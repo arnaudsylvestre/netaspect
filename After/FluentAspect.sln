@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentAspect.Weaver", "Flue
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentAspect.Weaver.Tasks", "FluentAspect.Weaver.Tasks\FluentAspect.Weaver.Tasks.csproj", "{972D20DB-3CF7-4177-BAC7-C5310D01D6F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentAspect.Core.Tests", "FluentAspect.Core.Tests\FluentAspect.Core.Tests.csproj", "{355BD088-9157-48F8-BDD0-68F5E7F1EDC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentAspect.Weaver.Tests", "FluentAspect.Weaver.Tests\FluentAspect.Weaver.Tests.csproj", "{BFCEA3C8-4EF3-456D-A1A3-23A651A86A5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +35,14 @@ Global
 		{972D20DB-3CF7-4177-BAC7-C5310D01D6F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{972D20DB-3CF7-4177-BAC7-C5310D01D6F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{972D20DB-3CF7-4177-BAC7-C5310D01D6F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{355BD088-9157-48F8-BDD0-68F5E7F1EDC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{355BD088-9157-48F8-BDD0-68F5E7F1EDC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{355BD088-9157-48F8-BDD0-68F5E7F1EDC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{355BD088-9157-48F8-BDD0-68F5E7F1EDC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFCEA3C8-4EF3-456D-A1A3-23A651A86A5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFCEA3C8-4EF3-456D-A1A3-23A651A86A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFCEA3C8-4EF3-456D-A1A3-23A651A86A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFCEA3C8-4EF3-456D-A1A3-23A651A86A5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
