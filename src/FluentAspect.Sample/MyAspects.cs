@@ -1,28 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using FluentAspect.Core;
 
 namespace FluentAspect.Sample
 {
-    public class AspectMatcherAttribute : Attribute
-    {
-        private Type t;
+   public class RaiseException : Exception
+   {
+      
+   }
 
-        public AspectMatcherAttribute(Type t)
-        {
-            this.t = t;
-        }
-    }
-
-    [FluentAspectDefinition]
-    public class MyAspects
+   public class MyAspects : FluentAspectDefinition
     {
-        [FluentAspectMethod(m => m.Name == "MustRaiseExceptionAfterWeave")]
-        public void RaiseException()
+        public void RaiseException(object callMethod)
         {
-            
+           throw new RaiseException();
         }
+
+      public override void Setup()
+      {
+         WeaveMethodWhichMatches(m => m.Name == "MustRaiseExceptionAfterWeave", "RaiseException");
+      }
     }
 }

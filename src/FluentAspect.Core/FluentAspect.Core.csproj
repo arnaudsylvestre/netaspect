@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FluentAspectAttribute.cs" />
     <Compile Include="FluentAspectDefinitionAttribute.cs" />
+    <Compile Include="Methods\IType.cs" />
     <Compile Include="Methods\Method.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

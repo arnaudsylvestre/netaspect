@@ -10,13 +10,15 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SheepAspect</RootNamespace>
     <AssemblyName>SheepAspect</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,7 +59,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -127,6 +128,13 @@
     <Compile Include="MixinsAdvising\DeclareMixinAdvice.cs" />
     <Compile Include="MixinsAdvising\DeclareMixinFromMethodAdvice.cs" />
     <Compile Include="MixinsAdvising\MixinsImplementationBinding.cs" />
+    <Compile Include="Net35\ConcurrentDictionary.cs" />
+    <Compile Include="Net35\Contract.cs" />
+    <Compile Include="Net35\EnumerableExtensions.cs" />
+    <Compile Include="Net35\Lazy.cs" />
+    <Compile Include="Net35\MemberExtensions.cs" />
+    <Compile Include="Net35\Parallel.cs" />
+    <Compile Include="Net35\Tuple.cs" />
     <Compile Include="Pointcuts\IConstructorPointcut.cs" />
     <Compile Include="Pointcuts\Impl\ConstructorPointcut.cs" />
     <Compile Include="Pointcuts\IMemberPointcut.cs" />
@@ -243,6 +251,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

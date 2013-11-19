@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,11 +44,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="WeaverTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FluentAspect.Sample\FluentAspect.Sample.csproj">
+      <Project>{6E481F61-CF92-4881-8F88-46C83B3018F7}</Project>
+      <Name>FluentAspect.Sample</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FluentAspect.Weaver\FluentAspect.Weaver.csproj">
+      <Project>{49D4BB30-2F64-40AB-BC27-5E4B0EF50C33}</Project>
+      <Name>FluentAspect.Weaver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SheepAspect\SheepAspect.csproj">
+      <Project>{CE5B9AF0-03CA-444E-B98C-6AF36696A708}</Project>
+      <Name>SheepAspect</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\FluentAspect.Sample\bin\Debug\FluentAspect.Core.CF.dll">
+      <Link>FluentAspect.Core.CF.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FluentAspect.Sample\bin\Debug\FluentAspect.Sample.CF.exe">
+      <Link>FluentAspect.Sample.CF.exe</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

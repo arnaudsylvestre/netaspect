@@ -52,10 +52,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SheepAspect.Weaver\SheepAspect.Weaver.csproj">
-      <Project>{D8C46680-454A-4977-A481-FA7C388B09C6}</Project>
-      <Name>SheepAspect.Weaver</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SheepAspect\SheepAspect.csproj">
       <Project>{CE5B9AF0-03CA-444E-B98C-6AF36696A708}</Project>
       <Name>SheepAspect</Name>
