@@ -134,6 +134,7 @@
     <Compile Include="Net35\Lazy.cs" />
     <Compile Include="Net35\MemberExtensions.cs" />
     <Compile Include="Net35\Parallel.cs" />
+    <Compile Include="Net35\ThreadLocal.cs" />
     <Compile Include="Net35\Tuple.cs" />
     <Compile Include="Pointcuts\IConstructorPointcut.cs" />
     <Compile Include="Pointcuts\Impl\ConstructorPointcut.cs" />

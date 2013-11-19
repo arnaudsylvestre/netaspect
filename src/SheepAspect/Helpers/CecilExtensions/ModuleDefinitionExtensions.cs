@@ -6,6 +6,15 @@ namespace SheepAspect.Helpers.CecilExtensions
 {
     public static class ModuleDefinitionExtensions
     {
+        public static MemberReference Import(this ModuleDefinition module, MemberInfo member)
+        {
+            if (member is MethodInfo)
+                return module.Import((MethodInfo)member);
+            if (member is FieldInfo)
+                return module.Import((FieldInfo)member);
+            if (member is Type)
+                return module.Import((Type)member);
+        }
         public static MethodReference ImportConstructor<T>(this ModuleDefinition module, params Type[] constructorParameters)
         {
             return module.Import(typeof(T).GetConstructor(constructorParameters));

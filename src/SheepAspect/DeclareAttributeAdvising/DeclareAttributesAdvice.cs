@@ -31,7 +31,7 @@ namespace SheepAspect.DeclareAttributeAdvising
         {
             ICustomAttributeProvider provider = _memberInfo is PropertyInfo?
                 module.Import(_memberInfo.DeclaringType).Resolve().Properties.First(x => x.Name == _memberInfo.Name):
-                (module.Import((dynamic) _memberInfo).Resolve());
+                (module.Import(_memberInfo).Resolve());
             
             var exceptAttributeTypeRef = module.Import(_exceptAttributeType).Resolve();
             return provider.CustomAttributes.Where(x => x.AttributeType.Resolve() != exceptAttributeTypeRef)

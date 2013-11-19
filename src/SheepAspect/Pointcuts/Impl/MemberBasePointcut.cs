@@ -43,7 +43,7 @@ namespace SheepAspect.Pointcuts.Impl
 
         public override void WhereAny(Func<TPointcut[]> func)
         {
-            _typeFilter.WhereAny(func);
+            _typeFilter.WhereAny(() => func());
             Where(m =>
             {
                 var pointcuts = func();
