@@ -116,9 +116,39 @@ namespace FluentAspect.Weaver
                methodDefinition.GenericParameters.Add(new GenericParameter(p.Name, methodDefinition));
            }
            var il = wrapperMethod.Body.GetILProcessor();
+
+           var variableDefinition = new VariableDefinition(moduleDefinition.Import(typeof (object[])));
+           methodDefinition.Body.Variables.Add(variableDefinition);
+           var args = variableDefinition;
+
+           il.Append(il.Create(OpCodes.Nop));
+           //il.Append(il.Create(OpCodes.Ldc_I4, methodDefinition.Parameters.Count));
+           //il.Append(il.Create(OpCodes.Newarr, moduleDefinition.Import(typeof(object))));
+           //il.Append(il.Create(OpCodes.Stloc, args));
+
+           //var targetParams = methodDefinition.Parameters.ToArray();
+           //foreach (var p in targetParams)
+           //{
+           //    wrapperMethod.Parameters.Add(p);
+
+           //    il.Append(il.Create(OpCodes.Ldloc, args));
+           //    il.Append(il.Create(OpCodes.Ldc_I4, p.Index));
+           //    il.Append(il.Create(OpCodes.Ldarg, p));
+           //    if (p.ParameterType.IsValueType)
+           //        il.Append(il.Create(OpCodes.Box, p.ParameterType));
+           //    il.Append(il.Create(OpCodes.Stelem_Ref));
+           //}
+
+           wrapperMethod.Body.InitLocals = methodDefinition.Body.InitLocals;
+
            //il.Append(il.Create(OpCodes.Nop));
-           il.Append(il.Create(OpCodes.Ldarg_0));
-           il.Append(il.Create(OpCodes.Call, moduleDefinition.Import(typeof(Around).GetMethod("Call"))));
+           //il.Append(il.Create(OpCodes.Ldarg_0));
+           //il.Append(il.Create(OpCodes.Ldstr, weavedMethodName));
+           //il.Append(il.Create(OpCodes.Ldloc, args));
+           //il.Append(il.Create(OpCodes.Ldnull));
+           //il.Append(il.Create(OpCodes.Call, moduleDefinition.Import(typeof(Around).GetMethod("Call"))));
+           //il.Append(il.Create(OpCodes.Pop));
+           //il.Append(il.Create(OpCodes.Ret));
 
            
 
