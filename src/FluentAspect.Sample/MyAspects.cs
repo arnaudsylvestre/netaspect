@@ -10,7 +10,7 @@ namespace FluentAspect.Sample
 
    public class MyAspectDefinition : FluentAspectDefinition
     {
-        public void RaiseException(Action callMethod)
+        public static void RaiseException(Action callMethod)
         {
            throw new RaiseException();
         }
