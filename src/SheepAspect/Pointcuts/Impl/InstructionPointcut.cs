@@ -29,7 +29,7 @@ namespace SheepAspect.Pointcuts.Impl
 
        public override void WhereAny(Func<IInstructionPointcut[]> func)
        {
-            _memberFilter.WhereAny(() => func());
+            _memberFilter.WhereAny(func);
 
             Where((method, ins) =>
                       {

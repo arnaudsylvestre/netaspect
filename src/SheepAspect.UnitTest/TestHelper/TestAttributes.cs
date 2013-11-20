@@ -7,14 +7,10 @@ using NUnit.Framework;
 
 namespace SheepAspect.UnitTest.TestHelper
 {
-    public class AssertAttribute : TestAttribute/*, ITestCaseAction*/
+    public class AssertAttribute : TestAttribute, ITestCaseAction
     {
         private static readonly string ArrangeAttributeName = typeof(ArrangeAttribute).FullName;
         private static readonly string ActAttributeName = typeof(ActAttribute).FullName;
-
-        public AssertAttribute()
-        {
-        }
 
         public void BeforeTestCase(object fixture, MethodInfo method)
         {

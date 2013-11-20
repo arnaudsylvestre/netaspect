@@ -6,16 +6,6 @@ namespace SheepAspect.Helpers.CecilExtensions
 {
     public static class ModuleDefinitionExtensions
     {
-        public static IMemberDefinition Import(this ModuleDefinition module, MemberInfo member)
-        {
-            if (member is MethodInfo)
-                return module.Import((MethodInfo)member).Resolve();
-            if (member is FieldInfo)
-                return module.Import((FieldInfo)member).Resolve();
-            if (member is Type)
-                return module.Import((Type)member).Resolve();
-            throw new NotImplementedException();
-        }
         public static MethodReference ImportConstructor<T>(this ModuleDefinition module, params Type[] constructorParameters)
         {
             return module.Import(typeof(T).GetConstructor(constructorParameters));

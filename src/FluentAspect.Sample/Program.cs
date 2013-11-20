@@ -23,9 +23,9 @@ namespace FluentAspect.Sample
            {
               MessageBox.Show("OK !");
            }
-           catch
+           catch (Exception e)
            {
-              MessageBox.Show("Another exception thrown");
+              MessageBox.Show(e.StackTrace, e.Message);
               throw;
            }
         }

@@ -36,7 +36,7 @@ namespace FluentAspect.Weaver
                   var pointcut_L = def.AddPointcut<FluentMethodPointcut>("First");
                   pointcut_L.SetMatcher(methodMatch_L.Matcher);
                   var methodInfo_L = typeDefinition_L.GetMethod(methodMatch_L.AdviceName);
-                  def.Advise(new AroundAdvice(new List<IPointcut>() { pointcut_L }, methodInfo_L));
+                  def.Advise(new FluentAroundAdvice(new List<IPointcut>() { pointcut_L }, methodInfo_L));
                }
 
                definitions_L.Add(def);

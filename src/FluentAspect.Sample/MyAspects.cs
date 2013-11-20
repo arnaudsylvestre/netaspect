@@ -8,9 +8,9 @@ namespace FluentAspect.Sample
       
    }
 
-   public class MyAspects : FluentAspectDefinition
+   public class MyAspectDefinition : FluentAspectDefinition
     {
-        public void RaiseException(object callMethod)
+        public void RaiseException(Action callMethod)
         {
            throw new RaiseException();
         }

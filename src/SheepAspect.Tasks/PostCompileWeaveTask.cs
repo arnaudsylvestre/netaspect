@@ -54,8 +54,8 @@ namespace SheepAspect.Tasks
             }
             catch (Exception e)
             {
-                Log.LogError(e.ToString());
-                return false;
+               Log.LogError(e.ToString());
+               return false;
             }
 
             stopwatch.Stop();

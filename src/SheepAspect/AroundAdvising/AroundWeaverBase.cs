@@ -182,7 +182,7 @@ namespace SheepAspect.AroundAdvising
                                                           Module.Import(typeof(object)));
                 var jpParam = new ParameterDefinition("joinPoint", ParameterAttributes.None,
                                                       Method.Module.Import(
-                                                          Module.Import(typeof(IJointPoint))));
+                                                          Module.Import(typeof(Action))));
 
                 InvokerMethod.Parameters.Add(aspectParam);
                 InvokerMethod.Parameters.Add(jpParam);
