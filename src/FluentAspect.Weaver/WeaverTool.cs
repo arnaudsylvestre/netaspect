@@ -118,9 +118,9 @@ namespace FluentAspect.Weaver
            var il = wrapperMethod.Body.GetILProcessor();
            //il.Append(il.Create(OpCodes.Nop));
            il.Append(il.Create(OpCodes.Ldarg_0));
-           il.Append(il.Create(OpCodes.Call, methodDefinition));
+           il.Append(il.Create(OpCodes.Call, moduleDefinition.Import(typeof(Around).GetMethod("Call"))));
 
-           moduleDefinition.Import(typeof(Around).GetMethod("Call"))
+           
 
            return wrapperMethod;
        }

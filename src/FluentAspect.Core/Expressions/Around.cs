@@ -16,7 +16,7 @@ namespace FluentAspect.Core.Expressions
             try
             {
                 interceptor.Before();
-
+                var 
                 interceptor.After();
                 return null;
             }
