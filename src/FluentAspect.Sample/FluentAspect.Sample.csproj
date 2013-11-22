@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyAspects.cs" />
+    <Compile Include="AOP\Interceptors\CheckWithParametersInterceptor.cs" />
+    <Compile Include="AOP\Interceptors\CheckWithReturnInterceptor.cs" />
+    <Compile Include="AOP\MyAspectDefinition.cs" />
     <Compile Include="MyClassToWeave.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

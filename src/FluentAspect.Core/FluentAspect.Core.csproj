@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D9877E16-93EF-4B3C-B671-8BE39BC41D94}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -41,10 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Expressions\Around.cs" />
-    <Compile Include="FluentAspectDefinitionAttribute.cs" />
-    <Compile Include="Methods\IType.cs" />
-    <Compile Include="Methods\Method.cs" />
+    <Compile Include="Attributes\FluentAspectMethodAttribute.cs" />
+    <Compile Include="Core\Around.cs" />
+    <Compile Include="Core\IInterceptor.cs" />
+    <Compile Include="Core\MethodCall.cs" />
+    <Compile Include="Core\MethodCallExtensions.cs" />
+    <Compile Include="Core\MethodCallResult.cs" />
+    <Compile Include="Fluent\FluentAspectDefinitionAttribute.cs" />
+    <Compile Include="Fluent\Methods\IType.cs" />
+    <Compile Include="Fluent\Methods\IMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

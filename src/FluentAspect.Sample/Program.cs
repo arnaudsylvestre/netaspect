@@ -7,7 +7,7 @@ namespace FluentAspect.Sample
         static void Main(string[] args)
         {
            MyClassToWeave toWeave = new MyClassToWeave();
-           var waved = toWeave.MustRaiseExceptionAfterWeave();
+           var waved = toWeave.CheckWithReturn();
            MessageBox.Show(waved);
         }
     }

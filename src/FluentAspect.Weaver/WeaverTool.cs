@@ -49,13 +49,20 @@ namespace FluentAspect.Weaver
    public class WeaverTool
    {
        private readonly string _asm;
+      private readonly string _dest;
 
-       public WeaverTool(string asm)
+      public WeaverTool(string asm)
+         :this(asm, asm)
        {
-           _asm = asm;
+          _asm = asm;
+       }
+       public WeaverTool(string asm, string dest_P)
+       {
+          _asm = asm;
+          _dest = dest_P;
        }
 
-       public void Weave()
+      public void Weave()
       {
          var definition = Assembly.LoadFrom(_asm);
          
@@ -100,7 +107,7 @@ namespace FluentAspect.Weaver
                         moduleDefinition.AssemblyReferences.Remove(reference);
                     }
                 }
-                assemblyDefinition.Write(_asm, new WriterParameters()
+                assemblyDefinition.Write(_dest, new WriterParameters()
                     {
                         WriteSymbols = true,
                     });

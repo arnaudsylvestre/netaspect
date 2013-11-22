@@ -2,9 +2,19 @@
 {
     public class MyClassToWeave
     {
-        public string MustRaiseExceptionAfterWeave()
-        {
-            return "NotWeaved";
-        }
+       public string CheckWithReturn()
+       {
+          return "NotWeaved";
+       }
+
+       public string CheckWithParameters(string aspectWillReturnThis)
+       {
+          return "NotWeaved";
+       }
+
+       public void CheckWithVoid()
+       {
+          
+       }
     }
 }
