@@ -45,7 +45,6 @@
     <Compile Include="Core\Around.cs" />
     <Compile Include="Core\IInterceptor.cs" />
     <Compile Include="Core\MethodCall.cs" />
-    <Compile Include="Core\MethodCallExtensions.cs" />
     <Compile Include="Core\MethodCallResult.cs" />
     <Compile Include="Fluent\FluentAspectDefinitionAttribute.cs" />
     <Compile Include="Fluent\Methods\IType.cs" />
