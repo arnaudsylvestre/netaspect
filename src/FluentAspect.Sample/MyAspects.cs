@@ -27,11 +27,6 @@ namespace FluentAspect.Sample
 
    public class MyAspectDefinition : FluentAspectDefinition
     {
-        public static void RaiseException(Action callMethod)
-        {
-           throw new RaiseException();
-        }
-
       public override void Setup()
       {
           WeaveMethodWhichMatches<MyInterceptor>(m => m.Name == "MustRaiseExceptionAfterWeave");

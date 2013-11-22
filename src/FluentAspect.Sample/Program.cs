@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace FluentAspect.Sample
 {
@@ -11,23 +6,9 @@ namespace FluentAspect.Sample
     {
         static void Main(string[] args)
         {
-           string file = @"C:\Test.txt";
            MyClassToWeave toWeave = new MyClassToWeave();
-           try
-           {
-              toWeave.MustRaiseExceptionAfterWeave();
-              MessageBox.Show("Not raised");
-              throw new Exception();
-           }
-           catch (RaiseException)
-           {
-              MessageBox.Show("OK !");
-           }
-           catch (Exception e)
-           {
-              MessageBox.Show(e.StackTrace, e.Message);
-              throw;
-           }
+           var waved = toWeave.MustRaiseExceptionAfterWeave();
+           MessageBox.Show(waved);
         }
     }
 }

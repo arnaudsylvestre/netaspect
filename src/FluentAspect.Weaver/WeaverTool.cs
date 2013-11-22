@@ -9,7 +9,6 @@ using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MethodAttributes = System.Reflection.MethodAttributes;
-using MethodBody = Mono.Cecil.Cil.MethodBody;
 
 namespace FluentAspect.Weaver
 {
@@ -126,16 +125,12 @@ namespace FluentAspect.Weaver
                p.GetType().GetField("owner", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(p, wrapperMethod);
                methodDefinition.GenericParameters.Add(new GenericParameter(p.Name, methodDefinition));
            }
-           //methodDefinition.Body.Instructions.TransferItemsTo(wrapperMethod.Body.Instructions);
-           //methodDefinition.Body.Variables.TransferItemsTo(wrapperMethod.Body.Variables);
-           //methodDefinition.Body.ExceptionHandlers.TransferItemsTo(wrapperMethod.Body.ExceptionHandlers);
            var il = wrapperMethod.Body.GetILProcessor();
 
            var variableDefinition = new VariableDefinition(moduleDefinition.Import(typeof(object[])));
            wrapperMethod.Body.Variables.Add(variableDefinition);
            var args = variableDefinition;
 
-           //il.Append(il.Create(OpCodes.Nop));
            il.Append(il.Create(OpCodes.Ldc_I4, methodDefinition.Parameters.Count));
            il.Append(il.Create(OpCodes.Newarr, moduleDefinition.Import(typeof(object))));
            il.Append(il.Create(OpCodes.Stloc, args));
@@ -155,7 +150,6 @@ namespace FluentAspect.Weaver
 
            wrapperMethod.Body.InitLocals = methodDefinition.Body.InitLocals;
 
-           //il.Append(il.Create(OpCodes.Nop));
            il.Append(il.Create(OpCodes.Ldarg_0));
            il.Append(il.Create(OpCodes.Ldstr, weavedMethodName));
            il.Append(il.Create(OpCodes.Ldloc, args));
