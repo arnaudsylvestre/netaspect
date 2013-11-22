@@ -53,6 +53,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\lib\cecil-master\Mono.Cecil.csproj">
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FluentAspect.Sample\FluentAspect.Sample.csproj">
       <Project>{6E481F61-CF92-4881-8F88-46C83B3018F7}</Project>
       <Name>FluentAspect.Sample</Name>

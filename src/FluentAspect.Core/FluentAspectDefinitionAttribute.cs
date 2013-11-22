@@ -11,22 +11,17 @@ namespace FluentAspect.Core
        {
           public Func<IMethod, bool> Matcher { get; set; }
 
-          public string AdviceName { get; set; }
+          public Type AdviceName { get; set; }
        }
 
        public List<MethodMatch> methodMatches = new List<MethodMatch>(); 
 
-       public IEnumerable<string> GetAdvices(IMethod method_P)
-       {
-          return from methodMatch_L in methodMatches where methodMatch_L.Matcher(method_P) select methodMatch_L.AdviceName;
-
-       }
 
        public abstract void Setup();
 
-         protected void WeaveMethodWhichMatches(Func<IMethod, bool> methodMatcher, string functionName)
+         protected void WeaveMethodWhichMatches<T>(Func<IMethod, bool> methodMatcher)
          {
-            methodMatches.Add(new MethodMatch() { Matcher = methodMatcher, AdviceName = functionName });
+            methodMatches.Add(new MethodMatch() { Matcher = methodMatcher, AdviceName = typeof(T) });
          }
     }
 }

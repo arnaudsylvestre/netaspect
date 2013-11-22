@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAspect.Core;
+using FluentAspect.Core.Expressions;
 
 namespace FluentAspect.Sample
 {
@@ -7,6 +8,22 @@ namespace FluentAspect.Sample
    {
       
    }
+
+    class MyInterceptor : IInterceptor
+    {
+        public void Before()
+        {
+        }
+
+        public void After(Around.MethodCallResult ret)
+        {
+            ret.Result = "Weaved";
+        }
+
+        public void OnException(Exception e)
+        {
+        }
+    }
 
    public class MyAspectDefinition : FluentAspectDefinition
     {
@@ -17,7 +34,7 @@ namespace FluentAspect.Sample
 
       public override void Setup()
       {
-         WeaveMethodWhichMatches(m => m.Name == "MustRaiseExceptionAfterWeave", "RaiseException");
+          WeaveMethodWhichMatches<MyInterceptor>(m => m.Name == "MustRaiseExceptionAfterWeave");
       }
     }
 }

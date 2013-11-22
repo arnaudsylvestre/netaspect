@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C7767C6F-3874-4D30-989E-D6A15F737FD0}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Expressions\Around.cs" />
     <Compile Include="FluentAspectDefinitionAttribute.cs" />
     <Compile Include="Methods\IType.cs" />
     <Compile Include="Methods\Method.cs" />

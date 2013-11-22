@@ -86,7 +86,7 @@ namespace SheepAspect.AroundAdvising
             var args = Method.AddLocal(typeof (object[]));
 
             var il = Method.Body.GetILProcessor();
-            il.Append(OpCodes.Nop);
+            //il.Append(OpCodes.Nop);
             il.Append(OpCodes.Ldc_I4, Method.Parameters.Count);
             il.Append(OpCodes.Newarr, Module.Import(typeof(object)));
             il.Append(OpCodes.Stloc, args);

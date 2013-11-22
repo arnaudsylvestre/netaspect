@@ -2,9 +2,9 @@
 {
     public class MyClassToWeave
     {
-        public void MustRaiseExceptionAfterWeave()
+        public string MustRaiseExceptionAfterWeave()
         {
-            
+            return "NotWeaved";
         }
     }
 }
