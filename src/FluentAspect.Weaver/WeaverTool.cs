@@ -67,7 +67,7 @@ namespace FluentAspect.Weaver
                var instance_L = (FluentAspectDefinition) Activator.CreateInstance(typeDefinition_L);
                instance_L.Setup();
                var methodMatches_L = instance_L.methodMatches;
-                var assemblyDefinition = AssemblyDefinition.ReadAssembly(_asm);
+                var assemblyDefinition = AssemblyDefinition.ReadAssembly(_asm, new ReaderParameters(ReadingMode.Immediate) {ReadSymbols = true});
 
                 foreach (var moduleDefinition in assemblyDefinition.Modules)
                 {
@@ -101,7 +101,10 @@ namespace FluentAspect.Weaver
                         moduleDefinition.AssemblyReferences.Remove(reference);
                     }
                 }
-                assemblyDefinition.Write(_asm);
+                assemblyDefinition.Write(_asm, new WriterParameters()
+                    {
+                        WriteSymbols = true,
+                    });
             }
          }
       }
