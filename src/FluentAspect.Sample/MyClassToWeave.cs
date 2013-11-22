@@ -1,4 +1,6 @@
-﻿namespace FluentAspect.Sample
+﻿using System;
+
+namespace FluentAspect.Sample
 {
     public class MyClassToWeave
     {
@@ -14,7 +16,28 @@
 
        public void CheckWithVoid()
        {
-          
+
+       }
+
+        public string CheckWithGenerics<T>(T arg)
+        {
+            return arg.ToString();
+        }
+
+        public void CheckThrow()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public string CheckBefore(string content)
+        {
+            return content;
+        }
+
+       public string CheckNotRenameInAssembly()
+       {
+           return CheckWithReturn();
        }
     }
 }
