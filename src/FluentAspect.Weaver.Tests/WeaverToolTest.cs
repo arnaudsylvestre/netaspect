@@ -8,6 +8,12 @@ namespace FluentAspect.Weaver.Tests
     [TestFixture]
     public class WeaverToolTest
     {
+        //public void Sample()
+        //{
+        //    object[] args = new object[0];
+        //    Around.Call(this, "CheckWith", args, new CheckThrowInterceptor());
+        //}
+
        [Test]
         public void CheckWithReturn()
        {
@@ -23,7 +29,7 @@ namespace FluentAspect.Weaver.Tests
        [Test]
        public void CheckWithVoid()
        {
-           WeaveAndCheck("CheckWithVoid", new object[] { });
+           WeaveAndCheck("CheckWithVoid", new object[] {});
        }
 
        [Test]
@@ -42,7 +48,9 @@ namespace FluentAspect.Weaver.Tests
            }
            catch (TargetInvocationException e)
            {
+               throw e.InnerException;
            }
+           
        }
 
        [Test]

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using FluentAspect.Core.Core;
 
 namespace FluentAspect.Core.Expressions
@@ -19,10 +20,10 @@ namespace FluentAspect.Core.Expressions
                 interceptor.After(call, result);
                 return result.Result;
             }
-            catch (Exception e)
+            catch (TargetInvocationException e)
             {
-               interceptor.OnException(call, e);
-                throw;
+               interceptor.OnException(call, e.InnerException);
+               throw e.InnerException;
             }
         }
     }

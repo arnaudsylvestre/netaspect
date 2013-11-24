@@ -12,7 +12,6 @@ namespace FluentAspect.Sample
 
         public void After(MethodCall call_P, MethodCallResult result_P)
         {
-            result_P.Result = "Weaved";
         }
 
         public void OnException(MethodCall callP_P, Exception e)

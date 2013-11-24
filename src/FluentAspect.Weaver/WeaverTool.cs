@@ -155,7 +155,7 @@ namespace FluentAspect.Weaver
                il.Append(il.Create(OpCodes.Stelem_Ref));
            }
 
-           wrapperMethod.Body.InitLocals = methodDefinition.Body.InitLocals;
+           //wrapperMethod.Body.InitLocals = methodDefinition.Body.InitLocals;
 
            il.Append(il.Create(OpCodes.Ldarg_0));
            il.Append(il.Create(OpCodes.Ldstr, weavedMethodName));
@@ -165,6 +165,9 @@ namespace FluentAspect.Weaver
            //il.Append(il.Create(OpCodes.Pop));
            //var ret = il.Create(OpCodes.Ret);
            //var leave = il.Create(OpCodes.Leave, ret);
+           if (methodDefinition.ReturnType.MetadataType == MetadataType.Void)
+            il.Append(il.Create(OpCodes.Pop));
+           //il.Emit(OpCodes.Nop);
            il.Append(il.Create(OpCodes.Ret));
 
            

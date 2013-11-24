@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{8CB7699F-6B65-414E-B15F-19FEE6A31BB6}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -53,6 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AOP\Interceptors\CheckBeforeInterceptor.cs" />
+    <Compile Include="AOP\Interceptors\CheckNotRenameInAssemblyInterceptor.cs" />
+    <Compile Include="AOP\Interceptors\CheckThrowInterceptor.cs" />
+    <Compile Include="AOP\Interceptors\CheckWithGenericsInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithParametersInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithReturnInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithVoidInterceptor.cs" />
