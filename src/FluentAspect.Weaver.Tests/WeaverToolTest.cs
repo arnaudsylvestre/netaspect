@@ -20,9 +20,9 @@ namespace FluentAspect.Weaver.Tests
         public void Sample()
         {
             var interceptor = new CheckThrowInterceptor();
-            //var args = new object[0];
-            //var method = GetType().GetMethod("Sample");
-            //var methodCall = new MethodCall(this, method, args);
+            var args = new object[0];
+            var method = GetType().GetMethod("Sample");
+            var methodCall = new MethodCall(this, method, args);
             //string weavedResult;
             //try
             //{
@@ -64,14 +64,8 @@ namespace FluentAspect.Weaver.Tests
        [Test]
        public void CheckWithVoid()
        {
-           try
-           {
                WeaveAndCheck("CheckWithVoid", new object[] { });
-           }
-           catch (Exception e)
-           {
-               
-           }
+           
            
        }
 

@@ -16,27 +16,28 @@ namespace FluentAspect.Weaver.Weavers
              var interceptor = CreateInterceptor(method, interceptorType, il);
              var args = CreateArgsArray(method, il);
              var methodInfo = CreateMethodInfo(method, il);
-             //var methodCall = CreateMethodCall(method, methodInfo, args);
-             //var weavedResult = CreateWeavedResult(method);
+             var methodCall = CreateMethodCall(method, methodInfo, args, il);
 
-             //CallBefore(method, interceptor, methodCall, interceptorType);
-             //var result = CallWeavedMethod(method, wrappedMethod);
-             //var methodCallResult = CreateMethodCallResult(method, result);
-             //CallAfter(method, interceptor, methodCall, methodCallResult, interceptorType);
-             //SetReturnValue(method, methodCallResult, weavedResult);
+             var weavedResult = CreateWeavedResult(method);
 
-             //var onCatch = CreateNopForCatch(method);
-             //var e = CreateException(method);
-             //var ex = CreateExceptionResult(method, e);
-             //CallExceptionInterceptor(method, interceptor, methodCall, ex, interceptorType);
-             //var cancelExceptionAndReturn = CreateCancelExceptionAndReturn(method, ex);
+             CallBefore(method, interceptor, methodCall, interceptorType, il);
+             var result = CallWeavedMethod(method, wrappedMethod, il);
+             var methodCallResult = CreateMethodCallResult(method, result, il);
+             CallAfter(method, interceptor, methodCall, methodCallResult, interceptorType, il);
+             SetReturnValue(method, methodCallResult, weavedResult, il);
+
+             var onCatch = CreateNopForCatch(method, il);
+             var e = CreateException(method);
+             var ex = CreateExceptionResult(method, e, il);
+             CallExceptionInterceptor(method, interceptor, methodCall, ex, interceptorType, il);
+             var cancelExceptionAndReturn = CreateCancelExceptionAndReturn(method, ex, il);
              //ThrowIfNecessary(method, cancelExceptionAndReturn);
-             //SetReturnValueOnException(method, cancelExceptionAndReturn, weavedResult);
+             SetReturnValueOnException(method, cancelExceptionAndReturn, weavedResult, il);
 
-             //var endCatch = CreateNopForCatch(method);
+             var endCatch = CreateNopForCatch(method, il);
              Return(method, /*weavedResult*/ null, il);
 
-             //CreateExceptionHandler(method, onCatch, endCatch);
+             CreateExceptionHandler(method, onCatch, endCatch);
          }
 
         private void Return(MethodDefinition method, VariableDefinition weavedResult, ILProcessor il)
@@ -119,7 +120,12 @@ namespace FluentAspect.Weaver.Weavers
 
         private VariableDefinition CreateWeavedResult(MethodDefinition method)
         {
-            return CreateVariable(method, method.ReturnType);
+            if (method.ReturnType.MetadataType != MetadataType.Void)
+            {
+                return CreateVariable(method, method.ReturnType);
+            }
+            return null;
+
         }
 
         private void SetReturnValue(MethodDefinition method, VariableDefinition methodCallResult, VariableDefinition weavedResult, ILProcessor il)
@@ -148,7 +154,7 @@ namespace FluentAspect.Weaver.Weavers
                 il.Emit(OpCodes.Ldnull);
             else
              il.Emit(OpCodes.Ldloc, result);
-             il.Emit(OpCodes.Newobj, method.Module.Import(typeof(MethodCall).GetConstructors()[0]));
+            il.Emit(OpCodes.Newobj, method.Module.Import(typeof(MethodCallResult).GetConstructors()[0]));
              il.Emit(OpCodes.Stloc, methodCallResult);
             return methodCallResult;
          }
