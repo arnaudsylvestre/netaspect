@@ -53,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\FluentAspectMethodAttribute.cs" />
-    <Compile Include="Core\Around.cs" />
+    <Compile Include="Core\ExceptionResult.cs" />
     <Compile Include="Core\IInterceptor.cs" />
     <Compile Include="Core\MethodCall.cs" />
     <Compile Include="Core\MethodCallResult.cs" />

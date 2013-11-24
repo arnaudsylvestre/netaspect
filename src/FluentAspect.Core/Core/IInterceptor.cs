@@ -7,6 +7,6 @@ namespace FluentAspect.Core.Core
    {
       void Before(MethodCall call_P);
       void After(MethodCall call_P, MethodCallResult result_P);
-      void OnException(MethodCall callP_P, Exception e);
+      void OnException(MethodCall callP_P, ExceptionResult e);
    }
 }

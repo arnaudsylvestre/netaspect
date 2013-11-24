@@ -6,6 +6,7 @@ using FluentAspect.Core;
 using FluentAspect.Core.Expressions;
 using FluentAspect.Core.Methods;
 using FluentAspect.Weaver.Helpers;
+using FluentAspect.Weaver.Weavers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MethodAttributes = System.Reflection.MethodAttributes;
@@ -118,72 +119,87 @@ namespace FluentAspect.Weaver
        private MethodDefinition Around(MethodDefinition methodDefinition, Type interceptor, ModuleDefinition moduleDefinition)
        {
            var weavedMethodName = ComputeNewName(methodDefinition);
-           var definition = CreateNewMethodBasedOnMethodToWeave(methodDefinition, moduleDefinition, weavedMethodName, interceptor);
+           var definition = CreateNewMethodBasedOnMethodToWeave(methodDefinition, weavedMethodName, interceptor);
            return definition;
        }
 
-       private MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition, ModuleDefinition moduleDefinition, string weavedMethodName, Type interceptor)
+       private MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition, string weavedMethodName, Type interceptor)
        {
-           var wrapperMethod = new MethodDefinition(methodDefinition.Name, methodDefinition.Attributes, methodDefinition.ReturnType) ;
-           methodDefinition.Name = weavedMethodName;
-           methodDefinition.GenericParameters.TransferItemsTo(wrapperMethod.GenericParameters);
-           foreach (var p in wrapperMethod.GenericParameters)
+           MethodDefinition wrappedMethod = new MethodDefinition(ComputeNewName(methodDefinition), methodDefinition.Attributes, methodDefinition.ReturnType);
+
+           foreach (var instruction in methodDefinition.Body.Instructions)
            {
-               p.GetType().GetField("owner", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(p, wrapperMethod);
-               methodDefinition.GenericParameters.Add(new GenericParameter(p.Name, methodDefinition));
+               wrappedMethod.Body.Instructions.Add(instruction);
            }
-           var il = wrapperMethod.Body.GetILProcessor();
-
-           var variableDefinition = new VariableDefinition(moduleDefinition.Import(typeof(object[])));
-           wrapperMethod.Body.Variables.Add(variableDefinition);
-           var args = variableDefinition;
-
-           il.Append(il.Create(OpCodes.Ldc_I4, methodDefinition.Parameters.Count));
-           il.Append(il.Create(OpCodes.Newarr, moduleDefinition.Import(typeof(object))));
-           il.Append(il.Create(OpCodes.Stloc, args));
-
-           var targetParams = methodDefinition.Parameters.ToArray();
-           foreach (var p in targetParams)
+           foreach (var variable in methodDefinition.Body.Variables)
            {
-               wrapperMethod.Parameters.Add(p);
-
-               il.Append(il.Create(OpCodes.Ldloc, args));
-               il.Append(il.Create(OpCodes.Ldc_I4, p.Index));
-               il.Append(il.Create(OpCodes.Ldarg, p));
-               if (p.ParameterType.IsValueType)
-                   il.Append(il.Create(OpCodes.Box, p.ParameterType));
-               il.Append(il.Create(OpCodes.Stelem_Ref));
+               wrappedMethod.Body.Variables.Add(variable);
+           }
+           foreach (var exceptionHandler in methodDefinition.Body.ExceptionHandlers)
+           {
+               wrappedMethod.Body.ExceptionHandlers.Add(exceptionHandler);
+           }
+           foreach (var genericParameter in methodDefinition.GenericParameters)
+           {
+               wrappedMethod.GenericParameters.Add(new GenericParameter(genericParameter.Name, wrappedMethod));
            }
 
-           //wrapperMethod.Body.InitLocals = methodDefinition.Body.InitLocals;
+           MethodAroundWeaver weaver = new MethodAroundWeaver();
+           weaver.CreateWeaver(methodDefinition, interceptor, wrappedMethod);
+           //var wrapperMethod = new MethodDefinition(methodDefinition.Name, methodDefinition.Attributes, methodDefinition.ReturnType) ;
+           //methodDefinition.Name = weavedMethodName;
+           //methodDefinition.GenericParameters.TransferItemsTo(wrapperMethod.GenericParameters);
+           //foreach (var p in wrapperMethod.GenericParameters)
+           //{
+           //    p.GetType().GetField("owner", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(p, wrapperMethod);
+           //    methodDefinition.GenericParameters.Add(new GenericParameter(p.Name, methodDefinition));
+           //}
+           //var il = wrapperMethod.Body.GetILProcessor();
 
-           il.Append(il.Create(OpCodes.Ldarg_0));
-           il.Append(il.Create(OpCodes.Ldstr, weavedMethodName));
-           il.Append(il.Create(OpCodes.Ldloc, args));
-           il.Append(il.Create(OpCodes.Newobj, moduleDefinition.Import(interceptor.GetConstructors()[0])));
-           il.Append(il.Create(OpCodes.Call, moduleDefinition.Import(typeof(Around).GetMethod("Call"))));
-           //il.Append(il.Create(OpCodes.Pop));
-           //var ret = il.Create(OpCodes.Ret);
-           //var leave = il.Create(OpCodes.Leave, ret);
-           if (methodDefinition.ReturnType.MetadataType == MetadataType.Void)
-            il.Append(il.Create(OpCodes.Pop));
-           //il.Emit(OpCodes.Nop);
-           il.Append(il.Create(OpCodes.Ret));
+           //var variableDefinition = new VariableDefinition(methodDefinition.Module.Import(typeof(object[])));
+           //wrapperMethod.Body.Variables.Add(variableDefinition);
+           //var args = variableDefinition;
 
-           
+           //il.Append(il.Create(OpCodes.Ldc_I4, methodDefinition.Parameters.Count));
+           //il.Append(il.Create(OpCodes.Newarr, methodDefinition.Module.Import(typeof(object))));
+           //il.Append(il.Create(OpCodes.Stloc, args));
 
-           return wrapperMethod;
+           //var targetParams = methodDefinition.Parameters.ToArray();
+           //foreach (var p in targetParams)
+           //{
+           //    wrapperMethod.Parameters.Add(p);
+
+           //    il.Append(il.Create(OpCodes.Ldloc, args));
+           //    il.Append(il.Create(OpCodes.Ldc_I4, p.Index));
+           //    il.Append(il.Create(OpCodes.Ldarg, p));
+           //    if (p.ParameterType.IsValueType)
+           //        il.Append(il.Create(OpCodes.Box, p.ParameterType));
+           //    il.Append(il.Create(OpCodes.Stelem_Ref));
+           //}
+
+           ////wrapperMethod.Body.InitLocals = methodDefinition.Body.InitLocals;
+
+           ////il.Append(il.Create(OpCodes.Ldarg_0));
+           ////il.Append(il.Create(OpCodes.Ldstr, weavedMethodName));
+           ////il.Append(il.Create(OpCodes.Ldloc, args));
+           ////il.Append(il.Create(OpCodes.Newobj, moduleDefinition.Import(interceptor.GetConstructors()[0])));
+           ////il.Append(il.Create(OpCodes.Call, moduleDefinition.Import(typeof(Around).GetMethod("Call"))));
+           ////il.Append(il.Create(OpCodes.Pop));
+           ////var ret = il.Create(OpCodes.Ret);
+           ////var leave = il.Create(OpCodes.Leave, ret);
+           //if (methodDefinition.ReturnType.MetadataType == MetadataType.Void)
+           // il.Append(il.Create(OpCodes.Pop));
+           ////il.Emit(OpCodes.Nop);
+           //il.Append(il.Create(OpCodes.Ret));
+
+
+
+           return wrappedMethod;
        }
 
        private string ComputeNewName(MethodDefinition methodDefinition)
        {
            return methodDefinition.Name + "<>Weaved<>";
-       }
-
-       private void Check(MethodInfo methodToCall)
-       {
-           if ((methodToCall.Attributes & MethodAttributes.Static) != MethodAttributes.Static)
-               throw new Exception("Advice must be static");
        }
    }
 }

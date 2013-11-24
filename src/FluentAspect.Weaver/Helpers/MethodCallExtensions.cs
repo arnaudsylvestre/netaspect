@@ -7,7 +7,7 @@ namespace FluentAspect.Core.Core
    {
       public static MethodCall Clone(this MethodCall call_P)
       {
-         return new MethodCall(call_P.This, call_P.MethodName, new List<object>(call_P.Parameters).ToArray());
+         return new MethodCall(call_P.This, call_P.Method, new List<object>(call_P.Parameters).ToArray());
       }
    }
 }

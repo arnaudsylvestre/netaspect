@@ -9,6 +9,6 @@ namespace FluentAspect.Core.Attributes
    {
       public virtual void Before(MethodCall call_P) { }
       public virtual void After(MethodCall call_P, MethodCallResult result_P) { }
-      public virtual void OnException(MethodCall callP_P, Exception e) { }
+      public virtual void OnException(MethodCall callP_P, ExceptionResult e) { }
    }
 }

@@ -15,7 +15,7 @@ namespace FluentAspect.Sample
          result_P.Result = call_P.Parameters[0];
       }
 
-      public void OnException(MethodCall callP_P, Exception e)
+      public void OnException(MethodCall callP_P, ExceptionResult e)
       {
       }
    }

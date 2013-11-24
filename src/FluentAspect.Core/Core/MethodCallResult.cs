@@ -2,6 +2,11 @@
 {
    public class MethodCallResult
    {
-      public object Result { get; set; }
+       public MethodCallResult(object result)
+       {
+           Result = result;
+       }
+
+       public object Result { get; set; }
    }
 }

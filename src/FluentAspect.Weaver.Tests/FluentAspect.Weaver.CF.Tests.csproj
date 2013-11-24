@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2AFA753F-41FB-4C83-BD19-D3E32A86C3C1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -54,6 +54,10 @@
     <Compile Include="WeaverToolTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FluentAspect.Core\FluentAspect.Core.CF.csproj">
+      <Project>{C7767C6F-3874-4D30-989E-D6A15F737FD0}</Project>
+      <Name>FluentAspect.Core.CF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FluentAspect.Sample\FluentAspect.Sample.CF.csproj">
       <Project>{8CB7699F-6B65-414E-B15F-19FEE6A31BB6}</Project>
       <Name>FluentAspect.Sample.CF</Name>

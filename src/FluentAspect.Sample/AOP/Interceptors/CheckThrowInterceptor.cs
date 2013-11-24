@@ -14,7 +14,7 @@ namespace FluentAspect.Sample
       {
       }
 
-      public void OnException(MethodCall callP_P, Exception e)
+      public void OnException(MethodCall callP_P, ExceptionResult e)
       {
           throw new NotSupportedException();
       }
