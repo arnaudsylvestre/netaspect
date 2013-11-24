@@ -131,10 +131,12 @@ namespace FluentAspect.Weaver
            {
                wrappedMethod.Body.Instructions.Add(instruction);
            }
+           methodDefinition.Body.Instructions.Clear();
            foreach (var variable in methodDefinition.Body.Variables)
            {
                wrappedMethod.Body.Variables.Add(variable);
            }
+           methodDefinition.Body.Variables.Clear();
            foreach (var exceptionHandler in methodDefinition.Body.ExceptionHandlers)
            {
                wrappedMethod.Body.ExceptionHandlers.Add(exceptionHandler);
@@ -143,7 +145,7 @@ namespace FluentAspect.Weaver
            {
                wrappedMethod.GenericParameters.Add(new GenericParameter(genericParameter.Name, wrappedMethod));
            }
-
+           methodDefinition.Body.InitLocals = true;
            MethodAroundWeaver weaver = new MethodAroundWeaver();
            weaver.CreateWeaver(methodDefinition, interceptor, wrappedMethod);
            //var wrapperMethod = new MethodDefinition(methodDefinition.Name, methodDefinition.Attributes, methodDefinition.ReturnType) ;
