@@ -17,36 +17,36 @@ namespace FluentAspect.Weaver.Tests
         //    Around.Call(this, "CheckWith", args, new CheckThrowInterceptor());
         //}
 
-        public void Sample()
+        public string Sample<U>()
         {
             var interceptor = new CheckThrowInterceptor();
             var args = new object[0];
             var method = GetType().GetMethod("Sample");
             var methodCall = new MethodCall(this, method, args);
-            //string weavedResult;
-            //try
-            //{
-            //    interceptor.Before(methodCall);
-            //    var result = SampleWeaved();
-            //    var methodCallResult = new MethodCallResult(result);
-            //    interceptor.After(methodCall, methodCallResult);
-            //    weavedResult = (string)methodCallResult.Result;
-            //}
-            //catch (Exception e)
-            //{
-            //    var ex = new ExceptionResult(e);
-            //    interceptor.OnException(methodCall, ex);
-            //    var cancelExceptionAndReturn = ex.CancelExceptionAndReturn;
-            //    if (cancelExceptionAndReturn == null)
-            //        throw;
-            //    weavedResult = (string)cancelExceptionAndReturn;
-            //}
-            //return weavedResult;
+            string weavedResult;
+            try
+            {
+               interceptor.Before(methodCall);
+               var result = SampleWeaved<U>();
+               var methodCallResult = new MethodCallResult(result);
+               interceptor.After(methodCall, methodCallResult);
+               weavedResult = (string)methodCallResult.Result;
+            }
+            catch (Exception e)
+            {
+               var ex = new ExceptionResult(e);
+               interceptor.OnException(methodCall, ex);
+               var cancelExceptionAndReturn = ex.CancelExceptionAndReturn;
+               if (cancelExceptionAndReturn == null)
+                  throw;
+               weavedResult = (string)cancelExceptionAndReturn;
+            }
+            return weavedResult;
         }
 
-        public void SampleWeaved()
+        public string SampleWeaved<T>()
         {
-            return;
+            return "Not Weaved";
         }
 
        [Test]
@@ -73,7 +73,7 @@ namespace FluentAspect.Weaver.Tests
        public void CheckWithGenerics()
        {
            var res = WeaveAndCheck<string>("CheckWithGenerics", new object[] { "Weaved" });
-           Assert.AreEqual("Weaved", res);
+           Assert.AreEqual("Weaved<>String", res);
        }
 
        [Test, ExpectedException(typeof(NotSupportedException))]
@@ -101,7 +101,7 @@ namespace FluentAspect.Weaver.Tests
        public void CheckNotRenameInAssembly()
        {
            var res = WeaveAndCheck("CheckNotRenameInAssembly", new object[] {  });
-           Assert.AreEqual("Waved", res);
+           Assert.AreEqual("Weaved", res);
        }
 
        private static object WeaveAndCheck(string checkwithreturn_L, object[] parameters)

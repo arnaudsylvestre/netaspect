@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Core.Core;
@@ -20,45 +21,55 @@ namespace FluentAspect.Weaver.Weavers
 
              var weavedResult = CreateWeavedResult(method);
 
+             var beforeCatch = CreateNopForCatch(il);
              CallBefore(method, interceptor, methodCall, interceptorType, il);
              var result = CallWeavedMethod(method, wrappedMethod, il);
              var methodCallResult = CreateMethodCallResult(method, result, il);
              CallAfter(method, interceptor, methodCall, methodCallResult, interceptorType, il);
+             var instruction_L = il.Create(OpCodes.Nop);
              SetReturnValue(method, methodCallResult, weavedResult, il);
+            Leave(il, instruction_L);
 
-             var onCatch = CreateNopForCatch(method, il);
+             var onCatch = CreateNopForCatch(il);
              var e = CreateException(method);
              var ex = CreateExceptionResult(method, e, il);
              CallExceptionInterceptor(method, interceptor, methodCall, ex, interceptorType, il);
              var cancelExceptionAndReturn = CreateCancelExceptionAndReturn(method, ex, il);
-             //ThrowIfNecessary(method, cancelExceptionAndReturn);
+            //ThrowIfNecessary(method, cancelExceptionAndReturn);
              SetReturnValueOnException(method, cancelExceptionAndReturn, weavedResult, il);
+            var endCatch = Leave(il, instruction_L);
+            Return(method, weavedResult, il, instruction_L);
 
-             var endCatch = CreateNopForCatch(method, il);
-             Return(method, /*weavedResult*/ null, il);
-
-             CreateExceptionHandler(method, onCatch, endCatch);
+            CreateExceptionHandler(method, onCatch, endCatch, beforeCatch);
          }
 
-        private void Return(MethodDefinition method, VariableDefinition weavedResult, ILProcessor il)
+        private void Return(MethodDefinition method, VariableDefinition weavedResult, ILProcessor il, Instruction ret)
          {
+           il.Append(ret);
             if (method.ReturnType.MetadataType != MetadataType.Void)
                 il.Emit(OpCodes.Ldloc, weavedResult);
             il.Emit(OpCodes.Ret);
         }
 
-        private Instruction CreateNopForCatch(MethodDefinition method, ILProcessor il)
+        private Instruction Leave(ILProcessor il, Instruction instructionP_P)
         {
-            var nop = il.Create(OpCodes.Nop);
-            il.Append(nop);
-            return nop;
+           il.Emit(OpCodes.Leave, instructionP_P);
+           var nop = il.Create(OpCodes.Nop);
+           il.Append(nop);
+           return nop;
+        }
+        private Instruction CreateNopForCatch(ILProcessor il)
+        {
+           var nop = il.Create(OpCodes.Nop);
+           il.Append(nop);
+           return nop;
         }
 
-        private void CreateExceptionHandler(MethodDefinition method, Instruction onCatch, Instruction endCatch)
+        private void CreateExceptionHandler(MethodDefinition method, Instruction onCatch, Instruction endCatch, Instruction beforeCatchP_P)
         {
             var handler = new ExceptionHandler(ExceptionHandlerType.Catch)
             {
-                TryStart = method.Body.Instructions.First(),
+               TryStart = beforeCatchP_P,
                 TryEnd = onCatch,
                 HandlerStart = onCatch,
                 HandlerEnd = endCatch,
@@ -164,18 +175,22 @@ namespace FluentAspect.Weaver.Weavers
             VariableDefinition result = null;
             if (method.ReturnType.MetadataType != MetadataType.Void)
             {
-                result = new VariableDefinition(method.ReturnType);
+               result = new VariableDefinition("result", method.ReturnType);
+               method.Body.Variables.Add(result);
             }
             il.Emit(OpCodes.Ldarg_0);
             foreach (var p in method.Parameters.ToArray())
             {
-                il.Emit(OpCodes.Ldarg, p);
+               il.Emit(OpCodes.Ldarg, p);
             }
-            il.Emit(OpCodes.Call, wrappedMethod);
+           List<TypeReference> generics = new List<TypeReference>(); 
+            il.Emit(OpCodes.Callvirt, wrappedMethod);
+            //il.Emit(OpCodes.Pop);
             if (result != null)
-                il.Emit(OpCodes.Stloc, result);
+               il.Emit(OpCodes.Stloc, result);
+               
             return result;
-        }
+         }
 
         private void CallBefore(MethodDefinition method, VariableDefinition interceptor, VariableDefinition methodCall, Type interceptorType, ILProcessor il)
          {
