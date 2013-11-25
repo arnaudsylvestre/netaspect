@@ -183,8 +183,13 @@ namespace FluentAspect.Weaver.Weavers
             {
                il.Emit(OpCodes.Ldarg, p);
             }
-           List<TypeReference> generics = new List<TypeReference>(); 
-            il.Emit(OpCodes.Callvirt, wrappedMethod);
+           List<TypeReference> generics = new List<TypeReference>();
+           MethodReference reference = new MethodReference(wrappedMethod.Name, method.ReturnType, method.DeclaringType);
+           foreach (var typeReference_L in generics)
+           {
+              reference.GenericParameters.Add(new GenericParameter(typeReference_L.Name, wrappedMethod));
+           }
+           il.Emit(OpCodes.Callvirt, reference);
             //il.Emit(OpCodes.Pop);
             if (result != null)
                il.Emit(OpCodes.Stloc, result);
