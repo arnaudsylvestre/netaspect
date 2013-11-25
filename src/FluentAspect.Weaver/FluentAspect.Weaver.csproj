@@ -54,6 +54,7 @@
     <Compile Include="Helpers\CollectionHelper.cs" />
     <Compile Include="Helpers\MethodCallExtensions.cs" />
     <Compile Include="Helpers\MethodCallResultExtensions.cs" />
+    <Compile Include="Helpers\MethodReferenceExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Weavers\MethodAroundWeaver.cs" />
