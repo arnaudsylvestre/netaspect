@@ -127,6 +127,10 @@ namespace FluentAspect.Weaver
        {
            MethodDefinition wrappedMethod = new MethodDefinition(ComputeNewName(methodDefinition), methodDefinition.Attributes, methodDefinition.ReturnType);
 
+           foreach (var parameterDefinition in methodDefinition.Parameters)
+           {
+               wrappedMethod.Parameters.Add(parameterDefinition);
+           }
            foreach (var instruction in methodDefinition.Body.Instructions)
            {
                wrappedMethod.Body.Instructions.Add(instruction);

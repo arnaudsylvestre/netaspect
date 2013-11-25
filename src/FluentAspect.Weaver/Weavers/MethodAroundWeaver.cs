@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using FluentAspect.Core.Core;
 using FluentAspect.Core.Expressions;
+using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -184,12 +185,12 @@ namespace FluentAspect.Weaver.Weavers
                il.Emit(OpCodes.Ldarg, p);
             }
            List<TypeReference> generics = new List<TypeReference>();
-           MethodReference reference = new MethodReference(wrappedMethod.Name, method.ReturnType, method.DeclaringType);
-           foreach (var typeReference_L in generics)
-           {
-              reference.GenericParameters.Add(new GenericParameter(typeReference_L.Name, wrappedMethod));
-           }
-           il.Emit(OpCodes.Callvirt, reference);
+           //MethodReference reference = new MethodReference(wrappedMethod.Name, method.ReturnType, method.DeclaringType);
+           //foreach (var typeReference_L in generics)
+           //{
+           //   reference.GenericParameters.Add(new GenericParameter(typeReference_L.Name, wrappedMethod));
+           //}
+           il.Emit(OpCodes.Callvirt, wrappedMethod.MakeGeneric(method.GenericParameters.ToArray()));
             //il.Emit(OpCodes.Pop);
             if (result != null)
                il.Emit(OpCodes.Stloc, result);
