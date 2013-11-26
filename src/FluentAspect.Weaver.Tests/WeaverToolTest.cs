@@ -56,12 +56,19 @@ namespace FluentAspect.Weaver.Tests
             return myClassToWeave.GetType().GetMethod(checkwithreturn_L).Invoke(myClassToWeave, parameters);
         }
 
-        private static object Weave()
+        [Test, Ignore]
+        public void LaunchWeaving()
         {
             const string asm = "FluentAspect.Sample.exe";
-            const string dst = "FluentAspect.Sample.Weaved.exe";
+            const string dst = "FluentAspect.Sample.exe";
             var weaver_L = new WeaverTool(asm, dst);
             weaver_L.Weave();
+        }
+
+        private static object Weave()
+        {
+            
+            const string dst = "FluentAspect.Sample.exe";
             Type myClassToWeaveType =
                 (from t in Assembly.LoadFrom(dst).GetTypes() where t.Name == "MyClassToWeave" select t).First();
             return Activator.CreateInstance(myClassToWeaveType);
@@ -80,7 +87,7 @@ namespace FluentAspect.Weaver.Tests
         [Test]
         public void CheckBefore()
         {
-            object res = WeaveAndCheck("CheckBefore", new object[] {"not before"});
+            object res = WeaveAndCheck("CheckBefore", new object[] { new BeforeParameter { Value = "not before" } });
             Assert.AreEqual("Value set in before", res);
         }
 

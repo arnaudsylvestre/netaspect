@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using FluentAspect.Core.Core;
 using FluentAspect.Core.Expressions;
 
@@ -8,7 +9,7 @@ namespace FluentAspect.Sample
     {
         public void Before(MethodCall call_P)
         {
-            call_P.Parameters[0] = "Value set in before";
+            ((BeforeParameter)call_P.Parameters[0]).Value = "Value set in before";
         }
 
        public void After(MethodCall call_P, MethodCallResult result_P)

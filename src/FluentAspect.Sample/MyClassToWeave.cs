@@ -2,6 +2,11 @@
 
 namespace FluentAspect.Sample
 {
+    public class BeforeParameter
+    {
+        public string Value { get; set; }
+    }
+
     public class MyClassToWeave
     {
        public string CheckWithReturn()
@@ -30,9 +35,9 @@ namespace FluentAspect.Sample
         }
 
 
-        public string CheckBefore(string content)
+        public string CheckBefore(BeforeParameter parameter)
         {
-            return content;
+            return parameter.Value;
         }
 
        public string CheckNotRenameInAssembly()
