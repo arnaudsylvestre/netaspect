@@ -190,7 +190,7 @@ namespace FluentAspect.Weaver.Weavers
            //{
            //   reference.GenericParameters.Add(new GenericParameter(typeReference_L.Name, wrappedMethod));
            //}
-           il.Emit(OpCodes.Callvirt, wrappedMethod.MakeGeneric(method.GenericParameters.ToArray()));
+           il.Emit(OpCodes.Callvirt, wrappedMethod/*.MakeGeneric(method.GenericParameters.ToArray())*/);
             //il.Emit(OpCodes.Pop);
             if (result != null)
                il.Emit(OpCodes.Stloc, result);
