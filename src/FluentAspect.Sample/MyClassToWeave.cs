@@ -26,7 +26,7 @@ namespace FluentAspect.Sample
 
         public string CheckWithGenerics<T>(T arg)
         {
-            return arg.ToString() + "<>" + typeof(T).Name;
+           return arg.ToString() + "<>" + typeof(T).FullName;
         }
 
         public void CheckThrow()

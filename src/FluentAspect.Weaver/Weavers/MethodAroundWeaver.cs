@@ -39,6 +39,8 @@ namespace FluentAspect.Weaver.Weavers
             //ThrowIfNecessary(method, cancelExceptionAndReturn);
              SetReturnValueOnException(method, cancelExceptionAndReturn, weavedResult, il);
             var endCatch = Leave(il, instruction_L);
+            endCatch = il.Create(OpCodes.Nop);
+            il.Append(endCatch);
             Return(method, weavedResult, il, instruction_L);
 
             CreateExceptionHandler(method, onCatch, endCatch, beforeCatch);
@@ -54,10 +56,9 @@ namespace FluentAspect.Weaver.Weavers
 
         private Instruction Leave(ILProcessor il, Instruction instructionP_P)
         {
-           il.Emit(OpCodes.Leave, instructionP_P);
-           var nop = il.Create(OpCodes.Nop);
-           il.Append(nop);
-           return nop;
+           var instruction_L = il.Create(OpCodes.Leave, instructionP_P);
+           il.Append(instruction_L);
+           return instruction_L;
         }
         private Instruction CreateNopForCatch(ILProcessor il)
         {
@@ -184,14 +185,8 @@ namespace FluentAspect.Weaver.Weavers
             {
                il.Emit(OpCodes.Ldarg, p);
             }
-           List<TypeReference> generics = new List<TypeReference>();
-           //MethodReference reference = new MethodReference(wrappedMethod.Name, method.ReturnType, method.DeclaringType);
-           //foreach (var typeReference_L in generics)
-           //{
-           //   reference.GenericParameters.Add(new GenericParameter(typeReference_L.Name, wrappedMethod));
-           //}
-           il.Emit(OpCodes.Callvirt, wrappedMethod/*.MakeGeneric(method.GenericParameters.ToArray())*/);
-            //il.Emit(OpCodes.Pop);
+
+            il.Emit(OpCodes.Callvirt, wrappedMethod.MakeGeneric(method.GenericParameters.ToArray()));
             if (result != null)
                il.Emit(OpCodes.Stloc, result);
                
@@ -206,10 +201,10 @@ namespace FluentAspect.Weaver.Weavers
         }
 
         private VariableDefinition CreateMethodInfo(MethodDefinition method, ILProcessor il)
-         {
-             var methodInfo = CreateVariable(method, typeof(MethodInfo));
+        {
+           var methodInfo = CreateVariable(method, typeof(MethodInfo));
              il.Emit(OpCodes.Ldarg_0);
-             il.Emit(OpCodes.Call, method.Module.Import(typeof(Type).GetMethod("GetType", new Type[0])));
+             il.Emit(OpCodes.Call, method.Module.Import(typeof(object).GetMethod("GetType", new Type[0])));
              il.Emit(OpCodes.Ldstr, method.Name);
              il.Emit(OpCodes.Callvirt, method.Module.Import(typeof(Type).GetMethod("GetMethod", new[] {typeof(string)})));
              il.Emit(OpCodes.Stloc, methodInfo);

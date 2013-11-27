@@ -114,8 +114,8 @@ namespace FluentAspect.Weaver.Tests
         [Test]
         public void CheckWithGenerics()
         {
-            object res = WeaveAndCheck<string>("CheckWithGenerics", new object[] {"Weaved"});
-            Assert.AreEqual("Weaved<>String", res);
+           object res = WeaveAndCheck<string>("CheckWithGenerics", new object[] { "Weaved" });
+           Assert.AreEqual("Weaved<>System.StringWeaved", res);
         }
 
         [Test]
