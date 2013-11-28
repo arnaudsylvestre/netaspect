@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6E481F61-CF92-4881-8F88-46C83B3018F7}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AOP\Attributes\CheckBeforeAttribute.cs" />
     <Compile Include="AOP\Interceptors\CheckNotRenameInAssemblyInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithParametersInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithReturnInterceptor.cs" />
@@ -55,7 +56,9 @@
     <Compile Include="AOP\Interceptors\CheckWithGenericsInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckThrowInterceptor.cs" />
     <Compile Include="AOP\MyAspectDefinition.cs" />
+    <Compile Include="BeforeParameter.cs" />
     <Compile Include="MyClassToWeave.cs" />
+    <Compile Include="MyClassToWeaveWithAttributes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

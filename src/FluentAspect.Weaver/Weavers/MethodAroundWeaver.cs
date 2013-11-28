@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using FluentAspect.Core.Core;
-using FluentAspect.Core.Expressions;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -18,26 +14,23 @@ namespace FluentAspect.Weaver.Weavers
              var interceptor = CreateInterceptor(method, interceptorType, il);
              var args = CreateArgsArray(method, il);
              var methodInfo = CreateMethodInfo(method, il);
-             var methodCall = CreateMethodCall(method, methodInfo, args, il);
+             //var methodCall = CreateMethodCall(method, methodInfo, args, il);
 
              var weavedResult = CreateWeavedResult(method);
 
              var beforeCatch = CreateNopForCatch(il);
-             CallBefore(method, interceptor, methodCall, interceptorType, il);
+             CallBefore(method, interceptor, methodInfo, args, interceptorType, il);
              var result = CallWeavedMethod(method, wrappedMethod, il);
-             var methodCallResult = CreateMethodCallResult(method, result, il);
-             CallAfter(method, interceptor, methodCall, methodCallResult, interceptorType, il);
+             var handleResult = CreateHandleResult(method, result, il);
+             CallAfter(method, interceptor, methodInfo, args, handleResult, interceptorType, il);
              var instruction_L = il.Create(OpCodes.Nop);
-             SetReturnValue(method, methodCallResult, weavedResult, il);
+             SetReturnValue(method, handleResult, weavedResult, il);
             Leave(il, instruction_L);
 
              var onCatch = CreateNopForCatch(il);
              var e = CreateException(method);
-             var ex = CreateExceptionResult(method, e, il);
-             CallExceptionInterceptor(method, interceptor, methodCall, ex, interceptorType, il);
-             var cancelExceptionAndReturn = CreateCancelExceptionAndReturn(method, ex, il);
-            //ThrowIfNecessary(method, cancelExceptionAndReturn);
-             SetReturnValueOnException(method, cancelExceptionAndReturn, weavedResult, il);
+             CallExceptionInterceptor(method, interceptor, methodInfo, args, e, interceptorType, il);
+             Throw(il);
             var endCatch = Leave(il, instruction_L);
             endCatch = il.Create(OpCodes.Nop);
             il.Append(endCatch);
@@ -46,7 +39,18 @@ namespace FluentAspect.Weaver.Weavers
             CreateExceptionHandler(method, onCatch, endCatch, beforeCatch);
          }
 
-        private void Return(MethodDefinition method, VariableDefinition weavedResult, ILProcessor il, Instruction ret)
+       private VariableDefinition CreateHandleResult(MethodDefinition method_P, VariableDefinition result_P, ILProcessor il)
+       {
+          var handleResult_P = CreateVariable(method_P, typeof(object), "handleResult");
+          if (result_P == null)
+             il.Emit(OpCodes.Ldnull);
+          else
+            il.Emit(OpCodes.Ldloc, result_P);
+          il.Emit(OpCodes.Stloc, handleResult_P);
+          return handleResult_P;
+       }
+
+       private void Return(MethodDefinition method, VariableDefinition weavedResult, ILProcessor il, Instruction ret)
          {
            il.Append(ret);
             if (method.ReturnType.MetadataType != MetadataType.Void)
@@ -91,86 +95,56 @@ namespace FluentAspect.Weaver.Weavers
              }
         }
 
-        private void ThrowIfNecessary(MethodDefinition method, VariableDefinition cancelExceptionAndReturn, ILProcessor il)
+        private void Throw(ILProcessor il)
          {
-            var reThrow = il.Create(OpCodes.Rethrow);
-            il.Emit(OpCodes.Brtrue_S, reThrow);
+            il.Emit(OpCodes.Rethrow);
         }
 
-        private VariableDefinition CreateCancelExceptionAndReturn(MethodDefinition method, VariableDefinition ex, ILProcessor il)
-         {
-             var cancelExceptionAndReturn = CreateVariable(method, typeof(object));
-             il.Emit(OpCodes.Ldloc, ex);
-             il.Emit(OpCodes.Callvirt, method.Module.Import(typeof(ExceptionResult).GetMethod("get_CancelExceptionAndReturn")));
-             il.Emit(OpCodes.Stloc, cancelExceptionAndReturn);
-            return cancelExceptionAndReturn;
-         }
-
-        private void CallExceptionInterceptor(MethodDefinition method, VariableDefinition interceptor, VariableDefinition methodCall, VariableDefinition ex, Type interceptorType, ILProcessor il)
+        private void CallExceptionInterceptor(MethodDefinition method, VariableDefinition interceptor, VariableDefinition methodInfo, VariableDefinition args, VariableDefinition ex, Type interceptorType, ILProcessor il)
         {
-            il.Emit(OpCodes.Ldloc, interceptor);
-            il.Emit(OpCodes.Ldloc, methodCall);
+           il.Emit(OpCodes.Stloc, ex);
+           il.Emit(OpCodes.Ldloc, interceptor);
+           il.Emit(OpCodes.Ldarg_0);
+           il.Emit(OpCodes.Ldloc, methodInfo);
+           il.Emit(OpCodes.Ldloc, args);
             il.Emit(OpCodes.Ldloc, ex);
             il.Emit(OpCodes.Callvirt, method.Module.Import(interceptorType.GetMethod("OnException")));
         }
 
-        private VariableDefinition CreateExceptionResult(MethodDefinition method, VariableDefinition e, ILProcessor il)
-         {
-            var ex = CreateVariable(method, typeof (ExceptionResult));
-
-            il.Emit(OpCodes.Ldloc, e);
-            il.Emit(OpCodes.Newobj, method.Module.Import(typeof(ExceptionResult).GetConstructors()[0]));
-            il.Emit(OpCodes.Stloc, ex);
-
-            return ex;
-
-         }
-
         private VariableDefinition CreateException(MethodDefinition method)
         {
-            return CreateVariable(method, typeof (Exception));
+            return CreateVariable(method, typeof (Exception), "e");
         }
 
         private VariableDefinition CreateWeavedResult(MethodDefinition method)
         {
             if (method.ReturnType.MetadataType != MetadataType.Void)
             {
-                return CreateVariable(method, method.ReturnType);
+               return CreateVariable(method, method.ReturnType, "weavedResult");
             }
             return null;
 
         }
 
-        private void SetReturnValue(MethodDefinition method, VariableDefinition methodCallResult, VariableDefinition weavedResult, ILProcessor il)
+        private void SetReturnValue(MethodDefinition method, VariableDefinition handleResult, VariableDefinition weavedResult, ILProcessor il)
          {
             if (method.ReturnType.MetadataType != MetadataType.Void)
             {
-                il.Emit(OpCodes.Ldloc, methodCallResult);
-                il.Emit(OpCodes.Callvirt, method.Module.Import(typeof(MethodCallResult).GetMethod("get_Result")));
+                il.Emit(OpCodes.Ldloc, handleResult);
                 il.Emit(OpCodes.Castclass, method.ReturnType);
                 il.Emit(OpCodes.Stloc, weavedResult);
             }
         }
 
-        private void CallAfter(MethodDefinition method, VariableDefinition interceptor, VariableDefinition methodCall, VariableDefinition methodCallResult, Type interceptorType, ILProcessor il)
+        private void CallAfter(MethodDefinition method, VariableDefinition interceptor, VariableDefinition methodInfo, VariableDefinition args, VariableDefinition handleResult, Type interceptorType, ILProcessor il)
          {
              il.Emit(OpCodes.Ldloc, interceptor);
-             il.Emit(OpCodes.Ldloc, methodCall);
-             il.Emit(OpCodes.Ldloc, methodCallResult);
+             il.Emit(OpCodes.Ldarg_0);
+             il.Emit(OpCodes.Ldloc, methodInfo);
+             il.Emit(OpCodes.Ldloc, args);
+             il.Emit(OpCodes.Ldloca, handleResult);
              il.Emit(OpCodes.Callvirt, method.Module.Import(interceptorType.GetMethod("After")));
         }
-
-        private VariableDefinition CreateMethodCallResult(MethodDefinition method, VariableDefinition result, ILProcessor il)
-         {
-             var methodCallResult = CreateVariable(method, typeof(MethodCallResult));
-            if (result == null)
-                il.Emit(OpCodes.Ldnull);
-            else
-             il.Emit(OpCodes.Ldloc, result);
-            il.Emit(OpCodes.Newobj, method.Module.Import(typeof(MethodCallResult).GetConstructors()[0]));
-             il.Emit(OpCodes.Stloc, methodCallResult);
-            return methodCallResult;
-         }
 
         private VariableDefinition CallWeavedMethod(MethodDefinition method, MethodDefinition wrappedMethod, ILProcessor il)
          {
@@ -193,16 +167,18 @@ namespace FluentAspect.Weaver.Weavers
             return result;
          }
 
-        private void CallBefore(MethodDefinition method, VariableDefinition interceptor, VariableDefinition methodCall, Type interceptorType, ILProcessor il)
+        private void CallBefore(MethodDefinition method, VariableDefinition interceptor, VariableDefinition methodInfo, VariableDefinition args, Type interceptorType, ILProcessor il)
          {
              il.Emit(OpCodes.Ldloc, interceptor);
-             il.Emit(OpCodes.Ldloc, methodCall);
+             il.Emit(OpCodes.Ldarg_0);
+             il.Emit(OpCodes.Ldloc, methodInfo);
+             il.Emit(OpCodes.Ldloc, args);
              il.Emit(OpCodes.Callvirt, method.Module.Import(interceptorType.GetMethod("Before")));
         }
 
         private VariableDefinition CreateMethodInfo(MethodDefinition method, ILProcessor il)
         {
-           var methodInfo = CreateVariable(method, typeof(MethodInfo));
+           var methodInfo = CreateVariable(method, typeof(MethodInfo), "method");
              il.Emit(OpCodes.Ldarg_0);
              il.Emit(OpCodes.Call, method.Module.Import(typeof(object).GetMethod("GetType", new Type[0])));
              il.Emit(OpCodes.Ldstr, method.Name);
@@ -211,20 +187,20 @@ namespace FluentAspect.Weaver.Weavers
             return methodInfo;
          }
 
-        private VariableDefinition CreateMethodCall(MethodDefinition method, VariableDefinition methodInfo, VariableDefinition args, ILProcessor il)
-         {
-             var methodCall = CreateVariable(method, typeof(MethodCall));
-             il.Emit(OpCodes.Ldarg_0);
-             il.Emit(OpCodes.Ldloc, methodInfo);
-             il.Emit(OpCodes.Ldloc, args);
-             il.Emit(OpCodes.Newobj, method.Module.Import(typeof(MethodCall).GetConstructors()[0]));
-             il.Emit(OpCodes.Stloc, methodCall);
-            return methodCall;
-         }
+        //private VariableDefinition CreateMethodCall(MethodDefinition method, VariableDefinition methodInfo, VariableDefinition args, ILProcessor il)
+        // {
+        //     var methodCall = CreateVariable(method, typeof(MethodCall));
+        //     il.Emit(OpCodes.Ldarg_0);
+        //     il.Emit(OpCodes.Ldloc, methodInfo);
+        //     il.Emit(OpCodes.Ldloc, args);
+        //     il.Emit(OpCodes.Newobj, method.Module.Import(typeof(MethodCall).GetConstructors()[0]));
+        //     il.Emit(OpCodes.Stloc, methodCall);
+        //    return methodCall;
+        // }
 
         private VariableDefinition CreateArgsArray(MethodDefinition method, ILProcessor il)
          {
-           var args = CreateVariable(method, typeof(object[]));
+            var args = CreateVariable(method, typeof(object[]), "args");
 
            il.Emit(OpCodes.Ldc_I4, method.Parameters.Count);
            il.Emit(OpCodes.Newarr, method.Module.Import(typeof(object)));
@@ -245,7 +221,7 @@ namespace FluentAspect.Weaver.Weavers
 
         private VariableDefinition CreateInterceptor(MethodDefinition method, Type interceptorType, ILProcessor il)
         {
-             var interceptor = CreateVariable(method, interceptorType);
+           var interceptor = CreateVariable(method, interceptorType, "interceptor");
              CreateNewObject(method, interceptor, interceptorType, il);
              return interceptor;
         }
@@ -256,15 +232,15 @@ namespace FluentAspect.Weaver.Weavers
             il.Emit(OpCodes.Stloc, interceptor);
         }
 
-        private VariableDefinition CreateVariable(MethodDefinition method, Type interceptorType)
+        private VariableDefinition CreateVariable(MethodDefinition method, Type interceptorType, string name)
         {
             var typeReference = method.Module.Import(interceptorType);
-            return CreateVariable(method, typeReference);
+            return CreateVariable(method, typeReference, name);
         }
 
-        private static VariableDefinition CreateVariable(MethodDefinition method, TypeReference typeReference)
+        private static VariableDefinition CreateVariable(MethodDefinition method, TypeReference typeReference, string name)
         {
-            var variableDefinition = new VariableDefinition(typeReference);
+           var variableDefinition = new VariableDefinition(name, typeReference);
             method.Body.Variables.Add(variableDefinition);
             return variableDefinition;
         }

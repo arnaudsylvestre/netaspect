@@ -1,24 +1,22 @@
 ﻿using System;
-using System.IO;
+using System.Reflection;
 using FluentAspect.Core.Core;
-using FluentAspect.Core.Expressions;
 
 namespace FluentAspect.Sample
 {
-   class CheckBeforeInterceptor : IInterceptor
-    {
-        public void Before(MethodCall call_P)
-        {
-            ((BeforeParameter)call_P.Parameters[0]).Value = "Value set in before";
-        }
-
-       public void After(MethodCall call_P, MethodCallResult result_P)
-       {
-       }
-
-      public void OnException(MethodCall callP_P, ExceptionResult e)
+   internal class CheckBeforeInterceptor : IInterceptor
+   {
+      public void Before(object thisObject, MethodInfo methodInfo_P, object[] parameters)
       {
-
+         ((BeforeParameter) parameters[0]).Value = "Value set in before";
       }
-    }
+
+      public void After(object thisObject, MethodInfo methodInfo_P, object[] parameters, ref object result_P)
+      {
+      }
+
+      public void OnException(object thisObject, MethodInfo methodInfo_P, object[] parameters, Exception e)
+      {
+      }
+   }
 }

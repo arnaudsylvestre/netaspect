@@ -1,21 +1,21 @@
 ﻿using System;
+using System.Reflection;
 using FluentAspect.Core.Core;
-using FluentAspect.Core.Expressions;
 
 namespace FluentAspect.Sample
 {
    public class CheckWithParametersInterceptor : IInterceptor
    {
-      public void Before(MethodCall call_P)
+      public void Before(object thisObject, MethodInfo methodInfo_P, object[] parameters)
       {
       }
 
-      public void After(MethodCall call_P, MethodCallResult result_P)
+      public void After(object thisObject, MethodInfo methodInfo_P, object[] parameters, ref object result_P)
       {
-         result_P.Result = call_P.Parameters[0];
+         result_P = parameters[0];
       }
 
-      public void OnException(MethodCall callP_P, ExceptionResult e)
+      public void OnException(object thisObject, MethodInfo methodInfo_P, object[] parameters, Exception e)
       {
       }
    }
