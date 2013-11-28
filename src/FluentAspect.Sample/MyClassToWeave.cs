@@ -40,6 +40,11 @@ namespace FluentAspect.Sample
             return parameter.Value;
         }
 
+        public static string CheckStatic(BeforeParameter parameter)
+        {
+            return parameter.Value;
+        }
+
        public string CheckNotRenameInAssembly()
        {
            return CheckWithReturn();

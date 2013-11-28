@@ -49,12 +49,6 @@ namespace FluentAspect.Weaver.Tests
             return "Not Weaved";
         }
 
-        private static readonly object myClassToWeave = Weave();
-
-        private static object WeaveAndCheck(string checkwithreturn_L, object[] parameters)
-        {
-            return myClassToWeave.GetType().GetMethod(checkwithreturn_L).Invoke(myClassToWeave, parameters);
-        }
 
         [Test, Ignore]
         public void LaunchWeaving()
@@ -65,36 +59,26 @@ namespace FluentAspect.Weaver.Tests
             weaver_L.Weave();
         }
 
-        private static object Weave()
-        {
-            
-            const string dst = "FluentAspect.Sample.exe";
-            Type myClassToWeaveType =
-                (from t in Assembly.LoadFrom(dst).GetTypes() where t.Name == "MyClassToWeave" select t).First();
-            return Activator.CreateInstance(myClassToWeaveType);
-        }
-
-        private static object WeaveAndCheck<T>(string checkwithreturn_L, object[] parameters)
-        {
-            object res =
-                myClassToWeave.GetType()
-                          .GetMethod(checkwithreturn_L)
-                          .MakeGenericMethod(typeof (T))
-                          .Invoke(myClassToWeave, parameters);
-            return res;
-        }
+        
 
         [Test]
         public void CheckBefore()
         {
-            object res = WeaveAndCheck("CheckBefore", new object[] { new BeforeParameter { Value = "not before" } });
+            var res = new MyClassToWeave().CheckBefore(new BeforeParameter {Value = "not before"});
+            Assert.AreEqual("Value set in before", res);
+        }
+
+        [Test]
+        public void CheckStatic()
+        {
+            var res = MyClassToWeave.CheckStatic(new BeforeParameter { Value = "not before" });
             Assert.AreEqual("Value set in before", res);
         }
 
         [Test]
         public void CheckNotRenameInAssembly()
         {
-            object res = WeaveAndCheck("CheckNotRenameInAssembly", new object[] {});
+            var res = new MyClassToWeave().CheckNotRenameInAssembly();
             Assert.AreEqual("Weaved", res);
         }
 
@@ -103,7 +87,7 @@ namespace FluentAspect.Weaver.Tests
         {
             try
             {
-                WeaveAndCheck("CheckThrow", new object[] {});
+                new MyClassToWeave().CheckThrow();
             }
             catch (TargetInvocationException e)
             {
@@ -114,28 +98,28 @@ namespace FluentAspect.Weaver.Tests
         [Test]
         public void CheckWithGenerics()
         {
-           object res = WeaveAndCheck<string>("CheckWithGenerics", new object[] { "Weaved" });
+            var res = new MyClassToWeave().CheckWithGenerics("Weaved");
            Assert.AreEqual("Weaved<>System.StringWeaved", res);
         }
 
         [Test]
         public void CheckWithParameters()
         {
-            object res = WeaveAndCheck("CheckWithParameters", new object[] {"Weaved with parameters"});
+            var res = new MyClassToWeave().CheckWithParameters("Weaved with parameters");
             Assert.AreEqual("Weaved with parameters", res);
         }
 
         [Test]
         public void CheckWithReturn()
         {
-            object res = WeaveAndCheck("CheckWithReturn", new object[0]);
+            var res = new MyClassToWeave().CheckWithReturn();
             Assert.AreEqual("Weaved", res);
         }
 
         [Test]
         public void CheckWithVoid()
         {
-            WeaveAndCheck("CheckWithVoid", new object[] {});
+            new MyClassToWeave().CheckWithVoid();
         }
     }
 }
