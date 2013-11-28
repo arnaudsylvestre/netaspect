@@ -35,7 +35,7 @@ namespace FluentAspect.Weaver.Tests.Core
             this.typeWalker = typeWalker;
         }
 
-        public void Walk(Assembly assembly, Action<MethodInfo> methodWalkerHandler)
+        public void Walk(IEnumerable<Type> types, Action<MethodInfo> methodWalkerHandler)
         {
             typeWalker.Walk(assembly, type =>
                 {
