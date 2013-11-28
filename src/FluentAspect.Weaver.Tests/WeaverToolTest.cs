@@ -8,15 +8,6 @@ namespace FluentAspect.Weaver.Tests
     [TestFixture]
     public class WeaverToolTest
     {
-        //public void Sample()
-        //{
-        //    object[] args = new object[0];
-        //    Around.Call(this, "CheckWith", args, new CheckThrowInterceptor());
-        //}
-
-        
-
-
         [Test, Ignore]
         public void LaunchWeaving()
         {
@@ -86,7 +77,14 @@ namespace FluentAspect.Weaver.Tests
         [Test]
         public void CheckWithVoid()
         {
-            new MyClassToWeave().CheckWithVoid();
+           new MyClassToWeave().CheckWithVoid();
+        }
+
+        [Test]
+        public void CheckWithAttributes()
+        {
+           var res = new MyClassToWeaveWithAttributes().CheckBefore(new BeforeParameter { Value = "not before" });
+           Assert.AreEqual("Value set in before", res);
         }
     }
 }
