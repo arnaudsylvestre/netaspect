@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{8CB7699F-6B65-414E-B15F-19FEE6A31BB6}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -60,8 +60,8 @@
     <Compile Include="AOP\Interceptors\CheckWithParametersInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithReturnInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithVoidInterceptor.cs" />
-    <Compile Include="AOP\Interceptors\MockInterceptor.cs" />
     <Compile Include="AOP\MyAspectDefinition.cs" />
+    <Compile Include="BeforeParameter.cs" />
     <Compile Include="MyClassToWeave.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

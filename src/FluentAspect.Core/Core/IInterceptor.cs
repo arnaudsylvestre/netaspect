@@ -1,12 +1,12 @@
 using System;
-using FluentAspect.Core.Expressions;
+using System.Reflection;
 
 namespace FluentAspect.Core.Core
 {
    public interface IInterceptor
    {
-      void Before(MethodCall call_P);
-      void After(MethodCall call_P, MethodCallResult result_P);
-      void OnException(MethodCall callP_P, ExceptionResult e);
+      void Before(object thisObject, MethodInfo methodInfo_P, object[] parameters);
+      void After(object thisObject, MethodInfo methodInfo_P, object[] parameters, ref object result_P);
+      void OnException(object thisObject, MethodInfo methodInfo_P, object[] parameters, Exception e);
    }
 }

@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Core;
-using FluentAspect.Core.Expressions;
 using FluentAspect.Core.Methods;
-using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Weavers;
 using Mono.Cecil;
-using Mono.Cecil.Cil;
-using MethodAttributes = System.Reflection.MethodAttributes;
 
 namespace FluentAspect.Weaver
 {

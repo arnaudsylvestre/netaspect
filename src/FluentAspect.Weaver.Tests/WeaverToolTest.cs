@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
-using FluentAspect.Core.Core;
-using FluentAspect.Core.Expressions;
 using FluentAspect.Sample;
 using NUnit.Framework;
 
@@ -17,37 +14,7 @@ namespace FluentAspect.Weaver.Tests
         //    Around.Call(this, "CheckWith", args, new CheckThrowInterceptor());
         //}
 
-        public string Sample<U>(U u)
-        {
-            var interceptor = new CheckThrowInterceptor();
-            var args = new object[0];
-            MethodInfo method = GetType().GetMethod("Sample");
-            var methodCall = new MethodCall(this, method, args);
-            string weavedResult;
-            try
-            {
-                interceptor.Before(methodCall);
-                string result = SampleWeaved<U>(u);
-                var methodCallResult = new MethodCallResult(result);
-                interceptor.After(methodCall, methodCallResult);
-                weavedResult = (string) methodCallResult.Result;
-            }
-            catch (Exception e)
-            {
-                var ex = new ExceptionResult(e);
-                interceptor.OnException(methodCall, ex);
-                object cancelExceptionAndReturn = ex.CancelExceptionAndReturn;
-                if (cancelExceptionAndReturn == null)
-                    throw;
-                weavedResult = (string) cancelExceptionAndReturn;
-            }
-            return weavedResult;
-        }
-
-        public string SampleWeaved<T>(T t)
-        {
-            return "Not Weaved";
-        }
+        
 
 
         [Test, Ignore]
