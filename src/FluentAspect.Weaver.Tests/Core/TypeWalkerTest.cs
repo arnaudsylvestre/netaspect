@@ -39,25 +39,4 @@ namespace FluentAspect.Weaver.Tests.Core
             return "";
         }
     }
-
-
-
-    public class TypeWalker
-    {
-        private readonly Func<Type, bool> matcher;
-
-        public TypeWalker(Func<Type, bool> matcher)
-        {
-            this.matcher = matcher;
-        }
-
-        public void Walk(Assembly assembly, Action<Type> onType)
-        {
-            foreach (var type in assembly.GetTypes())
-            {
-                if (matcher(type))
-                    onType(type);
-            }
-        }
-    }
 }

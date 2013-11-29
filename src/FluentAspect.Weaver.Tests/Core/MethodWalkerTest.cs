@@ -24,31 +24,5 @@ namespace FluentAspect.Weaver.Tests.Core
          
     }
 
-    public class MethodWalker
-    {
-        private TypeWalker typeWalker;
-        private Func<MethodInfo, bool> matcher;
-
-        public MethodWalker(Func<MethodInfo, bool> matcher, TypeWalker typeWalker)
-        {
-            this.matcher = matcher;
-            this.typeWalker = typeWalker;
-        }
-
-        public void Walk(IEnumerable<Type> types, Action<MethodInfo> methodWalkerHandler)
-        {
-            typeWalker.Walk(assembly, type =>
-                {
-                    
-                });
-            foreach (var type in typesProvider(assembly))
-            {
-                foreach (var methodInfo in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static))
-                {
-                    methodWalkerHandler(methodInfo);
-                }
-            }
-                    
-        }
-    }
+    
 }
