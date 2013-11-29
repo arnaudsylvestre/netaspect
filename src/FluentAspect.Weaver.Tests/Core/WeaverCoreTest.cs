@@ -14,8 +14,8 @@ namespace FluentAspect.Weaver.Tests.Core
             var assembly = Assembly.GetExecutingAssembly();
             var mock = new Mock<IWeaver>();
             mock.Setup(w => w.Weave(assembly));
-            var weaver = new WeaverCore();
-            weaver.Weave(assembly);
+            //var weaver = new WeaverCore();
+            //weaver.Weave(assembly);
             mock.Verify(w => w.Weave(assembly));
         }
          

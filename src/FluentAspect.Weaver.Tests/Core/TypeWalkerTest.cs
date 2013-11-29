@@ -15,7 +15,7 @@ namespace FluentAspect.Weaver.Tests.Core
             var assembly = Assembly.GetExecutingAssembly();
             var types = new List<Type>();
 
-            new TypeWalker(t => true).Walk(assembly, types.Add);
+            //new TypeWalker(t => true).Walk(assembly, types.Add);
 
             Assert.AreEqual(assembly.GetTypes(), types);
         }
@@ -26,7 +26,7 @@ namespace FluentAspect.Weaver.Tests.Core
             var assembly = Assembly.GetExecutingAssembly();
             var types = new List<Type>();
 
-            new TypeWalker(t => t == typeof(MyTypeToWalk)).Walk(assembly, types.Add);
+            //new TypeWalker(t => t == typeof(MyTypeToWalk)).Walk(assembly, types.Add);
 
             Assert.AreEqual(new List<Type> { typeof(MyTypeToWalk) }, types);
         }

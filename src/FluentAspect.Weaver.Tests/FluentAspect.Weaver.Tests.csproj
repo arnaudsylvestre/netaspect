@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2158446B-9E58-4E9D-BDC4-27A5A90365D1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Fluent\FluentWeaverEngineTest.cs" />
     <Compile Include="Core\MethodWalkerTest.cs" />
     <Compile Include="Core\TypeWalkerTest.cs" />
     <Compile Include="Core\WeaverCoreTest.cs" />

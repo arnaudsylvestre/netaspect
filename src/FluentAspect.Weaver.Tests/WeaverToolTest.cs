@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reflection;
 using FluentAspect.Sample;
+using FluentAspect.Weaver.Core;
+using FluentAspect.Weaver.Factory;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests
@@ -12,9 +14,8 @@ namespace FluentAspect.Weaver.Tests
         public void LaunchWeaving()
         {
             const string asm = "FluentAspect.Sample.exe";
-            const string dst = "FluentAspect.Sample.exe";
-            var weaver_L = new WeaverTool(asm, dst);
-            weaver_L.Weave();
+           var weaver_L = WeaverCoreFactory.Create();
+           weaver_L.Weave(asm);
         }
 
         
