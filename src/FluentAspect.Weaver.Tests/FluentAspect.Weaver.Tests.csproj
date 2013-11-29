@@ -63,6 +63,7 @@
     <Compile Include="Core\TypeWalkerTest.cs" />
     <Compile Include="Core\WeaverCoreTest.cs" />
     <Compile Include="Sample.cs" />
+    <Compile Include="unit\Core\WeaverCoreTest.cs" />
     <Compile Include="WeaverToolTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -91,6 +92,9 @@
       <Project>{28912034-8A56-4B8E-BAA1-02C50149CA68}</Project>
       <Name>FluentAspect.Weaver</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="acceptance\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
