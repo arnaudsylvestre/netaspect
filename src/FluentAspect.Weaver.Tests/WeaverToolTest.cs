@@ -3,7 +3,6 @@ using System.Reflection;
 using FluentAspect.Sample;
 using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Factory;
-using Mono.Cecil;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests
