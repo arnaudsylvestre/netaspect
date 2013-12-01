@@ -8,7 +8,7 @@ using Microsoft.Build.Utilities;
 
 namespace FluentAspect.Weaver.Tasks
 {
-    public class FluentAspectWeaveTask : Task
+    public class FluentAspectWeaverTask : Task
     {
         [Required]
         public string AssemblyFile { get; set; }
