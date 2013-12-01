@@ -11,10 +11,6 @@ namespace SheepAspect.Tasks
         [Required]
         public string ConfigFile { get; set; }
         
-        /// <summary>
-        /// Execute post compilation task.
-        /// </summary>
-        /// <returns></returns>
         public override bool Execute()
         {
             var stopwatch = Stopwatch.StartNew();
