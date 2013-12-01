@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F3174301-EBC2-4F54-A7CE-49685110ACB8}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -65,6 +65,7 @@
     <Compile Include="Core\Weavers\MethodAroundWeaver.cs" />
     <Compile Include="Core\Weavers\Methods\AroundMethodWeaver.cs" />
     <Compile Include="Factory\WeaverCoreFactory.cs" />
+    <Compile Include="Helpers\MethodDefinitionExtensions.cs" />
     <Compile Include="Helpers\MethodReferenceExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

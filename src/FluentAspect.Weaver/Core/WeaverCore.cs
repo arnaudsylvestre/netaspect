@@ -2,14 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
+using FluentAspect.Weaver.Core.Fluent;
 using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core
 {
-   public class WeaverCore
+    [Serializable]
+   public class WeaverCore : ISerializable
    {
       private IConfigurationReader configurationReader;
       private IWeaverBuilder weaverBuilder;
+
+       public WeaverCore()
+          : this(new FluentConfigurationReader(), new AroundMethodBuilderWeaver())
+       {
+           
+       }
+
+       public WeaverCore(SerializationInfo info, StreamingContext context)
+           : this(new FluentConfigurationReader(), new AroundMethodBuilderWeaver())
+        {
+            
+        }
 
       public WeaverCore(IConfigurationReader configurationReader_P, IWeaverBuilder weaverBuilder_P)
       {
@@ -50,5 +65,10 @@ namespace FluentAspect.Weaver.Core
             }
          }
       }
+
+       public void GetObjectData(SerializationInfo info, StreamingContext context)
+       {
+           
+       }
    }
 }

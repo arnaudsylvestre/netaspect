@@ -1,9 +1,24 @@
 ﻿using System;
 using System.Reflection;
-using FluentAspect.Sample;
+using FluentAspect.Core.Core;
 
 namespace FluentAspect.Weaver.Tests
 {
+    class CheckThrowInterceptor : IInterceptor
+    {
+        public void Before(object thisObject, MethodInfo methodInfo_P, object[] parameters)
+        { 
+        }
+
+        public void After(object thisObject, MethodInfo methodInfo_P, object[] parameters, ref object result_P)
+        {
+        }
+
+        public void OnException(object thisObject, MethodInfo methodInfo_P, object[] parameters, Exception e)
+        {
+        }
+    }
+
    public class SampleAspect
    {
       public string Sample<U>(U u)

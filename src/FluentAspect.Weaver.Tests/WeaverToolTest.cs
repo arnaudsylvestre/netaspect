@@ -1,9 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Reflection;
 using FluentAspect.Sample;
 using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Factory;
+using Mono.Cecil;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests
@@ -80,11 +80,11 @@ namespace FluentAspect.Weaver.Tests
         }
 
         [Test, Ignore]
-        public void LaunchWeaving()
+        public void Weave()
         {
             const string asm = "FluentAspect.Sample.exe";
-            WeaverCore weaver_L = WeaverCoreFactory.Create();
-                weaver_L.Weave(asm);
+            WeaverCore weaver = WeaverCoreFactory.Create();
+            weaver.Weave(asm);
         }
     }
 }

@@ -55,6 +55,10 @@
     <Compile Include="WeaverToolTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\lib\cecil-master\Mono.Cecil.csproj">
+      <Project>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FluentAspect.Core\FluentAspect.Core.CF.csproj">
       <Project>{C7767C6F-3874-4D30-989E-D6A15F737FD0}</Project>
       <Name>FluentAspect.Core.CF</Name>
