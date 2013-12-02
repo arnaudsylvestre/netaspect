@@ -83,7 +83,7 @@ namespace FluentAspect.Weaver.Tests
         {
             const string asm = "FluentAspect.Sample.exe";
             WeaverCore weaver = WeaverCoreFactory.Create();
-            weaver.Weave(asm);
+            weaver.Weave(asm, asm);
         }
     }
 }

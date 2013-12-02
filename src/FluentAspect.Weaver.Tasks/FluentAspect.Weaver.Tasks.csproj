@@ -50,7 +50,6 @@
   <ItemGroup>
     <Compile Include="AppDomainIsolatedDiscoveryRunner.cs" />
     <Compile Include="FluentAspectWeaverTask.cs" />
-    <Compile Include="PostCompileWeaveTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

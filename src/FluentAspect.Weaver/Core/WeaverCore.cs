@@ -32,7 +32,7 @@ namespace FluentAspect.Weaver.Core
          weaverBuilder = weaverBuilder_P;
       }
 
-      public void Weave(string assemblyFilePath)
+      public void Weave(string assemblyFilePath, string targetFileName)
       {
          var configuration_L = configurationReader.ReadConfiguration(Assembly.LoadFrom(assemblyFilePath).GetTypes());
          var assemblyDefinition = AssemblyDefinition.ReadAssembly(assemblyFilePath, new ReaderParameters(ReadingMode.Immediate) { ReadSymbols = true });
@@ -42,7 +42,7 @@ namespace FluentAspect.Weaver.Core
             weaver_L.Weave();
          }
          Clean(assemblyDefinition);
-         assemblyDefinition.Write(assemblyFilePath, new WriterParameters()
+         assemblyDefinition.Write(targetFileName, new WriterParameters()
          {
             WriteSymbols = true,
          });

@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
+using FluentAspect.Weaver.Factory;
 using Microsoft.Build.Utilities;
-using SheepAspect.Compile;
 
 namespace SheepAspect.Tasks
 {
@@ -13,27 +11,10 @@ namespace SheepAspect.Tasks
             weavedFiles = null;
             try
             {
-                var settings = new XmlCompilerSettings(configFile);
-                var disco = new AttributiveAspectDiscovery(settings);
+                var weaverCore = WeaverCoreFactory.Create();
+                weaverCore.Weave(configFile, TargetFileName(configFile));
 
-                var files = new List<string>();
-                new AspectCompiler(settings)
-                    {
-                        FileNameTransform = name =>
-                                                {
-                                                    files.Add(name);
-                                                    return TargetFileName(name);
-                                                }
-                    }.Weave(disco);
-
-                weavedFiles = files.ToArray();
                 return true;
-            }
-            catch (AggregateException e)
-            {
-                foreach (var inner in e.InnerExceptions)
-                    logger.LogError(inner.Message);
-                return false;
             }
             catch(Exception e)
             {
@@ -44,7 +25,7 @@ namespace SheepAspect.Tasks
 
         public static string TargetFileName(string sourceFileName)
         {
-            return sourceFileName + ".sac";
+            return sourceFileName + ".tmp";
         }
     }
 }
