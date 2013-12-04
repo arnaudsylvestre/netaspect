@@ -19,6 +19,24 @@ namespace FluentAspect.Weaver.Core.Fluent
 
       public void Clean(AssemblyDefinition assemblyDefinition)
       {
+          foreach (var moduleDefinition in assemblyDefinition.Modules)
+          {
+              List<TypeDefinition> toDelete = new List<TypeDefinition>();
+              foreach (var typeDefinition in moduleDefinition.GetTypes())
+              {
+                  if (typeDefinition.BaseType == null)
+                      continue;
+                    if (typeDefinition.BaseType.FullName == typeof (FluentAspectDefinition).FullName)
+                    {
+                        toDelete.Add(typeDefinition);
+                    }
+              }
+              foreach (var typeDefinition in toDelete)
+              {
+                  moduleDefinition.Types.Remove(typeDefinition);
+              }
+          }
+          
       }
 
       private WeavingConfiguration ExtractWeavingConfiguration(Type fluentConfigurationType_P)

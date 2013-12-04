@@ -91,20 +91,7 @@ namespace FluentAspect.Weaver.Weavers
          method.Body.ExceptionHandlers.Add(handler);
       }
 
-      private void SetReturnValueOnException(MethodDefinition method,
-                                             VariableDefinition cancelExceptionAndReturn,
-                                             VariableDefinition weavedResult,
-                                             ILProcessor il)
-      {
-         if (method.ReturnType.MetadataType != MetadataType.Void)
-         {
-            il.Emit(OpCodes.Ldloc, cancelExceptionAndReturn);
-            il.Emit(OpCodes.Castclass, method.ReturnType);
-            il.Emit(OpCodes.Stloc, weavedResult);
-         }
-      }
-
-      private void Throw(ILProcessor il)
+       private void Throw(ILProcessor il)
       {
          il.Emit(OpCodes.Rethrow);
       }
@@ -235,7 +222,7 @@ namespace FluentAspect.Weaver.Weavers
             il.Emit(OpCodes.Ldloc, args);
             il.Emit(OpCodes.Ldc_I4, p.Index);
             il.Emit(OpCodes.Ldarg, p);
-            if (p.ParameterType.IsValueType)
+            if (p.ParameterType.IsValueType || p.ParameterType is GenericParameter)
                il.Emit(OpCodes.Box, p.ParameterType);
             il.Emit(OpCodes.Stelem_Ref);
          }

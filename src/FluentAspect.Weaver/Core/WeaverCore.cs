@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using FluentAspect.Core.Core;
 using FluentAspect.Weaver.Core.Fluent;
 using Mono.Cecil;
 
@@ -51,19 +52,29 @@ namespace FluentAspect.Weaver.Core
       private void Clean(AssemblyDefinition assemblyDefinition)
       {
          configurationReader.Clean(assemblyDefinition);
-         CleanSelfReferences(assemblyDefinition);
+         CleanReferencesToNetAspect(assemblyDefinition);
       }
 
-      private static void CleanSelfReferences(AssemblyDefinition assemblyDefinition)
+      private static void CleanReferencesToNetAspect(AssemblyDefinition assemblyDefinition)
       {
          foreach (var moduleDefinition in assemblyDefinition.Modules)
          {
-            var same = (from r in moduleDefinition.AssemblyReferences where r.FullName == assemblyDefinition.FullName select r).ToList();
+            var same = (from r in moduleDefinition.AssemblyReferences where r.FullName == typeof(IInterceptor).Assembly.FullName select r).ToList();
             foreach (var reference in same)
             {
                moduleDefinition.AssemblyReferences.Remove(reference);
             }
+             foreach (var typeDefinition in moduleDefinition.GetTypes())
+             {
+                 var interfaces = (from i in typeDefinition.Interfaces where i.FullName == typeof (IInterceptor).FullName select i).ToList();
+                 foreach (var @interface in interfaces)
+                 {
+                     typeDefinition.Interfaces.Remove(@interface);
+                 }
+             }
          }
+
+
       }
 
        public void GetObjectData(SerializationInfo info, StreamingContext context)
