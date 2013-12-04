@@ -67,8 +67,8 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="lib\FluentAspect.targets" Condition="Exists('lib\FluentAspect.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!--<Import Project="lib\FluentAspect.targets" Condition="Exists('lib\FluentAspect.targets')" />
+   To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
