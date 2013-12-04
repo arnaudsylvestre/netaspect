@@ -123,10 +123,7 @@ namespace FluentAspect.Weaver.Weavers
          il.Emit(OpCodes.Ldloc, methodInfo);
          il.Emit(OpCodes.Ldloc, args);
          il.Emit(OpCodes.Ldloc, ex);
-         OpCode call = OpCodes.Callvirt;
-         if ((method.Attributes & MethodAttributes.Static) == MethodAttributes.Static)
-            call = OpCodes.Call;
-         il.Emit(call, method.Module.Import(interceptorType.GetMethod("OnException")));
+         il.Emit(OpCodes.Callvirt, method.Module.Import(interceptorType.GetMethod("OnException")));
       }
 
       private VariableDefinition CreateException(MethodDefinition method)
@@ -188,7 +185,10 @@ namespace FluentAspect.Weaver.Weavers
             il.Emit(OpCodes.Ldarg, p);
          }
 
-         il.Emit(OpCodes.Callvirt, wrappedMethod.MakeGeneric(method.GenericParameters.ToArray()));
+         OpCode call = OpCodes.Callvirt;
+         if ((method.Attributes & MethodAttributes.Static) == MethodAttributes.Static)
+            call = OpCodes.Call;
+         il.Emit(call, wrappedMethod.MakeGeneric(method.GenericParameters.ToArray()));
          if (result != null)
             il.Emit(OpCodes.Stloc, result);
 

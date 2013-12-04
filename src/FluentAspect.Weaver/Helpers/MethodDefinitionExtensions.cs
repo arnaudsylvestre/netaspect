@@ -1,4 +1,5 @@
-﻿using Mono.Cecil;
+﻿using System.Linq;
+using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Helpers
 {
@@ -8,9 +9,23 @@ namespace FluentAspect.Weaver.Helpers
         {
             var wrappedMethod = new MethodDefinition(cloneMethodName, methodDefinition.Attributes, methodDefinition.ReturnType);
 
+            foreach (var genericParameter in methodDefinition.GenericParameters)
+            {
+               var genericParameter_L = new GenericParameter(genericParameter.Name, wrappedMethod);
+               wrappedMethod.GenericParameters.Add(genericParameter_L);
+            }
             foreach (var parameterDefinition in methodDefinition.Parameters)
             {
-                wrappedMethod.Parameters.Add(parameterDefinition);
+               TypeReference parameterType = parameterDefinition.ParameterType;
+               if (parameterType is GenericParameter)
+               {
+                  var genericParameter_L = parameterType as GenericParameter;
+                  if (genericParameter_L.Type == GenericParameterType.Method)
+                  {
+                     parameterType = (from t in wrappedMethod.GenericParameters where t.Name == parameterType.Name select t).First();
+                  }
+               }
+               wrappedMethod.Parameters.Add(new ParameterDefinition(parameterDefinition.Name, parameterDefinition.Attributes, parameterType));
             }
             foreach (var instruction in methodDefinition.Body.Instructions)
             {
@@ -27,11 +42,7 @@ namespace FluentAspect.Weaver.Helpers
             {
                 wrappedMethod.Body.ExceptionHandlers.Add(exceptionHandler);
             }
-            foreach (var genericParameter in methodDefinition.GenericParameters)
-            {
-                wrappedMethod.GenericParameters.Add(new GenericParameter(genericParameter.Name, wrappedMethod));
-            }
-            return wrappedMethod;
+           return wrappedMethod;
         }
          
     }
