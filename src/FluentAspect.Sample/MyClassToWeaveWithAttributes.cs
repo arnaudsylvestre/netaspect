@@ -30,8 +30,8 @@ namespace FluentAspect.Sample
          throw new NotImplementedException();
       }
 
-      //[CheckBeforeAttribute]
-      public string CheckBefore(BeforeParameter parameter)
+      [CheckBefore]
+      public string CheckBeforeWithAttributes(BeforeParameter parameter)
       {
          return parameter.Value;
       }

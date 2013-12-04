@@ -45,9 +45,9 @@ namespace FluentAspect.Weaver.Tests
         }
 
         [Test]
-        public void CheckWithAttributes()
+        public void CheckBeforeWithAttributes()
         {
-            string res = new MyClassToWeaveWithAttributes().CheckBefore(new BeforeParameter {Value = "not before"});
+            string res = new MyClassToWeaveWithAttributes().CheckBeforeWithAttributes(new BeforeParameter {Value = "not before"});
             Assert.AreEqual("Value set in before", res);
         }
 

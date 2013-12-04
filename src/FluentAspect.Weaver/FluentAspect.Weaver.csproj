@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Configuration\Attributes\AttributeConfigurationReader.cs" />
+    <Compile Include="Core\Configuration\Attributes\TypeReferenceExtensions.cs" />
     <Compile Include="Core\WeaverBuilders\MethodDefinitionAdapter.cs" />
     <Compile Include="Core\WeaverBuilders\TypeDefinitionAdapter.cs" />
     <Compile Include="Core\IWeaverBuilder.cs" />
@@ -90,9 +92,6 @@
       <Project>{D9877E16-93EF-4B3C-B671-8BE39BC41D94}</Project>
       <Name>FluentAspect.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Configuration\Attributes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

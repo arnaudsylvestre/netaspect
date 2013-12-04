@@ -16,5 +16,7 @@ namespace FluentAspect.Weaver
       {
          get { return type.Name; }
       }
+
+       public string FullName { get { return type.FullName; }}
    }
 }
