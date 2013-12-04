@@ -60,20 +60,15 @@ namespace FluentAspect.Weaver.Core.Fluent
        private List<MethodDefinition> GetAllMatchingMethods(AssemblyDefinition assemblyDefinition)
        {
            List<MethodDefinition> matchingMethods = new List<MethodDefinition>();
-           foreach (var moduleDefinition in assemblyDefinition.Modules)
+           
+           foreach (var methodInfo in assemblyDefinition.GetAllMethods())
            {
-               foreach (var type in moduleDefinition.Types)
+               var customAttributes = methodInfo.CustomAttributes;
+               foreach (var customAttribute in customAttributes)
                {
-                   foreach (var methodInfo in type.Methods)
+                   if (customAttribute.AttributeType.Resolve().Is(typeof(MethodInterceptorAttribute)))
                    {
-                       var customAttributes = methodInfo.CustomAttributes;
-                       foreach (var customAttribute in customAttributes)
-                       {
-                           if (customAttribute.AttributeType.Resolve().Is(typeof(MethodInterceptorAttribute)))
-                           {
-                               matchingMethods.Add(methodInfo);
-                           }
-                       }
+                       matchingMethods.Add(methodInfo);
                    }
                }
            }
