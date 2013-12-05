@@ -1,4 +1,5 @@
 ﻿using FluentAspect.Weaver.Core;
+using FluentAspect.Weaver.Core.Configuration.Multi;
 using FluentAspect.Weaver.Core.Fluent;
 
 namespace FluentAspect.Weaver.Factory
@@ -7,7 +8,7 @@ namespace FluentAspect.Weaver.Factory
    {
        public static WeaverCore Create()
        {
-          return new WeaverCore(new FluentConfigurationReader(), new AroundMethodBuilderWeaver());
+          return new WeaverCore(new MultiConfigurationReader(new FluentConfigurationReader(), new AttributeConfigurationReader()), new AroundMethodBuilderWeaver());
        }
    }
 }

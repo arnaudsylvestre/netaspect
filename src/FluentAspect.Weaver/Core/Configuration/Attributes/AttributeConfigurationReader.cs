@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using FluentAspect.Core;
@@ -11,14 +12,17 @@ namespace FluentAspect.Weaver.Core.Fluent
 {
    public class AttributeConfigurationReader : IConfigurationReader
    {
+       private List<MethodInfo> methodsWithAttributesToDelete = new List<MethodInfo>(); 
+
       public WeavingConfiguration ReadConfiguration(IEnumerable<Type> types)
       {
-          var matchingMethods = GetAllMatchingMethods(types);
-          WeavingConfiguration configuration = new WeavingConfiguration();
+          var matchingMethods = types.GetAllMethods(m => m.GetCustomAttributes<MethodInterceptorAttribute>(true).Count > 0);
+          methodsWithAttributesToDelete.AddRange(matchingMethods);
+          var configuration = new WeavingConfiguration();
 
           foreach (var matchingMethod in matchingMethods)
           {
-              var interceptorAttribute = customAttribute as MethodInterceptorAttribute;
+              var interceptorAttribute = matchingMethod.GetCustomAttributes<MethodInterceptorAttribute>(true)[0];
               MethodInfo info = matchingMethod;
               configuration.Methods.Add(new MethodMatch()
               {
@@ -30,50 +34,44 @@ namespace FluentAspect.Weaver.Core.Fluent
           return configuration;
       }
 
-       private static List<MethodInfo> GetAllMatchingMethods(IEnumerable<Type> types)
-       {
-           List<MethodInfo> matchingMethods = new List<MethodInfo>();
-           foreach (var type in types)
-           {
-               foreach (var methodInfo in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic))
-               {
-                   var customAttributes = methodInfo.GetCustomAttributes(false);
-                   foreach (var customAttribute in customAttributes)
-                   {
-                       if (customAttribute is MethodInterceptorAttribute)
-                       {
-                           matchingMethods.Add(methodInfo);
-                       }
-                   }
-               }
-           }
-           return matchingMethods;
-       }
-
        public void Clean(AssemblyDefinition assemblyDefinition)
       {
-
-          var matchingMethods = GetAllMatchingMethods(assemblyDefinition);
-          
-      }
-
-       private List<MethodDefinition> GetAllMatchingMethods(AssemblyDefinition assemblyDefinition)
-       {
-           List<MethodDefinition> matchingMethods = new List<MethodDefinition>();
-           
-           foreach (var methodInfo in assemblyDefinition.GetAllMethods())
+           var methodDefinitions = assemblyDefinition.GetAllMethods(m => true);
+           foreach (var methodInfo in methodsWithAttributesToDelete)
            {
-               var customAttributes = methodInfo.CustomAttributes;
-               foreach (var customAttribute in customAttributes)
+               MethodInfo info = methodInfo;
+               var methodDefinition = (from m in methodDefinitions where m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName select m).FirstOrDefault();
+               if (methodDefinition == null)
+                   continue;
+               var methodInterceptorAttributes = info.GetCustomAttributes<MethodInterceptorAttribute>(false);
+               foreach (var methodAttribute in methodInterceptorAttributes)
                {
-                   if (customAttribute.AttributeType.Resolve().Is(typeof(MethodInterceptorAttribute)))
+                   MethodInterceptorAttribute attribute = methodAttribute;
+                   var attributesToDelete = (from a in methodDefinition.CustomAttributes where a.AttributeType.FullName == attribute.GetType().FullName select a).ToList();
+                   foreach (var customAttribute in attributesToDelete)
                    {
-                       matchingMethods.Add(methodInfo);
+                       methodDefinition.CustomAttributes.Remove(customAttribute);
                    }
+
                }
            }
-           
-           return matchingMethods;
-       }
+           foreach (var moduleDefinition in assemblyDefinition.Modules)
+           {
+               List<TypeDefinition> toDelete = new List<TypeDefinition>();
+               foreach (var typeDefinition in moduleDefinition.GetTypes())
+               {
+                   if (typeDefinition.BaseType == null)
+                       continue;
+                   if (typeDefinition.BaseType.FullName == typeof(MethodInterceptorAttribute).FullName)
+                   {
+                       toDelete.Add(typeDefinition);
+                   }
+               }
+               foreach (var typeDefinition in toDelete)
+               {
+                   moduleDefinition.Types.Remove(typeDefinition);
+               }
+           }
+      }
    }
 }

@@ -8,7 +8,7 @@ namespace FluentAspect.Weaver.Core.Configuration.Multi
    {
       private IEnumerable<IConfigurationReader> engines;
 
-      public MultiConfigurationReader(IEnumerable<IConfigurationReader> engines_P)
+      public MultiConfigurationReader(params IConfigurationReader[] engines_P)
       {
          engines = engines_P;
       }
