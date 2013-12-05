@@ -2,7 +2,8 @@
 
 namespace FluentAspect.Sample
 {
-   public class MyClassToWeave
+
+    public class MyClassToWeave
     {
        public string CheckWithReturn()
        {
@@ -55,9 +56,9 @@ namespace FluentAspect.Sample
         {
             throw new NotImplementedException();
         }
-        public string CheckMock()
+        public string CheckMock(string parameter)
         {
-            return "";
+            return "return";
         }
     }
 }

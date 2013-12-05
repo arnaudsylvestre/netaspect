@@ -7,14 +7,40 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests
 {
+
+    public class AppDomainIsolatedDiscoveryRunner : MarshalByRefObject
+    {
+        public void Process(Action action)
+        {
+            action();
+        }
+    }
+
     [TestFixture]
+    [Serializable]
     public class WeaverToolTest
     {
         [Test]
         public void CheckBefore()
         {
-            string res = new MyClassToWeave().CheckBefore(new BeforeParameter {Value = "not before"});
+            string res = new MyClassToWeave().CheckBefore(new BeforeParameter { Value = "not before" });
             Assert.AreEqual("Value set in before", res);
+        }
+
+        [Test]
+        public void CheckBefore2()
+        {
+            Weave();
+            var domain = AppDomain.CreateDomain("For test", null,
+                        new AppDomainSetup
+                        {
+                            ApplicationBase = @"D:\Developpement\fluentaspect\src\FluentAspect.Weaver.Tests\bin\Debug",                            
+                            ShadowCopyFiles = "true"
+                        });
+            var runnerType = typeof(AppDomainIsolatedDiscoveryRunner);
+
+            var runner = domain.CreateInstanceFromAndUnwrap(new Uri(runnerType.Assembly.CodeBase).LocalPath, runnerType.FullName) as AppDomainIsolatedDiscoveryRunner;
+            runner.Process(CheckBefore);
         }
 
         [Test]
@@ -79,8 +105,39 @@ namespace FluentAspect.Weaver.Tests
             MockInterceptor.before = null;
             MockInterceptor.exception = null;
             var myClassToWeave = new MyClassToWeave();
-            string res = myClassToWeave.CheckMock();
+            string res = myClassToWeave.CheckMock("param");
             Assert.AreSame(myClassToWeave, MockInterceptor.before.@this);
+            Assert.AreEqual("CheckMock", MockInterceptor.before.methodInfo_P.Name);
+            Assert.AreEqual(new object[] {"param"}, MockInterceptor.before.parameters);
+            Assert.AreSame(myClassToWeave, MockInterceptor.after.@this);
+            Assert.AreEqual("CheckMock", MockInterceptor.after.methodInfo_P.Name);
+            Assert.AreEqual(new object[] { "param" }, MockInterceptor.after.parameters);
+            Assert.AreEqual(res, MockInterceptor.after.result);
+            Assert.AreEqual(null, MockInterceptor.exception);
+        }
+
+        [Test]
+        public void CheckMockException()
+        {
+            MockInterceptor.after = null;
+            MockInterceptor.before = null;
+            MockInterceptor.exception = null;
+            var myClassToWeave = new MyClassToWeave();
+            try
+            {
+                string res = myClassToWeave.CheckMockException();
+
+            }
+            catch (NotImplementedException)
+            {
+            Assert.AreSame(myClassToWeave, MockInterceptor.before.@this);
+            Assert.AreEqual("CheckMockException", MockInterceptor.before.methodInfo_P.Name);
+            Assert.AreEqual(new object[0], MockInterceptor.before.parameters);
+            Assert.AreSame(myClassToWeave, MockInterceptor.exception.@this);
+            Assert.AreEqual("CheckMockException", MockInterceptor.exception.methodInfo_P.Name);
+            Assert.AreEqual(new object[0], MockInterceptor.exception.parameters);
+            Assert.True(MockInterceptor.exception.Exception is NotImplementedException);
+            }
         }
 
         [Test]
