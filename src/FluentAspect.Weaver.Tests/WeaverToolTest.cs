@@ -73,6 +73,17 @@ namespace FluentAspect.Weaver.Tests
         }
 
         [Test]
+        public void CheckMock()
+        {
+            MockInterceptor.after = null;
+            MockInterceptor.before = null;
+            MockInterceptor.exception = null;
+            var myClassToWeave = new MyClassToWeave();
+            string res = myClassToWeave.CheckMock();
+            Assert.AreSame(myClassToWeave, MockInterceptor.before.@this);
+        }
+
+        [Test]
         public void CheckWithVoid()
         {
             new MyClassToWeave().CheckWithVoid();

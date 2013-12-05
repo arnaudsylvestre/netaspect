@@ -46,9 +46,18 @@ namespace FluentAspect.Sample
             return parameter.Value;
         }
 
-       public string CheckNotRenameInAssembly()
-       {
-           return CheckWithReturn();
-       }
+        public string CheckNotRenameInAssembly()
+        {
+            return CheckWithReturn();
+        }
+
+        public string CheckMockException()
+        {
+            throw new NotImplementedException();
+        }
+        public string CheckMock()
+        {
+            return "";
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace FluentAspect.Sample
          WeaveMethodWhichMatches<CheckWithReturnInterceptor>(m => m.Name == "CheckWithReturn");
          WeaveMethodWhichMatches<CheckWithVoidInterceptor>(m => m.Name == "CheckWithVoid");
          WeaveMethodWhichMatches<CheckBeforeInterceptor>(m => m.Name == "CheckStatic");
+         WeaveMethodWhichMatches<MockInterceptor>(m => m.Name == "CheckMockException");
+         WeaveMethodWhichMatches<MockInterceptor>(m => m.Name == "CheckMock");
       }
    }
 }

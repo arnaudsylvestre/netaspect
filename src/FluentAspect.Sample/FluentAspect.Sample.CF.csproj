@@ -61,6 +61,7 @@
     <Compile Include="AOP\Interceptors\CheckWithParametersInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithReturnInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithVoidInterceptor.cs" />
+    <Compile Include="AOP\Interceptors\MockInterceptor.cs" />
     <Compile Include="AOP\MyAspectDefinition.cs" />
     <Compile Include="BeforeParameter.cs" />
     <Compile Include="MyClassToWeave.cs" />
