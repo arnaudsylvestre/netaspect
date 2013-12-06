@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using FluentAspect.Core.Core;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Fluent;
 using Mono.Cecil;
 
@@ -33,7 +34,7 @@ namespace FluentAspect.Weaver.Core
          weaverBuilder = weaverBuilder_P;
       }
 
-      public void Weave(string assemblyFilePath, string targetFileName)
+      public void Weave(string assemblyFilePath, string targetFileName, ErrorHandler errorHandler)
       {
          var configuration_L = configurationReader.ReadConfiguration(Assembly.LoadFrom(assemblyFilePath).GetTypes());
          var assemblyDefinition = AssemblyDefinition.ReadAssembly(assemblyFilePath, new ReaderParameters(ReadingMode.Immediate) { ReadSymbols = true });

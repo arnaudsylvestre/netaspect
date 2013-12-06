@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F3174301-EBC2-4F54-A7CE-49685110ACB8}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -61,6 +61,7 @@
     <Compile Include="Core\Configuration\Multi\MultiConfigurationReader.cs" />
     <Compile Include="Core\Configuration\Multi\WeavingConfigurationExtensions.cs" />
     <Compile Include="Core\Configuration\WeavingConfiguration.cs" />
+    <Compile Include="Core\Errors\ErrorHandler.cs" />
     <Compile Include="Core\IWeaveable.cs" />
     <Compile Include="Core\IWeaverBuilder.cs" />
     <Compile Include="Core\WeaverBuilders\AroundMethodBuilderWeaver.cs" />

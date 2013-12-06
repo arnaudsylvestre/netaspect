@@ -1,4 +1,5 @@
 using System;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Factory;
 using Microsoft.Build.Utilities;
 
@@ -11,8 +12,18 @@ namespace SheepAspect.Tasks
             weavedFiles = null;
             try
             {
+               ErrorHandler handler = new ErrorHandler();
                 var weaverCore = WeaverCoreFactory.Create();
-                weaverCore.Weave(configFile, TargetFileName(configFile));
+                weaverCore.Weave(configFile, TargetFileName(configFile), handler);
+
+                foreach (var warning_L in handler.Warnings)
+                {
+                   logger.LogWarning(warning_L);
+                }
+                foreach (var error in handler.Errors)
+                {
+                   logger.LogError(error);
+                }
 
                 return true;
             }

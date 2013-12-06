@@ -1,65 +1,94 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Security;
+using System.Security.Policy;
 using FluentAspect.Sample;
 using FluentAspect.Weaver.Core;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Factory;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests
 {
-
     public class AppDomainIsolatedDiscoveryRunner : MarshalByRefObject
     {
-        public void Process(Action action)
+        public void Run(Action action)
         {
             action();
         }
     }
 
     [TestFixture]
-    [Serializable]
     public class WeaverToolTest
     {
-        [Test]
+
+       static public string AssemblyDirectory
+       {
+          get
+          {
+             string codeBase = typeof(WeaverToolTest).Assembly.CodeBase;
+             UriBuilder uri = new UriBuilder(codeBase);
+             string path = Uri.UnescapeDataString(uri.Path);
+             return Path.GetDirectoryName(path);
+          }
+       }
+
+       private AppDomainIsolatedDiscoveryRunner runner;
+
+       [TestFixtureSetUp]
+       public void DoWeaving()
+       {
+          Weave();
+          var domain = AppDomain.CreateDomain("For test", null,
+                      new AppDomainSetup
+                      {
+                         ApplicationBase = AssemblyDirectory,
+                         ShadowCopyFiles = "true"
+                      });
+          var runnerType = typeof(AppDomainIsolatedDiscoveryRunner);
+
+          runner = domain.CreateInstanceFromAndUnwrap(new Uri(runnerType.Assembly.CodeBase).LocalPath, runnerType.FullName) as AppDomainIsolatedDiscoveryRunner;
+       }
+
+       [Test]
         public void CheckBefore()
         {
-            string res = new MyClassToWeave().CheckBefore(new BeforeParameter { Value = "not before" });
-            Assert.AreEqual("Value set in before", res);
-        }
-
-        [Test]
-        public void CheckBefore2()
-        {
-            Weave();
-            var domain = AppDomain.CreateDomain("For test", null,
-                        new AppDomainSetup
-                        {
-                            ApplicationBase = @"D:\Developpement\fluentaspect\src\FluentAspect.Weaver.Tests\bin\Debug",                            
-                            ShadowCopyFiles = "true"
-                        });
-            var runnerType = typeof(AppDomainIsolatedDiscoveryRunner);
-
-            var runner = domain.CreateInstanceFromAndUnwrap(new Uri(runnerType.Assembly.CodeBase).LocalPath, runnerType.FullName) as AppDomainIsolatedDiscoveryRunner;
-            runner.Process(CheckBefore);
+          runner.Run(() => 
+           {
+               string res = new MyClassToWeave().CheckBefore(new BeforeParameter { Value = "not before" });
+               Assert.AreEqual("Value set in before", res);
+           });
         }
 
         [Test]
         public void CheckNotRenameInAssembly()
-        {
-            string res = new MyClassToWeave().CheckNotRenameInAssembly();
-            Assert.AreEqual("Weaved", res);
+       {
+          runner.Run(() =>
+          {
+             string res = new MyClassToWeave().CheckNotRenameInAssembly();
+             Assert.AreEqual("Weaved", res);
+          });
         }
 
         [Test]
         public void CheckStatic()
         {
+          runner.Run(() =>
+          {
             string res = MyClassToWeave.CheckStatic(new BeforeParameter {Value = "not before"});
             Assert.AreEqual("Value set in before", res);
+          });
         }
 
         [Test, ExpectedException(typeof (NotSupportedException))]
         public void CheckThrow()
         {
+          runner.Run(() =>
+          {
             try
             {
                 new MyClassToWeave().CheckThrow();
@@ -68,39 +97,54 @@ namespace FluentAspect.Weaver.Tests
             {
                 throw e.InnerException;
             }
+          });
         }
 
         [Test]
         public void CheckBeforeWithAttributes()
         {
+          runner.Run(() =>
+          {
             string res = new MyClassToWeaveWithAttributes().CheckBeforeWithAttributes(new BeforeParameter {Value = "not before"});
             Assert.AreEqual("Value set in before", res);
+          });
         }
 
         [Test]
         public void CheckWithGenerics()
         {
+          runner.Run(() =>
+          {
             string res = new MyClassToWeave().CheckWithGenerics("Weaved");
             Assert.AreEqual("Weaved<>System.StringWeaved", res);
+          });
         }
 
         [Test]
         public void CheckWithParameters()
         {
+          runner.Run(() =>
+          {
             string res = new MyClassToWeave().CheckWithParameters("Weaved with parameters");
             Assert.AreEqual("Weaved with parameters", res);
+          });
         }
 
         [Test]
         public void CheckWithReturn()
         {
+          runner.Run(() =>
+          {
             string res = new MyClassToWeave().CheckWithReturn();
             Assert.AreEqual("Weaved", res);
+          });
         }
 
         [Test]
         public void CheckMock()
         {
+          runner.Run(() =>
+          {
             MockInterceptor.after = null;
             MockInterceptor.before = null;
             MockInterceptor.exception = null;
@@ -114,11 +158,14 @@ namespace FluentAspect.Weaver.Tests
             Assert.AreEqual(new object[] { "param" }, MockInterceptor.after.parameters);
             Assert.AreEqual(res, MockInterceptor.after.result);
             Assert.AreEqual(null, MockInterceptor.exception);
+          });
         }
 
         [Test]
         public void CheckMockException()
         {
+          runner.Run(() =>
+          {
             MockInterceptor.after = null;
             MockInterceptor.before = null;
             MockInterceptor.exception = null;
@@ -138,20 +185,24 @@ namespace FluentAspect.Weaver.Tests
             Assert.AreEqual(new object[0], MockInterceptor.exception.parameters);
             Assert.True(MockInterceptor.exception.Exception is NotImplementedException);
             }
+          });
         }
 
         [Test]
         public void CheckWithVoid()
         {
-            new MyClassToWeave().CheckWithVoid();
+          runner.Run(() =>
+          {
+             new MyClassToWeave().CheckWithVoid();
+          });
         }
 
-        [Test, Ignore]
-        public void Weave()
+       private static void Weave()
         {
             const string asm = "FluentAspect.Sample.exe";
             WeaverCore weaver = WeaverCoreFactory.Create();
-            weaver.Weave(asm, asm);
+           ErrorHandler errorHandler = new ErrorHandler();
+           weaver.Weave(asm, asm, errorHandler);
         }
     }
 }
