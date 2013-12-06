@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using FluentAspect.Weaver.Helpers;
+using FluentAspect.Weaver.Weavers.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MethodAttributes = Mono.Cecil.MethodAttributes;
@@ -12,7 +13,7 @@ namespace FluentAspect.Weaver.Weavers
       public void CreateWeaver(MethodDefinition method, Type interceptorType, MethodDefinition wrappedMethod)
       {
          ILProcessor il = method.Body.GetILProcessor();
-         VariableDefinition interceptor = CreateInterceptor(method, interceptorType, il);
+         VariableDefinition interceptor = il.CreateAndInitializeVariable(method, interceptorType);
          VariableDefinition args = CreateArgsArray(method, il);
          VariableDefinition methodInfo = CreateMethodInfo(method, il);
 
@@ -25,13 +26,13 @@ namespace FluentAspect.Weaver.Weavers
          CallAfter(method, interceptor, methodInfo, args, handleResult, interceptorType, il);
          Instruction instruction_L = il.Create(OpCodes.Nop);
          SetReturnValue(method, handleResult, weavedResult, il);
-         Leave(il, instruction_L);
+         il.AppendLeave(instruction_L);
 
          Instruction onCatch = CreateNopForCatch(il);
          VariableDefinition e = CreateException(method);
          CallExceptionInterceptor(method, interceptor, methodInfo, args, e, interceptorType, il);
          Throw(il);
-         Instruction endCatch = Leave(il, instruction_L);
+         Instruction endCatch = il.AppendLeave(instruction_L);
          endCatch = il.Create(OpCodes.Nop);
          il.Append(endCatch);
          Return(method, weavedResult, il, instruction_L);
@@ -43,7 +44,7 @@ namespace FluentAspect.Weaver.Weavers
                                                     VariableDefinition result_P,
                                                     ILProcessor il)
       {
-         VariableDefinition handleResult_P = CreateVariable(method_P, typeof (object), "handleResult");
+         VariableDefinition handleResult_P = method_P.CreateVariable(typeof (object));
          if (result_P == null)
             il.Emit(OpCodes.Ldnull);
          else
@@ -58,13 +59,6 @@ namespace FluentAspect.Weaver.Weavers
          if (method.ReturnType.MetadataType != MetadataType.Void)
             il.Emit(OpCodes.Ldloc, weavedResult);
          il.Emit(OpCodes.Ret);
-      }
-
-      private Instruction Leave(ILProcessor il, Instruction instructionP_P)
-      {
-         Instruction instruction_L = il.Create(OpCodes.Leave, instructionP_P);
-         il.Append(instruction_L);
-         return instruction_L;
       }
 
       private Instruction CreateNopForCatch(ILProcessor il)
@@ -115,14 +109,14 @@ namespace FluentAspect.Weaver.Weavers
 
       private VariableDefinition CreateException(MethodDefinition method)
       {
-         return CreateVariable(method, typeof (Exception), "e");
+          return method.CreateVariable(typeof(Exception));
       }
 
       private VariableDefinition CreateWeavedResult(MethodDefinition method)
       {
          if (method.ReturnType.MetadataType != MetadataType.Void)
          {
-            return CreateVariable(method, method.ReturnType, "weavedResult");
+             return method.CreateVariable(method.ReturnType);
          }
          return null;
       }
@@ -198,7 +192,7 @@ namespace FluentAspect.Weaver.Weavers
 
       private VariableDefinition CreateMethodInfo(MethodDefinition method, ILProcessor il)
       {
-         VariableDefinition methodInfo = CreateVariable(method, typeof (MethodInfo), "method");
+          VariableDefinition methodInfo = method.CreateVariable(typeof(MethodInfo));
          il.Emit(OpCodes.Ldarg_0);
          il.Emit(OpCodes.Call, method.Module.Import(typeof (object).GetMethod("GetType", new Type[0])));
          il.Emit(OpCodes.Ldstr, method.Name);
@@ -211,7 +205,7 @@ namespace FluentAspect.Weaver.Weavers
 
       private VariableDefinition CreateArgsArray(MethodDefinition method, ILProcessor il)
       {
-         VariableDefinition args = CreateVariable(method, typeof (object[]), "args");
+          VariableDefinition args = method.CreateVariable(typeof(object[]));
 
          il.Emit(OpCodes.Ldc_I4, method.Parameters.Count);
          il.Emit(OpCodes.Newarr, method.Module.Import(typeof (object)));
@@ -228,37 +222,6 @@ namespace FluentAspect.Weaver.Weavers
          }
 
          return args;
-      }
-
-      private VariableDefinition CreateInterceptor(MethodDefinition method, Type interceptorType, ILProcessor il)
-      {
-         VariableDefinition interceptor = CreateVariable(method, interceptorType, "interceptor");
-         CreateNewObject(method, interceptor, interceptorType, il);
-         return interceptor;
-      }
-
-      private void CreateNewObject(MethodDefinition method,
-                                   VariableDefinition interceptor,
-                                   Type interceptorType,
-                                   ILProcessor il)
-      {
-         il.Emit(OpCodes.Newobj, method.Module.Import(interceptorType.GetConstructors()[0]));
-         il.Emit(OpCodes.Stloc, interceptor);
-      }
-
-      private VariableDefinition CreateVariable(MethodDefinition method, Type interceptorType, string name)
-      {
-         TypeReference typeReference = method.Module.Import(interceptorType);
-         return CreateVariable(method, typeReference, name);
-      }
-
-      private static VariableDefinition CreateVariable(MethodDefinition method,
-                                                       TypeReference typeReference,
-                                                       string name)
-      {
-         VariableDefinition variableDefinition = new VariableDefinition(name, typeReference);
-         method.Body.Variables.Add(variableDefinition);
-         return variableDefinition;
       }
    }
 }
