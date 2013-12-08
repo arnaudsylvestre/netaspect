@@ -63,6 +63,7 @@
     <Compile Include="Core\WeaverBuilders\TypeDefinitionAdapter.cs" />
     <Compile Include="Core\WeaverCore.cs" />
     <Compile Include="Core\Weavers\Helpers\ILProcessorExtensions.cs" />
+    <Compile Include="Core\Weavers\Helpers\Method.cs" />
     <Compile Include="Core\Weavers\Helpers\VariableExtensions.cs" />
     <Compile Include="Core\Weavers\MethodAroundWeaver.cs" />
     <Compile Include="Core\Weavers\Methods\AroundMethodWeaver.cs" />

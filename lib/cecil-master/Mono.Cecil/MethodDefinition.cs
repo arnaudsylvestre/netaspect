@@ -26,9 +26,10 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System.Reflection;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
-
+using MethodBody = Mono.Cecil.Cil.MethodBody;
 using RVA = System.UInt32;
 
 namespace Mono.Cecil {
@@ -438,6 +439,7 @@ namespace Mono.Cecil {
 		{
 			return this;
 		}
+
 	}
 
 	static partial class Mixin {

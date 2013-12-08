@@ -12,10 +12,11 @@ namespace FluentAspect.Weaver.Weavers
    {
       public void CreateWeaver(MethodDefinition method, Type interceptorType, MethodDefinition wrappedMethod)
       {
+          Method myMethod = new Method(method);
          ILProcessor il = method.Body.GetILProcessor();
-         VariableDefinition interceptor = il.CreateAndInitializeVariable(method, interceptorType);
-         VariableDefinition args = CreateArgsArray(method, il);
-         VariableDefinition methodInfo = CreateMethodInfo(method, il);
+         VariableDefinition interceptor = myMethod.CreateAndInitializeVariable(interceptorType);
+         VariableDefinition args = myMethod.CreateArgsArrayFromParameters();
+         VariableDefinition methodInfo = myMethod.CreateMethodInfo();
 
          VariableDefinition weavedResult = CreateWeavedResult(method);
 
@@ -183,45 +184,7 @@ namespace FluentAspect.Weaver.Weavers
                               Type interceptorType,
                               ILProcessor il)
       {
-         il.Emit(OpCodes.Ldloc, interceptor);
-         il.Emit(OpCodes.Ldarg_0);
-         il.Emit(OpCodes.Ldloc, methodInfo);
-         il.Emit(OpCodes.Ldloc, args);
-         il.Emit(OpCodes.Callvirt, method.Module.Import(interceptorType.GetMethod("Before")));
-      }
-
-      private VariableDefinition CreateMethodInfo(MethodDefinition method, ILProcessor il)
-      {
-          VariableDefinition methodInfo = method.CreateVariable(typeof(MethodInfo));
-         il.Emit(OpCodes.Ldarg_0);
-         il.Emit(OpCodes.Call, method.Module.Import(typeof (object).GetMethod("GetType", new Type[0])));
-         il.Emit(OpCodes.Ldstr, method.Name);
-         il.Emit(
-            OpCodes.Callvirt,
-            method.Module.Import(typeof (Type).GetMethod("GetMethod", new[] {typeof (string)})));
-         il.Emit(OpCodes.Stloc, methodInfo);
-         return methodInfo;
-      }
-
-      private VariableDefinition CreateArgsArray(MethodDefinition method, ILProcessor il)
-      {
-          VariableDefinition args = method.CreateVariable(typeof(object[]));
-
-         il.Emit(OpCodes.Ldc_I4, method.Parameters.Count);
-         il.Emit(OpCodes.Newarr, method.Module.Import(typeof (object)));
-         il.Emit(OpCodes.Stloc, args);
-
-         foreach (ParameterDefinition p in method.Parameters.ToArray())
-         {
-            il.Emit(OpCodes.Ldloc, args);
-            il.Emit(OpCodes.Ldc_I4, p.Index);
-            il.Emit(OpCodes.Ldarg, p);
-            if (p.ParameterType.IsValueType || p.ParameterType is GenericParameter)
-               il.Emit(OpCodes.Box, p.ParameterType);
-            il.Emit(OpCodes.Stelem_Ref);
-         }
-
-         return args;
+          il.AppendCallTo(interceptorType.GetMethod("Before"), method.Module, interceptor, ILProcessorExtensions.This, methodInfo, args);
       }
    }
 }
