@@ -52,20 +52,38 @@ namespace FluentAspect.Weaver.Tests
 
         private static void Weave()
         {
-            const string asm = "FluentAspect.Sample.exe";
-            WeaverCore weaver = WeaverCoreFactory.Create();
-            var errorHandler = new ErrorHandler();
-            weaver.Weave(asm, asm, errorHandler);
+            try
+            {
+                const string asm = "FluentAspect.Sample.exe";
+                WeaverCore weaver = WeaverCoreFactory.Create();
+                var errorHandler = new ErrorHandler();
+                weaver.Weave(asm, asm, errorHandler);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+                throw;
+            }
         }
 
         [Test]
         public void CheckBefore()
         {
             runner.Run(() =>
-                {
-                    string res = new MyClassToWeave().CheckBefore(new BeforeParameter {Value = "not before"});
-                    Assert.AreEqual("Value set in before", res);
-                });
+            {
+                string res = new MyClassToWeave().CheckBefore(new BeforeParameter { Value = "not before" });
+                Assert.AreEqual("Value set in before", res);
+            });
+        }
+
+        [Test, ExpectedException(typeof(NotSupportedException))]
+        public void CheckConstructor()
+        {
+            runner.Run(() =>
+            {
+                new MyClassToWeaveWithAttributes(true);
+            });
         }
 
         [Test]

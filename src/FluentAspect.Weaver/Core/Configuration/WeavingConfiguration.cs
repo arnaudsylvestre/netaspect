@@ -9,8 +9,11 @@ namespace FluentAspect.Weaver.Core
       public WeavingConfiguration()
       {
          Methods = new List<MethodMatch>();
+          Constructors = new List<ConstructorMatch>();
       }
 
       public List<MethodMatch> Methods { get; private set; }
+
+       public List<ConstructorMatch> Constructors { get; private set; }
    }
 }

@@ -13,24 +13,24 @@ namespace FluentAspect.Weaver.Weavers
       public void CreateWeaver(MethodDefinition method, Type interceptorType, MethodDefinition wrappedMethod)
       {
           Method myMethod = new Method(method);
-         ILProcessor il = method.Body.GetILProcessor();
-         VariableDefinition interceptor = myMethod.CreateAndInitializeVariable(interceptorType);
-         VariableDefinition args = myMethod.CreateArgsArrayFromParameters();
-         VariableDefinition methodInfo = myMethod.CreateMethodInfo();
+         var il = method.Body.GetILProcessor();
+         var interceptor = myMethod.CreateAndInitializeVariable(interceptorType);
+         var args = myMethod.CreateArgsArrayFromParameters();
+         var methodInfo = myMethod.CreateMethodInfo();
 
-         VariableDefinition weavedResult = CreateWeavedResult(method);
+         var weavedResult = CreateWeavedResult(method);
 
-         Instruction beforeCatch = CreateNopForCatch(il);
+         var beforeCatch = CreateNopForCatch(il);
          CallBefore(method, interceptor, methodInfo, args, interceptorType, il);
-         VariableDefinition result = CallWeavedMethod(method, wrappedMethod, il);
-         VariableDefinition handleResult = CreateHandleResult(method, result, il);
+         var result = CallWeavedMethod(method, wrappedMethod, il);
+         var handleResult = CreateHandleResult(method, result, il);
          CallAfter(method, interceptor, methodInfo, args, handleResult, interceptorType, il);
-         Instruction instruction_L = il.Create(OpCodes.Nop);
+         var instruction_L = il.Create(OpCodes.Nop);
          SetReturnValue(method, handleResult, weavedResult, il);
          il.AppendLeave(instruction_L);
 
-         Instruction onCatch = CreateNopForCatch(il);
-         VariableDefinition e = CreateException(method);
+         var onCatch = CreateNopForCatch(il);
+         var e = CreateException(method);
          CallExceptionInterceptor(method, interceptor, methodInfo, args, e, interceptorType, il);
          Throw(il);
          Instruction endCatch = il.AppendLeave(instruction_L);

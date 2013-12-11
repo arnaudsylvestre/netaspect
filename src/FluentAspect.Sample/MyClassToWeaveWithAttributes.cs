@@ -5,6 +5,16 @@ namespace FluentAspect.Sample
 {
    public class MyClassToWeaveWithAttributes
    {
+       public MyClassToWeaveWithAttributes()
+       {
+
+       }
+       [Thrower]
+       public MyClassToWeaveWithAttributes(bool thrown)
+       {
+
+       }
+
       public string CheckWithReturn()
       {
          return "NotWeaved";

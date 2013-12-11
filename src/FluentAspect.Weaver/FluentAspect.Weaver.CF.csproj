@@ -49,7 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Configuration\Attributes\AttributeConfigurationReader.cs" />
+    <Compile Include="Core\Configuration\Attributes\ConstructorAttributeConfigurationReader.cs" />
+    <Compile Include="Core\Configuration\Attributes\MethodAttributeConfigurationReader.cs" />
     <Compile Include="Core\Configuration\ConfigurationNotFoundException.cs" />
     <Compile Include="Core\Configuration\Fluent\FluentConfigurationReader.cs" />
     <Compile Include="Core\Configuration\IConfigurationReader.cs" />
@@ -59,7 +60,9 @@
     <Compile Include="Core\Errors\ErrorHandler.cs" />
     <Compile Include="Core\IWeaveable.cs" />
     <Compile Include="Core\IWeaverBuilder.cs" />
+    <Compile Include="Core\WeaverBuilders\AroundConstructorBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\AroundMethodBuilderWeaver.cs" />
+    <Compile Include="Core\WeaverBuilders\MultiWeaverBuilder.cs" />
     <Compile Include="Core\WeaverBuilders\TypeDefinitionAdapter.cs" />
     <Compile Include="Core\WeaverCore.cs" />
     <Compile Include="Core\Weavers\Helpers\ILProcessorExtensions.cs" />

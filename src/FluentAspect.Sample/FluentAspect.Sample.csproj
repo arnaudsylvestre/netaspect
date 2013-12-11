@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AOP\Attributes\CheckBeforeAttribute.cs" />
+    <Compile Include="AOP\Attributes\ThrowerAttribute.cs" />
     <Compile Include="AOP\Interceptors\CheckNotRenameInAssemblyInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithParametersInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithReturnInterceptor.cs" />
@@ -44,6 +45,7 @@
     <Compile Include="AOP\Interceptors\CheckWithVoidInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithGenericsInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckThrowInterceptor.cs" />
+    <Compile Include="AOP\Interceptors\ThrowerInterceptor.cs" />
     <Compile Include="AOP\Interceptors\MockInterceptor.cs" />
     <Compile Include="AOP\MyAspectDefinition.cs" />
     <Compile Include="BeforeParameter.cs" />

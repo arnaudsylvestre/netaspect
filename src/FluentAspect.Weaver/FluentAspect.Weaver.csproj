@@ -51,7 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Configuration\Attributes\AttributeConfigurationReader.cs" />
+    <Compile Include="Core\Configuration\Attributes\ConstructorAttributeConfigurationReader.cs" />
+    <Compile Include="Core\Configuration\Attributes\MethodAttributeConfigurationReader.cs" />
+    <Compile Include="Core\WeaverBuilders\AroundConstructorBuilderWeaver.cs" />
+    <Compile Include="Core\WeaverBuilders\MultiWeaverBuilder.cs" />
     <Compile Include="Core\Weavers\Helpers\ILProcessorExtensions.cs" />
     <Compile Include="Core\Weavers\Helpers\Method.cs" />
     <Compile Include="Core\Weavers\Helpers\VariableExtensions.cs" />

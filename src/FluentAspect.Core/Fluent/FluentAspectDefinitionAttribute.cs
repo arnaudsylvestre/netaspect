@@ -5,12 +5,18 @@ using FluentAspect.Core.Methods;
 
 namespace FluentAspect.Core
 {
-   public class MethodMatch
-   {
-      public Func<IMethod, bool> Matcher { get; set; }
+    public class MethodMatch
+    {
+        public Func<IMethod, bool> Matcher { get; set; }
 
-      public Type AdviceName { get; set; }
-   }
+        public Type AdviceName { get; set; }
+    }
+    public class ConstructorMatch
+    {
+        public Func<IConstructor, bool> Matcher { get; set; }
+
+        public Type AdviceName { get; set; }
+    }
 
     public abstract class FluentAspectDefinition
     {

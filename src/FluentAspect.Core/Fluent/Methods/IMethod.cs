@@ -7,4 +7,9 @@ namespace FluentAspect.Core.Methods
         string Name { get; }
         IType DeclaringType { get; }
     }
+    public interface IConstructor
+    {
+        string Name { get; }
+        IType DeclaringType { get; }
+    }
 }

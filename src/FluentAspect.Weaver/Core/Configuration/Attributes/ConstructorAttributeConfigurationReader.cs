@@ -10,21 +10,21 @@ using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.Fluent
 {
-   public class AttributeConfigurationReader : IConfigurationReader
+   public class ConstructorAttributeConfigurationReader : IConfigurationReader
    {
-       private List<MethodInfo> methodsWithAttributesToDelete = new List<MethodInfo>(); 
+       private List<ConstructorInfo> constructorsWithAttributesToDelete = new List<ConstructorInfo>(); 
 
       public WeavingConfiguration ReadConfiguration(IEnumerable<Type> types)
       {
-          var matchingMethods = types.GetAllMethods(m => m.GetCustomAttributes<MethodInterceptorAttribute>(true).Count > 0);
-          methodsWithAttributesToDelete.AddRange(matchingMethods);
+          var constructors = types.GetAllConstructors(m => m.GetCustomAttributes<MethodInterceptorAttribute>(true).Count > 0);
+          constructorsWithAttributesToDelete.AddRange(constructors);
           var configuration = new WeavingConfiguration();
 
-          foreach (var matchingMethod in matchingMethods)
+          foreach (var matchingMethod in constructors)
           {
               var interceptorAttribute = matchingMethod.GetCustomAttributes<MethodInterceptorAttribute>(true)[0];
-              MethodInfo info = matchingMethod;
-              configuration.Methods.Add(new MethodMatch()
+              var info = matchingMethod;
+              configuration.Constructors.Add(new ConstructorMatch()
               {
                   AdviceName = interceptorAttribute.InterceptorType,
                   Matcher = m => m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName
@@ -36,11 +36,11 @@ namespace FluentAspect.Weaver.Core.Fluent
 
        public void Clean(AssemblyDefinition assemblyDefinition)
       {
-           var methodDefinitions = assemblyDefinition.GetAllMethods(m => true);
-           foreach (var methodInfo in methodsWithAttributesToDelete)
+           var methodDefinitions = assemblyDefinition.GetAllConstructors(m => true);
+           foreach (var methodInfo in constructorsWithAttributesToDelete)
            {
-               MethodInfo info = methodInfo;
-               var methodDefinition = (from m in methodDefinitions where m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName select m).FirstOrDefault();
+               var info = methodInfo;
+               var methodDefinition = (from m in methodDefinitions where IsMethodEqual(m, info) select m).FirstOrDefault();
                if (methodDefinition == null)
                    continue;
                var methodInterceptorAttributes = info.GetCustomAttributes<MethodInterceptorAttribute>(false);
@@ -73,5 +73,20 @@ namespace FluentAspect.Weaver.Core.Fluent
                }
            }
       }
+
+       private static bool IsMethodEqual(MethodDefinition m, ConstructorInfo info)
+       {
+           var parameters = (from t in info.GetParameters() select t.ParameterType).ToList();
+           var parametersMono = (from t in m.Parameters select t.ParameterType).ToList();
+           if (parameters.Count() != parametersMono.Count())
+               return false;
+           for (int i = 0; i < parameters.Count(); i++)
+           {
+               if (parameters[i].FullName != parametersMono[i].FullName)
+                   return false;
+           }
+
+           return m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName;
+       }
    }
 }
