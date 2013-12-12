@@ -4,7 +4,8 @@
    {
        public static void MergeWith(this WeavingConfiguration original, WeavingConfiguration toAdd)
        {
-          original.Methods.AddRange(toAdd.Methods);
+           original.Methods.AddRange(toAdd.Methods);
+           original.Constructors.AddRange(toAdd.Constructors);
        }
    }
 }

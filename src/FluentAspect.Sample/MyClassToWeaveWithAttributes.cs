@@ -5,10 +5,10 @@ namespace FluentAspect.Sample
 {
    public class MyClassToWeaveWithAttributes
    {
-       public MyClassToWeaveWithAttributes()
-       {
+       //public MyClassToWeaveWithAttributes()
+       //{
 
-       }
+       //}
        [Thrower]
        public MyClassToWeaveWithAttributes(bool thrown)
        {

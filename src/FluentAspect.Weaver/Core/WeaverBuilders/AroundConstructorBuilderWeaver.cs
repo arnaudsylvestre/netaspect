@@ -12,7 +12,7 @@ namespace FluentAspect.Weaver.Core
       {
          List<IWeaveable> weavers = new List<IWeaveable>();
          var methods = assemblyDefinition.GetAllMethods();
-         foreach (var methodMatch in configuration.Methods)
+         foreach (var methodMatch in configuration.Constructors)
          {
             weavers.AddRange((from methodDefinition in methods
                               where methodMatch.Matcher(new MethodDefinitionAdapter(methodDefinition))

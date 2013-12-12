@@ -36,7 +36,7 @@ namespace FluentAspect.Weaver.Weavers.Methods
 
       private string ComputeNewName(MethodDefinition methodDefinition)
       {
-         return methodDefinition.Name + "-Weaved-";
+         return "-Weaved-" + methodDefinition.Name;
       }
    }
 }

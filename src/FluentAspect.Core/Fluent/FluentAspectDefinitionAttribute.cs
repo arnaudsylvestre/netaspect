@@ -13,7 +13,7 @@ namespace FluentAspect.Core
     }
     public class ConstructorMatch
     {
-        public Func<IConstructor, bool> Matcher { get; set; }
+        public Func<IMethod, bool> Matcher { get; set; }
 
         public Type AdviceName { get; set; }
     }

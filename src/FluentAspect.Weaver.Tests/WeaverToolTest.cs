@@ -92,7 +92,7 @@ namespace FluentAspect.Weaver.Tests
             runner.Run(() =>
                 {
                     string res =
-                        new MyClassToWeaveWithAttributes().CheckBeforeWithAttributes(new BeforeParameter
+                        new MyClassToWeaveWithAttributes(false).CheckBeforeWithAttributes(new BeforeParameter
                             {
                                 Value = "not before"
                             });
