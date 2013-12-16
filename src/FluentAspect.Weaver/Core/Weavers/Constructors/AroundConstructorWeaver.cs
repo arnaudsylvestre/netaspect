@@ -6,12 +6,12 @@ using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Weavers.Methods
 {
-   public class AroundMethodWeaver : IWeaveable
+   public class AroundConstructorWeaver : IWeaveable
    {
       private Type interceptorType;
       private MethodDefinition definition;
 
-      public AroundMethodWeaver(Type interceptorType, MethodDefinition definition_P)
+      public AroundConstructorWeaver(Type interceptorType, MethodDefinition definition_P)
       {
          this.interceptorType = interceptorType;
          definition = definition_P;
@@ -27,18 +27,16 @@ namespace FluentAspect.Weaver.Weavers.Methods
        {
          var wrappedMethod = methodDefinition.Clone(ComputeNewName(methodDefinition));
 
-         methodDefinition.Body.Instructions.Clear();
-         methodDefinition.Body.Variables.Clear();
-         
-         MethodAroundWeaver weaver = new MethodAroundWeaver();
+
+         ConstructorAroundWeaver weaver = new ConstructorAroundWeaver();
          weaver.CreateWeaver(methodDefinition, interceptor, wrappedMethod);
-          methodDefinition.Body.InitLocals = true;
+         methodDefinition.Body.InitLocals = true;
          return wrappedMethod;
       }
 
       private string ComputeNewName(MethodDefinition methodDefinition)
       {
-         return "-Weaved-" + methodDefinition.Name;
+         return "-Weaved-Construcot";
       }
    }
 }
