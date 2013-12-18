@@ -80,10 +80,19 @@ namespace FluentAspect.Weaver.Tests
         [Test, ExpectedException(typeof(NotSupportedException))]
         public void CheckConstructor()
         {
-            runner.Run(() =>
-            {
-                new MyClassToWeaveWithAttributes(true);
-            });
+           runner.Run(() =>
+           {
+              new MyClassToWeaveWithAttributes(true);
+           });
+        }
+
+        [Test]
+        public void CheckConstructorWithFalse()
+        {
+           runner.Run(() =>
+           {
+              new MyClassToWeaveWithAttributes(false);
+           });
         }
 
         [Test]

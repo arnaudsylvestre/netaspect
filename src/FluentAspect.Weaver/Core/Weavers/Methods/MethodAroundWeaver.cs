@@ -12,33 +12,36 @@ namespace FluentAspect.Weaver.Weavers
    {
       public void CreateWeaver(MethodDefinition method, Type interceptorType, MethodDefinition wrappedMethod)
       {
-          Method myMethod = new Method(method);
-         var il = method.Body.GetILProcessor();
+         CreateWeaver(new Method(method), interceptorType, wrappedMethod);
+      }
+
+      public void CreateWeaver(Method myMethod, Type interceptorType, MethodDefinition wrappedMethod)
+      {
          var interceptor = myMethod.CreateAndInitializeVariable(interceptorType);
          var args = myMethod.CreateArgsArrayFromParameters();
          var methodInfo = myMethod.CreateMethodInfo();
 
-         var weavedResult = CreateWeavedResult(method);
+         var weavedResult = CreateWeavedResult(myMethod.MethodDefinition);
 
-         var beforeCatch = CreateNopForCatch(il);
-         CallBefore(method, interceptor, methodInfo, args, interceptorType, il);
-         var result = CallWeavedMethod(method, wrappedMethod, il);
-         var handleResult = CreateHandleResult(method, result, il);
-         CallAfter(method, interceptor, methodInfo, args, handleResult, interceptorType, il);
-         var instruction_L = il.Create(OpCodes.Nop);
-         SetReturnValue(method, handleResult, weavedResult, il);
-         il.AppendLeave(instruction_L);
+         var beforeCatch = CreateNopForCatch(myMethod.Il);
+         CallBefore(myMethod.MethodDefinition, interceptor, methodInfo, args, interceptorType, myMethod.Il);
+         var result = CallWeavedMethod(myMethod.MethodDefinition, wrappedMethod, myMethod.Il);
+         var handleResult = CreateHandleResult(myMethod.MethodDefinition, result, myMethod.Il);
+         CallAfter(myMethod.MethodDefinition, interceptor, methodInfo, args, handleResult, interceptorType, myMethod.Il);
+         var instruction_L = myMethod.Il.Create(OpCodes.Nop);
+         SetReturnValue(myMethod.MethodDefinition, handleResult, weavedResult, myMethod.Il);
+         myMethod.Il.AppendLeave(instruction_L);
 
-         var onCatch = CreateNopForCatch(il);
-         var e = CreateException(method);
-         CallExceptionInterceptor(method, interceptor, methodInfo, args, e, interceptorType, il);
-         Throw(il);
-         Instruction endCatch = il.AppendLeave(instruction_L);
-         endCatch = il.Create(OpCodes.Nop);
-         il.Append(endCatch);
-         Return(method, weavedResult, il, instruction_L);
+         var onCatch = CreateNopForCatch(myMethod.Il);
+         var e = CreateException(myMethod.MethodDefinition);
+         CallExceptionInterceptor(myMethod.MethodDefinition, interceptor, methodInfo, args, e, interceptorType, myMethod.Il);
+         Throw(myMethod.Il);
+         Instruction endCatch = myMethod.Il.AppendLeave(instruction_L);
+         endCatch = myMethod.Il.Create(OpCodes.Nop);
+         myMethod.Il.Append(endCatch);
+         Return(myMethod.MethodDefinition, weavedResult, myMethod.Il, instruction_L);
 
-         CreateExceptionHandler(method, onCatch, endCatch, beforeCatch);
+         CreateExceptionHandler(myMethod.MethodDefinition, onCatch, endCatch, beforeCatch);
       }
 
       private VariableDefinition CreateHandleResult(MethodDefinition method_P,

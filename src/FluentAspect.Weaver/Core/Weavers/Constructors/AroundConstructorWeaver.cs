@@ -25,18 +25,13 @@ namespace FluentAspect.Weaver.Weavers.Methods
 
        private MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition, Type interceptor)
        {
-         var wrappedMethod = methodDefinition.Clone(ComputeNewName(methodDefinition));
+         var wrappedMethod = methodDefinition.Clone("-Weaved-Constructor");
 
 
          ConstructorAroundWeaver weaver = new ConstructorAroundWeaver();
          weaver.CreateWeaver(methodDefinition, interceptor, wrappedMethod);
          methodDefinition.Body.InitLocals = true;
          return wrappedMethod;
-      }
-
-      private string ComputeNewName(MethodDefinition methodDefinition)
-      {
-         return "-Weaved-Construcot";
       }
    }
 }

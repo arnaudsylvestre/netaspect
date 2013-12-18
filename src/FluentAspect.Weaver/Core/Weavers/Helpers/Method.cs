@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -16,7 +17,22 @@ namespace FluentAspect.Weaver.Weavers.Helpers
             il = definition.Body.GetILProcessor();
         }
 
-        public VariableDefinition CreateAndInitializeVariable(Type interceptorType)
+       public TryCatch CreateTryCatch()
+       {
+          
+       }
+
+       public ILProcessor Il
+       {
+          get { return il; }
+       }
+
+       public MethodDefinition MethodDefinition
+       {
+          get { return definition; }
+       }
+
+       public VariableDefinition CreateAndInitializeVariable(Type interceptorType)
         {
             return il.CreateAndInitializeVariable(definition, interceptorType);
         }
@@ -53,5 +69,13 @@ namespace FluentAspect.Weaver.Weavers.Helpers
 
             return methodInfo;
         }
+
+       public void Append(List<Instruction> callBaseInstructions_P)
+       {
+          foreach (var callBaseInstruction_L in callBaseInstructions_P)
+          {
+             il.Append(callBaseInstruction_L);
+          }
+       }
     }
 }

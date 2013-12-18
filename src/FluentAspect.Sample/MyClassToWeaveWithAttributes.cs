@@ -9,10 +9,12 @@ namespace FluentAspect.Sample
        //{
 
        //}
+      private bool thrown = false;
+
        [Thrower]
        public MyClassToWeaveWithAttributes(bool thrown)
        {
-
+          this.thrown = thrown;
        }
 
       public string CheckWithReturn()

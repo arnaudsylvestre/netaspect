@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentAspect.Weaver.Weavers.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -12,6 +13,12 @@ namespace FluentAspect.Weaver.Weavers.Methods
          var callBaseInstructions = ExtractCallToBaseInstructions(wrappedMethod_P, methodDefinition_P.DeclaringType);
          ClearCallToBase(wrappedMethod_P, methodDefinition_P.DeclaringType);
 
+         var method_L = new Method(methodDefinition_P);
+         method_L.MethodDefinition.Body.Instructions.Clear();
+         method_L.Append(callBaseInstructions);
+
+         MethodAroundWeaver aroundWeaver_L = new MethodAroundWeaver();
+         aroundWeaver_L.CreateWeaver(method_L, interceptor_P, wrappedMethod_P);
       }
 
       private List<Instruction> ExtractCallToBaseInstructions(MethodDefinition wrappedMethod_P, TypeDefinition declaringType_P)
@@ -37,7 +44,7 @@ namespace FluentAspect.Weaver.Weavers.Methods
 
       private bool IsCallToBase(MethodDefinition wrappedMethod_P, TypeDefinition declaringTypePP_P, int iP_P)
       {
-         var instruction_L = wrappedMethod_P.Body.Instructions[0];
+         var instruction_L = wrappedMethod_P.Body.Instructions[iP_P];
          var isCall = instruction_L.OpCode == OpCodes.Call;
          if (!isCall)
             return false;
