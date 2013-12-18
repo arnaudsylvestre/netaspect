@@ -9,6 +9,11 @@ namespace FluentAspect.Weaver.Weavers.Helpers
     {
         public static VariableDefinition This = new VariableDefinition(new TypeReference("", "", null, null));
 
+        public static void AppendThrow(this ILProcessor il)
+        {
+            il.Emit(OpCodes.Rethrow);
+        }
+
         public static void AppendCallToThisGetType(this ILProcessor il, ModuleDefinition module)
         {
             il.Emit(OpCodes.Ldarg_0);

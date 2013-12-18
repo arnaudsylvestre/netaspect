@@ -49,6 +49,8 @@
     <Compile Include="AOP\Interceptors\MockInterceptor.cs" />
     <Compile Include="AOP\MyAspectDefinition.cs" />
     <Compile Include="BeforeParameter.cs" />
+    <Compile Include="AbstractClassToWeaveWithAttributes.cs" />
+    <Compile Include="InterfaceToWeaveWithAttributes.cs" />
     <Compile Include="MyClassToWeave.cs" />
     <Compile Include="MyClassToWeaveWithAttributes.cs" />
     <Compile Include="Program.cs" />

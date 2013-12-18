@@ -38,10 +38,18 @@ namespace FluentAspect.Weaver.Core
       {
          var configuration_L = configurationReader.ReadConfiguration(Assembly.LoadFrom(assemblyFilePath).GetTypes());
          var assemblyDefinition = AssemblyDefinition.ReadAssembly(assemblyFilePath, new ReaderParameters(ReadingMode.Immediate) { ReadSymbols = true });
-         var weavers = weaverBuilder.BuildWeavers(assemblyDefinition, configuration_L);
+         var weavers = weaverBuilder.BuildWeavers(assemblyDefinition, configuration_L, errorHandler);
          foreach (var weaver_L in weavers)
          {
-            weaver_L.Weave();
+             try
+             {
+                 weaver_L.Weave();
+             }
+             catch (Exception e)
+             {
+                 errorHandler.Warnings.Add(e.Message);
+             }
+            
          }
          Clean(assemblyDefinition);
          assemblyDefinition.Write(targetFileName, new WriterParameters()
@@ -50,7 +58,7 @@ namespace FluentAspect.Weaver.Core
          });
       }
 
-      private void Clean(AssemblyDefinition assemblyDefinition)
+        private void Clean(AssemblyDefinition assemblyDefinition)
       {
          configurationReader.Clean(assemblyDefinition);
          CleanReferencesToNetAspect(assemblyDefinition);

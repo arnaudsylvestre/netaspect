@@ -6,6 +6,7 @@ using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Weavers.Helpers
 {
+
     public class Method
     {
         private MethodDefinition definition;
@@ -16,11 +17,6 @@ namespace FluentAspect.Weaver.Weavers.Helpers
             this.definition = definition;
             il = definition.Body.GetILProcessor();
         }
-
-       public TryCatch CreateTryCatch()
-       {
-          
-       }
 
        public ILProcessor Il
        {
@@ -77,5 +73,100 @@ namespace FluentAspect.Weaver.Weavers.Helpers
              il.Append(callBaseInstruction_L);
           }
        }
+
+        public void Add(TryCatch tryCatch)
+        {
+            var beforeCatch = CreateNopForCatch(Il);
+            var instruction_L = Il.Create(OpCodes.Nop);
+
+            tryCatch.OnTryContent(Il);
+
+            Il.AppendLeave(instruction_L);
+
+            var onCatch = CreateNopForCatch(Il);
+            tryCatch.OnCatch(Il);
+            Instruction endCatch = Il.AppendLeave(instruction_L);
+            endCatch = Il.Create(OpCodes.Nop);
+            Il.Append(endCatch);
+
+            Il.Append(instruction_L);
+            CreateExceptionHandler(MethodDefinition, onCatch, endCatch, beforeCatch);
+        }
+
+        private Instruction CreateNopForCatch(ILProcessor il)
+        {
+            Instruction nop = il.Create(OpCodes.Nop);
+            il.Append(nop);
+            return nop;
+        }
+
+        private void CreateExceptionHandler(MethodDefinition method,
+                                            Instruction onCatch,
+                                            Instruction endCatch,
+                                            Instruction beforeCatchP_P)
+        {
+            ExceptionHandler handler = new ExceptionHandler(ExceptionHandlerType.Catch)
+            {
+                TryStart = beforeCatchP_P,
+                TryEnd = onCatch,
+                HandlerStart = onCatch,
+                HandlerEnd = endCatch,
+                CatchType = method.Module.Import(typeof(Exception)),
+            };
+
+            method.Body.ExceptionHandlers.Add(handler);
+        }
+
+
+        public VariableDefinition CreateWeavedResult()
+        {
+            if (MethodDefinition.ReturnType.MetadataType != MetadataType.Void)
+            {
+                return MethodDefinition.CreateVariable(MethodDefinition.ReturnType);
+            }
+            return null;
+        }
+
+        public VariableDefinition CreateHandleResult(VariableDefinition result_P)
+        {
+            VariableDefinition handleResult_P = MethodDefinition.CreateVariable(typeof(object));
+            if (result_P == null)
+                il.Emit(OpCodes.Ldnull);
+            else
+                il.Emit(OpCodes.Ldloc, result_P);
+            il.Emit(OpCodes.Stloc, handleResult_P);
+            return handleResult_P;
+        }
+
+
+
+        public void Return(VariableDefinition weavedResult)
+        {
+            if (MethodDefinition.ReturnType.MetadataType != MetadataType.Void)
+                il.Emit(OpCodes.Ldloc, weavedResult);
+            il.Emit(OpCodes.Ret);
+        }
+    }
+
+    public class TryCatch
+    {
+        private readonly Action<ILProcessor> onTryContent;
+        private readonly Action<ILProcessor> _onCatch;
+
+        public TryCatch(Action<ILProcessor> onTryContent, Action<ILProcessor> onCatch)
+        {
+            this.onTryContent = onTryContent;
+            _onCatch = onCatch;
+        }
+
+        public Action<ILProcessor> OnTryContent
+        {
+            get { return onTryContent; }
+        }
+
+        public Action<ILProcessor> OnCatch
+        {
+            get { return _onCatch; }
+        }
     }
 }

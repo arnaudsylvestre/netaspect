@@ -5,8 +5,8 @@ namespace FluentAspect.Sample
    public class MyAspectDefinition : FluentAspectDefinition
    {
       public override void Setup()
-      {
-         WeaveMethodWhichMatches<CheckBeforeInterceptor>(m => m.Name == "CheckBefore");
+       {
+           WeaveMethodWhichMatches<CheckBeforeInterceptor>(m => m.Name == "CheckBefore");
          WeaveMethodWhichMatches<CheckNotRenameInAssemblyInterceptor>(m => m.Name == "CheckNotRenameInAssembly");
          WeaveMethodWhichMatches<CheckThrowInterceptor>(m => m.Name == "CheckThrow");
          WeaveMethodWhichMatches<CheckWithGenericsInterceptor>(m => m.Name == "CheckWithGenerics");

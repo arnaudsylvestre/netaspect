@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using FluentAspect.Sample;
@@ -50,13 +51,14 @@ namespace FluentAspect.Weaver.Tests
                 as AppDomainIsolatedTestRunner;
         }
 
+        private static ErrorHandler errorHandler = new ErrorHandler();
+
         private static void Weave()
         {
             try
             {
                 const string asm = "FluentAspect.Sample.exe";
                 WeaverCore weaver = WeaverCoreFactory.Create();
-                var errorHandler = new ErrorHandler();
                 weaver.Weave(asm, asm, errorHandler);
 
             }
@@ -75,6 +77,20 @@ namespace FluentAspect.Weaver.Tests
                 string res = new MyClassToWeave().CheckBefore(new BeforeParameter { Value = "not before" });
                 Assert.AreEqual("Value set in before", res);
             });
+        }
+
+        [Test]
+        public void CheckErrors()
+        {
+            Assert.AreEqual(new List<string>()
+            {
+                "A method declared in interface can not be weaved : InterfaceToWeaveWithAttributes.CheckBeforeWithAttributes",       
+                "An abstract method can not be weaved : AbstractClassToWeaveWithAttributes.CheckBeforeWithAttributes",
+            }, errorHandler.Warnings);
+            Assert.AreEqual(new List<string>()
+            {
+
+            }, errorHandler.Errors);
         }
 
         [Test, ExpectedException(typeof(NotSupportedException))]
