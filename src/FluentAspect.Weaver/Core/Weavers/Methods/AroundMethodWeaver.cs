@@ -32,7 +32,6 @@ namespace FluentAspect.Weaver.Weavers.Methods
                    throw new Exception(string.Format("A method declared in interface can not be weaved : {0}.{1}", definition.DeclaringType.Name, definition.Name));
                if ((definition.Attributes & MethodAttributes.Abstract) == MethodAttributes.Abstract)
                    throw new Exception(string.Format("An abstract method can not be weaved : {0}.{1}", definition.DeclaringType.Name, definition.Name));
-               
            }
        }
 

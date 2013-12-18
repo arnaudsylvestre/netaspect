@@ -115,14 +115,42 @@ namespace FluentAspect.Weaver.Tests
         public void CheckBeforeWithAttributes()
         {
             runner.Run(() =>
-                {
-                    string res =
-                        new MyClassToWeaveWithAttributes(false).CheckBeforeWithAttributes(new BeforeParameter
-                            {
-                                Value = "not before"
-                            });
-                    Assert.AreEqual("Value set in before", res);
-                });
+            {
+                string res =
+                    new MyClassToWeaveWithAttributes(false).CheckBeforeWithAttributes(new BeforeParameter
+                    {
+                        Value = "not before"
+                    });
+                Assert.AreEqual("Value set in before", res);
+            });
+        }
+
+        [Test]
+        public void CheckInterceptPrivate()
+        {
+            runner.Run(() =>
+            {
+                string res =
+                    new MyClassToWeaveWithAttributes(false).CallCheckBeforeWithAttributesPrivate(new BeforeParameter
+                    {
+                        Value = "not before"
+                    });
+                Assert.AreEqual("Value set in before", res);
+            });
+        }
+
+        [Test]
+        public void CheckInterceptProtected()
+        {
+            runner.Run(() =>
+            {
+                string res =
+                    new MyClassToWeaveWithAttributes(false).CallCheckBeforeWithAttributesProtected(new BeforeParameter
+                    {
+                        Value = "not before"
+                    });
+                Assert.AreEqual("Value set in before", res);
+            });
         }
 
         [Test]

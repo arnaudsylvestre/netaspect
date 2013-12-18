@@ -45,7 +45,17 @@ namespace FluentAspect.Sample
       [CheckBefore]
       public string CheckBeforeWithAttributes(BeforeParameter parameter)
       {
-         return parameter.Value;
+          return parameter.Value;
+      }
+
+      [CheckBefore]
+      private string CheckBeforeWithAttributesPrivate(BeforeParameter parameter)
+      {
+          return parameter.Value;
+      }
+      public string CallCheckBeforeWithAttributesPrivate(BeforeParameter parameter)
+      {
+          return CheckBeforeWithAttributesPrivate(parameter);
       }
 
       public static string CheckStatic(BeforeParameter parameter)
@@ -57,5 +67,17 @@ namespace FluentAspect.Sample
       {
          return CheckWithReturn();
       }
+
+
+      [CheckBefore]
+      private string CheckBeforeWithAttributesProtected(BeforeParameter parameter)
+      {
+          return parameter.Value;
+      }
+
+       public string CallCheckBeforeWithAttributesProtected(BeforeParameter beforeParameter)
+       {
+           return CheckBeforeWithAttributesProtected(beforeParameter);
+       }
    }
 }

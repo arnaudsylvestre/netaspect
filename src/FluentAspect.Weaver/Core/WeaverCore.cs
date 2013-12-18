@@ -52,43 +52,17 @@ namespace FluentAspect.Weaver.Core
             
          }
          Clean(assemblyDefinition);
+
          assemblyDefinition.Write(targetFileName, new WriterParameters()
          {
             WriteSymbols = true,
          });
+          CheckAssembly(errorHandler);
       }
 
-        private void Clean(AssemblyDefinition assemblyDefinition)
-      {
-         configurationReader.Clean(assemblyDefinition);
-         CleanReferencesToNetAspect(assemblyDefinition);
-      }
-
-      private static void CleanReferencesToNetAspect(AssemblyDefinition assemblyDefinition)
-      {
-         foreach (var moduleDefinition in assemblyDefinition.Modules)
-         {
-            var same = (from r in moduleDefinition.AssemblyReferences where r.FullName == typeof(IInterceptor).Assembly.FullName select r).ToList();
-            foreach (var reference in same)
-            {
-               moduleDefinition.AssemblyReferences.Remove(reference);
-            }
-             foreach (var typeDefinition in moduleDefinition.GetTypes())
-             {
-                 var interfaces = (from i in typeDefinition.Interfaces where i.FullName == typeof (IInterceptor).FullName select i).ToList();
-                 foreach (var @interface in interfaces)
-                 {
-                     typeDefinition.Interfaces.Remove(@interface);
-                 }
-             }
-         }
+        private void CheckAssembly(ErrorHandler errorHandler)
+        {
+            
 
 
-      }
-
-       public void GetObjectData(SerializationInfo info, StreamingContext context)
-       {
-           
-       }
-   }
-}
+            

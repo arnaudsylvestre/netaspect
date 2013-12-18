@@ -13,7 +13,7 @@ namespace FluentAspect.Weaver.Core.Fluent
 
             foreach (var type in types)
             {
-                methods.AddRange(from m in type.GetMethods() where filter(m) select m);
+                methods.AddRange(from m in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance) where filter(m) select m);
             }
 
             return methods;
