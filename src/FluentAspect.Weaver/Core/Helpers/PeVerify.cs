@@ -26,6 +26,7 @@
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
+using System;
 using System.CodeDom.Compiler;
 using System.Runtime.Remoting.Contexts;
 
@@ -36,13 +37,10 @@ namespace Boo.Lang.Compiler.Steps
 	using System.IO;
 	using Compiler;
 
-	public class PEVerify : AbstractCompilerStep
+	public class PEVerify
 	{
-		override public void Run()
+		public void Run(string assemblyFile)
 		{			
-#if !NO_SYSTEM_PROCESS
-			if (FluentAspect.Weaver.Core.Errors.Count > 0)
-				return;
 
 			string command = null;
 			string arguments = string.Empty;
@@ -52,30 +50,25 @@ namespace Boo.Lang.Compiler.Steps
 				case (int)System.PlatformID.Unix:
 				case 128:// mono's PlatformID.Unix workaround on 1.1
 					command = "pedump";
-					arguments = "--verify all \"" + Context.GeneratedAssemblyFileName + "\"";
+					arguments = "--verify all \"" + assemblyFile + "\"";
 					break;
 				default: // Windows
 					command = "peverify.exe";
-					arguments = "\"" + Context.GeneratedAssemblyFileName + "\"";
+					arguments = "\"" + assemblyFile + "\"";
 					break;					
 			}
-			
-			try
-			{
-				var p = StartProcess(Path.GetDirectoryName(Parameters.OutputAssembly), command, arguments);
+		    int exitCode = 0;
+		    string output = "";
+				var p = StartProcess(@".\", command, arguments);
 				p.WaitForExit();
-				if (0 != p.ExitCode)
-					FluentAspect.Weaver.Core.Errors.Add(new CompilerError(Ast.LexicalInfo.Empty, p.StandardOutput.ReadToEnd()));
-			}
-			catch (System.Exception e)
-			{
-				Warnings.Add(new CompilerWarning("Could not start " + command));      
-				Context.TraceWarning("Could not start " + command +" : " + e.Message);
-			}
-#endif
+                output = p.StandardOutput.ReadToEnd();
+			    exitCode = p.ExitCode;
+            if (0 != exitCode)
+            {
+                throw new Exception(output);
+            }
 		}
 		
-#if !NO_SYSTEM_PROCESS
 		public Process StartProcess(string workingdir, string filename, string arguments)
 		{
 			var p = new Process
@@ -104,43 +97,7 @@ namespace Boo.Lang.Compiler.Steps
 			p.Start();
 			return p;
 		}
-#endif
 	}
 }
 
-        }
-
-        private void Clean(AssemblyDefinition assemblyDefinition)
-      {
-         configurationReader.Clean(assemblyDefinition);
-         CleanReferencesToNetAspect(assemblyDefinition);
-      }
-
-      private static void CleanReferencesToNetAspect(AssemblyDefinition assemblyDefinition)
-      {
-         foreach (var moduleDefinition in assemblyDefinition.Modules)
-         {
-            var same = (from r in moduleDefinition.AssemblyReferences where r.FullName == typeof(IInterceptor).Assembly.FullName select r).ToList();
-            foreach (var reference in same)
-            {
-               moduleDefinition.AssemblyReferences.Remove(reference);
-            }
-             foreach (var typeDefinition in moduleDefinition.GetTypes())
-             {
-                 var interfaces = (from i in typeDefinition.Interfaces where i.FullName == typeof (IInterceptor).FullName select i).ToList();
-                 foreach (var @interface in interfaces)
-                 {
-                     typeDefinition.Interfaces.Remove(@interface);
-                 }
-             }
-         }
-
-
-      }
-
-       public void GetObjectData(SerializationInfo info, StreamingContext context)
-       {
-           
-       }
-   }
-}
+       
