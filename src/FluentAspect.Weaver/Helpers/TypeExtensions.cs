@@ -24,7 +24,18 @@ namespace FluentAspect.Weaver.Core.Fluent
 
             foreach (var type in types)
             {
-                methods.AddRange(from m in type.GetConstructors() where filter(m) select m);
+                methods.AddRange(from m in type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance) where filter(m) select m);
+            }
+
+            return methods;
+        }
+        public static List<PropertyInfo> GetAllProperties(this IEnumerable<Type> types, Func<PropertyInfo, bool> filter)
+        {
+            var methods = new List<PropertyInfo>();
+
+            foreach (var type in types)
+            {
+                methods.AddRange(from m in type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance) where filter(m) select m);
             }
 
             return methods;

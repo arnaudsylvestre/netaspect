@@ -25,7 +25,8 @@ namespace SheepAspect.Tasks
                    logger.LogError(error);
                 }
 
-                return true;
+
+                return handler.Errors.Count == 0;
             }
             catch(Exception e)
             {

@@ -20,32 +20,36 @@ namespace SheepAspect.Tasks
                 var directoryPath = Path.GetDirectoryName(ConfigFile);
                 string[] weavedFiles;
                 var domain = AppDomain.CreateDomain("SheepAspect Weaving", null,
-                        new AppDomainSetup
-                            {
-                                ApplicationBase = directoryPath,
-                                ShadowCopyFiles = "true"
-                            });
+                                                    new AppDomainSetup
+                                                        {
+                                                            ApplicationBase = directoryPath,
+                                                            ShadowCopyFiles = "true"
+                                                        });
 
                 try
                 {
                     var runnerType = typeof (AppDomainIsolatedDiscoveryRunner);
-                    
-                    var runner = domain.CreateInstanceFromAndUnwrap(new Uri(runnerType.Assembly.CodeBase).LocalPath, runnerType.FullName) as
-                                 AppDomainIsolatedDiscoveryRunner;
+
+                    var runner =
+                        domain.CreateInstanceFromAndUnwrap(new Uri(runnerType.Assembly.CodeBase).LocalPath,
+                                                           runnerType.FullName) as
+                        AppDomainIsolatedDiscoveryRunner;
 
                     if (!runner.Process(ConfigFile, Log, out weavedFiles))
+                    {
+                        var targetFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(ConfigFile);
+                        if (File.Exists(targetFileName))
+                            File.Delete(targetFileName);
                         return false;
+                    }
                 }
                 finally
                 {
                     AppDomain.Unload(domain);
                 }
-
-                {
-                    var tempFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(ConfigFile);
-                    File.Copy(tempFileName, ConfigFile, true);
-                    File.Delete(tempFileName);
-                }
+                var tempFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(ConfigFile);
+                File.Copy(tempFileName, ConfigFile, true);
+                File.Delete(tempFileName);
             }
             catch (Exception e)
             {
