@@ -56,7 +56,6 @@ namespace FluentAspect.Weaver.Weavers
                                             ILProcessor il)
       {
          il.Emit(OpCodes.Stloc, ex);
-         il.Emit(OpCodes.Ldloc, interceptor);
 
          var forParameters = new Dictionary<string, Action>();
          forParameters.Add("instance", () => il.Emit(OpCodes.Ldarg_0));
