@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Reflection;
-using FluentAspect.Core.Core;
 
 namespace FluentAspect.Sample
 {
-   public class ThrowerInterceptor : IInterceptor
+   public class ThrowerInterceptor
    {
-      public void Before(object thisObject, MethodInfo methodInfo_P, object[] parameters)
-      {
-          if ((bool)parameters[0])
-            throw new NotSupportedException();
-      }
 
-      public void After(object thisObject, MethodInfo methodInfo_P, object[] parameters, ref object result_P)
-      {
-      }
+       public void Before(object instance, MethodInfo method, object[] parameters)
+       {
+           if ((bool)parameters[0])
+               throw new NotSupportedException();
+       }
 
-      public void OnException(object thisObject, MethodInfo methodInfo_P, object[] parameters, Exception e)
-      {
-      }
+       public void After(object instance, MethodInfo method, object[] parameters, ref object result)
+       {
+       }
+
+       public void OnException(object instance, MethodInfo method, object[] parameters, Exception exception)
+       {
+       }
    }
 }

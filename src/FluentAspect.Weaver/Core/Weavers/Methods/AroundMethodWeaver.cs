@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAspect.Core.Core;
 using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;

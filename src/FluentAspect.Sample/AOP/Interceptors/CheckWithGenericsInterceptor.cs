@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Reflection;
-using FluentAspect.Core.Core;
 
 namespace FluentAspect.Sample
 {
-   class CheckWithGenericsInterceptor : IInterceptor
+   class CheckWithGenericsInterceptor
     {
-      public void Before(object thisObject, MethodInfo methodInfo_P, object[] parameters)
-      {
-      }
+        public void Before(object instance, MethodInfo method, object[] parameters)
+        {
+        }
 
-      public void After(object thisObject, MethodInfo methodInfo_P, object[] parameters, ref object result_P)
-      {
-         result_P = result_P + "Weaved";
-      }
+        public void After(object instance, MethodInfo method, object[] parameters, ref object result)
+        {
+            result = result + "Weaved";
+        }
 
-      public void OnException(object thisObject, MethodInfo methodInfo_P, object[] parameters, Exception e)
-      {
-      }
+        public void OnException(object instance, MethodInfo method, object[] parameters, Exception exception)
+        {
+        }
     }
 }

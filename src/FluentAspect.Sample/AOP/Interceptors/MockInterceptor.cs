@@ -1,44 +1,43 @@
 ﻿using System;
 using System.Reflection;
-using FluentAspect.Core.Core;
 
 namespace FluentAspect.Sample
 {
-    public class MockInterceptor : IInterceptor
+    public class MockInterceptor
     {
         public static BeforeInfo before;
         public static AfterInfo after;
         public static ExceptionInfo exception;
 
-        public void Before(object thisObject, MethodInfo methodInfo_P, object[] parameters)
+        public void Before(object instance, MethodInfo method, object[] parameters)
         {
             before = new BeforeInfo
                 {
-                    @this = thisObject,
-                    methodInfo_P = methodInfo_P,
+                    @this = instance,
+                    methodInfo_P = method,
                     parameters = parameters
                 };
         }
 
-        public void After(object thisObject, MethodInfo methodInfo_P, object[] parameters, ref object result_P)
+        public void After(object instance, MethodInfo method, object[] parameters, ref object result)
         {
             after = new AfterInfo
                 {
-                    @this = thisObject,
-                    result = result_P,
-                    methodInfo_P = methodInfo_P,
+                    @this = instance,
+                    result = result,
+                    methodInfo_P = method,
                     parameters = parameters
                 };
         }
 
-        public void OnException(object thisObject, MethodInfo methodInfo_P, object[] parameters, Exception e)
+        public void OnException(object instance, MethodInfo method, object[] parameters, Exception exception)
         {
-            exception = new ExceptionInfo
+            MockInterceptor.exception = new ExceptionInfo
                 {
-                    @this = thisObject,
-                    methodInfo_P = methodInfo_P,
+                    @this = instance,
+                    methodInfo_P = method,
                     parameters = parameters,
-                    Exception = e,
+                    Exception = exception,
                 };
         }
 

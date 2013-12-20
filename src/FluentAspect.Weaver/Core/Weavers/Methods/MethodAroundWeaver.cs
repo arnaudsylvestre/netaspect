@@ -57,11 +57,23 @@ namespace FluentAspect.Weaver.Weavers
       {
          il.Emit(OpCodes.Stloc, ex);
          il.Emit(OpCodes.Ldloc, interceptor);
-         il.Emit(OpCodes.Ldarg_0);
-         il.Emit(OpCodes.Ldloc, methodInfo);
-         il.Emit(OpCodes.Ldloc, args);
-         il.Emit(OpCodes.Ldloc, ex);
-         il.Emit(OpCodes.Callvirt, method.Module.Import(interceptorType.GetMethod("OnException")));
+
+         var forParameters = new Dictionary<string, Action>();
+         forParameters.Add("instance", () => il.Emit(OpCodes.Ldarg_0));
+         forParameters.Add("method", () => il.Emit(OpCodes.Ldloc, methodInfo));
+         forParameters.Add("parameters", () => il.Emit(OpCodes.Ldloc, args));
+         forParameters.Add("exception", () => il.Emit(OpCodes.Ldloc, ex));
+
+         var beforeMethod = interceptorType.GetMethod("OnException");
+         if (beforeMethod == null)
+             return;
+         il.Emit(OpCodes.Ldloc, interceptor);
+
+         foreach (var parameterInfo in beforeMethod.GetParameters())
+         {
+             forParameters[parameterInfo.Name]();
+         }
+         il.Emit(OpCodes.Call, method.Module.Import(beforeMethod));
       }
 
       private VariableDefinition CreateException(MethodDefinition method)
@@ -90,12 +102,26 @@ namespace FluentAspect.Weaver.Weavers
                              Type interceptorType,
                              ILProcessor il)
       {
-         il.Emit(OpCodes.Ldloc, interceptor);
-         il.Emit(OpCodes.Ldarg_0);
-         il.Emit(OpCodes.Ldloc, methodInfo);
-         il.Emit(OpCodes.Ldloc, args);
-         il.Emit(OpCodes.Ldloca, handleResult);
-         il.Emit(OpCodes.Callvirt, method.Module.Import(interceptorType.GetMethod("After")));
+          var forParameters = new Dictionary<string, Action<ParameterInfo>>();
+          forParameters.Add("instance", (p) => il.Emit(OpCodes.Ldarg_0));
+          forParameters.Add("method", (p) => il.Emit(OpCodes.Ldloc, methodInfo));
+          forParameters.Add("parameters", (p) => 
+              il.Emit(OpCodes.Ldloc, args));
+          forParameters.Add("result", (p) => 
+              il.Emit(p.ParameterType.IsByRef ? OpCodes.Ldloca : OpCodes.Ldloc, handleResult));
+
+
+          var afterMethod = interceptorType.GetMethod("After");
+          if (afterMethod == null)
+              return;
+
+          il.Emit(OpCodes.Ldloc, interceptor);
+
+          foreach (var parameterInfo in afterMethod.GetParameters())
+          {
+              forParameters[parameterInfo.Name](parameterInfo);
+          }
+          il.Emit(OpCodes.Call, method.Module.Import(afterMethod));
       }
 
       private VariableDefinition CallWeavedMethod(MethodDefinition method,
@@ -131,7 +157,21 @@ namespace FluentAspect.Weaver.Weavers
                               Type interceptorType,
                               ILProcessor il)
       {
-          il.AppendCallTo(interceptorType.GetMethod("Before"), method.Module, interceptor, ILProcessorExtensions.This, methodInfo, args);
+          var forParameters = new Dictionary<string, Action>();
+          forParameters.Add("instance", () => il.Emit(OpCodes.Ldarg_0));
+          forParameters.Add("method", () => il.Emit(OpCodes.Ldloc, methodInfo));
+          forParameters.Add("parameters", () => il.Emit(OpCodes.Ldloc, args));
+
+          var beforeMethod = interceptorType.GetMethod("Before");
+          if (beforeMethod == null)
+              return;
+          il.Emit(OpCodes.Ldloc, interceptor);
+
+          foreach (var parameterInfo in beforeMethod.GetParameters())
+          {
+              forParameters[parameterInfo.Name]();
+          }
+          il.Emit(OpCodes.Call, method.Module.Import(beforeMethod));
       }
    }
 }
