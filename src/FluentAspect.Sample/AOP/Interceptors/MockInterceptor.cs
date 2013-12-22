@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace FluentAspect.Sample
 {
-    public class MockInterceptor
+    public class MockInterceptorNetAspectAttribute : Attribute
     {
         public static BeforeInfo before;
         public static AfterInfo after;
@@ -32,7 +32,7 @@ namespace FluentAspect.Sample
 
         public void OnException(object instance, MethodInfo method, object[] parameters, Exception exception)
         {
-            MockInterceptor.exception = new ExceptionInfo
+            MockInterceptorNetAspectAttribute.exception = new ExceptionInfo
                 {
                     @this = instance,
                     methodInfo_P = method,

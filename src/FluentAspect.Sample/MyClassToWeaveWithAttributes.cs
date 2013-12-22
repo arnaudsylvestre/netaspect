@@ -11,7 +11,7 @@ namespace FluentAspect.Sample
        //}
       private bool thrown = false;
 
-       [Thrower]
+       [ThrowerNetAspect]
        public MyClassToWeaveWithAttributes(bool thrown)
        {
           this.thrown = thrown;
@@ -42,13 +42,13 @@ namespace FluentAspect.Sample
          throw new NotImplementedException();
       }
 
-      [CheckBefore]
+      [CheckBeforeNetAspect]
       public string CheckBeforeWithAttributes(BeforeParameter parameter)
       {
           return parameter.Value;
       }
 
-      [CheckBefore]
+      [CheckBeforeNetAspect]
       private string CheckBeforeWithAttributesPrivate(BeforeParameter parameter)
       {
           return parameter.Value;
@@ -69,7 +69,7 @@ namespace FluentAspect.Sample
       }
 
 
-      [CheckBefore]
+      [CheckBeforeNetAspect]
       private string CheckBeforeWithAttributesProtected(BeforeParameter parameter)
       {
           return parameter.Value;

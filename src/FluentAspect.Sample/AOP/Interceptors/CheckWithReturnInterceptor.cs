@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace FluentAspect.Sample
 {
-   class CheckWithReturnInterceptor
+   class CheckWithReturnInterceptorNetAspectAttribute : Attribute
     {
       
       public void Before(object instance, MethodInfo method, object[] parameters)

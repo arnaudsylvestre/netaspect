@@ -37,17 +37,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AOP\Attributes\CheckBeforeAttribute.cs" />
-    <Compile Include="AOP\Attributes\CheckMultiInterceptorAttribute.cs" />
     <Compile Include="AOP\Attributes\ThrowerAttribute.cs" />
     <Compile Include="AOP\Interceptors\CheckMultiInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckNotRenameInAssemblyInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithParametersInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithReturnInterceptor.cs" />
-    <Compile Include="AOP\Interceptors\CheckBeforeInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithVoidInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckWithGenericsInterceptor.cs" />
     <Compile Include="AOP\Interceptors\CheckThrowInterceptor.cs" />
-    <Compile Include="AOP\Interceptors\ThrowerInterceptor.cs" />
     <Compile Include="AOP\Interceptors\MockInterceptor.cs" />
     <Compile Include="BeforeParameter.cs" />
     <Compile Include="AbstractClassToWeaveWithAttributes.cs" />
@@ -56,12 +53,6 @@
     <Compile Include="MyClassToWeaveWithAttributes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FluentAspect.Core\FluentAspect.Core.csproj">
-      <Project>{D9877E16-93EF-4B3C-B671-8BE39BC41D94}</Project>
-      <Name>FluentAspect.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

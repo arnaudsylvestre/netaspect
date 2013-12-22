@@ -3,7 +3,8 @@ using System.Reflection;
 
 namespace FluentAspect.Sample
 {
-    public class CheckNotRenameInAssemblyInterceptor
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    public class CheckNotRenameInAssemblyNetAspectAttribute : Attribute
     {
         public void Before(object instance, MethodInfo method, object[] parameters)
         {

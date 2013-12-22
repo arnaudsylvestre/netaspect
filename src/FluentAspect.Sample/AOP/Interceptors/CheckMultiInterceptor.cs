@@ -3,7 +3,8 @@ using System.Reflection;
 
 namespace FluentAspect.Sample
 {
-    public class CheckMultiInterceptor
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    public class CheckMultiNetAspectAttribute : Attribute
     {
         public void Before(ref int i)
         {

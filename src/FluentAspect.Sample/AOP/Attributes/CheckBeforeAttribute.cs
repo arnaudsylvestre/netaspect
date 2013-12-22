@@ -1,12 +1,21 @@
 ﻿using System;
-using FluentAspect.Core.Attributes;
+using System.Reflection;
 
 namespace FluentAspect.Sample.Attributes
 {
-    public class CheckBeforeAttribute : MethodInterceptorAttribute
+    
+    public class CheckBeforeNetAspectAttribute : Attribute
     {
-        public CheckBeforeAttribute()
-            : base(typeof(CheckBeforeInterceptor))
+        public void Before(object instance, MethodInfo method, object[] parameters)
+        {
+            ((BeforeParameter)parameters[0]).Value = "Value set in before";
+        }
+
+        public void After(object instance, MethodInfo method, object[] parameters, ref object result)
+        {
+        }
+
+        public void OnException(object instance, MethodInfo method, object[] parameters, Exception exception)
         {
         }
     }

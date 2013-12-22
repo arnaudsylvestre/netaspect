@@ -180,19 +180,19 @@ namespace FluentAspect.Weaver.Tests
         {
             runner.Run(() =>
                 {
-                    MockInterceptor.after = null;
-                    MockInterceptor.before = null;
-                    MockInterceptor.exception = null;
+                    MockInterceptorNetAspectAttribute.after = null;
+                    MockInterceptorNetAspectAttribute.before = null;
+                    MockInterceptorNetAspectAttribute.exception = null;
                     var myClassToWeave = new MyClassToWeave();
                     string res = myClassToWeave.CheckMock("param");
-                    Assert.AreSame(myClassToWeave, MockInterceptor.before.@this);
-                    Assert.AreEqual("CheckMock", MockInterceptor.before.methodInfo_P.Name);
-                    Assert.AreEqual(new object[] {"param"}, MockInterceptor.before.parameters);
-                    Assert.AreSame(myClassToWeave, MockInterceptor.after.@this);
-                    Assert.AreEqual("CheckMock", MockInterceptor.after.methodInfo_P.Name);
-                    Assert.AreEqual(new object[] {"param"}, MockInterceptor.after.parameters);
-                    Assert.AreEqual(res, MockInterceptor.after.result);
-                    Assert.AreEqual(null, MockInterceptor.exception);
+                    Assert.AreSame(myClassToWeave, MockInterceptorNetAspectAttribute.before.@this);
+                    Assert.AreEqual("CheckMock", MockInterceptorNetAspectAttribute.before.methodInfo_P.Name);
+                    Assert.AreEqual(new object[] { "param" }, MockInterceptorNetAspectAttribute.before.parameters);
+                    Assert.AreSame(myClassToWeave, MockInterceptorNetAspectAttribute.after.@this);
+                    Assert.AreEqual("CheckMock", MockInterceptorNetAspectAttribute.after.methodInfo_P.Name);
+                    Assert.AreEqual(new object[] { "param" }, MockInterceptorNetAspectAttribute.after.parameters);
+                    Assert.AreEqual(res, MockInterceptorNetAspectAttribute.after.result);
+                    Assert.AreEqual(null, MockInterceptorNetAspectAttribute.exception);
                 });
         }
 
@@ -201,9 +201,9 @@ namespace FluentAspect.Weaver.Tests
         {
             runner.Run(() =>
                 {
-                    MockInterceptor.after = null;
-                    MockInterceptor.before = null;
-                    MockInterceptor.exception = null;
+                    MockInterceptorNetAspectAttribute.after = null;
+                    MockInterceptorNetAspectAttribute.before = null;
+                    MockInterceptorNetAspectAttribute.exception = null;
                     var myClassToWeave = new MyClassToWeave();
                     try
                     {
@@ -211,13 +211,13 @@ namespace FluentAspect.Weaver.Tests
                     }
                     catch (NotImplementedException)
                     {
-                        Assert.AreSame(myClassToWeave, MockInterceptor.before.@this);
-                        Assert.AreEqual("CheckMockException", MockInterceptor.before.methodInfo_P.Name);
-                        Assert.AreEqual(new object[0], MockInterceptor.before.parameters);
-                        Assert.AreSame(myClassToWeave, MockInterceptor.exception.@this);
-                        Assert.AreEqual("CheckMockException", MockInterceptor.exception.methodInfo_P.Name);
-                        Assert.AreEqual(new object[0], MockInterceptor.exception.parameters);
-                        Assert.True(MockInterceptor.exception.Exception is NotImplementedException);
+                        Assert.AreSame(myClassToWeave, MockInterceptorNetAspectAttribute.before.@this);
+                        Assert.AreEqual("CheckMockException", MockInterceptorNetAspectAttribute.before.methodInfo_P.Name);
+                        Assert.AreEqual(new object[0], MockInterceptorNetAspectAttribute.before.parameters);
+                        Assert.AreSame(myClassToWeave, MockInterceptorNetAspectAttribute.exception.@this);
+                        Assert.AreEqual("CheckMockException", MockInterceptorNetAspectAttribute.exception.methodInfo_P.Name);
+                        Assert.AreEqual(new object[0], MockInterceptorNetAspectAttribute.exception.parameters);
+                        Assert.True(MockInterceptorNetAspectAttribute.exception.Exception is NotImplementedException);
                     }
                 });
         }

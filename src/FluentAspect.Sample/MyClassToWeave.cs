@@ -1,19 +1,17 @@
 ﻿using System;
-using FluentAspect.Core.Attributes;
 using FluentAspect.Sample.Attributes;
 
 namespace FluentAspect.Sample
 {
-
     public class MyClassToWeave
     {
 
-        [MethodInterceptor(typeof(CheckWithReturnInterceptor))]
+        [CheckWithReturnInterceptorNetAspect]
        public string CheckWithReturn()
        {
           return "NotWeaved";
        }
-        [MethodInterceptor(typeof(CheckWithParametersInterceptor))]
+        [CheckWithParametersInterceptorNetAspect]
         
        public string CheckWithParameters(string aspectWillReturnThis)
        {
@@ -21,46 +19,46 @@ namespace FluentAspect.Sample
        }
 
 
-        [MethodInterceptor(typeof(CheckWithVoidInterceptor))]
+        [CheckWithVoidInterceptorNetAspect]
        public void CheckWithVoid()
        {
 
        }
 
-       [MethodInterceptor(typeof(CheckWithGenericsInterceptor))]
+        [CheckWithGenericsInterceptorNetAspect]
        public string CheckWithGenerics<T>(T arg)
        {
            return arg.ToString() + "<>" + typeof(T).FullName;
        }
 
 
-       [MethodInterceptor(typeof(CheckWithGenericsInterceptor))]
+        [CheckWithGenericsInterceptorNetAspect]
        public string CheckWithGenericsClass<T>(T arg)
            where T : class 
        {
            return arg.ToString() + "<>" + typeof(T).FullName;
        }
 
-       [MethodInterceptor(typeof(CheckThrowInterceptor))]
+        [CheckThrowInterceptorNetAspect]
         public void CheckThrow()
         {
             throw new NotImplementedException();
         }
 
 
-       [MethodInterceptor(typeof(CheckBeforeInterceptor))]
+        [CheckBeforeNetAspect]
         public string CheckBefore(BeforeParameter parameter)
         {
             return parameter.Value;
         }
 
-        [MethodInterceptor(typeof(CheckWithParameterNameInterceptor))]
+        [CheckWithParameterNameInterceptorNetAspectAttribute]
         public string CheckWithParameterName(int first, int second)
         {
             return string.Format("{0} : {1}", first, second);
         }
 
-        [MethodInterceptor(typeof(CheckBeforeInterceptor))]
+        [CheckBeforeNetAspect]
         public static string CheckStatic(BeforeParameter parameter)
         {
             return parameter.Value;
@@ -68,7 +66,7 @@ namespace FluentAspect.Sample
 
 
 
-        [MethodInterceptor(typeof(CheckNotRenameInAssemblyInterceptor))]
+        [CheckNotRenameInAssemblyNetAspectAttribute]
         public string CheckNotRenameInAssembly()
         {
             return CheckWithReturn();
@@ -76,26 +74,26 @@ namespace FluentAspect.Sample
 
 
 
-        [MethodInterceptor(typeof(MockInterceptor))]
+        [MockInterceptorNetAspect]
         public string CheckMockException()
         {
             throw new NotImplementedException();
         }
-        [MethodInterceptor(typeof(MockInterceptor))]
+        [MockInterceptorNetAspect]
         public string CheckMock(string parameter)
         {
             return "return";
         }
 
-        [CheckMultiInterceptor]
-        [CheckMultiInterceptor]
+        [CheckMultiNetAspect]
+        [CheckMultiNetAspect]
         public string CheckMulti(int i)
         {
             return i.ToString();
         }
     }
 
-    public class CheckWithParameterNameInterceptor
+    public class CheckWithParameterNameInterceptorNetAspectAttribute : Attribute
     {
         public void Before(int first, ref int second)
         {
