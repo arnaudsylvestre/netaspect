@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Weavers.Helpers;
@@ -9,17 +10,91 @@ using MethodAttributes = Mono.Cecil.MethodAttributes;
 
 namespace FluentAspect.Weaver.Weavers
 {
+
+
+    public class MethodMethodAroundWeaverConfiguration : MethodAroundWeaver.IAroundWeaverConfiguration
+    {
+        public MethodInfo ToCallBefore(Type interceptorType)
+        {
+            return interceptorType.GetMethod("Before");
+        }
+
+        public MethodInfo ToCallAfter(Type interceptorType)
+        {
+            return interceptorType.GetMethod("After");
+        }
+
+        public MethodInfo ToCallOnException(Type interceptorType)
+        {
+            return interceptorType.GetMethod("OnException");
+        }
+    }
+
+    public static class AroundWeaverConfigurationExtensions
+    {
+        public static bool Needs(this MethodAroundWeaver.IAroundWeaverConfiguration configuration, List<Type> interceptorTypes, string variableName)
+        {
+            foreach (var interceptorType in interceptorTypes)
+            {
+                var parameters = new List<ParameterInfo>();
+                var callBefore = configuration.ToCallBefore(interceptorType);
+                if (callBefore != null)
+                parameters.AddRange(callBefore.GetParameters().ToList());
+                var methodInfo = configuration.ToCallAfter(interceptorType);
+                if (methodInfo != null)
+                parameters.AddRange(methodInfo.GetParameters().ToList());
+                var callOnException = configuration.ToCallOnException(interceptorType);
+                if (callOnException != null)
+                    parameters.AddRange(callOnException.GetParameters().ToList());
+
+                var enumerable = from p in parameters where p.Name == variableName select p.Name;
+                if (enumerable.Any())
+                    return true;
+            }
+            return false;
+        }
+
+        public static bool NeedsCallBefore(this MethodAroundWeaver.IAroundWeaverConfiguration configuration,
+                                           List<Type> interceptorTypes)
+        {
+            return interceptorTypes.Any(interceptorType => configuration.ToCallBefore(interceptorType) != null);
+        }
+
+        public static bool NeedsCallAfter(this MethodAroundWeaver.IAroundWeaverConfiguration configuration,
+                                           List<Type> interceptorTypes)
+        {
+            return interceptorTypes.Any(interceptorType => configuration.ToCallAfter(interceptorType) != null);
+        }
+
+        public static bool NeedsCallOnException(this MethodAroundWeaver.IAroundWeaverConfiguration configuration,
+                                           List<Type> interceptorTypes)
+        {
+            return interceptorTypes.Any(interceptorType => configuration.ToCallOnException(interceptorType) != null);
+        }
+    }
+
    public class MethodAroundWeaver
    {
-      public void CreateWeaver(MethodDefinition method, List<Type> interceptorType, MethodDefinition wrappedMethod)
+       private const string ParameterParameters = "parameters";
+
+       public interface IAroundWeaverConfiguration
+       {
+           MethodInfo ToCallBefore(Type interceptorType);
+           MethodInfo ToCallAfter(Type interceptorType);
+           MethodInfo ToCallOnException(Type interceptorType);
+       }
+
+      public void CreateWeaver(MethodDefinition method, List<Type> interceptorType, MethodDefinition wrappedMethod, IAroundWeaverConfiguration configuration)
       {
-         CreateWeaver(new Method(method), interceptorType, wrappedMethod);
+          CreateWeaver(new Method(method), interceptorType, wrappedMethod, configuration);
       }
 
-      public void CreateWeaver(Method myMethod, List<Type> interceptorType, MethodDefinition wrappedMethod)
+      public void CreateWeaver(Method myMethod, List<Type> interceptorType, MethodDefinition wrappedMethod, IAroundWeaverConfiguration configuration)
       {
          var interceptor = myMethod.CreateAndInitializeVariable(interceptorType);
-         var args = myMethod.CreateArgsArrayFromParameters();
+         VariableDefinition args = null;
+         if (configuration.Needs(interceptorType, ParameterParameters))
+              args = myMethod.CreateArgsArrayFromParameters();
          var methodInfo = myMethod.CreateMethodInfo();
          var weavedResult = myMethod.CreateWeavedResult();
 
@@ -65,7 +140,7 @@ namespace FluentAspect.Weaver.Weavers
               var forParameters = new Dictionary<string, Action<ParameterInfo>>();
               forParameters.Add("instance", (p) => il.Emit(OpCodes.Ldarg_0));
               forParameters.Add("method", (p) => il.Emit(OpCodes.Ldloc, methodInfo));
-              forParameters.Add("parameters", (p) => il.Emit(OpCodes.Ldloc, args));
+              forParameters.Add(ParameterParameters, (p) => il.Emit(OpCodes.Ldloc, args));
               forParameters.Add("exception", (p) => il.Emit(OpCodes.Ldloc, ex));
 
 
@@ -111,7 +186,7 @@ namespace FluentAspect.Weaver.Weavers
               var forParameters = new Dictionary<string, Action<ParameterInfo>>();
               forParameters.Add("instance", (p) => il.Emit(OpCodes.Ldarg_0));
               forParameters.Add("method", (p) => il.Emit(OpCodes.Ldloc, methodInfo));
-              forParameters.Add("parameters", (p) =>
+              forParameters.Add(ParameterParameters, (p) =>
                   il.Emit(OpCodes.Ldloc, args));
               forParameters.Add("result", (p) =>
                   il.Emit(p.ParameterType.IsByRef ? OpCodes.Ldloca : OpCodes.Ldloc, handleResult));
@@ -179,7 +254,7 @@ namespace FluentAspect.Weaver.Weavers
               var forParameters = new Dictionary<string, Action<ParameterInfo>>();
               forParameters.Add("instance", (p) => il.Emit(OpCodes.Ldarg_0));
               forParameters.Add("method", (p) => il.Emit(OpCodes.Ldloc, methodInfo));
-              forParameters.Add("parameters", (p) => il.Emit(OpCodes.Ldloc, args));
+              forParameters.Add(ParameterParameters, (p) => il.Emit(OpCodes.Ldloc, args));
 
 
               foreach (var parameterDefinition in method.Parameters)

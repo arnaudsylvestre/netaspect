@@ -20,9 +20,14 @@ namespace FluentAspect.Weaver.Weavers.Methods
       public void Weave()
       {
           Check();
-         var newMethod = CreateNewMethodBasedOnMethodToWeave(definition, interceptorType);
-         definition.DeclaringType.Methods.Add(newMethod);
+          WeaveMethod(definition, interceptorType);
       }
+
+       public static void WeaveMethod(MethodDefinition methodDefinition, List<Type> interceptorTypes)
+       {
+           var newMethod = CreateNewMethodBasedOnMethodToWeave(methodDefinition, interceptorTypes);
+           methodDefinition.DeclaringType.Methods.Add(newMethod);
+       }
 
        private void Check()
        {
@@ -35,7 +40,7 @@ namespace FluentAspect.Weaver.Weavers.Methods
            }
        }
 
-       private MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition, List<Type> interceptor)
+       private static MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition, List<Type> interceptor)
        {
          var wrappedMethod = methodDefinition.Clone(ComputeNewName(methodDefinition));
 
@@ -48,7 +53,7 @@ namespace FluentAspect.Weaver.Weavers.Methods
          return wrappedMethod;
       }
 
-      private string ComputeNewName(MethodDefinition methodDefinition)
+      private static string ComputeNewName(MethodDefinition methodDefinition)
       {
          return "-Weaved-" + methodDefinition.Name;
       }

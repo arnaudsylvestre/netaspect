@@ -59,12 +59,14 @@
     <Compile Include="Core\IMethod.cs" />
     <Compile Include="Core\IType.cs" />
     <Compile Include="Core\WeaverBuilders\AroundConstructorBuilderWeaver.cs" />
+    <Compile Include="Core\WeaverBuilders\AroundPropertyBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\MultiWeaverBuilder.cs" />
     <Compile Include="Core\Weavers\Constructors\AroundConstructorWeaver.cs" />
     <Compile Include="Core\Weavers\Constructors\ConstructorAroundWeaver.cs" />
     <Compile Include="Core\Weavers\Helpers\ILProcessorExtensions.cs" />
     <Compile Include="Core\Weavers\Helpers\Method.cs" />
     <Compile Include="Core\Weavers\Helpers\VariableExtensions.cs" />
+    <Compile Include="Core\Weavers\Properties\AroundPropertyWeaver.cs" />
     <Compile Include="Helpers\MethodDefinitionAdapter.cs" />
     <Compile Include="Helpers\MethodInfoExtensions.cs" />
     <Compile Include="Helpers\TypeExtensions.cs" />
@@ -102,9 +104,6 @@
       <Project>{63E6915C-7EA4-4D76-AB28-0D7191EEA626}</Project>
       <Name>Mono.Cecil.Pdb</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Weavers\Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

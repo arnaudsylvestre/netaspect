@@ -6,6 +6,7 @@
        {
            original.Methods.AddRange(toAdd.Methods);
            original.Constructors.AddRange(toAdd.Constructors);
+           original.Properties.AddRange(toAdd.Properties);
        }
    }
 }

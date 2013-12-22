@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.Fluent
 {
@@ -19,23 +18,14 @@ namespace FluentAspect.Weaver.Core.Fluent
 
               var interceptorAttribute = from m in matchingMethod.GetNetAspectAttributes(true) select (Type)m.GetType();
               var info = matchingMethod;
-              configuration.Methods.Add(new MethodMatch()
+              configuration.Properties.Add(new PropertyMatch()
               {
                   InterceptorTypes = interceptorAttribute.ToList(),
-                  Matcher = m => m.Name == "get_" + info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName
-              });
-              configuration.Methods.Add(new MethodMatch()
-              {
-                  InterceptorTypes = interceptorAttribute.ToList(),
-                  Matcher = m => m.Name == "set_" + info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName
+                  Matcher = m => m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName
               });
           }
 
           return configuration;
-      }
-
-       public void Clean(AssemblyDefinition assemblyDefinition)
-      {
       }
    }
 }
