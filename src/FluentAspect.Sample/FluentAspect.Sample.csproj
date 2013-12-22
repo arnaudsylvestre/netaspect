@@ -36,16 +36,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AOP\Attributes\CheckBeforeAttribute.cs" />
-    <Compile Include="AOP\Attributes\ThrowerAttribute.cs" />
-    <Compile Include="AOP\Interceptors\CheckMultiInterceptor.cs" />
-    <Compile Include="AOP\Interceptors\CheckNotRenameInAssemblyInterceptor.cs" />
-    <Compile Include="AOP\Interceptors\CheckWithParametersInterceptor.cs" />
-    <Compile Include="AOP\Interceptors\CheckWithReturnInterceptor.cs" />
-    <Compile Include="AOP\Interceptors\CheckWithVoidInterceptor.cs" />
-    <Compile Include="AOP\Interceptors\CheckWithGenericsInterceptor.cs" />
-    <Compile Include="AOP\Interceptors\CheckThrowInterceptor.cs" />
-    <Compile Include="AOP\Interceptors\MockInterceptor.cs" />
+    <Compile Include="AOP\CheckBeforeAttribute.cs" />
+    <Compile Include="AOP\ThrowerAttribute.cs" />
+    <Compile Include="AOP\CheckMultiInterceptor.cs" />
+    <Compile Include="AOP\CheckNotRenameInAssemblyInterceptor.cs" />
+    <Compile Include="AOP\CheckWithParametersInterceptor.cs" />
+    <Compile Include="AOP\CheckWithReturnInterceptor.cs" />
+    <Compile Include="AOP\CheckWithVoidInterceptor.cs" />
+    <Compile Include="AOP\CheckWithGenericsInterceptor.cs" />
+    <Compile Include="AOP\CheckThrowInterceptor.cs" />
+    <Compile Include="AOP\MockInterceptor.cs" />
     <Compile Include="BeforeParameter.cs" />
     <Compile Include="AbstractClassToWeaveWithAttributes.cs" />
     <Compile Include="InterfaceToWeaveWithAttributes.cs" />
