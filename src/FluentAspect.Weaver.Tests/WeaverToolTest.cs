@@ -14,6 +14,8 @@ namespace FluentAspect.Weaver.Tests
     {
         public void Run(Action action)
         {
+            if (WeaverToolTest.errorHandler.Errors.Count != 0 || WeaverToolTest.errorHandler.Warnings.Count != 0)
+                throw new Exception("Errors or warnings");
             action();
         }
     }
@@ -51,7 +53,7 @@ namespace FluentAspect.Weaver.Tests
                 as AppDomainIsolatedTestRunner;
         }
 
-        private static ErrorHandler errorHandler = new ErrorHandler();
+        public static ErrorHandler errorHandler = new ErrorHandler();
 
         private static void Weave()
         {
@@ -76,6 +78,26 @@ namespace FluentAspect.Weaver.Tests
             {
                 string res = new MyClassToWeave().CheckBefore(new BeforeParameter { Value = "not before" });
                 Assert.AreEqual("Value set in before", res);
+            });
+        }
+
+        [Test]
+        public void CheckByParameterName()
+        {
+            runner.Run(() =>
+            {
+                string res = new MyClassToWeave().CheckWithParameterName(6, 1);
+                Assert.AreEqual("6 : 7", res);
+            });
+        }
+
+        [Test]
+        public void CheckMultiInterceptors()
+        {
+            runner.Run(() =>
+            {
+                var res = new MyClassToWeave().CheckMulti(1);
+                Assert.AreEqual("3", res);
             });
         }
 

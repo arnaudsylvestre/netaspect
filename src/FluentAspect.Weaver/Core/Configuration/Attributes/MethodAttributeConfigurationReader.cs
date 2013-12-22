@@ -22,11 +22,11 @@ namespace FluentAspect.Weaver.Core.Fluent
 
           foreach (var matchingMethod in matchingMethods)
           {
-              var interceptorAttribute = matchingMethod.GetCustomAttributes<MethodInterceptorAttribute>(true)[0];
+              var interceptorAttribute = from m in matchingMethod.GetCustomAttributes<MethodInterceptorAttribute>(true) select m.InterceptorType;
               MethodInfo info = matchingMethod;
               configuration.Methods.Add(new MethodMatch()
               {
-                  AdviceName = interceptorAttribute.InterceptorType,
+                  AdviceName = interceptorAttribute.ToList(),
                   Matcher = m => m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName
               });
           }

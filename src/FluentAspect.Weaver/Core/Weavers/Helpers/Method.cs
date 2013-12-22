@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -28,10 +29,10 @@ namespace FluentAspect.Weaver.Weavers.Helpers
           get { return definition; }
        }
 
-       public VariableDefinition CreateAndInitializeVariable(Type interceptorType)
-        {
-            return il.CreateAndInitializeVariable(definition, interceptorType);
-        }
+       public List<VariableDefinition> CreateAndInitializeVariable(List<Type> interceptorType)
+       {
+           return interceptorType.Select(type => il.CreateAndInitializeVariable(definition, type)).ToList();
+       }
 
         public VariableDefinition CreateArgsArrayFromParameters()
         {

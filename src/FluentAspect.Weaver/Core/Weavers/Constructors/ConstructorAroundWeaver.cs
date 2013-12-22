@@ -8,7 +8,7 @@ namespace FluentAspect.Weaver.Weavers.Methods
 {
    public class ConstructorAroundWeaver
    {
-      public void CreateWeaver(MethodDefinition methodDefinition_P, Type interceptor_P, MethodDefinition wrappedMethod_P)
+      public void CreateWeaver(MethodDefinition methodDefinition_P, List<Type> interceptor_P, MethodDefinition wrappedMethod_P)
       {
          var callBaseInstructions = ExtractCallToBaseInstructions(wrappedMethod_P, methodDefinition_P.DeclaringType);
          ClearCallToBase(wrappedMethod_P, methodDefinition_P.DeclaringType);

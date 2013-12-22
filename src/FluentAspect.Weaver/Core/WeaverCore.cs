@@ -16,7 +16,6 @@ namespace FluentAspect.Weaver.Core
       private IWeaverBuilder weaverBuilder;
 
         public WeaverCore(SerializationInfo info, StreamingContext context)
-           : this(new FluentConfigurationReader(), new AroundMethodBuilderWeaver())
         {
             
         }

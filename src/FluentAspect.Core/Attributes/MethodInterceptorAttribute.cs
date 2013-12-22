@@ -2,7 +2,7 @@
 
 namespace FluentAspect.Core.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, AllowMultiple = true, Inherited = false)]
     public class MethodInterceptorAttribute : Attribute
     {
         public Type InterceptorType { get; private set; }

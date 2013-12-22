@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
@@ -7,10 +8,10 @@ namespace FluentAspect.Weaver.Weavers.Methods
 {
    public class AroundConstructorWeaver : IWeaveable
    {
-      private Type interceptorType;
+       private List<Type> interceptorType;
       private MethodDefinition definition;
 
-      public AroundConstructorWeaver(Type interceptorType, MethodDefinition definition_P)
+      public AroundConstructorWeaver(List<Type> interceptorType, MethodDefinition definition_P)
       {
          this.interceptorType = interceptorType;
          definition = definition_P;
@@ -22,7 +23,7 @@ namespace FluentAspect.Weaver.Weavers.Methods
          definition.DeclaringType.Methods.Add(newMethod);
       }
 
-       private MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition, Type interceptor)
+       private MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition, List<Type> interceptor)
        {
          var wrappedMethod = methodDefinition.Clone("-Weaved-Constructor");
 

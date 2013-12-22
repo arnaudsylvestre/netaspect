@@ -42,13 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\MethodInterceptorAttribute.cs" />
-    <Compile Include="Fluent\FluentAspectDefinitionAttribute.cs" />
-    <Compile Include="Fluent\Methods\IType.cs" />
-    <Compile Include="Fluent\Methods\IMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
