@@ -8,12 +8,10 @@ namespace FluentAspect.Weaver.Core.Fluent
 {
    public class PropertyAttributeConfigurationReader : IConfigurationReader
    {
-       private List<ConstructorInfo> constructorsWithAttributesToDelete = new List<ConstructorInfo>(); 
 
       public WeavingConfiguration ReadConfiguration(IEnumerable<Type> types)
       {
-          var constructors = types.GetAllConstructors(m => m.GetNetAspectAttributes(true).Count > 0);
-          constructorsWithAttributesToDelete.AddRange(constructors);
+          var constructors = types.GetAllProperties(m => m.GetNetAspectAttributes(true).Count > 0);
           var configuration = new WeavingConfiguration();
 
           foreach (var matchingMethod in constructors)
@@ -21,10 +19,15 @@ namespace FluentAspect.Weaver.Core.Fluent
 
               var interceptorAttribute = from m in matchingMethod.GetNetAspectAttributes(true) select (Type)m.GetType();
               var info = matchingMethod;
-              configuration.Constructors.Add(new MethodMatch()
+              configuration.Methods.Add(new MethodMatch()
               {
                   InterceptorTypes = interceptorAttribute.ToList(),
-                  Matcher = m => m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName
+                  Matcher = m => m.Name == "get_" + info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName
+              });
+              configuration.Methods.Add(new MethodMatch()
+              {
+                  InterceptorTypes = interceptorAttribute.ToList(),
+                  Matcher = m => m.Name == "set_" + info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName
               });
           }
 

@@ -127,10 +127,19 @@ namespace FluentAspect.Weaver.Tests
         [Test]
         public void CheckConstructorWithFalse()
         {
-           runner.Run(() =>
-           {
-              new MyClassToWeaveWithAttributes(false);
-           });
+            runner.Run(() =>
+            {
+                new MyClassToWeaveWithAttributes(false);
+            });
+        }
+
+        [Test]
+        public void CheckPropertyGetter()
+        {
+            runner.Run(() =>
+            {
+                Assert.AreEqual("3", new MyClassToWeaveWithAttributes(false).Property);
+            });
         }
 
         [Test]

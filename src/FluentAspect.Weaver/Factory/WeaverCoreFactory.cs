@@ -12,7 +12,8 @@ namespace FluentAspect.Weaver.Factory
           return new WeaverCore(
               new MultiConfigurationReader(
                   new MethodAttributeConfigurationReader(), 
-                  new ConstructorAttributeConfigurationReader()
+                  new ConstructorAttributeConfigurationReader(),
+                  new PropertyAttributeConfigurationReader()
                ),
                new MultiWeaverBuilder(new AroundMethodBuilderWeaver(), new AroundConstructorBuilderWeaver()))
            ;

@@ -17,7 +17,13 @@ namespace FluentAspect.Sample
           this.thrown = thrown;
        }
 
-      public string CheckWithReturn()
+       [GetPropertyNetAspectAttribute]
+       public string Property
+       {
+           get { return "1"; }
+       }
+
+       public string CheckWithReturn()
       {
          return "NotWeaved";
       }
@@ -80,4 +86,13 @@ namespace FluentAspect.Sample
            return CheckBeforeWithAttributesProtected(beforeParameter);
        }
    }
+
+    public class GetPropertyNetAspectAttribute : Attribute
+    {
+        public void After(ref string result)
+        {
+            result = "3";
+        }
+
+    }
 }
