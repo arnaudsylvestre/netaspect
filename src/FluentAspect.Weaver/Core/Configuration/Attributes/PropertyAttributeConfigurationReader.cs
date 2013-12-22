@@ -21,9 +21,9 @@ namespace FluentAspect.Weaver.Core.Fluent
 
               var interceptorAttribute = from m in matchingMethod.GetNetAspectAttributes(true) select (Type)m.GetType();
               var info = matchingMethod;
-              configuration.Constructors.Add(new ConstructorMatch()
+              configuration.Constructors.Add(new MethodMatch()
               {
-                  AdviceName = interceptorAttribute.ToList(),
+                  InterceptorTypes = interceptorAttribute.ToList(),
                   Matcher = m => m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName
               });
           }

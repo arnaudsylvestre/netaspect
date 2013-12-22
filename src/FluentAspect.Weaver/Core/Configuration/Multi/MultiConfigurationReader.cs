@@ -32,13 +32,5 @@ namespace FluentAspect.Weaver.Core.Configuration.Multi
             throw new ConfigurationNotFoundException();
          return configuration_L;
       }
-
-      public void Clean(AssemblyDefinition assemblyDefinition)
-      {
-         foreach (var configurationReader_L in engines)
-         {
-            configurationReader_L.Clean(assemblyDefinition);
-         }
-      }
    }
 }

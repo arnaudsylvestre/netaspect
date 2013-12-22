@@ -43,8 +43,7 @@ namespace FluentAspect.Weaver.Core
              }
             
          }
-         Clean(assemblyDefinition);
-
+         
          assemblyDefinition.Write(targetFileName, new WriterParameters()
          {
             WriteSymbols = true,
@@ -64,11 +63,6 @@ namespace FluentAspect.Weaver.Core
                 errorHandler.Errors.Add("An internal error has occured : " + e.Message);
             }
 
-        }
-
-        private void Clean(AssemblyDefinition assemblyDefinition)
-        {
-            configurationReader.Clean(assemblyDefinition);
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)

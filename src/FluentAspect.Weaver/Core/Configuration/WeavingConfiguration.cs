@@ -10,13 +10,7 @@ namespace FluentAspect.Weaver.Core
     {
         public Func<IMethod, bool> Matcher { get; set; }
 
-        public List<Type> AdviceName { get; set; }
-    }
-    public class ConstructorMatch
-    {
-        public Func<IMethod, bool> Matcher { get; set; }
-
-        public List<Type> AdviceName { get; set; }
+        public List<Type> InterceptorTypes { get; set; }
     }
 
    public class WeavingConfiguration
@@ -24,11 +18,11 @@ namespace FluentAspect.Weaver.Core
       public WeavingConfiguration()
       {
          Methods = new List<MethodMatch>();
-          Constructors = new List<ConstructorMatch>();
+         Constructors = new List<MethodMatch>();
       }
 
       public List<MethodMatch> Methods { get; private set; }
 
-       public List<ConstructorMatch> Constructors { get; private set; }
+      public List<MethodMatch> Constructors { get; private set; }
    }
 }
