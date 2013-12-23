@@ -76,6 +76,7 @@ namespace FluentAspect.Weaver.Weavers
    public class MethodAroundWeaver
    {
        private const string ParameterParameters = "parameters";
+       private const string Instance = "instance";
 
        public interface IAroundWeaverConfiguration
        {
@@ -117,9 +118,15 @@ namespace FluentAspect.Weaver.Weavers
 
       }
 
+       public class InterceptorCaller
+       {
+            
+       }
 
-      
-
+      private void CallInterceptor(MethodDefinition method)
+       {
+           
+       }
        
 
       private void CallExceptionInterceptor(MethodDefinition method,
@@ -138,7 +145,7 @@ namespace FluentAspect.Weaver.Weavers
               il.Emit(OpCodes.Stloc, ex);
 
               var forParameters = new Dictionary<string, Action<ParameterInfo>>();
-              forParameters.Add("instance", (p) => il.Emit(OpCodes.Ldarg_0));
+              forParameters.Add(Instance, (p) => il.Emit(OpCodes.Ldarg_0));
               forParameters.Add("method", (p) => il.Emit(OpCodes.Ldloc, methodInfo));
               forParameters.Add(ParameterParameters, (p) => il.Emit(OpCodes.Ldloc, args));
               forParameters.Add("exception", (p) => il.Emit(OpCodes.Ldloc, ex));
