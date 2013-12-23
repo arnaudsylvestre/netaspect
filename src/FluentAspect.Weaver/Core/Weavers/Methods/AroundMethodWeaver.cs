@@ -48,7 +48,7 @@ namespace FluentAspect.Weaver.Weavers.Methods
          methodDefinition.Body.Variables.Clear();
          
          MethodAroundWeaver weaver = new MethodAroundWeaver();
-         weaver.CreateWeaver(methodDefinition, interceptor, wrappedMethod);
+         weaver.CreateWeaver(methodDefinition, interceptor, wrappedMethod, new MethodMethodAroundWeaverConfiguration());
           methodDefinition.Body.InitLocals = true;
          return wrappedMethod;
       }

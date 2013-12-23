@@ -18,7 +18,7 @@ namespace FluentAspect.Weaver.Weavers.Methods
          method_L.Append(callBaseInstructions);
 
          MethodAroundWeaver aroundWeaver_L = new MethodAroundWeaver();
-         aroundWeaver_L.CreateWeaver(method_L, interceptor_P, wrappedMethod_P);
+         aroundWeaver_L.CreateWeaver(method_L, interceptor_P, wrappedMethod_P, new MethodMethodAroundWeaverConfiguration());
       }
 
       private List<Instruction> ExtractCallToBaseInstructions(MethodDefinition wrappedMethod_P, TypeDefinition declaringType_P)
