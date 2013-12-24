@@ -48,13 +48,13 @@ namespace FluentAspect.Sample
          throw new NotImplementedException();
       }
 
-      [CheckBeforeNetAspect]
+      [CheckBeforeAspect]
       public string CheckBeforeWithAttributes(BeforeParameter parameter)
       {
           return parameter.Value;
       }
 
-      [CheckBeforeNetAspect]
+      [CheckBeforeAspect]
       private string CheckBeforeWithAttributesPrivate(BeforeParameter parameter)
       {
           return parameter.Value;
@@ -75,7 +75,7 @@ namespace FluentAspect.Sample
       }
 
 
-      [CheckBeforeNetAspect]
+      [CheckBeforeAspect]
       private string CheckBeforeWithAttributesProtected(BeforeParameter parameter)
       {
           return parameter.Value;

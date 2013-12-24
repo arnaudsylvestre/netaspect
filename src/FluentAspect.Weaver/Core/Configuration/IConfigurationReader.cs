@@ -6,7 +6,7 @@ namespace FluentAspect.Weaver.Core
 {
    public interface IConfigurationReader
    {
-      WeavingConfiguration ReadConfiguration(IEnumerable<Type> types);
+      void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration);
 
    }
 }

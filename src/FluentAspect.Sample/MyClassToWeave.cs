@@ -50,7 +50,7 @@ namespace FluentAspect.Sample
         }
 
 
-        [CheckBeforeNetAspect]
+        [CheckBeforeAspect]
         public string CheckBefore(BeforeParameter parameter)
         {
             return parameter.Value;
@@ -62,7 +62,7 @@ namespace FluentAspect.Sample
             return string.Format("{0} : {1}", first, second);
         }
 
-        [CheckBeforeNetAspect]
+        [CheckBeforeAspect]
         public static string CheckStatic(BeforeParameter parameter)
         {
             return parameter.Value;

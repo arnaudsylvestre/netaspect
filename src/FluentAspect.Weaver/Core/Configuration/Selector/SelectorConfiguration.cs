@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Core.Methods;
+using FluentAspect.Weaver.Core.Fluent;
 
 namespace FluentAspect.Weaver.Core.Selector
 {
     public class SelectorConfigurationReader : IConfigurationReader
     {
-        public WeavingConfiguration ReadConfiguration(IEnumerable<Type> types)
+        public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration)
         {
-            var configuration = new WeavingConfiguration();
 
             var assemblies = new HashSet<Assembly>();
 
@@ -21,9 +21,7 @@ namespace FluentAspect.Weaver.Core.Selector
 
             foreach (var assembly in assemblies)
             {
-                var attrbiutes = from a in assembly.GetCustomAttributes(true)
-                                 where a.GetType().Name.EndsWith("NetAspectAttribute")
-                                 select a;
+                var attrbiutes = assembly.GetNetAspectAttributes(true);
                 foreach (var attrbiute in attrbiutes)
                 {
                     var type = attrbiute.GetType();
@@ -37,8 +35,6 @@ namespace FluentAspect.Weaver.Core.Selector
                     }
                 }
             }
-
-            return configuration;
         }
 
         private bool CheckMethod(IMethod arg, MethodInfo info)

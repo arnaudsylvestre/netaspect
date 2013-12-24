@@ -13,24 +13,22 @@ namespace FluentAspect.Weaver.Core.Configuration.Multi
          engines = engines_P;
       }
 
-      public WeavingConfiguration ReadConfiguration(IEnumerable<Type> types)
+      public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration)
       {
-         WeavingConfiguration configuration_L = new WeavingConfiguration();
          bool configurationFound = false;
          foreach (var weaverEngine_L in engines)
          {
             try
             {
-               configuration_L.MergeWith(weaverEngine_L.ReadConfiguration(types));
+                weaverEngine_L.ReadConfiguration(types, configuration);
                configurationFound = true;
             }
             catch (ConfigurationNotFoundException)
             {
             }
          }
-         if (!configurationFound)
-            throw new ConfigurationNotFoundException();
-         return configuration_L;
+          if (!configurationFound)
+              throw new ConfigurationNotFoundException();
       }
    }
 }

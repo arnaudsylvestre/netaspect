@@ -5,7 +5,7 @@ namespace FluentAspect.Sample
 {
    public abstract class AbstractClassToWeaveWithAttributes
    {
-       [CheckBeforeNetAspect]
+       [CheckBeforeAspect]
        public abstract string CheckBeforeWithAttributes(BeforeParameter parameter);
 
    }

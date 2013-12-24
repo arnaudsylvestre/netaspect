@@ -11,9 +11,9 @@ namespace FluentAspect.Weaver.Core.Fluent
         //{
         //    return method.GetCustomAttributes(inherit).OfType<T>().ToList();
         //}
-        public static List<object> GetNetAspectAttributes(this MemberInfo method, bool inherit)
+        public static List<object> GetNetAspectAttributes(this ICustomAttributeProvider method, bool inherit)
         {
-            return (from m in method.GetCustomAttributes(inherit) where m.GetType().Name.EndsWith("NetAspectAttribute") select m).ToList();
+            return (from m in method.GetCustomAttributes(inherit) where m.GetType().Name.EndsWith("NetAspectAttribute") || m.GetType().GetProperty("IsNetAspectAttribute") != null select m).ToList();
         }
         public static List<Type> GetNetAspectInterceptors(this MemberInfo method)
         {

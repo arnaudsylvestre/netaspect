@@ -53,7 +53,6 @@
   <ItemGroup>
     <Compile Include="Core\Configuration\Attributes\ConstructorAttributeConfigurationReader.cs" />
     <Compile Include="Core\Configuration\Attributes\Helpers\MethodBaseAttributeConfigurationReaderHelper.cs" />
-    <Compile Include="Core\Configuration\Attributes\PropertyAttributeConfigurationReader.cs" />
     <Compile Include="Core\Configuration\Attributes\MethodAttributeConfigurationReader.cs" />
     <Compile Include="Core\Configuration\Selector\SelectorConfiguration.cs" />
     <Compile Include="Core\Helpers\PeVerify.cs" />
@@ -86,7 +85,6 @@
     <Compile Include="Core\WeaverCore.cs" />
     <Compile Include="Core\Weavers\Methods\AroundMethodWeaver.cs" />
     <Compile Include="Core\Configuration\WeavingConfiguration.cs" />
-    <Compile Include="Core\Configuration\Multi\WeavingConfigurationExtensions.cs" />
     <Compile Include="Factory\WeaverCoreFactory.cs" />
     <Compile Include="Helpers\MethodDefinitionExtensions.cs" />
     <Compile Include="Helpers\MethodReferenceExtensions.cs" />

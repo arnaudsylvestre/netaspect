@@ -9,13 +9,10 @@ namespace FluentAspect.Weaver.Core.Fluent
 {
    public class ConstructorAttributeConfigurationReader : IConfigurationReader
    {
-       public WeavingConfiguration ReadConfiguration(IEnumerable<Type> types)
+       public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration)
       {
-          var configuration = new WeavingConfiguration();
-
            MethodBaseAttributeConfigurationReaderHelper.Fill(types.GetAllConstructors(m => m.GetNetAspectAttributes(true).Count > 0).Cast<MethodBase>(), configuration.Constructors);
 
-          return configuration;
       }
    }
 }

@@ -4,6 +4,8 @@ namespace FluentAspect.Sample.AOP
 {
     public class AssemblyNetAspectAttribute : Attribute
     {
+        public bool IsNetAspectAttribute { get { return true; } }
+
         public void Before()
         {
             throw new NotSupportedException("Weaved through assembly");

@@ -45,24 +45,6 @@ namespace FluentAspect.Weaver.Weavers
             }
             return false;
         }
-
-        public static bool NeedsCallBefore(this IAroundWeaverConfiguration configuration,
-                                           List<Type> interceptorTypes)
-        {
-            return interceptorTypes.Any(interceptorType => configuration.ToCallBefore(interceptorType) != null);
-        }
-
-        public static bool NeedsCallAfter(this IAroundWeaverConfiguration configuration,
-                                          List<Type> interceptorTypes)
-        {
-            return interceptorTypes.Any(interceptorType => configuration.ToCallAfter(interceptorType) != null);
-        }
-
-        public static bool NeedsCallOnException(this IAroundWeaverConfiguration configuration,
-                                                List<Type> interceptorTypes)
-        {
-            return interceptorTypes.Any(interceptorType => configuration.ToCallOnException(interceptorType) != null);
-        }
     }
 
     public class MethodAroundWeaver
