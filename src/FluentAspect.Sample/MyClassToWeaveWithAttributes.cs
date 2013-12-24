@@ -94,7 +94,7 @@ namespace FluentAspect.Sample
 
    public class GetPropertyNetAspectAttribute : Attribute
    {
-       public void AfterGet(ref string result)
+       public void After(ref string result)
        {
            result = "3";
        }
