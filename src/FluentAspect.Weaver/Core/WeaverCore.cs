@@ -28,7 +28,7 @@ namespace FluentAspect.Weaver.Core
 
       public void Weave(string assemblyFilePath, string targetFileName, ErrorHandler errorHandler)
       {
-         var configuration_L = configurationReader.ReadConfiguration(Assembly.LoadFrom(assemblyFilePath).GetTypes());
+          var configuration_L = configurationReader.ReadConfiguration(Assembly.LoadFrom(assemblyFilePath).GetTypes());
          var assemblyDefinition = AssemblyDefinition.ReadAssembly(assemblyFilePath, new ReaderParameters(ReadingMode.Immediate) { ReadSymbols = true });
          var weavers = weaverBuilder.BuildWeavers(assemblyDefinition, configuration_L, errorHandler);
          foreach (var weaver_L in weavers)

@@ -6,19 +6,19 @@ namespace FluentAspect.Weaver.Weavers
 {
     public class MethodMethodAroundWeaverConfiguration : IAroundWeaverConfiguration
     {
-        public IEnumerable<string> ToCallBefore(Type interceptorType)
+        public string ToCallBefore(Type interceptorType)
         {
-            return new List<string>{"Before"};
+            return "Before";
         }
 
-        public IEnumerable<string> ToCallAfter(Type interceptorType)
+        public string ToCallAfter(Type interceptorType)
         {
-            return new List<string> { "After" };
+            return "After";
         }
 
-        public IEnumerable<string> ToCallOnException(Type interceptorType)
+        public string ToCallOnException(Type interceptorType)
         {
-            return new List<string> { "OnException" };
+            return "OnException";
         }
     }
 }

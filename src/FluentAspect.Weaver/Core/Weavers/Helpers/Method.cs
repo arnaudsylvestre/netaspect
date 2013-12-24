@@ -150,19 +150,6 @@ namespace FluentAspect.Weaver.Weavers.Helpers
                 il.Emit(OpCodes.Ldloc, weavedResult);
             il.Emit(OpCodes.Ret);
         }
-
-
-
-        public void SetReturnValue(VariableDefinition handleResult,
-                                    VariableDefinition weavedResult)
-        {
-            if (MethodDefinition.ReturnType.MetadataType != MetadataType.Void)
-            {
-                il.Emit(OpCodes.Ldloc, handleResult);
-                il.Emit(OpCodes.Castclass, MethodDefinition.ReturnType);
-                il.Emit(OpCodes.Stloc, weavedResult);
-            }
-        }
     }
 
     public class TryCatch

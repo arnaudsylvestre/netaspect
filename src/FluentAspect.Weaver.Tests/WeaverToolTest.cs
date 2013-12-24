@@ -143,28 +143,6 @@ namespace FluentAspect.Weaver.Tests
         }
 
         [Test]
-        public void CheckPropertyGetterAndSetter()
-        {
-            runner.Run(() =>
-            {
-                var myClassToWeaveWithAttributes = new MyClassToWeaveWithAttributes(false);
-                myClassToWeaveWithAttributes.PropertyGetterSetter = "3";
-                Assert.AreEqual("4", myClassToWeaveWithAttributes.PropertyGetterSetter);
-                });
-        }
-
-        [Test]
-        public void CheckPropertySetter()
-        {
-            runner.Run(() =>
-                {
-                    var myClassToWeaveWithAttributes = new MyClassToWeaveWithAttributes(false);
-                    myClassToWeaveWithAttributes.PropertySetter = "3";
-                    Assert.AreEqual("3Weaved", myClassToWeaveWithAttributes.PropertySetter);
-                });
-        }
-
-        [Test]
         public void CheckBeforeWithAttributes()
         {
             runner.Run(() =>
@@ -257,11 +235,31 @@ namespace FluentAspect.Weaver.Tests
         public void CheckNotRenameInAssembly()
         {
             runner.Run(() =>
-                {
-                    string res = new MyClassToWeave().CheckNotRenameInAssembly();
-                    Assert.AreEqual("Weaved", res);
-                });
+            {
+                string res = new MyClassToWeave().CheckNotRenameInAssembly();
+                Assert.AreEqual("Weaved", res);
+            });
         }
+
+
+
+
+        [Test, ExpectedException(typeof(NotSupportedException), ExpectedMessage = "Weaved through assembly")]
+        public void CheckWeavedThroughAssembly()
+        {
+            runner.Run(() =>
+            {
+                try
+                {
+                    new MyClassToWeave().WeavedThroughAssembly();
+                }
+                catch (TargetInvocationException e)
+                {
+                    throw e.InnerException;
+                }
+            });
+        }
+        
 
         [Test]
         public void CheckStatic()
@@ -273,20 +271,36 @@ namespace FluentAspect.Weaver.Tests
                 });
         }
 
-        [Test, ExpectedException(typeof (NotSupportedException))]
+        [Test, ExpectedException(typeof(NotSupportedException))]
         public void CheckThrow()
         {
             runner.Run(() =>
+            {
+                try
                 {
-                    try
-                    {
-                        new MyClassToWeave().CheckThrow();
-                    }
-                    catch (TargetInvocationException e)
-                    {
-                        throw e.InnerException;
-                    }
-                });
+                    new MyClassToWeave().CheckThrow();
+                }
+                catch (TargetInvocationException e)
+                {
+                    throw e.InnerException;
+                }
+            });
+        }
+
+        [Test, ExpectedException(typeof(NotSupportedException))]
+        public void CheckThrowWithReturn()
+        {
+            runner.Run(() =>
+            {
+                try
+                {
+                    new MyClassToWeave().CheckThrowWithReturn();
+                }
+                catch (TargetInvocationException e)
+                {
+                    throw e.InnerException;
+                }
+            });
         }
 
         [Test]
@@ -313,10 +327,20 @@ namespace FluentAspect.Weaver.Tests
         public void CheckWithReturn()
         {
             runner.Run(() =>
-                {
-                    string res = new MyClassToWeave().CheckWithReturn();
-                    Assert.AreEqual("Weaved", res);
-                });
+            {
+                string res = new MyClassToWeave().CheckWithReturn();
+                Assert.AreEqual("Weaved", res);
+            });
+        }
+
+        [Test]
+        public void CheckWithReturnSimpleType()
+        {
+            runner.Run(() =>
+            {
+                int res = new MyClassToWeave().CheckWithReturnSimpleType();
+                Assert.AreEqual(5, res);
+            });
         }
 
         [Test]

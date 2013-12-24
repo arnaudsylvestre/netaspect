@@ -6,8 +6,8 @@ namespace FluentAspect.Weaver.Weavers
 {
     public interface IAroundWeaverConfiguration
     {
-        IEnumerable<string> ToCallBefore(Type interceptorType);
-        IEnumerable<string> ToCallAfter(Type interceptorType);
-        IEnumerable<string> ToCallOnException(Type interceptorType);
+        string ToCallBefore(Type interceptorType);
+        string ToCallAfter(Type interceptorType);
+        string ToCallOnException(Type interceptorType);
     }
 }

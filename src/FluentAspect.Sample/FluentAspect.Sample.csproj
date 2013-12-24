@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AOP\AssemblyNetAspectAttribute.cs" />
     <Compile Include="AOP\CheckBeforeAttribute.cs" />
     <Compile Include="AOP\ThrowerAttribute.cs" />
     <Compile Include="AOP\CheckMultiInterceptor.cs" />

@@ -23,10 +23,6 @@ namespace FluentAspect.Sample
            get { return "1"; }
        }
 
-       public string PropertyGetterSetter { [GetPropertyNetAspectAttribute] get; set; }
-
-       public string PropertySetter { get; set; }
-
        public string CheckWithReturn()
       {
          return "NotWeaved";

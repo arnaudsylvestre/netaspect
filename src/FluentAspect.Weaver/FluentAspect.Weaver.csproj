@@ -55,6 +55,7 @@
     <Compile Include="Core\Configuration\Attributes\Helpers\MethodBaseAttributeConfigurationReaderHelper.cs" />
     <Compile Include="Core\Configuration\Attributes\PropertyAttributeConfigurationReader.cs" />
     <Compile Include="Core\Configuration\Attributes\MethodAttributeConfigurationReader.cs" />
+    <Compile Include="Core\Configuration\Selector\SelectorConfiguration.cs" />
     <Compile Include="Core\Helpers\PeVerify.cs" />
     <Compile Include="Core\IMethod.cs" />
     <Compile Include="Core\IType.cs" />

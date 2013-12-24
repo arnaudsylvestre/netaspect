@@ -2,6 +2,7 @@
 using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Core.Configuration.Multi;
 using FluentAspect.Weaver.Core.Fluent;
+using FluentAspect.Weaver.Core.Selector;
 
 namespace FluentAspect.Weaver.Factory
 {
@@ -13,7 +14,8 @@ namespace FluentAspect.Weaver.Factory
               new MultiConfigurationReader(
                   new MethodAttributeConfigurationReader(), 
                   new ConstructorAttributeConfigurationReader(),
-                  new PropertyAttributeConfigurationReader()
+                  new PropertyAttributeConfigurationReader(),
+                  new SelectorConfigurationReader()
                ),
                new MultiWeaverBuilder(new AroundMethodBuilderWeaver(), new AroundConstructorBuilderWeaver(), new AroundPropertyBuilderWeaver()))
            ;

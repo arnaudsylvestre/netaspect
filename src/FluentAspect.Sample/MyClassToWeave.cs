@@ -6,6 +6,10 @@ namespace FluentAspect.Sample
     public class MyClassToWeave
     {
 
+        public void WeavedThroughAssembly()
+        {
+        }
+
         [CheckWithReturnInterceptorNetAspect]
        public string CheckWithReturn()
        {
@@ -90,6 +94,26 @@ namespace FluentAspect.Sample
         public string CheckMulti(int i)
         {
             return i.ToString();
+        }
+
+        [CheckReturnSimpleTypeNetAspect]
+        public int CheckWithReturnSimpleType()
+        {
+            return 0;
+        }
+
+        [CheckThrowInterceptorNetAspect]
+        public string CheckThrowWithReturn()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class CheckReturnSimpleTypeNetAspectAttribute : Attribute
+    {
+        public void After(ref int result)
+        {
+            result = 5;
         }
     }
 
