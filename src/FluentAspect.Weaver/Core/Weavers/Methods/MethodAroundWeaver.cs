@@ -83,10 +83,18 @@ namespace FluentAspect.Weaver.Weavers
                                                 interceptorType, il, configuration);
                                      VariableDefinition result = CallWeavedMethod(myMethod.MethodDefinition,
                                                                                   wrappedMethod, il);
+                                     if (configuration.NeedsCallAfter(interceptorType))
+                                     {
                                      VariableDefinition handleResult = myMethod.CreateHandleResult(result);
                                      CallAfter(myMethod.MethodDefinition, interceptor, methodInfo, args, handleResult,
                                                interceptorType, il, configuration);
                                      myMethod.SetReturnValue(handleResult, weavedResult);
+                                         
+                                     }
+                                     else
+                                     {
+                                         myMethod.SetReturnValue(result, weavedResult);
+                                     }
                                  },
                              il =>
                                  {

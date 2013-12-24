@@ -138,8 +138,30 @@ namespace FluentAspect.Weaver.Tests
         {
             runner.Run(() =>
             {
-                Assert.AreEqual("3", new MyClassToWeaveWithAttributes(false).Property);
+                Assert.AreEqual("3", new MyClassToWeaveWithAttributes(false).PropertyGetter);
             });
+        }
+
+        [Test]
+        public void CheckPropertyGetterAndSetter()
+        {
+            runner.Run(() =>
+            {
+                var myClassToWeaveWithAttributes = new MyClassToWeaveWithAttributes(false);
+                myClassToWeaveWithAttributes.PropertyGetterSetter = "3";
+                Assert.AreEqual("4", myClassToWeaveWithAttributes.PropertyGetterSetter);
+                });
+        }
+
+        [Test]
+        public void CheckPropertySetter()
+        {
+            runner.Run(() =>
+                {
+                    var myClassToWeaveWithAttributes = new MyClassToWeaveWithAttributes(false);
+                    myClassToWeaveWithAttributes.PropertySetter = "3";
+                    Assert.AreEqual("3Weaved", myClassToWeaveWithAttributes.PropertySetter);
+                });
         }
 
         [Test]

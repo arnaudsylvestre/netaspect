@@ -17,11 +17,15 @@ namespace FluentAspect.Sample
           this.thrown = thrown;
        }
 
-       [GetPropertyNetAspectAttribute]
-       public string Property
+       public string PropertyGetter
        {
+           [GetPropertyNetAspectAttribute]
            get { return "1"; }
        }
+
+       public string PropertyGetterSetter { [GetPropertyNetAspectAttribute] get; set; }
+
+       public string PropertySetter { get; set; }
 
        public string CheckWithReturn()
       {
@@ -87,12 +91,13 @@ namespace FluentAspect.Sample
        }
    }
 
-    public class GetPropertyNetAspectAttribute : Attribute
-    {
-        public void After(ref string result)
-        {
-            result = "3";
-        }
 
-    }
+   public class GetPropertyNetAspectAttribute : Attribute
+   {
+       public void AfterGet(ref string result)
+       {
+           result = "3";
+       }
+
+   }
 }
