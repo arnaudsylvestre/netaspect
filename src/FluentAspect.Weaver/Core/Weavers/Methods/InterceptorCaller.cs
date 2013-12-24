@@ -77,23 +77,28 @@ namespace FluentAspect.Weaver.Weavers
             }
         }
 
-        public void Call(VariableDefinition interceptorVariable, string interceptorMethodname, Type iType)
+        public void Call(VariableDefinition interceptorVariable, IEnumerable<string> methodsToCall, Type iType)
         {
-            MethodInfo method = iType.GetMethod(interceptorMethodname);
-            if (method == null)
-                return;
-            il.Emit(OpCodes.Ldloc, interceptorVariable);
-
-            foreach (ParameterInfo parameterInfo in method.GetParameters())
+            foreach (var methodToCall in methodsToCall)
             {
-                if (!forParameters.ContainsKey(parameterInfo.Name))
-                    throw new Exception(
-                        string.Format("Parameter {0} not recognized in interceptor {1}.{2} for method {3} in {4}",
-                                      parameterInfo.Name, iType.Name, method.Name, _methodDefinition.Name,
-                                      _methodDefinition.DeclaringType.Name));
-                forParameters[parameterInfo.Name](parameterInfo);
+                MethodInfo method = iType.GetMethod(methodToCall);
+                if (method == null)
+                    return;
+                il.Emit(OpCodes.Ldloc, interceptorVariable);
+
+                foreach (ParameterInfo parameterInfo in method.GetParameters())
+                {
+                    if (!forParameters.ContainsKey(parameterInfo.Name))
+                        throw new Exception(
+                            string.Format("Parameter {0} not recognized in interceptor {1}.{2} for method {3} in {4}",
+                                          parameterInfo.Name, iType.Name, method.Name, _methodDefinition.Name,
+                                          _methodDefinition.DeclaringType.Name));
+                    forParameters[parameterInfo.Name](parameterInfo);
+                }
+                il.Emit(OpCodes.Call, _methodDefinition.Module.Import(method));
             }
-            il.Emit(OpCodes.Call, _methodDefinition.Module.Import(method));
+
+            
         }
     }
 }

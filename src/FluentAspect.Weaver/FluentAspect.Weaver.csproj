@@ -66,7 +66,9 @@
     <Compile Include="Core\Weavers\Helpers\ILProcessorExtensions.cs" />
     <Compile Include="Core\Weavers\Helpers\Method.cs" />
     <Compile Include="Core\Weavers\Helpers\VariableExtensions.cs" />
+    <Compile Include="Core\Weavers\Methods\IAroundWeaverConfiguration.cs" />
     <Compile Include="Core\Weavers\Methods\InterceptorCaller.cs" />
+    <Compile Include="Core\Weavers\Methods\MethodMethodAroundWeaverConfiguration.cs" />
     <Compile Include="Core\Weavers\Properties\AroundPropertyWeaver.cs" />
     <Compile Include="Helpers\MethodDefinitionAdapter.cs" />
     <Compile Include="Helpers\MethodInfoExtensions.cs" />

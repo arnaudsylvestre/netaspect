@@ -10,62 +10,44 @@ using MethodAttributes = Mono.Cecil.MethodAttributes;
 
 namespace FluentAspect.Weaver.Weavers
 {
-    public class MethodMethodAroundWeaverConfiguration : MethodAroundWeaver.IAroundWeaverConfiguration
-    {
-        public MethodInfo ToCallBefore(Type interceptorType)
-        {
-            return interceptorType.GetMethod("Before");
-        }
-
-        public MethodInfo ToCallAfter(Type interceptorType)
-        {
-            return interceptorType.GetMethod("After");
-        }
-
-        public MethodInfo ToCallOnException(Type interceptorType)
-        {
-            return interceptorType.GetMethod("OnException");
-        }
-    }
-
     public static class AroundWeaverConfigurationExtensions
     {
-        public static bool Needs(this MethodAroundWeaver.IAroundWeaverConfiguration configuration,
-                                 List<Type> interceptorTypes, string variableName)
-        {
-            foreach (Type interceptorType in interceptorTypes)
-            {
-                var parameters = new List<ParameterInfo>();
-                MethodInfo callBefore = configuration.ToCallBefore(interceptorType);
-                if (callBefore != null)
-                    parameters.AddRange(callBefore.GetParameters().ToList());
-                MethodInfo methodInfo = configuration.ToCallAfter(interceptorType);
-                if (methodInfo != null)
-                    parameters.AddRange(methodInfo.GetParameters().ToList());
-                MethodInfo callOnException = configuration.ToCallOnException(interceptorType);
-                if (callOnException != null)
-                    parameters.AddRange(callOnException.GetParameters().ToList());
+        //public static bool Needs(this IAroundWeaverConfiguration configuration,
+        //                         List<Type> interceptorTypes, string variableName)
+        //{
+        //    foreach (Type interceptorType in interceptorTypes)
+        //    {
+        //        var parameters = new List<ParameterInfo>();
+        //        MethodInfo callBefore = configuration.ToCallBefore(interceptorType);
+        //        if (callBefore != null)
+        //            parameters.AddRange(callBefore.GetParameters().ToList());
+        //        MethodInfo methodInfo = configuration.ToCallAfter(interceptorType);
+        //        if (methodInfo != null)
+        //            parameters.AddRange(methodInfo.GetParameters().ToList());
+        //        MethodInfo callOnException = configuration.ToCallOnException(interceptorType);
+        //        if (callOnException != null)
+        //            parameters.AddRange(callOnException.GetParameters().ToList());
 
-                IEnumerable<string> enumerable = from p in parameters where p.Name == variableName select p.Name;
-                if (enumerable.Any())
-                    return true;
-            }
-            return false;
-        }
+        //        IEnumerable<string> enumerable = from p in parameters where p.Name == variableName select p.Name;
+        //        if (enumerable.Any())
+        //            return true;
+        //    }
+        //    return false;
+        //}
 
-        public static bool NeedsCallBefore(this MethodAroundWeaver.IAroundWeaverConfiguration configuration,
+        public static bool NeedsCallBefore(this IAroundWeaverConfiguration configuration,
                                            List<Type> interceptorTypes)
         {
             return interceptorTypes.Any(interceptorType => configuration.ToCallBefore(interceptorType) != null);
         }
 
-        public static bool NeedsCallAfter(this MethodAroundWeaver.IAroundWeaverConfiguration configuration,
+        public static bool NeedsCallAfter(this IAroundWeaverConfiguration configuration,
                                           List<Type> interceptorTypes)
         {
             return interceptorTypes.Any(interceptorType => configuration.ToCallAfter(interceptorType) != null);
         }
 
-        public static bool NeedsCallOnException(this MethodAroundWeaver.IAroundWeaverConfiguration configuration,
+        public static bool NeedsCallOnException(this IAroundWeaverConfiguration configuration,
                                                 List<Type> interceptorTypes)
         {
             return interceptorTypes.Any(interceptorType => configuration.ToCallOnException(interceptorType) != null);
@@ -88,8 +70,8 @@ namespace FluentAspect.Weaver.Weavers
                                  IAroundWeaverConfiguration configuration)
         {
             List<VariableDefinition> interceptor = myMethod.CreateAndInitializeVariable(interceptorType);
-            VariableDefinition args = null;
-            if (configuration.Needs(interceptorType, ParameterParameters))
+            VariableDefinition /*args = null;
+            if (configuration.Needs(interceptorType, ParameterParameters))*/
                 args = myMethod.CreateArgsArrayFromParameters();
             VariableDefinition methodInfo = myMethod.CreateMethodInfo();
             VariableDefinition weavedResult = myMethod.CreateWeavedResult();
@@ -98,19 +80,19 @@ namespace FluentAspect.Weaver.Weavers
                              il =>
                                  {
                                      CallBefore(myMethod.MethodDefinition, interceptor, methodInfo, args,
-                                                interceptorType, il);
+                                                interceptorType, il, configuration);
                                      VariableDefinition result = CallWeavedMethod(myMethod.MethodDefinition,
                                                                                   wrappedMethod, il);
                                      VariableDefinition handleResult = myMethod.CreateHandleResult(result);
                                      CallAfter(myMethod.MethodDefinition, interceptor, methodInfo, args, handleResult,
-                                               interceptorType, il);
+                                               interceptorType, il, configuration);
                                      myMethod.SetReturnValue(handleResult, weavedResult);
                                  },
                              il =>
                                  {
                                      VariableDefinition e = CreateException(myMethod.MethodDefinition);
                                      CallExceptionInterceptor(myMethod.MethodDefinition, interceptor, methodInfo, args,
-                                                              e, interceptorType, myMethod.Il);
+                                                              e, interceptorType, myMethod.Il, configuration);
                                      myMethod.Il.AppendThrow();
                                  }));
 
@@ -118,13 +100,7 @@ namespace FluentAspect.Weaver.Weavers
             myMethod.Return(weavedResult);
         }
 
-        private void CallExceptionInterceptor(MethodDefinition method,
-                                              List<VariableDefinition> interceptor,
-                                              VariableDefinition methodInfo,
-                                              VariableDefinition args,
-                                              VariableDefinition ex,
-                                              List<Type> interceptorType,
-                                              ILProcessor il)
+        private void CallExceptionInterceptor(MethodDefinition method, List<VariableDefinition> interceptor, VariableDefinition methodInfo, VariableDefinition args, VariableDefinition ex, List<Type> interceptorType, ILProcessor il, IAroundWeaverConfiguration configuration)
         {
             il.Emit(OpCodes.Stloc, ex);
             var caller = new InterceptorCaller(il, method);
@@ -134,7 +110,7 @@ namespace FluentAspect.Weaver.Weavers
 
             for (int i = 0; i < interceptorType.Count; i++)
             {
-                caller.Call(interceptor[i], "OnException", interceptorType[i]);
+                caller.Call(interceptor[i], configuration.ToCallOnException(interceptorType[i]), interceptorType[i]);
             }
         }
 
@@ -143,13 +119,7 @@ namespace FluentAspect.Weaver.Weavers
             return method.CreateVariable(typeof (Exception));
         }
 
-        private void CallAfter(MethodDefinition method,
-                               List<VariableDefinition> interceptor,
-                               VariableDefinition methodInfo,
-                               VariableDefinition args,
-                               VariableDefinition handleResult,
-                               List<Type> interceptorType,
-                               ILProcessor il)
+        private void CallAfter(MethodDefinition method, List<VariableDefinition> interceptor, VariableDefinition methodInfo, VariableDefinition args, VariableDefinition handleResult, List<Type> interceptorType, ILProcessor il, IAroundWeaverConfiguration configuration)
         {
             var caller = new InterceptorCaller(il, method);
 
@@ -158,7 +128,7 @@ namespace FluentAspect.Weaver.Weavers
 
             for (int i = 0; i < interceptorType.Count; i++)
             {
-                caller.Call(interceptor[i], "After", interceptorType[i]);
+                caller.Call(interceptor[i], configuration.ToCallAfter(interceptorType[i]), interceptorType[i]);
             }
         }
 
@@ -188,12 +158,7 @@ namespace FluentAspect.Weaver.Weavers
             return result;
         }
 
-        private void CallBefore(MethodDefinition method,
-                                List<VariableDefinition> interceptor,
-                                VariableDefinition methodInfo,
-                                VariableDefinition args,
-                                List<Type> interceptorType,
-                                ILProcessor il)
+        private void CallBefore(MethodDefinition method, List<VariableDefinition> interceptor, VariableDefinition methodInfo, VariableDefinition args, List<Type> interceptorType, ILProcessor il, IAroundWeaverConfiguration configuration)
         {
             var caller = new InterceptorCaller(il, method);
 
@@ -201,7 +166,7 @@ namespace FluentAspect.Weaver.Weavers
 
             for (int i = 0; i < interceptorType.Count; i++)
             {
-                caller.Call(interceptor[i], "Before", interceptorType[i]);
+                caller.Call(interceptor[i], configuration.ToCallBefore(interceptorType[i]), interceptorType[i]);
             }
         }
 
@@ -213,14 +178,6 @@ namespace FluentAspect.Weaver.Weavers
             caller.AddVariable(ParameterParameters, args, false);
             caller.AddParameters(method.Parameters);
         }
-
-        public interface IAroundWeaverConfiguration
-        {
-            MethodInfo ToCallBefore(Type interceptorType);
-            MethodInfo ToCallAfter(Type interceptorType);
-            MethodInfo ToCallOnException(Type interceptorType);
-        }
-
         
     }
 }
