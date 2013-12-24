@@ -41,23 +41,26 @@ namespace FluentAspect.Weaver.Core
                   continue;
               toWeave.AddRange((IEnumerable<Assembly>) propertyInfo.GetValue(netAspectAttribute, new object[0]));
           }
+          var weavingConfiguration = new WeavingConfiguration();
           foreach (var asmToWeave in toWeave)
           {
-              WeaveOneAssembly(asmToWeave.GetAssemblyPath(), errorHandler, newAssemblyNameProvider);
-              
+              configurationReader.ReadConfiguration(Assembly.LoadFrom(asmToWeave.GetAssemblyPath()).GetTypes(), weavingConfiguration);
+          }
+
+          foreach (var asmToWeave in toWeave)
+          {
+              WeaveOneAssembly(asmToWeave.GetAssemblyPath(), errorHandler, newAssemblyNameProvider, weavingConfiguration);
           }
       }
 
-      private void WeaveOneAssembly(string assemblyFilePath, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
+      private void WeaveOneAssembly(string assemblyFilePath, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider, WeavingConfiguration configuration)
         {
-            var configuration_L = new WeavingConfiguration();
-            configurationReader.ReadConfiguration(Assembly.LoadFrom(assemblyFilePath).GetTypes(), configuration_L);
             var assemblyDefinition = AssemblyDefinition.ReadAssembly(assemblyFilePath,
                                                                      new ReaderParameters(ReadingMode.Immediate)
                                                                          {
                                                                              ReadSymbols = true
                                                                          });
-            var weavers = weaverBuilder.BuildWeavers(assemblyDefinition, configuration_L, errorHandler);
+            var weavers = weaverBuilder.BuildWeavers(assemblyDefinition, configuration, errorHandler);
             foreach (var weaver_L in weavers)
             {
                 try

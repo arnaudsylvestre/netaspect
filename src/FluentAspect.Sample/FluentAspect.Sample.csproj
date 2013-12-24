@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="AOP\AssemblyNetAspectAttribute.cs" />
     <Compile Include="AOP\CheckBeforeAttribute.cs" />
+    <Compile Include="AOP\EnsureNotNullAttribute.cs" />
     <Compile Include="AOP\ThrowerAttribute.cs" />
     <Compile Include="AOP\CheckMultiInterceptor.cs" />
     <Compile Include="AOP\CheckNotRenameInAssemblyInterceptor.cs" />
@@ -60,6 +61,12 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FluentAspect.Sample.Dep\FluentAspect.Sample.Dep.csproj">
+      <Project>{584095D8-E7A6-42EF-B3C1-6A34F15B4B40}</Project>
+      <Name>FluentAspect.Sample.Dep</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--<Import Project="lib\FluentAspect.targets" Condition="Exists('lib\FluentAspect.targets')" />

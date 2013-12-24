@@ -80,6 +80,22 @@ namespace FluentAspect.Weaver.Tests
                 Assert.AreEqual("Value set in before", res);
             });
         }
+        [Test, ExpectedException(typeof(ArgumentNullException))]
+        public void CheckDependency()
+        {
+            runner.Run(() =>
+            {
+                new MyClassToWeave().CheckDependency(null);
+            });
+        }
+        [Test]
+        public void CheckDependencyWithoutException()
+        {
+            runner.Run(() =>
+            {
+                new MyClassToWeave().CheckDependency("");
+            });
+        }
 
         [Test]
         public void CheckByParameterName()
