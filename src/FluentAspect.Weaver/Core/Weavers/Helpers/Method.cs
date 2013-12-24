@@ -130,13 +130,16 @@ namespace FluentAspect.Weaver.Weavers.Helpers
 
         public VariableDefinition CreateHandleResult(VariableDefinition result_P)
         {
-            VariableDefinition handleResult_P = MethodDefinition.CreateVariable(typeof(object));
             if (result_P == null)
-                il.Emit(OpCodes.Ldnull);
+                return null;
             else
+            {
+
+                VariableDefinition handleResult_P = MethodDefinition.CreateVariable(result_P.VariableType);
                 il.Emit(OpCodes.Ldloc, result_P);
-            il.Emit(OpCodes.Stloc, handleResult_P);
-            return handleResult_P;
+                il.Emit(OpCodes.Stloc, handleResult_P);
+                return handleResult_P;
+            }
         }
 
 
