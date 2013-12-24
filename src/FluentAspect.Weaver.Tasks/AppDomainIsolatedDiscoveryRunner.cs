@@ -14,7 +14,7 @@ namespace SheepAspect.Tasks
             {
                ErrorHandler handler = new ErrorHandler();
                 var weaverCore = WeaverCoreFactory.Create();
-                weaverCore.Weave(configFile, TargetFileName(configFile), handler);
+                weaverCore.Weave(configFile, handler, TargetFileName);
 
                 foreach (var warning_L in handler.Warnings)
                 {
