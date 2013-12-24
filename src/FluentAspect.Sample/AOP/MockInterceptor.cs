@@ -19,7 +19,7 @@ namespace FluentAspect.Sample
                 };
         }
 
-        public void After(object instance, MethodInfo method, object[] parameters, ref object result)
+        public void After(object instance, MethodInfo method, object[] parameters, ref string result)
         {
             after = new AfterInfo
                 {

@@ -5,18 +5,10 @@ namespace FluentAspect.Sample
 {
    class CheckWithReturnInterceptorNetAspectAttribute : Attribute
     {
-      
-      public void Before(object instance, MethodInfo method, object[] parameters)
-      {
-      }
 
-      public void After(object instance, MethodInfo method, object[] parameters, ref object result)
+      public void After(ref string result)
       {
           result = "Weaved";
-      }
-
-      public void OnException(object instance, MethodInfo method, object[] parameters, Exception exception)
-      {
       }
 
     }
