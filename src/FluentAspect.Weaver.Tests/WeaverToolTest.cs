@@ -61,7 +61,7 @@ namespace FluentAspect.Weaver.Tests
             {
                 const string asm = "FluentAspect.Sample.exe";
                 WeaverCore weaver = WeaverCoreFactory.Create();
-                weaver.Weave(asm, errorHandler, (a) => asm);
+                weaver.Weave(asm, errorHandler, (a) => a);
 
             }
             catch (Exception e)
@@ -78,6 +78,15 @@ namespace FluentAspect.Weaver.Tests
             {
                 string res = new MyClassToWeave().CheckBefore(new BeforeParameter { Value = "not before" });
                 Assert.AreEqual("Value set in before", res);
+            });
+        }
+
+        [Test, ExpectedException(typeof(NotSupportedException))]
+        public void CheckCallWeavedOnCall()
+        {
+            runner.Run(() =>
+            {
+                new MyClassToWeave().CallWeavedOnCall("Hello");
             });
         }
         [Test, ExpectedException(typeof(ArgumentNullException))]

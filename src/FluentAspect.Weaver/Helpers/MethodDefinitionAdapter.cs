@@ -5,27 +5,9 @@ namespace FluentAspect.Weaver
 {
     class MethodDefinitionAdapter : IMethod
     {
-        private MethodDefinition method;
+        private MethodReference method;
 
-        public MethodDefinitionAdapter(MethodDefinition method_P)
-        {
-            method = method_P;
-        }
-
-        public string Name
-        {
-            get { return method.Name; }
-        }
-        public IType DeclaringType
-        {
-            get { return new TypeDefinitionAdapter(method.DeclaringType); }
-        }
-    }
-    class PropertyDefinitionAdapter : IProperty
-    {
-        private PropertyDefinition method;
-
-        public PropertyDefinitionAdapter(PropertyDefinition method_P)
+        public MethodDefinitionAdapter(MethodReference method_P)
         {
             method = method_P;
         }

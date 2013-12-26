@@ -59,6 +59,7 @@
     <Compile Include="Core\IMethod.cs" />
     <Compile Include="Core\IType.cs" />
     <Compile Include="Core\WeaverBuilders\AroundConstructorBuilderWeaver.cs" />
+    <Compile Include="Core\WeaverBuilders\CallMethodBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\MultiWeaverBuilder.cs" />
     <Compile Include="Core\Weavers\Constructors\AroundConstructorWeaver.cs" />
     <Compile Include="Core\Weavers\Constructors\ConstructorAroundWeaver.cs" />

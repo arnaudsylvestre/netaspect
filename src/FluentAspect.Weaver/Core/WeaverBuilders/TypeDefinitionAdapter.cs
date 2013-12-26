@@ -5,9 +5,9 @@ namespace FluentAspect.Weaver
 {
    class TypeDefinitionAdapter : IType
    {
-      private TypeDefinition type;
+      private TypeReference type;
 
-      public TypeDefinitionAdapter(TypeDefinition type_P)
+      public TypeDefinitionAdapter(TypeReference type_P)
       {
          type = type_P;
       }
