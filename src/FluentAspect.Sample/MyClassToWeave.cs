@@ -127,7 +127,7 @@ namespace FluentAspect.Sample
 
     public class CheckOnCallNetAspectAttribute : Attribute
     {
-        public void BeforeCall()
+        public static void BeforeCall()
         {
             throw new NotSupportedException();
         }

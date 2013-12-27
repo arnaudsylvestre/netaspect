@@ -39,12 +39,13 @@ namespace FluentAspect.Weaver.Core
                         instructions.Insert(i + 1, beforeInstruction);
                     }
 
-                    var beforeInstructions = CreateBeforeInstructions();
+                    var beforeInstructions = CreateBeforeInstructions(_method.Module);
                     beforeInstructions.Reverse();
                     foreach (var beforeInstruction in beforeInstructions)
                     {
                         instructions.Insert(i, beforeInstruction);
                     }
+                    break;
                 }
             }
 
@@ -59,28 +60,26 @@ namespace FluentAspect.Weaver.Core
         {
 
             var instructions = new List<Instruction>();
-            il.Emit(OpCodes.Newobj, module.Import(interceptorType.GetConstructors()[0]));
-            il.Emit(OpCodes.Stloc, interceptor);
             foreach (var interceptorType in _interceptorTypes)
             {
                 if (interceptorType.GetMethod("AfterCall") != null)
                 {
-                    instructions.Add(Instruction.Create(OpCodes.Call));
                 }
             }
             return instructions;
         }
 
-        private List<Instruction> CreateBeforeInstructions()
+        private List<Instruction> CreateBeforeInstructions(ModuleDefinition module)
         {
+            var instructions = new List<Instruction>();
             foreach (var interceptorType in _interceptorTypes)
             {
                 if (interceptorType.GetMethod("BeforeCall") != null)
                 {
-
+                    instructions.Add(Instruction.Create(OpCodes.Call, module.Import(interceptorType.GetMethod("BeforeCall"))));
                 }
-
             }
+            return instructions;
         }
     }
 
