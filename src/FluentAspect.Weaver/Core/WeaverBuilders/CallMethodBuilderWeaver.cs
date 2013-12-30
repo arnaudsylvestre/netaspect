@@ -32,7 +32,7 @@ namespace FluentAspect.Weaver.Core
                 if (instructions[i] == _instruction)
                 {
 
-                    var afterInstructions = CreateAfterInstructions();
+                   var afterInstructions = CreateAfterInstructions(_method.Module);
                     afterInstructions.Reverse();
                     foreach (var beforeInstruction in afterInstructions)
                     {
@@ -56,7 +56,7 @@ namespace FluentAspect.Weaver.Core
             }
         }
 
-        private IEnumerable<Instruction> CreateAfterInstructions()
+        private IEnumerable<Instruction> CreateAfterInstructions(ModuleDefinition module)
         {
 
             var instructions = new List<Instruction>();
@@ -64,6 +64,7 @@ namespace FluentAspect.Weaver.Core
             {
                 if (interceptorType.GetMethod("AfterCall") != null)
                 {
+                   instructions.Add(Instruction.Create(OpCodes.Call, module.Import(interceptorType.GetMethod("AfterCall"))));
                 }
             }
             return instructions;

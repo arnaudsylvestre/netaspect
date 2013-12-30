@@ -54,12 +54,23 @@ namespace FluentAspect.Sample
         [CheckOnCallNetAspectAttribute]
         public string WeavedOnCall(string parameter)
         {
-            return "Hello";
+           return "Hello";
+        }
+
+        [CheckOnCallAfterNetAspectAttribute]
+        public string WeavedOnCallAfter(string parameter)
+        {
+           return "Hello";
         }
 
         public string CallWeavedOnCall(string parameter)
         {
-            return WeavedOnCall(parameter);
+           return WeavedOnCall(parameter);
+        }
+
+        public string CallWeavedOnCallAfter(string parameter)
+        {
+           return WeavedOnCallAfter(parameter);
         }
 
 
@@ -127,10 +138,19 @@ namespace FluentAspect.Sample
 
     public class CheckOnCallNetAspectAttribute : Attribute
     {
-        public static void BeforeCall()
-        {
-            throw new NotSupportedException();
-        }
+       public static void BeforeCall()
+       {
+          throw new NotSupportedException();
+       }
+
+    }
+
+    public class CheckOnCallAfterNetAspectAttribute : Attribute
+    {
+       public static void AfterCall()
+       {
+          throw new NotSupportedException();
+       }
 
     }
 
