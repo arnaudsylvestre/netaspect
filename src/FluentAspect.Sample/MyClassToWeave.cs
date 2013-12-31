@@ -144,9 +144,29 @@ namespace FluentAspect.Sample
         {
             throw new NotImplementedException();
         }
+
+       public void CallWeavedOnCallAfterWithParameters(string callerMethodParameter)
+       {
+          WeavedOnCallAfterWithParameters();
+       }
+
+       [CheckParametersCallerOnCallAfterNetAspectAttribute]
+       public void WeavedOnCallAfterWithParameters()
+       {
+          
+       }
     }
 
-    public class CheckOnCallNetAspectAttribute : Attribute
+   public class CheckParametersCallerOnCallAfterNetAspectAttribute : Attribute
+   {
+
+      public static void AfterCall(string callerMethodParameterCaller)
+      {
+         throw new Exception(callerMethodParameterCaller);
+      }
+   }
+
+   public class CheckOnCallNetAspectAttribute : Attribute
     {
        public static void BeforeCall()
        {

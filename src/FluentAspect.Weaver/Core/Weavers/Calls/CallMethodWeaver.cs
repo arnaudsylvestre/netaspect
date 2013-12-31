@@ -71,6 +71,13 @@ namespace FluentAspect.Weaver.Core
                parameters.Add("filename", () => instructions.Add(Instruction.Create(OpCodes.Ldstr, instructionP_P == null ? "" : Path.GetFileName(instructionP_P.Document.Url))));
                parameters.Add("filepath", () => instructions.Add(Instruction.Create(OpCodes.Ldstr, instructionP_P == null ? "" : instructionP_P.Document.Url)));
 
+               foreach (var parameter_L in _method.Parameters)
+               {
+                  ParameterDefinition parameter1_L = parameter_L;
+                  parameters.Add((parameter1_L.Name + "Caller").ToLower(), () => instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter1_L)));
+               }
+                  
+
                foreach (var parameterInfo_L in afterCallMethod.GetParameters())
                {
                   parameters[parameterInfo_L.Name.ToLower()]();

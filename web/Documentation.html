@@ -27,89 +27,106 @@
   </head>
 
   <body>
-
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">Net Aspect</a>
-        </div>
-		<div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="GettingStarted.html">Getting started</a>
-        </div>
-		<div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="Documentation.html">Documentation</a>
-        </div>
-		<div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="Licence.html">Licence</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <header class="jumbotron subhead" id="overview">
-  <div class="container">
-    <p>Documentation for the Fluent based approach</p>
-  </div>
-</header>
-
-    <div class="container">
-	
-	<div class="row">
-      
-	  <div class="span9">
+<!-- Docs page layout -->
 
 
+<div class="container bs-docs-container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="bs-sidebar hidden-print" role="complementary">
+            <ul class="nav bs-sidenav" data-spy="affix" >
+              
+                <li>
+  <a href="#attributes">Attributes</a>
+  <ul class="nav" >
+    <li><a href="#netaspect-attributes">NetAspect Attribute</a></li>
+    <li><a href="#member-attributes">How to use</a></li>
+  </ul>
+</li>
+<li>
+  <a href="#dropdowns">Method Weaving</a>
+  <ul class="nav">
+    <li><a href="#dropdowns-example">Before method</a></li>
+    <li><a href="#dropdowns-alignment">After method</a></li>
+    <li><a href="#dropdowns-headers">OnException method</a></li>
+  </ul>
+</li>
 
-        <!-- Dropdowns
-        ================================================== -->
-        <section id="dropdowns">
-          <div class="page-header">
-            <h1>1. Define the class to weave</h1>
+            </ul>
           </div>
-
-          <h2>Example</h2>
-          <p>Toggleable, contextual menu for displaying lists of links. Made interactive with the <a href="./javascript.html#dropdowns">dropdown JavaScript plugin</a>.</p>
-          
-<pre class="prettyprint">
-public class MyClassToWeave
+        </div>
+        <div class="col-md-9" role="main">
+            <!-- Glyphicons
+  ================================================== -->
+  <div class="bs-docs-section">
+    <div class="page-header">
+      <h1 id="attributes">Attributes</h1>
+    </div>
+    
+	<h2 id="netaspect-attributes">NetAspect attribute</h2>
+    <p>NetAspect use .Net attributes to define the weaving model. To define a NetAspect attribute you must declare your attribute with a property named <b>IsNetAspectAttribute</b> like this :</p>
+	<pre class="prettyprint">
+public class LogAttribute : Attribute
 {
-	public void Check()
-	{
-	
-	}
+    public bool IsNetAspectAttribute { get { return true; } }
 }
 </pre>
+    <h2 id="member-attributes">How to use</h2>
+    <p>You can so put this attribute on a member to weave the method with your NetAspectAttribute</p>
+    <pre class="prettyprint">
+public class Computer
+{
+   [Log]
+   public int Divide(int a, int b)
+   {
+      return a / b;
+   }
+}
+</pre>
+  </div>
 
-        </section>
-	  
+
+  <!-- Dropdowns
+  ================================================== -->
+  <div class="bs-docs-section">
+    <div class="page-header">
+      <h1 id="dropdowns">Method weaving</h1>
+    </div>
+    
+    <h2 id="dropdowns-example">Define your aspect</h2>
+	<p>By adding a NetAspect attribute to a method, you can add behaviors in 3 locations : Before the code of the method, after the code of the method, handle if an exception occured</p>
+	<pre class="prettyprint">
+public class LogAttribute : Attribute
+{
+    public bool IsNetAspectAttribute { get { return true; } }
+	
+    public void Before() { Console.WriteLine("Before"); }
+	
+    public void After() { Console.WriteLine("After"); }
+	
+    public void OnException() { Console.WriteLine("OnException"); }
+}
+</pre>
+	<p>After weaving, when any method will call your <b>Divide</b> method in your <b>Computer</b> class, the console will be filled !</p>
+	
+    <h2 id="dropdowns-example-after">Parameters</h2>
+	<p>You can add some parameters to your Before/After/OnException methods to get some information about the weaved method</p>
+	
+    <h3 id="dropdowns-example">Parameters available in the Before method</h3>
+	
+	<ul>
+		<li><b>instance</b> : the <i>this</i> of the weaved method (in our case the this of Divide). The type of instance can be <b>object</b> or <b>Computer</b> in our case</li>
+		<li><b>method</b> : the MethodInfo of the weaved method (in our case Divide). The type of method must be <b>MethodInfo</b></li>
+		<li><b>parameters</b> : the parameters of the weaved method (in our case the parameters of the Divide method). The type of parameters must be <b>object[]</b></li>
+		<li><b>parameter name</b> : if a parameter name/type in the Before method is the same in the weaved method</li>
+	</ul>
+</div>
+
 	  
 	  </div>
-	  </div>
-    </div> <!-- /container -->
+
+    </div>
+
 
 
     <!-- Bootstrap core JavaScript

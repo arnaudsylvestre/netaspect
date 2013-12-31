@@ -62,6 +62,7 @@
     <Compile Include="acceptance\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="acceptance\Weaving\Calls\BeforeCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\AfterCallTest.cs" />
+    <Compile Include="acceptance\Weaving\Calls\MethodParameterCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\LineNumberCallTest.cs" />
     <Compile Include="acceptance\Weaving\Errors\ErrorsTest.cs" />
     <Compile Include="acceptance\Weaving\Method\AssemblyAttributes\AssemblyAttributeTest.cs" />
