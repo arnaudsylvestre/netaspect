@@ -118,8 +118,21 @@ public class LogAttribute : Attribute
 		<li><b>instance</b> : the <i>this</i> of the weaved method (in our case the this of Divide). The type of instance can be <b>object</b> or <b>Computer</b> in our case</li>
 		<li><b>method</b> : the MethodInfo of the weaved method (in our case Divide). The type of method must be <b>MethodInfo</b></li>
 		<li><b>parameters</b> : the parameters of the weaved method (in our case the parameters of the Divide method). The type of parameters must be <b>object[]</b></li>
-		<li><b>parameter name</b> : if a parameter name/type in the Before method is the same in the weaved method</li>
+		<li><b>parameter name</b> : if a parameter name/type in the Before method is in the weaved method so the value will be the same. You can referenced the parameter in the aspect method to update the value in the weaved method</li>
 	</ul>
+	<p>Here is a sample of all the above parameters</p>
+	
+	<pre class="prettyprint">
+public class LogAttribute : Attribute
+{
+    public bool IsNetAspectAttribute { get { return true; } }
+	
+    public void Before(Computer instance, MethodInfo method, object[] parameters, int a, ref int b) 
+    {
+        Console.WriteLine(string.Format("Before {0}", method.Name));
+    }
+}
+</pre>
 </div>
 
 	  
