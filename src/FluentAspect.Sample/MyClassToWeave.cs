@@ -63,6 +63,11 @@ namespace FluentAspect.Sample
            return "Hello";
         }
 
+        [CheckLineNumberOnCallAfterNetAspectAttribute]
+        public void WeavedOnCallAfter()
+        {
+        }
+
         public string CallWeavedOnCall(string parameter)
         {
            return WeavedOnCall(parameter);
@@ -71,6 +76,11 @@ namespace FluentAspect.Sample
         public string CallWeavedOnCallAfter(string parameter)
         {
            return WeavedOnCallAfter(parameter);
+        }
+
+        public void CallWeavedOnCallAfter()
+        {
+           WeavedOnCallAfter();
         }
 
 
@@ -150,6 +160,15 @@ namespace FluentAspect.Sample
        public static void AfterCall()
        {
           throw new NotSupportedException();
+       }
+
+    }
+
+    public class CheckLineNumberOnCallAfterNetAspectAttribute : Attribute
+    {
+       public static void AfterCall(int lineNumber, int columnNumber, string filename)
+       {
+          throw new Exception(lineNumber.ToString() + " : " + columnNumber.ToString() + " : " + filename);
        }
 
     }
