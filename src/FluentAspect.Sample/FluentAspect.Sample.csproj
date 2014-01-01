@@ -50,6 +50,8 @@
     <Compile Include="AOP\MockInterceptor.cs" />
     <Compile Include="BeforeParameter.cs" />
     <Compile Include="AbstractClassToWeaveWithAttributes.cs" />
+    <Compile Include="docs\LogAttribute.cs" />
+    <Compile Include="docs\MyInt.cs" />
     <Compile Include="InterfaceToWeaveWithAttributes.cs" />
     <Compile Include="MyClassToWeave.cs" />
     <Compile Include="MyClassToWeaveWithAttributes.cs" />
