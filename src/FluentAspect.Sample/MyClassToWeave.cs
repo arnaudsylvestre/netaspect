@@ -11,17 +11,21 @@ namespace FluentAspect.Sample
         {
         }
 
-        [CheckWithReturnInterceptor]
+        [CheckWithReturn]
        public string CheckWithReturn()
        {
           return "NotWeaved";
        }
         [CheckWithParametersInterceptor]
-        
-       public string CheckWithParameters(string aspectWillReturnThis)
-       {
-          return "NotWeaved";
-       }
+        public string CheckWithParameters(string aspectWillReturnThis)
+        {
+           return "NotWeaved";
+        }
+        [CheckWithParametersReferenced]
+        public string CheckWithParametersReferenced(string aspectWillReturnThis)
+        {
+           return "NotWeaved";
+        }
 
 
         [CheckWithVoidInterceptor]

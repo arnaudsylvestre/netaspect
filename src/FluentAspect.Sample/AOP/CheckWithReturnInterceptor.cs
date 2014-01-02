@@ -2,7 +2,7 @@
 
 namespace FluentAspect.Sample.AOP
 {
-   class CheckWithReturnInterceptorAttribute : Attribute
+   class CheckWithReturnAttribute : Attribute
     {
       string NetAspectAttributeKind = "MethodWeaving";
       public void After(ref string result)

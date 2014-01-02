@@ -65,13 +65,19 @@ namespace FluentAspect.Weaver.Core
             {
                 try
                 {
-                    weaver_L.Weave();
+                   weaver_L.Weave();
+                }
+                catch (WeavingWarningException e)
+                {
+                   errorHandler.Warnings.Add(e.Message);
                 }
                 catch (Exception e)
                 {
-                    errorHandler.Warnings.Add(e.Message);
+                   errorHandler.Errors.Add(e.Message);
                 }
             }
+         if (errorHandler.Errors.Count > 0)
+            return;
             var targetFileName = newAssemblyNameProvider(assemblyFilePath);
             assemblyDefinition.Write(targetFileName, new WriterParameters()
                 {
@@ -98,6 +104,10 @@ namespace FluentAspect.Weaver.Core
         {
 
         }
+   }
+
+   internal class WeavingWarningException : Exception
+   {
    }
 }
 

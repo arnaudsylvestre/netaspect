@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="AOP\AssemblyNetAspectAttribute.cs" />
     <Compile Include="AOP\CheckBeforeAttribute.cs" />
+    <Compile Include="AOP\CheckWithParametersReferencedAttribute.cs" />
     <Compile Include="AOP\EnsureNotNullAttribute.cs" />
     <Compile Include="AOP\ThrowerAttribute.cs" />
     <Compile Include="AOP\CheckMultiInterceptor.cs" />
