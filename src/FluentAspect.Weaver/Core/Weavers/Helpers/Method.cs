@@ -128,23 +128,8 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
             return null;
         }
 
-        public VariableDefinition CreateHandleResult(VariableDefinition result_P)
-        {
-            if (result_P == null)
-                return null;
-            else
-            {
 
-                VariableDefinition handleResult_P = MethodDefinition.CreateVariable(result_P.VariableType);
-                il.Emit(OpCodes.Ldloc, result_P);
-                il.Emit(OpCodes.Stloc, handleResult_P);
-                return handleResult_P;
-            }
-        }
-
-
-
-        public void Return(VariableDefinition weavedResult)
+       public void Return(VariableDefinition weavedResult)
         {
             if (MethodDefinition.ReturnType.MetadataType != MetadataType.Void)
                 il.Emit(OpCodes.Ldloc, weavedResult);

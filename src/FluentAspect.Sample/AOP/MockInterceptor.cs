@@ -3,8 +3,10 @@ using System.Reflection;
 
 namespace FluentAspect.Sample.AOP
 {
-    public class MockInterceptorNetAspectAttribute : Attribute
+    public class MockInterceptorAttribute : Attribute
     {
+       string NetAspectAttributeKind = "MethodWeaving";
+
         public static BeforeInfo before;
         public static AfterInfo after;
         public static ExceptionInfo exception;
@@ -32,7 +34,7 @@ namespace FluentAspect.Sample.AOP
 
         public void OnException(object instance, MethodInfo method, object[] parameters, Exception exception)
         {
-            MockInterceptorNetAspectAttribute.exception = new ExceptionInfo
+            MockInterceptorAttribute.exception = new ExceptionInfo
                 {
                     @this = instance,
                     methodInfo_P = method,
@@ -64,47 +66,4 @@ namespace FluentAspect.Sample.AOP
             public object @this;
         }
     }
-
-
-
-    public class MockPropertyInterceptorNetAspectAttribute : Attribute
-    {
-        public static MockInterceptorNetAspectAttribute.BeforeInfo before;
-        public static MockInterceptorNetAspectAttribute.AfterInfo after;
-        public static MockInterceptorNetAspectAttribute.ExceptionInfo exception;
-
-        public void BeforeGet(object instance, MethodInfo method, object[] parameters)
-        {
-            before = new MockInterceptorNetAspectAttribute.BeforeInfo
-            {
-                @this = instance,
-                methodInfo_P = method,
-                parameters = parameters
-            };
-        }
-
-        public void AfterGet(object instance, MethodInfo method, object[] parameters, ref string result)
-        {
-            after = new MockInterceptorNetAspectAttribute.AfterInfo
-            {
-                @this = instance,
-                result = result,
-                methodInfo_P = method,
-                parameters = parameters
-            };
-        }
-
-        public void OnExceptionGet(object instance, MethodInfo method, object[] parameters, Exception exception)
-        {
-            MockInterceptorNetAspectAttribute.exception = new MockInterceptorNetAspectAttribute.ExceptionInfo
-            {
-                @this = instance,
-                methodInfo_P = method,
-                parameters = parameters,
-                Exception = exception,
-            };
-        }
-    }
-
-
 }

@@ -11,12 +11,12 @@ namespace FluentAspect.Sample
         {
         }
 
-        [CheckWithReturnInterceptorNetAspect]
+        [CheckWithReturnInterceptor]
        public string CheckWithReturn()
        {
           return "NotWeaved";
        }
-        [CheckWithParametersInterceptorNetAspect]
+        [CheckWithParametersInterceptor]
         
        public string CheckWithParameters(string aspectWillReturnThis)
        {
@@ -24,34 +24,34 @@ namespace FluentAspect.Sample
        }
 
 
-        [CheckWithVoidInterceptorNetAspect]
+        [CheckWithVoidInterceptor]
        public void CheckWithVoid()
        {
 
        }
 
-        [CheckWithGenericsInterceptorNetAspect]
+        [CheckWithGenericsInterceptor]
        public string CheckWithGenerics<T>(T arg)
        {
            return arg.ToString() + "<>" + typeof(T).FullName;
        }
 
 
-        [CheckWithGenericsInterceptorNetAspect]
+        [CheckWithGenericsInterceptor]
        public string CheckWithGenericsClass<T>(T arg)
            where T : class 
        {
            return arg.ToString() + "<>" + typeof(T).FullName;
        }
 
-        [CheckThrowInterceptorNetAspect]
+        [CheckThrowInterceptor]
         public void CheckThrow()
         {
             throw new NotImplementedException();
         }
 
 
-        [CheckOnCallNetAspectAttribute]
+        [CheckOnCall]
         public string WeavedOnCall(string parameter)
         {
            return "Hello";
@@ -63,7 +63,7 @@ namespace FluentAspect.Sample
            return "Hello";
         }
 
-        [CheckLineNumberOnCallAfterNetAspectAttribute]
+        [CheckLineNumberOnCallAfterAttribute]
         public void WeavedOnCallAfter()
         {
         }
@@ -90,7 +90,7 @@ namespace FluentAspect.Sample
             return parameter.Value;
         }
 
-        [CheckWithParameterNameInterceptorNetAspectAttribute]
+        [CheckWithParameterNameInterceptorAttribute]
         public string CheckWithParameterName(int first, int second)
         {
             return string.Format("{0} : {1}", first, second);
@@ -107,7 +107,7 @@ namespace FluentAspect.Sample
             new DepClassToWeave().EnsureNotNull(o);
         }
 
-        [CheckNotRenameInAssemblyNetAspect]
+        [CheckNotRenameInAssembly]
         public string CheckNotRenameInAssembly()
         {
             return CheckWithReturn();
@@ -115,31 +115,31 @@ namespace FluentAspect.Sample
 
 
 
-        [MockInterceptorNetAspect]
+        [MockInterceptor]
         public string CheckMockException()
         {
             throw new NotImplementedException();
         }
-        [MockInterceptorNetAspect]
+        [MockInterceptor]
         public string CheckMock(string parameter)
         {
             return "return";
         }
 
-        [CheckMultiNetAspect]
-        [CheckMultiNetAspect]
+        [CheckMulti]
+        [CheckMulti]
         public string CheckMulti(int i)
         {
             return i.ToString();
         }
 
-        [CheckReturnSimpleTypeNetAspect]
+        [CheckReturnSimpleType]
         public int CheckWithReturnSimpleType()
         {
             return 0;
         }
 
-        [CheckThrowInterceptorNetAspect]
+        [CheckThrowInterceptor]
         public string CheckThrowWithReturn()
         {
             throw new NotImplementedException();
@@ -150,7 +150,7 @@ namespace FluentAspect.Sample
           WeavedOnCallAfterWithParameters();
        }
 
-       [CheckParametersCallerOnCallAfterNetAspectAttribute]
+       [CheckParametersCallerOnCallAfter]
        public void WeavedOnCallAfterWithParameters()
        {
           
@@ -161,16 +161,16 @@ namespace FluentAspect.Sample
           CheckCaller();
        }
 
-       [CheckCallerNetAspect]
+       [CheckCaller]
        public void CheckCaller()
        {
 
        }
     }
 
-   public class CheckCallerNetAspectAttribute : Attribute
+   public class CheckCallerAttribute : Attribute
    {
-
+      string NetAspectAttributeKind = "CallWeaving";
 
       public static void AfterCall(object caller)
       {
@@ -178,8 +178,9 @@ namespace FluentAspect.Sample
       }
    }
 
-   public class CheckParametersCallerOnCallAfterNetAspectAttribute : Attribute
+   public class CheckParametersCallerOnCallAfterAttribute : Attribute
    {
+      string NetAspectAttributeKind = "CallWeaving";
 
       public static void AfterCall(string callerMethodParameterCaller)
       {
@@ -187,8 +188,10 @@ namespace FluentAspect.Sample
       }
    }
 
-   public class CheckOnCallNetAspectAttribute : Attribute
+   public class CheckOnCallAttribute : Attribute
     {
+      string NetAspectAttributeKind = "CallWeaving";
+
        public static void BeforeCall()
        {
           throw new NotSupportedException();
@@ -208,8 +211,10 @@ namespace FluentAspect.Sample
 
     }
 
-    public class CheckLineNumberOnCallAfterNetAspectAttribute : Attribute
+    public class CheckLineNumberOnCallAfterAttribute : Attribute
     {
+       string NetAspectAttributeKind = "CallWeaving";
+
        public static void AfterCall(int lineNumber, int columnNumber, string filename)
        {
           throw new Exception(lineNumber.ToString() + " : " + columnNumber.ToString() + " : " + filename);
@@ -217,16 +222,19 @@ namespace FluentAspect.Sample
 
     }
 
-    public class CheckReturnSimpleTypeNetAspectAttribute : Attribute
+    public class CheckReturnSimpleTypeAttribute : Attribute
     {
+       string NetAspectAttributeKind = "MethodWeaving";
+
         public void After(ref int result)
         {
             result = 5;
         }
     }
 
-    public class CheckWithParameterNameInterceptorNetAspectAttribute : Attribute
+    public class CheckWithParameterNameInterceptorAttribute : Attribute
     {
+       string NetAspectAttributeKind = "MethodWeaving";
         public void Before(int first, ref int second)
         {
             second = first + 1;

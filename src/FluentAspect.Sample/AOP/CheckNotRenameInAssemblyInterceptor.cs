@@ -3,7 +3,8 @@
 namespace FluentAspect.Sample.AOP
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public class CheckNotRenameInAssemblyNetAspectAttribute : Attribute
+    public class CheckNotRenameInAssemblyAttribute : Attribute
     {
+       string NetAspectAttributeKind = "MethodWeaving";
     }
 }

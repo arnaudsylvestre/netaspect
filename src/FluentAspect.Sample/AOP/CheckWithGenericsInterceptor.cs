@@ -2,9 +2,9 @@
 
 namespace FluentAspect.Sample.AOP
 {
-    class CheckWithGenericsInterceptorNetAspectAttribute : Attribute
+    class CheckWithGenericsInterceptorAttribute : Attribute
     {
-
+       string NetAspectAttributeKind = "MethodWeaving";
         public void After(ref string result)
         {
             result = result + "Weaved";

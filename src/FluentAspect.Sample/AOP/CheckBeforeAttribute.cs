@@ -7,7 +7,7 @@ namespace FluentAspect.Sample.AOP
     public class CheckBeforeAspectAttribute : Attribute
     {
 
-        public bool IsNetAspectAttribute { get { return true; } }
+       string NetAspectAttributeKind = "MethodWeaving";
 
         public void Before(object instance, MethodInfo method, object[] parameters)
         {

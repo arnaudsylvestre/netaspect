@@ -3,8 +3,10 @@
 namespace FluentAspect.Sample.AOP
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public class CheckMultiNetAspectAttribute : Attribute
+    public class CheckMultiAttribute : Attribute
     {
+       string NetAspectAttributeKind = "MethodWeaving";
+
         public void Before(ref int i)
         {
             i++;

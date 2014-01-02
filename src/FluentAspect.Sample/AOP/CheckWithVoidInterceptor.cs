@@ -2,7 +2,8 @@
 
 namespace FluentAspect.Sample.AOP
 {
-    public class CheckWithVoidInterceptorNetAspectAttribute : Attribute
+    public class CheckWithVoidInterceptorAttribute : Attribute
    {
+       string NetAspectAttributeKind = "MethodWeaving";
    }
 }

@@ -13,19 +13,19 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Interceptors
       {
          return () =>
             {
-               MockInterceptorNetAspectAttribute.after = null;
-               MockInterceptorNetAspectAttribute.before = null;
-               MockInterceptorNetAspectAttribute.exception = null;
+               MockInterceptorAttribute.after = null;
+               MockInterceptorAttribute.before = null;
+               MockInterceptorAttribute.exception = null;
                var myClassToWeave = new MyClassToWeave();
                string res = myClassToWeave.CheckMock("param");
-               Assert.AreSame(myClassToWeave, MockInterceptorNetAspectAttribute.before.@this);
-               Assert.AreEqual("CheckMock", MockInterceptorNetAspectAttribute.before.methodInfo_P.Name);
-               Assert.AreEqual(new object[] { "param" }, MockInterceptorNetAspectAttribute.before.parameters);
-               Assert.AreSame(myClassToWeave, MockInterceptorNetAspectAttribute.after.@this);
-               Assert.AreEqual("CheckMock", MockInterceptorNetAspectAttribute.after.methodInfo_P.Name);
-               Assert.AreEqual(new object[] { "param" }, MockInterceptorNetAspectAttribute.after.parameters);
-               Assert.AreEqual(res, MockInterceptorNetAspectAttribute.after.result);
-               Assert.AreEqual(null, MockInterceptorNetAspectAttribute.exception);
+               Assert.AreSame(myClassToWeave, MockInterceptorAttribute.before.@this);
+               Assert.AreEqual("CheckMock", MockInterceptorAttribute.before.methodInfo_P.Name);
+               Assert.AreEqual(new object[] { "param" }, MockInterceptorAttribute.before.parameters);
+               Assert.AreSame(myClassToWeave, MockInterceptorAttribute.after.@this);
+               Assert.AreEqual("CheckMock", MockInterceptorAttribute.after.methodInfo_P.Name);
+               Assert.AreEqual(new object[] { "param" }, MockInterceptorAttribute.after.parameters);
+               Assert.AreEqual(res, MockInterceptorAttribute.after.result);
+               Assert.AreEqual(null, MockInterceptorAttribute.exception);
             };
       }
    }

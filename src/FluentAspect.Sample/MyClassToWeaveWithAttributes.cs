@@ -11,7 +11,7 @@ namespace FluentAspect.Sample
        //}
       private bool thrown = false;
 
-       [ThrowerNetAspect]
+       [Thrower]
        public MyClassToWeaveWithAttributes(bool thrown)
        {
           this.thrown = thrown;
@@ -19,7 +19,7 @@ namespace FluentAspect.Sample
 
        public string PropertyGetter
        {
-           [GetPropertyNetAspectAttribute]
+           [GetProperty]
            get { return "1"; }
        }
 
@@ -88,8 +88,10 @@ namespace FluentAspect.Sample
    }
 
 
-   public class GetPropertyNetAspectAttribute : Attribute
+   public class GetPropertyAttribute : Attribute
    {
+      string NetAspectAttributeKind = "MethodWeaving";
+
        public void After(ref string result)
        {
            result = "3";

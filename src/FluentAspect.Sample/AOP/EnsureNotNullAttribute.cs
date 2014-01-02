@@ -10,11 +10,9 @@ namespace FluentAspect.Sample.AOP
         public IEnumerable<Assembly> AssembliesToWeave
         {
             get { return new List<Assembly>() {typeof (DepClassToWeave).Assembly}; }
-        } 
-
-        public bool IsNetAspectAttribute {
-            get { return true; }
         }
+
+        string NetAspectAttributeKind = "MethodWeaving";
 
         public void Before(string s)
         {
