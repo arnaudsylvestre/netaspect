@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
 
-namespace FluentAspect.Weaver.Weavers
+namespace FluentAspect.Weaver.Core.Weavers.Methods
 {
     public interface IAroundWeaverConfiguration
     {

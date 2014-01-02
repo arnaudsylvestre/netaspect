@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FluentAspect.Weaver.Core.Errors;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.Weaving.Errors
+namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Errors
 {
    public class ErrorsTest : AcceptanceTest
    {

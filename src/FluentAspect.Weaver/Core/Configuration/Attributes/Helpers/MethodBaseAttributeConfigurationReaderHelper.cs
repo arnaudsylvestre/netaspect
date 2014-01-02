@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FluentAspect.Core.Methods;
+using FluentAspect.Weaver.Helpers;
 
-namespace FluentAspect.Weaver.Core.Fluent.Helpers
+namespace FluentAspect.Weaver.Core.Configuration.Attributes.Helpers
 {
     public class MethodBaseAttributeConfigurationReaderHelper
     {

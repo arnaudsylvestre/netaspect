@@ -1,5 +1,5 @@
 ﻿using System;
-using FluentAspect.Sample.Attributes;
+using FluentAspect.Sample.AOP;
 using FluentAspect.Sample.Dep;
 
 namespace FluentAspect.Sample
@@ -107,7 +107,7 @@ namespace FluentAspect.Sample
             new DepClassToWeave().EnsureNotNull(o);
         }
 
-        [CheckNotRenameInAssemblyNetAspectAttribute]
+        [CheckNotRenameInAssemblyNetAspect]
         public string CheckNotRenameInAssembly()
         {
             return CheckWithReturn();

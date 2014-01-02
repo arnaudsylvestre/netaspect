@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 
-namespace FluentAspect.Weaver.Weavers.Methods
+namespace FluentAspect.Weaver.Core.Weavers.Methods
 {
    public class AroundMethodWeaver : IWeaveable
    {

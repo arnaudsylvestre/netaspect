@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAspect.Sample;
+using FluentAspect.Sample.AOP;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Interceptors

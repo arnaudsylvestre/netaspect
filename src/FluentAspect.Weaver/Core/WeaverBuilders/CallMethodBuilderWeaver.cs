@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAspect.Core;
+using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Weavers.Methods;
+using FluentAspect.Weaver.Core.Weavers.Calls;
+using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core
+namespace FluentAspect.Weaver.Core.WeaverBuilders
 {
    public class CallMethodBuilderWeaver : IWeaverBuilder
    {

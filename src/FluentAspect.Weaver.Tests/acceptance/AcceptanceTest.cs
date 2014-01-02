@@ -5,7 +5,7 @@ using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Factory;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests
+namespace FluentAspect.Weaver.Tests.acceptance
 {
    [TestFixture]
    public abstract class AcceptanceTest : MarshalByRefObject

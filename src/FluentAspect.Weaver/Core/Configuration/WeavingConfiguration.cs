@@ -1,29 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using FluentAspect.Core;
-using FluentAspect.Core.Methods;
+﻿using System.Collections.Generic;
 
-namespace FluentAspect.Weaver.Core
+namespace FluentAspect.Weaver.Core.Configuration
 {
-    public class MethodMatch
-    {
-        public Func<IMethod, bool> Matcher { get; set; }
-
-        public List<Type> InterceptorTypes { get; set; }
-    }
-    public class PropertyMatch
-    {
-        public Func<IProperty, bool> Matcher { get; set; }
-
-        public List<Type> InterceptorTypes { get; set; }
-    }
-
    public class WeavingConfiguration
    {
       public WeavingConfiguration()
       {
-          Properties = new List<PropertyMatch>();
           Methods = new List<MethodMatch>();
          Constructors = new List<MethodMatch>();
       }
@@ -31,7 +13,5 @@ namespace FluentAspect.Weaver.Core
       public List<MethodMatch> Methods { get; private set; }
 
       public List<MethodMatch> Constructors { get; private set; }
-
-      public List<PropertyMatch> Properties { get; private set; }
    }
 }

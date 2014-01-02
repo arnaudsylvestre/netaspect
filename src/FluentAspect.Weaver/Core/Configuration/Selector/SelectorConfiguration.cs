@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using FluentAspect.Core.Methods;
-using FluentAspect.Weaver.Core.Fluent;
+using FluentAspect.Weaver.Helpers;
 
-namespace FluentAspect.Weaver.Core.Selector
+namespace FluentAspect.Weaver.Core.Configuration.Selector
 {
     public class SelectorConfigurationReader : IConfigurationReader
     {

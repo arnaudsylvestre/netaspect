@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FluentAspect.Core.Methods
+namespace FluentAspect.Weaver.Core
 {
    public interface IMethod
    {

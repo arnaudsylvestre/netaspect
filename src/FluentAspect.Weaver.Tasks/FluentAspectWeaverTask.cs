@@ -4,7 +4,7 @@ using System.IO;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
-namespace SheepAspect.Tasks
+namespace FluentAspect.Weaver.Tasks
 {
     public class FluentAspectWeaverTask: Task 
     {

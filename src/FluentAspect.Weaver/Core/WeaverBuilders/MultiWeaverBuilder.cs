@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FluentAspect.Weaver.Core;
+﻿using System.Collections.Generic;
+using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Errors;
 using Mono.Cecil;
 
-namespace FluentAspect.Weaver.CF.Core.WeaverBuilders
+namespace FluentAspect.Weaver.Core.WeaverBuilders
 {
     class MultiWeaverBuilder : IWeaverBuilder
     {

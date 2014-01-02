@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAspect.Weaver.Weavers.Helpers;
+using FluentAspect.Weaver.Core.Weavers.Helpers;
+using FluentAspect.Weaver.Core.Weavers.Methods;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Weavers.Methods
+namespace FluentAspect.Weaver.Core.Weavers.Constructors
 {
    public class ConstructorAroundWeaver
    {

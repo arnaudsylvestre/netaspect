@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAspect.Sample.docs;
+using FluentAspect.Weaver.Tests.acceptance;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.docs

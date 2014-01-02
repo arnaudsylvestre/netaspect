@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 #endregion
 
-namespace FluentAspect.Weaver.Tests
+namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Visibility
 {
    [TestFixture]
    public class ProtectedWeavingTest : AcceptanceTest

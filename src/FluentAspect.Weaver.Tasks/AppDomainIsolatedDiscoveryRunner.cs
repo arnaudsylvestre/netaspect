@@ -3,7 +3,7 @@ using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Factory;
 using Microsoft.Build.Utilities;
 
-namespace SheepAspect.Tasks
+namespace FluentAspect.Weaver.Tasks
 {
     public class AppDomainIsolatedDiscoveryRunner: MarshalByRefObject
     {

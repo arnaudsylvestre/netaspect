@@ -1,5 +1,5 @@
 ﻿using System;
-using FluentAspect.Sample.Attributes;
+using FluentAspect.Sample.AOP;
 
 namespace FluentAspect.Sample
 {

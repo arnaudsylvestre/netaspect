@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Mono.Cecil;
 
-namespace FluentAspect.Weaver.Core
+namespace FluentAspect.Weaver.Core.Configuration
 {
    public interface IConfigurationReader
    {

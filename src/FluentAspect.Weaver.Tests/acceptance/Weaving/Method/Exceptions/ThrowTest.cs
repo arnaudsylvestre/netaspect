@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Reflection;
 using FluentAspect.Sample;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests
+namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Exceptions
 {
    [TestFixture]
    public class ThrowTest : AcceptanceTest

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FluentAspect.Weaver.Core.Weavers.Helpers;
 using FluentAspect.Weaver.Helpers;
-using FluentAspect.Weaver.Weavers.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MethodAttributes = Mono.Cecil.MethodAttributes;
 
-namespace FluentAspect.Weaver.Weavers
+namespace FluentAspect.Weaver.Core.Weavers.Methods
 {
     public static class AroundWeaverConfigurationExtensions
     {

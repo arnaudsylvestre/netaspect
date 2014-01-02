@@ -1,8 +1,8 @@
-﻿using FluentAspect.Weaver.CF.Core.WeaverBuilders;
-using FluentAspect.Weaver.Core;
+﻿using FluentAspect.Weaver.Core;
+using FluentAspect.Weaver.Core.Configuration.Attributes;
 using FluentAspect.Weaver.Core.Configuration.Multi;
-using FluentAspect.Weaver.Core.Fluent;
-using FluentAspect.Weaver.Core.Selector;
+using FluentAspect.Weaver.Core.Configuration.Selector;
+using FluentAspect.Weaver.Core.WeaverBuilders;
 
 namespace FluentAspect.Weaver.Factory
 {

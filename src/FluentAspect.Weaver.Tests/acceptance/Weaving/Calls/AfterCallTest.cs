@@ -2,7 +2,7 @@
 using FluentAspect.Sample;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests
+namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Calls
 {
    [TestFixture]
    public class AfterCallTest : AcceptanceTest

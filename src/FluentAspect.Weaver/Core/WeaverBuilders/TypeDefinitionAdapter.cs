@@ -1,7 +1,6 @@
-﻿using FluentAspect.Core.Methods;
-using Mono.Cecil;
+﻿using Mono.Cecil;
 
-namespace FluentAspect.Weaver
+namespace FluentAspect.Weaver.Core.WeaverBuilders
 {
    class TypeDefinitionAdapter : IType
    {

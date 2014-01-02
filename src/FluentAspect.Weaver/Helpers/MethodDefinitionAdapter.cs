@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using FluentAspect.Core.Methods;
+using FluentAspect.Weaver.Core;
+using FluentAspect.Weaver.Core.WeaverBuilders;
 using Mono.Cecil;
 
-namespace FluentAspect.Weaver
+namespace FluentAspect.Weaver.Helpers
 {
     class MethodDefinitionAdapter : IMethod
     {

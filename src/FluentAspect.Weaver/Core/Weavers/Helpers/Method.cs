@@ -5,7 +5,7 @@ using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Weavers.Helpers
+namespace FluentAspect.Weaver.Core.Weavers.Helpers
 {
 
     public class Method

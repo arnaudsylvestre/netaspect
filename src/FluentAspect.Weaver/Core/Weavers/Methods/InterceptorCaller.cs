@@ -4,7 +4,7 @@ using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Weavers
+namespace FluentAspect.Weaver.Core.Weavers.Methods
 {
     public class InterceptorCaller
     {

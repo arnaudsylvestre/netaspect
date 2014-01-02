@@ -27,17 +27,12 @@
 #endregion
 
 using System;
-using System.CodeDom.Compiler;
-using System.Runtime.Remoting.Contexts;
+using System.Diagnostics;
+using System.Text;
 
-namespace Boo.Lang.Compiler.Steps
+namespace FluentAspect.Weaver.Core.Helpers
 {
-	using System.Diagnostics;
-	using System.Text;
-	using System.IO;
-	using Compiler;
-
-	public class PEVerify
+   public class PEVerify
 	{
 		public void Run(string assemblyFile)
 		{			

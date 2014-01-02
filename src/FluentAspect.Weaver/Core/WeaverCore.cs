@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using Boo.Lang.Compiler.Steps;
+using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Fluent;
+using FluentAspect.Weaver.Core.Helpers;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 

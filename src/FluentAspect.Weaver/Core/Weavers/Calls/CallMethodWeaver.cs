@@ -5,7 +5,7 @@ using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core
+namespace FluentAspect.Weaver.Core.Weavers.Calls
 {
    public class CallMethodWeaver : IWeaveable
    {

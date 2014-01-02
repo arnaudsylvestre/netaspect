@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace FluentAspect.Weaver.Core.Fluent
+namespace FluentAspect.Weaver.Helpers
 {
     public static class TypeExtensions
     {
@@ -29,17 +29,5 @@ namespace FluentAspect.Weaver.Core.Fluent
 
             return methods;
         }
-        public static List<PropertyInfo> GetAllProperties(this IEnumerable<Type> types, Func<PropertyInfo, bool> filter)
-        {
-            var methods = new List<PropertyInfo>();
-
-            foreach (var type in types)
-            {
-                methods.AddRange(from m in type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance) where filter(m) select m);
-            }
-
-            return methods;
-        }
-         
     }
 }

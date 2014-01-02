@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FluentAspect.Core;
+using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Weavers.Methods;
+using FluentAspect.Weaver.Core.Weavers.Methods;
+using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 
-namespace FluentAspect.Weaver.Core
+namespace FluentAspect.Weaver.Core.WeaverBuilders
 {
    public class AroundMethodBuilderWeaver : IWeaverBuilder
    {

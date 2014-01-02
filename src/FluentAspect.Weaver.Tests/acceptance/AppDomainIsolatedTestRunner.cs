@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentAspect.Weaver.Tests
+namespace FluentAspect.Weaver.Tests.acceptance
 {
    public class AppDomainIsolatedTestRunner : MarshalByRefObject
    {

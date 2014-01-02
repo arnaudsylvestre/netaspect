@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FluentAspect.Core;
+using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Errors;
 using Mono.Cecil;
 

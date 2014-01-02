@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Reflection;
 
-namespace FluentAspect.Sample
+namespace FluentAspect.Sample.AOP
 {
    class CheckWithReturnInterceptorNetAspectAttribute : Attribute
     {
