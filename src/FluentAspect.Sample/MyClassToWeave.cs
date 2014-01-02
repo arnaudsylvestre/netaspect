@@ -57,7 +57,7 @@ namespace FluentAspect.Sample
            return "Hello";
         }
 
-        [CheckOnCallAfterNetAspectAttribute]
+        [CheckOnCallAfterAttribute]
         public string WeavedOnCallAfter(string parameter)
         {
            return "Hello";
@@ -155,7 +155,28 @@ namespace FluentAspect.Sample
        {
           
        }
+
+       public void CallCheckCaller()
+       {
+          CheckCaller();
+       }
+
+       [CheckCallerNetAspect]
+       public void CheckCaller()
+       {
+
+       }
     }
+
+   public class CheckCallerNetAspectAttribute : Attribute
+   {
+
+
+      public static void AfterCall(object caller)
+      {
+         throw new Exception(caller.GetType() == typeof(MyClassToWeave) ? "OK" : "KO");
+      }
+   }
 
    public class CheckParametersCallerOnCallAfterNetAspectAttribute : Attribute
    {
@@ -175,8 +196,11 @@ namespace FluentAspect.Sample
 
     }
 
-    public class CheckOnCallAfterNetAspectAttribute : Attribute
+    public class CheckOnCallAfterAttribute : Attribute
     {
+
+       string NetAspectAttributeKind = "CallWeaving";
+
        public static void AfterCall()
        {
           throw new NotSupportedException();

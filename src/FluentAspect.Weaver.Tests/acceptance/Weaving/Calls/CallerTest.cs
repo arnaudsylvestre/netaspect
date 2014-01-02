@@ -2,10 +2,10 @@
 using FluentAspect.Sample;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.AssemblyAttributes
+namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Calls
 {
    [TestFixture]
-   public class AssemblyAttributeTest : AcceptanceTest
+   public class CallerTest : AcceptanceTest
    {
 
       protected override Action Execute()
@@ -14,12 +14,12 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.AssemblyAttributes
             {
                try
                {
-                  new MyClassToWeave().WeavedThroughAssembly();
+                  new MyClassToWeave().CallCheckCaller();
                   Assert.Fail();
                }
-               catch (NotSupportedException e)
+               catch (Exception e)
                {
-                  Assert.AreEqual("Weaved through assembly", e.Message);
+                  Assert.AreEqual("OK", e.Message);
                }
             };
       }

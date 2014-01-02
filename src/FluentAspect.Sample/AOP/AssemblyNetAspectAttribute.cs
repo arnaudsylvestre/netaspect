@@ -2,9 +2,9 @@
 
 namespace FluentAspect.Sample.AOP
 {
-    public class AssemblyNetAspectAttribute : Attribute
+    public class AssemblyAttribute : Attribute
     {
-        public bool IsNetAspectAttribute { get { return true; } }
+        string NetAspectAttributeKind = "MethodWeaving";
 
         public void Before()
         {

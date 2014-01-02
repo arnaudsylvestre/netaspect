@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2158446B-9E58-4E9D-BDC4-27A5A90365D1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -62,6 +62,7 @@
     <Compile Include="acceptance\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="acceptance\Weaving\Calls\BeforeCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\AfterCallTest.cs" />
+    <Compile Include="acceptance\Weaving\Calls\CallerTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\MethodParameterCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\LineNumberCallTest.cs" />
     <Compile Include="acceptance\Weaving\Errors\ErrorsTest.cs" />

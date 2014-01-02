@@ -9,7 +9,7 @@ namespace FluentAspect.Weaver.Helpers
     {
         public static List<object> GetNetAspectAttributes(this ICustomAttributeProvider method, bool inherit)
         {
-            return (from m in method.GetCustomAttributes(inherit) where m.GetType().Name.EndsWith("NetAspectAttribute") || m.GetType().GetProperty("IsNetAspectAttribute") != null select m).ToList();
+            return (from m in method.GetCustomAttributes(inherit) where m.GetType().GetField("NetAspectAttributeKind", BindingFlags.NonPublic | BindingFlags.Public) != null select m).ToList();
         }
         public static List<Type> GetNetAspectInterceptors(this MemberInfo method)
         {

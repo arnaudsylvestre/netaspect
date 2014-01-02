@@ -70,6 +70,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
                parameters.Add("columnnumber", () => instructions.Add(Instruction.Create(OpCodes.Ldc_I4, instructionP_P == null ? 0 : instructionP_P.StartColumn)));
                parameters.Add("filename", () => instructions.Add(Instruction.Create(OpCodes.Ldstr, instructionP_P == null ? "" : Path.GetFileName(instructionP_P.Document.Url))));
                parameters.Add("filepath", () => instructions.Add(Instruction.Create(OpCodes.Ldstr, instructionP_P == null ? "" : instructionP_P.Document.Url)));
+               parameters.Add("caller", () => instructions.Add(Instruction.Create(OpCodes.Ldarg_0)));
 
                foreach (var parameter_L in _method.Parameters)
                {
