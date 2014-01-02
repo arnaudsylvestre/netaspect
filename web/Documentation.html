@@ -112,12 +112,37 @@ public class MyInt
     </div>
     
 	
-    <h2 id="dropdowns-example">Define the aspect</h2>
+    <h2 id="dropdowns-example">Setup</h2>
+    <h3 id="dropdowns-example">Define the aspect</h3>
     <p>NetAspect use .Net attributes to define the weaving model. To define a NetAspect attribute you must declare your attribute with a property named <b>IsNetAspectAttribute</b> like this :</p>
 	<pre class="prettyprint">
 public class LogAttribute : Attribute
 {
     public bool IsNetAspectAttribute { get { return true; } }
+}
+</pre>
+<h3 id="dropdowns-example">Link the method with the aspect</h3>
+    <p>Now, just add the attribute to the DivideBy method</p>
+	<pre class="prettyprint">
+public class MyInt
+{
+  private readonly int value;
+
+  public MyInt(int value)
+  {
+	 this.value = value;
+  }
+
+  public int Value
+  {
+	 get { return value; }
+  }
+
+  [Log]
+  public int DivideBy(int v)
+  {
+	 return value / v;
+  }
 }
 </pre>
     <h2 id="dropdowns-example">Do something before the method is called</h2>
@@ -132,34 +157,44 @@ public class LogAttribute : Attribute
     public void Before() { Console.WriteLine("Start Division"); }
 }
 </pre>
-	<p>After weaving, when any method will call the <b>DivideBy</b> method in our <b>MyInt</b> class, the console will be filled !</p>
 	
-    <h2 id="dropdowns-example-after">Parameters</h2>
-	<p>You can add some parameters to your Before/After/OnException methods to get some information about the weaved method</p>
-	
-    <h3 id="dropdowns-example">Parameters available in the Before method</h3>
-	
+    <h3 id="dropdowns-example-after">Parameters</h3>
+	<p>You can add some parameters to your Before method to get some information about the weaved method</p>	
 	<ul>
 		<li><b>instance</b> : the <i>this</i> of the weaved method (in our case the this of Divide). The type of instance can be <b>object</b> or <b>Computer</b> in our case</li>
 		<li><b>method</b> : the MethodInfo of the weaved method (in our case Divide). The type of method must be <b>MethodInfo</b></li>
 		<li><b>parameters</b> : the parameters of the weaved method (in our case the parameters of the Divide method). The type of parameters must be <b>object[]</b></li>
 		<li><b>parameter name</b> : if a parameter name/type in the Before method is in the weaved method so the value will be the same. You can referenced the parameter in the aspect method to update the value in the weaved method</li>
 	</ul>
-	<p>Here is a sample of all the above parameters</p>
+	<p>Here is a sample with parameters</p>
 	
 	<pre class="prettyprint">
 public class LogAttribute : Attribute
 {
     public bool IsNetAspectAttribute { get { return true; } }
 	
-    public void Before(Computer instance, MethodInfo method, object[] parameters, int a, ref int b) 
+    public void Before(MyInt instance, int v) 
     {
-        Console.WriteLine(string.Format("Before {0}", method.Name));
+        Console.WriteLine(string.Format("Start Division {0} / {1}", instance.Value, v));
     }
 }
 </pre>
-<h3 id="dropdowns-example-1">Parameters available in the After method</h3>
+
+<h2 id="dropdowns-example">Do something after the method is called</h2>
+    <p>Imagine that we want to print "End of division" in the console when the division is done.</p>
+	<h3 id="dropdowns-example">Modify the aspect</h3>
+    <p>We must modify our aspect like this</p>
+	<pre class="prettyprint">
+public class LogAttribute : Attribute
+{
+    public bool IsNetAspectAttribute { get { return true; } }
 	
+    public void After() { Console.WriteLine("End of division"); }
+}
+</pre>
+	
+    <h3 id="dropdowns-example-after">Parameters</h3>
+	<p>You can add some parameters to your After method to get some information about the weaved method</p>	
 	<ul>
 		<li><b>instance</b> : same as the Before method</li>
 		<li><b>method</b> : same as the Before method</li>
@@ -167,21 +202,35 @@ public class LogAttribute : Attribute
 		<li><b>parameter name</b> : same as the Before method</li>
 		<li><b>result</b> : the value returned by the weaved method. You can referenced the result in the aspect method to update the result value in the weaved method. The type of result must be the same type as the weaved method</li>
 	</ul>
-<p>Here is a sample of all the above parameters</p>
+	<p>Here is a sample with parameters</p>
 	
 	<pre class="prettyprint">
 public class LogAttribute : Attribute
 {
     public bool IsNetAspectAttribute { get { return true; } }
 	
-    public void After(Computer instance, MethodInfo method, object[] parameters, int a, ref int b, ref result) 
+    public void After(MyInt instance, int v, int result) 
     {
-        Console.WriteLine(string.Format("Before {0}", method.Name));
+        Console.WriteLine(string.Format("End of Division {0} / {1}. Result : {2}", instance.Value, v, result));
     }
 }
 </pre>
-<h3 id="dropdowns-example-2">Parameters available in the OnException method</h3>
+
+<h2 id="dropdowns-example">Do something when an exception is raised in the method</h2>
+    <p>Imagine that we want to print "Exception" in the console when the division raises an exception.</p>
+	<h3 id="dropdowns-example">Modify the aspect</h3>
+    <p>We must modify our aspect like this</p>
+	<pre class="prettyprint">
+public class LogAttribute : Attribute
+{
+    public bool IsNetAspectAttribute { get { return true; } }
 	
+    public void OnException() { Console.WriteLine("Exception"); }
+}
+</pre>
+	
+    <h3 id="dropdowns-example-after">Parameters</h3>
+	<p>You can add some parameters to your OnException method to get some information about the weaved method</p>	
 	<ul>
 		<li><b>instance</b> : same as the Before method</li>
 		<li><b>method</b> : same as the Before method</li>
@@ -189,115 +238,110 @@ public class LogAttribute : Attribute
 		<li><b>parameter name</b> : same as the Before method</li>
 		<li><b>exception</b> : the exception raised in the weaved.</li>
 	</ul>
-<p>Here is a sample of all the above parameters</p>
+	<p>Here is a sample with parameters</p>
 	
 	<pre class="prettyprint">
 public class LogAttribute : Attribute
 {
     public bool IsNetAspectAttribute { get { return true; } }
 	
-    public void After(Computer instance, MethodInfo method, object[] parameters, int a, ref int b, ref result) 
+    public void OnException(Exception exception) 
     {
-        Console.WriteLine(string.Format("Before {0}", method.Name));
+         Console.WriteLine("Exception : {0}", exception.Message);
     }
 }
 </pre>
-</div>
-    
-	  
+
+
 	 <!-- Dropdowns
   ================================================== -->
   <div class="bs-docs-section">
     <div class="page-header">
       <h1 id="dropdowns">Call weaving</h1>
     </div>
+    <p>The "call weaving" add aspects to the method which call our method and/or field so, you can access to the caller information</p>
+	
+    <h2 id="dropdowns-example">Setup</h2>
+    <p>To define a NetAspect call attribute you must declare your attribute with a field named <b>NetAspectAttributeKind</b> like this :</p>
+	<pre class="prettyprint">
+public class LogOnCallAttribute : Attribute
+{
+    string NetAspectAttributeKind = "Call";
+}
+</pre>
+<h3 id="dropdowns-example">The caller class</h3>
+<pre class="prettyprint">
+public class Math
+{
+  public int Divide(int dividend, int divisor)
+  {
+	 var myInt = new MyInt(dividend);
+	 return myInt.DivideBy(divisor);
+  }
+}
+</pre>
+<h3 id="dropdowns-example">Link the method with the aspect</h3>
+    <p>Now, just add the attribute to the member you wish.</p>
+	<pre class="prettyprint">
+public class MyInt
+{
+  private readonly int value;
+
+  public MyInt(int value)
+  {
+	 this.value = value;
+  }
+
+  public int Value
+  {
+	 get { return value; }
+  }
+
+  [LogOnCall]
+  public int DivideBy(int v)
+  {
+	 return value / v;
+  }
+}
+</pre>
     
-    <h2 id="dropdowns-example">Method call weaving</h2>
-	<p>By adding a NetAspect call attribute to a method, you can add behaviors in 3 locations : Before the code of the method, after the code of the method, handle if an exception occured</p>
+    <h2 id="dropdowns-example">Do something before the method is called</h2>
+    <p>Imagine that we want to print in the console the type name of each caller to the DivideBy method.</p>
+	<h3 id="dropdowns-example">Modify the aspect</h3>
+    <p>We must modify our aspect like this</p>
 	<pre class="prettyprint">
-public class LogAttribute : Attribute
+public class LogOnCallAttribute : Attribute
 {
-    public bool IsNetAspectAttribute { get { return true; } }
+    string NetAspectAttributeKind = "Call";
 	
-    public void Before() { Console.WriteLine("Before"); }
-	
-    public void After() { Console.WriteLine("After"); }
-	
-    public void OnException() { Console.WriteLine("OnException"); }
+    public void BeforeCall(object caller) { Console.WriteLine("Start Division by {0}", caller.GetType().Name); }
 }
 </pre>
-	<p>After weaving, when any method will call your <b>Divide</b> method in your <b>Computer</b> class, the console will be filled !</p>
 	
-    <h2 id="dropdowns-example-after">Parameters</h2>
-	<p>You can add some parameters to your Before/After/OnException methods to get some information about the weaved method</p>
-	
-    <h3 id="dropdowns-example">Parameters available in the Before method</h3>
-	
+    <h3 id="dropdowns-example-after">Parameters</h3>
+	<p>You can add some parameters to your BeforeCall method to get some information.</p>	
 	<ul>
-		<li><b>instance</b> : the <i>this</i> of the weaved method (in our case the this of Divide). The type of instance can be <b>object</b> or <b>Computer</b> in our case</li>
-		<li><b>method</b> : the MethodInfo of the weaved method (in our case Divide). The type of method must be <b>MethodInfo</b></li>
-		<li><b>parameters</b> : the parameters of the weaved method (in our case the parameters of the Divide method). The type of parameters must be <b>object[]</b></li>
-		<li><b>parameter name</b> : if a parameter name/type in the Before method is in the weaved method so the value will be the same. You can referenced the parameter in the aspect method to update the value in the weaved method</li>
+		<li><b>caller</b> : the <i>this</i> of the caller. The type of instance can be <b>object</b> or the type of the caller</li>
+		<li><b>TODO</b></li>
 	</ul>
-	<p>Here is a sample of all the above parameters</p>
 	
-	<pre class="prettyprint">
-public class LogAttribute : Attribute
-{
-    public bool IsNetAspectAttribute { get { return true; } }
-	
-    public void Before(Computer instance, MethodInfo method, object[] parameters, int a, ref int b) 
-    {
-        Console.WriteLine(string.Format("Before {0}", method.Name));
-    }
-}
-</pre>
-<h3 id="dropdowns-example-1">Parameters available in the After method</h3>
-	
-	<ul>
-		<li><b>instance</b> : same as the Before method</li>
-		<li><b>method</b> : same as the Before method</li>
-		<li><b>parameters</b> : same as the Before method</li>
-		<li><b>parameter name</b> : same as the Before method</li>
-		<li><b>result</b> : the value returned by the weaved method. You can referenced the result in the aspect method to update the result value in the weaved method. The type of result must be the same type as the weaved method</li>
-	</ul>
-<p>Here is a sample of all the above parameters</p>
-	
-	<pre class="prettyprint">
-public class LogAttribute : Attribute
-{
-    public bool IsNetAspectAttribute { get { return true; } }
-	
-    public void After(Computer instance, MethodInfo method, object[] parameters, int a, ref int b, ref result) 
-    {
-        Console.WriteLine(string.Format("Before {0}", method.Name));
-    }
-}
-</pre>
-<h3 id="dropdowns-example-2">Parameters available in the OnException method</h3>
-	
-	<ul>
-		<li><b>instance</b> : same as the Before method</li>
-		<li><b>method</b> : same as the Before method</li>
-		<li><b>parameters</b> : same as the Before method</li>
-		<li><b>parameter name</b> : same as the Before method</li>
-		<li><b>exception</b> : the exception raised in the weaved.</li>
-	</ul>
-<p>Here is a sample of all the above parameters</p>
-	
-	<pre class="prettyprint">
-public class LogAttribute : Attribute
-{
-    public bool IsNetAspectAttribute { get { return true; } }
-	
-    public void After(Computer instance, MethodInfo method, object[] parameters, int a, ref int b, ref result) 
-    {
-        Console.WriteLine(string.Format("Before {0}", method.Name));
-    }
-}
-</pre>
 </div>
     
+	
+	
+	<div class="bs-docs-section">
+    <div class="page-header">
+      <h1 id="dropdowns">Additional features</h1>
+    </div>
+    
+    <h2 id="dropdowns-example">Scopes</h2>
+	<p>TODO</p>
+    <h2 id="dropdowns-example">Aspect lifecycle</h2>
+    <p>TODO</p>
+    
+</div>
+	
+	
 	  
 	  </div>
 

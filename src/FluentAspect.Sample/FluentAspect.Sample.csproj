@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6E481F61-CF92-4881-8F88-46C83B3018F7}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -51,6 +51,7 @@
     <Compile Include="BeforeParameter.cs" />
     <Compile Include="AbstractClassToWeaveWithAttributes.cs" />
     <Compile Include="docs\LogAttribute.cs" />
+    <Compile Include="docs\Math.cs" />
     <Compile Include="docs\MyInt.cs" />
     <Compile Include="InterfaceToWeaveWithAttributes.cs" />
     <Compile Include="MyClassToWeave.cs" />
