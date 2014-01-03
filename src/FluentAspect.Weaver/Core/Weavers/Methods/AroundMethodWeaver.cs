@@ -22,6 +22,8 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
           WeaveMethod(definition, interceptorType);
       }
 
+
+
        public static void WeaveMethod(MethodDefinition methodDefinition, List<Type> interceptorTypes)
        {
            var newMethod = CreateNewMethodBasedOnMethodToWeave(methodDefinition, interceptorTypes);
