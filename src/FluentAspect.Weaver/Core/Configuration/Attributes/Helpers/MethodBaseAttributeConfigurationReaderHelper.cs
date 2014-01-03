@@ -14,7 +14,7 @@ namespace FluentAspect.Weaver.Core.Configuration.Attributes.Helpers
                  var info = matchingMethod;
                  matches.Add(new MethodMatch()
                  {
-                     InterceptorTypes = matchingMethod.GetNetAspectInterceptors().ToList(),
+                     Interceptors = matchingMethod.GetNetAspectAttributes(true).ToList(),
                      Matcher = m => m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName && ParametersEqual(m, info)
                  });
              }

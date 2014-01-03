@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using FluentAspect.Weaver.Core.Weavers.Helpers;
+using FluentAspect.Weaver.Core.Weavers.Methods.Interceptors;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -10,138 +10,98 @@ using MethodAttributes = Mono.Cecil.MethodAttributes;
 
 namespace FluentAspect.Weaver.Core.Weavers.Methods
 {
-    public static class AroundWeaverConfigurationExtensions
+   public class MethodAroundWeaver
     {
-        public static bool HasCallOnException(this IAroundWeaverConfiguration configuration, List<Type> interceptorTypes)
+      private readonly InterceptorHelpers _interceptorHelpers = new InterceptorHelpers();
+      public const string ParameterParameters = "parameters";
+      public const string Instance = "instance";
+      public const string Method = "method";
+
+        public void CreateWeaver(MethodDefinition method, IEnumerable<MethodWeavingConfiguration> interceptorType, MethodDefinition wrappedMethod)
         {
-            foreach (Type interceptorType in interceptorTypes)
-            {
-                MethodInfo callOnException = interceptorType.GetMethod(configuration.ToCallOnException(interceptorType));
-                if (callOnException != null)
-                    return true;
-            }
-            return false;
+            CreateWeaver(new Method(method), interceptorType, wrappedMethod);
         }
 
-        public static bool Needs(this IAroundWeaverConfiguration configuration,
-                                 List<Type> interceptorTypes, string variableName)
+        public void CreateWeaver(Method myMethod, IEnumerable<MethodWeavingConfiguration> interceptorType, MethodDefinition wrappedMethod)
         {
-            foreach (Type interceptorType in interceptorTypes)
-            {
-                var parameters = new List<ParameterInfo>();
-                var callBefore = interceptorType.GetMethod(configuration.ToCallBefore(interceptorType));
-                if (callBefore != null)
-                    parameters.AddRange(callBefore.GetParameters().ToList());
-                MethodInfo methodInfo = interceptorType.GetMethod(configuration.ToCallAfter(interceptorType));
-                if (methodInfo != null)
-                    parameters.AddRange(methodInfo.GetParameters().ToList());
-                MethodInfo callOnException = interceptorType.GetMethod(configuration.ToCallOnException(interceptorType));
-                if (callOnException != null)
-                    parameters.AddRange(callOnException.GetParameters().ToList());
 
-                IEnumerable<string> enumerable = from p in parameters where p.Name == variableName select p.Name;
-                if (enumerable.Any())
-                    return true;
-            }
-            return false;
-        }
-    }
 
-    public class MethodAroundWeaver
-    {
-        private const string ParameterParameters = "parameters";
-        private const string Instance = "instance";
-        private const string Method = "method";
 
-        public void CreateWeaver(MethodDefinition method, List<Type> interceptorType, MethodDefinition wrappedMethod,
-                                 IAroundWeaverConfiguration configuration)
-        {
-            CreateWeaver(new Method(method), interceptorType, wrappedMethod, configuration);
-        }
+           Variables variables = CreateVariables(myMethod, interceptorType);
 
-        public void CreateWeaver(Method myMethod, List<Type> interceptorType, MethodDefinition wrappedMethod,
-                                 IAroundWeaverConfiguration configuration)
-        {
-            List<VariableDefinition> interceptor = myMethod.CreateAndInitializeVariable(interceptorType);
-            VariableDefinition args = null;
-            if (configuration.Needs(interceptorType, ParameterParameters))
-                args = myMethod.CreateArgsArrayFromParameters();
-            VariableDefinition methodInfo = null;
-
-            if (configuration.Needs(interceptorType, Method)) 
-                methodInfo = myMethod.CreateMethodInfo();
-            VariableDefinition weavedResult = myMethod.CreateWeavedResult();
-
-            if (configuration.HasCallOnException(interceptorType))
+            if (AroundWeaverConfigurationExtensions.HasCallOnException(interceptorType))
 
                 myMethod.Add(new TryCatch(
                                  il =>
                                  {
-                                     Weave(myMethod, interceptorType, wrappedMethod, configuration, interceptor, methodInfo, args, il, weavedResult);
+                                    Weave(myMethod, interceptorType, wrappedMethod, variables, il);
                                  },
                                  il =>
                                  {
-                                     VariableDefinition e = CreateException(myMethod.MethodDefinition);
-                                     CallExceptionInterceptor(myMethod.MethodDefinition, interceptor, methodInfo, args,
-                                                              e, interceptorType, myMethod.Il, configuration);
+                                     VariableDefinition e = myMethod.MethodDefinition.CreateVariable(typeof (Exception));
+                                     CallExceptionInterceptor(myMethod.MethodDefinition, variables,
+                                                              e, interceptorType, myMethod.Il);
                                      myMethod.Il.AppendThrow();
                                  }));
             else
             {
-                Weave(myMethod, interceptorType, wrappedMethod, configuration, interceptor, methodInfo, args, myMethod.Il, weavedResult);
+                Weave(myMethod, interceptorType, wrappedMethod, variables, myMethod.Il);
             }
 
 
-            myMethod.Return(weavedResult);
+            myMethod.Return(variables.handleResult);
         }
 
-        private void Weave(Method myMethod, List<Type> interceptorType, MethodDefinition wrappedMethod,
-                           IAroundWeaverConfiguration configuration, List<VariableDefinition> interceptor, VariableDefinition methodInfo,
-                           VariableDefinition args, ILProcessor il, VariableDefinition weavedResult)
+        private Variables CreateVariables(Method myMethod, IEnumerable<MethodWeavingConfiguration> interceptorType)
+      {
+         List<VariableDefinition> interceptor = myMethod.CreateAndInitializeVariable(interceptorType);
+         VariableDefinition args = null;
+         if (AroundWeaverConfigurationExtensions.Needs(interceptorType, ParameterParameters))
+            args = myMethod.CreateArgsArrayFromParameters();
+         VariableDefinition methodInfo = null;
+
+         if (AroundWeaverConfigurationExtensions.Needs(interceptorType, Method))
+            methodInfo = myMethod.CreateMethodInfo();
+         VariableDefinition weavedResult = myMethod.CreateWeavedResult();
+           return new Variables()
+              {
+                 Interceptors = interceptor,
+                 args                 = args,
+                 handleResult = weavedResult,
+                 methodInfo                 = methodInfo,
+              };
+      }
+
+      private void Weave(Method myMethod, IEnumerable<MethodWeavingConfiguration> interceptorType, MethodDefinition wrappedMethod,
+                           Variables variables, ILProcessor il)
         {
-            CallBefore(myMethod.MethodDefinition, interceptor, methodInfo, args,
-                       interceptorType, il, configuration);
+
+           AfterInterceptorILGenerator afterInterceptor_L = new AfterInterceptorILGenerator(interceptorType);
+            CallBefore(myMethod.MethodDefinition, variables,
+                       interceptorType, il);
             CallWeavedMethod(myMethod.MethodDefinition,
-                             wrappedMethod, il, weavedResult);
-            CallAfter(myMethod.MethodDefinition, interceptor, methodInfo, args, weavedResult,
-                      interceptorType, il, configuration);
+                             wrappedMethod, il, variables.handleResult);
+            afterInterceptor_L.CallAfter(myMethod.MethodDefinition, variables, il);
         }
 
-        private void CallExceptionInterceptor(MethodDefinition method, List<VariableDefinition> interceptor, VariableDefinition methodInfo, VariableDefinition args, VariableDefinition ex, List<Type> interceptorType, ILProcessor il, IAroundWeaverConfiguration configuration)
+        private void CallExceptionInterceptor(MethodDefinition method, Variables variables, VariableDefinition ex, IEnumerable<MethodWeavingConfiguration> interceptorType, ILProcessor il)
         {
             il.Emit(OpCodes.Stloc, ex);
             var caller = new InterceptorCaller(il, method);
 
-            Fill(method, methodInfo, args, caller);
+            InterceptorHelpers.FillForBefore(method, variables.methodInfo, variables.args, caller);
             caller.AddVariable("exception", ex, false);
 
-            for (int i = 0; i < interceptorType.Count; i++)
+            for (int i = 0; i < interceptorType.Count(); i++)
             {
-                caller.Call(interceptor[i], configuration.ToCallOnException(interceptorType[i]), interceptorType[i]);
+               caller.Call(variables.Interceptors[i], interceptorType.ToList()[i].OnException.Method, interceptorType.ToList()[i]);
             }
         }
 
-        private VariableDefinition CreateException(MethodDefinition method)
+
+      private void CallWeavedMethod(MethodDefinition method, MethodDefinition wrappedMethod, ILProcessor il, VariableDefinition weavedResult)
         {
-            return method.CreateVariable(typeof (Exception));
-        }
-
-        private void CallAfter(MethodDefinition method, List<VariableDefinition> interceptor, VariableDefinition methodInfo, VariableDefinition args, VariableDefinition handleResult, List<Type> interceptorType, ILProcessor il, IAroundWeaverConfiguration configuration)
-        {
-            var caller = new InterceptorCaller(il, method);
-
-            Fill(method, methodInfo, args, caller);
-            caller.AddVariable("result", handleResult, true);
-
-            for (int i = 0; i < interceptorType.Count; i++)
-            {
-                caller.Call(interceptor[i], configuration.ToCallAfter(interceptorType[i]), interceptorType[i]);
-            }
-        }
-
-        private void CallWeavedMethod(MethodDefinition method, MethodDefinition wrappedMethod, ILProcessor il, VariableDefinition weavedResult)
-        {
-            if ((wrappedMethod.Attributes & MethodAttributes.Static) != MethodAttributes.Static)
+            if (!wrappedMethod.IsStatic)
                 il.Emit(OpCodes.Ldarg_0);
             foreach (ParameterDefinition p in method.Parameters.ToArray())
             {
@@ -157,26 +117,16 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
                 il.Emit(OpCodes.Stloc, weavedResult);
         }
 
-        private void CallBefore(MethodDefinition method, List<VariableDefinition> interceptor, VariableDefinition methodInfo, VariableDefinition args, List<Type> interceptorType, ILProcessor il, IAroundWeaverConfiguration configuration)
+        private void CallBefore(MethodDefinition method, Variables variables, IEnumerable<MethodWeavingConfiguration> interceptorType, ILProcessor il)
         {
             var caller = new InterceptorCaller(il, method);
 
-            Fill(method, methodInfo, args, caller);
+            InterceptorHelpers.FillForBefore(method, variables.methodInfo, variables.args, caller);
 
-            for (int i = 0; i < interceptorType.Count; i++)
+            for (int i = 0; i < interceptorType.Count(); i++)
             {
-                caller.Call(interceptor[i], configuration.ToCallBefore(interceptorType[i]), interceptorType[i]);
+               caller.Call(variables.Interceptors[i], interceptorType.ToList()[i].Before.Method, interceptorType.ToList()[i]);
             }
         }
-
-        private static void Fill(MethodDefinition method, VariableDefinition methodInfo, VariableDefinition args,
-                                 InterceptorCaller caller)
-        {
-            caller.AddThis(Instance);
-            caller.AddVariable(Method, methodInfo, false);
-            caller.AddVariable(ParameterParameters, args, false);
-            caller.AddParameters(method.Parameters);
-        }
-        
     }
 }

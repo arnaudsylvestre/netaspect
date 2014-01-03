@@ -59,6 +59,12 @@
     <Compile Include="Core\Helpers\PeVerify.cs" />
     <Compile Include="Core\IMethod.cs" />
     <Compile Include="Core\IType.cs" />
+    <Compile Include="Core\Model\CallWeavingConfiguration.cs" />
+    <Compile Include="Core\Model\InterceptorInformation.cs" />
+    <Compile Include="Core\Model\MethodWeavingConfiguration.cs" />
+    <Compile Include="Core\Model\NetAspectAttribute.cs" />
+    <Compile Include="Core\Model\NetAspectAttributeExtensions.cs" />
+    <Compile Include="Core\Model\NetAspectAttributeKind.cs" />
     <Compile Include="Core\WeaverBuilders\AroundConstructorBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\CallMethodBuilderWeaver.cs" />
     <Compile Include="Core\Weavers\Calls\CallMethodWeaver.cs" />
@@ -68,10 +74,12 @@
     <Compile Include="Core\Weavers\Helpers\ILProcessorExtensions.cs" />
     <Compile Include="Core\Weavers\Helpers\Method.cs" />
     <Compile Include="Core\Weavers\Helpers\VariableExtensions.cs" />
-    <Compile Include="Core\Weavers\Methods\IAroundWeaverConfiguration.cs" />
+    <Compile Include="Core\Weavers\Methods\AroundWeaverConfigurationExtensions.cs" />
     <Compile Include="Core\Weavers\Methods\InterceptorCaller.cs" />
-    <Compile Include="Core\Weavers\Methods\MethodMethodAroundWeaverConfiguration.cs" />
+    <Compile Include="Core\Weavers\Methods\InterceptorHelpers.cs" />
+    <Compile Include="Core\Weavers\Methods\Interceptors\AfterInterceptorILGenerator.cs" />
     <Compile Include="Helpers\AssemblyExtensions.cs" />
+    <Compile Include="Helpers\EnumParser.cs" />
     <Compile Include="Helpers\MethodDefinitionAdapter.cs" />
     <Compile Include="Helpers\MethodInfoExtensions.cs" />
     <Compile Include="Helpers\TypeExtensions.cs" />

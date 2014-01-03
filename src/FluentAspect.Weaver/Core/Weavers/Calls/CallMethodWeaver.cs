@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using FluentAspect.Weaver.Core.Errors;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -11,16 +12,21 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
    {
       private readonly MethodDefinition _method;
       private readonly Instruction _instruction;
-      private readonly List<Type> _interceptorTypes;
+      private readonly List<NetAspectAttribute> _interceptorTypes;
 
-      public CallMethodWeaver(MethodDefinition method, Instruction instruction, List<Type> interceptorTypes)
+      public CallMethodWeaver(MethodDefinition method, Instruction instruction, List<NetAspectAttribute> interceptorTypes)
       {
          _method = method;
          _instruction = instruction;
          _interceptorTypes = interceptorTypes;
       }
 
-      public void Weave()
+      public void Check(ErrorHandler errorHandler)
+      {
+         
+      }
+
+      public void Weave(ErrorHandler errorP_P)
       {
          var reference = _instruction.Operand as MethodReference;
 
@@ -62,7 +68,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
          var instructions = new List<Instruction>();
          foreach (var interceptorType in _interceptorTypes)
          {
-            var afterCallMethod = interceptorType.GetMethod("AfterCall");
+            var afterCallMethod = interceptorType.CallWeavingConfiguration.AfterInterceptor.Method;
             if (afterCallMethod != null)
             {
                var parameters = new Dictionary<string, Action>();
@@ -95,9 +101,9 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
          var instructions = new List<Instruction>();
          foreach (var interceptorType in _interceptorTypes)
          {
-            if (interceptorType.GetMethod("BeforeCall") != null)
+            if (interceptorType.CallWeavingConfiguration.BeforeInterceptor.Method != null)
             {
-               instructions.Add(Instruction.Create(OpCodes.Call, module.Import(interceptorType.GetMethod("BeforeCall"))));
+               instructions.Add(Instruction.Create(OpCodes.Call, module.Import(interceptorType.CallWeavingConfiguration.BeforeInterceptor.Method)));
             }
          }
          return instructions;

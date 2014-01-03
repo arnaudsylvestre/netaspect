@@ -8,9 +8,9 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
     {
 
 
-        public static VariableDefinition CreateVariable(this MethodDefinition method, Type interceptorType)
+       public static VariableDefinition CreateVariable(this MethodDefinition method, Type type)
         {
-            TypeReference typeReference = method.Module.Import(interceptorType);
+           TypeReference typeReference = method.Module.Import(type);
             return CreateVariable(method, typeReference);
         }
 

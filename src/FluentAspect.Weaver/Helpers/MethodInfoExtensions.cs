@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FluentAspect.Weaver.Core;
 
 namespace FluentAspect.Weaver.Helpers
 {
     public static class MethodInfoExtensions
     {
-        public static List<object> GetNetAspectAttributes(this ICustomAttributeProvider method, bool inherit)
+        public static List<NetAspectAttribute> GetNetAspectAttributes(this ICustomAttributeProvider method, bool inherit)
         {
-            return (from m in method.GetCustomAttributes(inherit) where m.GetType().GetField("NetAspectAttributeKind", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance) != null select m).ToList();
-        }
-        public static List<Type> GetNetAspectInterceptors(this MemberInfo method)
-        {
-            return (from m in method.GetNetAspectAttributes(true) select m.GetType()).ToList();
+           var customAttributes_L = method.GetCustomAttributes(inherit).Select((a) => new NetAspectAttribute(a));
+           return (from m in customAttributes_L where m.IsValid select m).ToList();
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 
@@ -7,16 +9,21 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
 {
    public class AroundMethodWeaver : IWeaveable
    {
-       private List<Type> interceptorType;
+      private List<NetAspectAttribute> interceptorType;
       private MethodDefinition definition;
 
-      public AroundMethodWeaver(List<Type> interceptorType, MethodDefinition definition_P)
+      public AroundMethodWeaver(List<NetAspectAttribute> interceptorType, MethodDefinition definition_P)
       {
          this.interceptorType = interceptorType;
          definition = definition_P;
       }
 
-      public void Weave()
+      public void Check(ErrorHandler errorHandler)
+      {
+         
+      }
+
+      public void Weave(ErrorHandler errorP_P)
       {
           Check();
           WeaveMethod(definition, interceptorType);
@@ -24,7 +31,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
 
 
 
-       public static void WeaveMethod(MethodDefinition methodDefinition, List<Type> interceptorTypes)
+       public static void WeaveMethod(MethodDefinition methodDefinition, List<NetAspectAttribute> interceptorTypes)
        {
            var newMethod = CreateNewMethodBasedOnMethodToWeave(methodDefinition, interceptorTypes);
            methodDefinition.DeclaringType.Methods.Add(newMethod);
@@ -41,7 +48,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
            }
        }
 
-       private static MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition, List<Type> interceptor)
+       private static MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition, List<NetAspectAttribute> interceptor)
        {
          var wrappedMethod = methodDefinition.Clone(ComputeNewName(methodDefinition));
 
@@ -49,7 +56,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
          methodDefinition.Body.Variables.Clear();
          
          MethodAroundWeaver weaver = new MethodAroundWeaver();
-         weaver.CreateWeaver(methodDefinition, interceptor, wrappedMethod, new MethodMethodAroundWeaverConfiguration());
+         weaver.CreateWeaver(methodDefinition, from i in interceptor select i.MethodWeavingConfiguration, wrappedMethod);
           methodDefinition.Body.InitLocals = true;
          return wrappedMethod;
       }

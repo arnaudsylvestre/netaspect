@@ -58,11 +58,11 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
 
 
 
-        public static VariableDefinition CreateAndInitializeVariable(this ILProcessor il, MethodDefinition method, Type interceptorType)
+        public static VariableDefinition CreateAndInitializeVariable(this ILProcessor il, MethodDefinition method, Type type)
         {
-            VariableDefinition interceptor = method.CreateVariable(interceptorType);
-            il.AppendCreateNewObject(interceptor, interceptorType, method.Module);
-            return interceptor;
+           VariableDefinition variable_L = method.CreateVariable(type);
+           il.AppendCreateNewObject(variable_L, type, method.Module);
+            return variable_L;
         }
     }
 }

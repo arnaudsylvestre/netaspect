@@ -36,10 +36,7 @@ namespace FluentAspect.Weaver.Core
           toWeave.Add(mainAssembly);
           foreach (var netAspectAttribute in netAspectAttributes)
           {
-              var propertyInfo = netAspectAttribute.GetType().GetProperty("AssembliesToWeave");
-              if (propertyInfo == null)
-                  continue;
-              toWeave.AddRange((IEnumerable<Assembly>) propertyInfo.GetValue(netAspectAttribute, new object[0]));
+              toWeave.AddRange(netAspectAttribute.AssembliesToWeave);
           }
           var weavingConfiguration = new WeavingConfiguration();
           foreach (var asmToWeave in toWeave)
@@ -65,19 +62,18 @@ namespace FluentAspect.Weaver.Core
             {
                 try
                 {
-                   weaver_L.Weave();
+                   weaver_L.Weave(errorHandler);
                 }
-                catch (WeavingWarningException e)
-                {
-                   errorHandler.Warnings.Add(e.Message);
-                }
+                //catch (WeavingWarningException e)
+                //{
+                //   errorHandler.Warnings.Add(e.Message);
+                //}
                 catch (Exception e)
                 {
-                   errorHandler.Errors.Add(e.Message);
+                   errorHandler.Warnings.Add(e.Message);
+                   //errorHandler.Errors.Add(e.Message);
                 }
             }
-         if (errorHandler.Errors.Count > 0)
-            return;
             var targetFileName = newAssemblyNameProvider(assemblyFilePath);
             assemblyDefinition.Write(targetFileName, new WriterParameters()
                 {

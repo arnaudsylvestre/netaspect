@@ -77,9 +77,8 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
             }
         }
 
-        public void Call(VariableDefinition interceptorVariable, string methodToCall, Type iType)
+        public void Call(VariableDefinition interceptorVariable, MethodInfo method, MethodWeavingConfiguration netAspect_P)
         {
-            MethodInfo method = iType.GetMethod(methodToCall);
             if (method == null)
                 return;
             il.Emit(OpCodes.Ldloc, interceptorVariable);
@@ -89,7 +88,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
                 if (!forParameters.ContainsKey(parameterInfo.Name))
                     throw new Exception(
                         string.Format("Parameter {0} not recognized in interceptor {1}.{2} for method {3} in {4}",
-                                      parameterInfo.Name, iType.Name, method.Name, _methodDefinition.Name,
+                                      parameterInfo.Name, netAspect_P.Type.Name, method.Name, _methodDefinition.Name,
                                       _methodDefinition.DeclaringType.Name));
                 forParameters[parameterInfo.Name](parameterInfo);
             }

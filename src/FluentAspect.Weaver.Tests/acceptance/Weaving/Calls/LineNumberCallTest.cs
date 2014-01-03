@@ -19,7 +19,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Calls
                }
                catch (Exception e)
                {
-                  Assert.AreEqual("83 : 12 : MyClassToWeave.cs", e.Message);
+                  Assert.AreEqual("87 : 12 : MyClassToWeave.cs", e.Message);
                }
             };
       }

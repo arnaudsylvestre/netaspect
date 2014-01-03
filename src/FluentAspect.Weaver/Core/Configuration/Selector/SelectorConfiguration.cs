@@ -22,13 +22,13 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
                 var attrbiutes = assembly.GetNetAspectAttributes(true);
                 foreach (var attrbiute in attrbiutes)
                 {
-                    var type = attrbiute.GetType();
-                    if (type.GetMethod("WeaveMethod") != null)
+                    var methodInfo_L = attrbiute.SelectorMethod;
+                   if (methodInfo_L != null)
                     {
                         configuration.Methods.Add(new MethodMatch()
                             {
-                                InterceptorTypes = new List<Type>() {type},
-                                Matcher                                = m => CheckMethod(m, type.GetMethod("WeaveMethod"))
+                               Interceptors = new List<NetAspectAttribute>() { attrbiute },
+                                Matcher                                = m => CheckMethod(m, methodInfo_L)
                             });
                     }
                 }

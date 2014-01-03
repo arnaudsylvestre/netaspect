@@ -7,6 +7,6 @@ namespace FluentAspect.Weaver.Core.Configuration
    {
       public Func<IMethod, bool> Matcher { get; set; }
 
-      public List<Type> InterceptorTypes { get; set; }
+      public List<NetAspectAttribute> Interceptors { get; set; }
    }
 }

@@ -29,9 +29,9 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
           get { return definition; }
        }
 
-       public List<VariableDefinition> CreateAndInitializeVariable(List<Type> interceptorType)
+       public List<VariableDefinition> CreateAndInitializeVariable(IEnumerable<MethodWeavingConfiguration> interceptorType)
        {
-           return interceptorType.Select(type => il.CreateAndInitializeVariable(definition, type)).ToList();
+           return interceptorType.Select(type => il.CreateAndInitializeVariable(definition, type.Type)).ToList();
        }
 
         public VariableDefinition CreateArgsArrayFromParameters()

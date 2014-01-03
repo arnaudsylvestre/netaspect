@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAspect.Weaver.Core.Weavers.Helpers;
 using FluentAspect.Weaver.Core.Weavers.Methods;
 using Mono.Cecil;
@@ -9,7 +10,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Constructors
 {
    public class ConstructorAroundWeaver
    {
-      public void CreateWeaver(MethodDefinition methodDefinition_P, List<Type> interceptor_P, MethodDefinition wrappedMethod_P)
+      public void CreateWeaver(MethodDefinition methodDefinition_P, List<NetAspectAttribute> interceptor_P, MethodDefinition wrappedMethod_P)
       {
          var callBaseInstructions = ExtractCallToBaseInstructions(wrappedMethod_P, methodDefinition_P.DeclaringType);
          ClearCallToBase(wrappedMethod_P, methodDefinition_P.DeclaringType);
@@ -19,7 +20,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Constructors
          method_L.Append(callBaseInstructions);
 
          MethodAroundWeaver aroundWeaver_L = new MethodAroundWeaver();
-         aroundWeaver_L.CreateWeaver(method_L, interceptor_P, wrappedMethod_P, new MethodMethodAroundWeaverConfiguration());
+         aroundWeaver_L.CreateWeaver(method_L, from i in interceptor_P select i.MethodWeavingConfiguration, wrappedMethod_P);
       }
 
       private List<Instruction> ExtractCallToBaseInstructions(MethodDefinition wrappedMethod_P, TypeDefinition declaringType_P)
