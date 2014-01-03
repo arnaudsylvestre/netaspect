@@ -6,29 +6,29 @@ using Microsoft.Build.Utilities;
 
 namespace FluentAspect.Weaver.Tasks
 {
-    public class FluentAspectWeaverTask: Task 
+    public class FluentAspectWeaverTask : Task
     {
         [Required]
         public string ConfigFile { get; set; }
-        
+
         public override bool Execute()
         {
-            var stopwatch = Stopwatch.StartNew();
+            Stopwatch stopwatch = Stopwatch.StartNew();
 
             try
             {
-                var directoryPath = Path.GetDirectoryName(ConfigFile);
+                string directoryPath = Path.GetDirectoryName(ConfigFile);
                 string[] weavedFiles;
-                var domain = AppDomain.CreateDomain("SheepAspect Weaving", null,
-                                                    new AppDomainSetup
-                                                        {
-                                                            ApplicationBase = directoryPath,
-                                                            ShadowCopyFiles = "true"
-                                                        });
+                AppDomain domain = AppDomain.CreateDomain("SheepAspect Weaving", null,
+                                                          new AppDomainSetup
+                                                              {
+                                                                  ApplicationBase = directoryPath,
+                                                                  ShadowCopyFiles = "true"
+                                                              });
 
                 try
                 {
-                    var runnerType = typeof (AppDomainIsolatedDiscoveryRunner);
+                    Type runnerType = typeof (AppDomainIsolatedDiscoveryRunner);
 
                     var runner =
                         domain.CreateInstanceFromAndUnwrap(new Uri(runnerType.Assembly.CodeBase).LocalPath,
@@ -37,7 +37,7 @@ namespace FluentAspect.Weaver.Tasks
 
                     if (!runner.Process(ConfigFile, Log, out weavedFiles))
                     {
-                        var targetFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(ConfigFile);
+                        string targetFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(ConfigFile);
                         if (File.Exists(targetFileName))
                             File.Delete(targetFileName);
                         return false;
@@ -47,14 +47,14 @@ namespace FluentAspect.Weaver.Tasks
                 {
                     AppDomain.Unload(domain);
                 }
-                var tempFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(ConfigFile);
+                string tempFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(ConfigFile);
                 File.Copy(tempFileName, ConfigFile, true);
                 File.Delete(tempFileName);
             }
             catch (Exception e)
             {
-               Log.LogError(e.ToString());
-               return false;
+                Log.LogError(e.ToString());
+                return false;
             }
 
             stopwatch.Stop();

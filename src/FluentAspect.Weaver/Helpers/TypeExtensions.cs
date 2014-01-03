@@ -11,20 +11,32 @@ namespace FluentAspect.Weaver.Helpers
         {
             var methods = new List<MethodInfo>();
 
-            foreach (var type in types)
+            foreach (Type type in types)
             {
-                methods.AddRange(from m in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance) where filter(m) select m);
+                methods.AddRange(
+                    from m in
+                        type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+                                        BindingFlags.Instance)
+                    where filter(m)
+                    select m);
             }
 
             return methods;
         }
-        public static List<ConstructorInfo> GetAllConstructors(this IEnumerable<Type> types, Func<ConstructorInfo, bool> filter)
+
+        public static List<ConstructorInfo> GetAllConstructors(this IEnumerable<Type> types,
+                                                               Func<ConstructorInfo, bool> filter)
         {
             var methods = new List<ConstructorInfo>();
 
-            foreach (var type in types)
+            foreach (Type type in types)
             {
-                methods.AddRange(from m in type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance) where filter(m) select m);
+                methods.AddRange(
+                    from m in
+                        type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+                                             BindingFlags.Instance)
+                    where filter(m)
+                    select m);
             }
 
             return methods;

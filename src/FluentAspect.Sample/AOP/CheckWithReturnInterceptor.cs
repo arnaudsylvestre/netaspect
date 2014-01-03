@@ -2,13 +2,13 @@
 
 namespace FluentAspect.Sample.AOP
 {
-   class CheckWithReturnAttribute : Attribute
+    internal class CheckWithReturnAttribute : Attribute
     {
-      string NetAspectAttributeKind = "MethodWeaving";
-      public void After(ref string result)
-      {
-          result = "Weaved";
-      }
+        private string NetAspectAttributeKind = "MethodWeaving";
 
+        public void After(ref string result)
+        {
+            result = "Weaved";
+        }
     }
 }

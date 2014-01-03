@@ -2,8 +2,7 @@
 
 namespace FluentAspect.Weaver.Core.Configuration
 {
-   public class ConfigurationNotFoundException : Exception
-   {
-       
-   }
+    public class ConfigurationNotFoundException : Exception
+    {
+    }
 }

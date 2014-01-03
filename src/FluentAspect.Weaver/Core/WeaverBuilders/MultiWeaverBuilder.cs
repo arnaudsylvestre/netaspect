@@ -5,19 +5,20 @@ using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.WeaverBuilders
 {
-    class MultiWeaverBuilder : IWeaverBuilder
+    internal class MultiWeaverBuilder : IWeaverBuilder
     {
-        private IEnumerable<IWeaverBuilder> builders;
+        private readonly IEnumerable<IWeaverBuilder> builders;
 
         public MultiWeaverBuilder(params IWeaverBuilder[] builders)
         {
             this.builders = builders;
         }
 
-        public IEnumerable<IWeaveable> BuildWeavers(AssemblyDefinition assemblyDefinition, WeavingConfiguration configuration, ErrorHandler errorHandler)
+        public IEnumerable<IWeaveable> BuildWeavers(AssemblyDefinition assemblyDefinition,
+                                                    WeavingConfiguration configuration, ErrorHandler errorHandler)
         {
             var weavables = new List<IWeaveable>();
-            foreach (var weaverBuilder in builders)
+            foreach (IWeaverBuilder weaverBuilder in builders)
             {
                 weavables.AddRange(weaverBuilder.BuildWeavers(assemblyDefinition, configuration, errorHandler));
             }

@@ -1,34 +1,35 @@
 using System;
+using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Factory;
 using Microsoft.Build.Utilities;
 
 namespace FluentAspect.Weaver.Tasks
 {
-    public class AppDomainIsolatedDiscoveryRunner: MarshalByRefObject
+    public class AppDomainIsolatedDiscoveryRunner : MarshalByRefObject
     {
         public bool Process(string configFile, TaskLoggingHelper logger, out string[] weavedFiles)
         {
             weavedFiles = null;
             try
             {
-               ErrorHandler handler = new ErrorHandler();
-                var weaverCore = WeaverCoreFactory.Create();
+                var handler = new ErrorHandler();
+                WeaverCore weaverCore = WeaverCoreFactory.Create();
                 weaverCore.Weave(configFile, handler, TargetFileName);
 
-                foreach (var warning_L in handler.Warnings)
+                foreach (string warning_L in handler.Warnings)
                 {
-                   logger.LogWarning(warning_L);
+                    logger.LogWarning(warning_L);
                 }
-                foreach (var error in handler.Errors)
+                foreach (string error in handler.Errors)
                 {
-                   logger.LogError(error);
+                    logger.LogError(error);
                 }
 
 
                 return handler.Errors.Count == 0;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 logger.LogError(e.Message);
                 return false;

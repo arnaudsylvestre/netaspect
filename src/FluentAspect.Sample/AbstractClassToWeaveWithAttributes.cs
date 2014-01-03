@@ -1,12 +1,10 @@
-﻿using System;
-using FluentAspect.Sample.AOP;
+﻿using FluentAspect.Sample.AOP;
 
 namespace FluentAspect.Sample
 {
-   public abstract class AbstractClassToWeaveWithAttributes
-   {
-       [CheckBeforeAspect]
-       public abstract string CheckBeforeWithAttributes(BeforeParameter parameter);
-
-   }
+    public abstract class AbstractClassToWeaveWithAttributes
+    {
+        [CheckBeforeAspect]
+        public abstract string CheckBeforeWithAttributes(BeforeParameter parameter);
+    }
 }

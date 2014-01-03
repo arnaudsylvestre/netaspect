@@ -17,11 +17,13 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
         public static void AppendCallToThisGetType(this ILProcessor il, ModuleDefinition module)
         {
             il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Call, module.Import(typeof(object).GetMethod("GetType", new Type[0])));
+            il.Emit(OpCodes.Call, module.Import(typeof (object).GetMethod("GetType", new Type[0])));
         }
-        public static void AppendCallTo(this ILProcessor il, MethodInfo method, ModuleDefinition module, params VariableDefinition[] parameters)
+
+        public static void AppendCallTo(this ILProcessor il, MethodInfo method, ModuleDefinition module,
+                                        params VariableDefinition[] parameters)
         {
-            foreach (var parameter in parameters)
+            foreach (VariableDefinition parameter in parameters)
             {
                 if (parameter == This)
                     il.Emit(OpCodes.Ldarg_0);
@@ -30,11 +32,13 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
             }
             il.Emit(OpCodes.Call, module.Import(method));
         }
+
         public static void AppendCallToGetMethod(this ILProcessor il, string methodName, ModuleDefinition module)
         {
             il.Emit(OpCodes.Ldstr, methodName);
-            il.Emit(OpCodes.Callvirt, module.Import(typeof(Type).GetMethod("GetMethod", new[] { typeof(string) })));
+            il.Emit(OpCodes.Callvirt, module.Import(typeof (Type).GetMethod("GetMethod", new[] {typeof (string)})));
         }
+
         public static void AppendSaveResultTo(this ILProcessor il, VariableDefinition variable)
         {
             il.Emit(OpCodes.Stloc, variable);
@@ -48,20 +52,20 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
         }
 
         public static void AppendCreateNewObject(this ILProcessor il,
-                                     VariableDefinition interceptor,
-                                     Type interceptorType,
-                                     ModuleDefinition module)
+                                                 VariableDefinition interceptor,
+                                                 Type interceptorType,
+                                                 ModuleDefinition module)
         {
             il.Emit(OpCodes.Newobj, module.Import(interceptorType.GetConstructors()[0]));
             il.Emit(OpCodes.Stloc, interceptor);
         }
 
 
-
-        public static VariableDefinition CreateAndInitializeVariable(this ILProcessor il, MethodDefinition method, Type type)
+        public static VariableDefinition CreateAndInitializeVariable(this ILProcessor il, MethodDefinition method,
+                                                                     Type type)
         {
-           VariableDefinition variable_L = method.CreateVariable(type);
-           il.AppendCreateNewObject(variable_L, type, method.Module);
+            VariableDefinition variable_L = method.CreateVariable(type);
+            il.AppendCreateNewObject(variable_L, type, method.Module);
             return variable_L;
         }
     }

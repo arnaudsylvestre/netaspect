@@ -4,17 +4,16 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Generics
 {
-   [TestFixture]
-   public class GenericMethodTest : AcceptanceTest
-   {
-
-      protected override Action Execute()
-      {
-         return () =>
-            {
-               string res = new MyClassToWeave().CheckWithGenerics("Weaved");
-               Assert.AreEqual("Weaved<>System.StringWeaved", res);
-            };
-      }
-   }
+    [TestFixture]
+    public class GenericMethodTest : AcceptanceTest
+    {
+        protected override Action Execute()
+        {
+            return () =>
+                {
+                    string res = new MyClassToWeave().CheckWithGenerics("Weaved");
+                    Assert.AreEqual("Weaved<>System.StringWeaved", res);
+                };
+        }
+    }
 }

@@ -6,19 +6,19 @@ using FluentAspect.Weaver.Core.WeaverBuilders;
 
 namespace FluentAspect.Weaver.Factory
 {
-   public static class WeaverCoreFactory
-   {
-       public static WeaverCore Create()
-       {
-          return new WeaverCore(
-              new MultiConfigurationReader(
-                  new MethodAttributeConfigurationReader(), 
-                  new ConstructorAttributeConfigurationReader(),
-                  new SelectorConfigurationReader()
-               ),
-               new MultiWeaverBuilder(new AroundMethodBuilderWeaver(), new AroundConstructorBuilderWeaver(), new CallMethodBuilderWeaver()))
-           ;
-
-       }
-   }
+    public static class WeaverCoreFactory
+    {
+        public static WeaverCore Create()
+        {
+            return new WeaverCore(
+                new MultiConfigurationReader(
+                    new MethodAttributeConfigurationReader(),
+                    new ConstructorAttributeConfigurationReader(),
+                    new SelectorConfigurationReader()
+                    ),
+                new MultiWeaverBuilder(new AroundMethodBuilderWeaver(), new AroundConstructorBuilderWeaver(),
+                                       new CallMethodBuilderWeaver()))
+                ;
+        }
+    }
 }

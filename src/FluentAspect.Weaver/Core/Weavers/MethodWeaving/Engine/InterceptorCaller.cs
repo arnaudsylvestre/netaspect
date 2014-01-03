@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Weavers.Helpers;
+using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -12,8 +13,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
     {
         private readonly MethodDefinition _methodDefinition;
 
-        private readonly Dictionary<string, Action<ParameterInfo>> forParameters =
-            new Dictionary<string, Action<ParameterInfo>>();
+        private readonly Dictionary<string, Action<ParameterInfo>> forParameters = new Dictionary<string, Action<ParameterInfo>>();
 
         private readonly ILProcessor il;
 
@@ -95,6 +95,14 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
                 forParameters[parameterInfo.Name](parameterInfo);
             }
             il.Emit(OpCodes.Call, _methodDefinition.Module.Import(method));
+        }
+
+        public void Call(MethodToWeave method, Variables variables, Func<MethodWeavingConfiguration, Interceptor> interceptorProvider)
+        {
+            for (int i = 0; i < method.Interceptors.Count; i++)
+            {
+                Call(variables.Interceptors[i], interceptorProvider(method.Interceptors[i]).Method, method.Interceptors[i]);
+            }
         }
     }
 }

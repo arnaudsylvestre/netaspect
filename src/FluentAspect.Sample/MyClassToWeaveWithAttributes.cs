@@ -3,99 +3,97 @@ using FluentAspect.Sample.AOP;
 
 namespace FluentAspect.Sample
 {
-   public class MyClassToWeaveWithAttributes
-   {
-       //public MyClassToWeaveWithAttributes()
-       //{
+    public class MyClassToWeaveWithAttributes
+    {
+        //public MyClassToWeaveWithAttributes()
+        //{
 
-       //}
-      private bool thrown = false;
+        //}
+        private bool thrown;
 
-       [Thrower]
-       public MyClassToWeaveWithAttributes(bool thrown)
-       {
-          this.thrown = thrown;
-       }
+        [Thrower]
+        public MyClassToWeaveWithAttributes(bool thrown)
+        {
+            this.thrown = thrown;
+        }
 
-       public string PropertyGetter
-       {
-           [GetProperty]
-           get { return "1"; }
-       }
+        public string PropertyGetter
+        {
+            [GetProperty] get { return "1"; }
+        }
 
-       public string CheckWithReturn()
-      {
-         return "NotWeaved";
-      }
+        public string CheckWithReturn()
+        {
+            return "NotWeaved";
+        }
 
-      public string CheckWithParameters(string aspectWillReturnThis)
-      {
-         return "NotWeaved";
-      }
+        public string CheckWithParameters(string aspectWillReturnThis)
+        {
+            return "NotWeaved";
+        }
 
-      public void CheckWithVoid()
-      {
+        public void CheckWithVoid()
+        {
+        }
 
-      }
+        public string CheckWithGenerics<T>(T arg)
+        {
+            return arg + "<>" + typeof (T).FullName;
+        }
 
-      public string CheckWithGenerics<T>(T arg)
-      {
-         return arg.ToString() + "<>" + typeof(T).FullName;
-      }
+        public void CheckThrow()
+        {
+            throw new NotImplementedException();
+        }
 
-      public void CheckThrow()
-      {
-         throw new NotImplementedException();
-      }
+        [CheckBeforeAspect]
+        public string CheckBeforeWithAttributes(BeforeParameter parameter)
+        {
+            return parameter.Value;
+        }
 
-      [CheckBeforeAspect]
-      public string CheckBeforeWithAttributes(BeforeParameter parameter)
-      {
-          return parameter.Value;
-      }
+        [CheckBeforeAspect]
+        private string CheckBeforeWithAttributesPrivate(BeforeParameter parameter)
+        {
+            return parameter.Value;
+        }
 
-      [CheckBeforeAspect]
-      private string CheckBeforeWithAttributesPrivate(BeforeParameter parameter)
-      {
-          return parameter.Value;
-      }
-      public string CallCheckBeforeWithAttributesPrivate(BeforeParameter parameter)
-      {
-          return CheckBeforeWithAttributesPrivate(parameter);
-      }
+        public string CallCheckBeforeWithAttributesPrivate(BeforeParameter parameter)
+        {
+            return CheckBeforeWithAttributesPrivate(parameter);
+        }
 
-      public static string CheckStatic(BeforeParameter parameter)
-      {
-         return parameter.Value;
-      }
+        public static string CheckStatic(BeforeParameter parameter)
+        {
+            return parameter.Value;
+        }
 
-      public string CheckNotRenameInAssembly()
-      {
-         return CheckWithReturn();
-      }
-
-
-      [CheckBeforeAspect]
-      private string CheckBeforeWithAttributesProtected(BeforeParameter parameter)
-      {
-          return parameter.Value;
-      }
-
-       public string CallCheckBeforeWithAttributesProtected(BeforeParameter beforeParameter)
-       {
-           return CheckBeforeWithAttributesProtected(beforeParameter);
-       }
-   }
+        public string CheckNotRenameInAssembly()
+        {
+            return CheckWithReturn();
+        }
 
 
-   public class GetPropertyAttribute : Attribute
-   {
-      string NetAspectAttributeKind = "MethodWeaving";
+        [CheckBeforeAspect]
+        private string CheckBeforeWithAttributesProtected(BeforeParameter parameter)
+        {
+            return parameter.Value;
+        }
 
-       public void After(ref string result)
-       {
-           result = "3";
-       }
+        public string CallCheckBeforeWithAttributesProtected(BeforeParameter beforeParameter)
+        {
+            return CheckBeforeWithAttributesProtected(beforeParameter);
+        }
+    }
 
-   }
+
+    public class GetPropertyAttribute : Attribute
+    {
+        private string NetAspectAttributeKind = "MethodWeaving";
+
+        public void After(ref string result)
+        {
+            result = "3";
+        }
+    }
 }

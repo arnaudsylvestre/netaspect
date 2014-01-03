@@ -2,20 +2,23 @@
 
 namespace FluentAspect.Weaver.Core.WeaverBuilders
 {
-   class TypeDefinitionAdapter : IType
-   {
-      private TypeReference type;
+    internal class TypeDefinitionAdapter : IType
+    {
+        private readonly TypeReference type;
 
-      public TypeDefinitionAdapter(TypeReference type_P)
-      {
-         type = type_P;
-      }
+        public TypeDefinitionAdapter(TypeReference type_P)
+        {
+            type = type_P;
+        }
 
-      public string Name
-      {
-         get { return type.Name; }
-      }
+        public string Name
+        {
+            get { return type.Name; }
+        }
 
-       public string FullName { get { return type.FullName; }}
-   }
+        public string FullName
+        {
+            get { return type.FullName; }
+        }
+    }
 }

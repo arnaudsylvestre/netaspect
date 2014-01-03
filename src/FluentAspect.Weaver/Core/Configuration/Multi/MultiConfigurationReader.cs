@@ -1,34 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.Configuration.Multi
 {
-   public class MultiConfigurationReader : IConfigurationReader
-   {
-      private IEnumerable<IConfigurationReader> engines;
+    public class MultiConfigurationReader : IConfigurationReader
+    {
+        private readonly IEnumerable<IConfigurationReader> engines;
 
-      public MultiConfigurationReader(params IConfigurationReader[] engines_P)
-      {
-         engines = engines_P;
-      }
+        public MultiConfigurationReader(params IConfigurationReader[] engines_P)
+        {
+            engines = engines_P;
+        }
 
-      public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration)
-      {
-         bool configurationFound = false;
-         foreach (var weaverEngine_L in engines)
-         {
-            try
+        public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration)
+        {
+            bool configurationFound = false;
+            foreach (IConfigurationReader weaverEngine_L in engines)
             {
-                weaverEngine_L.ReadConfiguration(types, configuration);
-               configurationFound = true;
+                try
+                {
+                    weaverEngine_L.ReadConfiguration(types, configuration);
+                    configurationFound = true;
+                }
+                catch (ConfigurationNotFoundException)
+                {
+                }
             }
-            catch (ConfigurationNotFoundException)
-            {
-            }
-         }
-          if (!configurationFound)
-              throw new ConfigurationNotFoundException();
-      }
-   }
+            if (!configurationFound)
+                throw new ConfigurationNotFoundException();
+        }
+    }
 }

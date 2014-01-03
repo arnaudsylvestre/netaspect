@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Core.Model;
 
 namespace FluentAspect.Weaver.Helpers
@@ -11,8 +9,9 @@ namespace FluentAspect.Weaver.Helpers
     {
         public static List<NetAspectAttribute> GetNetAspectAttributes(this ICustomAttributeProvider method, bool inherit)
         {
-           var customAttributes_L = method.GetCustomAttributes(inherit).Select((a) => new NetAspectAttribute(a));
-           return (from m in customAttributes_L where m.IsValid select m).ToList();
+            IEnumerable<NetAspectAttribute> customAttributes_L =
+                method.GetCustomAttributes(inherit).Select((a) => new NetAspectAttribute(a));
+            return (from m in customAttributes_L where m.IsValid select m).ToList();
         }
     }
 }

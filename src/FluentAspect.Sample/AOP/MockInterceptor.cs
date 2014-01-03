@@ -5,11 +5,10 @@ namespace FluentAspect.Sample.AOP
 {
     public class MockInterceptorAttribute : Attribute
     {
-       string NetAspectAttributeKind = "MethodWeaving";
-
         public static BeforeInfo before;
         public static AfterInfo after;
         public static ExceptionInfo exception;
+        private string NetAspectAttributeKind = "MethodWeaving";
 
         public void Before(object instance, MethodInfo method, object[] parameters)
         {

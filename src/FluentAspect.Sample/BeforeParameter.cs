@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace FluentAspect.Sample
+﻿namespace FluentAspect.Sample
 {
     public class BeforeParameter
-   {
-      public string Value { get; set; }
-   }
+    {
+        public string Value { get; set; }
+    }
 }

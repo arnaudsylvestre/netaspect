@@ -2,13 +2,13 @@
 
 namespace FluentAspect.Sample
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-           MyClassToWeave toWeave = new MyClassToWeave();
-           var waved = toWeave.CheckWithReturn();
-           MessageBox.Show(waved);
+            var toWeave = new MyClassToWeave();
+            string waved = toWeave.CheckWithReturn();
+            MessageBox.Show(waved);
         }
     }
 }
