@@ -10,26 +10,25 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
     {
         public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration)
         {
-
             var assemblies = new HashSet<Assembly>();
 
-            foreach (var type in types)
+            foreach (Type type in types)
             {
                 assemblies.Add(type.Assembly);
             }
 
-            foreach (var assembly in assemblies)
+            foreach (Assembly assembly in assemblies)
             {
-                var attrbiutes = assembly.GetNetAspectAttributes(true);
-                foreach (var attrbiute in attrbiutes)
+                List<NetAspectAttribute> attrbiutes = assembly.GetNetAspectAttributes(true);
+                foreach (NetAspectAttribute attrbiute in attrbiutes)
                 {
-                    var methodInfo_L = attrbiute.SelectorMethod;
-                   if (methodInfo_L != null)
+                    MethodInfo methodInfo_L = attrbiute.SelectorMethod;
+                    if (methodInfo_L != null)
                     {
-                        configuration.Methods.Add(new MethodMatch()
+                        configuration.Methods.Add(new MethodMatch
                             {
-                               Interceptors = new List<NetAspectAttribute>() { attrbiute },
-                                Matcher                                = m => CheckMethod(m, methodInfo_L)
+                                Interceptors = new List<NetAspectAttribute> {attrbiute},
+                                Matcher = m => CheckMethod(m, methodInfo_L)
                             });
                     }
                 }
@@ -38,7 +37,7 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
 
         private bool CheckMethod(IMethod arg, MethodInfo info)
         {
-            List<object> parameters = new List<object>();
+            var parameters = new List<object>();
 
             var p = new Dictionary<string, object>
                 {
@@ -47,7 +46,7 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
                     {"declaringTypeFullName", arg.DeclaringType.FullName}
                 };
 
-            foreach (var parameterInfo in info.GetParameters())
+            foreach (ParameterInfo parameterInfo in info.GetParameters())
             {
                 parameters.Add(p[parameterInfo.Name]);
             }

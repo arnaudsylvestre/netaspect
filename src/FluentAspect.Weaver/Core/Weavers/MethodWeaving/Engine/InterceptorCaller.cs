@@ -13,7 +13,8 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
     {
         private readonly MethodDefinition _methodDefinition;
 
-        private readonly Dictionary<string, Action<ParameterInfo>> forParameters = new Dictionary<string, Action<ParameterInfo>>();
+        private readonly Dictionary<string, Action<ParameterInfo>> forParameters =
+            new Dictionary<string, Action<ParameterInfo>>();
 
         private readonly ILProcessor il;
 
@@ -79,7 +80,8 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
             }
         }
 
-        public void Call(VariableDefinition interceptorVariable, MethodInfo method, MethodWeavingConfiguration netAspect_P)
+        public void Call(VariableDefinition interceptorVariable, MethodInfo method,
+                         MethodWeavingConfiguration netAspect_P)
         {
             if (method == null)
                 return;
@@ -97,11 +99,13 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
             il.Emit(OpCodes.Call, _methodDefinition.Module.Import(method));
         }
 
-        public void Call(MethodToWeave method, Variables variables, Func<MethodWeavingConfiguration, Interceptor> interceptorProvider)
+        public void Call(MethodToWeave method, Variables variables,
+                         Func<MethodWeavingConfiguration, Interceptor> interceptorProvider)
         {
             for (int i = 0; i < method.Interceptors.Count; i++)
             {
-                Call(variables.Interceptors[i], interceptorProvider(method.Interceptors[i]).Method, method.Interceptors[i]);
+                Call(variables.Interceptors[i], interceptorProvider(method.Interceptors[i]).Method,
+                     method.Interceptors[i]);
             }
         }
     }

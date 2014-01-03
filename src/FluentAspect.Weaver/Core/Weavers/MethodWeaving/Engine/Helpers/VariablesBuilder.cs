@@ -8,13 +8,13 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
     {
         public static Variables CreateVariables(this MethodToWeave method)
         {
-            return new Variables()
-            {
-                Interceptors = CreateInterceptorInstances(method),
-                args = CreateArgs(method),
-                handleResult = CreateResult(method),
-                methodInfo = CreateMethodInfo(method),
-            };
+            return new Variables
+                {
+                    Interceptors = CreateInterceptorInstances(method),
+                    args = CreateArgs(method),
+                    handleResult = CreateResult(method),
+                    methodInfo = CreateMethodInfo(method),
+                };
         }
 
         private static VariableDefinition CreateResult(this MethodToWeave myMethod)

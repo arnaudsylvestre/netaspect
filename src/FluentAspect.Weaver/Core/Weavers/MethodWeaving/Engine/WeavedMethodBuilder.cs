@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using FluentAspect.Weaver.Core.Weavers.Helpers;
+﻿using FluentAspect.Weaver.Core.Weavers.Helpers;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
-using FluentAspect.Weaver.Core.Weavers.Methods;
 using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
@@ -11,7 +9,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
     {
         public void Build(MethodToWeave weavedMethod, MethodDefinition wrappedMethod)
         {
-            var variables = weavedMethod.CreateVariables();
+            Variables variables = weavedMethod.CreateVariables();
             if (weavedMethod.HasInterceptorsOnException())
                 weavedMethod.Method.Add(new TryCatch(
                                             () => Weave(weavedMethod, wrappedMethod, variables),

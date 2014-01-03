@@ -75,9 +75,9 @@
     <Compile Include="Core\Weavers\Helpers\ILProcessorExtensions.cs" />
     <Compile Include="Core\Weavers\Helpers\Method.cs" />
     <Compile Include="Core\Weavers\Helpers\VariableExtensions.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\InterceptorCallerExtensions.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\MethodToWeaveExtensions.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\InterceptorCaller.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\InterceptorHelpers.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\CallAfterInterceptorHelper.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\CallBeforeInterceptorHelper.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\CallOnExceptionInterceptorHelper.cs" />

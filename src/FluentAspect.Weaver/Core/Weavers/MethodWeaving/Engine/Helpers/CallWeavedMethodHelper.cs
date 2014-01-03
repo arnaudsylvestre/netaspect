@@ -7,7 +7,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
 {
     public static class CallWeavedMethodHelper
     {
-        public static void CallWeavedMethod(this MethodToWeave method, MethodDefinition wrappedMethod, VariableDefinition weavedResult)
+        public static void CallWeavedMethod(this MethodToWeave method, MethodDefinition wrappedMethod,
+                                            VariableDefinition weavedResult)
         {
             if (!wrappedMethod.IsStatic)
                 method.Method.Il.Emit(OpCodes.Ldarg_0);
@@ -19,7 +20,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
             OpCode call = OpCodes.Callvirt;
             if ((method.Method.MethodDefinition.Attributes & MethodAttributes.Static) == MethodAttributes.Static)
                 call = OpCodes.Call;
-            method.Method.Il.Emit(call, wrappedMethod.MakeGeneric(method.Method.MethodDefinition.GenericParameters.ToArray()));
+            method.Method.Il.Emit(call,
+                                  wrappedMethod.MakeGeneric(method.Method.MethodDefinition.GenericParameters.ToArray()));
 
             if (method.Method.MethodDefinition.ReturnType.MetadataType != MetadataType.Void)
                 method.Method.Il.Emit(OpCodes.Stloc, weavedResult);

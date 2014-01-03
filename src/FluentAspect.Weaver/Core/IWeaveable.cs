@@ -2,8 +2,8 @@
 
 namespace FluentAspect.Weaver.Core
 {
-   public interface IWeaveable
-   {
-       void Weave(ErrorHandler errorP_P);
-   }
+    public interface IWeaveable
+    {
+        void Weave(ErrorHandler errorP_P);
+    }
 }

@@ -6,8 +6,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model
 {
     public class MethodToWeave
     {
-        private Method method;
-        private List<MethodWeavingConfiguration> interceptors;
+        private readonly List<MethodWeavingConfiguration> interceptors;
+        private readonly Method method;
 
         public MethodToWeave(List<MethodWeavingConfiguration> interceptors, Method method)
         {
