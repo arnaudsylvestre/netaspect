@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core;
+using FluentAspect.Weaver.Core.Model;
 
 namespace FluentAspect.Weaver.Helpers
 {

@@ -1,4 +1,4 @@
-﻿namespace FluentAspect.Weaver.Core
+﻿namespace FluentAspect.Weaver.Core.Model
 {
    public class CallWeavingConfiguration
    {
@@ -9,19 +9,19 @@
          _attribute = attribute_P;
       }
 
-      public InterceptorInformation BeforeInterceptor
+      public Interceptor BeforeInterceptor
       {
          get
          {
-            return new InterceptorInformation(_attribute.GetInterceptorMethod("BeforeCall"));
+            return new Interceptor(_attribute.GetInterceptorMethod("BeforeCall"));
          }
       }
 
-      public InterceptorInformation AfterInterceptor
+      public Interceptor AfterInterceptor
       {
          get
          {
-            return new InterceptorInformation(_attribute.GetInterceptorMethod("AfterCall"));
+            return new Interceptor(_attribute.GetInterceptorMethod("AfterCall"));
          }
       }
    }

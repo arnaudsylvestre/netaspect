@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAspect.Weaver.Core.Errors;
+using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 

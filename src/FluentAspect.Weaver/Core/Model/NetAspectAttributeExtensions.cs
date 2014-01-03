@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace FluentAspect.Weaver.Core
+namespace FluentAspect.Weaver.Core.Model
 {
    public static class NetAspectAttributeExtensions
    {

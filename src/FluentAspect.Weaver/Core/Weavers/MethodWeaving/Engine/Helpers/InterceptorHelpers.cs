@@ -1,12 +1,13 @@
-﻿using FluentAspect.Weaver.Core.Weavers.Methods.Interceptors;
+﻿using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
+using FluentAspect.Weaver.Core.Weavers.Methods;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.Weavers.Methods
+namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
 {
    public class InterceptorHelpers
    {
-      public static void FillForBefore(MethodDefinition method, VariableDefinition methodInfo, VariableDefinition args,
+      public static void Fill(MethodDefinition method, VariableDefinition methodInfo, VariableDefinition args,
                               InterceptorCaller caller)
       {
          caller.AddThis(Variables.Instance);

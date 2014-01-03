@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Helpers;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 

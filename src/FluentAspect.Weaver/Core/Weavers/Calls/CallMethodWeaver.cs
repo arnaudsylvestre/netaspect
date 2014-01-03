@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FluentAspect.Weaver.Core.Errors;
+using FluentAspect.Weaver.Core.Model;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 

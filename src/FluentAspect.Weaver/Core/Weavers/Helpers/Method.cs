@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FluentAspect.Weaver.Core.Model;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 

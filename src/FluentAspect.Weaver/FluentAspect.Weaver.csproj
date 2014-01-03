@@ -56,10 +56,11 @@
     <Compile Include="Core\Configuration\Attributes\MethodAttributeConfigurationReader.cs" />
     <Compile Include="Core\Configuration\MethodMatch.cs" />
     <Compile Include="Core\Configuration\Selector\SelectorConfiguration.cs" />
-    <Compile Include="Core\Helpers\PeVerify.cs" />
+    <Compile Include="Core\Errors\PeVerify.cs" />
     <Compile Include="Core\IMethod.cs" />
     <Compile Include="Core\IType.cs" />
     <Compile Include="Core\Model\CallWeavingConfiguration.cs" />
+    <Compile Include="Core\Model\InterceptorExtensions.cs" />
     <Compile Include="Core\Model\InterceptorInformation.cs" />
     <Compile Include="Core\Model\MethodWeavingConfiguration.cs" />
     <Compile Include="Core\Model\NetAspectAttribute.cs" />
@@ -74,14 +75,18 @@
     <Compile Include="Core\Weavers\Helpers\ILProcessorExtensions.cs" />
     <Compile Include="Core\Weavers\Helpers\Method.cs" />
     <Compile Include="Core\Weavers\Helpers\VariableExtensions.cs" />
-    <Compile Include="Core\Weavers\Methods\AroundWeaverConfigurationExtensions.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\MethodToWeaveExtensions.cs" />
     <Compile Include="Core\Weavers\Methods\InterceptorCaller.cs" />
-    <Compile Include="Core\Weavers\Methods\InterceptorHelpers.cs" />
-    <Compile Include="Core\Weavers\Methods\Interceptors\AfterInterceptorILGenerator.cs" />
-    <Compile Include="Core\Weavers\Methods\Interceptors\BeforeInterceptorILGenerator.cs" />
-    <Compile Include="Core\Weavers\Methods\Interceptors\OnExceptionInterceptorILGenerator.cs" />
-    <Compile Include="Core\Weavers\Methods\Interceptors\Variables.cs" />
-    <Compile Include="Core\Weavers\Methods\VariablesBuilder.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\InterceptorHelpers.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\CallAfterInterceptorHelper.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\CallBeforeInterceptorHelper.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\CallOnExceptionInterceptorHelper.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Engine\Model\Variables.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\VariablesBuilder.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\CallWeavedMethodHelper.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Engine\Model\MethodToWeave.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Engine\WeavedMethodBuilder.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Engine\WeavedMethodChecker.cs" />
     <Compile Include="Helpers\AssemblyExtensions.cs" />
     <Compile Include="Helpers\EnumParser.cs" />
     <Compile Include="Helpers\MethodDefinitionAdapter.cs" />
@@ -104,7 +109,6 @@
     <Compile Include="Helpers\MethodReferenceExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\Weavers\Methods\MethodAroundWeaver.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\lib\cecil-master\Mono.Cecil.csproj">
@@ -119,6 +123,10 @@
       <Project>{63E6915C-7EA4-4D76-AB28-0D7191EEA626}</Project>
       <Name>Mono.Cecil.Pdb</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Weavers\CallWeaving\Engine\" />
+    <Folder Include="Core\Weavers\Methods\Interceptors\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

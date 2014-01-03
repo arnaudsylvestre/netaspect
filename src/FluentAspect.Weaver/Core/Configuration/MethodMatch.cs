@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentAspect.Weaver.Core.Model;
 
 namespace FluentAspect.Weaver.Core.Configuration
 {

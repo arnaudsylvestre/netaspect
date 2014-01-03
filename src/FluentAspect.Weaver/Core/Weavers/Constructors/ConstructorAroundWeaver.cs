@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Weavers.Helpers;
+using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine;
+using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
 using FluentAspect.Weaver.Core.Weavers.Methods;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -19,8 +22,9 @@ namespace FluentAspect.Weaver.Core.Weavers.Constructors
          method_L.MethodDefinition.Body.Instructions.Clear();
          method_L.Append(callBaseInstructions);
 
-         MethodAroundWeaver aroundWeaver_L = new MethodAroundWeaver();
-         aroundWeaver_L.CreateWeaver(method_L, from i in interceptor_P select i.MethodWeavingConfiguration, wrappedMethod_P);
+          var methodWeavingConfigurations = from i in interceptor_P select i.MethodWeavingConfiguration;
+          WeavedMethodBuilder aroundWeaver_L = new WeavedMethodBuilder();
+         aroundWeaver_L.Build(new MethodToWeave(methodWeavingConfigurations.ToList(), method_L), wrappedMethod_P);
       }
 
       private List<Instruction> ExtractCallToBaseInstructions(MethodDefinition wrappedMethod_P, TypeDefinition declaringType_P)
@@ -50,18 +54,16 @@ namespace FluentAspect.Weaver.Core.Weavers.Constructors
          var isCall = instruction_L.OpCode == OpCodes.Call;
          if (!isCall)
             return false;
-         var isBase = IsBase(wrappedMethod_P, instruction_L, declaringTypePP_P);
+         var isBase = IsBase(instruction_L, declaringTypePP_P);
          if (!isBase)
             return false;
          var isCtor = ((MethodReference) instruction_L.Operand).Name == ".ctor";
          return isCtor;
       }
 
-      private static bool IsBase(MethodDefinition wrappedMethod_P, Instruction instruction_L, TypeDefinition declaringTypePPP_P)
+      private static bool IsBase(Instruction instruction_L, TypeDefinition declaringTypePPP_P)
       {
          var typeDefinition_L = declaringTypePPP_P;
-         //if (typeDefinition_L == null)
-         //   typeDefinition_L = declaringTypePPP_P.Module.Import(typeof (object));
          return ((MethodReference) instruction_L.Operand).DeclaringType == typeDefinition_L.BaseType;
       }
    }

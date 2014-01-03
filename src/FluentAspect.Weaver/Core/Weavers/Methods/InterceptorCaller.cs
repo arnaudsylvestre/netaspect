@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FluentAspect.Weaver.Core.Model;
+using FluentAspect.Weaver.Core.Weavers.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -15,10 +17,10 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
 
         private readonly ILProcessor il;
 
-        public InterceptorCaller(ILProcessor il, MethodDefinition methodDefinition)
+        public InterceptorCaller(Method method)
         {
-            this.il = il;
-            _methodDefinition = methodDefinition;
+            il = method.Il;
+            _methodDefinition = method.MethodDefinition;
         }
 
         public void AddVariable(string parameterName, VariableDefinition variable, bool updateAllowed)

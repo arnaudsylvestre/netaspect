@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.Weavers.Methods.Interceptors
+namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model
 {
     public class Variables
     {

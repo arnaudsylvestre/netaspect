@@ -30,7 +30,7 @@ using System;
 using System.Diagnostics;
 using System.Text;
 
-namespace FluentAspect.Weaver.Core.Helpers
+namespace FluentAspect.Weaver.Core.Errors
 {
    public class PEVerify
 	{

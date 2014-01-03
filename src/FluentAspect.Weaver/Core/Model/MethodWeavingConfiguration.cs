@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentAspect.Weaver.Core
+namespace FluentAspect.Weaver.Core.Model
 {
    public class MethodWeavingConfiguration
    {
@@ -16,27 +16,27 @@ namespace FluentAspect.Weaver.Core
          _attribute = attribute_P;
       }
 
-      public InterceptorInformation Before
+      public Interceptor Before
       {
          get
          {
-            return new InterceptorInformation(_attribute.GetInterceptorMethod("Before"));
+            return new Interceptor(_attribute.GetInterceptorMethod("Before"));
          }
       }
 
-      public InterceptorInformation After
+      public Interceptor After
       {
          get
          {
-            return new InterceptorInformation(_attribute.GetInterceptorMethod("After"));
+            return new Interceptor(_attribute.GetInterceptorMethod("After"));
          }
       }
 
-      public InterceptorInformation OnException
+      public Interceptor OnException
       {
          get
          {
-            return new InterceptorInformation(_attribute.GetInterceptorMethod("OnException"));
+            return new Interceptor(_attribute.GetInterceptorMethod("OnException"));
          }
       }
    }
