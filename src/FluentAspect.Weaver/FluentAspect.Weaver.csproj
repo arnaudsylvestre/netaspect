@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{28912034-8A56-4B8E-BAA1-02C50149CA68}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -78,6 +78,10 @@
     <Compile Include="Core\Weavers\Methods\InterceptorCaller.cs" />
     <Compile Include="Core\Weavers\Methods\InterceptorHelpers.cs" />
     <Compile Include="Core\Weavers\Methods\Interceptors\AfterInterceptorILGenerator.cs" />
+    <Compile Include="Core\Weavers\Methods\Interceptors\BeforeInterceptorILGenerator.cs" />
+    <Compile Include="Core\Weavers\Methods\Interceptors\OnExceptionInterceptorILGenerator.cs" />
+    <Compile Include="Core\Weavers\Methods\Interceptors\Variables.cs" />
+    <Compile Include="Core\Weavers\Methods\VariablesBuilder.cs" />
     <Compile Include="Helpers\AssemblyExtensions.cs" />
     <Compile Include="Helpers\EnumParser.cs" />
     <Compile Include="Helpers\MethodDefinitionAdapter.cs" />

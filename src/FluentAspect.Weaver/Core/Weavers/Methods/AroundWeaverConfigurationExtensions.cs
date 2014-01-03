@@ -6,7 +6,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
 {
    public static class AroundWeaverConfigurationExtensions
    {
-      public static bool HasCallOnException(IEnumerable<MethodWeavingConfiguration> interceptorTypes)
+      public static bool HasCallOnException(this IEnumerable<MethodWeavingConfiguration> interceptorTypes)
       {
          foreach (var interceptorType in interceptorTypes)
          {

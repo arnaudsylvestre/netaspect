@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAspect.Weaver.Core.Errors;
+using FluentAspect.Weaver.Core.Weavers.Helpers;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 
@@ -56,7 +57,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
          methodDefinition.Body.Variables.Clear();
          
          MethodAroundWeaver weaver = new MethodAroundWeaver();
-         weaver.CreateWeaver(methodDefinition, from i in interceptor select i.MethodWeavingConfiguration, wrappedMethod);
+         weaver.CreateWeaver(new Method(methodDefinition), from i in interceptor select i.MethodWeavingConfiguration, wrappedMethod);
           methodDefinition.Body.InitLocals = true;
          return wrappedMethod;
       }

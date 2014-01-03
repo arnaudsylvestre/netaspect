@@ -80,12 +80,12 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
             var beforeCatch = CreateNopForCatch(Il);
             var instruction_L = Il.Create(OpCodes.Nop);
 
-            tryCatch.OnTryContent(Il);
+            tryCatch.OnTryContent();
 
             Il.AppendLeave(instruction_L);
 
             var onCatch = CreateNopForCatch(Il);
-            tryCatch.OnCatch(Il);
+            tryCatch.OnCatch();
             Instruction endCatch = Il.AppendLeave(instruction_L);
             endCatch = Il.Create(OpCodes.Nop);
             Il.Append(endCatch);
@@ -139,21 +139,21 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
 
     public class TryCatch
     {
-        private readonly Action<ILProcessor> onTryContent;
-        private readonly Action<ILProcessor> _onCatch;
+        private readonly Action onTryContent;
+        private readonly Action _onCatch;
 
-        public TryCatch(Action<ILProcessor> onTryContent, Action<ILProcessor> onCatch)
+        public TryCatch(Action onTryContent, Action onCatch)
         {
             this.onTryContent = onTryContent;
             _onCatch = onCatch;
         }
 
-        public Action<ILProcessor> OnTryContent
+        public Action OnTryContent
         {
             get { return onTryContent; }
         }
 
-        public Action<ILProcessor> OnCatch
+        public Action OnCatch
         {
             get { return _onCatch; }
         }
