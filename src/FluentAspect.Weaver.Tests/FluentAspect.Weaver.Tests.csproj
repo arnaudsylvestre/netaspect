@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2158446B-9E58-4E9D-BDC4-27A5A90365D1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -60,6 +60,12 @@
   <ItemGroup>
     <Compile Include="acceptance\AcceptanceTest.cs" />
     <Compile Include="acceptance\AppDomainIsolatedTestRunner.cs" />
+    <Compile Include="acceptance\MethodWeaving\Parameters\Parameters\Referenced\ToCheckParametersInAfterTest.cs" />
+    <Compile Include="acceptance\MethodWeaving\Parameters\Parameters\Referenced\ToCheckParametersOnExceptionTest.cs" />
+    <Compile Include="acceptance\MethodWeaving\Parameters\Parameters\Referenced\ToCheckParametersTest.cs" />
+    <Compile Include="acceptance\MethodWeaving\Parameters\Parameters\Usual\ToCheckParametersOnExceptionTest.cs" />
+    <Compile Include="acceptance\MethodWeaving\Parameters\Parameters\Usual\ToCheckParametersInAfterTest.cs" />
+    <Compile Include="acceptance\MethodWeaving\Parameters\Parameters\Usual\ToCheckParametersTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\BeforeCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\AfterCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\CallerTest.cs" />
@@ -70,6 +76,7 @@
     <Compile Include="acceptance\Weaving\Method\Exceptions\ThrowWithReturnTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Exceptions\ThrowTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Generics\GenericMethodTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\Parameters\ParametersReferencedInBeforeTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Parameters\ParameterTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Constructors\ConstructorWeavingTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Bugs\NotRenamedInAssemblyTest.cs" />

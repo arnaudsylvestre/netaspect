@@ -41,19 +41,30 @@ namespace FluentAspect.Weaver.Core
             {
                 toWeave.AddRange(netAspectAttribute.AssembliesToWeave);
             }
+            AspectChecker.CheckInterceptors(netAspectAttributes, errorHandler);
+
             var weavingConfiguration = new WeavingConfiguration();
             foreach (Assembly asmToWeave in toWeave)
             {
                 configurationReader.ReadConfiguration(Assembly.LoadFrom(asmToWeave.GetAssemblyPath()).GetTypes(),
                                                       weavingConfiguration);
             }
-
+            foreach (var methodMatch in weavingConfiguration.Methods)
+            {
+                AspectChecker.CheckInterceptors(methodMatch.Interceptors, errorHandler);
+            }
+            foreach (var methodMatch in weavingConfiguration.Constructors)
+            {
+                AspectChecker.CheckInterceptors(methodMatch.Interceptors, errorHandler);
+            }
             foreach (Assembly asmToWeave in toWeave)
             {
                 WeaveOneAssembly(asmToWeave.GetAssemblyPath(), errorHandler, newAssemblyNameProvider,
                                  weavingConfiguration);
             }
         }
+
+        
 
         private void WeaveOneAssembly(string assemblyFilePath, ErrorHandler errorHandler,
                                       Func<string, string> newAssemblyNameProvider, WeavingConfiguration configuration)
@@ -71,7 +82,7 @@ namespace FluentAspect.Weaver.Core
                 {
                     var error = new ErrorHandler();
                     weaver_L.Check(error);
-                    if (error.Errors.Count == 0)
+                    if (error.Errors.Count == 0 && weaver_L.CanWeave())
                         weaver_L.Weave(errorHandler);
                     errorHandler.Errors.AddRange(error.Errors);
                     errorHandler.Warnings.AddRange(error.Warnings);

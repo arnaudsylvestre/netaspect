@@ -64,6 +64,11 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
         {
         }
 
+        public bool CanWeave()
+        {
+            return true;
+        }
+
         private IEnumerable<Instruction> CreateAfterInstructions(ModuleDefinition module, SequencePoint instructionP_P)
         {
             var instructions = new List<Instruction>();

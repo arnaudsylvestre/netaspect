@@ -1,0 +1,24 @@
+﻿using System;
+
+namespace FluentAspect.Sample.MethodWeaving.Parameters
+{
+    public class ToCheckParametersInAfter
+    {
+        [ToCheckParametersInAfterAspect]
+        public void Check(string parameter1, int parameter2)
+        {
+            
+        }
+    }
+
+    public class ToCheckParametersInAfterAspectAttribute : Attribute
+    {
+
+        private string NetAspectAttributeKind = "MethodWeaving";
+
+        public void After(object[] parameters)
+        {
+            throw new ParametersException(parameters);
+        }
+    }
+}

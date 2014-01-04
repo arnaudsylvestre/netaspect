@@ -27,6 +27,11 @@ namespace FluentAspect.Weaver.Core.Weavers.Constructors
         {
         }
 
+        public bool CanWeave()
+        {
+            return true;
+        }
+
         private MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition,
                                                                      List<NetAspectAttribute> interceptor)
         {

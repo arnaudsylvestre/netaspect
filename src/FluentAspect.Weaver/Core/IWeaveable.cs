@@ -6,5 +6,6 @@ namespace FluentAspect.Weaver.Core
     {
         void Weave(ErrorHandler errorP_P);
         void Check(ErrorHandler error);
+        bool CanWeave();
     }
 }
