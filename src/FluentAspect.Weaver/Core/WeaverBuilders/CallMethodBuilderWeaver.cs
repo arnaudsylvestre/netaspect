@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using FluentAspect.Weaver.Core.Configuration;
-using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Weavers.Calls;
 using FluentAspect.Weaver.Helpers;
@@ -12,7 +11,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
     public class CallMethodBuilderWeaver : IWeaverBuilder
     {
         public IEnumerable<IWeaveable> BuildWeavers(AssemblyDefinition assemblyDefinition,
-                                                    WeavingConfiguration configuration, ErrorHandler errorHandler)
+                                                    WeavingConfiguration configuration)
         {
             var weavers = new List<IWeaveable>();
             List<MethodDefinition> methods = assemblyDefinition.GetAllMethods();

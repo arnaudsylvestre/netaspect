@@ -9,8 +9,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
     {
         public static void GenerateOnExceptionInterceptor(this MethodToWeave myMethod, Variables variables)
         {
-            VariableDefinition e = myMethod.Method.MethodDefinition.CreateVariable(typeof (Exception));
-            CallExceptionInterceptor(myMethod, variables, e);
+            var exception = myMethod.Method.MethodDefinition.CreateVariable<Exception>();
+            CallExceptionInterceptor(myMethod, variables, exception);
             myMethod.Method.Il.AppendThrow();
         }
 

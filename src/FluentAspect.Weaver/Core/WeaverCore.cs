@@ -64,21 +64,21 @@ namespace FluentAspect.Weaver.Core
                                                                                         {
                                                                                             ReadSymbols = true
                                                                                         });
-            IEnumerable<IWeaveable> weavers = weaverBuilder.BuildWeavers(assemblyDefinition, configuration, errorHandler);
+            IEnumerable<IWeaveable> weavers = weaverBuilder.BuildWeavers(assemblyDefinition, configuration);
             foreach (IWeaveable weaver_L in weavers)
             {
                 try
                 {
-                    weaver_L.Weave(errorHandler);
+                    var error = new ErrorHandler();
+                    weaver_L.Check(error);
+                    if (error.Errors.Count == 0)
+                        weaver_L.Weave(errorHandler);
+                    errorHandler.Errors.AddRange(error.Errors);
+                    errorHandler.Warnings.AddRange(error.Warnings);
                 }
-                    //catch (WeavingWarningException e)
-                    //{
-                    //   errorHandler.Warnings.Add(e.Message);
-                    //}
                 catch (Exception e)
                 {
-                    errorHandler.Warnings.Add(e.Message);
-                    //errorHandler.Errors.Add(e.Message);
+                    errorHandler.Failures.Add(e.Message);
                 }
             }
             string targetFileName = newAssemblyNameProvider(assemblyFilePath);

@@ -9,12 +9,6 @@ namespace FluentAspect.Weaver.Core
         IEnumerable<IParameter> Parameters { get; }
     }
 
-    public interface IProperty
-    {
-        string Name { get; }
-        IType DeclaringType { get; }
-    }
-
     public interface IParameter
     {
         IType Type { get; }

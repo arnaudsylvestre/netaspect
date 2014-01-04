@@ -35,7 +35,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
 
         public VariableDefinition CreateArgsArrayFromParameters()
         {
-            VariableDefinition args = definition.CreateVariable(typeof (object[]));
+            VariableDefinition args = definition.CreateVariable<object[]>();
 
             il.Emit(OpCodes.Ldc_I4, definition.Parameters.Count);
             il.Emit(OpCodes.Newarr, definition.Module.Import(typeof (object)));
@@ -57,7 +57,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
 
         public VariableDefinition CreateMethodInfo()
         {
-            VariableDefinition methodInfo = definition.CreateVariable(typeof (MethodInfo));
+            var methodInfo = definition.CreateVariable<MethodInfo>();
             il.AppendCallToThisGetType(definition.Module);
             il.AppendCallToGetMethod(definition.Name, definition.Module);
             il.AppendSaveResultTo(methodInfo);
@@ -65,12 +65,10 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
             return methodInfo;
         }
 
-        public void Append(List<Instruction> callBaseInstructions_P)
+        public void Append(IEnumerable<Instruction> callBaseInstructions_P)
         {
-            foreach (Instruction callBaseInstruction_L in callBaseInstructions_P)
-            {
+            foreach (var callBaseInstruction_L in callBaseInstructions_P)
                 il.Append(callBaseInstruction_L);
-            }
         }
 
         public void AddTryCatch(Action onTry, Action onCatch)

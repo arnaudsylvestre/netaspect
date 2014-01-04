@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAspect.Weaver.Core.Configuration;
-using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Weavers.Constructors;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
@@ -11,7 +10,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
     public class AroundConstructorBuilderWeaver : IWeaverBuilder
     {
         public IEnumerable<IWeaveable> BuildWeavers(AssemblyDefinition assemblyDefinition,
-                                                    WeavingConfiguration configuration, ErrorHandler errorHandler)
+                                                    WeavingConfiguration configuration)
         {
             var weavers = new List<IWeaveable>();
             List<MethodDefinition> methods = assemblyDefinition.GetAllMethods();

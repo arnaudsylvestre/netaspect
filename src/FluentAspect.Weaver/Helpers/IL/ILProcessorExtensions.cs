@@ -6,8 +6,6 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
 {
     public static class ILProcessorExtensions
     {
-        public static VariableDefinition This = new VariableDefinition(new TypeReference("", "", null, null));
-
         public static void AppendThrow(this ILProcessor il)
         {
             il.Emit(OpCodes.Rethrow);

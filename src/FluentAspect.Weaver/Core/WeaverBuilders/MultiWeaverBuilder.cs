@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using FluentAspect.Weaver.Core.Configuration;
-using FluentAspect.Weaver.Core.Errors;
 using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.WeaverBuilders
@@ -15,12 +14,12 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
         }
 
         public IEnumerable<IWeaveable> BuildWeavers(AssemblyDefinition assemblyDefinition,
-                                                    WeavingConfiguration configuration, ErrorHandler errorHandler)
+                                                    WeavingConfiguration configuration)
         {
             var weavables = new List<IWeaveable>();
             foreach (IWeaverBuilder weaverBuilder in builders)
             {
-                weavables.AddRange(weaverBuilder.BuildWeavers(assemblyDefinition, configuration, errorHandler));
+                weavables.AddRange(weaverBuilder.BuildWeavers(assemblyDefinition, configuration));
             }
             return weavables;
         }

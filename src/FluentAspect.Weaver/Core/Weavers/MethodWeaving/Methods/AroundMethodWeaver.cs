@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Weavers.Helpers;
@@ -8,6 +9,7 @@ using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
+using MethodAttributes = Mono.Cecil.MethodAttributes;
 
 namespace FluentAspect.Weaver.Core.Weavers.Methods
 {
@@ -38,6 +40,30 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
                 if ((definition.Attributes & MethodAttributes.Abstract) == MethodAttributes.Abstract)
                     throw new Exception(string.Format("An abstract method can not be weaved : {0}.{1}",
                                                       definition.DeclaringType.Name, definition.Name));
+            }
+            foreach (var attribute in interceptorType)
+            {
+                CheckBeforeParameters(attribute.MethodWeavingConfiguration.Before, errorHandler);
+            }
+        }
+
+        private void CheckBeforeParameters(Interceptor before, ErrorHandler errorHandler)
+        {
+            var checkers = new Dictionary<string, Action<ParameterInfo, ErrorHandler>>();
+            checkers.Add("parameters", (p, handler) =>
+                {
+                    
+                });
+            foreach (var parameterInfo in before.GetParameters())
+            {
+                if (!checkers.ContainsKey(parameterInfo.Name))
+                {
+                    //errorHandler.Errors.Add(string.Format("The parameter {0} is not supported", parameterInfo.Name));
+                }
+                else
+                {
+                    checkers[parameterInfo.Name](parameterInfo, errorHandler);
+                }
             }
         }
 
