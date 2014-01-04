@@ -74,6 +74,7 @@
     <Compile Include="Core\Weavers\Constructors\ConstructorAroundWeaver.cs" />
     <Compile Include="Core\Weavers\Helpers\ILProcessorExtensions.cs" />
     <Compile Include="Core\Weavers\Helpers\Method.cs" />
+    <Compile Include="Core\Weavers\Helpers\TryCatch.cs" />
     <Compile Include="Core\Weavers\Helpers\VariableExtensions.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\InterceptorCallerExtensions.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\MethodToWeaveExtensions.cs" />

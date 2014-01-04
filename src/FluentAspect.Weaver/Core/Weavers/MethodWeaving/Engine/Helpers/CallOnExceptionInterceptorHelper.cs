@@ -1,7 +1,6 @@
 ﻿using System;
 using FluentAspect.Weaver.Core.Weavers.Helpers;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
-using FluentAspect.Weaver.Core.Weavers.Methods;
 using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
@@ -10,7 +9,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
     {
         public static void GenerateOnExceptionInterceptor(this MethodToWeave myMethod, Variables variables)
         {
-            var e = myMethod.Method.MethodDefinition.CreateVariable(typeof (Exception));
+            VariableDefinition e = myMethod.Method.MethodDefinition.CreateVariable(typeof (Exception));
             CallExceptionInterceptor(myMethod, variables, e);
             myMethod.Method.Il.AppendThrow();
         }

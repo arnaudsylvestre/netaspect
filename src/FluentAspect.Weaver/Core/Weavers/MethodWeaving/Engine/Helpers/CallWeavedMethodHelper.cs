@@ -13,13 +13,9 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
             if (!wrappedMethod.IsStatic)
                 method.Method.Il.Emit(OpCodes.Ldarg_0);
             foreach (ParameterDefinition p in method.Method.MethodDefinition.Parameters.ToArray())
-            {
                 method.Method.Il.Emit(OpCodes.Ldarg, p);
-            }
 
-            OpCode call = OpCodes.Callvirt;
-            if ((method.Method.MethodDefinition.Attributes & MethodAttributes.Static) == MethodAttributes.Static)
-                call = OpCodes.Call;
+            OpCode call = method.Method.MethodDefinition.IsStatic ? OpCodes.Call : OpCodes.Callvirt;
             method.Method.Il.Emit(call,
                                   wrappedMethod.MakeGeneric(method.Method.MethodDefinition.GenericParameters.ToArray()));
 

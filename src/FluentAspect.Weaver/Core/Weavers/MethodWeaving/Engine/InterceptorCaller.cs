@@ -7,7 +7,7 @@ using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.Weavers.Methods
+namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
 {
     public class InterceptorCaller
     {

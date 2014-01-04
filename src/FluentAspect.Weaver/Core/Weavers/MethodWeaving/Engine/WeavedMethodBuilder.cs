@@ -1,5 +1,4 @@
-﻿using FluentAspect.Weaver.Core.Weavers.Helpers;
-using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers;
+﻿using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
 using Mono.Cecil;
 
@@ -11,9 +10,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
         {
             Variables variables = weavedMethod.CreateVariables();
             if (weavedMethod.HasInterceptorsOnException())
-                weavedMethod.Method.Add(new TryCatch(
-                                            () => Weave(weavedMethod, wrappedMethod, variables),
-                                            () => weavedMethod.GenerateOnExceptionInterceptor(variables)));
+                weavedMethod.Method.AddTryCatch(() => Weave(weavedMethod, wrappedMethod, variables),
+                                                () => weavedMethod.GenerateOnExceptionInterceptor(variables));
             else
                 Weave(weavedMethod, wrappedMethod, variables);
             weavedMethod.Method.Return(variables.handleResult);

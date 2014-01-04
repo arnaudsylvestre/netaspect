@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -18,19 +17,6 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
         {
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Call, module.Import(typeof (object).GetMethod("GetType", new Type[0])));
-        }
-
-        public static void AppendCallTo(this ILProcessor il, MethodInfo method, ModuleDefinition module,
-                                        params VariableDefinition[] parameters)
-        {
-            foreach (VariableDefinition parameter in parameters)
-            {
-                if (parameter == This)
-                    il.Emit(OpCodes.Ldarg_0);
-                else
-                    il.Emit(OpCodes.Ldloc, parameter);
-            }
-            il.Emit(OpCodes.Call, module.Import(method));
         }
 
         public static void AppendCallToGetMethod(this ILProcessor il, string methodName, ModuleDefinition module)

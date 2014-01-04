@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FluentAspect.Weaver.Core.Model;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -29,10 +28,9 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
             get { return definition; }
         }
 
-        public List<VariableDefinition> CreateAndInitializeVariable(
-            IEnumerable<MethodWeavingConfiguration> interceptorType)
+        public List<VariableDefinition> CreateAndInitializeVariable(IEnumerable<Type> types)
         {
-            return interceptorType.Select(type => il.CreateAndInitializeVariable(definition, type.Type)).ToList();
+            return types.Select(type => il.CreateAndInitializeVariable(definition, type)).ToList();
         }
 
         public VariableDefinition CreateArgsArrayFromParameters()
@@ -75,23 +73,23 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
             }
         }
 
-        public void Add(TryCatch tryCatch)
+        public void AddTryCatch(Action onTry, Action onCatch)
         {
             Instruction beforeCatch = CreateNopForCatch(Il);
             Instruction instruction_L = Il.Create(OpCodes.Nop);
 
-            tryCatch.OnTryContent();
+            onTry();
 
             Il.AppendLeave(instruction_L);
 
-            Instruction onCatch = CreateNopForCatch(Il);
-            tryCatch.OnCatch();
+            Instruction startCatch = CreateNopForCatch(Il);
+            onCatch();
             Instruction endCatch = Il.AppendLeave(instruction_L);
             endCatch = Il.Create(OpCodes.Nop);
             Il.Append(endCatch);
 
             Il.Append(instruction_L);
-            CreateExceptionHandler(MethodDefinition, onCatch, endCatch, beforeCatch);
+            CreateExceptionHandler(MethodDefinition, startCatch, endCatch, beforeCatch);
         }
 
         private Instruction CreateNopForCatch(ILProcessor il)
@@ -134,28 +132,6 @@ namespace FluentAspect.Weaver.Core.Weavers.Helpers
             if (MethodDefinition.ReturnType.MetadataType != MetadataType.Void)
                 il.Emit(OpCodes.Ldloc, weavedResult);
             il.Emit(OpCodes.Ret);
-        }
-    }
-
-    public class TryCatch
-    {
-        private readonly Action _onCatch;
-        private readonly Action onTryContent;
-
-        public TryCatch(Action onTryContent, Action onCatch)
-        {
-            this.onTryContent = onTryContent;
-            _onCatch = onCatch;
-        }
-
-        public Action OnTryContent
-        {
-            get { return onTryContent; }
-        }
-
-        public Action OnCatch
-        {
-            get { return _onCatch; }
         }
     }
 }

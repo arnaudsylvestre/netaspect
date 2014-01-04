@@ -1,5 +1,4 @@
 ﻿using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
-using FluentAspect.Weaver.Core.Weavers.Methods;
 
 namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
 {

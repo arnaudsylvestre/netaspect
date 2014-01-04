@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
 using Mono.Cecil.Cil;
 
@@ -41,7 +42,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
 
         private static List<VariableDefinition> CreateInterceptorInstances(MethodToWeave myMethod)
         {
-            return myMethod.Method.CreateAndInitializeVariable(myMethod.Interceptors);
+            return myMethod.Method.CreateAndInitializeVariable(from i in myMethod.Interceptors select i.Type);
         }
     }
 }
