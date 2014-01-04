@@ -76,7 +76,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
             AddCommonCheckers(checkers, methodDefinition);
             checkers.Add("exception", (info, handler) =>
             {
-                EnsureOfType(info, handler, typeof(Exception));
+                EnsureOfType(info, handler, typeof(Exception).FullName);
             });
             Check(errorHandler, onExceptionInterceptor, checkers);
         }
@@ -119,13 +119,13 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
 
 
 
-        private void EnsureOfType(ParameterInfo info, ErrorHandler handler, Type type)
+        private void EnsureOfType(ParameterInfo info, ErrorHandler handler, params string[] types)
         {
-            if (info.ParameterType.FullName != type.FullName)
+            if (!(from t in types where info.ParameterType.FullName.Replace("&", "") == t select t).Any())
             {
                 handler.Errors.Add(string.Format("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4}",
-                    info.Name, info.Member.Name, info.Member.DeclaringType.FullName,
-                    type.FullName));
+                    info.Name, info.Member.Name, info.Member.DeclaringType.FullName, info.ParameterType.FullName,
+                    string.Join(" or ", types)));
             }
         }
 
@@ -151,8 +151,16 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
         private void AddCommonCheckers(Dictionary<string, Action<ParameterInfo, ErrorHandler>> checkers, MethodDefinition methodDefinition)
         {
             checkers.Add("parameters", (p, handler) => { EnsureNotReferenced(p, handler); });
-            checkers.Add("instance", (p, handler) => { EnsureNotReferenced(p, handler); });
-            checkers.Add("method", (p, handler) => { EnsureNotReferenced(p, handler); });
+            checkers.Add("instance", (p, handler) =>
+                {
+                    EnsureNotReferenced(p, handler);
+                    EnsureOfType(p, handler, typeof(object).FullName, methodDefinition.DeclaringType.FullName);
+                });
+            checkers.Add("method", (p, handler) =>
+            {
+                EnsureNotReferenced(p, handler);
+                EnsureOfType(p, handler, typeof(MethodInfo).FullName);
+            });
             foreach (var parameter in methodDefinition.Parameters)
             {
                 checkers.Add(parameter.Name, (p, handler) => { EnsureOfType(p, handler, parameter); });
