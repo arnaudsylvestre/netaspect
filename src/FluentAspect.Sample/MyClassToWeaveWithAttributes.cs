@@ -89,7 +89,7 @@ namespace FluentAspect.Sample
 
     public class GetPropertyAttribute : Attribute
     {
-        private string NetAspectAttributeKind = "MethodWeaving";
+        public string NetAspectAttributeKind = "MethodWeaving";
 
         public void After(ref string result)
         {

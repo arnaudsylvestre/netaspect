@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Weavers.Calls;
@@ -37,7 +38,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                         actualInterceptors.Add(interceptorType);
                                 }
                                 if (actualInterceptors.Count != 0)
-                                    weavers.Add(new CallMethodWeaver(method, instruction, methodMatch.Interceptors));
+                                    weavers.Add(new CallMethodWeaver(method, instruction, (from m in methodMatch.Interceptors select m.CallWeavingConfiguration).ToList()));
                             }
                         }
                     }

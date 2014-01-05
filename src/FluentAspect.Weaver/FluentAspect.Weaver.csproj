@@ -71,6 +71,7 @@
     <Compile Include="Core\WeaverBuilders\CallMethodBuilderWeaver.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\CallMethodWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\MultiWeaverBuilder.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Engine\Model\CallToWeave.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\AroundConstructorWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\ConstructorAroundWeaver.cs" />
     <Compile Include="Helpers\IL\ILProcessorExtensions.cs" />

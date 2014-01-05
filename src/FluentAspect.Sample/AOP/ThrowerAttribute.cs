@@ -5,7 +5,7 @@ namespace FluentAspect.Sample.AOP
 {
     public class ThrowerAttribute : Attribute
     {
-        private string NetAspectAttributeKind = "MethodWeaving";
+        public string NetAspectAttributeKind = "MethodWeaving";
 
         public void Before(object instance, MethodInfo method, object[] parameters)
         {

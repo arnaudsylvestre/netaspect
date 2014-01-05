@@ -15,7 +15,7 @@ namespace FluentAspect.Sample.MethodWeaving.Parameters
     public class ToCheckMethodReferencedInAfterAspectAttribute : Attribute
     {
 
-        private string NetAspectAttributeKind = "MethodWeaving";
+        public string NetAspectAttributeKind = "MethodWeaving";
 
         public void After(ref MethodInfo method)
         {

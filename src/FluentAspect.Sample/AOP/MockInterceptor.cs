@@ -8,7 +8,7 @@ namespace FluentAspect.Sample.AOP
         public static BeforeInfo before;
         public static AfterInfo after;
         public static ExceptionInfo exception;
-        private string NetAspectAttributeKind = "MethodWeaving";
+        public string NetAspectAttributeKind = "MethodWeaving";
 
         public void Before(object instance, MethodInfo method, object[] parameters)
         {

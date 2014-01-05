@@ -7,8 +7,8 @@ namespace FluentAspect.Sample.AOP
 {
     public class EnsureNotNullAttribute : Attribute
     {
-        private IEnumerable<Assembly> AssembliesToWeave = new List<Assembly> {typeof (DepClassToWeave).Assembly};
-        private string NetAspectAttributeKind = "MethodWeaving";
+        public IEnumerable<Assembly> AssembliesToWeave = new List<Assembly> { typeof(DepClassToWeave).Assembly };
+        public string NetAspectAttributeKind = "MethodWeaving";
 
         public void Before(string s)
         {

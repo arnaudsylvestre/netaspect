@@ -7,7 +7,7 @@ namespace FluentAspect.Sample.docs
     {
         public static StringBuilder Trace = new StringBuilder();
 
-        private string NetAspectAttributeKind = "MethodWeaving";
+        public string NetAspectAttributeKind = "MethodWeaving";
 
         public void Before(MyInt instance, int v)
         {

@@ -14,7 +14,7 @@ namespace FluentAspect.Sample.MethodWeaving.Parameters
     public class ToCheckInstanceWithWrongTypeInAfterAspectAttribute : Attribute
     {
 
-        private string NetAspectAttributeKind = "MethodWeaving";
+        public string NetAspectAttributeKind = "MethodWeaving";
 
         public void After(int instance)
         {

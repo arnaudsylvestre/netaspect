@@ -16,6 +16,6 @@ namespace FluentAspect.Sample.MethodWeaving.Problems.Warnings
 
     public class EmptyAspectAttribute : Attribute
     {
-        private string NetAspectAttributeKind = "MethodWeaving";
+        public string NetAspectAttributeKind = "MethodWeaving";
     }
 }

@@ -172,7 +172,7 @@ namespace FluentAspect.Sample
 
     public class CheckCallerAttribute : Attribute
     {
-        private string NetAspectAttributeKind = "CallWeaving";
+        public string NetAspectAttributeKind = "CallWeaving";
 
         public static void AfterCall(object caller)
         {
@@ -182,7 +182,7 @@ namespace FluentAspect.Sample
 
     public class CheckParametersCallerOnCallAfterAttribute : Attribute
     {
-        private string NetAspectAttributeKind = "CallWeaving";
+        public string NetAspectAttributeKind = "CallWeaving";
 
         public static void AfterCall(string callerMethodParameterCaller)
         {
@@ -192,7 +192,7 @@ namespace FluentAspect.Sample
 
     public class CheckOnCallAttribute : Attribute
     {
-        private string NetAspectAttributeKind = "CallWeaving";
+        public string NetAspectAttributeKind = "CallWeaving";
 
         public static void BeforeCall()
         {
@@ -202,7 +202,7 @@ namespace FluentAspect.Sample
 
     public class CheckOnCallAfterAttribute : Attribute
     {
-        private string NetAspectAttributeKind = "CallWeaving";
+        public string NetAspectAttributeKind = "CallWeaving";
 
         public static void AfterCall()
         {
@@ -212,7 +212,7 @@ namespace FluentAspect.Sample
 
     public class CheckLineNumberOnCallAfterAttribute : Attribute
     {
-        private string NetAspectAttributeKind = "CallWeaving";
+        public string NetAspectAttributeKind = "CallWeaving";
 
         public static void AfterCall(int lineNumber, int columnNumber, string filename)
         {
@@ -222,7 +222,7 @@ namespace FluentAspect.Sample
 
     public class CheckReturnSimpleTypeAttribute : Attribute
     {
-        private string NetAspectAttributeKind = "MethodWeaving";
+        public string NetAspectAttributeKind = "MethodWeaving";
 
         public void After(ref int result)
         {
@@ -232,7 +232,7 @@ namespace FluentAspect.Sample
 
     public class CheckWithParameterNameInterceptorAttribute : Attribute
     {
-        private string NetAspectAttributeKind = "MethodWeaving";
+        public string NetAspectAttributeKind = "MethodWeaving";
 
         public void Before(int first, ref int second)
         {

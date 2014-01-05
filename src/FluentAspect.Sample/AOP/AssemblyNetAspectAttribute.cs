@@ -4,7 +4,7 @@ namespace FluentAspect.Sample.AOP
 {
     public class AssemblyAttribute : Attribute
     {
-        private string NetAspectAttributeKind = "MethodWeaving";
+        public string NetAspectAttributeKind = "MethodWeaving";
 
         public void Before()
         {

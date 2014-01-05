@@ -14,7 +14,7 @@ namespace FluentAspect.Sample.MethodWeaving.Parameters
     public class ToCheckParametersReferencedInBeforeAspectAttribute : Attribute
     {
 
-        private string NetAspectAttributeKind = "MethodWeaving";
+        public string NetAspectAttributeKind = "MethodWeaving";
 
         public void Before(ref object[] parameters)
         {

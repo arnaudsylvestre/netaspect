@@ -4,7 +4,7 @@ namespace FluentAspect.Sample.AOP
 {
     public class CheckWithParametersReferencedAttribute : Attribute
     {
-        private string NetAspectAttributeKind = "MethodWeaving";
+        public string NetAspectAttributeKind = "MethodWeaving";
 
         public void After(ref object[] parameters, ref string result)
         {
