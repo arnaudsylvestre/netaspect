@@ -19,7 +19,7 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
 
             foreach (Assembly assembly in assemblies)
             {
-                List<NetAspectAttribute> attrbiutes = assembly.GetNetAspectAttributes(true);
+                List<NetAspectAttribute> attrbiutes = assembly.GetMethodWeavingAspectAttributes(true);
                 foreach (NetAspectAttribute attrbiute in attrbiutes)
                 {
                     MethodInfo methodInfo_L = attrbiute.SelectorMethod;
