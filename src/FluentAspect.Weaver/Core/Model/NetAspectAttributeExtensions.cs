@@ -6,7 +6,7 @@ namespace FluentAspect.Weaver.Core.Model
     {
         public static MethodInfo GetInterceptorMethod(this object netAspectAttribute, string methodName)
         {
-            return netAspectAttribute.GetType().GetMethod(methodName, NetAspectAttribute._bindingFlags);
+            return netAspectAttribute.GetType().GetMethod(methodName, NetAspectAttribute.BINDING_FLAGS);
         }
     }
 }

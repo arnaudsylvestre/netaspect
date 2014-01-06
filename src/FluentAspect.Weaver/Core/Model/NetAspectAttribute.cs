@@ -7,8 +7,9 @@ namespace FluentAspect.Weaver.Core.Model
 {
     public class NetAspectAttribute
     {
-        public const BindingFlags _bindingFlags =
-            BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
+        public const BindingFlags BINDING_FLAGS =
+            BindingFlags.NonPublic | BindingFlags.Public|
+            BindingFlags.Instance | BindingFlags.Static;
 
         private readonly object attribute;
 
@@ -22,11 +23,6 @@ namespace FluentAspect.Weaver.Core.Model
             get { return NetAspectAttributeKindField != null; }
         }
 
-        private FieldInfo NetAspectAttributeKindField
-        {
-            get { return Type.GetField("NetAspectAttributeKind", _bindingFlags); }
-        }
-
         public NetAspectAttributeKind Kind
         {
             get
@@ -34,6 +30,11 @@ namespace FluentAspect.Weaver.Core.Model
                 return
                     EnumParser.Parse<NetAspectAttributeKind>(NetAspectAttributeKindField.GetValue(attribute).ToString());
             }
+        }
+
+        private FieldInfo NetAspectAttributeKindField
+        {
+           get { return attribute.GetType().GetField("NetAspectAttributeKind", BINDING_FLAGS); }
         }
 
         public MethodWeavingConfiguration MethodWeavingConfiguration
@@ -48,19 +49,14 @@ namespace FluentAspect.Weaver.Core.Model
 
         public MethodInfo SelectorMethod
         {
-            get { return attribute.GetType().GetMethod("WeaveMethod", _bindingFlags); }
+            get { return attribute.GetType().GetMethod("WeaveMethod", BINDING_FLAGS); }
         }
 
-        public Type Type
-        {
-            get { return attribute.GetType(); }
-        }
-
-        public IEnumerable<Assembly> AssembliesToWeave
+       public IEnumerable<Assembly> AssembliesToWeave
         {
             get
             {
-                FieldInfo fieldInfo_L = Type.GetField("AssembliesToWeave", _bindingFlags);
+                FieldInfo fieldInfo_L = attribute.GetType().GetField("AssembliesToWeave", BINDING_FLAGS);
                 if (fieldInfo_L == null)
                     return new Assembly[0];
                 return (IEnumerable<Assembly>) fieldInfo_L.GetValue(attribute);

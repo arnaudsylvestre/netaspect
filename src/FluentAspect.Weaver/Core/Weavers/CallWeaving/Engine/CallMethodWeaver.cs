@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
+using FluentAspect.Weaver.Core.Weavers.Helpers;
+using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
@@ -31,29 +33,10 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
         {
             var reference = toWeave.Instruction.Operand as MethodReference;
 
-            Collection<Instruction> instructions = toWeave.MethodToWeave.Body.Instructions;
-            SequencePoint point_L = null;
-            for (int i = 0; i < instructions.Count; i++)
-            {
-                if (instructions[i].SequencePoint != null)
-                    point_L = instructions[i].SequencePoint;
-                if (instructions[i] == toWeave.Instruction)
-                {
-                    IEnumerable<Instruction> afterInstructions = CreateAfterInstructions(toWeave.MethodToWeave.Module, point_L);
-                    foreach (Instruction beforeInstruction in afterInstructions.Reverse())
-                    {
-                        instructions.Insert(i + 1, beforeInstruction);
-                    }
+            SequencePoint point_L = toWeave.Instruction.GetLastSequencePoint();
 
-                    IEnumerable<Instruction> beforeInstructions = CreateBeforeInstructions(toWeave.MethodToWeave.Module);
-
-                    foreach (Instruction beforeInstruction in beforeInstructions.Reverse())
-                    {
-                        instructions.Insert(i, beforeInstruction);
-                    }
-                    break;
-                }
-            }
+           toWeave.MethodToWeave.InsertAfter(toWeave.Instruction, CreateAfterInstructions(toWeave.MethodToWeave.Module, point_L));
+           toWeave.MethodToWeave.InsertBefore(toWeave.Instruction, CreateBeforeInstructions(toWeave.MethodToWeave.Module));
 
             foreach (ParameterDefinition parameter in reference.Parameters)
             {

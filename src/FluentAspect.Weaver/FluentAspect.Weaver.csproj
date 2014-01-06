@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{28912034-8A56-4B8E-BAA1-02C50149CA68}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -75,6 +75,7 @@
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\AroundConstructorWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\ConstructorAroundWeaver.cs" />
     <Compile Include="Helpers\IL\ILProcessorExtensions.cs" />
+    <Compile Include="Helpers\IL\InstructionExtensions.cs" />
     <Compile Include="Helpers\IL\Method.cs" />
     <Compile Include="Helpers\IL\VariableExtensions.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\InterceptorCallerExtensions.cs" />
@@ -126,6 +127,10 @@
       <Project>{63E6915C-7EA4-4D76-AB28-0D7191EEA626}</Project>
       <Name>Mono.Cecil.Pdb</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Weavers\CallWeaving\Engine\Checkers\" />
+    <Folder Include="Core\Weavers\CallWeaving\Engine\Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

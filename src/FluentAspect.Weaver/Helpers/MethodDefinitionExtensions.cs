@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -6,6 +7,37 @@ namespace FluentAspect.Weaver.Helpers
 {
     public static class MethodDefinitionExtensions
     {
+       public static void InsertAfter(this MethodDefinition method, Instruction instruction, IEnumerable<Instruction> toInsert)
+       {
+          var instructions = method.Body.Instructions;
+          for (int i = 0; i < instructions.Count; i++)
+          {
+             if (instructions[i] == instruction)
+             {
+                foreach (Instruction afterInstruction in toInsert.Reverse())
+                {
+                   instructions.Insert(i + 1, afterInstruction);
+                }
+                break;
+             }
+          }
+       }
+       public static void InsertBefore(this MethodDefinition method, Instruction instruction, IEnumerable<Instruction> toInsert)
+       {
+          var instructions = method.Body.Instructions;
+          for (int i = 0; i < instructions.Count; i++)
+          {
+             if (instructions[i] == instruction)
+             {
+                foreach (Instruction beforeInstruction in toInsert.Reverse())
+                {
+                   instructions.Insert(i, beforeInstruction);
+                }
+                break;
+             }
+          }
+       }
+
         public static MethodDefinition Clone(this MethodDefinition methodDefinition, string cloneMethodName)
         {
             MethodAttributes isStatic = (methodDefinition.Attributes & MethodAttributes.Static);
