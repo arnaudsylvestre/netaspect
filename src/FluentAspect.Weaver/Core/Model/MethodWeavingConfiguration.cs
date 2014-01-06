@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace FluentAspect.Weaver.Core.Model
 {
@@ -9,6 +11,24 @@ namespace FluentAspect.Weaver.Core.Model
         public MethodWeavingConfiguration(object attribute_P)
         {
             _attribute = attribute_P;
+        }
+
+
+
+        public MethodInfo SelectorMethod
+        {
+            get { return _attribute.GetType().GetMethod("WeaveMethod", BINDING_FLAGS); }
+        }
+
+        public IEnumerable<Assembly> AssembliesToWeave
+        {
+            get
+            {
+                FieldInfo fieldInfo_L = _attribute.GetType().GetField("AssembliesToWeave", BINDING_FLAGS);
+                if (fieldInfo_L == null)
+                    return new Assembly[0];
+                return (IEnumerable<Assembly>)fieldInfo_L.GetValue(attribute);
+            }
         }
 
         public Type Type

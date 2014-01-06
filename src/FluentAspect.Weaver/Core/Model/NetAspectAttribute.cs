@@ -46,21 +46,5 @@ namespace FluentAspect.Weaver.Core.Model
         {
             get { return new CallWeavingConfiguration(attribute); }
         }
-
-        public MethodInfo SelectorMethod
-        {
-            get { return attribute.GetType().GetMethod("WeaveMethod", BINDING_FLAGS); }
-        }
-
-       public IEnumerable<Assembly> AssembliesToWeave
-        {
-            get
-            {
-                FieldInfo fieldInfo_L = attribute.GetType().GetField("AssembliesToWeave", BINDING_FLAGS);
-                if (fieldInfo_L == null)
-                    return new Assembly[0];
-                return (IEnumerable<Assembly>) fieldInfo_L.GetValue(attribute);
-            }
-        }
     }
 }
