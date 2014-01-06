@@ -36,7 +36,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
             SequencePoint point_L = toWeave.Instruction.GetLastSequencePoint();
 
            toWeave.MethodToWeave.InsertAfter(toWeave.Instruction, CreateAfterInstructions(toWeave.MethodToWeave.Module, point_L));
-           toWeave.MethodToWeave.InsertBefore(toWeave.Instruction, CreateBeforeInstructions(toWeave.MethodToWeave.Module));
+           toWeave.MethodToWeave.InsertBefore(toWeave.Instruction, CreateBeforeInstructions(toWeave.MethodToWeave.Module, point_L));
 
             foreach (ParameterDefinition parameter in reference.Parameters)
             {
@@ -49,8 +49,41 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
         {
             foreach (var netAspectAttribute in toWeave.Interceptors)
             {
-                //CheckParameters(netAspectAttribute)
+                CheckParameters(netAspectAttribute.BeforeInterceptor.GetParameters(), errorHandler);
             }
+        }
+
+        private void CheckParameters(IEnumerable<ParameterInfo> getParameters, ErrorHandler errorHandler)
+        {
+            var errors = new Dictionary<string, Action<ParameterInfo, ErrorHandler>>();
+            errors.Add("linenumber", (info, handler) =>
+            {
+                EnsureSequencePoint(errorHandler, info);
+            });
+            errors.Add("columnnumber", (info, handler) =>
+            {
+                EnsureSequencePoint(errorHandler, info);
+            });
+            errors.Add("filename", (info, handler) =>
+            {
+                EnsureSequencePoint(errorHandler, info);
+            });
+            errors.Add("filepath", (info, handler) =>
+            {
+                EnsureSequencePoint(errorHandler, info);
+            });
+
+            foreach (var parameterInfo in getParameters)
+            {
+                errors[parameterInfo.Name.ToLower()](parameterInfo, errorHandler);
+            }
+        }
+
+        private void EnsureSequencePoint(ErrorHandler errorHandler, ParameterInfo info)
+        {
+            if (toWeave.Instruction.GetLastSequencePoint() == null)
+                errorHandler.Warnings.Add(string.Format("The parameter {0} in method {1} of type {2} will have the default value because there is no debugging information",
+                    info.Name, (info.Member).Name, (info.Member.DeclaringType).FullName));
         }
 
         public bool CanWeave()
@@ -67,39 +100,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
                 if (afterCallMethod != null)
                 {
                     var parameters = new Dictionary<string, Action<ParameterInfo>>();
-                    parameters.Add("linenumber",
-                                   (p) =>
-                                   instructions.Add(Instruction.Create(OpCodes.Ldc_I4,
-                                                                       instructionP_P == null
-                                                                           ? 0
-                                                                           : instructionP_P.StartLine)));
-                    parameters.Add("columnnumber",
-                                   (p) =>
-                                   instructions.Add(Instruction.Create(OpCodes.Ldc_I4,
-                                                                       instructionP_P == null
-                                                                           ? 0
-                                                                           : instructionP_P.StartColumn)));
-                    parameters.Add("filename",
-                                   (p) =>
-                                   instructions.Add(Instruction.Create(OpCodes.Ldstr,
-                                                                       instructionP_P == null
-                                                                           ? ""
-                                                                           : Path.GetFileName(
-                                                                               instructionP_P.Document.Url))));
-                    parameters.Add("filepath",
-                                   (p) =>
-                                   instructions.Add(Instruction.Create(OpCodes.Ldstr,
-                                                                       instructionP_P == null
-                                                                           ? ""
-                                                                           : instructionP_P.Document.Url)));
-                    parameters.Add("caller", (p) => instructions.Add(Instruction.Create(OpCodes.Ldarg_0)));
-
-                    foreach (ParameterDefinition parameter_L in toWeave.MethodToWeave.Parameters)
-                    {
-                        ParameterDefinition parameter1_L = parameter_L;
-                        parameters.Add((parameter1_L.Name + "Caller").ToLower(),
-                                       (p) => instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter1_L)));
-                    }
+                    FillParameters(instructionP_P, parameters, instructions);
 
 
                     foreach (ParameterInfo parameterInfo_L in afterCallMethod.GetParameters())
@@ -113,22 +114,46 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
             return instructions;
         }
 
-        private void EnsureSequencePoint(SequencePoint sequencePoint, ParameterDefinition parameterDefinition, ErrorHandler errorHandler)
+        private void FillParameters(SequencePoint instructionP_P, Dictionary<string, Action<ParameterInfo>> parameters, List<Instruction> instructions)
         {
-            if (sequencePoint == null)
+            parameters.Add("linenumber", p => instructions.Add(Create(instructionP_P, i => i.StartLine)));
+            parameters.Add("columnnumber", p => instructions.Add(Create(instructionP_P, i => i.StartColumn)));
+            parameters.Add("filename", p => instructions.Add(Create(instructionP_P, i => Path.GetFileName(i.Document.Url))));
+            parameters.Add("filepath", p => instructions.Add(Create(instructionP_P, i => i.Document.Url)));
+            parameters.Add("caller", p => instructions.Add(Instruction.Create(OpCodes.Ldarg_0)));
+
+            foreach (ParameterDefinition parameter_L in toWeave.MethodToWeave.Parameters)
             {
-                errorHandler.Warnings.Add(string.Format("The parameter {0} in method {1} of type {2} will have the default value because there is no debugging information",
-                    parameterDefinition.Name, ((IMemberDefinition)parameterDefinition.Method).Name, ((IMemberDefinition)parameterDefinition.Method).FullName));
+                ParameterDefinition parameter1_L = parameter_L;
+                parameters.Add((parameter1_L.Name + "Caller").ToLower(), p => instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter1_L)));
             }
         }
 
-        private IEnumerable<Instruction> CreateBeforeInstructions(ModuleDefinition module)
+        private static Instruction Create(SequencePoint instructionP_P, Func<SequencePoint, int> provider)
+        {
+            return Instruction.Create(OpCodes.Ldc_I4,
+                                      instructionP_P == null
+                                          ? 0
+                                          : provider(instructionP_P));
+        }
+
+        private static Instruction Create(SequencePoint instructionP_P, Func<SequencePoint, string> provider)
+        {
+            return Instruction.Create(OpCodes.Ldstr,
+                                      instructionP_P == null
+                                          ? null
+                                          : provider(instructionP_P));
+        }
+
+        private IEnumerable<Instruction> CreateBeforeInstructions(ModuleDefinition module, SequencePoint pointL)
         {
             var instructions = new List<Instruction>();
             foreach (var interceptorType in toWeave.Interceptors)
             {
                 if (interceptorType.BeforeInterceptor.Method != null)
                 {
+                    var parameters = new Dictionary<string, Action<ParameterInfo>>();
+                    FillParameters(pointL, parameters, instructions);
                     instructions.Add(Instruction.Create(OpCodes.Call,
                                                         module.Import(
                                                             interceptorType.BeforeInterceptor
