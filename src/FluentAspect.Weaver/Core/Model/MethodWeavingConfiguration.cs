@@ -5,6 +5,14 @@ using FluentAspect.Weaver.Helpers;
 
 namespace FluentAspect.Weaver.Core.Model
 {
+    public interface IWeavingConfiguration
+    {
+        IEnumerable<Assembly> AssembliesToWeave { get; }
+        Type Type { get; }
+        MethodInfo SelectorMethod { get; }
+        MethodInfo SelectorConstructor { get; }
+    }
+
     public class MethodWeavingConfiguration
     {
         private readonly object _attribute;
@@ -12,11 +20,6 @@ namespace FluentAspect.Weaver.Core.Model
         public MethodWeavingConfiguration(object attribute_P)
         {
             _attribute = attribute_P;
-        }
-
-        public MethodInfo SelectorMethod
-        {
-           get { return _attribute.GetMethod("WeaveMethod"); }
         }
 
         public IEnumerable<Assembly> AssembliesToWeave
@@ -51,5 +54,15 @@ namespace FluentAspect.Weaver.Core.Model
        {
           get { return _attribute.GetAspectKind() == NetAspectAttributeKind.MethodWeaving; }
        }
+
+        public MethodInfo SelectorConstructor
+       {
+           get { return _attribute.GetMethod("WeaveConstructor"); }
+       }
+
+        public MethodInfo SelectorMethod
+        {
+            get { return _attribute.GetMethod("WeaveMethod"); }
+        }
     }
 }

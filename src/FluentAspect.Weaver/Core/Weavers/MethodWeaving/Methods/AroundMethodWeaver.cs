@@ -16,9 +16,9 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
     public class AroundMethodWeaver : IWeaveable
     {
         private readonly MethodDefinition definition;
-        private readonly List<MethodWeavingConfiguration> interceptorType;
+        private readonly IEnumerable<MethodWeavingConfiguration> interceptorType;
 
-        public AroundMethodWeaver(List<MethodWeavingConfiguration> interceptorType, MethodDefinition definition_P)
+        public AroundMethodWeaver(IEnumerable<MethodWeavingConfiguration> interceptorType, MethodDefinition definition_P)
         {
             this.interceptorType = interceptorType;
             definition = definition_P;
@@ -169,14 +169,14 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
         }
 
 
-        public static void WeaveMethod(MethodDefinition methodDefinition, List<MethodWeavingConfiguration> interceptorTypes)
+        public static void WeaveMethod(MethodDefinition methodDefinition, IEnumerable<MethodWeavingConfiguration> interceptorTypes)
         {
             MethodDefinition newMethod = CreateNewMethodBasedOnMethodToWeave(methodDefinition, interceptorTypes);
             methodDefinition.DeclaringType.Methods.Add(newMethod);
         }
 
         private static MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition,
-                                                                            List<MethodWeavingConfiguration> interceptor)
+                                                                            IEnumerable<MethodWeavingConfiguration> interceptor)
         {
             MethodDefinition wrappedMethod = methodDefinition.Clone("-Weaved-" + methodDefinition.Name);
 

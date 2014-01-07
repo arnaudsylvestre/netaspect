@@ -9,17 +9,20 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
 {
     public class AroundMethodBuilderWeaver : IWeaverBuilder
     {
-        public IEnumerable<IWeaveable> BuildWeavers(AssemblyDefinition assemblyDefinition,
-                                                    WeavingConfiguration configuration)
+        public IEnumerable<IWeaveable> BuildWeavers(WeavingConfiguration configuration)
         {
             var weavers = new List<IWeaveable>();
-            List<MethodDefinition> methods = assemblyDefinition.GetAllMethods();
             foreach (MethodMatch methodMatch in configuration.Methods)
             {
-                weavers.AddRange((from methodDefinition in methods
-                                  where methodMatch.Matcher(new MethodDefinitionAdapter(methodDefinition))
-                                  select new AroundMethodWeaver(methodMatch.MethodWeavingInterceptors, methodDefinition))
-                                     .Cast<IWeaveable>());
+                foreach (var assemblyDefinition in methodMatch.AssembliesToScan)
+                {
+                    List<MethodDefinition> methods = assemblyDefinition.GetAllMethods();
+                    weavers.AddRange((from methodDefinition in methods
+                                      where methodMatch.Matcher(new MethodDefinitionAdapter(methodDefinition))
+                                      select new AroundMethodWeaver(methodMatch.MethodWeavingInterceptors, methodDefinition))
+                                         .Cast<IWeaveable>());
+                    
+                }
             }
             return weavers;
         }

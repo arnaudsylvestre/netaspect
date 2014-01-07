@@ -13,13 +13,12 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
             this.builders = builders;
         }
 
-        public IEnumerable<IWeaveable> BuildWeavers(AssemblyDefinition assemblyDefinition,
-                                                    WeavingConfiguration configuration)
+        public IEnumerable<IWeaveable> BuildWeavers(WeavingConfiguration configuration)
         {
             var weavables = new List<IWeaveable>();
             foreach (IWeaverBuilder weaverBuilder in builders)
             {
-                weavables.AddRange(weaverBuilder.BuildWeavers(assemblyDefinition, configuration));
+                weavables.AddRange(weaverBuilder.BuildWeavers(configuration));
             }
             return weavables;
         }

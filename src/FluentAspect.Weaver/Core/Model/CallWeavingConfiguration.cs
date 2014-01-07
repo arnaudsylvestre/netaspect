@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 using FluentAspect.Weaver.Helpers;
 
 namespace FluentAspect.Weaver.Core.Model
@@ -25,6 +26,25 @@ namespace FluentAspect.Weaver.Core.Model
        public bool IsValid
        {
           get { return _attribute.GetAspectKind() == NetAspectAttributeKind.CallWeaving; }
+       }
+
+
+       public IEnumerable<Assembly> AssembliesToWeave
+       {
+           get
+           {
+               return _attribute.GetValueForField<IEnumerable<Assembly>>("AssembliesToWeave", () => new Assembly[0]);
+           }
+       }
+
+       public MethodInfo SelectorConstructor
+       {
+           get { return _attribute.GetMethod("WeaveConstructor"); }
+       }
+
+       public MethodInfo SelectorMethod
+       {
+           get { return _attribute.GetMethod("WeaveMethod"); }
        }
     }
 }

@@ -19,7 +19,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
 
 
         public CallMethodWeaver(MethodDefinition method, Instruction instruction,
-                                List<CallWeavingConfiguration> interceptorTypes)
+                                IEnumerable<CallWeavingConfiguration> interceptorTypes)
         {
             toWeave = new CallToWeave
                 {

@@ -6,6 +6,6 @@ namespace FluentAspect.Weaver.Core
 {
     public interface IWeaverBuilder
     {
-        IEnumerable<IWeaveable> BuildWeavers(AssemblyDefinition assemblyDefinition, WeavingConfiguration configuration);
+        IEnumerable<IWeaveable> BuildWeavers(WeavingConfiguration configuration);
     }
 }

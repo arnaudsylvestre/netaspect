@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 
 namespace FluentAspect.Weaver.Core.Configuration.Multi
@@ -13,11 +13,11 @@ namespace FluentAspect.Weaver.Core.Configuration.Multi
             engines = engines_P;
         }
 
-        public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration, ErrorHandler errorHandler)
+        public void ReadConfiguration(Assembly assembly, WeavingConfiguration configuration, ErrorHandler errorHandler)
         {
-            foreach (IConfigurationReader weaverEngine_L in engines)
+            foreach (var weaverEngine in engines)
             {
-               weaverEngine_L.ReadConfiguration(types, configuration, errorHandler);
+                weaverEngine.ReadConfiguration(assembly, configuration, errorHandler);
             }
         }
     }

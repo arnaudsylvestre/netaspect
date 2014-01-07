@@ -9,9 +9,9 @@ namespace FluentAspect.Weaver.Core.Weavers.Constructors
     public class AroundConstructorWeaver : IWeaveable
     {
         private readonly MethodDefinition definition;
-        private readonly List<MethodWeavingConfiguration> interceptorType;
+        private readonly IEnumerable<MethodWeavingConfiguration> interceptorType;
 
-        public AroundConstructorWeaver(List<MethodWeavingConfiguration> interceptorType, MethodDefinition definition_P)
+        public AroundConstructorWeaver(IEnumerable<MethodWeavingConfiguration> interceptorType, MethodDefinition definition_P)
         {
             this.interceptorType = interceptorType;
             definition = definition_P;
@@ -33,7 +33,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Constructors
         }
 
         private MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition,
-                                                                     List<MethodWeavingConfiguration> interceptor)
+                                                                     IEnumerable<MethodWeavingConfiguration> interceptor)
         {
             MethodDefinition wrappedMethod = methodDefinition.Clone("-Weaved-Constructor");
 

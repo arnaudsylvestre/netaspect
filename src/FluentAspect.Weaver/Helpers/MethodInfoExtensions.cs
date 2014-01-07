@@ -13,7 +13,8 @@ namespace FluentAspect.Weaver.Helpers
         }
         public static IEnumerable<CallWeavingConfiguration> GetCallWeavingAspectAttributes(this ICustomAttributeProvider method)
         {
-           return method.GetCustomAttributes(true).Select((a) => new CallWeavingConfiguration(a)).Where(m => m.IsValid);
+            return method.GetCustomAttributes(true).Select((a) => new CallWeavingConfiguration(a)).Where(m => m.IsValid);
         }
+        
     }
 }

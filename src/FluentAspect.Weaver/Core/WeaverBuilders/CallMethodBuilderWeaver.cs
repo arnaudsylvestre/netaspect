@@ -11,39 +11,48 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
 {
     public class CallMethodBuilderWeaver : IWeaverBuilder
     {
-        public IEnumerable<IWeaveable> BuildWeavers(AssemblyDefinition assemblyDefinition,
-                                                    WeavingConfiguration configuration)
+        public IEnumerable<IWeaveable> BuildWeavers(WeavingConfiguration configuration)
         {
             var weavers = new List<IWeaveable>();
-            List<MethodDefinition> methods = assemblyDefinition.GetAllMethods();
 
-            foreach (MethodDefinition method in methods)
+            foreach (MethodMatch m in configuration.Methods)
             {
-                if (!method.HasBody)
-                    continue;
-                foreach (Instruction instruction in method.Body.Instructions)
+                foreach (var assemblyDefinition in m.AssembliesToScan)
                 {
-                    if (instruction.OpCode == OpCodes.Call && instruction.Operand is MethodReference)
+                    List<MethodDefinition> methods = assemblyDefinition.GetAllMethods();
+                    foreach (MethodDefinition method in methods)
                     {
-                        foreach (MethodMatch methodMatch in configuration.Methods)
+                        if (!method.HasBody)
+                            continue;
+                        foreach (Instruction instruction in method.Body.Instructions)
                         {
-                            if (methodMatch.Matcher(new MethodDefinitionAdapter(instruction.Operand as MethodReference)))
+                            if (instruction.OpCode == OpCodes.Call && instruction.Operand is MethodReference)
                             {
-                                var actualInterceptors = new List<CallWeavingConfiguration>();
-
-                                foreach (var interceptorType in methodMatch.CallWeavingInterceptors)
+                                foreach (MethodMatch methodMatch in configuration.Methods)
                                 {
-                                    if (interceptorType.BeforeInterceptor.Method != null ||
-                                        interceptorType.AfterInterceptor.Method != null)
-                                        actualInterceptors.Add(interceptorType);
+                                    if (methodMatch.Matcher(new MethodDefinitionAdapter(instruction.Operand as MethodReference)))
+                                    {
+                                        var actualInterceptors = new List<CallWeavingConfiguration>();
+
+                                        foreach (var interceptorType in methodMatch.CallWeavingInterceptors)
+                                        {
+                                            if (interceptorType.BeforeInterceptor.Method != null ||
+                                                interceptorType.AfterInterceptor.Method != null)
+                                                actualInterceptors.Add(interceptorType);
+                                        }
+                                        if (actualInterceptors.Count != 0)
+                                            weavers.Add(new CallMethodWeaver(method, instruction, methodMatch.CallWeavingInterceptors));
+                                    }
                                 }
-                                if (actualInterceptors.Count != 0)
-                                   weavers.Add(new CallMethodWeaver(method, instruction, methodMatch.CallWeavingInterceptors));
                             }
                         }
                     }
                 }
+
             }
+
+
+            
 
             return weavers;
         }

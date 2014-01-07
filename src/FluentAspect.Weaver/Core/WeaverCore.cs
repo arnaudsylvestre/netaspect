@@ -30,25 +30,14 @@ namespace FluentAspect.Weaver.Core
         {
         }
 
+        Dictionary<Assembly, AssemblyDefinition> asms = new Dictionary<Assembly, AssemblyDefinition>(); 
+
         public void Weave(string assemblyFilePath, ErrorHandler errorHandler,
                           Func<string, string> newAssemblyNameProvider)
         {
-            var toWeave = new List<Assembly>();
             Assembly mainAssembly = Assembly.LoadFrom(assemblyFilePath);
-            var netAspectAttributes = mainAssembly.GetMethodWeavingAspectAttributes();
-            toWeave.Add(mainAssembly);
-            foreach (MethodWeavingConfiguration netAspectAttribute in netAspectAttributes)
-            {
-                toWeave.AddRange(netAspectAttribute.AssembliesToWeave);
-            }
-            AspectChecker.CheckInterceptors(netAspectAttributes, errorHandler);
-
-            var weavingConfiguration = new WeavingConfiguration();
-            foreach (Assembly asmToWeave in toWeave)
-            {
-                configurationReader.ReadConfiguration(Assembly.LoadFrom(asmToWeave.GetAssemblyPath()).GetTypes(),
-                                                      weavingConfiguration, errorHandler);
-            }
+            var weavingConfiguration = new WeavingConfiguration(new AssemblyDefinitionProvider());
+            configurationReader.ReadConfiguration(mainAssembly, weavingConfiguration, errorHandler);
             foreach (var methodMatch in weavingConfiguration.Methods)
             {
                 AspectChecker.CheckInterceptors(methodMatch.MethodWeavingInterceptors, errorHandler);
@@ -57,26 +46,8 @@ namespace FluentAspect.Weaver.Core
             {
                 AspectChecker.CheckInterceptors(methodMatch.MethodWeavingInterceptors, errorHandler);
             }
-            foreach (Assembly asmToWeave in toWeave)
-            {
-                WeaveOneAssembly(asmToWeave.GetAssemblyPath(), errorHandler, newAssemblyNameProvider,
-                                 weavingConfiguration);
-            }
-        }
 
-        
-
-        private void WeaveOneAssembly(string assemblyFilePath, ErrorHandler errorHandler,
-                                      Func<string, string> newAssemblyNameProvider, WeavingConfiguration configuration)
-        {
-            AssemblyDefinition assemblyDefinition = AssemblyDefinition.ReadAssembly(assemblyFilePath,
-                                                                                    new ReaderParameters(
-                                                                                        ReadingMode.Immediate)
-                                                                                        {
-                                                                                            ReadSymbols = true
-                                                                                        });
-            IEnumerable<IWeaveable> weavers = weaverBuilder.BuildWeavers(assemblyDefinition, configuration);
-            foreach (IWeaveable weaver_L in weavers)
+            foreach (IWeaveable weaver_L in weaverBuilder.BuildWeavers(weavingConfiguration))
             {
                 try
                 {
@@ -92,7 +63,17 @@ namespace FluentAspect.Weaver.Core
                     errorHandler.Failures.Add(e.Message);
                 }
             }
-            string targetFileName = newAssemblyNameProvider(assemblyFilePath);
+            foreach (var def in asms)
+            {
+                WeaveOneAssembly(def.Key.GetAssemblyPath(), def.Value, errorHandler, newAssemblyNameProvider);
+                
+            }
+        }
+
+
+        private void WeaveOneAssembly(string getAssemblyPath, AssemblyDefinition assemblyDefinition, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
+        {
+            string targetFileName = newAssemblyNameProvider(getAssemblyPath);
             assemblyDefinition.Write(targetFileName, new WriterParameters
                 {
                     WriteSymbols = true,
@@ -114,7 +95,27 @@ namespace FluentAspect.Weaver.Core
         }
     }
 
-    internal class WeavingWarningException : Exception
+    public class AssemblyDefinitionProvider : IAssemblyDefinitionProvider
     {
+        Dictionary<Assembly, AssemblyDefinition> asms = new Dictionary<Assembly, AssemblyDefinition>();
+
+        public Dictionary<Assembly, AssemblyDefinition> Asms
+        {
+            get { return asms; }
+        }
+
+        public AssemblyDefinition GetAssemblyDefinition(Assembly assembly)
+        {
+            if (!asms.ContainsKey(assembly))
+            {
+                var parameters = new ReaderParameters(ReadingMode.Immediate)
+                {
+                    ReadSymbols = true
+                };
+                var asmDefinition = AssemblyDefinition.ReadAssembly(assembly.GetAssemblyPath(), parameters);
+                asms.Add(assembly, asmDefinition);
+            }
+            return asms[assembly];
+        }
     }
 }

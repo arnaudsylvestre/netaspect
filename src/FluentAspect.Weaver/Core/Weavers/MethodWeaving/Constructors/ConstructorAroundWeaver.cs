@@ -11,7 +11,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Constructors
 {
     public class ConstructorAroundWeaver
     {
-       public void CreateWeaver(MethodDefinition methodDefinition_P, List<MethodWeavingConfiguration> interceptor_P,
+       public void CreateWeaver(MethodDefinition methodDefinition_P, IEnumerable<MethodWeavingConfiguration> interceptor_P,
                                  MethodDefinition wrappedMethod_P)
         {
             List<Instruction> callBaseInstructions = ExtractCallToBaseInstructions(wrappedMethod_P,
