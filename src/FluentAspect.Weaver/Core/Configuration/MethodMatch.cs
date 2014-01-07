@@ -8,6 +8,7 @@ namespace FluentAspect.Weaver.Core.Configuration
     {
         public Func<IMethod, bool> Matcher { get; set; }
 
-        public List<NetAspectAttribute> Interceptors { get; set; }
+        public List<MethodWeavingConfiguration> MethodWeavingInterceptors { get; set; }
+        public List<CallWeavingConfiguration> CallWeavingInterceptors { get; set; }
     }
 }

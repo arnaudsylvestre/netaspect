@@ -18,7 +18,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
             {
                 weavers.AddRange((from methodDefinition in methods
                                   where methodMatch.Matcher(new MethodDefinitionAdapter(methodDefinition))
-                                  select new AroundMethodWeaver(methodMatch.Interceptors, methodDefinition))
+                                  select new AroundMethodWeaver(methodMatch.MethodWeavingInterceptors, methodDefinition))
                                      .Cast<IWeaveable>());
             }
             return weavers;

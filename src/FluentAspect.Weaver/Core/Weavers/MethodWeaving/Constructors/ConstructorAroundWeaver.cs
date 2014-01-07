@@ -11,7 +11,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Constructors
 {
     public class ConstructorAroundWeaver
     {
-        public void CreateWeaver(MethodDefinition methodDefinition_P, List<NetAspectAttribute> interceptor_P,
+       public void CreateWeaver(MethodDefinition methodDefinition_P, List<MethodWeavingConfiguration> interceptor_P,
                                  MethodDefinition wrappedMethod_P)
         {
             List<Instruction> callBaseInstructions = ExtractCallToBaseInstructions(wrappedMethod_P,
@@ -22,10 +22,8 @@ namespace FluentAspect.Weaver.Core.Weavers.Constructors
             method_L.MethodDefinition.Body.Instructions.Clear();
             method_L.Append(callBaseInstructions);
 
-            IEnumerable<MethodWeavingConfiguration> methodWeavingConfigurations = from i in interceptor_P
-                                                                                  select i.MethodWeavingConfiguration;
             var aroundWeaver_L = new WeavedMethodBuilder();
-            aroundWeaver_L.Build(new MethodToWeave(methodWeavingConfigurations.ToList(), method_L), wrappedMethod_P);
+            aroundWeaver_L.Build(new MethodToWeave(interceptor_P.ToList(), method_L), wrappedMethod_P);
         }
 
         private List<Instruction> ExtractCallToBaseInstructions(MethodDefinition wrappedMethod_P,

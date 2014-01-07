@@ -29,16 +29,16 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                         {
                             if (methodMatch.Matcher(new MethodDefinitionAdapter(instruction.Operand as MethodReference)))
                             {
-                                var actualInterceptors = new List<NetAspectAttribute>();
+                                var actualInterceptors = new List<CallWeavingConfiguration>();
 
-                                foreach (NetAspectAttribute interceptorType in methodMatch.Interceptors)
+                                foreach (var interceptorType in methodMatch.CallWeavingInterceptors)
                                 {
-                                    if (interceptorType.CallWeavingConfiguration.BeforeInterceptor.Method != null ||
-                                        interceptorType.CallWeavingConfiguration.AfterInterceptor.Method != null)
+                                    if (interceptorType.BeforeInterceptor.Method != null ||
+                                        interceptorType.AfterInterceptor.Method != null)
                                         actualInterceptors.Add(interceptorType);
                                 }
                                 if (actualInterceptors.Count != 0)
-                                    weavers.Add(new CallMethodWeaver(method, instruction, (from m in methodMatch.Interceptors select m.CallWeavingConfiguration).ToList()));
+                                   weavers.Add(new CallMethodWeaver(method, instruction, methodMatch.CallWeavingInterceptors));
                             }
                         }
                     }

@@ -12,7 +12,7 @@ namespace FluentAspect.Weaver.Core.Configuration.Attributes
         public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration)
         {
             MethodBaseAttributeConfigurationReaderHelper.Fill(
-                types.GetAllMethods(m => m.GetNetAspectAttributes(true).Count > 0).Cast<MethodBase>(),
+                types.GetAllMethods(m => m.GetMethodWeavingAspectAttributes(true).Count > 0).Cast<MethodBase>(),
                 configuration.Methods);
         }
     }

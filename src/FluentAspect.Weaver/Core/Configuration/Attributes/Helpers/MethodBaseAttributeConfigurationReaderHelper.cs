@@ -14,7 +14,7 @@ namespace FluentAspect.Weaver.Core.Configuration.Attributes.Helpers
                 MethodBase info = matchingMethod;
                 matches.Add(new MethodMatch
                     {
-                        Interceptors = matchingMethod.GetNetAspectAttributes(true).ToList(),
+                        MethodWeavingInterceptors = matchingMethod.GetMethodWeavingAspectAttributes(true).ToList(),
                         Matcher =
                             m =>
                             m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName &&

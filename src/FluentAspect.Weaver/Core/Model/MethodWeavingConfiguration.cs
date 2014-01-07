@@ -17,17 +17,17 @@ namespace FluentAspect.Weaver.Core.Model
 
         public MethodInfo SelectorMethod
         {
-            get { return _attribute.GetType().GetMethod("WeaveMethod", BINDING_FLAGS); }
+           get { return _attribute.GetType().GetMethod("WeaveMethod", NetAspectAttribute.BINDING_FLAGS); }
         }
 
         public IEnumerable<Assembly> AssembliesToWeave
         {
             get
             {
-                FieldInfo fieldInfo_L = _attribute.GetType().GetField("AssembliesToWeave", BINDING_FLAGS);
+               FieldInfo fieldInfo_L = _attribute.GetType().GetField("AssembliesToWeave", NetAspectAttribute.BINDING_FLAGS);
                 if (fieldInfo_L == null)
                     return new Assembly[0];
-                return (IEnumerable<Assembly>)fieldInfo_L.GetValue(attribute);
+                return (IEnumerable<Assembly>)fieldInfo_L.GetValue(_attribute);
             }
         }
 

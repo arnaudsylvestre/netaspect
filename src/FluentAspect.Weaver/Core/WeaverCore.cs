@@ -35,9 +35,9 @@ namespace FluentAspect.Weaver.Core
         {
             var toWeave = new List<Assembly>();
             Assembly mainAssembly = Assembly.LoadFrom(assemblyFilePath);
-            List<NetAspectAttribute> netAspectAttributes = mainAssembly.GetNetAspectAttributes(true);
+            List<MethodWeavingConfiguration> netAspectAttributes = mainAssembly.GetMethodWeavingAspectAttributes(true);
             toWeave.Add(mainAssembly);
-            foreach (NetAspectAttribute netAspectAttribute in netAspectAttributes)
+            foreach (MethodWeavingConfiguration netAspectAttribute in netAspectAttributes)
             {
                 toWeave.AddRange(netAspectAttribute.AssembliesToWeave);
             }
@@ -51,11 +51,11 @@ namespace FluentAspect.Weaver.Core
             }
             foreach (var methodMatch in weavingConfiguration.Methods)
             {
-                AspectChecker.CheckInterceptors(methodMatch.Interceptors, errorHandler);
+                AspectChecker.CheckInterceptors(methodMatch.MethodWeavingInterceptors, errorHandler);
             }
             foreach (var methodMatch in weavingConfiguration.Constructors)
             {
-                AspectChecker.CheckInterceptors(methodMatch.Interceptors, errorHandler);
+                AspectChecker.CheckInterceptors(methodMatch.MethodWeavingInterceptors, errorHandler);
             }
             foreach (Assembly asmToWeave in toWeave)
             {

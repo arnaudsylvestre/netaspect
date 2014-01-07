@@ -16,9 +16,9 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
     public class AroundMethodWeaver : IWeaveable
     {
         private readonly MethodDefinition definition;
-        private readonly List<NetAspectAttribute> interceptorType;
+        private readonly List<MethodWeavingConfiguration> interceptorType;
 
-        public AroundMethodWeaver(List<NetAspectAttribute> interceptorType, MethodDefinition definition_P)
+        public AroundMethodWeaver(List<MethodWeavingConfiguration> interceptorType, MethodDefinition definition_P)
         {
             this.interceptorType = interceptorType;
             definition = definition_P;
@@ -42,9 +42,9 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
             }
             foreach (var attribute in interceptorType)
             {
-                CheckBeforeParameters(attribute.MethodWeavingConfiguration.Before, errorHandler, definition);
-                CheckAfterParameters(attribute.MethodWeavingConfiguration.After, errorHandler, definition);
-                CheckOnExceptionParameters(attribute.MethodWeavingConfiguration.OnException, errorHandler, definition);
+                CheckBeforeParameters(attribute.Before, errorHandler, definition);
+                CheckAfterParameters(attribute.After, errorHandler, definition);
+                CheckOnExceptionParameters(attribute.OnException, errorHandler, definition);
             }
         }
 
@@ -52,11 +52,11 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
         {
             foreach (var attribute in interceptorType)
             {
-                if (attribute.MethodWeavingConfiguration.Before.Method != null)
+                if (attribute.Before.Method != null)
                     return true;
-                if (attribute.MethodWeavingConfiguration.After.Method != null)
+                if (attribute.After.Method != null)
                     return true;
-                if (attribute.MethodWeavingConfiguration.OnException.Method != null)
+                if (attribute.OnException.Method != null)
                     return true;
             }
             return false;
@@ -169,24 +169,22 @@ namespace FluentAspect.Weaver.Core.Weavers.Methods
         }
 
 
-        public static void WeaveMethod(MethodDefinition methodDefinition, List<NetAspectAttribute> interceptorTypes)
+        public static void WeaveMethod(MethodDefinition methodDefinition, List<MethodWeavingConfiguration> interceptorTypes)
         {
             MethodDefinition newMethod = CreateNewMethodBasedOnMethodToWeave(methodDefinition, interceptorTypes);
             methodDefinition.DeclaringType.Methods.Add(newMethod);
         }
 
         private static MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition,
-                                                                            List<NetAspectAttribute> interceptor)
+                                                                            List<MethodWeavingConfiguration> interceptor)
         {
             MethodDefinition wrappedMethod = methodDefinition.Clone("-Weaved-" + methodDefinition.Name);
 
             methodDefinition.Body.Instructions.Clear();
             methodDefinition.Body.Variables.Clear();
 
-            IEnumerable<MethodWeavingConfiguration> methodWeavingConfigurations = from i in interceptor
-                                                                                  select i.MethodWeavingConfiguration;
-            var weaver = new WeavedMethodBuilder();
-            weaver.Build(new MethodToWeave(methodWeavingConfigurations.ToList(), new Method(methodDefinition)),
+           var weaver = new WeavedMethodBuilder();
+            weaver.Build(new MethodToWeave(interceptor.ToList(), new Method(methodDefinition)),
                          wrappedMethod);
             methodDefinition.Body.InitLocals = true;
             return wrappedMethod;

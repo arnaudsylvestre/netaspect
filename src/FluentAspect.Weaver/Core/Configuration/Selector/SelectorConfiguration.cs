@@ -19,15 +19,15 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
 
             foreach (Assembly assembly in assemblies)
             {
-                List<NetAspectAttribute> attrbiutes = assembly.GetMethodWeavingAspectAttributes(true);
-                foreach (NetAspectAttribute attrbiute in attrbiutes)
+                List<MethodWeavingConfiguration> attrbiutes = assembly.GetMethodWeavingAspectAttributes(true);
+                foreach (MethodWeavingConfiguration attrbiute in attrbiutes)
                 {
                     MethodInfo methodInfo_L = attrbiute.SelectorMethod;
                     if (methodInfo_L != null)
                     {
                         configuration.Methods.Add(new MethodMatch
                             {
-                                Interceptors = new List<NetAspectAttribute> {attrbiute},
+                               MethodWeavingInterceptors = new List<MethodWeavingConfiguration> { attrbiute },
                                 Matcher = m => CheckMethod(m, methodInfo_L)
                             });
                     }
