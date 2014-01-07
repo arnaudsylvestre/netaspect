@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentAspect.Weaver.Core.Errors;
 
 namespace FluentAspect.Weaver.Core.Configuration.Multi
 {
@@ -12,22 +13,12 @@ namespace FluentAspect.Weaver.Core.Configuration.Multi
             engines = engines_P;
         }
 
-        public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration)
+        public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration, ErrorHandler errorHandler)
         {
-            bool configurationFound = false;
             foreach (IConfigurationReader weaverEngine_L in engines)
             {
-                try
-                {
-                    weaverEngine_L.ReadConfiguration(types, configuration);
-                    configurationFound = true;
-                }
-                catch (ConfigurationNotFoundException)
-                {
-                }
+               weaverEngine_L.ReadConfiguration(types, configuration, errorHandler);
             }
-            if (!configurationFound)
-                throw new ConfigurationNotFoundException();
         }
     }
 }

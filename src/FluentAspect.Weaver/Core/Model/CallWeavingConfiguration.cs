@@ -1,4 +1,7 @@
-﻿namespace FluentAspect.Weaver.Core.Model
+﻿using System.Reflection;
+using FluentAspect.Weaver.Helpers;
+
+namespace FluentAspect.Weaver.Core.Model
 {
     public class CallWeavingConfiguration
     {
@@ -11,12 +14,17 @@
 
         public Interceptor BeforeInterceptor
         {
-            get { return new Interceptor(_attribute.GetInterceptorMethod("BeforeCall")); }
+            get { return new Interceptor(_attribute.GetMethod("BeforeCall")); }
         }
 
         public Interceptor AfterInterceptor
         {
-            get { return new Interceptor(_attribute.GetInterceptorMethod("AfterCall")); }
+            get { return new Interceptor(_attribute.GetMethod("AfterCall")); }
         }
+
+       public bool IsValid
+       {
+          get { return _attribute.GetAspectKind() == NetAspectAttributeKind.CallWeaving; }
+       }
     }
 }

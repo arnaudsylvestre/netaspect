@@ -35,7 +35,7 @@ namespace FluentAspect.Weaver.Core
         {
             var toWeave = new List<Assembly>();
             Assembly mainAssembly = Assembly.LoadFrom(assemblyFilePath);
-            List<MethodWeavingConfiguration> netAspectAttributes = mainAssembly.GetMethodWeavingAspectAttributes(true);
+            var netAspectAttributes = mainAssembly.GetMethodWeavingAspectAttributes();
             toWeave.Add(mainAssembly);
             foreach (MethodWeavingConfiguration netAspectAttribute in netAspectAttributes)
             {
@@ -47,7 +47,7 @@ namespace FluentAspect.Weaver.Core
             foreach (Assembly asmToWeave in toWeave)
             {
                 configurationReader.ReadConfiguration(Assembly.LoadFrom(asmToWeave.GetAssemblyPath()).GetTypes(),
-                                                      weavingConfiguration);
+                                                      weavingConfiguration, errorHandler);
             }
             foreach (var methodMatch in weavingConfiguration.Methods)
             {

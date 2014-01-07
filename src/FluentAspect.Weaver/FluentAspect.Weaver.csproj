@@ -58,6 +58,7 @@
     <Compile Include="Core\Configuration\Selector\SelectorConfiguration.cs" />
     <Compile Include="Core\Errors\AspectChecker.cs" />
     <Compile Include="Core\Errors\PeVerify.cs" />
+    <Compile Include="Core\Helpers\AssembliesToWeaveProvider.cs" />
     <Compile Include="Core\Model\IMethod.cs" />
     <Compile Include="Core\Model\IType.cs" />
     <Compile Include="Core\Model\CallWeavingConfiguration.cs" />
@@ -95,13 +96,13 @@
     <Compile Include="Core\Model\Adapters\MethodDefinitionAdapter.cs" />
     <Compile Include="Helpers\MethodInfoExtensions.cs" />
     <Compile Include="Core\Model\Adapters\ParameterDefinitionAdapter.cs" />
+    <Compile Include="Helpers\ObjectExtensions.cs" />
     <Compile Include="Helpers\TypeExtensions.cs" />
     <Compile Include="Core\Errors\ErrorHandler.cs" />
     <Compile Include="Core\Model\Adapters\TypeDefinitionAdapter.cs" />
     <Compile Include="Core\IWeaverBuilder.cs" />
     <Compile Include="Core\WeaverBuilders\AroundMethodBuilderWeaver.cs" />
     <Compile Include="Helpers\AssemblyDefinitionExtensions.cs" />
-    <Compile Include="Core\Configuration\ConfigurationNotFoundException.cs" />
     <Compile Include="Core\Configuration\Multi\MultiConfigurationReader.cs" />
     <Compile Include="Core\Configuration\IConfigurationReader.cs" />
     <Compile Include="Core\IWeaveable.cs" />

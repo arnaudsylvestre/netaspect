@@ -7,23 +7,13 @@ namespace FluentAspect.Weaver.Helpers
 {
     public static class MethodInfoExtensions
     {
-        //public static List<NetAspectAttribute> GetNetAspectAttributes(this ICustomAttributeProvider method, bool inherit)
-        //{
-        //    IEnumerable<NetAspectAttribute> customAttributes_L =
-        //        method.GetCustomAttributes(inherit).Select((a) => new NetAspectAttribute(a));
-        //    return (from m in customAttributes_L where m.IsValid select m).ToList();
-        //}
-        public static List<MethodWeavingConfiguration> GetMethodWeavingAspectAttributes(this ICustomAttributeProvider method, bool inherit)
+        public static IEnumerable<MethodWeavingConfiguration> GetMethodWeavingAspectAttributes(this ICustomAttributeProvider method)
         {
-            IEnumerable<NetAspectAttribute> customAttributes_L =
-                method.GetCustomAttributes(inherit).Select((a) => new NetAspectAttribute(a));
-            return (from m in customAttributes_L where m.IsValid && m.Kind == NetAspectAttributeKind.MethodWeaving select m.MethodWeavingConfiguration).ToList();
+            return method.GetCustomAttributes(true).Select((a) => new MethodWeavingConfiguration(a)).Where(m => m.IsValid);
         }
-        public static List<CallWeavingConfiguration> GetCallWeavingAspectAttributes(this ICustomAttributeProvider method, bool inherit)
+        public static IEnumerable<CallWeavingConfiguration> GetCallWeavingAspectAttributes(this ICustomAttributeProvider method)
         {
-            IEnumerable<NetAspectAttribute> customAttributes_L =
-                method.GetCustomAttributes(inherit).Select((a) => new NetAspectAttribute(a));
-            return (from m in customAttributes_L where m.IsValid && m.Kind == NetAspectAttributeKind.CallWeaving select m.CallWeavingConfiguration).ToList();
+           return method.GetCustomAttributes(true).Select((a) => new CallWeavingConfiguration(a)).Where(m => m.IsValid);
         }
     }
 }

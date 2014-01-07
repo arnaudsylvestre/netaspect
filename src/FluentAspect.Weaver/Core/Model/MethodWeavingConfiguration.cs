@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FluentAspect.Weaver.Helpers;
 
 namespace FluentAspect.Weaver.Core.Model
 {
@@ -13,21 +14,16 @@ namespace FluentAspect.Weaver.Core.Model
             _attribute = attribute_P;
         }
 
-
-
         public MethodInfo SelectorMethod
         {
-           get { return _attribute.GetType().GetMethod("WeaveMethod", NetAspectAttribute.BINDING_FLAGS); }
+           get { return _attribute.GetMethod("WeaveMethod"); }
         }
 
         public IEnumerable<Assembly> AssembliesToWeave
         {
             get
             {
-               FieldInfo fieldInfo_L = _attribute.GetType().GetField("AssembliesToWeave", NetAspectAttribute.BINDING_FLAGS);
-                if (fieldInfo_L == null)
-                    return new Assembly[0];
-                return (IEnumerable<Assembly>)fieldInfo_L.GetValue(_attribute);
+               return _attribute.GetValueForField<IEnumerable<Assembly>>("AssembliesToWeave", () => new Assembly[0]);
             }
         }
 
@@ -38,17 +34,22 @@ namespace FluentAspect.Weaver.Core.Model
 
         public Interceptor Before
         {
-            get { return new Interceptor(_attribute.GetInterceptorMethod("Before")); }
+            get { return new Interceptor(_attribute.GetMethod("Before")); }
         }
 
         public Interceptor After
         {
-            get { return new Interceptor(_attribute.GetInterceptorMethod("After")); }
+            get { return new Interceptor(_attribute.GetMethod("After")); }
         }
 
         public Interceptor OnException
         {
-            get { return new Interceptor(_attribute.GetInterceptorMethod("OnException")); }
+            get { return new Interceptor(_attribute.GetMethod("OnException")); }
         }
+
+       public bool IsValid
+       {
+          get { return _attribute.GetAspectKind() == NetAspectAttributeKind.MethodWeaving; }
+       }
     }
 }

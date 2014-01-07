@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Helpers;
 
@@ -8,7 +9,7 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
 {
     public class SelectorConfigurationReader : IConfigurationReader
     {
-        public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration)
+       public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration, ErrorHandler errorHandler)
         {
             var assemblies = new HashSet<Assembly>();
 
@@ -19,7 +20,7 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
 
             foreach (Assembly assembly in assemblies)
             {
-                List<MethodWeavingConfiguration> attrbiutes = assembly.GetMethodWeavingAspectAttributes(true);
+                var attrbiutes = assembly.GetMethodWeavingAspectAttributes();
                 foreach (MethodWeavingConfiguration attrbiute in attrbiutes)
                 {
                     MethodInfo methodInfo_L = attrbiute.SelectorMethod;

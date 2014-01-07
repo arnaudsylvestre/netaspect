@@ -1,12 +1,23 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using FluentAspect.Weaver.Helpers;
 
 namespace FluentAspect.Weaver.Core.Model
 {
     public static class NetAspectAttributeExtensions
     {
-        public static MethodInfo GetInterceptorMethod(this object netAspectAttribute, string methodName)
-        {
-            return netAspectAttribute.GetType().GetMethod(methodName, NetAspectAttribute.BINDING_FLAGS);
-        }
+       public static NetAspectAttributeKind GetAspectKind(this object o)
+       {
+          try
+          {
+             var value = o.GetValueForField("NetAspectAttributeKind");
+             return EnumParser.Parse<NetAspectAttributeKind>(value.ToString());
+          }
+          catch (Exception)
+          {
+             return NetAspectAttributeKind.Invalid;
+          }
+       }
+
     }
 }

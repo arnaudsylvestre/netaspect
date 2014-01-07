@@ -5,7 +5,7 @@ namespace FluentAspect.Weaver.Core.Errors
 {
     public class AspectChecker
     {
-       public static void CheckInterceptors(List<MethodWeavingConfiguration> netAspectAttributes, ErrorHandler errorHandler)
+       public static void CheckInterceptors(IEnumerable<MethodWeavingConfiguration> netAspectAttributes, ErrorHandler errorHandler)
         {
             foreach (var netAspectAttribute in netAspectAttributes)
             {
