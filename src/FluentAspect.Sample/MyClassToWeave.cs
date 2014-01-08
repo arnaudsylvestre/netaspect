@@ -171,12 +171,12 @@ namespace FluentAspect.Sample
 
        public void CallWeavedOnCallAfterWithParameterCalled()
        {
-          WeavedOnCallAfterWithParameters("Parameter intercepted");
+           WeavedOnCallAfterWithParameters("Parameter", "intercepted");
        }
 
 
        [CheckParametersCalledOnCallAfter]
-       public void WeavedOnCallAfterWithParameters(string parameter1)
+       public void WeavedOnCallAfterWithParameters(string parameter1, string parameter2)
        {
        }
     }
@@ -205,9 +205,9 @@ namespace FluentAspect.Sample
     {
        public string NetAspectAttributeKind = "CallWeaving";
 
-       public static void AfterCall(string parameter1Called)
+       public static void AfterCall(string parameter1Called, string parameter2Called)
        {
-          throw new Exception(parameter1Called);
+           throw new Exception(parameter1Called + " " + parameter2Called);
        }
     }
 

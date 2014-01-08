@@ -28,19 +28,16 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                         {
                             if (instruction.OpCode == OpCodes.Call && instruction.Operand is MethodReference)
                             {
-                                foreach (MethodMatch methodMatch in configuration.Methods)
+                                //foreach (MethodMatch methodMatch in configuration.Methods)v
+                                var methodMatch = m;
                                 {
                                     if (methodMatch.Matcher(new MethodDefinitionAdapter(instruction.Operand as MethodReference)))
                                     {
-                                        var actualInterceptors = new List<CallWeavingConfiguration>();
 
                                         if (methodMatch.CallWeavingInterceptors != null)
                                         {
                                            if (methodMatch.CallWeavingInterceptors.BeforeInterceptor.Method != null ||
                                                 methodMatch.CallWeavingInterceptors.AfterInterceptor.Method != null)
-                                              actualInterceptors.Add(methodMatch.CallWeavingInterceptors);
-                                        }
-                                        if (actualInterceptors.Count != 0)
                                         {
                                            var methodPoint_L = new MethodPoint
                                               {
@@ -50,8 +47,11 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                            {
                                               points.Add(methodPoint_L, new List<CallWeavingConfiguration>());
                                            }
-                                           points[methodPoint_L].AddRange(actualInterceptors);
+                                           points[methodPoint_L].Add(methodMatch.CallWeavingInterceptors);
                                            
+                                        }
+
+
                                         }
                                     }
                                 }
