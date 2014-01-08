@@ -40,6 +40,7 @@
     <Compile Include="AOP\CheckBeforeAttribute.cs" />
     <Compile Include="AOP\CheckWithParametersReferencedAttribute.cs" />
     <Compile Include="AOP\EnsureNotNullAttribute.cs" />
+    <Compile Include="AOP\SelectorWithTypeErrorAttribute.cs" />
     <Compile Include="AOP\ThrowerAttribute.cs" />
     <Compile Include="AOP\CheckMultiInterceptor.cs" />
     <Compile Include="AOP\CheckNotRenameInAssemblyInterceptor.cs" />

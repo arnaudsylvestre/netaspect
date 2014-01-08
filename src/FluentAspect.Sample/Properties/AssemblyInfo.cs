@@ -41,3 +41,5 @@ using FluentAspect.Sample.AOP;
 
 [assembly: Assembly]
 [assembly: EnsureNotNull]
+[assembly: SelectorWithTypeError]
+[assembly: SelectorWithNoDefaultConstructorAttribute("Toto")]

@@ -24,6 +24,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Errors
             }, errorHandler.Failures);
             EnsureEquals(new List<string>
                 {
+"Wrong type for parameter methodName, expected System.String",
                    "impossible to ref the parameter 'parameters' in the method OnException of the type 'FluentAspect.Sample.MethodWeaving.Parameters.ToCheckParametersReferencedOnExceptionAspectAttribute'",
 "the result parameter in the method After of the type 'FluentAspect.Sample.MethodWeaving.Parameters.ToCheckResultInVoidAspectAttribute' is declared with the type 'System.Int32&' but it is expected to be System.Void because the return type of the method Check in the type FluentAspect.Sample.MethodWeaving.Parameters.ToCheckResultInVoid",
 "impossible to ref the parameter 'instance' in the method After of the type 'FluentAspect.Sample.MethodWeaving.Parameters.ToCheckInstanceReferencedInAfterAspectAttribute'",

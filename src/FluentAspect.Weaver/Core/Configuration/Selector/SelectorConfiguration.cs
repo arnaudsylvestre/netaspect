@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
@@ -16,11 +17,25 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
                    MethodWeavingConfiguration attribute_L = attribute;
                 if (attribute.SelectorMethod != null)
                 {
-                   configuration.AddMethod(m => CheckMethod(m, attribute_L.SelectorMethod), GetAssemblies(attribute, assembly), attribute, null);
+                    var errors = new List<string>();
+                    EnsureParameters(attribute_L.SelectorMethod, errors);
+                    errorHandler.Errors.AddRange(errors);
+                    if (errors.Count > 0)
+                        continue;
+                    errors = new List<string>();
+                    configuration.AddMethod(m => CheckMethod(m, attribute_L.SelectorMethod), GetAssemblies(attribute, assembly), attribute, null, errors);
+                    errorHandler.Errors.AddRange(errors);
                 }
                if (attribute.SelectorConstructor != null)
                 {
-                   configuration.AddConstructor(m => CheckMethod(m, attribute_L.SelectorConstructor), GetAssemblies(attribute, assembly), attribute, null);
+                    var errors = new List<string>();
+                    EnsureParameters(attribute_L.SelectorMethod, errors);
+                    errorHandler.Errors.AddRange(errors);
+                    if (errors.Count > 0)
+                        continue;
+                    errors = new List<string>();
+                    configuration.AddConstructor(m => CheckMethod(m, attribute_L.SelectorConstructor), GetAssemblies(attribute, assembly), attribute, null, errors);
+                    errorHandler.Errors.AddRange(errors);
                 }
             }
             foreach (var attribute in assembly.GetCallWeavingAspectAttributes())
@@ -28,14 +43,29 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
                    CallWeavingConfiguration attribute_L = attribute;
                 if (attribute.SelectorMethod != null)
                 {
-                   configuration.AddMethod(m => CheckMethod(m, attribute_L.SelectorMethod), GetAssemblies(attribute, assembly), null, attribute);
+                    var errors = new List<string>();
+                    EnsureParameters(attribute_L.SelectorMethod, errors);
+                    errorHandler.Errors.AddRange(errors);
+                    if (errors.Count > 0)
+                        continue;
+                    errors = new List<string>();
+                   configuration.AddMethod(m => CheckMethod(m, attribute_L.SelectorMethod), GetAssemblies(attribute, assembly), null, attribute, errors);
+                    errorHandler.Errors.AddRange(errors);
                 }
                if (attribute.SelectorConstructor != null)
                 {
-                   configuration.AddConstructor(m => CheckMethod(m, attribute_L.SelectorConstructor), GetAssemblies(attribute, assembly), null, attribute);
+                    var errors = new List<string>();
+                    EnsureParameters(attribute_L.SelectorMethod, errors);
+                    errorHandler.Errors.AddRange(errors);
+                    if (errors.Count > 0)
+                        continue;
+                    errors = new List<string>();
+                    configuration.AddConstructor(m => CheckMethod(m, attribute_L.SelectorConstructor), GetAssemblies(attribute, assembly), null, attribute, errors);
+                    errorHandler.Errors.AddRange(errors);
                 }
             }
         }
+
 
         private IEnumerable<Assembly> GetAssemblies(MethodWeavingConfiguration attribute_P, Assembly assembly_P)
         {
@@ -51,23 +81,83 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
            return attribute_P.AssembliesToWeave;
         }
 
-       private bool CheckMethod(IMethod arg, MethodInfo info)
+
+        private void EnsureParameters(MethodInfo methodInfo, List<string> errorHandler)
         {
-            var parameters = new List<object>();
+            CreateFiller().Check(methodInfo, errorHandler);
+        }
 
-            var p = new Dictionary<string, object>
-                {
-                    {"methodName", arg.Name},
-                    {"declaringTypeName", arg.DeclaringType.Name},
-                    {"declaringTypeFullName", arg.DeclaringType.FullName}
-                };
+        public class Parameter
+        {
+            public string Name { get; set; }
+            public Type Type { get; set; }
+            public object Value { get; set; }
+        }
 
-            foreach (ParameterInfo parameterInfo in info.GetParameters())
+        public class ParametersFiller
+        {
+            private Dictionary<string, Parameter> descriptions = new Dictionary<string, Parameter>();
+
+            public void Add(Parameter parameter)
             {
-                parameters.Add(p[parameterInfo.Name]);
+                descriptions.Add(parameter.Name, parameter);
             }
 
-            return (bool) info.Invoke(null, parameters.ToArray());
+            public void Check(MethodInfo info, List<string> handler)
+            {
+                foreach (ParameterInfo parameterInfo in info.GetParameters())
+                {
+                    var fullName = descriptions[parameterInfo.Name].Type.FullName;
+                    if (fullName != parameterInfo.ParameterType.FullName)
+                        handler.Add(string.Format("Wrong type for parameter {0}, expected {1}", parameterInfo.Name, fullName));
+                }
+            }
+
+            public List<object> Fill(MethodInfo info)
+            {
+                var parameters = new List<object>();
+
+                foreach (ParameterInfo parameterInfo in info.GetParameters())
+                {
+                    parameters.Add(descriptions[parameterInfo.Name].Value);
+                }
+                return parameters;
+            }
+
+            public void SetValue(string key, object value)
+            {
+                descriptions[key].Value = value;
+            }
+        }
+
+       private bool CheckMethod(IMethod arg, MethodInfo info)
+        {
+            var filler = CreateFiller();
+           filler.SetValue("methodName", arg.Name);
+           var parameters = filler.Fill(info);
+
+           return (bool) info.Invoke(null, parameters.ToArray());
+        }
+
+       private static ParametersFiller CreateFiller()
+        {
+            var filler = new ParametersFiller();
+            filler.Add(new Parameter()
+                {
+                    Name = "methodName",
+                    Type = typeof(string),
+                });
+            filler.Add(new Parameter()
+                {
+                    Name = "declaringTypeName",
+                    Type = typeof(string),
+                });
+            filler.Add(new Parameter()
+                {
+                    Name = "declaringTypeFullName",
+                    Type = typeof(string),
+                });
+            return filler;
         }
     }
 }
