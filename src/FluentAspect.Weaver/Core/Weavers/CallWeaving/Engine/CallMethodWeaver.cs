@@ -68,7 +68,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
         public void Weave(ErrorHandler errorP_P)
         {
             var reference = toWeave.Instruction.Operand as MethodReference;
-
+            toWeave.MethodToWeave.Body.InitLocals = true;
             SequencePoint point_L = toWeave.Instruction.GetLastSequencePoint();
 
             List<Instruction> instructions = new List<Instruction>();
