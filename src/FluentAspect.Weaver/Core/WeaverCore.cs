@@ -53,11 +53,16 @@ namespace FluentAspect.Weaver.Core
                     errorHandler.Failures.Add(e.Message);
                 }
             }
-            foreach (var def in assemblyDefinitionProvider_L.Asms)
-            {
-                WeaveOneAssembly(def.Key.GetAssemblyPath(), def.Value, errorHandler, newAssemblyNameProvider);
-                
-            }
+           foreach (var def in assemblyDefinitionProvider_L.Asms)
+           {
+               WeaveOneAssembly(def.Key.GetAssemblyPath(), def.Value, errorHandler, newAssemblyNameProvider);
+
+           }
+           foreach (var def in assemblyDefinitionProvider_L.Asms)
+           {
+               CheckAssembly(def.Key.GetAssemblyPath(), errorHandler);
+
+           }
         }
 
 
@@ -76,7 +81,7 @@ namespace FluentAspect.Weaver.Core
             try
             {
                 var peVerify = new PEVerify();
-                //peVerify.Run(targetFileName);
+                peVerify.Run(targetFileName);
             }
             catch (Exception e)
             {
