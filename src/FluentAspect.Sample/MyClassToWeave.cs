@@ -4,8 +4,22 @@ using FluentAspect.Sample.Dep;
 
 namespace FluentAspect.Sample
 {
+    public static class MyClassToWeaveFactory
+    {
+        public static MyClassToWeave Create()
+        {
+            return new MyClassToWeave();
+        }
+    }
+
     public class MyClassToWeave
     {
+        [CheckOnCallAfterAttribute]
+        public MyClassToWeave()
+        {
+            
+        }
+
         public void WeavedThroughAssembly()
         {
         }
@@ -55,7 +69,7 @@ namespace FluentAspect.Sample
         }
 
 
-        [CheckOnCall]
+        [CheckOnCallBefore]
         public string WeavedOnCall(string parameter)
         {
             return "Hello";
@@ -211,7 +225,7 @@ namespace FluentAspect.Sample
        }
     }
 
-    public class CheckOnCallAttribute : Attribute
+    public class CheckOnCallBeforeAttribute : Attribute
     {
         public string NetAspectAttributeKind = "CallWeaving";
 

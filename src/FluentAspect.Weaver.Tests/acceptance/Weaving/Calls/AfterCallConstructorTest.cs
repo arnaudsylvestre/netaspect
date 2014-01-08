@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Calls
 {
     [TestFixture]
-    public class LineNumberCallTest : AcceptanceTest
+    public class AfterCallConstructorTest : AcceptanceTest
     {
         protected override Action Execute()
         {
@@ -13,12 +13,11 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Calls
                 {
                     try
                     {
-                        new MyClassToWeave().CallWeavedOnCallAfter();
+                        MyClassToWeaveFactory.Create();
                         Assert.Fail();
                     }
-                    catch (Exception e)
+                    catch (NotSupportedException)
                     {
-                        Assert.AreEqual("101 : 13 : MyClassToWeave.cs", e.Message);
                     }
                 };
         }

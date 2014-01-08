@@ -15,7 +15,10 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
         {
            var points = new Dictionary<MethodPoint, List<CallWeavingConfiguration>>();
 
-            foreach (MethodMatch m in configuration.Methods)
+           //var methodMatches = new List<MethodMatch>(configuration.Constructors);
+           var methodMatches = new List<MethodMatch>(configuration.Methods);
+           methodMatches.AddRange(configuration.Constructors);
+            foreach (MethodMatch m in methodMatches)
             {
                 foreach (var assemblyDefinition in m.AssembliesToScan)
                 {
@@ -26,7 +29,8 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                             continue;
                         foreach (Instruction instruction in method.Body.Instructions)
                         {
-                            if (instruction.OpCode == OpCodes.Call && instruction.Operand is MethodReference)
+                            if (instruction.OpCode == OpCodes.Call && instruction.Operand is MethodReference ||
+                                instruction.OpCode == OpCodes.Newobj && instruction.Operand is MethodReference)
                             {
                                 //foreach (MethodMatch methodMatch in configuration.Methods)v
                                 var methodMatch = m;
