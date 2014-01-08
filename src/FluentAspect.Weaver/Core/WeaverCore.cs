@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.Serialization;
 using FluentAspect.Weaver.Core.Configuration;
@@ -29,25 +28,16 @@ namespace FluentAspect.Weaver.Core
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
         }
-
-        Dictionary<Assembly, AssemblyDefinition> asms = new Dictionary<Assembly, AssemblyDefinition>(); 
-
         public void Weave(string assemblyFilePath, ErrorHandler errorHandler,
                           Func<string, string> newAssemblyNameProvider)
         {
             Assembly mainAssembly = Assembly.LoadFrom(assemblyFilePath);
-            var weavingConfiguration = new WeavingConfiguration(new AssemblyDefinitionProvider());
+           var assemblyDefinitionProvider_L = new AssemblyDefinitionProvider();
+           var weavingConfiguration = new WeavingConfiguration(assemblyDefinitionProvider_L);
             configurationReader.ReadConfiguration(mainAssembly, weavingConfiguration, errorHandler);
-            foreach (var methodMatch in weavingConfiguration.Methods)
-            {
-                AspectChecker.CheckInterceptors(methodMatch.MethodWeavingInterceptors, errorHandler);
-            }
-            foreach (var methodMatch in weavingConfiguration.Constructors)
-            {
-                AspectChecker.CheckInterceptors(methodMatch.MethodWeavingInterceptors, errorHandler);
-            }
+            AspectChecker.CheckAspects(errorHandler, weavingConfiguration);
 
-            foreach (IWeaveable weaver_L in weaverBuilder.BuildWeavers(weavingConfiguration))
+           foreach (IWeaveable weaver_L in weaverBuilder.BuildWeavers(weavingConfiguration))
             {
                 try
                 {
@@ -63,7 +53,7 @@ namespace FluentAspect.Weaver.Core
                     errorHandler.Failures.Add(e.Message);
                 }
             }
-            foreach (var def in asms)
+            foreach (var def in assemblyDefinitionProvider_L.Asms)
             {
                 WeaveOneAssembly(def.Key.GetAssemblyPath(), def.Value, errorHandler, newAssemblyNameProvider);
                 
@@ -71,7 +61,7 @@ namespace FluentAspect.Weaver.Core
         }
 
 
-        private void WeaveOneAssembly(string getAssemblyPath, AssemblyDefinition assemblyDefinition, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
+       private void WeaveOneAssembly(string getAssemblyPath, AssemblyDefinition assemblyDefinition, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
         {
             string targetFileName = newAssemblyNameProvider(getAssemblyPath);
             assemblyDefinition.Write(targetFileName, new WriterParameters
@@ -92,30 +82,6 @@ namespace FluentAspect.Weaver.Core
             {
                 errorHandler.Errors.Add("An internal error has occured : " + e.Message);
             }
-        }
-    }
-
-    public class AssemblyDefinitionProvider : IAssemblyDefinitionProvider
-    {
-        Dictionary<Assembly, AssemblyDefinition> asms = new Dictionary<Assembly, AssemblyDefinition>();
-
-        public Dictionary<Assembly, AssemblyDefinition> Asms
-        {
-            get { return asms; }
-        }
-
-        public AssemblyDefinition GetAssemblyDefinition(Assembly assembly)
-        {
-            if (!asms.ContainsKey(assembly))
-            {
-                var parameters = new ReaderParameters(ReadingMode.Immediate)
-                {
-                    ReadSymbols = true
-                };
-                var asmDefinition = AssemblyDefinition.ReadAssembly(assembly.GetAssemblyPath(), parameters);
-                asms.Add(assembly, asmDefinition);
-            }
-            return asms[assembly];
         }
     }
 }

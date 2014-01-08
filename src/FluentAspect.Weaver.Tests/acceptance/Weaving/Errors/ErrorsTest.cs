@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAspect.Weaver.Core.Errors;
 using NUnit.Framework;
 
@@ -11,16 +12,17 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Errors
         {
             Dump(errorHandler);
 
-            Assert.AreEqual(new List<string>
-            {
-"The aspect FluentAspect.Sample.MethodWeaving.Problems.Warnings.EmptyAspectAttribute doesn't have a Before/After/OnException method",
-"The aspect FluentAspect.Sample.AOP.CheckWithVoidInterceptorAttribute doesn't have a Before/After/OnException method",
-"The aspect FluentAspect.Sample.AOP.CheckNotRenameInAssemblyAttribute doesn't have a Before/After/OnException method",         
-            }, errorHandler.Warnings);
-            Assert.AreEqual(new List<string>
+            EnsureEquals(new List<string>
+               {
+                  "The aspect FluentAspect.Sample.MethodWeaving.Problems.Warnings.EmptyAspectAttribute doesn't have a Before/After/OnException method",
+                  "The aspect FluentAspect.Sample.AOP.CheckWithVoidInterceptorAttribute doesn't have a Before/After/OnException method",
+                  "The aspect FluentAspect.Sample.AOP.CheckNotRenameInAssemblyAttribute doesn't have a Before/After/OnException method",
+               }, errorHandler.Warnings);
+
+            EnsureEquals(new List<string>
             {
             }, errorHandler.Failures);
-            Assert.AreEqual(new List<string>
+            EnsureEquals(new List<string>
                 {
                    "impossible to ref the parameter 'parameters' in the method OnException of the type 'FluentAspect.Sample.MethodWeaving.Parameters.ToCheckParametersReferencedOnExceptionAspectAttribute'",
 "the result parameter in the method After of the type 'FluentAspect.Sample.MethodWeaving.Parameters.ToCheckResultInVoidAspectAttribute' is declared with the type 'System.Int32&' but it is expected to be System.Void because the return type of the method Check in the type FluentAspect.Sample.MethodWeaving.Parameters.ToCheckResultInVoid",
@@ -36,7 +38,14 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Errors
                 }, errorHandler.Errors);
         }
 
-        private static void Dump(ErrorHandler errorHandler)
+       private static void EnsureEquals(List<string> expected_P, List<string> actual)
+       {
+          Assert.AreEqual(
+             (from e in expected_P orderby e select e).ToList(),
+             (from e in actual orderby e select e).ToList());
+       }
+
+       private static void Dump(ErrorHandler errorHandler)
         {
             Dump("Warnings", errorHandler.Warnings);
             Dump("Errors", errorHandler.Errors);

@@ -34,14 +34,14 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                     {
                                         var actualInterceptors = new List<CallWeavingConfiguration>();
 
-                                        foreach (var interceptorType in methodMatch.CallWeavingInterceptors)
+                                        if (methodMatch.CallWeavingInterceptors != null)
                                         {
-                                            if (interceptorType.BeforeInterceptor.Method != null ||
-                                                interceptorType.AfterInterceptor.Method != null)
-                                                actualInterceptors.Add(interceptorType);
+                                           if (methodMatch.CallWeavingInterceptors.BeforeInterceptor.Method != null ||
+                                                methodMatch.CallWeavingInterceptors.AfterInterceptor.Method != null)
+                                              actualInterceptors.Add(methodMatch.CallWeavingInterceptors);
                                         }
                                         if (actualInterceptors.Count != 0)
-                                            weavers.Add(new CallMethodWeaver(method, instruction, methodMatch.CallWeavingInterceptors));
+                                           weavers.Add(new CallMethodWeaver(method, instruction, actualInterceptors));
                                     }
                                 }
                             }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using FluentAspect.Weaver.Helpers;
 
@@ -45,6 +46,11 @@ namespace FluentAspect.Weaver.Core.Model
        public MethodInfo SelectorMethod
        {
            get { return _attribute.GetMethod("WeaveMethod"); }
+       }
+
+       public Type Type
+       {
+          get { return _attribute.GetType(); }
        }
     }
 }

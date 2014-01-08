@@ -36,8 +36,8 @@ namespace FluentAspect.Weaver.Core.Configuration
         }
 
         public void AddMethod(Func<IMethod, bool> matcher, IEnumerable<Assembly> assemblies,
-                              IEnumerable<MethodWeavingConfiguration> methodWeavingConfigurations,
-                              IEnumerable<CallWeavingConfiguration> callWeavingConfigurations)
+                              MethodWeavingConfiguration methodWeavingConfigurations,
+                              CallWeavingConfiguration callWeavingConfigurations)
         {
             _methods.Add(new MethodMatch()
             {
@@ -49,8 +49,8 @@ namespace FluentAspect.Weaver.Core.Configuration
         }
 
         public void AddConstructor(Func<IMethod, bool> matcher, IEnumerable<Assembly> assemblies,
-                              IEnumerable<MethodWeavingConfiguration> methodWeavingConfigurations,
-                              IEnumerable<CallWeavingConfiguration> callWeavingConfigurations)
+                              MethodWeavingConfiguration methodWeavingConfigurations,
+                              CallWeavingConfiguration callWeavingConfigurations)
         {
             _constructors.Add(new MethodMatch()
             {

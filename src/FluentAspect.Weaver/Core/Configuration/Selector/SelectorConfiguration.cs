@@ -13,29 +13,45 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
         {
             foreach (MethodWeavingConfiguration attribute in assembly.GetMethodWeavingAspectAttributes())
             {
+                   MethodWeavingConfiguration attribute_L = attribute;
                 if (attribute.SelectorMethod != null)
                 {
-                    configuration.AddMethod(m => CheckMethod(m, attribute.SelectorMethod), attribute.AssembliesToWeave, new List<MethodWeavingConfiguration> { attribute }, new List<CallWeavingConfiguration>());
+                   configuration.AddMethod(m => CheckMethod(m, attribute_L.SelectorMethod), GetAssemblies(attribute, assembly), attribute, null);
                 }
-                if (attribute.SelectorConstructor != null)
+               if (attribute.SelectorConstructor != null)
                 {
-                    configuration.AddConstructor(m => CheckMethod(m, attribute.SelectorConstructor), attribute.AssembliesToWeave, new List<MethodWeavingConfiguration> { attribute }, new List<CallWeavingConfiguration>());
+                   configuration.AddConstructor(m => CheckMethod(m, attribute_L.SelectorConstructor), GetAssemblies(attribute, assembly), attribute, null);
                 }
             }
             foreach (var attribute in assembly.GetCallWeavingAspectAttributes())
             {
+                   CallWeavingConfiguration attribute_L = attribute;
                 if (attribute.SelectorMethod != null)
                 {
-                    configuration.AddMethod(m => CheckMethod(m, attribute.SelectorMethod), attribute.AssembliesToWeave, new List<MethodWeavingConfiguration> { }, new List<CallWeavingConfiguration>() { attribute });
+                   configuration.AddMethod(m => CheckMethod(m, attribute_L.SelectorMethod), GetAssemblies(attribute, assembly), null, attribute);
                 }
-                if (attribute.SelectorConstructor != null)
+               if (attribute.SelectorConstructor != null)
                 {
-                    configuration.AddConstructor(m => CheckMethod(m, attribute.SelectorConstructor), attribute.AssembliesToWeave, new List<MethodWeavingConfiguration> { }, new List<CallWeavingConfiguration>() { attribute });
+                   configuration.AddConstructor(m => CheckMethod(m, attribute_L.SelectorConstructor), GetAssemblies(attribute, assembly), null, attribute);
                 }
             }
         }
 
-        private bool CheckMethod(IMethod arg, MethodInfo info)
+        private IEnumerable<Assembly> GetAssemblies(MethodWeavingConfiguration attribute_P, Assembly assembly_P)
+        {
+           if (!attribute_P.AssembliesToWeave.Any())
+              return new List<Assembly> { assembly_P };
+           return attribute_P.AssembliesToWeave;
+        }
+
+        private IEnumerable<Assembly> GetAssemblies(CallWeavingConfiguration attribute_P, Assembly assembly_P)
+        {
+           if (!attribute_P.AssembliesToWeave.Any())
+              return new List<Assembly> { assembly_P };
+           return attribute_P.AssembliesToWeave;
+        }
+
+       private bool CheckMethod(IMethod arg, MethodInfo info)
         {
             var parameters = new List<object>();
 

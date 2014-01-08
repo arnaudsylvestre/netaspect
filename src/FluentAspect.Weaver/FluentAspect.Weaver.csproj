@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{28912034-8A56-4B8E-BAA1-02C50149CA68}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -51,8 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\AssemblyDefinitionProvider.cs" />
     <Compile Include="Core\Configuration\Attributes\ConstructorAttributeConfigurationReader.cs" />
-    <Compile Include="Core\Configuration\Attributes\Helpers\MethodBaseAttributeConfigurationReaderHelper.cs" />
     <Compile Include="Core\Configuration\Attributes\MethodAttributeConfigurationReader.cs" />
     <Compile Include="Core\Configuration\MethodMatch.cs" />
     <Compile Include="Core\Configuration\Selector\SelectorConfiguration.cs" />
