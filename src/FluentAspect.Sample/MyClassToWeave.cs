@@ -168,6 +168,17 @@ namespace FluentAspect.Sample
         public void CheckCaller()
         {
         }
+
+       public void CallWeavedOnCallAfterWithParameterCalled()
+       {
+          WeavedOnCallAfterWithParameters("Parameter intercepted");
+       }
+
+
+       [CheckParametersCalledOnCallAfter]
+       public void WeavedOnCallAfterWithParameters(string parameter1)
+       {
+       }
     }
 
     public class CheckCallerAttribute : Attribute
@@ -182,12 +193,22 @@ namespace FluentAspect.Sample
 
     public class CheckParametersCallerOnCallAfterAttribute : Attribute
     {
-        public string NetAspectAttributeKind = "CallWeaving";
+       public string NetAspectAttributeKind = "CallWeaving";
 
-        public static void AfterCall(string callerMethodParameterCaller)
-        {
-            throw new Exception(callerMethodParameterCaller);
-        }
+       public static void AfterCall(string callerMethodParameterCaller)
+       {
+          throw new Exception(callerMethodParameterCaller);
+       }
+    }
+
+    public class CheckParametersCalledOnCallAfter : Attribute
+    {
+       public string NetAspectAttributeKind = "CallWeaving";
+
+       public static void AfterCall(string parameter1Called)
+       {
+          throw new Exception(parameter1Called);
+       }
     }
 
     public class CheckOnCallAttribute : Attribute

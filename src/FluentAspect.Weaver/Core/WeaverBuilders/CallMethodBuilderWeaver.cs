@@ -13,13 +13,13 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
     {
         public IEnumerable<IWeaveable> BuildWeavers(WeavingConfiguration configuration)
         {
-            var weavers = new List<IWeaveable>();
+           var points = new Dictionary<MethodPoint, List<CallWeavingConfiguration>>();
 
             foreach (MethodMatch m in configuration.Methods)
             {
                 foreach (var assemblyDefinition in m.AssembliesToScan)
                 {
-                    List<MethodDefinition> methods = assemblyDefinition.GetAllMethods();
+                   List<MethodDefinition> methods = assemblyDefinition.GetAllMethods();
                     foreach (MethodDefinition method in methods)
                     {
                         if (!method.HasBody)
@@ -41,7 +41,18 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                               actualInterceptors.Add(methodMatch.CallWeavingInterceptors);
                                         }
                                         if (actualInterceptors.Count != 0)
-                                           weavers.Add(new CallMethodWeaver(method, instruction, actualInterceptors));
+                                        {
+                                           var methodPoint_L = new MethodPoint
+                                              {
+                                                 Method = method, Instruction = instruction,
+                                              };
+                                           if (!points.ContainsKey(methodPoint_L))
+                                           {
+                                              points.Add(methodPoint_L, new List<CallWeavingConfiguration>());
+                                           }
+                                           points[methodPoint_L].AddRange(actualInterceptors);
+                                           
+                                        }
                                     }
                                 }
                             }
@@ -52,9 +63,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
             }
 
 
-            
-
-            return weavers;
+           return points.Select(point_L => new CallMethodWeaver(point_L.Key, point_L.Value)).Cast<IWeaveable>().ToList();
         }
     }
 }

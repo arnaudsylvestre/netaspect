@@ -13,18 +13,54 @@ using Mono.Collections.Generic;
 
 namespace FluentAspect.Weaver.Core.Weavers.Calls
 {
+   public class MethodPoint
+   {
+      public MethodDefinition Method { get; set; }
+      public Instruction Instruction { get; set; }
+
+      public override int GetHashCode()
+      {
+         unchecked
+         {
+            return ((Method != null ? Method.GetHashCode() : 0) * 397) ^ (Instruction != null ? Instruction.GetHashCode() : 0);
+         }
+      }
+
+      protected bool Equals(MethodPoint other)
+      {
+         return Equals(Method, other.Method) && Equals(Instruction, other.Instruction);
+      }
+
+      /// <summary>
+      /// Détermine si l'objet <see cref="T:System.Object"/> spécifié est égal à l'objet <see cref="T:System.Object"/> actuel.
+      /// </summary>
+      /// <returns>
+      /// true si l'objet <see cref="T:System.Object"/> spécifié est égal à l'objet <see cref="T:System.Object"/> en cours ; sinon, false.
+      /// </returns>
+      /// <param name="obj"><see cref="T:System.Object"/> à comparer avec le <see cref="T:System.Object"/> actuel. 
+      ///                 </param><exception cref="T:System.NullReferenceException">Le paramètre <paramref name="obj"/> est null.
+      ///                 </exception>
+      public override bool Equals(object obj)
+      {
+         if (ReferenceEquals(null, obj)) return false;
+         if (ReferenceEquals(this, obj)) return true;
+         if (obj.GetType() != this.GetType()) return false;
+         return Equals((MethodPoint) obj);
+      }
+   }
+
     public class CallMethodWeaver : IWeaveable
     {
         private CallToWeave toWeave;
 
 
-        public CallMethodWeaver(MethodDefinition method, Instruction instruction,
+        public CallMethodWeaver(MethodPoint point,
                                 IEnumerable<CallWeavingConfiguration> interceptorTypes)
         {
             toWeave = new CallToWeave
                 {
-                    MethodToWeave = method,
-                    Instruction                    = instruction,
+                    MethodToWeave = point.Method,
+                    Instruction                    = point.Instruction,
                     Interceptors                    = interceptorTypes
                 };
         }
@@ -35,8 +71,19 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
 
             SequencePoint point_L = toWeave.Instruction.GetLastSequencePoint();
 
-           toWeave.MethodToWeave.InsertAfter(toWeave.Instruction, CreateAfterInstructions(toWeave.MethodToWeave.Module, point_L));
-           toWeave.MethodToWeave.InsertBefore(toWeave.Instruction, CreateBeforeInstructions(toWeave.MethodToWeave.Module, point_L));
+            List<Instruction> instructions = new List<Instruction>();
+            var variablesForParameters = new Dictionary<string, VariableDefinition>();
+            foreach (var parameterDefinition_L in reference.Parameters.Reverse())
+            {
+               var variableDefinition_L = toWeave.MethodToWeave.CreateVariable(parameterDefinition_L.ParameterType);
+               
+               instructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition_L));
+               variablesForParameters.Add(parameterDefinition_L.Name, variableDefinition_L);
+            }
+           instructions.AddRange(CreateBeforeInstructions(toWeave.MethodToWeave.Module, point_L, variablesForParameters, reference));
+            var afterInstructions = CreateAfterInstructions(toWeave.MethodToWeave.Module, point_L, variablesForParameters, reference);
+            toWeave.MethodToWeave.InsertAfter(toWeave.Instruction, afterInstructions);
+            toWeave.MethodToWeave.InsertBefore(toWeave.Instruction, instructions);
 
             foreach (ParameterDefinition parameter in reference.Parameters)
             {
@@ -91,7 +138,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
             return true;
         }
 
-        private IEnumerable<Instruction> CreateAfterInstructions(ModuleDefinition module, SequencePoint instructionP_P)
+        private IEnumerable<Instruction> CreateAfterInstructions(ModuleDefinition module, SequencePoint instructionP_P, Dictionary<string, VariableDefinition> variableParameters, MethodReference reference)
         {
             var instructions = new List<Instruction>();
             foreach (var interceptorType in toWeave.Interceptors)
@@ -100,7 +147,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
                 if (afterCallMethod != null)
                 {
                     var parameters = new Dictionary<string, Action<ParameterInfo>>();
-                    FillParameters(instructionP_P, parameters, instructions);
+                    FillParameters(instructionP_P, parameters, instructions, variableParameters, reference);
 
 
                     foreach (ParameterInfo parameterInfo_L in afterCallMethod.GetParameters())
@@ -114,9 +161,15 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
             return instructions;
         }
 
-        private void FillParameters(SequencePoint instructionP_P, Dictionary<string, Action<ParameterInfo>> parameters, List<Instruction> instructions)
+        private void FillParameters(SequencePoint instructionP_P, Dictionary<string, Action<ParameterInfo>> parameters, List<Instruction> instructions, Dictionary<string, VariableDefinition> variablesForParameters, MethodReference reference_P)
         {
-            parameters.Add("linenumber", p => instructions.Add(Create(instructionP_P, i => i.StartLine)));
+           foreach (var parameterDefinition_L in reference_P.Parameters.Reverse())
+           {
+              ParameterDefinition definition_L = parameterDefinition_L;
+              parameters.Add((parameterDefinition_L.Name + "Called").ToLower(), p => instructions.Add(Instruction.Create(OpCodes.Ldloc, variablesForParameters[definition_L.Name])));
+           }
+
+           parameters.Add("linenumber", p => instructions.Add(Create(instructionP_P, i => i.StartLine)));
             parameters.Add("columnnumber", p => instructions.Add(Create(instructionP_P, i => i.StartColumn)));
             parameters.Add("filename", p => instructions.Add(Create(instructionP_P, i => Path.GetFileName(i.Document.Url))));
             parameters.Add("filepath", p => instructions.Add(Create(instructionP_P, i => i.Document.Url)));
@@ -127,6 +180,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
                 ParameterDefinition parameter1_L = parameter_L;
                 parameters.Add((parameter1_L.Name + "Caller").ToLower(), p => instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter1_L)));
             }
+
         }
 
         private static Instruction Create(SequencePoint instructionP_P, Func<SequencePoint, int> provider)
@@ -145,7 +199,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
                                           : provider(instructionP_P));
         }
 
-        private IEnumerable<Instruction> CreateBeforeInstructions(ModuleDefinition module, SequencePoint pointL)
+        private IEnumerable<Instruction> CreateBeforeInstructions(ModuleDefinition module, SequencePoint pointL, Dictionary<string, VariableDefinition> variableParameters, MethodReference reference)
         {
             var instructions = new List<Instruction>();
             foreach (var interceptorType in toWeave.Interceptors)
@@ -153,7 +207,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
                 if (interceptorType.BeforeInterceptor.Method != null)
                 {
                     var parameters = new Dictionary<string, Action<ParameterInfo>>();
-                    FillParameters(pointL, parameters, instructions);
+                    FillParameters(pointL, parameters, instructions, variableParameters, reference);
                     instructions.Add(Instruction.Create(OpCodes.Call,
                                                         module.Import(
                                                             interceptorType.BeforeInterceptor
