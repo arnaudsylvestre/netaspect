@@ -97,8 +97,10 @@
     <Compile Include="acceptance\Weaving\Method\Visibility\StaticWeavingTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Visibility\ProtectedWeavingTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Visibility\PrivateWeavingTest.cs" />
+    <Compile Include="Core\AssemblyBuilder.cs" />
     <Compile Include="docs\MyIntTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="unit\UnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\lib\cecil-master\Mono.Cecil.csproj">
