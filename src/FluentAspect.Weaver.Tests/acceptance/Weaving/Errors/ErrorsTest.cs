@@ -36,6 +36,11 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Errors
 "impossible to ref the parameter 'parameters' in the method After of the type 'FluentAspect.Sample.MethodWeaving.Parameters.ToCheckParametersReferencedInAfterAspectAttribute'",
 "An abstract method can not be weaved : AbstractClassToWeaveWithAttributes.CheckBeforeWithAttributes",
 "impossible to ref the parameter 'method' in the method After of the type 'FluentAspect.Sample.MethodWeaving.Parameters.ToCheckMethodReferencedInAfterAspectAttribute'",
+"The type FluentAspect.Sample.AOP.SelectorWithNoDefaultConstructorAttribute must have a default constructor",
+"Wrong parameter type for lineNumber in method AfterCall of type FluentAspect.Sample.CheckAfterCallParameterTypeOnCallAfterAttribute",
+"Wrong parameter type for columnNumber in method AfterCall of type FluentAspect.Sample.CheckAfterCallParameterTypeOnCallAfterAttribute",
+"Wrong parameter type for fileName in method AfterCall of type FluentAspect.Sample.CheckAfterCallParameterTypeOnCallAfterAttribute",
+"Wrong parameter type for filePath in method AfterCall of type FluentAspect.Sample.CheckAfterCallParameterTypeOnCallAfterAttribute",
                 }, errorHandler.Errors);
         }
 

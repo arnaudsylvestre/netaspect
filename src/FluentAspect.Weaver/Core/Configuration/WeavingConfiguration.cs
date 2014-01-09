@@ -41,6 +41,8 @@ namespace FluentAspect.Weaver.Core.Configuration
         {
             Check(callWeavingConfigurations, errors);
             Check(methodWeavingConfigurations, errors);
+            if (errors.Count > 0)
+                return;
             _methods.Add(new MethodMatch()
             {
                 AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
@@ -52,13 +54,13 @@ namespace FluentAspect.Weaver.Core.Configuration
 
         private void Check(MethodWeavingConfiguration methodWeavingConfigurations, List<string> errors)
         {
-            if (methodWeavingConfigurations != null && methodWeavingConfigurations.Type.GetConstructor(new Type[0]) != null)
+            if (methodWeavingConfigurations != null && methodWeavingConfigurations.Type.GetConstructor(new Type[0]) == null)
                 errors.Add(string.Format("The type {0} must have a default constructor", methodWeavingConfigurations.Type.FullName));
         }
 
         private static void Check(CallWeavingConfiguration callWeavingConfigurations, List<string> errors)
         {
-            if (callWeavingConfigurations != null && callWeavingConfigurations.Type.GetConstructor(new Type[0]) != null)
+            if (callWeavingConfigurations != null && callWeavingConfigurations.Type.GetConstructor(new Type[0]) == null)
                 errors.Add(string.Format("The type {0} must have a default constructor", callWeavingConfigurations.Type.FullName));
         }
 
@@ -68,6 +70,8 @@ namespace FluentAspect.Weaver.Core.Configuration
         {
             Check(callWeavingConfigurations, errors);
             Check(methodWeavingConfigurations, errors);
+            if (errors.Count > 0)
+                return;
             _constructors.Add(new MethodMatch()
             {
                 AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),

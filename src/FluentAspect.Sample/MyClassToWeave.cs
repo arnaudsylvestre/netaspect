@@ -193,6 +193,26 @@ namespace FluentAspect.Sample
        public void WeavedOnCallAfterWithParameters(string parameter1, string parameter2)
        {
        }
+
+       [CheckAfterCallParameterTypeOnCallAfter]
+       public void AfterCallParametersWithWrongTypeCalled(string parameter1, string parameter2)
+       {
+       }
+       public void AfterCallParametersWithWrongType(string parameter1, string parameter2)
+       {
+           AfterCallParametersWithWrongTypeCalled(parameter1, parameter2);
+       }
+    }
+
+    public class CheckAfterCallParameterTypeOnCallAfterAttribute : Attribute
+    {
+
+        public string NetAspectAttributeKind = "CallWeaving";
+
+        public static void AfterCall(string lineNumber, string columnNumber, int fileName, int filePath)
+        {
+            throw new NotSupportedException();
+        }
     }
 
     public class CheckCallerAttribute : Attribute

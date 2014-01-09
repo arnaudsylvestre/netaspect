@@ -69,7 +69,8 @@
     <Compile Include="acceptance\Weaving\Calls\BeforeCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\AfterCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\CallerTest.cs" />
-    <Compile Include="acceptance\Weaving\Calls\AfterCallConstructorTest.cs" />
+    <Compile Include="acceptance\Weaving\Calls\WrongParameterTypeInAfterCallTest.cs" />
+    <Compile Include="acceptance\Weaving\Calls\Copie de AfterCallConstructorTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\MethodParameterCalledCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\MethodParameterCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\LineNumberCallTest.cs" />

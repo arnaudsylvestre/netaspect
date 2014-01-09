@@ -101,6 +101,7 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
             foreach (var netAspectAttribute in toWeave.Interceptors)
             {
                 CheckParameters(netAspectAttribute.BeforeInterceptor.GetParameters(), errorHandler);
+                CheckParameters(netAspectAttribute.AfterInterceptor.GetParameters(), errorHandler);
             }
         }
 
@@ -110,24 +111,67 @@ namespace FluentAspect.Weaver.Core.Weavers.Calls
             errors.Add("linenumber", (info, handler) =>
             {
                 EnsureSequencePoint(errorHandler, info);
+                EnsureType<int>(info, errorHandler);
             });
             errors.Add("columnnumber", (info, handler) =>
             {
                 EnsureSequencePoint(errorHandler, info);
+                EnsureType<int>(info, errorHandler);
             });
             errors.Add("filename", (info, handler) =>
             {
                 EnsureSequencePoint(errorHandler, info);
+                EnsureType<string>(info, errorHandler);
             });
             errors.Add("filepath", (info, handler) =>
             {
                 EnsureSequencePoint(errorHandler, info);
+                EnsureType<string>(info, errorHandler);
             });
+            errors.Add("caller", (info, handler) =>
+            {
+                EnsureSequencePoint(errorHandler, info);
+                EnsureType(info, errorHandler, toWeave.MethodToWeave.DeclaringType, typeof(object));
+            });
+
+            foreach (ParameterDefinition parameter_L in toWeave.MethodToWeave.Parameters)
+            {
+                ParameterDefinition parameter1_L = parameter_L;
+                errors.Add((parameter1_L.Name + "Caller").ToLower(), (info, handler) =>
+                {
+                    EnsureType(info, errorHandler, parameter1_L.ParameterType, null);
+                });
+            }
+
+            foreach (var parameterDefinition_L in ((MethodReference)toWeave.Instruction.Operand).Parameters)
+            {
+                ParameterDefinition definition_L = parameterDefinition_L;
+                errors.Add((parameterDefinition_L.Name + "Called").ToLower(), (info, handler) =>
+                {
+                    EnsureType(info, errorHandler, definition_L.ParameterType, null);
+                });
+            }
+
 
             foreach (var parameterInfo in getParameters)
             {
                 errors[parameterInfo.Name.ToLower()](parameterInfo, errorHandler);
             }
+        }
+
+        private void EnsureType(ParameterInfo info, ErrorHandler errorHandler, TypeReference declaringType, Type type)
+        {
+            var secondTypeOk = true;
+            if (type != null)
+                secondTypeOk = info.ParameterType == type;
+            if (info.ParameterType.FullName != declaringType.FullName && !secondTypeOk)
+                errorHandler.Errors.Add(string.Format("Wrong parameter type for {0} in method {1} of type {2}", info.Name, info.Member.Name, info.Member.DeclaringType.FullName));
+        }
+
+        private void EnsureType<T>(ParameterInfo info, ErrorHandler errorHandler)
+        {
+            if (info.ParameterType != typeof(T))
+                errorHandler.Errors.Add(string.Format("Wrong parameter type for {0} in method {1} of type {2}", info.Name, info.Member.Name, info.Member.DeclaringType.FullName));
         }
 
         private void EnsureSequencePoint(ErrorHandler errorHandler, ParameterInfo info)
