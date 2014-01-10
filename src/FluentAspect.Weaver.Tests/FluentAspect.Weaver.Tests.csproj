@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2158446B-9E58-4E9D-BDC4-27A5A90365D1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -70,7 +70,7 @@
     <Compile Include="acceptance\Weaving\Calls\AfterCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\CallerTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\WrongParameterTypeInAfterCallTest.cs" />
-    <Compile Include="acceptance\Weaving\Calls\Copie de AfterCallConstructorTest.cs" />
+    <Compile Include="acceptance\Weaving\Calls\AfterCallConstructorTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\MethodParameterCalledCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\MethodParameterCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\LineNumberCallTest.cs" />
@@ -79,6 +79,7 @@
     <Compile Include="acceptance\Weaving\Method\Exceptions\ThrowWithReturnTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Exceptions\ThrowTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Generics\GenericMethodTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\Before\Instance\InstanceParameterBeforeTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Parameters\Parameters\ParametersReferencedInBeforeTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Parameters\ParameterTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Constructors\ConstructorWeavingTest.cs" />
@@ -100,7 +101,7 @@
     <Compile Include="Core\AssemblyBuilder.cs" />
     <Compile Include="docs\MyIntTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="unit\UnitTest.cs" />
+    <Compile Include="acceptance\SimpleAcceptanceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\lib\cecil-master\Mono.Cecil.csproj">
@@ -131,7 +132,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="unit\Core\" />
+    <Folder Include="unit\MethodWeaving\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
