@@ -4,6 +4,7 @@ using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Factory;
 using FluentAspect.Weaver.Tests.Core;
+using FluentAspect.Weaver.Tests.acceptance.Weaving.Errors;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit
@@ -36,6 +37,7 @@ namespace FluentAspect.Weaver.Tests.unit
 
        protected virtual void EnsureErrors(ErrorHandler errorHandler)
        {
+          ErrorsTest.Dump(errorHandler);
           Assert.AreEqual(0, errorHandler.Warnings.Count);
           Assert.AreEqual(0, errorHandler.Errors.Count);
           Assert.AreEqual(0, errorHandler.Failures.Count);

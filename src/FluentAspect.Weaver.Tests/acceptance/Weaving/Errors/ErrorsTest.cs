@@ -51,7 +51,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Errors
              (from e in actual orderby e select e).ToList());
        }
 
-       private static void Dump(ErrorHandler errorHandler)
+       public static void Dump(ErrorHandler errorHandler)
         {
             Dump("Warnings", errorHandler.Warnings);
             Dump("Errors", errorHandler.Errors);

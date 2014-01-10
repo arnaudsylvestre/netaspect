@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Tests.Core;
 using FluentAspect.Weaver.Tests.unit;
 
@@ -28,7 +29,19 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before.
 
       protected override void EnsureAssembly(Assembly assembly_P)
       {
-         assembly_P.GetType()
+         assembly_P.CreateInstance("MyClassToWeave").CallMethod("MyMethodToWeave");
+      }
+   }
+
+   public static class AssemblyExtensions
+   {
+      public static object CreateInstance(this Assembly assembly, string type, params object[] parameters)
+      {
+         return assembly.GetType(type).GetConstructors()[0].Invoke(parameters);
+      }
+      public static object CallMethod(this object o, string methodName, params object[] parameters)
+      {
+         return o.GetType().GetMethod(methodName).Invoke(o, parameters);
       }
    }
 }
