@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FluentAspect.Sample.MethodWeaving.Parameters
+namespace FluentAspect.Sample.MethodWeaving.Problems.Errors
 {
     public class ToCheckMethodReferencedInAfter
     {

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Model;
+using FluentAspect.Weaver.Core.Model.Helpers;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
 
 namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers

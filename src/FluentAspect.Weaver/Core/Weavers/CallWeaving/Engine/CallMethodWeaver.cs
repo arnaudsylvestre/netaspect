@@ -5,13 +5,14 @@ using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.Weavers.Helpers;
+using FluentAspect.Weaver.Core.Model.Helpers;
+using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Model;
 using FluentAspect.Weaver.Helpers;
+using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using Mono.Collections.Generic;
 
-namespace FluentAspect.Weaver.Core.Weavers.Calls
+namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 {
    public class MethodPoint
    {

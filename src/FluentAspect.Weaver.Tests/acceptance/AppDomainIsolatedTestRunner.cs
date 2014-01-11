@@ -6,7 +6,6 @@ using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Factory;
 using FluentAspect.Weaver.Tests.acceptance.Weaving.Errors;
-using FluentAspect.Weaver.Tests.unit;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.acceptance

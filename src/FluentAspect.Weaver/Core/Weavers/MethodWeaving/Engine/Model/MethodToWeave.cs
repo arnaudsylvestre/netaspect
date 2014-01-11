@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.Weavers.Helpers;
+using FluentAspect.Weaver.Helpers.IL;
 
 namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model
 {

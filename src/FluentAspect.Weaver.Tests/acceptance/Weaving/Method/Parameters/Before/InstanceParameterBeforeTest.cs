@@ -1,14 +1,13 @@
 ﻿using FluentAspect.Weaver.Tests.Core;
-using FluentAspect.Weaver.Tests.unit;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before.Instance
+namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
 {
     [TestFixture]
    public class InstanceParameterBeforeTest
    {
         [Test]
-        public void CheckInstanceParameterOnBeforeWithReferenced()
+        public void CheckInstanceReferenced()
         {
             DoAcceptance.Test()
                     .ByDefiningAssembly(assembly =>
@@ -23,7 +22,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before.
         }
 
         [Test]
-        public void CheckInstanceParameterOnBeforeWithBadType()
+        public void CheckInstanceBadType()
         {
             DoAcceptance.Test()
                     .ByDefiningAssembly(assembly =>
@@ -38,7 +37,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before.
         }
 
         [Test]
-        public void CheckInstanceParameterOnBeforeWithObjectType()
+        public void CheckInstanceWithObjectType()
         {
             DoAcceptance.Test()
                     .ByDefiningAssembly(assembly =>
@@ -61,7 +60,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before.
         }
 
         [Test]
-        public void CheckInstanceParameterOnBeforeWithRealType()
+        public void CheckInstanceWithRealType()
         {
             DoAcceptance.Test()
                     .ByDefiningAssembly(assembly =>

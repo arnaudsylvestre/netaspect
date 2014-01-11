@@ -1,6 +1,6 @@
 ﻿using Mono.Cecil;
 
-namespace FluentAspect.Weaver.Core.WeaverBuilders
+namespace FluentAspect.Weaver.Core.Model.Adapters
 {
     internal class TypeDefinitionAdapter : IType
     {

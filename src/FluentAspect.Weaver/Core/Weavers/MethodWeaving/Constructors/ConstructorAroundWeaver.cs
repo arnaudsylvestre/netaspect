@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.Weavers.Helpers;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
+using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.Weavers.Constructors
+namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Constructors
 {
     public class ConstructorAroundWeaver
     {

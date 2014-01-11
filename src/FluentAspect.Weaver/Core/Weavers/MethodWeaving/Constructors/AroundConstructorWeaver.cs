@@ -4,7 +4,7 @@ using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 
-namespace FluentAspect.Weaver.Core.Weavers.Constructors
+namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Constructors
 {
     public class AroundConstructorWeaver : IWeaveable
     {

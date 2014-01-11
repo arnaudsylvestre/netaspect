@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before.Instance;
+using FluentAspect.Weaver.Tests.Core;
 
-namespace FluentAspect.Weaver.Tests.unit
+namespace FluentAspect.Weaver.Tests.acceptance
 {
     public class DoAcceptanceHelper
     {

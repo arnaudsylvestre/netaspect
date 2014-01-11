@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using FluentAspect.Sample;
-using FluentAspect.Weaver.Helpers;
 
-namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before.Instance
+namespace FluentAspect.Weaver.Tests.Core
 {
     public static class AssemblyExtensions
    {

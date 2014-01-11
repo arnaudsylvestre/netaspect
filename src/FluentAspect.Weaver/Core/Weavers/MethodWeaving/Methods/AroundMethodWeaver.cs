@@ -4,14 +4,15 @@ using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.Weavers.Helpers;
+using FluentAspect.Weaver.Core.Model.Helpers;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
 using FluentAspect.Weaver.Helpers;
+using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using MethodAttributes = Mono.Cecil.MethodAttributes;
 
-namespace FluentAspect.Weaver.Core.Weavers.Methods
+namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 {
     public class AroundMethodWeaver : IWeaveable
     {

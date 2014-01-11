@@ -2,7 +2,8 @@
 using System.Linq;
 using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.Weavers.Calls;
+using FluentAspect.Weaver.Core.Model.Adapters;
+using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;

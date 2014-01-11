@@ -1,8 +1,8 @@
 ﻿using System;
-using FluentAspect.Sample.MethodWeaving.Parameters;
+using FluentAspect.Sample.MethodWeaving.Parameters.Parameters.Usual;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.acceptance.MethodWeaving.Parameters.Parameters
+namespace FluentAspect.Weaver.Tests.acceptance.MethodWeaving.Parameters.Parameters.Usual
 {
     [TestFixture]
     public class ToCheckParametersOnExceptionTest : AcceptanceTest

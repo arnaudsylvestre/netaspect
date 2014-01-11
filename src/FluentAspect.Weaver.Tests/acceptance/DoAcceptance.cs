@@ -3,9 +3,8 @@ using System.IO;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Tests.Core;
-using FluentAspect.Weaver.Tests.acceptance;
 
-namespace FluentAspect.Weaver.Tests.unit
+namespace FluentAspect.Weaver.Tests.acceptance
 {
     public static class DoAcceptance
     {

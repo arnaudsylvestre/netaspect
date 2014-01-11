@@ -1,4 +1,4 @@
-﻿namespace FluentAspect.Weaver.Core
+﻿namespace FluentAspect.Weaver.Core.Model
 {
     public interface IType
     {

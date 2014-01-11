@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 
-namespace FluentAspect.Weaver.Core.Model
+namespace FluentAspect.Weaver.Core.Model.Helpers
 {
     public static class InterceptorExtensions
     {

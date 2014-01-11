@@ -1,8 +1,6 @@
-﻿using FluentAspect.Weaver.Core;
-using FluentAspect.Weaver.Core.WeaverBuilders;
-using Mono.Cecil;
+﻿using Mono.Cecil;
 
-namespace FluentAspect.Weaver.Helpers
+namespace FluentAspect.Weaver.Core.Model.Adapters
 {
     internal class ParameterDefinitionAdapter : IParameter
     {

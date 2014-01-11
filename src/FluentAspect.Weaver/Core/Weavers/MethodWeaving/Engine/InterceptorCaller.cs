@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.Weavers.Helpers;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
+using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 

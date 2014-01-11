@@ -2,8 +2,8 @@
 using System.Linq;
 using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.Weavers.Constructors;
-using FluentAspect.Weaver.Core.Weavers.Methods;
+using FluentAspect.Weaver.Core.Model.Adapters;
+using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 

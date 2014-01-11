@@ -1,6 +1,6 @@
 ﻿using System;
-using FluentAspect.Weaver.Core.Weavers.Helpers;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
+using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers

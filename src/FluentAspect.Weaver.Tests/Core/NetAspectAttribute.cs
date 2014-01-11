@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before.Instance
+namespace FluentAspect.Weaver.Tests.Core
 {
     public class NetAspectAttribute
     {
