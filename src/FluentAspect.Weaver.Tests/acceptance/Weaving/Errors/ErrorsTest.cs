@@ -61,6 +61,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Errors
 
         private static void Dump(string format, IEnumerable<string> warnings)
         {
+            if (!warnings.Any())
+                return;
             Console.WriteLine("{0} :", format);
             foreach (var error in warnings)
             {

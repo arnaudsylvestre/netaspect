@@ -167,15 +167,41 @@ namespace FluentAspect.Weaver.Tests.Core
 
         public MethodDefinitionDefiner WithParameter<T>(string name)
         {
-            var parameterType = _definition.Module.Import(typeof (T));
+            var parameterType = _definition.Module.Import(typeof(T));
             var parameterDefinition = new ParameterDefinition(name, ParameterAttributes.None, parameterType);
             _definition.Parameters.Add(parameterDefinition);
             var fieldDefinition = new FieldDefinition("Before" + name, FieldAttributes.Public | FieldAttributes.Static, parameterType);
             _definition.DeclaringType.Fields.Add(fieldDefinition);
 
-            _definition.Body.Instructions.Insert(0,Instruction.Create(OpCodes.Ldarg_0));
-            _definition.Body.Instructions.Insert(1,Instruction.Create(OpCodes.Ldarg, parameterDefinition));
-           _definition.Body.Instructions.Insert(2,Instruction.Create(OpCodes.Stfld, fieldDefinition));
+            _definition.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldarg_0));
+            _definition.Body.Instructions.Insert(1, Instruction.Create(OpCodes.Ldarg, parameterDefinition));
+            _definition.Body.Instructions.Insert(2, Instruction.Create(OpCodes.Stfld, fieldDefinition));
+
+            return this;
+        }
+
+        public MethodDefinitionDefiner WithReferencedParameter<T>(string name)
+        {
+            var parameterType = _definition.Module.Import(typeof(T));
+            var parameterDefinition = new ParameterDefinition(name, ParameterAttributes.None, new ByReferenceType(parameterType));
+            _definition.Parameters.Add(parameterDefinition);
+            var fieldDefinition = new FieldDefinition("Before" + name, FieldAttributes.Public | FieldAttributes.Static, parameterType);
+            _definition.DeclaringType.Fields.Add(fieldDefinition);
+
+            //_definition.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldarg_0));
+            _definition.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldarg, parameterDefinition));
+            _definition.Body.Instructions.Insert(1, Instruction.Create(OpCodes.Ldind_Ref));
+            _definition.Body.Instructions.Insert(2, Instruction.Create(OpCodes.Stsfld, fieldDefinition));
+
+            return this;
+        }
+
+        public MethodDefinitionDefiner WhichRaiseException()
+        {
+            var index = _definition.Body.Instructions.FindIndex(instruction => instruction.OpCode == OpCodes.Ret);
+
+            _definition.Body.Instructions.Insert(index, Instruction.Create(OpCodes.Newobj, _definition.Module.Import(typeof(Exception).GetConstructor(new Type[0]))));
+            _definition.Body.Instructions.Insert(index + 1, Instruction.Create(OpCodes.Throw));
             return this;
         }
 
@@ -183,5 +209,31 @@ namespace FluentAspect.Weaver.Tests.Core
         {
             _definition.CustomAttributes.Add(new CustomAttribute(aspect.Constructor));
         }
+    }
+
+    public static class InstcurionsExtensions
+    {
+        ///<summary>Finds the index of the first item matching an expression in an enumerable.</summary>
+        ///<param name="items">The enumerable to search.</param>
+        ///<param name="predicate">The expression to test the items against.</param>
+        ///<returns>The index of the first matching item, or -1 if no items match.</returns>
+        public static int FindIndex<T>(this IEnumerable<T> items, Func<T, bool> predicate)
+        {
+            if (items == null) throw new ArgumentNullException("items");
+            if (predicate == null) throw new ArgumentNullException("predicate");
+
+            int retVal = 0;
+            foreach (var item in items)
+            {
+                if (predicate(item)) return retVal;
+                retVal++;
+            }
+            return -1;
+        }
+        ///<summary>Finds the index of the first occurence of an item in an enumerable.</summary>
+        ///<param name="items">The enumerable to search.</param>
+        ///<param name="item">The item to find.</param>
+        ///<returns>The index of the first matching item, or -1 if the item was not found.</returns>
+        public static int IndexOf<T>(this IEnumerable<T> items, T item) { return items.FindIndex(i => EqualityComparer<T>.Default.Equals(item, i)); }
     }
 }
