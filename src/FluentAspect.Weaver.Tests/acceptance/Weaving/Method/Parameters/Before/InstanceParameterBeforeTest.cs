@@ -42,21 +42,45 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before.
         {
             DoAcceptance.Test()
                     .ByDefiningAssembly(assembly =>
-                        {
-                            var aspect = assembly.WithMethodWeavingAspect("MyAspectAttribute");
-                            aspect.AddBefore().WithParameter<object>("instance");
-                            var method = assembly.WithType("MyClassToWeave").WithMethod("MyMethodToWeave");
-                            method.AddAspect(aspect);
-                        })
+                    {
+                        var aspect = assembly.WithMethodWeavingAspect("MyAspectAttribute");
+                        aspect.AddBefore().WithParameter<object>("instance");
+                        var method = assembly.WithType("MyClassToWeave").WithMethod("MyMethodToWeave");
+                        method.AddAspect(aspect);
+                    })
                     .AndEnsureAssembly((assemblyP, helper) =>
-                        {
-                            var o = assemblyP.CreateObject("MyClassToWeave");
-                            o.CallMethod("MyMethodToWeave");
+                    {
+                        var o = assemblyP.CreateObject("MyClassToWeave");
+                        o.CallMethod("MyMethodToWeave");
 
-                            var netAspectAttribute = helper.GetNetAspectAttribute("MyAspectAttribute");
+                        var netAspectAttribute = helper.GetNetAspectAttribute("MyAspectAttribute");
 
-                            Assert.AreEqual(o, netAspectAttribute.BeforeInstance);
-                        })
+                        Assert.AreEqual(o, netAspectAttribute.BeforeInstance);
+                    })
+                    .AndLaunchTest();
+        }
+
+        [Test]
+        public void CheckInstanceParameterOnBeforeWithRealType()
+        {
+            DoAcceptance.Test()
+                    .ByDefiningAssembly(assembly =>
+                    {
+                        var type = assembly.WithType("MyClassToWeave");
+                        var aspect = assembly.WithMethodWeavingAspect("MyAspectAttribute");
+                        aspect.AddBefore().WithParameter("instance", type.Type);
+                        var method = type.WithMethod("MyMethodToWeave");
+                        method.AddAspect(aspect);
+                    })
+                    .AndEnsureAssembly((assemblyP, helper) =>
+                    {
+                        var o = assemblyP.CreateObject("MyClassToWeave");
+                        o.CallMethod("MyMethodToWeave");
+
+                        var netAspectAttribute = helper.GetNetAspectAttribute("MyAspectAttribute");
+
+                        Assert.AreEqual(o, netAspectAttribute.BeforeInstance);
+                    })
                     .AndLaunchTest();
         }
    }

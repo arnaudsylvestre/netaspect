@@ -60,9 +60,9 @@ namespace FluentAspect.Weaver.Tests.unit
                 configure(assembly);
                 assembly.Save(dll_L);
 
-                ErrorHandler errorHandler = new ErrorHandler();
+                var errorHandler = new ErrorHandler();
                 errorHandlerProvider(errorHandler);
-                runner.Run(dll_L, errorHandler.Errors, errorHandler.Failures, errorHandler.Warnings);
+                Console.Write(runner.Run(dll_L, errorHandler.Errors, errorHandler.Failures, errorHandler.Warnings));
 
                 runner = CreateAppRunner();
                 runner.Ensure(dll_L, ensure);

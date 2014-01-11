@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using FluentAspect.Weaver.Core.Errors;
 using NUnit.Framework;
 
@@ -10,7 +11,9 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Errors
     {
         protected override void EnsureErrorHandler(ErrorHandler errorHandler)
         {
-            Dump(errorHandler);
+            var builder = new StringBuilder();
+            Dump(errorHandler, builder);
+            Console.Write(builder);
 
             EnsureEquals(new List<string>
                {
@@ -51,22 +54,22 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Errors
              (from e in actual orderby e select e).ToList());
        }
 
-       public static void Dump(ErrorHandler errorHandler)
+       public static void Dump(ErrorHandler errorHandler, StringBuilder builder)
         {
-            Dump("Warnings", errorHandler.Warnings);
-            Dump("Errors", errorHandler.Errors);
-            Dump("Failures", errorHandler.Failures);
+            Dump("Warnings", errorHandler.Warnings, builder);
+            Dump("Errors", errorHandler.Errors, builder);
+            Dump("Failures", errorHandler.Failures, builder);
 
         }
 
-        private static void Dump(string format, IEnumerable<string> warnings)
+        private static void Dump(string format, IEnumerable<string> warnings, StringBuilder builder)
         {
             if (!warnings.Any())
                 return;
-            Console.WriteLine("{0} :", format);
+            builder.AppendFormat("{0} :\n", format);
             foreach (var error in warnings)
             {
-                Console.WriteLine("\"{0}\",", error);
+                builder.AppendFormat("\"{0}\",\n", error);
             }
         }
 

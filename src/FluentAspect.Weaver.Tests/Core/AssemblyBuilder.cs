@@ -33,6 +33,11 @@ namespace FluentAspect.Weaver.Tests.Core
             this.type = type;
         }
 
+        public TypeDefinition Type
+        {
+            get { return type; }
+        }
+
         public MethodDefinitionDefiner WithMethod(string methodName)
         {
             var methodDefinition = new MethodDefinition(methodName, MethodAttributes.Public, type.Module.TypeSystem.Void);
@@ -93,6 +98,11 @@ namespace FluentAspect.Weaver.Tests.Core
     {
         private readonly TypeDefinition typeDefinition;
        private MethodDefinition DefaultConstructor;
+
+        public TypeDefinition TypeDefinition
+        {
+            get { return typeDefinition; }
+        }
 
         public MethodWeavingAspectDefiner(TypeDefinition typeDefinition)
         {
@@ -208,6 +218,20 @@ namespace FluentAspect.Weaver.Tests.Core
         public void AddAspect(MethodWeavingAspectDefiner aspect)
         {
             _definition.CustomAttributes.Add(new CustomAttribute(aspect.Constructor));
+        }
+
+        public MethodDefinitionDefiner WithParameter(string name, TypeDefinition parameterType)
+        {
+            var parameterDefinition = new ParameterDefinition(name, ParameterAttributes.None, parameterType);
+            _definition.Parameters.Add(parameterDefinition);
+            var fieldDefinition = new FieldDefinition("Before" + name, FieldAttributes.Public | FieldAttributes.Static, parameterType);
+            _definition.DeclaringType.Fields.Add(fieldDefinition);
+
+            _definition.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldarg_0));
+            _definition.Body.Instructions.Insert(1, Instruction.Create(OpCodes.Ldarg, parameterDefinition));
+            _definition.Body.Instructions.Insert(2, Instruction.Create(OpCodes.Stfld, fieldDefinition));
+
+            return this;
         }
     }
 
