@@ -167,8 +167,15 @@ namespace FluentAspect.Weaver.Tests.Core
 
         public MethodDefinitionDefiner WithParameter<T>(string name)
         {
-            _definition.Parameters.Add(new ParameterDefinition(name, ParameterAttributes.None,
-                                                                   _definition.Module.Import(typeof (T))));
+            var parameterType = _definition.Module.Import(typeof (T));
+            var parameterDefinition = new ParameterDefinition(name, ParameterAttributes.None, parameterType);
+            _definition.Parameters.Add(parameterDefinition);
+            var fieldDefinition = new FieldDefinition("Before" + name, FieldAttributes.Public | FieldAttributes.Static, parameterType);
+            _definition.DeclaringType.Fields.Add(fieldDefinition);
+
+            _definition.Body.Instructions.Insert(0,Instruction.Create(OpCodes.Ldarg_0));
+            _definition.Body.Instructions.Insert(1,Instruction.Create(OpCodes.Ldarg, parameterDefinition));
+           _definition.Body.Instructions.Insert(2,Instruction.Create(OpCodes.Stfld, fieldDefinition));
             return this;
         }
 

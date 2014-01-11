@@ -1,7 +1,10 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Linq;
+using System.Reflection;
 using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Tests.Core;
 using FluentAspect.Weaver.Tests.unit;
+using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before.Instance
 {
@@ -29,19 +32,36 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before.
 
       protected override void EnsureAssembly(Assembly assembly_P)
       {
-         assembly_P.CreateInstance("MyClassToWeave").CallMethod("MyMethodToWeave");
+          var o = assembly_P.CreateObject("MyClassToWeave");
+          o.CallMethod("MyMethodToWeave");
+
+          var actual = assembly_P.FindType("MyAspectAttribute").GetField("Beforeinstance", BindingFlags.Public | BindingFlags.Static).GetValue(null);
+
+          Assert.AreEqual(o, actual);
       }
    }
 
    public static class AssemblyExtensions
    {
-      public static object CreateInstance(this Assembly assembly, string type, params object[] parameters)
+       public static object CreateObject(this Assembly assembly, string type, params object[] parameters)
       {
-         return assembly.GetType(type).GetConstructors()[0].Invoke(parameters);
+          var first = FindType(assembly, type);
+
+          return first.GetConstructors()[0].Invoke(parameters);
       }
-      public static object CallMethod(this object o, string methodName, params object[] parameters)
-      {
-         return o.GetType().GetMethod(methodName).Invoke(o, parameters);
-      }
+
+       public static Type FindType(this Assembly assembly, string type)
+       {
+           return (from t in assembly.GetTypes() where t.Name == type select t).First();
+       }
+
+       public static object CallMethod(this object o, string methodName, params object[] parameters)
+       {
+           return o.GetType().GetMethod(methodName).Invoke(o, parameters);
+       }
+       public static object GetFieldValue(this object o, string fieldName)
+       {
+           return o.GetType().GetField(fieldName).GetValue(o);
+       }
    }
 }

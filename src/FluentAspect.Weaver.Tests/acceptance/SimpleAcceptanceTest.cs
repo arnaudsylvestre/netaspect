@@ -21,7 +21,7 @@ namespace FluentAspect.Weaver.Tests.unit
            ConfigureAssembly(assembly);
             
             //method.WhichContainsThrowException();
-           var dll_L = "TempAssembly.dll";
+           var dll_L = @"Temp.dll";
            assembly.Save(dll_L);
            PEVerify verify_L = new PEVerify();
            verify_L.Run(dll_L);
