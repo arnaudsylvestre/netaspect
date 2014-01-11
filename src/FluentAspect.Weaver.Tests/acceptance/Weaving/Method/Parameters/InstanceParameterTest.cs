@@ -1,11 +1,19 @@
-﻿using FluentAspect.Weaver.Tests.Core;
+﻿using System;
+using FluentAspect.Weaver.Tests.Core;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
 {
     [TestFixture]
-   public class InstanceParameterBeforeTest
-   {
+   public abstract class InstanceParameterTest
+    {
+        private Func<MethodWeavingAspectDefiner, MethodDefinitionDefiner> interceptor;
+
+        public InstanceParameterTest(Func<MethodWeavingAspectDefiner, MethodDefinitionDefiner> interceptor)
+        {
+            this.interceptor = interceptor;
+        }
+
         [Test]
         public void CheckInstanceReferenced()
         {
@@ -13,11 +21,11 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
                     .ByDefiningAssembly(assembly =>
                     {
                         var aspect = assembly.WithMethodWeavingAspect("MyAspectAttribute");
-                        aspect.AddBefore().WithReferencedParameter<object>("instance");
+                        interceptor(aspect).WithReferencedParameter<object>("instance");
                         var method = assembly.WithType("MyClassToWeave").WithMethod("MyMethodToWeave");
                         method.AddAspect(aspect);
                     })
-                    .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add("impossible to ref the parameter 'instance' in the method Before of the type 'A.MyAspectAttribute'"))
+                    .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add("impossible to ref the parameter 'instance' in the method After of the type 'A.MyAspectAttribute'"))
                     .AndLaunchTest();
         }
 
@@ -28,11 +36,11 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
                     .ByDefiningAssembly(assembly =>
                     {
                         var aspect = assembly.WithMethodWeavingAspect("MyAspectAttribute");
-                        aspect.AddBefore().WithParameter<int>("instance");
+                        interceptor(aspect).WithParameter<int>("instance");
                         var method = assembly.WithType("MyClassToWeave").WithMethod("MyMethodToWeave");
                         method.AddAspect(aspect);
                     })
-                    .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add("the instance parameter in the method Before of the type 'A.MyAspectAttribute' is declared with the type 'System.Int32' but it is expected to be System.Object or A.MyClassToWeave"))
+                    .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add("the instance parameter in the method After of the type 'A.MyAspectAttribute' is declared with the type 'System.Int32' but it is expected to be System.Object or A.MyClassToWeave"))
                     .AndLaunchTest();
         }
 
@@ -43,7 +51,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
                     .ByDefiningAssembly(assembly =>
                     {
                         var aspect = assembly.WithMethodWeavingAspect("MyAspectAttribute");
-                        aspect.AddBefore().WithParameter<object>("instance");
+                        interceptor(aspect).WithParameter<object>("instance");
                         var method = assembly.WithType("MyClassToWeave").WithMethod("MyMethodToWeave");
                         method.AddAspect(aspect);
                     })
@@ -67,7 +75,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
                     {
                         var type = assembly.WithType("MyClassToWeave");
                         var aspect = assembly.WithMethodWeavingAspect("MyAspectAttribute");
-                        aspect.AddBefore().WithParameter("instance", type.Type);
+                        interceptor(aspect).WithParameter("instance", type.Type);
                         var method = type.WithMethod("MyMethodToWeave");
                         method.AddAspect(aspect);
                     })

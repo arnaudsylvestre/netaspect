@@ -81,10 +81,12 @@
     <Compile Include="acceptance\Weaving\Method\Exceptions\ThrowWithReturnTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Exceptions\ThrowTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Generics\GenericMethodTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\After\BeforeInstanceParameterTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\Before\BeforeInstanceParameterTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\OnException\OnExceptionInstanceParameterTest.cs" />
     <Compile Include="Core\AssemblyExtensions.cs" />
-    <Compile Include="acceptance\Weaving\Method\Parameters\Before\InstanceParameterBeforeTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\InstanceParameterTest.cs" />
     <Compile Include="Core\NetAspectAttribute.cs" />
-    <Compile Include="acceptance\Weaving\Method\Parameters\Parameters\ParametersReferencedInBeforeTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Parameters\ParameterTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Constructors\ConstructorWeavingTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Bugs\NotRenamedInAssemblyTest.cs" />

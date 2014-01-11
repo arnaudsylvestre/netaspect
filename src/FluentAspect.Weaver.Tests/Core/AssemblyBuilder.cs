@@ -142,9 +142,24 @@ namespace FluentAspect.Weaver.Tests.Core
 
         public MethodDefinitionDefiner AddBefore()
         {
-            var definition = new MethodDefinition("Before", MethodAttributes.Public, typeDefinition.Module.Import(typeof(void)));
+            return CreateInterceptor("Before");
+        }
+
+        public MethodDefinitionDefiner AddAfter()
+        {
+            return CreateInterceptor("After");
+        }
+
+        public MethodDefinitionDefiner AddOnException()
+        {
+            return CreateInterceptor("OnException");
+        }
+
+        private MethodDefinitionDefiner CreateInterceptor(string before)
+        {
+            var definition = new MethodDefinition(before, MethodAttributes.Public, typeDefinition.Module.Import(typeof (void)));
             typeDefinition.Methods.Add(definition);
-           definition.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+            definition.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             return new MethodDefinitionDefiner(definition);
         }
     }
@@ -180,7 +195,7 @@ namespace FluentAspect.Weaver.Tests.Core
             var parameterType = _definition.Module.Import(typeof(T));
             var parameterDefinition = new ParameterDefinition(name, ParameterAttributes.None, parameterType);
             _definition.Parameters.Add(parameterDefinition);
-            var fieldDefinition = new FieldDefinition("Before" + name, FieldAttributes.Public | FieldAttributes.Static, parameterType);
+            var fieldDefinition = new FieldDefinition(_definition.Name + name, FieldAttributes.Public | FieldAttributes.Static, parameterType);
             _definition.DeclaringType.Fields.Add(fieldDefinition);
 
             _definition.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldarg_0));
