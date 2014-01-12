@@ -45,10 +45,10 @@ namespace FluentAspect.Weaver.Tests.acceptance
             return builder.ToString();
         }
 
-        public void Ensure(string dll_L, Action<Assembly, DoAcceptanceHelper> ensure)
+        public void Ensure<T>(string dll_L, T context, Action<Assembly, T, DoAcceptanceHelper> ensure)
         {
             var assemblyDll = Assembly.LoadFrom(dll_L);
-            ensure(assemblyDll, new DoAcceptanceHelper(assemblyDll));
+            ensure(assemblyDll, context, new DoAcceptanceHelper(assemblyDll));
         }
     }
 }

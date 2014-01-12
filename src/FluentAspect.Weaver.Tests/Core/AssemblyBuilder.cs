@@ -157,6 +157,10 @@ namespace FluentAspect.Weaver.Tests.Core
 
         private MethodDefinitionDefiner CreateInterceptor(string before)
         {
+            var firstOrDefault = (from e in typeDefinition.Methods where e.Name == before select e).FirstOrDefault();
+            if (firstOrDefault != null)
+                return new MethodDefinitionDefiner(firstOrDefault);
+
             var definition = new MethodDefinition(before, MethodAttributes.Public, typeDefinition.Module.Import(typeof (void)));
             typeDefinition.Methods.Add(definition);
             definition.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
@@ -210,7 +214,7 @@ namespace FluentAspect.Weaver.Tests.Core
             var parameterType = _definition.Module.Import(typeof(T));
             var parameterDefinition = new ParameterDefinition(name, ParameterAttributes.None, new ByReferenceType(parameterType));
             _definition.Parameters.Add(parameterDefinition);
-            var fieldDefinition = new FieldDefinition("Before" + name, FieldAttributes.Public | FieldAttributes.Static, parameterType);
+            var fieldDefinition = new FieldDefinition(_definition.Name + name, FieldAttributes.Public | FieldAttributes.Static, parameterType);
             _definition.DeclaringType.Fields.Add(fieldDefinition);
 
             //_definition.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldarg_0));
@@ -239,7 +243,7 @@ namespace FluentAspect.Weaver.Tests.Core
         {
             var parameterDefinition = new ParameterDefinition(name, ParameterAttributes.None, parameterType);
             _definition.Parameters.Add(parameterDefinition);
-            var fieldDefinition = new FieldDefinition("Before" + name, FieldAttributes.Public | FieldAttributes.Static, parameterType);
+            var fieldDefinition = new FieldDefinition(_definition.Name + name, FieldAttributes.Public | FieldAttributes.Static, parameterType);
             _definition.DeclaringType.Fields.Add(fieldDefinition);
 
             _definition.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldarg_0));

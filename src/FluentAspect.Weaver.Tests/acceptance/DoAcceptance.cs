@@ -8,16 +8,26 @@ namespace FluentAspect.Weaver.Tests.acceptance
 {
     public static class DoAcceptance
     {
-        public static DoAcceptanceConfiguration Test()
+        public static DoAcceptanceConfiguration<T> Test<T>(T context)
         {
-            return new DoAcceptanceConfiguration();
+            return new DoAcceptanceConfiguration<T>(context);
+        }
+        public static DoAcceptanceConfiguration<object> Test()
+        {
+            return new DoAcceptanceConfiguration<object>(null);
         }
 
-        public class DoAcceptanceConfiguration
+        public class DoAcceptanceConfiguration<T>
         {
+            private readonly T _context;
             private Action<AssemblyDefinitionDefiner> configure = definer => { };
-            private Action<Assembly, DoAcceptanceHelper> ensure = (assembly, helper) => { };
+            private Action<Assembly, T, DoAcceptanceHelper> ensure = (assembly, t, helper) => { };
             private Action<ErrorHandler> errorHandlerProvider = e => { };
+
+            public DoAcceptanceConfiguration(T context)
+            {
+                _context = context;
+            }
 
 
             private static string AssemblyDirectory
@@ -31,19 +41,19 @@ namespace FluentAspect.Weaver.Tests.acceptance
                 }
             }
 
-            public DoAcceptanceConfiguration ByDefiningAssembly(Action<AssemblyDefinitionDefiner> configure)
+            public DoAcceptanceConfiguration<T> ByDefiningAssembly(Action<AssemblyDefinitionDefiner> configure)
             {
                 this.configure = configure;
                 return this;
             }
 
-            public DoAcceptanceConfiguration AndEnsureAssembly(Action<Assembly, DoAcceptanceHelper> ensure)
+            public DoAcceptanceConfiguration<T> AndEnsureAssembly(Action<Assembly, T, DoAcceptanceHelper> ensure)
             {
                 this.ensure = ensure;
                 return this;
             }
 
-            public DoAcceptanceConfiguration EnsureErrorHandler(Action<ErrorHandler> errorHandlerProvider)
+            public DoAcceptanceConfiguration<T> EnsureErrorHandler(Action<ErrorHandler> errorHandlerProvider)
             {
                 this.errorHandlerProvider = errorHandlerProvider;
                 return this;
@@ -64,7 +74,7 @@ namespace FluentAspect.Weaver.Tests.acceptance
                 Console.Write(runner.Run(dll_L, errorHandler.Errors, errorHandler.Failures, errorHandler.Warnings));
 
                 runner = CreateAppRunner();
-                runner.Ensure(dll_L, ensure);
+                runner.Ensure(dll_L, _context, ensure);
             }
 
             private static AppDomainIsolatedTestRunner CreateAppRunner()

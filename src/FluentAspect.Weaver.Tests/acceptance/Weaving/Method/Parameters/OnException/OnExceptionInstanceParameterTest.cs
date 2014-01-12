@@ -6,7 +6,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
     public class OnExceptionInstanceParameterTest : InstanceParameterTest
     {
         public OnExceptionInstanceParameterTest()
-            : base(a => a.AddOnException())
+            : base(a => a.AddOnException(), "OnException")
         {
         }
     }

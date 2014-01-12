@@ -5,7 +5,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
 {
     public class BeforeInstanceParameterTest : InstanceParameterTest
     {
-        public BeforeInstanceParameterTest() : base(a => a.AddBefore())
+        public BeforeInstanceParameterTest() : base(a => a.AddBefore(), "Before")
         {
         }
     }

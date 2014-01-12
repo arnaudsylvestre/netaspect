@@ -6,7 +6,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
     public class AfterInstanceParameterTest : InstanceParameterTest
     {
         public AfterInstanceParameterTest()
-            : base(a => a.AddAfter())
+            : base(a => a.AddAfter(), "After")
         {
         }
     }
