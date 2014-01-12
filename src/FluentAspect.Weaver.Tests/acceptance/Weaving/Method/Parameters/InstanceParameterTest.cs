@@ -93,8 +93,19 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
 
                 public MethodDefinitionDefiner MethodToWeave { get; set; }
 
-                public MethodDefinitionDefiner BeforeInterceptor {
+                public MethodDefinitionDefiner BeforeInterceptor
+                {
                     get { return Aspect.AddBefore(); }
+                }
+
+                public MethodDefinitionDefiner AfterInterceptor
+                {
+                    get { return Aspect.AddAfter(); }
+                }
+
+                public MethodDefinitionDefiner OnExceptionInterceptor
+                {
+                    get { return Aspect.AddOnException(); }
                 }
             }
 
