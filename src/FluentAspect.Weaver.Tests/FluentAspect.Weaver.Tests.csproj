@@ -83,6 +83,9 @@
     <Compile Include="acceptance\Weaving\Method\Generics\GenericMethodTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Parameters\Instance\AfterInstanceParameterTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Parameters\Instance\OnExceptionInstanceParameterTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\Parameters\AfterParametersParameterTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\Parameters\BeforeParametersParameterTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\Parameters\OnExceptionParametersParameterTest.cs" />
     <Compile Include="Core\SimpleClassAndWeaverActual.cs" />
     <Compile Include="Core\IAcceptanceTestBuilder.cs" />
     <Compile Include="Core\SimpleClassAndWeaverAcceptanceTestBuilder.cs" />
@@ -140,9 +143,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="acceptance\Weaving\Method\Parameters\After\" />
-    <Folder Include="acceptance\Weaving\Method\Parameters\Before\" />
-    <Folder Include="acceptance\Weaving\Method\Parameters\OnException\" />
     <Folder Include="unit\MethodWeaving\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -151,7 +151,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 
         private void AddCommonCheckers(Dictionary<string, Action<ParameterInfo, ErrorHandler>> checkers, MethodDefinition methodDefinition)
         {
-            checkers.Add("parameters", (p, handler) => { EnsureNotReferenced(p, handler); });
+            checkers.Add("parameters", (p, handler) => { EnsureNotReferenced(p, handler);
+            EnsureOfType});
             checkers.Add("instance", (p, handler) =>
                 {
                     EnsureNotReferenced(p, handler);

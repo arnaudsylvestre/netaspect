@@ -27,7 +27,12 @@ namespace FluentAspect.Weaver.Tests.Core
             get { return type.GetField("OnExceptioninstance", BindingFlags.Public | BindingFlags.Static).GetValue(null); }
         }
 
-        public object GetInstance(string methodName)
+       public object AfterParameters
+        {
+           get { return type.GetField("Afterparameters", BindingFlags.Public | BindingFlags.Static).GetValue(null); }
+       }
+
+       public object GetInstance(string methodName)
         {
             return type.GetField(string.Format("{0}instance", methodName), BindingFlags.Public | BindingFlags.Static).GetValue(null);
         }
