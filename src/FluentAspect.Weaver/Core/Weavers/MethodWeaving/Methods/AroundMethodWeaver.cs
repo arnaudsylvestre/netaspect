@@ -129,6 +129,10 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
                     string.Join(" or ", types)));
             }
         }
+        private void EnsureOfType<T>(ParameterInfo info, ErrorHandler handler)
+        {
+            EnsureOfType(info, handler, typeof (T).FullName);
+        }
 
 
 
@@ -152,7 +156,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
         private void AddCommonCheckers(Dictionary<string, Action<ParameterInfo, ErrorHandler>> checkers, MethodDefinition methodDefinition)
         {
             checkers.Add("parameters", (p, handler) => { EnsureNotReferenced(p, handler);
-            EnsureOfType});
+                                                           EnsureOfType<object[]>(p, handler);
+            });
             checkers.Add("instance", (p, handler) =>
                 {
                     EnsureNotReferenced(p, handler);
