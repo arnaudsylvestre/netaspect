@@ -3,34 +3,31 @@ using System.IO;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Tests.Core;
+using FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before;
 
 namespace FluentAspect.Weaver.Tests.acceptance
 {
     public static class DoAcceptance
     {
-        public static DoAcceptanceConfiguration<T> Test<T>(T context)
+       public static DoAcceptanceConfiguration<TSample, TActual> Test<TSample, TActual>(IAcceptanceTestBuilder<TSample, TActual> acceptanceTestBuilder)
         {
-            return new DoAcceptanceConfiguration<T>(context);
-        }
-        public static DoAcceptanceConfiguration<object> Test()
-        {
-            return new DoAcceptanceConfiguration<object>(null);
+           return new DoAcceptanceConfiguration<TSample, TActual>(acceptanceTestBuilder);
         }
 
-        public class DoAcceptanceConfiguration<T>
+       public class DoAcceptanceConfiguration<TSample, TActual>
         {
-            private readonly T _context;
-            private Action<AssemblyDefinitionDefiner> configure = definer => { };
-            private Action<Assembly, T, DoAcceptanceHelper> ensure = (assembly, t, helper) => { };
+          private readonly IAcceptanceTestBuilder<TSample, TActual> _acceptanceTestBuilder;
+          private Action<TSample> configure = definer => { };
+          private Action<Assembly, TActual> ensure = (assembly, t) => { };
             private Action<ErrorHandler> errorHandlerProvider = e => { };
 
-            public DoAcceptanceConfiguration(T context)
+            public DoAcceptanceConfiguration(IAcceptanceTestBuilder<TSample, TActual> acceptanceTestBuilder_P)
             {
-                _context = context;
+               _acceptanceTestBuilder = acceptanceTestBuilder_P;
             }
 
 
-            private static string AssemblyDirectory
+          private static string AssemblyDirectory
             {
                 get
                 {
@@ -41,19 +38,19 @@ namespace FluentAspect.Weaver.Tests.acceptance
                 }
             }
 
-            public DoAcceptanceConfiguration<T> ByDefiningAssembly(Action<AssemblyDefinitionDefiner> configure)
+          public DoAcceptanceConfiguration<TSample, TActual> ByDefiningAssembly(Action<TSample> configure)
             {
                 this.configure = configure;
                 return this;
             }
 
-            public DoAcceptanceConfiguration<T> AndEnsureAssembly(Action<Assembly, T, DoAcceptanceHelper> ensure)
+          public DoAcceptanceConfiguration<TSample, TActual> AndEnsureAssembly(Action<Assembly, TActual> ensure)
             {
                 this.ensure = ensure;
                 return this;
             }
 
-            public DoAcceptanceConfiguration<T> EnsureErrorHandler(Action<ErrorHandler> errorHandlerProvider)
+          public DoAcceptanceConfiguration<TSample, TActual> EnsureErrorHandler(Action<ErrorHandler> errorHandlerProvider)
             {
                 this.errorHandlerProvider = errorHandlerProvider;
                 return this;
@@ -66,7 +63,8 @@ namespace FluentAspect.Weaver.Tests.acceptance
                 var runner = CreateAppRunner();
 
                 var assembly = AssemblyBuilder.Create();
-                configure(assembly);
+               var sample_L = _acceptanceTestBuilder.CreateSample(assembly);
+               configure(sample_L);
                 assembly.Save(dll_L);
 
                 var errorHandler = new ErrorHandler();
@@ -74,7 +72,7 @@ namespace FluentAspect.Weaver.Tests.acceptance
                 Console.Write(runner.Run(dll_L, errorHandler.Errors, errorHandler.Failures, errorHandler.Warnings));
 
                 runner = CreateAppRunner();
-                runner.Ensure(dll_L, _context, ensure);
+                runner.Ensure(dll_L, _acceptanceTestBuilder, ensure);
             }
 
             private static AppDomainIsolatedTestRunner CreateAppRunner()

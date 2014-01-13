@@ -6,6 +6,7 @@ using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Factory;
 using FluentAspect.Weaver.Tests.acceptance.Weaving.Errors;
+using FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.acceptance
@@ -45,10 +46,10 @@ namespace FluentAspect.Weaver.Tests.acceptance
             return builder.ToString();
         }
 
-        public void Ensure<T>(string dll_L, T context, Action<Assembly, T, DoAcceptanceHelper> ensure)
+        public void Ensure<TSample, TActual>(string dll_L, IAcceptanceTestBuilder<TSample, TActual> context, Action<Assembly, TActual> ensure)
         {
             var assemblyDll = Assembly.LoadFrom(dll_L);
-            ensure(assemblyDll, context, new DoAcceptanceHelper(assemblyDll));
+            ensure(assemblyDll, context.CreateActual(assemblyDll, new DoAcceptanceHelper(assemblyDll)));
         }
     }
 }

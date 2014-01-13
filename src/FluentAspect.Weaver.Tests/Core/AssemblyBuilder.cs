@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FluentAspect.Weaver.Tests.acceptance;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NUnit.Framework;
@@ -140,7 +141,12 @@ namespace FluentAspect.Weaver.Tests.Core
            get { return DefaultConstructor; }
         }
 
-        public MethodDefinitionDefiner AddBefore()
+       public object GetBeforeInstance(DoAcceptanceHelper helper)
+       {
+          return helper.GetNetAspectAttribute(typeDefinition.Name);
+       }
+
+       public MethodDefinitionDefiner AddBefore()
         {
             return CreateInterceptor("Before");
         }
