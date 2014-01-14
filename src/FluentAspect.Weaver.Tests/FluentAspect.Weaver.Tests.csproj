@@ -81,8 +81,11 @@
     <Compile Include="acceptance\Weaving\Method\Exceptions\ThrowWithReturnTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Exceptions\ThrowTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Generics\GenericMethodTest.cs" />
-    <Compile Include="acceptance\Weaving\Method\Parameters\Instance\AfterInstanceParameterTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\Method\AfterMethodParameterTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\Instance\BeforeInstanceParameterTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Parameters\Instance\OnExceptionInstanceParameterTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\Instance\AfterInstanceParameterTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\Method\OnExceptionMethodParameterTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Parameters\Parameters\AfterParametersParameterTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Parameters\Parameters\BeforeParametersParameterTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Parameters\Parameters\OnExceptionParametersParameterTest.cs" />
@@ -91,7 +94,7 @@
     <Compile Include="Core\SimpleClassAndWeaverAcceptanceTestBuilder.cs" />
     <Compile Include="Core\AssemblyFactory.cs" />
     <Compile Include="Core\AssemblyExtensions.cs" />
-    <Compile Include="acceptance\Weaving\Method\Parameters\Instance\BeforeInstanceParameterTest.cs" />
+    <Compile Include="acceptance\Weaving\Method\Parameters\Method\BeforeMethodParameterTest.cs" />
     <Compile Include="Core\NetAspectAttribute.cs" />
     <Compile Include="acceptance\Weaving\Method\Parameters\ParameterTest.cs" />
     <Compile Include="acceptance\Weaving\Method\Constructors\ConstructorWeavingTest.cs" />

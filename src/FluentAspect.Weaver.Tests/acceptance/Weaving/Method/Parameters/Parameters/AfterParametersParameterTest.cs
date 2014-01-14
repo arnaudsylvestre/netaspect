@@ -27,7 +27,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
                       simpleClassAndWeaver.AfterInterceptor.WithParameter<int>("parameters");
                       simpleClassAndWeaver.MethodToWeave.WithParameter<int>("first");
                    })
-                    .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("the parameters parameter in the method After of the type 'A.MyAspectAttribute' is declared with the type 'System.Int32' but it is expected to be System.Object or A.MyClassToWeave")))
+                    .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("the parameters parameter in the method After of the type 'A.MyAspectAttribute' is declared with the type 'System.Int32' but it is expected to be System.Object[]")))
                     .AndLaunchTest();
         }
 
