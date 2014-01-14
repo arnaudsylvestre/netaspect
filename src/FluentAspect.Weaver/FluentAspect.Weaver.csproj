@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{28912034-8A56-4B8E-BAA1-02C50149CA68}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -58,7 +58,6 @@
     <Compile Include="Core\Configuration\Selector\SelectorConfiguration.cs" />
     <Compile Include="Core\Errors\AspectChecker.cs" />
     <Compile Include="Core\Errors\PeVerify.cs" />
-    <Compile Include="Core\Helpers\AssembliesToWeaveProvider.cs" />
     <Compile Include="Core\Model\IMethod.cs" />
     <Compile Include="Core\Model\Interceptor.cs" />
     <Compile Include="Core\Model\IType.cs" />
@@ -130,6 +129,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Core\Helpers\" />
     <Folder Include="Core\Weavers\CallWeaving\Engine\Checkers\" />
     <Folder Include="Core\Weavers\CallWeaving\Engine\Helpers\" />
   </ItemGroup>

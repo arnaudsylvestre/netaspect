@@ -28,7 +28,14 @@ namespace FluentAspect.Weaver.Core
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
         }
-        public void Weave(string assemblyFilePath, ErrorHandler errorHandler,
+
+       public class AssemblyInfo
+       {
+          public Assembly Assembly { get; set; }
+          public AssemblyDefinition AssemblyDefinition { get; set; } 
+       }
+
+       public void Weave(string assemblyFilePath, ErrorHandler errorHandler,
                           Func<string, string> newAssemblyNameProvider)
         {
             Assembly mainAssembly = Assembly.LoadFrom(assemblyFilePath);

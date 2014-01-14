@@ -6,6 +6,6 @@ namespace FluentAspect.Weaver.Core.Configuration
 {
     public interface IConfigurationReader
     {
-        void ReadConfiguration(Assembly assembly, WeavingConfiguration configuration, ErrorHandler errorHandler);
+       void ReadConfiguration(Assembly assembly, WeavingConfiguration configuration, ErrorHandler errorHandler);
     }
 }

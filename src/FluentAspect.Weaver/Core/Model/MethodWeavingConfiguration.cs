@@ -15,9 +15,9 @@ namespace FluentAspect.Weaver.Core.Model
 
     public class MethodWeavingConfiguration
     {
-        private readonly object _attribute;
+       private readonly object _attribute;
 
-        public MethodWeavingConfiguration(object attribute_P)
+       public MethodWeavingConfiguration(object attribute_P)
         {
             _attribute = attribute_P;
         }

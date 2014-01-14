@@ -10,7 +10,7 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
 {
     public class SelectorConfigurationReader : IConfigurationReader
     {
-        public void ReadConfiguration(Assembly assembly, WeavingConfiguration configuration, ErrorHandler errorHandler)
+       public void ReadConfiguration(Assembly assembly, WeavingConfiguration configuration, ErrorHandler errorHandler)
         {
             foreach (MethodWeavingConfiguration attribute in assembly.GetMethodWeavingAspectAttributes())
             {
