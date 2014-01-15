@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Model;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -18,19 +19,26 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
     {
         private List<CallMethodWeaver.KeyValue> variablesForParameters = new List<CallMethodWeaver.KeyValue>();
         private MethodReference reference;
-        private readonly MethodDefinition _method;
+        private readonly CallToWeave _toWeave;
+        private ParametersEngine parametersEngine;
 
-        public CallMethodWeavingProvider(MethodReference reference, MethodDefinition method)
+        public CallMethodWeavingProvider(MethodReference reference, CallToWeave toWeave, ParametersEngine parametersEngine)
         {
             this.reference = reference;
-            _method = method;
+            _toWeave = toWeave;
+            this.parametersEngine = parametersEngine;
+        }
+
+        public void AddBefore(List<Instruction> beforeInstructions)
+        {
+            Prepare(beforeInstructions);
         }
 
         private void Prepare(List<Instruction> instructions)
         {
             foreach (var parameterDefinition_L in reference.Parameters.Reverse())
             {
-                var variableDefinition_L = _method.CreateVariable(parameterDefinition_L.ParameterType);
+                var variableDefinition_L = _toWeave.MethodToWeave.CreateVariable(parameterDefinition_L.ParameterType);
                 instructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition_L));
                 variablesForParameters.Add(new CallMethodWeaver.KeyValue()
                 {
@@ -40,22 +48,18 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
             }
         }
 
-        public void AddBefore(List<Instruction> beforeInstructions)
-        {
-            Prepare(beforeInstructions);
-        }
-
-        private IEnumerable<Instruction> CreateBeforeInstructions(ModuleDefinition module, SequencePoint pointL, List<CallMethodWeaver.KeyValue> variableParameters, MethodReference reference)
+        private IEnumerable<Instruction> CreateBeforeInstructions(SequencePoint pointL, List<CallMethodWeaver.KeyValue> variableParameters)
         {
             var instructions = new List<Instruction>();
-            foreach (var interceptorType in toWeave.Interceptors)
+            foreach (var interceptorType in _toWeave.Interceptors)
             {
                 if (interceptorType.BeforeInterceptor.Method != null)
                 {
                     var parameters = new Dictionary<string, Action<ParameterInfo>>();
+                    parametersEngine.Fill();
                     FillParameters(pointL, parameters, instructions, variableParameters, reference);
                     instructions.Add(Instruction.Create(OpCodes.Call,
-                                                        module.Import(
+                                                        _toWeave.MethodToWeave.Module.Import(
                                                             interceptorType.BeforeInterceptor
                                                                            .Method)));
                 }
