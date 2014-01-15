@@ -14,10 +14,9 @@ namespace FluentAspect.Sample
     {
         public static object Beforeinstance;
 
-        public void Before(ref object instance)
+        public static void Before(ref object instance)
         {
-            Res res = new Res();
-            res.field = 3;
+            Beforeinstance = instance;
         }
     }
 }

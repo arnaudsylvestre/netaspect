@@ -16,13 +16,14 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields
                  .ByDefiningAssembly(simpleClassAndWeaver =>
                     {
                        simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
-                          .WithParameter<int>("value");
+                          .WithParameter<int>("lineNumber");
                     })
+                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter lineNumber in method BeforeUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
                   .AndEnsureAssembly((assembly, actual) =>
                       {
                           var caller = actual.CreateCallerObject();
                           actual.CallCallerMethod(caller);
-                          Assert.AreEqual(caller, actual.Aspect.BeforeCaller);
+                          Assert.AreEqual(0, actual.Aspect.BeforeUpdateFieldValueLineNumber);
                       })
                   .AndLaunchTest();
          }
@@ -59,10 +60,12 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields
         private const string _aspectName = "MyAspectAttribute";
         private const string _typeName = "MyClassToWeave";
         private const string fieldName = "MyFieldToWeave";
+        private const string callerTypeName = "CallerType";
+        private const string callerMethod = "Caller";
 
         public ClassAndAspectAndCallActual CreateActual(Assembly assemblyDllP_P, DoAcceptanceHelper helper)
         {
-            return new ClassAndAspectAndCallActual(assemblyDllP_P, _typeName, fieldName)
+            return new ClassAndAspectAndCallActual(assemblyDllP_P, callerTypeName, callerMethod)
             {
                 Aspect = new NetAspectAttribute(assemblyDllP_P, _aspectName)
             };
@@ -75,8 +78,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields
             var aspect = assembly.WithCallFieldWeavingAspect(_aspectName);
             var field = type.WithField<int>(fieldName);
             field.AddAspect(aspect);
-            var callerType = assembly.WithType("CallerType");
-            callerType.WithMethod("Caller")
+            var callerType = assembly.WithType(callerTypeName);
+            callerType.WithMethod(callerMethod)
                 .WhichInstantiateAnObject("toCall", type)
                 .AndInitializeField("toCall", fieldName, 3)
                 .AndReturn();

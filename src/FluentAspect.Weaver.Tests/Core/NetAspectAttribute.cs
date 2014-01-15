@@ -52,6 +52,11 @@ namespace FluentAspect.Weaver.Tests.Core
            get { return type.GetField("Beforecaller", BindingFlags.Public | BindingFlags.Static).GetValue(null); }
         }
 
+        public object BeforeUpdateFieldValueLineNumber
+        {
+            get { return type.GetField("BeforeUpdateFieldValuelineNumber", BindingFlags.Public | BindingFlags.Static).GetValue(null); }
+        }
+
         public object GetInstance(string methodName)
         {
             return type.GetField(string.Format("{0}instance", methodName), BindingFlags.Public | BindingFlags.Static).GetValue(null);

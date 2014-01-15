@@ -151,12 +151,12 @@ namespace FluentAspect.Weaver.Tests.Core
 
         public MethodDefinitionDefiner AddBeforeFieldAccess()
         {
-           return MethodWeavingAspectDefiner.CreateInterceptor(_typeDefinition, "BeforeFieldAccess", true);
+           return MethodWeavingAspectDefiner.CreateInterceptor(_typeDefinition, "BeforeUpdateFieldValue", true);
         }
 
        public MethodDefinitionDefiner AddAfterFieldAccess()
         {
-          return MethodWeavingAspectDefiner.CreateInterceptor(_typeDefinition, "AfterFieldAccess", true);
+          return MethodWeavingAspectDefiner.CreateInterceptor(_typeDefinition, "AfterUpdateFieldValue", true);
         }
 
     }
@@ -281,10 +281,11 @@ namespace FluentAspect.Weaver.Tests.Core
             _definition.Parameters.Add(parameterDefinition);
             var fieldDefinition = new FieldDefinition(_definition.Name + name, FieldAttributes.Public | FieldAttributes.Static, parameterType);
             _definition.DeclaringType.Fields.Add(fieldDefinition);
-
-            _definition.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldarg_0));
-            _definition.Body.Instructions.Insert(1, Instruction.Create(OpCodes.Ldarg, parameterDefinition));
-            _definition.Body.Instructions.Insert(2, Instruction.Create(OpCodes.Stfld, fieldDefinition));
+           int i = 0;
+           if (!_definition.IsStatic)
+                _definition.Body.Instructions.Insert(i++, Instruction.Create(OpCodes.Ldarg_0));
+           _definition.Body.Instructions.Insert(i++, Instruction.Create(OpCodes.Ldarg, parameterDefinition));
+           _definition.Body.Instructions.Insert(i++, Instruction.Create(_definition.IsStatic ? OpCodes.Stsfld : OpCodes.Stfld, fieldDefinition));
 
             return this;
         }

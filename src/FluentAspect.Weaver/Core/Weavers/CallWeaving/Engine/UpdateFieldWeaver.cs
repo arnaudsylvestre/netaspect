@@ -15,12 +15,12 @@ using Mono.Cecil.Cil;
 namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 {
 
-    public class CallFieldWeaver : IWeaveable
+    public class UpdateFieldWeaver : IWeaveable
     {
         private CallToWeave toWeave;
 
 
-        public CallFieldWeaver(MethodPoint point,
+        public UpdateFieldWeaver(MethodPoint point,
                                 IEnumerable<CallWeavingConfiguration> interceptorTypes)
         {
             toWeave = new CallToWeave
@@ -51,8 +51,8 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
         {
             foreach (var netAspectAttribute in toWeave.Interceptors)
             {
-                CheckParameters(netAspectAttribute.BeforeInterceptor.GetParameters(), errorHandler);
-                CheckParameters(netAspectAttribute.AfterInterceptor.GetParameters(), errorHandler);
+                CheckParameters(netAspectAttribute.BeforeUpdateFieldValue.GetParameters(), errorHandler);
+                CheckParameters(netAspectAttribute.AfterUpdateFieldValue.GetParameters(), errorHandler);
             }
         }
 
@@ -83,6 +83,10 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
             {
                 EnsureSequencePoint(errorHandler, info);
                 EnsureType(info, errorHandler, toWeave.MethodToWeave.DeclaringType, typeof(object));
+            });
+            errors.Add("value", (info, handler) =>
+            {
+                EnsureType(info, errorHandler, (toWeave.Instruction.Operand as FieldReference).FieldType, null);
             });
 
             foreach (ParameterDefinition parameter_L in toWeave.MethodToWeave.Parameters)
@@ -133,7 +137,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
             var instructions = new List<Instruction>();
             foreach (var interceptorType in toWeave.Interceptors)
             {
-                MethodInfo afterCallMethod = interceptorType.AfterFieldAccess.Method;
+                MethodInfo afterCallMethod = interceptorType.AfterUpdateFieldValue.Method;
                 if (afterCallMethod != null)
                 {
                     var parameters = new Dictionary<string, Action<ParameterInfo>>();
@@ -158,6 +162,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
             parameters.Add("filename", p => instructions.Add(Create(instructionP_P, i => Path.GetFileName(i.Document.Url))));
             parameters.Add("filepath", p => instructions.Add(Create(instructionP_P, i => i.Document.Url)));
             parameters.Add("caller", p => instructions.Add(Instruction.Create(OpCodes.Ldarg_0)));
+            //parameters.Add("value", p => instructions.Add(Instruction.Create(OpCodes.Ldarg_0)));
 
             foreach (ParameterDefinition parameter_L in toWeave.MethodToWeave.Parameters)
             {
@@ -188,14 +193,20 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
             var instructions = new List<Instruction>();
             foreach (var interceptorType in toWeave.Interceptors)
             {
-                if (interceptorType.BeforeFieldAccess.Method != null)
+                var beforeCallMethod = interceptorType.BeforeUpdateFieldValue.Method;
+                if (beforeCallMethod != null)
                 {
                     var parameters = new Dictionary<string, Action<ParameterInfo>>();
                     FillParameters(pointL, parameters, instructions, reference);
+
+                    foreach (ParameterInfo parameterInfo_L in beforeCallMethod.GetParameters())
+                    {
+                        parameters[parameterInfo_L.Name.ToLower()](parameterInfo_L);
+                    }
+
                     instructions.Add(Instruction.Create(OpCodes.Call,
                                                         module.Import(
-                                                            interceptorType.BeforeFieldAccess
-                                                                           .Method)));
+                                                            beforeCallMethod)));
                 }
             }
             return instructions;

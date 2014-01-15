@@ -15,7 +15,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
       {
          var type = assembly.WithType(_typeName);
          var aspect = assembly.WithMethodWeavingAspect(_aspectName);
-         var method = type.WithMethod(_methodName);
+         var method = type.WithMethod(_methodName).AndReturn();
          method.AddAspect(aspect);
          return new SimpleClassAndWeaver()
             {
