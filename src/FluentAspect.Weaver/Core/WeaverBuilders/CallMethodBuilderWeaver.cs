@@ -4,6 +4,7 @@ using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Model.Adapters;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
+using FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -68,7 +69,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
             }
 
 
-           return points.Select(point_L => new CallMethodWeaver(point_L.Key, point_L.Value)).Cast<IWeaveable>().ToList();
+           return points.Select(point_L => CallWeavingFactory.CreateCallMethodWeaver(point_L.Key, point_L.Value)).Cast<IWeaveable>().ToList();
         }
     }
 }

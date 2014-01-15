@@ -73,9 +73,14 @@
     <Compile Include="Core\WeaverBuilders\CallFieldBuilderWeaver.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\CallMethodWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\MultiWeaverBuilder.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Engine\Checkers\Ensure.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Engine\Core\AroundInstructionWeaver.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\GetValueFieldWeaver.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Engine\Model\MethodPoint.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Engine\Core\ParametersEngine.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\UpdateFieldWeaver.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\Model\CallToWeave.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Factory\CallWeavingFactory.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\AroundConstructorWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\ConstructorAroundWeaver.cs" />
     <Compile Include="Helpers\IL\ILProcessorExtensions.cs" />
@@ -134,7 +139,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Helpers\" />
-    <Folder Include="Core\Weavers\CallWeaving\Engine\Checkers\" />
     <Folder Include="Core\Weavers\CallWeaving\Engine\Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

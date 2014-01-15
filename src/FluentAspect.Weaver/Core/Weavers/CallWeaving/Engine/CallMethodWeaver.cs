@@ -6,6 +6,7 @@ using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Model.Helpers;
+using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Checkers;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Model;
 using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
@@ -14,86 +15,23 @@ using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 {
-   public class MethodPoint
-   {
-      public MethodDefinition Method { get; set; }
-      public Instruction Instruction { get; set; }
-
-      public override int GetHashCode()
-      {
-         unchecked
-         {
-            return ((Method != null ? Method.GetHashCode() : 0) * 397) ^ (Instruction != null ? Instruction.GetHashCode() : 0);
-         }
-      }
-
-      protected bool Equals(MethodPoint other)
-      {
-         return Equals(Method, other.Method) && Equals(Instruction, other.Instruction);
-      }
-
-      /// <summary>
-      /// Détermine si l'objet <see cref="T:System.Object"/> spécifié est égal à l'objet <see cref="T:System.Object"/> actuel.
-      /// </summary>
-      /// <returns>
-      /// true si l'objet <see cref="T:System.Object"/> spécifié est égal à l'objet <see cref="T:System.Object"/> en cours ; sinon, false.
-      /// </returns>
-      /// <param name="obj"><see cref="T:System.Object"/> à comparer avec le <see cref="T:System.Object"/> actuel. 
-      ///                 </param><exception cref="T:System.NullReferenceException">Le paramètre <paramref name="obj"/> est null.
-      ///                 </exception>
-      public override bool Equals(object obj)
-      {
-         if (ReferenceEquals(null, obj)) return false;
-         if (ReferenceEquals(this, obj)) return true;
-         if (obj.GetType() != this.GetType()) return false;
-         return Equals((MethodPoint) obj);
-      }
-   }
-
     public class CallMethodWeaver : IWeaveable
     {
         private CallToWeave toWeave;
+        private ParametersEngine engine;
 
-
-        public CallMethodWeaver(MethodPoint point,
-                                IEnumerable<CallWeavingConfiguration> interceptorTypes)
+        public CallMethodWeaver(ParametersEngine engine, CallToWeave toWeave)
         {
-            toWeave = new CallToWeave
-                {
-                    MethodToWeave = point.Method,
-                    Instruction                    = point.Instruction,
-                    Interceptors                    = interceptorTypes
-                };
+            this.engine = engine;
+            this.toWeave = toWeave;
         }
+
 
         public void Weave(ErrorHandler errorP_P)
         {
             var reference = toWeave.Instruction.Operand as MethodReference;
             toWeave.MethodToWeave.Body.InitLocals = true;
-            SequencePoint point_L = toWeave.Instruction.GetLastSequencePoint();
-
-            List<Instruction> instructions = new List<Instruction>();
-            var variablesForParameters = new List<KeyValue>();
-            foreach (var parameterDefinition_L in reference.Parameters.Reverse())
-            {
-               var variableDefinition_L = toWeave.MethodToWeave.CreateVariable(parameterDefinition_L.ParameterType);
-               instructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition_L));
-               variablesForParameters.Add(new KeyValue()
-                   {
-                       Variable = variableDefinition_L,
-                       ParameterName                       = parameterDefinition_L.Name,
-                   });
-            }
-           instructions.AddRange(CreateBeforeInstructions(toWeave.MethodToWeave.Module, point_L, variablesForParameters, reference));
-
-            foreach (var variablesForParameter in ((IEnumerable<KeyValue>)variablesForParameters).Reverse())
-            {
-                instructions.Add(Instruction.Create(OpCodes.Ldloc, variablesForParameter.Variable));
-            }
-
-            var afterInstructions = CreateAfterInstructions(toWeave.MethodToWeave.Module, point_L, variablesForParameters, reference).ToList();
-            toWeave.MethodToWeave.InsertAfter(toWeave.Instruction, afterInstructions);
-            toWeave.MethodToWeave.InsertBefore(toWeave.Instruction, instructions);
+            
 
         }
 
@@ -101,88 +39,12 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
         {
             foreach (var netAspectAttribute in toWeave.Interceptors)
             {
-                CheckParameters(netAspectAttribute.BeforeInterceptor.GetParameters(), errorHandler);
-                CheckParameters(netAspectAttribute.AfterInterceptor.GetParameters(), errorHandler);
+                engine.Check(netAspectAttribute.BeforeInterceptor.GetParameters(), errorHandler);
+                engine.Check(netAspectAttribute.AfterInterceptor.GetParameters(), errorHandler);
             }
         }
 
-        private void CheckParameters(IEnumerable<ParameterInfo> getParameters, ErrorHandler errorHandler)
-        {
-            var errors = new Dictionary<string, Action<ParameterInfo, ErrorHandler>>();
-            errors.Add("linenumber", (info, handler) =>
-            {
-                EnsureSequencePoint(errorHandler, info);
-                EnsureType<int>(info, errorHandler);
-            });
-            errors.Add("columnnumber", (info, handler) =>
-            {
-                EnsureSequencePoint(errorHandler, info);
-                EnsureType<int>(info, errorHandler);
-            });
-            errors.Add("filename", (info, handler) =>
-            {
-                EnsureSequencePoint(errorHandler, info);
-                EnsureType<string>(info, errorHandler);
-            });
-            errors.Add("filepath", (info, handler) =>
-            {
-                EnsureSequencePoint(errorHandler, info);
-                EnsureType<string>(info, errorHandler);
-            });
-            errors.Add("caller", (info, handler) =>
-            {
-                EnsureSequencePoint(errorHandler, info);
-                EnsureType(info, errorHandler, toWeave.MethodToWeave.DeclaringType, typeof(object));
-            });
-
-            foreach (ParameterDefinition parameter_L in toWeave.MethodToWeave.Parameters)
-            {
-                ParameterDefinition parameter1_L = parameter_L;
-                errors.Add((parameter1_L.Name + "Caller").ToLower(), (info, handler) =>
-                {
-                    EnsureType(info, errorHandler, parameter1_L.ParameterType, null);
-                });
-            }
-
-            foreach (var parameterDefinition_L in ((MethodReference)toWeave.Instruction.Operand).Parameters)
-            {
-                ParameterDefinition definition_L = parameterDefinition_L;
-                errors.Add((parameterDefinition_L.Name + "Called").ToLower(), (info, handler) =>
-                {
-                    EnsureType(info, errorHandler, definition_L.ParameterType, null);
-                });
-            }
-
-
-            foreach (var parameterInfo in getParameters)
-            {
-                errors[parameterInfo.Name.ToLower()](parameterInfo, errorHandler);
-            }
-        }
-
-        private void EnsureType(ParameterInfo info, ErrorHandler errorHandler, TypeReference declaringType, Type type)
-        {
-            var secondTypeOk = true;
-            if (type != null)
-                secondTypeOk = info.ParameterType == type;
-            if (info.ParameterType.FullName != declaringType.FullName && !secondTypeOk)
-                errorHandler.Errors.Add(string.Format("Wrong parameter type for {0} in method {1} of type {2}", info.Name, info.Member.Name, info.Member.DeclaringType.FullName));
-        }
-
-        private void EnsureType<T>(ParameterInfo info, ErrorHandler errorHandler)
-        {
-            if (info.ParameterType != typeof(T))
-                errorHandler.Errors.Add(string.Format("Wrong parameter type for {0} in method {1} of type {2}", info.Name, info.Member.Name, info.Member.DeclaringType.FullName));
-        }
-
-        private void EnsureSequencePoint(ErrorHandler errorHandler, ParameterInfo info)
-        {
-            if (toWeave.Instruction.GetLastSequencePoint() == null)
-                errorHandler.Warnings.Add(string.Format("The parameter {0} in method {1} of type {2} will have the default value because there is no debugging information",
-                    info.Name, (info.Member).Name, (info.Member.DeclaringType).FullName));
-        }
-
-        class KeyValue
+        public class KeyValue
         {
             public VariableDefinition Variable;
             public string ParameterName;
@@ -257,22 +119,6 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
                                           : provider(instructionP_P));
         }
 
-        private IEnumerable<Instruction> CreateBeforeInstructions(ModuleDefinition module, SequencePoint pointL, List<KeyValue> variableParameters, MethodReference reference)
-        {
-            var instructions = new List<Instruction>();
-            foreach (var interceptorType in toWeave.Interceptors)
-            {
-                if (interceptorType.BeforeInterceptor.Method != null)
-                {
-                    var parameters = new Dictionary<string, Action<ParameterInfo>>();
-                    FillParameters(pointL, parameters, instructions, variableParameters, reference);
-                    instructions.Add(Instruction.Create(OpCodes.Call,
-                                                        module.Import(
-                                                            interceptorType.BeforeInterceptor
-                                                                           .Method)));
-                }
-            }
-            return instructions;
-        }
+        
     }
 }
