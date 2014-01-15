@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Core\AssemblyDefinitionProvider.cs" />
     <Compile Include="Core\Configuration\Attributes\ConstructorAttributeConfigurationReader.cs" />
+    <Compile Include="Core\Configuration\Attributes\FieldAttributeConfigurationReader.cs" />
     <Compile Include="Core\Configuration\Attributes\MethodAttributeConfigurationReader.cs" />
     <Compile Include="Core\Configuration\MethodMatch.cs" />
     <Compile Include="Core\Configuration\Selector\SelectorConfiguration.cs" />
@@ -69,8 +70,10 @@
     <Compile Include="Core\Model\NetAspectAttributeKind.cs" />
     <Compile Include="Core\WeaverBuilders\AroundConstructorBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\CallMethodBuilderWeaver.cs" />
+    <Compile Include="Core\WeaverBuilders\CallFieldBuilderWeaver.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\CallMethodWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\MultiWeaverBuilder.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Engine\CallFieldWeaver.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\Model\CallToWeave.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\AroundConstructorWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\ConstructorAroundWeaver.cs" />

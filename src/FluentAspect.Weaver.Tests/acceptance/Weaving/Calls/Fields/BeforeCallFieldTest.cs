@@ -14,9 +14,9 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields
          {
           DoAcceptance.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
                  .ByDefiningAssembly(simpleClassAndWeaver =>
-                  {
-
-                  })
+                    {
+                       simpleClassAndWeaver.Aspect.AddBeforeFieldAccess();
+                    })
                   .AndEnsureAssembly((assembly, actual) =>
                       {
                           var caller = actual.CreateCallerObject();

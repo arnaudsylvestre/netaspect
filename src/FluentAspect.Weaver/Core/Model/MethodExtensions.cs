@@ -7,10 +7,14 @@ namespace FluentAspect.Weaver.Core.Model
 {
     public static class MethodExtensions
     {
-        public static bool AreEqual(this IMethod m, MethodBase info)
+       public static bool AreEqual(this IMethod m, MethodBase info)
+       {
+          return m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName &&
+                 ParametersEqual(m, info);
+       }
+        public static bool AreEqual(this FieldReference m, FieldInfo info)
          {
-             return m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName &&
-                    ParametersEqual(m, info);
+             return m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName;
          }
 
          private static bool ParametersEqual(IMethod method_P, MethodBase info_P)

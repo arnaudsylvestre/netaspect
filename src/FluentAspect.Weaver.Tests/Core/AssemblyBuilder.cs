@@ -42,7 +42,7 @@ namespace FluentAspect.Weaver.Tests.Core
         public MethodDefinitionDefiner WithMethod(string methodName)
         {
             var methodDefinition = new MethodDefinition(methodName, MethodAttributes.Public, type.Module.TypeSystem.Void);
-           methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+           //methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             type.Methods.Add(methodDefinition);
             return new MethodDefinitionDefiner(methodDefinition);
         }
@@ -135,7 +135,7 @@ namespace FluentAspect.Weaver.Tests.Core
 
             var instructions_L = new List<Instruction>();
             instructions_L.Add(Instruction.Create(OpCodes.Ldarg_0));
-            instructions_L.Add(Instruction.Create(OpCodes.Ldstr, "MethodWeaving"));
+            instructions_L.Add(Instruction.Create(OpCodes.Ldstr, "CallWeaving"));
             instructions_L.Add(Instruction.Create(OpCodes.Stfld, fieldDefinition_L));
 
             var constructorInfo_L = typeof(Attribute).GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)[0];
@@ -148,6 +148,17 @@ namespace FluentAspect.Weaver.Tests.Core
         {
             get { return DefaultConstructor; }
         }
+
+        public MethodDefinitionDefiner AddBeforeFieldAccess()
+        {
+           return MethodWeavingAspectDefiner.CreateInterceptor(_typeDefinition, "BeforeFieldAccess", true);
+        }
+
+       public MethodDefinitionDefiner AddAfterFieldAccess()
+        {
+          return MethodWeavingAspectDefiner.CreateInterceptor(_typeDefinition, "AfterFieldAccess", true);
+        }
+
     }
 
     public class MethodWeavingAspectDefiner
@@ -203,26 +214,29 @@ namespace FluentAspect.Weaver.Tests.Core
 
        public MethodDefinitionDefiner AddBefore()
         {
-            return CreateInterceptor("Before");
+           return CreateInterceptor(typeDefinition, "Before", false);
         }
 
         public MethodDefinitionDefiner AddAfter()
         {
-            return CreateInterceptor("After");
+           return CreateInterceptor(typeDefinition, "After", false);
         }
 
         public MethodDefinitionDefiner AddOnException()
         {
-            return CreateInterceptor("OnException");
+           return CreateInterceptor(typeDefinition, "OnException", false);
         }
 
-        private MethodDefinitionDefiner CreateInterceptor(string before)
+        public static MethodDefinitionDefiner CreateInterceptor(TypeDefinition typeDefinition, string before, bool isStatic)
         {
             var firstOrDefault = (from e in typeDefinition.Methods where e.Name == before select e).FirstOrDefault();
             if (firstOrDefault != null)
                 return new MethodDefinitionDefiner(firstOrDefault);
 
-            var definition = new MethodDefinition(before, MethodAttributes.Public, typeDefinition.Module.Import(typeof (void)));
+           var methodAttributes_L = MethodAttributes.Public;
+           if (isStatic)
+              methodAttributes_L |= MethodAttributes.Static;
+           var definition = new MethodDefinition(before, methodAttributes_L, typeDefinition.Module.Import(typeof (void)));
             typeDefinition.Methods.Add(definition);
             definition.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             return new MethodDefinitionDefiner(definition);
@@ -255,7 +269,12 @@ namespace FluentAspect.Weaver.Tests.Core
             _definition = definition;
         }
 
-        public MethodDefinitionDefiner WithParameter<T>(string name)
+       public MethodDefinition Definition
+       {
+          get { return _definition; }
+       }
+
+       public MethodDefinitionDefiner WithParameter<T>(string name)
         {
             var parameterType = _definition.Module.Import(typeof(T));
             var parameterDefinition = new ParameterDefinition(name, ParameterAttributes.None, parameterType);

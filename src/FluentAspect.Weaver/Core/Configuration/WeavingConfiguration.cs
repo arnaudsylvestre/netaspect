@@ -14,15 +14,17 @@ namespace FluentAspect.Weaver.Core.Configuration
 
     public class WeavingConfiguration
     {
-        private readonly IAssemblyDefinitionProvider _assemblyDefinitionProvider;
-        private List<MethodMatch> _methods;
-        private List<MethodMatch> _constructors;
+       private readonly IAssemblyDefinitionProvider _assemblyDefinitionProvider;
+       private List<MethodMatch> _methods;
+       private List<MethodMatch> _constructors;
+       private List<FieldMatch> _fields;
 
         public WeavingConfiguration(IAssemblyDefinitionProvider assemblyDefinitionProvider)
         {
             _assemblyDefinitionProvider = assemblyDefinitionProvider;
             _methods = new List<MethodMatch>();
             _constructors = new List<MethodMatch>();
+           _fields = new List<FieldMatch>();
         }
 
         public IEnumerable<MethodMatch> Methods
@@ -35,21 +37,40 @@ namespace FluentAspect.Weaver.Core.Configuration
             get { return _constructors; }
         }
 
-        public void AddMethod(Func<IMethod, bool> matcher, IEnumerable<Assembly> assemblies,
+       public List<FieldMatch> Fields
+       {
+          get { return _fields; }
+       }
+
+       public void AddMethod(Func<IMethod, bool> matcher, IEnumerable<Assembly> assemblies,
                               MethodWeavingConfiguration methodWeavingConfigurations,
                               CallWeavingConfiguration callWeavingConfigurations, List<string> errors)
         {
-            Check(callWeavingConfigurations, errors);
-            Check(methodWeavingConfigurations, errors);
-            if (errors.Count > 0)
-                return;
-            _methods.Add(new MethodMatch()
-            {
-                AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
-                Matcher = matcher,
-                CallWeavingInterceptors = callWeavingConfigurations,
-                MethodWeavingInterceptors = methodWeavingConfigurations,
-            });
+           Check(callWeavingConfigurations, errors);
+           Check(methodWeavingConfigurations, errors);
+           if (errors.Count > 0)
+              return;
+           _methods.Add(new MethodMatch()
+           {
+              AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
+              Matcher = matcher,
+              CallWeavingInterceptors = callWeavingConfigurations,
+              MethodWeavingInterceptors = methodWeavingConfigurations,
+           });
+        }
+
+        public void AddField(Func<FieldReference, bool> matcher, IEnumerable<Assembly> assemblies,
+                              CallWeavingConfiguration callWeavingConfigurations, List<string> errors)
+        {
+           Check(callWeavingConfigurations, errors);
+           if (errors.Count > 0)
+              return;
+           _fields.Add(new FieldMatch()
+           {
+              AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
+              Matcher = matcher,
+              CallWeavingInterceptors = callWeavingConfigurations,
+           });
         }
 
         private void Check(MethodWeavingConfiguration methodWeavingConfigurations, List<string> errors)

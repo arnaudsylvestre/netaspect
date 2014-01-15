@@ -16,12 +16,22 @@ namespace FluentAspect.Weaver.Core.Model
 
         public Interceptor BeforeInterceptor
         {
-            get { return new Interceptor(_attribute.GetMethod("BeforeCall")); }
+           get { return new Interceptor(_attribute.GetMethod("BeforeCall")); }
         }
 
         public Interceptor AfterInterceptor
         {
-            get { return new Interceptor(_attribute.GetMethod("AfterCall")); }
+           get { return new Interceptor(_attribute.GetMethod("AfterCall")); }
+        }
+
+        public Interceptor BeforeFieldAccess
+        {
+           get { return new Interceptor(_attribute.GetMethod("BeforeFieldAccess")); }
+        }
+
+        public Interceptor AfterFieldAccess
+        {
+           get { return new Interceptor(_attribute.GetMethod("AfterFieldAccess")); }
         }
 
        public bool IsValid
