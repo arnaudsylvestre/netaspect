@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Model;
+using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -56,8 +57,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
                 if (interceptorType.BeforeInterceptor.Method != null)
                 {
                     var parameters = new Dictionary<string, Action<ParameterInfo>>();
-                    parametersEngine.Fill();
-                    FillParameters(pointL, parameters, instructions, variableParameters, reference);
+                    parametersEngine.Fill(interceptorType.BeforeInterceptor.Method.GetParameters(), instructions);
                     instructions.Add(Instruction.Create(OpCodes.Call,
                                                         _toWeave.MethodToWeave.Module.Import(
                                                             interceptorType.BeforeInterceptor
@@ -88,11 +88,9 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 
             var instructions = new List<Instruction>();
             var variablesForParameters = new List<CallMethodWeaver.KeyValue>();
-            provider.Prepare(instructions);
 
             var beforeInstructions = new List<Instruction>();
             provider.AddBefore(beforeInstructions);
-            // CreateBeforeInstructions(toWeave.MethodToWeave.Module, point_L, variablesForParameters, reference)
             instructions.AddRange(beforeInstructions);
 
             foreach (var variablesForParameter in ((IEnumerable<CallMethodWeaver.KeyValue>)variablesForParameters).Reverse())
@@ -100,9 +98,11 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
                 instructions.Add(Instruction.Create(OpCodes.Ldloc, variablesForParameter.Variable));
             }
 
-            var afterInstructions = CreateAfterInstructions(toWeave.MethodToWeave.Module, point_L, variablesForParameters, reference).ToList();
-            toWeave.MethodToWeave.InsertAfter(toWeave.Instruction, afterInstructions);
-            toWeave.MethodToWeave.InsertBefore(toWeave.Instruction, instructions);
+
+            var afterInstructions = new List<Instruction>();
+            provider.AddAfter(afterInstructions);
+            point.Method.InsertAfter(point.Instruction, afterInstructions);
+            point.Method.InsertBefore(point.Instruction, instructions);
         }
     }
 }
