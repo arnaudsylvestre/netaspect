@@ -5,7 +5,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 {
     public class GetValueFieldWeaver
     {
-        public GetValueFieldWeaver(MethodPoint key, List<CallWeavingConfiguration> value)
+        public GetValueFieldWeaver(JoinPoint key, List<CallWeavingConfiguration> value)
         {
             throw new System.NotImplementedException();
         }

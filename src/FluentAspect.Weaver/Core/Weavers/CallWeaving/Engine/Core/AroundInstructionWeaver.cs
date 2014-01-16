@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Model;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
-using Mono.Cecil;
 using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
@@ -14,95 +12,50 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
     {
         void AddBefore(List<Instruction> beforeInstructions);
         void AddAfter(List<Instruction> beforeInstructions);
+        void Check(ErrorHandler error);
+        bool CanWeave();
     }
 
-    public class CallMethodWeavingProvider : ICallWeavingProvider
+    public class AroundInstructionWeaver : IWeaveable
     {
-        private List<CallMethodWeaver.KeyValue> variablesForParameters = new List<CallMethodWeaver.KeyValue>();
-        private MethodReference reference;
-        private readonly CallToWeave _toWeave;
-        private ParametersEngine parametersEngine;
+        private JoinPoint point;
+        private ICallWeavingProvider provider;
 
-        public CallMethodWeavingProvider(MethodReference reference, CallToWeave toWeave, ParametersEngine parametersEngine)
-        {
-            this.reference = reference;
-            _toWeave = toWeave;
-            this.parametersEngine = parametersEngine;
-        }
-
-        public void AddBefore(List<Instruction> beforeInstructions)
-        {
-            Prepare(beforeInstructions);
-        }
-
-        private void Prepare(List<Instruction> instructions)
-        {
-            foreach (var parameterDefinition_L in reference.Parameters.Reverse())
-            {
-                var variableDefinition_L = _toWeave.MethodToWeave.CreateVariable(parameterDefinition_L.ParameterType);
-                instructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition_L));
-                variablesForParameters.Add(new CallMethodWeaver.KeyValue()
-                {
-                    Variable = variableDefinition_L,
-                    ParameterName = parameterDefinition_L.Name,
-                });
-            }
-        }
-
-        private IEnumerable<Instruction> CreateBeforeInstructions(SequencePoint pointL, List<CallMethodWeaver.KeyValue> variableParameters)
-        {
-            var instructions = new List<Instruction>();
-            foreach (var interceptorType in _toWeave.Interceptors)
-            {
-                if (interceptorType.BeforeInterceptor.Method != null)
-                {
-                    var parameters = new Dictionary<string, Action<ParameterInfo>>();
-                    parametersEngine.Fill(interceptorType.BeforeInterceptor.Method.GetParameters(), instructions);
-                    instructions.Add(Instruction.Create(OpCodes.Call,
-                                                        _toWeave.MethodToWeave.Module.Import(
-                                                            interceptorType.BeforeInterceptor
-                                                                           .Method)));
-                }
-            }
-            return instructions;
-        }
-
-        public void AddAfter(List<Instruction> beforeInstructions)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
-
-    public class AroundInstructionWeaver
-    {
-        private MethodPoint point;
-
-        public AroundInstructionWeaver(MethodPoint point)
+        public AroundInstructionWeaver(JoinPoint point, ICallWeavingProvider provider)
         {
             this.point = point;
+            this.provider = provider;
         }
 
-        public void Weave(ICallWeavingProvider provider)
+        public void Weave()
         {
-            SequencePoint point_L = point.Instruction.GetLastSequencePoint();
-
             var instructions = new List<Instruction>();
-            var variablesForParameters = new List<CallMethodWeaver.KeyValue>();
 
             var beforeInstructions = new List<Instruction>();
             provider.AddBefore(beforeInstructions);
             instructions.AddRange(beforeInstructions);
 
-            foreach (var variablesForParameter in ((IEnumerable<CallMethodWeaver.KeyValue>)variablesForParameters).Reverse())
-            {
-                instructions.Add(Instruction.Create(OpCodes.Ldloc, variablesForParameter.Variable));
-            }
 
 
+            InsertAfterJointPointInstructions(provider);
+            point.Method.InsertBefore(point.Instruction, instructions);
+        }
+
+        public void Check(ErrorHandler error)
+        {
+            provider.Check(error);
+        }
+
+        public bool CanWeave()
+        {
+            return provider.CanWeave();
+        }
+
+        private void InsertAfterJointPointInstructions(ICallWeavingProvider provider)
+        {
             var afterInstructions = new List<Instruction>();
             provider.AddAfter(afterInstructions);
             point.Method.InsertAfter(point.Instruction, afterInstructions);
-            point.Method.InsertBefore(point.Instruction, instructions);
         }
     }
 }

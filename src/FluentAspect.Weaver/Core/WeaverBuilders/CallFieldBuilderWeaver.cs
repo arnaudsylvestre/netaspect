@@ -14,8 +14,8 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
     {
         public IEnumerable<IWeaveable> BuildWeavers(WeavingConfiguration configuration)
         {
-           var updates = new Dictionary<MethodPoint, List<CallWeavingConfiguration>>();
-           var getters = new Dictionary<MethodPoint, List<CallWeavingConfiguration>>();
+           var updates = new Dictionary<JoinPoint, List<CallWeavingConfiguration>>();
+           var getters = new Dictionary<JoinPoint, List<CallWeavingConfiguration>>();
 
            //var methodMatches = new List<MethodMatch>(configuration.Constructors);
            var fieldMatches_L = configuration.Fields;
@@ -42,7 +42,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                            if (methodMatch.CallWeavingInterceptors.BeforeUpdateFieldValue.Method != null ||
                                                 methodMatch.CallWeavingInterceptors.AfterUpdateFieldValue.Method != null)
                                         {
-                                           var methodPoint_L = new MethodPoint
+                                           var methodPoint_L = new JoinPoint
                                               {
                                                  Method = method, Instruction = instruction,
                                               };
@@ -72,7 +72,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                             if (methodMatch.CallWeavingInterceptors.BeforeUpdateFieldValue.Method != null ||
                                                  methodMatch.CallWeavingInterceptors.AfterUpdateFieldValue.Method != null)
                                             {
-                                                var methodPoint_L = new MethodPoint
+                                                var methodPoint_L = new JoinPoint
                                                 {
                                                     Method = method,
                                                     Instruction = instruction,

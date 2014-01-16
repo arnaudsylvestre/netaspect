@@ -5,10 +5,13 @@ using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Model
 {
-    public class CallToWeave
+    public class MethodCallToWeave
     {
-        public MethodDefinition MethodToWeave { get; set; }
+        public JoinPoint JoinPoint { get; set; }
         public IEnumerable<CallWeavingConfiguration> Interceptors { get; set; }
-        public Instruction Instruction { get; set; }
+        public MethodReference CalledMethod
+        {
+            get { return JoinPoint.Instruction.Operand as MethodReference; }
+        }
     }
 }

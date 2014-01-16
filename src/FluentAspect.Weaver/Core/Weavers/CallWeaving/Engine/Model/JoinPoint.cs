@@ -3,7 +3,7 @@ using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 {
-    public class MethodPoint
+    public class JoinPoint
     {
         public MethodDefinition Method { get; set; }
         public Instruction Instruction { get; set; }
@@ -16,7 +16,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
             }
         }
 
-        private bool Equals(MethodPoint other)
+        private bool Equals(JoinPoint other)
         {
             return Equals(Method, other.Method) && Equals(Instruction, other.Instruction);
         }
@@ -26,7 +26,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((MethodPoint) obj);
+            return Equals((JoinPoint) obj);
         }
     }
 }

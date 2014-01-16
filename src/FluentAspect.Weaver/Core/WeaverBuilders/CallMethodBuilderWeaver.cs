@@ -4,6 +4,7 @@ using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Model.Adapters;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
+using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Model;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
@@ -15,7 +16,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
     {
         public IEnumerable<IWeaveable> BuildWeavers(WeavingConfiguration configuration)
         {
-           var points = new Dictionary<MethodPoint, List<CallWeavingConfiguration>>();
+           var points = new Dictionary<JoinPoint, List<CallWeavingConfiguration>>();
 
            //var methodMatches = new List<MethodMatch>(configuration.Constructors);
            var methodMatches = new List<MethodMatch>(configuration.Methods);
@@ -45,7 +46,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                            if (methodMatch.CallWeavingInterceptors.BeforeInterceptor.Method != null ||
                                                 methodMatch.CallWeavingInterceptors.AfterInterceptor.Method != null)
                                         {
-                                           var methodPoint_L = new MethodPoint
+                                           var methodPoint_L = new JoinPoint
                                               {
                                                  Method = method, Instruction = instruction,
                                               };
@@ -69,7 +70,10 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
             }
 
 
-           return points.Select(point_L => CallWeavingFactory.CreateCallMethodWeaver(point_L.Key, point_L.Value)).Cast<IWeaveable>().ToList();
+           return points.Select(point_L => new AroundInstructionWeaver(point_L.Key, new CallMethodWeavingProvider(new MethodCallToWeave()
+               {
+                   JoinPoint = point_L.Key, Interceptors = point_L.Value
+               }))).Cast<IWeaveable>().ToList();
         }
     }
 }

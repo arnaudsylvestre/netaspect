@@ -17,7 +17,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Constructors
             definition = definition_P;
         }
 
-        public void Weave(ErrorHandler errorP_P)
+        public void Weave()
         {
             MethodDefinition newMethod = CreateNewMethodBasedOnMethodToWeave(definition, interceptorType);
             definition.DeclaringType.Methods.Add(newMethod);

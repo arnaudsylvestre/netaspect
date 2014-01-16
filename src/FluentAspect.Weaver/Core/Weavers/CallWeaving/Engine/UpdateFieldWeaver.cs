@@ -17,33 +17,32 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 
     public class UpdateFieldWeaver : IWeaveable
     {
-        private CallToWeave toWeave;
+        private MethodCallToWeave toWeave;
 
 
-        public UpdateFieldWeaver(MethodPoint point,
+        public UpdateFieldWeaver(JoinPoint point,
                                 IEnumerable<CallWeavingConfiguration> interceptorTypes)
         {
-            toWeave = new CallToWeave
+            toWeave = new MethodCallToWeave
                 {
-                    MethodToWeave = point.Method,
-                    Instruction                    = point.Instruction,
+                    JoinPoint = point,
                     Interceptors                    = interceptorTypes
                 };
         }
 
-        public void Weave(ErrorHandler errorP_P)
+        public void Weave()
         {
-            var reference = toWeave.Instruction.Operand as FieldReference;
-            toWeave.MethodToWeave.Body.InitLocals = true;
-            SequencePoint point_L = toWeave.Instruction.GetLastSequencePoint();
+            var reference = toWeave.JoinPoint.Instruction.Operand as FieldReference;
+            toWeave.JoinPoint.Method.Body.InitLocals = true;
+            SequencePoint point_L = toWeave.JoinPoint.Instruction.GetLastSequencePoint();
 
             List<Instruction> instructions = new List<Instruction>();
-            
-           instructions.AddRange(CreateBeforeInstructions(toWeave.MethodToWeave.Module, point_L, reference));
 
-            var afterInstructions = CreateAfterInstructions(toWeave.MethodToWeave.Module, point_L, reference).ToList();
-            toWeave.MethodToWeave.InsertAfter(toWeave.Instruction, afterInstructions);
-            toWeave.MethodToWeave.InsertBefore(toWeave.Instruction, instructions);
+            instructions.AddRange(CreateBeforeInstructions(toWeave.JoinPoint.Method.Module, point_L, reference));
+
+            var afterInstructions = CreateAfterInstructions(toWeave.JoinPoint.Method.Module, point_L, reference).ToList();
+            toWeave.JoinPoint.Method.InsertAfter(toWeave.JoinPoint.Instruction, afterInstructions);
+            toWeave.JoinPoint.Method.InsertBefore(toWeave.JoinPoint.Instruction, instructions);
 
         }
 
@@ -82,14 +81,14 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
             errors.Add("caller", (info, handler) =>
             {
                 EnsureSequencePoint(errorHandler, info);
-                EnsureType(info, errorHandler, toWeave.MethodToWeave.DeclaringType, typeof(object));
+                EnsureType(info, errorHandler, toWeave.JoinPoint.Method.DeclaringType, typeof(object));
             });
             errors.Add("value", (info, handler) =>
             {
-                EnsureType(info, errorHandler, (toWeave.Instruction.Operand as FieldReference).FieldType, null);
+                EnsureType(info, errorHandler, (toWeave.JoinPoint.Instruction.Operand as FieldReference).FieldType, null);
             });
 
-            foreach (ParameterDefinition parameter_L in toWeave.MethodToWeave.Parameters)
+            foreach (ParameterDefinition parameter_L in toWeave.JoinPoint.Method.Parameters)
             {
                 ParameterDefinition parameter1_L = parameter_L;
                 errors.Add((parameter1_L.Name + "Caller").ToLower(), (info, handler) =>
@@ -122,7 +121,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 
         private void EnsureSequencePoint(ErrorHandler errorHandler, ParameterInfo info)
         {
-            if (toWeave.Instruction.GetLastSequencePoint() == null)
+            if (toWeave.JoinPoint.Instruction.GetLastSequencePoint() == null)
                 errorHandler.Warnings.Add(string.Format("The parameter {0} in method {1} of type {2} will have the default value because there is no debugging information",
                     info.Name, (info.Member).Name, (info.Member.DeclaringType).FullName));
         }
@@ -164,7 +163,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
             parameters.Add("caller", p => instructions.Add(Instruction.Create(OpCodes.Ldarg_0)));
             //parameters.Add("value", p => instructions.Add(Instruction.Create(OpCodes.Ldarg_0)));
 
-            foreach (ParameterDefinition parameter_L in toWeave.MethodToWeave.Parameters)
+            foreach (ParameterDefinition parameter_L in toWeave.JoinPoint.Method.Parameters)
             {
                 ParameterDefinition parameter1_L = parameter_L;
                 parameters.Add((parameter1_L.Name + "Caller").ToLower(), p => instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter1_L)));

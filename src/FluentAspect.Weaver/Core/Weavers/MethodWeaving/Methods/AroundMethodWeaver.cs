@@ -25,7 +25,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
             definition = definition_P;
         }
 
-        public void Weave(ErrorHandler errorP_P)
+        public void Weave()
         {
             WeaveMethod(definition, interceptorType);
         }

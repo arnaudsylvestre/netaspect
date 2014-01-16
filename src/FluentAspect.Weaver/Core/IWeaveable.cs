@@ -4,7 +4,7 @@ namespace FluentAspect.Weaver.Core
 {
     public interface IWeaveable
     {
-        void Weave(ErrorHandler errorP_P);
+        void Weave();
         void Check(ErrorHandler error);
         bool CanWeave();
     }

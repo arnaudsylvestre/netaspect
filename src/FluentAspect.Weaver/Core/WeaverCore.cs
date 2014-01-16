@@ -51,7 +51,7 @@ namespace FluentAspect.Weaver.Core
                     var error = new ErrorHandler();
                     weaver_L.Check(error);
                     if (error.Errors.Count == 0 && weaver_L.CanWeave())
-                        weaver_L.Weave(errorHandler);
+                        weaver_L.Weave();
                     errorHandler.Errors.AddRange(error.Errors);
                     errorHandler.Warnings.AddRange(error.Warnings);
                 }
