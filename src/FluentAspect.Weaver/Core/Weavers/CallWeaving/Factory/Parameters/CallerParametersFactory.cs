@@ -8,7 +8,14 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
 {
     public static class CallerParametersFactory
     {
-        public static void AddCaller(this ParametersEngine engine, JoinPoint point)
+        public static void AddCallerParams(this ParametersEngine engine, JoinPoint point)
+        {
+
+            engine.AddCaller(point);
+            engine.AddCallerParameters(point);
+        }
+
+        private static void AddCaller(this ParametersEngine engine, JoinPoint point)
         {
             engine.AddPossibleParameter("caller",
                                         (info, handler) => Ensure.ParameterType(info, handler, point.Method.DeclaringType,
@@ -16,7 +23,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
         }
 
 
-        public static void AddCallerParameters(this ParametersEngine engine, JoinPoint joinPoint)
+        private static void AddCallerParameters(this ParametersEngine engine, JoinPoint joinPoint)
         {
             foreach (ParameterDefinition parameter_L in joinPoint.Method.Parameters)
             {

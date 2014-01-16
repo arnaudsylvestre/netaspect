@@ -10,7 +10,15 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
 {
     public static class PdbParameterFactory
     {
-        public static void AddLineNumber(this ParametersEngine engine, JoinPoint point)
+        public static void AddPdbParameters(this ParametersEngine engine, JoinPoint point)
+        {
+            engine.AddLineNumber(point);
+            engine.AddColumnNumber(point);
+            engine.AddFilename(point);
+            engine.AddFilepath(point);
+        }
+
+        private static void AddLineNumber(this ParametersEngine engine, JoinPoint point)
         {
 
             engine.AddPossibleParameter("linenumber", (info, handler) =>
@@ -22,8 +30,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
         }
 
 
-
-        public static void AddColumnNumber(this ParametersEngine engine, JoinPoint point)
+        private static void AddColumnNumber(this ParametersEngine engine, JoinPoint point)
         {
             engine.AddPossibleParameter("columnnumber", (info, handler) =>
             {
@@ -34,8 +41,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
         }
 
 
-
-        public static void AddFilename(this ParametersEngine engine, JoinPoint point)
+        private static void AddFilename(this ParametersEngine engine, JoinPoint point)
         {
             engine.AddPossibleParameter("filename", (info, handler) =>
             {
@@ -46,8 +52,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
         }
 
 
-
-        public static void AddFilepath(this ParametersEngine engine, JoinPoint joinPoint)
+        private static void AddFilepath(this ParametersEngine engine, JoinPoint joinPoint)
         {
             engine.AddPossibleParameter("filepath", (info, handler) =>
             {
