@@ -13,7 +13,6 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
         void AddBefore(List<Instruction> beforeInstructions);
         void AddAfter(List<Instruction> beforeInstructions);
         void Check(ErrorHandler error);
-        bool CanWeave();
     }
 
     public class AroundInstructionWeaver : IWeaveable
@@ -34,7 +33,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
             var beforeInstructions = new List<Instruction>();
             provider.AddBefore(beforeInstructions);
             instructions.AddRange(beforeInstructions);
-
+            point.Method.Body.InitLocals = true;
 
 
             InsertAfterJointPointInstructions(provider);
@@ -44,11 +43,6 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
         public void Check(ErrorHandler error)
         {
             provider.Check(error);
-        }
-
-        public bool CanWeave()
-        {
-            return provider.CanWeave();
         }
 
         private void InsertAfterJointPointInstructions(ICallWeavingProvider provider)

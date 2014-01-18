@@ -17,7 +17,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
 
                 }, (info, instructions) =>
                 {
-                    VariableDefinition variable = variablesForParameters[info.Name];
+                    VariableDefinition variable = variablesForParameters[info.Name.Substring(0, info.Name.Length - "Called".Length)];
                     instructions.Add(Instruction.Create(OpCodes.Ldloc, variable));
                 });
             }

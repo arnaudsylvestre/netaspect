@@ -11,14 +11,14 @@ using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 {
-    public class CallMethodWeavingProvider : ICallWeavingProvider
+    public class CallMethodWeaver : ICallWeavingProvider
     {
         private Dictionary<string, VariableDefinition> variablesForParameters = new Dictionary<string, VariableDefinition>();
 
         private readonly MethodCallToWeave _toWeave;
         private ParametersEngine parametersEngine;
 
-        public CallMethodWeavingProvider(MethodCallToWeave toWeave)
+        public CallMethodWeaver(MethodCallToWeave toWeave)
         {
             _toWeave = toWeave;
             parametersEngine = ParametersEngineFactory.CreateForMethodCall(_toWeave.JoinPoint, variablesForParameters);

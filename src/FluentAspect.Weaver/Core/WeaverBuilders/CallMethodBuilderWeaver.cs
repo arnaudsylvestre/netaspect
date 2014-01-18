@@ -70,7 +70,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
             }
 
 
-           return points.Select(point_L => new AroundInstructionWeaver(point_L.Key, new CallMethodWeavingProvider(new MethodCallToWeave()
+           return points.Select(point_L => new AroundInstructionWeaver(point_L.Key, new CallMethodWeaver(new MethodCallToWeave()
                {
                    JoinPoint = point_L.Key, Interceptors = point_L.Value
                }))).Cast<IWeaveable>().ToList();

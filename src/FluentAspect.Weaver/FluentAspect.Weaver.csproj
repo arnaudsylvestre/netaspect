@@ -71,16 +71,15 @@
     <Compile Include="Core\WeaverBuilders\AroundConstructorBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\CallMethodBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\CallFieldBuilderWeaver.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Engine\CallMethodWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\MultiWeaverBuilder.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Engine\Checkers\Ensure.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Engine\Core\AroundInstructionWeaver.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Engine\Core\Method\CallMethodWeavingProvider.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Checkers\Ensure.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Engine\AroundInstructionWeaver.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Methods\CallMethodWeaver.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\GetValueFieldWeaver.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Engine\Model\JoinPoint.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Engine\Core\ParametersEngine.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Engine\UpdateFieldWeaver.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Engine\Model\MethodCallToWeave.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Engine\JoinPoint.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Engine\ParametersEngine.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Fields\UpdateFieldWeaver.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Methods\MethodCallToWeave.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Factory\ParametersEngineFactory.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Factory\Helpers\InstructionFactory.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Factory\Parameters\CalledParametersFactory.cs" />
@@ -144,8 +143,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Helpers\" />
-    <Folder Include="Core\Weavers\CallWeaving\Engine\Core\FieldUpdate\" />
-    <Folder Include="Core\Weavers\CallWeaving\Engine\Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
