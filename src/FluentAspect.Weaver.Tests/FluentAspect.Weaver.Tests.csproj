@@ -75,6 +75,7 @@
     <Compile Include="acceptance\Weaving\Calls\Fields\ClassAndAspectAndCall.cs" />
     <Compile Include="acceptance\Weaving\Calls\Fields\ClassAndAspectAndCallAcceptanceTestBuilder.cs" />
     <Compile Include="acceptance\Weaving\Calls\Fields\ClassAndAspectAndCallActual.cs" />
+    <Compile Include="acceptance\Weaving\Calls\Fields\Parameters\BeforeUpdateFieldValueParameterTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\WrongParameterTypeInAfterCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\AfterCallConstructorTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\MethodParameterCalledCallTest.cs" />

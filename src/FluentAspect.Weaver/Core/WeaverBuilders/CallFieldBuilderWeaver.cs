@@ -4,6 +4,7 @@ using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Model.Adapters;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
+using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Model;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -97,7 +98,10 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
             }
 
             List<IWeaveable> weavables = new List<IWeaveable>();
-            weavables.AddRange(updates.Select(point_L => new UpdateFieldWeaver(point_L.Key, point_L.Value)).Cast<IWeaveable>());
+            weavables.AddRange(updates.Select(point_L => new AroundInstructionWeaver(point_L.Key, new UpdateFieldWeaver(new MethodCallToWeave()
+                {
+                    JoinPoint = point_L.Key, Interceptors = point_L.Value
+                }))).Cast<IWeaveable>());
             weavables.AddRange(getters.Select(point_L => new GetValueFieldWeaver(point_L.Key, point_L.Value)).Cast<IWeaveable>());
             return weavables;
         }

@@ -81,10 +81,5 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
                 parametersEngine.Check(netAspectAttribute.AfterInterceptor.GetParameters(), error);
             }
         }
-
-        public bool CanWeave()
-        {
-            return true;
-        }
     }
 }
