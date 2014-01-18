@@ -74,6 +74,7 @@
     <Compile Include="Core\WeaverBuilders\MultiWeaverBuilder.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Checkers\Ensure.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\AroundInstructionWeaver.cs" />
+    <Compile Include="Core\Weavers\CallWeaving\Factory\Parameters\FieldParametersFactory.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Methods\CallMethodWeaver.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\GetValueFieldWeaver.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\JoinPoint.cs" />
