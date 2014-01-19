@@ -1,6 +1,4 @@
-﻿using FluentAspect.Weaver.Tests.Core;
-
-namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
+﻿namespace FluentAspect.Weaver.Tests.Core
 {
    public class AssemblyFactory
    {

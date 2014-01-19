@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using FluentAspect.Weaver.Core.Model;
+using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using Mono.Cecil;
-using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Model
+namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Methods
 {
     public class MethodCallToWeave
     {

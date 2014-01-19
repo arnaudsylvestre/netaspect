@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
-using FluentAspect.Weaver.Tests.Core;
 
-namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
+namespace FluentAspect.Weaver.Tests.Core
 {
    public interface IAcceptanceTestBuilder<TSample, TActual>
    {

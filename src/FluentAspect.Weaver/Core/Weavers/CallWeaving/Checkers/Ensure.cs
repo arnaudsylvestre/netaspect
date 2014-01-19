@@ -5,7 +5,7 @@ using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Checkers
+namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
 {
     static class Ensure
     {

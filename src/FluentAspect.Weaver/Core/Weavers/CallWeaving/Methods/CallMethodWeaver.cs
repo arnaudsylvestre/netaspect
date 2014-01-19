@@ -3,13 +3,12 @@ using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model.Helpers;
-using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Model;
+using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory;
 using FluentAspect.Weaver.Helpers.IL;
-using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
+namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Methods
 {
     public class CallMethodWeaver : ICallWeavingProvider
     {

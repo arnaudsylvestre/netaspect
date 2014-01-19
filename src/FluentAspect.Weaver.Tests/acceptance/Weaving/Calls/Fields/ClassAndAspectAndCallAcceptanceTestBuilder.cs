@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using FluentAspect.Weaver.Tests.Core;
-using FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before;
 
 namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields
 {

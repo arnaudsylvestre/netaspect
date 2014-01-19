@@ -4,7 +4,7 @@ using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Model.Adapters;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
-using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Model;
+using FluentAspect.Weaver.Core.Weavers.CallWeaving.Fields;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;

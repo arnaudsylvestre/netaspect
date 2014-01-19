@@ -1,6 +1,5 @@
-﻿using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
-using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Checkers;
-using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine.Model;
+﻿using FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers;
+using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
