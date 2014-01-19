@@ -3,7 +3,7 @@
 namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
 {
     [TestFixture]
-   public class AfterParametersParameterTest
+    public class AfterConstructorParametersParameterTest
     {
        [Test]
        public void CheckParametersReferenced()

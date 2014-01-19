@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
 {
     [TestFixture]
-   public class AfterMethodParameterTest
+    public class AfterMethodMethodParameterTest
     {
        [Test]
        public void CheckMethodReferenced()

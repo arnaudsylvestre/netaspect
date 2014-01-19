@@ -3,7 +3,7 @@
 namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
 {
     [TestFixture]
-   public class BeforeInstanceParameterTest
+   public class AfterConstructorInstanceParameterTest
     {
        [Test]
        public void CheckInstanceReferenced()
@@ -11,9 +11,9 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                  .ByDefiningAssembly(simpleClassAndWeaver =>
                   {
-                     simpleClassAndWeaver.BeforeInterceptor.WithReferencedParameter<object>("instance");
+                     simpleClassAndWeaver.AfterInterceptor.WithReferencedParameter<object>("instance");
                   })
-                  .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref the parameter 'instance' in the method Before of the type 'A.MyAspectAttribute'")))
+                  .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref the parameter 'instance' in the method After of the type 'A.MyAspectAttribute'")))
                   .AndLaunchTest();
        }
 
@@ -23,9 +23,9 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
            DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                     .ByDefiningAssembly(simpleClassAndWeaver =>
                    {
-                      simpleClassAndWeaver.BeforeInterceptor.WithParameter<int>("instance");
+                      simpleClassAndWeaver.AfterInterceptor.WithParameter<int>("instance");
                    })
-                    .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("the instance parameter in the method Before of the type 'A.MyAspectAttribute' is declared with the type 'System.Int32' but it is expected to be System.Object or A.MyClassToWeave")))
+                    .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("the instance parameter in the method After of the type 'A.MyAspectAttribute' is declared with the type 'System.Int32' but it is expected to be System.Object or A.MyClassToWeave")))
                     .AndLaunchTest();
         }
 
@@ -35,13 +35,13 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                    .ByDefiningAssembly(simpleClassAndWeaver =>
                    {
-                      simpleClassAndWeaver.BeforeInterceptor.WithParameter<object>("instance");
+                      simpleClassAndWeaver.AfterInterceptor.WithParameter<object>("instance");
                    })
                    .AndEnsureAssembly((assemblyP, result) =>
                    {
                       var o = result.CreateObjectFromClassToWeaveType();
                       result.CallWeavedMethod(o);
-                      Assert.AreEqual(o, result.Aspect.BeforeInstance);
+                      Assert.AreEqual(o, result.Aspect.AfterInstance);
 
                    })
                    .AndLaunchTest();
@@ -54,13 +54,13 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
            DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                     .ByDefiningAssembly(simpleClassAndWeaver =>
                     {                       
-                        simpleClassAndWeaver.BeforeInterceptor.WithParameter("instance", simpleClassAndWeaver.ClassToWeave.Type);
+                        simpleClassAndWeaver.AfterInterceptor.WithParameter("instance", simpleClassAndWeaver.ClassToWeave.Type);
                     })
                     .AndEnsureAssembly((assemblyP, result) =>
                     {
                        var o = result.CreateObjectFromClassToWeaveType();
                        result.CallWeavedMethod(o);
-                       Assert.AreEqual(o, result.Aspect.BeforeInstance);
+                       Assert.AreEqual(o, result.Aspect.AfterInstance);
 
                     })
                     .AndLaunchTest();
