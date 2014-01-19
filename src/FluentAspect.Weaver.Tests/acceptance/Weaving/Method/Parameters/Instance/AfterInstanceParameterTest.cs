@@ -8,7 +8,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
        [Test]
        public void CheckInstanceReferenced()
        {
-          DoAcceptance.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
+          DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                  .ByDefiningAssembly(simpleClassAndWeaver =>
                   {
                      simpleClassAndWeaver.AfterInterceptor.WithReferencedParameter<object>("instance");
@@ -20,7 +20,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
         [Test]
         public void CheckInstanceBadType()
         {
-           DoAcceptance.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
+           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                     .ByDefiningAssembly(simpleClassAndWeaver =>
                    {
                       simpleClassAndWeaver.AfterInterceptor.WithParameter<int>("instance");
@@ -32,7 +32,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
        [Test]
        public void CheckInstanceWithObjectType()
        {
-          DoAcceptance.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
+          DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                    .ByDefiningAssembly(simpleClassAndWeaver =>
                    {
                       simpleClassAndWeaver.AfterInterceptor.WithParameter<object>("instance");
@@ -51,7 +51,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
        [Test]
         public void CheckInstanceWithRealType()
         {
-           DoAcceptance.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
+           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                     .ByDefiningAssembly(simpleClassAndWeaver =>
                     {                       
                         simpleClassAndWeaver.AfterInterceptor.WithParameter("instance", simpleClassAndWeaver.ClassToWeave.Type);

@@ -10,7 +10,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
        [Test]
        public void CheckMethodReferenced()
        {
-          DoAcceptance.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
+          DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                  .ByDefiningAssembly(simpleClassAndWeaver =>
                   {
                      simpleClassAndWeaver.OnExceptionInterceptor.WithReferencedParameter<MethodInfo>("method");
@@ -37,7 +37,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
         [Test]
         public void CheckMethodBadType()
         {
-           DoAcceptance.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
+           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                     .ByDefiningAssembly(simpleClassAndWeaver =>
                    {
                       simpleClassAndWeaver.OnExceptionInterceptor.WithParameter<int>("method");
@@ -66,7 +66,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
        [Test]
         public void CheckMethodWithRealType()
         {
-           DoAcceptance.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
+           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                     .ByDefiningAssembly(simpleClassAndWeaver =>
                     {                       
                         simpleClassAndWeaver.OnExceptionInterceptor.WithParameter<MethodInfo>("method");

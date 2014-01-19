@@ -49,7 +49,7 @@ namespace FluentAspect.Weaver.Tests.acceptance
         public void Ensure<TSample, TActual>(string dll_L, IAcceptanceTestBuilder<TSample, TActual> context, Action<Assembly, TActual> ensure)
         {
             var assemblyDll = Assembly.LoadFrom(dll_L);
-            ensure(assemblyDll, context.CreateActual(assemblyDll, new DoAcceptanceHelper(assemblyDll)));
+            ensure(assemblyDll, context.CreateActual(assemblyDll));
         }
     }
 }

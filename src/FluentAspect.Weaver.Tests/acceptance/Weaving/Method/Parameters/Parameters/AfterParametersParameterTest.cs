@@ -8,7 +8,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
        [Test]
        public void CheckParametersReferenced()
        {
-          DoAcceptance.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
+          DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                  .ByDefiningAssembly(simpleClassAndWeaver =>
                   {
                      simpleClassAndWeaver.AfterInterceptor.WithReferencedParameter<object[]>("parameters");
@@ -21,7 +21,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
         [Test]
         public void CheckParametersBadType()
         {
-           DoAcceptance.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
+           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                     .ByDefiningAssembly(simpleClassAndWeaver =>
                    {
                       simpleClassAndWeaver.AfterInterceptor.WithParameter<int>("parameters");
@@ -34,7 +34,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
        [Test]
        public void CheckParametersWithRealType()
        {
-          DoAcceptance.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
+          DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                    .ByDefiningAssembly(simpleClassAndWeaver =>
                    {
                       simpleClassAndWeaver.AfterInterceptor.WithParameter<object[]>("parameters");

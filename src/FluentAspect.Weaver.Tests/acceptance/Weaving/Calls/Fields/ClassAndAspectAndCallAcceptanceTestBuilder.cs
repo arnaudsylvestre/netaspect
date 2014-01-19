@@ -14,7 +14,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields
         private const string callerTypeName = "CallerType";
         private const string callerMethod = "Caller";
 
-        public ClassAndAspectAndCallActual CreateActual(Assembly assemblyDllP_P, DoAcceptanceHelper helper)
+        public ClassAndAspectAndCallActual CreateActual(Assembly assemblyDllP_P)
         {
             return new ClassAndAspectAndCallActual(assemblyDllP_P, callerTypeName, callerMethod)
                 {

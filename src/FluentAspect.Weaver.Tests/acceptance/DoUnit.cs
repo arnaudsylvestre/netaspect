@@ -7,7 +7,7 @@ using FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before;
 
 namespace FluentAspect.Weaver.Tests.acceptance
 {
-    public static class DoAcceptance
+    public static class DoUnit
     {
        public static DoAcceptanceConfiguration<TSample, TActual> Test<TSample, TActual>(IAcceptanceTestBuilder<TSample, TActual> acceptanceTestBuilder)
         {

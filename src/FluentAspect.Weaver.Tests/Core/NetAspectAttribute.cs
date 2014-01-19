@@ -62,6 +62,21 @@ namespace FluentAspect.Weaver.Tests.Core
             get { return type.GetField("BeforeUpdateFieldValuevalue", BindingFlags.Public | BindingFlags.Static).GetValue(null); }
         }
 
+        public object BeforeUpdateFieldValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeUpdateFieldValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeUpdateFieldValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public object GetInstance(string methodName)
         {
             return type.GetField(string.Format("{0}instance", methodName), BindingFlags.Public | BindingFlags.Static).GetValue(null);

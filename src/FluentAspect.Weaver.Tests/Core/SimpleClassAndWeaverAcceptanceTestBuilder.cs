@@ -25,7 +25,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
             };
       }
 
-      public SimpleClassAndWeaverActual CreateActual(Assembly assemblyDllP_P, DoAcceptanceHelper helper)
+      public SimpleClassAndWeaverActual CreateActual(Assembly assemblyDllP_P)
       {
          return new SimpleClassAndWeaverActual(assemblyDllP_P, _typeName, _methodName)
             {

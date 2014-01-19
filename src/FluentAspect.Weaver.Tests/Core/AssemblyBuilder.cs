@@ -207,11 +207,6 @@ namespace FluentAspect.Weaver.Tests.Core
            get { return DefaultConstructor; }
         }
 
-       public object GetBeforeInstance(DoAcceptanceHelper helper)
-       {
-          return helper.GetNetAspectAttribute(typeDefinition.Name);
-       }
-
        public MethodDefinitionDefiner AddBefore()
         {
            return CreateInterceptor(typeDefinition, "Before", false);
