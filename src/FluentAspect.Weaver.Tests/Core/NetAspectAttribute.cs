@@ -171,5 +171,60 @@ namespace FluentAspect.Weaver.Tests.Core
         {
             get { throw new NotImplementedException(); }
         }
+
+        public object BeforeCallMethodValueValue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterCallMethodValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterCallMethodValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterCallMethodValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterCallMethodValueLineNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterCallMethodValueValue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeCallMethodValueCaller
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeCallMethodValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeCallMethodValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeCallMethodValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeCallMethodValueLineNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

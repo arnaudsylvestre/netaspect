@@ -146,6 +146,27 @@
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldFileNameParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldParameterInCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\After\AfterCallMethodCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\After\AfterCallMethodColumnNumberParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\After\AfterCallMethodFileNameParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\After\AfterCallMethodFilePathParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\After\AfterCallMethodLineNumberParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\After\AfterCallMethodParameterInCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\After\AfterCallMethodValueParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\Before\BeforeCallMethodCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\Before\BeforeCallMethodColumnNumberParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\Before\BeforeCallMethodFileNameParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\Before\BeforeCallMethodFilePathParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\Before\BeforeCallMethodLineNumberParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\Before\BeforeCallMethodParameterInCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\Before\BeforeCallMethodValueParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\OnException\OnExceptionCallMethodCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\OnException\OnExceptionCallMethodColumnNumberParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\OnException\OnExceptionCallMethodFileNameParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\OnException\OnExceptionCallMethodFilePathParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\OnException\OnExceptionCallMethodLineNumberParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\OnException\OnExceptionCallMethodParameterInCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\Parameters\OnException\OnExceptionCallMethodExceptionParameterTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\lib\cecil-master\Mono.Cecil.csproj">
