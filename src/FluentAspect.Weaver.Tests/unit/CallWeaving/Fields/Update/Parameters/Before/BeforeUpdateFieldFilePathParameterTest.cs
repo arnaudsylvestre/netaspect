@@ -1,7 +1,9 @@
 ﻿using System;
+using FluentAspect.Weaver.Tests.acceptance;
+using FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Before
 {
     [TestFixture]
     public class BeforeUpdateFieldFilePathParameterTest 

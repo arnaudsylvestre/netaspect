@@ -70,6 +70,27 @@
     <Compile Include="acceptance\Weaving\Calls\BeforeCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\AfterCallTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\CallerTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldColumnNumberParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldFileNameParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldFilePathParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldLineNumberParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldParameterInCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldValueParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldColumnNumberParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldFileNameParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldFilePathParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldLineNumberParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldParameterInCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldValueParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldColumnNumberParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldFileNameParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldFilePathParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldLineNumberParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldParameterInCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldValueParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldLineNumberParameterTest.cs" />
     <Compile Include="acceptance\Weaving\Calls\Fields\ClassAndAspectAndCall.cs" />
     <Compile Include="acceptance\Weaving\Calls\Fields\ClassAndAspectAndCallAcceptanceTestBuilder.cs" />
@@ -123,6 +144,8 @@
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldColumnNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldFilePathParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldFileNameParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldCallerParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldParameterInCallerParameterTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\lib\cecil-master\Mono.Cecil.csproj">

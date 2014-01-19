@@ -3,88 +3,88 @@ using FluentAspect.Weaver.Tests.acceptance;
 using FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Before
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.After
 {
     [TestFixture]
-    public class BeforeUpdateFieldColumnNumberParameterTest 
+    public class AfterGetFieldFilePathParameterTest 
     {
          [Test]
-         public void CheckUpdateFieldWithColumnNumberAndNoDebuggingInformation()
+         public void CheckGetFieldWithFilePathAndNoDebuggingInformation()
          {
           DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
                  .ByDefiningAssembly(simpleClassAndWeaver =>
                     {
-                       simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
-                          .WithParameter<int>("columnNumber");
+                       simpleClassAndWeaver.Aspect.AddAfterFieldAccess()
+                          .WithParameter<int>("filePath");
                     })
-                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter columnNumber in method BeforeUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
+                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter filePath in method AfterGetFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
                   .AndEnsureAssembly((assembly, actual) =>
                       {
                           var caller = actual.CreateCallerObject();
                           actual.CallCallerMethod(caller);
-                          Assert.AreEqual(0, actual.Aspect.BeforeUpdateFieldValueColumnNumber);
+                          Assert.AreEqual(0, actual.Aspect.AfterGetFieldValueFilePath);
                       })
                   .AndLaunchTest();
          }
 
          [Test]
-         public void CheckUpdateFieldWithColumnNumberAndDebuggingInformation()
+         public void CheckGetFieldWithFilePathAndDebuggingInformation()
          {
              throw new NotImplementedException();
              //DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
              //       .ByDefiningAssembly(simpleClassAndWeaver =>
              //       {
-             //           simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
-             //              .WithParameter<int>("columnNumber");
+             //           simpleClassAndWeaver.Aspect.AddAfterFieldAccess()
+             //              .WithParameter<int>("filePath");
              //       })
-             //          .EnsureErrorHandler(e => e.Warnings.Add("The parameter columnNumber in method BeforeUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
+             //          .EnsureErrorHandler(e => e.Warnings.Add("The parameter filePath in method AfterGetFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
              //        .AndEnsureAssembly((assembly, actual) =>
              //        {
              //            var caller = actual.CreateCallerObject();
              //            actual.CallCallerMethod(caller);
-             //            Assert.AreEqual(0, actual.Aspect.BeforeUpdateFieldValueColumnNumber);
+             //            Assert.AreEqual(0, actual.Aspect.AfterGetFieldValueFilePath);
              //        })
              //        .AndLaunchTest();
          }
 
 
          [Test]
-         public void CheckUpdateFieldWithColumnNumberAndNoDebuggingInformationAndWrongType()
+         public void CheckGetFieldWithFilePathAndNoDebuggingInformationAndWrongType()
          {
              throw new NotImplementedException();
              //DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
              //       .ByDefiningAssembly(simpleClassAndWeaver =>
              //       {
-             //           simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
-             //              .WithParameter<string>("columnNumber");
+             //           simpleClassAndWeaver.Aspect.AddAfterFieldAccess()
+             //              .WithParameter<string>("filePath");
              //       })
-             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter columnNumber in method BeforeUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
+             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter filePath in method AfterGetFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
              //        .AndEnsureAssembly((assembly, actual) =>
              //        {
              //            var caller = actual.CreateCallerObject();
              //            actual.CallCallerMethod(caller);
-             //            Assert.False(actual.Aspect.BeforeUpdateFieldValuePassed);
+             //            Assert.False(actual.Aspect.AfterGetFieldValuePassed);
              //        })
              //        .AndLaunchTest();
          }
 
 
          [Test]
-         public void CheckUpdateFieldWithColumnNumberAndNoDebuggingInformationAndReferenced()
+         public void CheckGetFieldWithFilePathAndNoDebuggingInformationAndReferenced()
          {
              throw new NotImplementedException();
              //DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
              //       .ByDefiningAssembly(simpleClassAndWeaver =>
              //       {
-             //           simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
-             //              .WithReferencedParameter<int>("columnNumber");
+             //           simpleClassAndWeaver.Aspect.AddAfterFieldAccess()
+             //              .WithReferencedParameter<int>("filePath");
              //       })
-             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter columnNumber in method BeforeUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
+             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter filePath in method AfterGetFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
              //        .AndEnsureAssembly((assembly, actual) =>
              //        {
              //            var caller = actual.CreateCallerObject();
              //            actual.CallCallerMethod(caller);
-             //            Assert.False(actual.Aspect.BeforeUpdateFieldValuePassed);
+             //            Assert.False(actual.Aspect.AfterGetFieldValuePassed);
              //        })
              //        .AndLaunchTest();
          }

@@ -77,9 +77,99 @@ namespace FluentAspect.Weaver.Tests.Core
             get { throw new NotImplementedException(); }
         }
 
-        public object GetInstance(string methodName)
+        public object BeforeUpdateFieldValueCaller
         {
-            return type.GetField(string.Format("{0}instance", methodName), BindingFlags.Public | BindingFlags.Static).GetValue(null);
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterUpdateFieldValueValue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterUpdateFieldValueCaller
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterUpdateFieldValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterUpdateFieldValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterUpdateFieldValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterUpdateFieldValueLineNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeGetFieldValueValue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterGetFieldValueCaller
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterGetFieldValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterGetFieldValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterGetFieldValueLineNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterGetFieldValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterGetFieldValueValue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeGetFieldValueCaller
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeGetFieldValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeGetFieldValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeGetFieldValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeGetFieldValueLineNumber
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 }

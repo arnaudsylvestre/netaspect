@@ -3,88 +3,88 @@ using FluentAspect.Weaver.Tests.acceptance;
 using FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Before
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before
 {
     [TestFixture]
-    public class BeforeUpdateFieldColumnNumberParameterTest 
+    public class BeforeGetFieldLineNumberParameterTest 
     {
          [Test]
-         public void CheckUpdateFieldWithColumnNumberAndNoDebuggingInformation()
+         public void CheckGetFieldWithLineNumberAndNoDebuggingInformation()
          {
           DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
                  .ByDefiningAssembly(simpleClassAndWeaver =>
                     {
                        simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
-                          .WithParameter<int>("columnNumber");
+                          .WithParameter<int>("lineNumber");
                     })
-                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter columnNumber in method BeforeUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
+                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter lineNumber in method BeforeGetFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
                   .AndEnsureAssembly((assembly, actual) =>
                       {
                           var caller = actual.CreateCallerObject();
                           actual.CallCallerMethod(caller);
-                          Assert.AreEqual(0, actual.Aspect.BeforeUpdateFieldValueColumnNumber);
+                          Assert.AreEqual(0, actual.Aspect.BeforeGetFieldValueLineNumber);
                       })
                   .AndLaunchTest();
          }
 
          [Test]
-         public void CheckUpdateFieldWithColumnNumberAndDebuggingInformation()
+         public void CheckGetFieldWithLineNumberAndDebuggingInformation()
          {
              throw new NotImplementedException();
              //DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
              //       .ByDefiningAssembly(simpleClassAndWeaver =>
              //       {
              //           simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
-             //              .WithParameter<int>("columnNumber");
+             //              .WithParameter<int>("lineNumber");
              //       })
-             //          .EnsureErrorHandler(e => e.Warnings.Add("The parameter columnNumber in method BeforeUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
+             //          .EnsureErrorHandler(e => e.Warnings.Add("The parameter lineNumber in method BeforeGetFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
              //        .AndEnsureAssembly((assembly, actual) =>
              //        {
              //            var caller = actual.CreateCallerObject();
              //            actual.CallCallerMethod(caller);
-             //            Assert.AreEqual(0, actual.Aspect.BeforeUpdateFieldValueColumnNumber);
+             //            Assert.AreEqual(0, actual.Aspect.BeforeGetFieldValueLineNumber);
              //        })
              //        .AndLaunchTest();
          }
 
 
          [Test]
-         public void CheckUpdateFieldWithColumnNumberAndNoDebuggingInformationAndWrongType()
+         public void CheckGetFieldWithLineNumberAndNoDebuggingInformationAndWrongType()
          {
              throw new NotImplementedException();
              //DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
              //       .ByDefiningAssembly(simpleClassAndWeaver =>
              //       {
              //           simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
-             //              .WithParameter<string>("columnNumber");
+             //              .WithParameter<string>("lineNumber");
              //       })
-             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter columnNumber in method BeforeUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
+             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter lineNumber in method BeforeGetFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
              //        .AndEnsureAssembly((assembly, actual) =>
              //        {
              //            var caller = actual.CreateCallerObject();
              //            actual.CallCallerMethod(caller);
-             //            Assert.False(actual.Aspect.BeforeUpdateFieldValuePassed);
+             //            Assert.False(actual.Aspect.BeforeGetFieldValuePassed);
              //        })
              //        .AndLaunchTest();
          }
 
 
          [Test]
-         public void CheckUpdateFieldWithColumnNumberAndNoDebuggingInformationAndReferenced()
+         public void CheckGetFieldWithLineNumberAndNoDebuggingInformationAndReferenced()
          {
              throw new NotImplementedException();
              //DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
              //       .ByDefiningAssembly(simpleClassAndWeaver =>
              //       {
              //           simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
-             //              .WithReferencedParameter<int>("columnNumber");
+             //              .WithReferencedParameter<int>("lineNumber");
              //       })
-             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter columnNumber in method BeforeUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
+             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter lineNumber in method BeforeGetFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
              //        .AndEnsureAssembly((assembly, actual) =>
              //        {
              //            var caller = actual.CreateCallerObject();
              //            actual.CallCallerMethod(caller);
-             //            Assert.False(actual.Aspect.BeforeUpdateFieldValuePassed);
+             //            Assert.False(actual.Aspect.BeforeGetFieldValuePassed);
              //        })
              //        .AndLaunchTest();
          }

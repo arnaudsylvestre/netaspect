@@ -3,13 +3,13 @@ using FluentAspect.Weaver.Tests.acceptance;
 using FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Before
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before
 {
     [TestFixture]
-    public class BeforeUpdateFieldColumnNumberParameterTest 
+    public class BeforeGetFieldColumnNumberParameterTest 
     {
          [Test]
-         public void CheckUpdateFieldWithColumnNumberAndNoDebuggingInformation()
+         public void CheckGetFieldWithColumnNumberAndNoDebuggingInformation()
          {
           DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
                  .ByDefiningAssembly(simpleClassAndWeaver =>
@@ -17,18 +17,18 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Be
                        simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
                           .WithParameter<int>("columnNumber");
                     })
-                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter columnNumber in method BeforeUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
+                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter columnNumber in method BeforeGetFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
                   .AndEnsureAssembly((assembly, actual) =>
                       {
                           var caller = actual.CreateCallerObject();
                           actual.CallCallerMethod(caller);
-                          Assert.AreEqual(0, actual.Aspect.BeforeUpdateFieldValueColumnNumber);
+                          Assert.AreEqual(0, actual.Aspect.BeforeGetFieldValueColumnNumber);
                       })
                   .AndLaunchTest();
          }
 
          [Test]
-         public void CheckUpdateFieldWithColumnNumberAndDebuggingInformation()
+         public void CheckGetFieldWithColumnNumberAndDebuggingInformation()
          {
              throw new NotImplementedException();
              //DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
@@ -37,19 +37,19 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Be
              //           simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
              //              .WithParameter<int>("columnNumber");
              //       })
-             //          .EnsureErrorHandler(e => e.Warnings.Add("The parameter columnNumber in method BeforeUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
+             //          .EnsureErrorHandler(e => e.Warnings.Add("The parameter columnNumber in method BeforeGetFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
              //        .AndEnsureAssembly((assembly, actual) =>
              //        {
              //            var caller = actual.CreateCallerObject();
              //            actual.CallCallerMethod(caller);
-             //            Assert.AreEqual(0, actual.Aspect.BeforeUpdateFieldValueColumnNumber);
+             //            Assert.AreEqual(0, actual.Aspect.BeforeGetFieldValueColumnNumber);
              //        })
              //        .AndLaunchTest();
          }
 
 
          [Test]
-         public void CheckUpdateFieldWithColumnNumberAndNoDebuggingInformationAndWrongType()
+         public void CheckGetFieldWithColumnNumberAndNoDebuggingInformationAndWrongType()
          {
              throw new NotImplementedException();
              //DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
@@ -58,19 +58,19 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Be
              //           simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
              //              .WithParameter<string>("columnNumber");
              //       })
-             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter columnNumber in method BeforeUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
+             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter columnNumber in method BeforeGetFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
              //        .AndEnsureAssembly((assembly, actual) =>
              //        {
              //            var caller = actual.CreateCallerObject();
              //            actual.CallCallerMethod(caller);
-             //            Assert.False(actual.Aspect.BeforeUpdateFieldValuePassed);
+             //            Assert.False(actual.Aspect.BeforeGetFieldValuePassed);
              //        })
              //        .AndLaunchTest();
          }
 
 
          [Test]
-         public void CheckUpdateFieldWithColumnNumberAndNoDebuggingInformationAndReferenced()
+         public void CheckGetFieldWithColumnNumberAndNoDebuggingInformationAndReferenced()
          {
              throw new NotImplementedException();
              //DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
@@ -79,12 +79,12 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Be
              //           simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
              //              .WithReferencedParameter<int>("columnNumber");
              //       })
-             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter columnNumber in method BeforeUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
+             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter columnNumber in method BeforeGetFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
              //        .AndEnsureAssembly((assembly, actual) =>
              //        {
              //            var caller = actual.CreateCallerObject();
              //            actual.CallCallerMethod(caller);
-             //            Assert.False(actual.Aspect.BeforeUpdateFieldValuePassed);
+             //            Assert.False(actual.Aspect.BeforeGetFieldValuePassed);
              //        })
              //        .AndLaunchTest();
          }
