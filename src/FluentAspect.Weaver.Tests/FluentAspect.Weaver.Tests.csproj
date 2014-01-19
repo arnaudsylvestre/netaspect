@@ -174,10 +174,18 @@
     <Compile Include="unit\MethodWeaving\Constructor\OnException\OnExceptionConstructorMethodParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\OnException\OnExceptionParameterNameParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\OnException\OnExceptionConstructorParametersParameterTest.cs" />
+    <Compile Include="unit\MethodWeaving\Constructor\OnFinally\OnFinallyConstructorInstanceParameterTest.cs" />
+    <Compile Include="unit\MethodWeaving\Constructor\OnFinally\OnFinallyMethodMethodParameterTest.cs" />
+    <Compile Include="unit\MethodWeaving\Constructor\OnFinally\OnFinallyMethodParameterNameParameterTest.cs" />
+    <Compile Include="unit\MethodWeaving\Constructor\OnFinally\OnFinallyMethodParametersParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\After\AfterMethodMethodParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\After\AfterMethodParameterNameParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Before\BeforeMethodParameterNameParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Before\BeforeMethodInstanceParameterTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\OnFinally\OnFinallyMethodInstanceParameterTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\OnFinally\OnFinallyMethodMethodParameterTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\OnFinally\OnFinallyMethodParameterNameParameterTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\OnFinally\OnFinallyMethodParametersParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\OnException\OnExceptionMethodParameterNameParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\OnException\OnExceptionMethodInstanceParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\After\AfterMethodInstanceParameterTest.cs" />
@@ -238,6 +246,22 @@
     <Compile Include="unit\CallWeaving\Methods\Parameters\OnException\OnExceptionCallMethodLineNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\Parameters\OnException\OnExceptionCallMethodParameterInCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\Parameters\OnException\OnExceptionCallMethodExceptionParameterTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\AfterMethodParameterTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\AfterMethodParameterValueTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\BeforeMethodParameterTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\BeforeMethodParameterValueTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\OnException\OnExceptionMethodParameterTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\OnException\OnExceptionMethodParameterValueTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\OnFinally\OnFinallyMethodParameterTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\OnFinally\OnFinallyMethodParameterValueTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\After\AfterMethodParameterTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\After\AfterMethodParameterValueTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\BeforeMethodParameterTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\BeforeMethodParameterValueTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\OnException\OnExceptionMethodParameterTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\OnException\OnExceptionMethodParameterValueTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\OnFinally\OnFinallyMethodParameterTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\OnFinally\OnFinallyMethodParameterValueTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\lib\cecil-master\Mono.Cecil.csproj">

@@ -26,5 +26,10 @@
       {
          get { return Aspect.AddOnException(); }
       }
+
+      public MethodDefinitionDefiner OnFinallyInterceptor
+       {
+           get { throw new System.NotImplementedException(); }
+       }
    }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.After
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.After
 {
     [TestFixture]
     public class AfterUpdatePropertyParameterInCallerParameterTest 

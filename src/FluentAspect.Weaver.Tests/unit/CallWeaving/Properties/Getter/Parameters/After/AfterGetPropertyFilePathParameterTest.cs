@@ -1,9 +1,8 @@
 ﻿using System;
-using FluentAspect.Weaver.Tests.acceptance;
 using FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.After
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.After
 {
     [TestFixture]
     public class AfterGetPropertyFilePathParameterTest 

@@ -1,8 +1,7 @@
-﻿using FluentAspect.Weaver.Tests.acceptance;
-using FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields;
+﻿using FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Before
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Subsribe.Parameters.Before
 {
     [TestFixture]
     public class BeforeSubscribeEventValueParameterTest

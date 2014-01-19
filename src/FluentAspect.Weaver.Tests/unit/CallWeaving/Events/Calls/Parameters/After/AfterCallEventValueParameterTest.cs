@@ -1,8 +1,7 @@
-﻿using FluentAspect.Weaver.Tests.acceptance;
-using FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields;
+﻿using FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.After
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Calls.Parameters.After
 {
     [TestFixture]
     public class AfterCallEventValueParameterTest

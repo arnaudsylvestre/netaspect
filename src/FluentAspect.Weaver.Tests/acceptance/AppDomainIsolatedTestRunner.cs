@@ -5,8 +5,8 @@ using System.Text;
 using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Factory;
+using FluentAspect.Weaver.Tests.Core;
 using FluentAspect.Weaver.Tests.acceptance.Weaving.Errors;
-using FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.acceptance

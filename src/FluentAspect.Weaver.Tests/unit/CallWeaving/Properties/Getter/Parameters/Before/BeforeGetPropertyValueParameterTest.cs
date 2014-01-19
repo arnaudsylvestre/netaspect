@@ -1,8 +1,7 @@
-﻿using FluentAspect.Weaver.Tests.acceptance;
-using FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields;
+﻿using FluentAspect.Weaver.Tests.acceptance.Weaving.Calls.Fields;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.Before
 {
     [TestFixture]
     public class BeforeGetPropertyValueParameterTest

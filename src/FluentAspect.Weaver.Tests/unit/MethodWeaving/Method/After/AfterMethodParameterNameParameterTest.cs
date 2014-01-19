@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
+namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.After
 {
     [TestFixture]
     public class AfterMethodParameterNameParameterTest

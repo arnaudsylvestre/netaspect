@@ -1,7 +1,8 @@
 ﻿using System.Reflection;
+using FluentAspect.Weaver.Tests.Core;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters.Before
+namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Constructor.After
 {
     [TestFixture]
     public class AfterConstructorMethodParameterTest

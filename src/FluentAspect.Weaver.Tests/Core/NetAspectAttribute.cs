@@ -466,5 +466,15 @@ namespace FluentAspect.Weaver.Tests.Core
         {
             get { throw new NotImplementedException(); }
         }
+
+        public object OnFinallyInstance
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object OnFinallyMethod
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }
