@@ -16,12 +16,12 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory
             engine.AddCalledParameters(point.Instruction.Operand as MethodReference, variablesForParameters);
             return engine;
         }
-        public static ParametersEngine CreateForUpdateField(JoinPoint point)
+        public static ParametersEngine CreateForUpdateField(JoinPoint point, VariableDefinition value)
         {
             var engine = new ParametersEngine();
             engine.AddPdbParameters(point);
             engine.AddCallerParams(point);
-            engine.AddFieldValue(point);
+            engine.AddFieldValue(point, value);
             return engine;
         }
     }

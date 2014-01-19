@@ -98,7 +98,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
             }
 
             List<IWeaveable> weavables = new List<IWeaveable>();
-            weavables.AddRange(updates.Select(point_L => new AroundInstructionWeaver(point_L.Key, new UpdateFieldWeaver(new MethodCallToWeave()
+            weavables.AddRange(updates.Select(point_L => new AroundInstructionWeaver(point_L.Key, new UpdateFieldWeaver(new FieldToWeave()
                 {
                     JoinPoint = point_L.Key, Interceptors = point_L.Value
                 }))).Cast<IWeaveable>());
