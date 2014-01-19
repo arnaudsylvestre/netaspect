@@ -226,5 +226,180 @@ namespace FluentAspect.Weaver.Tests.Core
         {
             get { throw new NotImplementedException(); }
         }
+
+        public object BeforeUpdatePropertyValueValue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterGetPropertyValueCaller
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterGetPropertyValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterGetPropertyValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterGetPropertyValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterGetPropertyValueLineNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterGetPropertyValueValue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeGetPropertyValueCaller
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeGetPropertyValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeGetPropertyValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeGetPropertyValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeGetPropertyValueLineNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeGetPropertyValueValue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterUpdatePropertyValueCaller
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterUpdatePropertyValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterUpdatePropertyValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterUpdatePropertyValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterUpdatePropertyValueLineNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterUpdatePropertyValueValue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeUpdatePropertyValueCaller
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeUpdatePropertyValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeUpdatePropertyValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeUpdatePropertyValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeUpdatePropertyValueLineNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeSubscribeEventValueValue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterCallEventValueCaller
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterCallEventValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterCallEventValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterCallEventValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterCallEventValueLineNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterCallEventValueValue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeCallEventValueCaller
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeCallEventValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeCallEventValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeCallEventValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }
