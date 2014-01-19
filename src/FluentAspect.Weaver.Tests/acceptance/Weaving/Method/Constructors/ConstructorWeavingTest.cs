@@ -10,7 +10,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Constructors
         protected override Action Execute()
         {
             return () =>
-                {
+            {
+                throw new NotImplementedException();
                     new MyClassToWeaveWithAttributes(false);
                     try
                     {

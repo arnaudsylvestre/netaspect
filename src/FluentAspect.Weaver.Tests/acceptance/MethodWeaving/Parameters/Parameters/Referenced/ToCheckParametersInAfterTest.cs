@@ -11,6 +11,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.MethodWeaving.Parameters.Paramete
         {
             return () =>
                 {
+                    throw new NotImplementedException();
                     new ToCheckParametersReferencedInAfter().Check("parameter", 3);
                     
                 };

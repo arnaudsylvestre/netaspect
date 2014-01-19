@@ -9,6 +9,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method
     {
         protected override Action Execute()
         {
+            throw new NotImplementedException();
             return () =>
                 {
                     string res = new MyClassToWeave().CheckMulti(1);

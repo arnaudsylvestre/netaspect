@@ -11,6 +11,7 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Errors
     {
         protected override void EnsureErrorHandler(ErrorHandler errorHandler)
         {
+            throw new NotImplementedException();
             var builder = new StringBuilder();
             Dump(errorHandler, builder);
             Console.Write(builder);

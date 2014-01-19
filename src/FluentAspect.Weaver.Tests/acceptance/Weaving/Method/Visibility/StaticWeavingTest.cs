@@ -11,7 +11,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Visibility
         {
             return () =>
                 {
-                    string res = MyClassToWeave.CheckStatic(new BeforeParameter {Value = "not before"});
+
+                    throw new NotImplementedException(); string res = MyClassToWeave.CheckStatic(new BeforeParameter { Value = "not before" });
                     Assert.AreEqual("Value set in before", res);
                 };
         }

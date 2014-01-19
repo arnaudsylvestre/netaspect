@@ -11,7 +11,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Interceptors
         protected override Action Execute()
         {
             return () =>
-                {
+            {
+                throw new NotImplementedException();
                     MockInterceptorAttribute.after = null;
                     MockInterceptorAttribute.before = null;
                     MockInterceptorAttribute.exception = null;

@@ -10,7 +10,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Return
         protected override Action Execute()
         {
             return () =>
-                {
+            {
+                throw new NotImplementedException();
                     int res = new MyClassToWeave().CheckWithReturnSimpleType();
                     Assert.AreEqual(5, res);
                 };

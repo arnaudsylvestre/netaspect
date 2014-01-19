@@ -10,7 +10,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Be
     {
          [Test]
          public void CheckUpdateFieldWithLineNumberAndNoDebuggingInformation()
-         {
+        {
+            throw new NotImplementedException();
           DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
                  .ByDefiningAssembly(simpleClassAndWeaver =>
                     {

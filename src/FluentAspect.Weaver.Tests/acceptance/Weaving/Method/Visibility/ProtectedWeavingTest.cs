@@ -14,7 +14,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Visibility
         protected override Action Execute()
         {
             return () =>
-                {
+            {
+                throw new NotImplementedException();
                     string res =
                         new MyClassToWeaveWithAttributes(false).CallCheckBeforeWithAttributesProtected(
                             new BeforeParameter

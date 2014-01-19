@@ -10,7 +10,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.MethodWeaving.Parameters.Paramete
         protected override Action Execute()
         {
             return () =>
-                {
+            {
+                throw new NotImplementedException();
                     try
                     {
                         new ToCheckParametersReferencedOnException().Check("parameter", 3);

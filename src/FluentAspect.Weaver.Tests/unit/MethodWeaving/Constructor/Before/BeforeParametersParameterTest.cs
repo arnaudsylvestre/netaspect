@@ -1,4 +1,5 @@
-﻿using FluentAspect.Weaver.Tests.Core;
+﻿using System;
+using FluentAspect.Weaver.Tests.Core;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Before
@@ -8,7 +9,8 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Before
     {
        [Test]
        public void CheckInstanceReferenced()
-       {
+        {
+            throw new NotImplementedException();
           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                  .ByDefiningAssembly(simpleClassAndWeaver =>
                   {
@@ -20,7 +22,8 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Before
 
         [Test]
         public void CheckInstanceBadType()
-        {
+       {
+           throw new NotImplementedException();
            DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                     .ByDefiningAssembly(simpleClassAndWeaver =>
                    {
@@ -32,7 +35,8 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Before
 
        [Test]
        public void CheckInstanceWithObjectType()
-       {
+        {
+            throw new NotImplementedException();
           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                    .ByDefiningAssembly(simpleClassAndWeaver =>
                    {
@@ -51,7 +55,8 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Before
 
        [Test]
         public void CheckInstanceWithRealType()
-        {
+       {
+           throw new NotImplementedException();
            DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                     .ByDefiningAssembly(simpleClassAndWeaver =>
                     {                       

@@ -9,7 +9,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Dependencies
         protected override Action Execute()
         {
             return () =>
-                {
+            {
+                throw new NotImplementedException();
                     try
                     {
                         new MyClassToWeave().CheckDependency(null);

@@ -10,7 +10,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Exceptions
         protected override Action Execute()
         {
             return () =>
-                {
+            {
+                throw new NotImplementedException();
                     try
                     {
                         new MyClassToWeave().CheckThrowWithReturn();

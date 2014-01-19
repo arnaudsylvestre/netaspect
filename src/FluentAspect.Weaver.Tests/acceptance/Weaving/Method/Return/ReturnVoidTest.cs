@@ -9,7 +9,10 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Return
     {
         protected override Action Execute()
         {
-            return () => { new MyClassToWeave().CheckWithVoid(); };
+            return () =>
+            {
+                throw new NotImplementedException(); new MyClassToWeave().CheckWithVoid();
+            };
         }
     }
 }

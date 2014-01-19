@@ -11,7 +11,8 @@ namespace FluentAspect.Weaver.Tests.docs
         protected override Action Execute()
         {
             return () =>
-                {
+            {
+                throw new NotImplementedException();
                     var myInt = new MyInt(4);
                     myInt.DivideBy(2);
                     Assert.AreEqual("Start Division 4 / 2", LogAttribute.Trace.ToString());

@@ -10,7 +10,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters
         protected override Action Execute()
         {
             return () =>
-                {
+            {
+                throw new NotImplementedException();
                     string res = new MyClassToWeave().CheckBefore(new BeforeParameter {Value = "not before"});
                     Assert.AreEqual("Value set in before", res);
                 };

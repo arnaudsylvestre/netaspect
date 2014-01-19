@@ -9,7 +9,10 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Properties
     {
         protected override Action Execute()
         {
-            return () => { Assert.AreEqual("3", new MyClassToWeaveWithAttributes(false).PropertyGetter); };
+            return () =>
+            {
+                throw new NotImplementedException(); Assert.AreEqual("3", new MyClassToWeaveWithAttributes(false).PropertyGetter);
+            };
         }
     }
 }

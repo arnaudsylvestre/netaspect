@@ -10,7 +10,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Bugs
         protected override Action Execute()
         {
             return () =>
-                {
+            {
+                throw new NotImplementedException();
                     string res = new MyClassToWeave().CheckNotRenameInAssembly();
                     Assert.AreEqual("Weaved", res);
                 };

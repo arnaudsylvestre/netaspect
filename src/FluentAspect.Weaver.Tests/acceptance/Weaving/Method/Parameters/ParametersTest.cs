@@ -10,7 +10,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Parameters
         protected override Action Execute()
         {
             return () =>
-                {
+            {
+                throw new NotImplementedException();
                     string res = new MyClassToWeave().CheckWithParameters("Weaved with parameters");
                     Assert.AreEqual("Weaved with parameters", res);
                 };

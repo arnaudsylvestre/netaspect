@@ -10,7 +10,8 @@ namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Method.Generics
         protected override Action Execute()
         {
             return () =>
-                {
+            {
+                throw new NotImplementedException();
                     string res = new MyClassToWeave().CheckWithGenerics("Weaved");
                     Assert.AreEqual("Weaved<>System.StringWeaved", res);
                 };
