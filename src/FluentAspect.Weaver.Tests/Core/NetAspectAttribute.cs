@@ -401,5 +401,70 @@ namespace FluentAspect.Weaver.Tests.Core
         {
             get { throw new NotImplementedException(); }
         }
+
+        public object BeforeCallEventValueLineNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeCallEventValueValue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterSubscribeEventValueCaller
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterSubscribeEventValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterSubscribeEventValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterSubscribeEventValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterSubscribeEventValueLineNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object AfterSubscribeEventValueValue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeSubscribeEventValueCaller
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeSubscribeEventValueColumnNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeSubscribeEventValueFileName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeSubscribeEventValueFilePath
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public object BeforeSubscribeEventValueLineNumber
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }
