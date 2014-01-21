@@ -53,7 +53,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
             }
             if (parameterInfo.ParameterType.IsByRef && !updateAllowed)
             {
-                throw new NotSupportedException("impossible to ref this parameter");
+                throw new NotSupportedException("impossible to ref/out this parameter");
             }
         }
 

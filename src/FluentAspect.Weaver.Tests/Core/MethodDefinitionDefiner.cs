@@ -50,6 +50,22 @@ namespace FluentAspect.Weaver.Tests.Core
             return this;
         }
 
+        public MethodDefinitionDefiner WithOutParameter<T>(string name)
+        {
+            var parameterType = _definition.Module.Import(typeof(T));
+            var parameterDefinition = new ParameterDefinition(name, ParameterAttributes.Out, new ByReferenceType(parameterType));
+            _definition.Parameters.Add(parameterDefinition);
+            var fieldDefinition = new FieldDefinition(_definition.Name + name, FieldAttributes.Public | FieldAttributes.Static, parameterType);
+            _definition.DeclaringType.Fields.Add(fieldDefinition);
+
+            //_definition.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldarg_0));
+            _definition.Body.Instructions.Insert(0, Instruction.Create(OpCodes.Ldarg, parameterDefinition));
+            _definition.Body.Instructions.Insert(1, Instruction.Create(OpCodes.Ldind_Ref));
+            _definition.Body.Instructions.Insert(2, Instruction.Create(OpCodes.Stsfld, fieldDefinition));
+
+            return this;
+        }
+
         public MethodDefinitionDefiner WhichRaiseException()
         {
             var index = _definition.Body.Instructions.FindIndex(instruction => instruction.OpCode == OpCodes.Ret);

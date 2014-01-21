@@ -6,14 +6,23 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
 {
     [TestFixture]
    public class AfterMethodInstanceParameterTest
-    {
+   {
        [Test]
        public void CheckInstanceReferenced()
-        {
-          DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
-                 .ByDefiningAssembly(simpleClassAndWeaver => simpleClassAndWeaver.AfterInterceptor.WithReferencedParameter<object>("instance"))
-                  .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref the parameter 'instance' in the method After of the type 'A.MyAspectAttribute'")))
-                  .AndLaunchTest();
+       {
+           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
+                  .ByDefiningAssembly(simpleClassAndWeaver => simpleClassAndWeaver.AfterInterceptor.WithReferencedParameter<object>("instance"))
+                   .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'instance' in the method After of the type 'A.MyAspectAttribute'")))
+                   .AndLaunchTest();
+       }
+
+       [Test]
+       public void CheckInstanceOut()
+       {
+           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
+                  .ByDefiningAssembly(simpleClassAndWeaver => simpleClassAndWeaver.AfterInterceptor.WithOutParameter<object>("instance"))
+                   .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'instance' in the method After of the type 'A.MyAspectAttribute'")))
+                   .AndLaunchTest();
        }
 
         [Test]

@@ -67,7 +67,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
         {
             if (parameterInfo.ParameterType.IsByRef)
             {
-                errorHandler.Errors.Add(string.Format("impossible to ref the parameter '{0}' in the method {1} of the type '{2}'", parameterInfo.Name, parameterInfo.Member.Name, parameterInfo.Member.DeclaringType.FullName));
+                errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter '{0}' in the method {1} of the type '{2}'", parameterInfo.Name, parameterInfo.Member.Name, parameterInfo.Member.DeclaringType.FullName));
             }
         }
 
