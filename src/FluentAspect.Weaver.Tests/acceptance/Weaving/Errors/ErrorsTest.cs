@@ -7,6 +7,7 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.acceptance.Weaving.Errors
 {
+    [Ignore]
     public class ErrorsTest : AcceptanceTest
     {
         protected override void EnsureErrorHandler(ErrorHandler errorHandler)

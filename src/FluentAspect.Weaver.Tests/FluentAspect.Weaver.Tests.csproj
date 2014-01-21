@@ -177,9 +177,9 @@
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldParameterInCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldValueParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldLineNumberParameterTest.cs" />
-    <Compile Include="acceptance\Weaving\Calls\Fields\ClassAndAspectAndCall.cs" />
-    <Compile Include="acceptance\Weaving\Calls\Fields\ClassAndAspectAndCallAcceptanceTestBuilder.cs" />
-    <Compile Include="acceptance\Weaving\Calls\Fields\ClassAndAspectAndCallActual.cs" />
+    <Compile Include="Core\ClassAndAspectAndCall.cs" />
+    <Compile Include="Core\ClassAndAspectAndCallAcceptanceTestBuilder.cs" />
+    <Compile Include="Core\ClassAndAspectAndCallActual.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldValueParameterTest.cs" />
     <Compile Include="acceptance\Weaving\Errors\ErrorsTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\ConstructorWeavingInAnotherAssemblyTest.cs" />
