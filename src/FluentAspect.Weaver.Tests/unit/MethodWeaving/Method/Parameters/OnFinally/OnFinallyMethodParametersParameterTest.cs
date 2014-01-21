@@ -2,7 +2,7 @@
 using FluentAspect.Weaver.Tests.Core;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.OnFinally
+namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinally
 {
     [TestFixture]
     public class OnFinallyMethodParametersParameterTest

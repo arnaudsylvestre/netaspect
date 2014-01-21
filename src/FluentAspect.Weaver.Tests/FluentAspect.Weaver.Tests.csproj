@@ -60,7 +60,18 @@
   <ItemGroup>
     <Compile Include="acceptance\AcceptanceTest.cs" />
     <Compile Include="acceptance\AppDomainIsolatedTestRunner.cs" />
+    <Compile Include="Core\AssemblyDefinitionDefiner.cs" />
+    <Compile Include="Core\CallFieldWeavingAspectDefiner.cs" />
+    <Compile Include="Core\CallWeavingAspectDefiner.cs" />
+    <Compile Include="Core\FieldDefinitionDefiner.cs" />
+    <Compile Include="Core\InstcurionsExtensions.cs" />
+    <Compile Include="Core\MethodDefinitionDefiner.cs" />
+    <Compile Include="Core\MethodWeavingAspectDefiner.cs" />
+    <Compile Include="Core\SimpleClassAndWeaver.cs" />
+    <Compile Include="Core\TypeDefinitionDefiner.cs" />
+    <Compile Include="Core\TypeDefinitionExtensions.cs" />
     <Compile Include="unit\CallWeaving\Events\Calls\EventCallWeavingAssemblyAttributeWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Events\Calls\EventCallWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Calls\Parameters\After\AfterCallEventCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Calls\Parameters\After\AfterCallEventColumnNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Calls\Parameters\After\AfterCallEventFileNameParameterTest.cs" />
@@ -75,6 +86,7 @@
     <Compile Include="unit\CallWeaving\Events\Calls\Parameters\Before\BeforeCallEventLineNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Calls\Parameters\Before\BeforeCallEventParameterInCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Calls\Parameters\Before\BeforeCallEventValueParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Events\Subsribe\EventSubscribeWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Subsribe\EventSubscribeCallWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Subsribe\Parameters\After\AfterSubscribeEventCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Subsribe\Parameters\After\AfterSubscribeEventColumnNumberParameterTest.cs" />
@@ -90,18 +102,22 @@
     <Compile Include="unit\CallWeaving\Events\Subsribe\Parameters\Before\BeforeSubscribeEventLineNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Subsribe\Parameters\Before\BeforeSubscribeEventParameterInCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Subsribe\Parameters\Before\BeforeSubscribeEventValueParameterTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\FieldGetterCallWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\VisibilityFieldGetterWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\FieldGetterCallWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\StaticFieldGetterWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Update\FieldUpdaterCallWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\FieldUpdaterCallWeavingAssemblyAttributeWeavingTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Update\StaticFieldGetterWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Update\StaticFieldUpdaterWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\VisibilityFieldUpdaterWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\CallWeavingWithGenericsTest.cs" />
+    <Compile Include="unit\CallWeaving\Methods\MethodCallWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\MethodCallWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\ReturnWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\StaticMethodCallWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\VisibilityMethodCallWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Multi\MultiCallWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Getter\PropertyGetterCallWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Getter\PropertyGetterCallWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\After\AfterGetPropertyCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\After\AfterGetPropertyColumnNumberParameterTest.cs" />
@@ -120,6 +136,7 @@
     <Compile Include="unit\CallWeaving\Properties\Getter\ReturnWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Getter\StaticPropertyGetterCallWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Getter\VisibilityPropertyGetterCallWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\PropertyUpdaterCallWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\AfterUpdatePropertyCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\AfterUpdatePropertyColumnNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\AfterUpdatePropertyFileNameParameterTest.cs" />
@@ -165,6 +182,7 @@
     <Compile Include="acceptance\Weaving\Calls\Fields\ClassAndAspectAndCallActual.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldValueParameterTest.cs" />
     <Compile Include="acceptance\Weaving\Errors\ErrorsTest.cs" />
+    <Compile Include="unit\MethodWeaving\Constructor\ConstructorWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\AfterConstructorInstanceParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\AfterConstructorMethodParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\AfterConstructorParameterNameParameterTest.cs" />
@@ -185,6 +203,7 @@
     <Compile Include="unit\MethodWeaving\Constructor\ConstructorWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\StaticConstructorWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\VisibilityConstructorWeavingTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\MethodWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\MethodWeavingWithGenericsTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\AfterMethodMethodParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\AfterMethodParameterNameParameterTest.cs" />
@@ -209,11 +228,6 @@
     <Compile Include="Core\AssemblyExtensions.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\BeforeMethodMethodParameterTest.cs" />
     <Compile Include="Core\NetAspectAttribute.cs" />
-    <Compile Include="acceptance\Weaving\Method\Dependencies\DependencyWithoutExceptionTest.cs" />
-    <Compile Include="acceptance\Weaving\Method\Dependencies\DependencyWeavingTest.cs" />
-    <Compile Include="acceptance\Weaving\Method\Visibility\StaticWeavingTest.cs" />
-    <Compile Include="acceptance\Weaving\Method\Visibility\ProtectedWeavingTest.cs" />
-    <Compile Include="acceptance\Weaving\Method\Visibility\PrivateWeavingTest.cs" />
     <Compile Include="Core\AssemblyBuilder.cs" />
     <Compile Include="docs\MyIntTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -246,6 +260,7 @@
     <Compile Include="unit\MethodWeaving\Method\ReturnWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\StaticMethodWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\VisibilityMethodWeavingTest.cs" />
+    <Compile Include="unit\MethodWeaving\Properties\Getter\PropertyGetterWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\PropertyGetterWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Parameters\After\AfterPropertyGetterInstanceParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Parameters\After\AfterPropertyGetterMethodParameterTest.cs" />
@@ -266,6 +281,7 @@
     <Compile Include="unit\MethodWeaving\Properties\Getter\PropertyGetterReturnWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\PropertyGetterStaticMethodWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\VisibilityPropertyGetterWeavingTest.cs" />
+    <Compile Include="unit\MethodWeaving\Properties\Updater\PropertyUpdaterWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\PropertyUpdaterWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\After\AfterPropertyUpdaterInstanceParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\After\AfterPropertyUpdaterMethodParameterTest.cs" />
@@ -285,14 +301,14 @@
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\OnFinally\OnFinallyPropertyUpdaterParametersParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\StaticPropertyUpdaterWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\VisibilityPropertyUpdaterWeavingTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\After\AfterMethodParameterTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\After\AfterMethodParameterValueTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\Before\BeforeMethodParameterTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\Before\BeforeMethodParameterValueTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\OnException\OnExceptionMethodParameterTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\OnException\OnExceptionMethodParameterValueTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\OnFinally\OnFinallyMethodParameterTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\OnFinally\OnFinallyMethodParameterValueTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\AfterConstructorParameterTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\AfterConstructorParameterValueTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\BeforeConstructorParameterTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\BeforeConstructorParameterValueTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\OnException\OnExceptionConstructorParameterTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\OnException\OnExceptionConstructorParameterValueTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\OnFinally\OnFinallyConstructorParameterTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\OnFinally\OnFinallyConstructorParameterValueTest.cs" />
     <Compile Include="unit\ParameterWeaving\Constructor\ParameterConstructorWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\After\AfterMethodParameterTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\After\AfterMethodParameterValueTest.cs" />
@@ -331,12 +347,6 @@
       <Link>PEVerify.exe</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="acceptance\Weaving\Method\Interceptors\" />
-    <Folder Include="acceptance\Weaving\Method\Parameters\" />
-    <Folder Include="acceptance\Weaving\Method\Properties\" />
-    <Folder Include="acceptance\Weaving\Method\Return\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,7 +3,7 @@ using System.Reflection;
 using FluentAspect.Weaver.Tests.Core;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Before
+namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.Before
 {
     [TestFixture]
     public class BeforeConstructorMethodParameterTest

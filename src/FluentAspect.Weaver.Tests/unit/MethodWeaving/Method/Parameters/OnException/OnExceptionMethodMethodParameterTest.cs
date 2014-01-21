@@ -3,7 +3,7 @@ using System.Reflection;
 using FluentAspect.Weaver.Tests.Core;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.OnException
+namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnException
 {
     [TestFixture]
     public class OnExceptionMethodMethodParameterTest

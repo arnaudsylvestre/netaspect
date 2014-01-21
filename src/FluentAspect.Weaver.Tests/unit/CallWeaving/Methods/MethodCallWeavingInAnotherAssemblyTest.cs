@@ -1,10 +1,10 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Calls
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods
 {
     [TestFixture]
-    public class StaticFieldUpdaterWeavingTest
+    public class MethodCallWeavingInAnotherAssemblyTest
     {
         [Test]
          public void Check()

@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Constructor.OnException
+namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnException
 {
     [TestFixture]
    public class OnExceptionParameterNameParameterTest
