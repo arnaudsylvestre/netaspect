@@ -249,10 +249,12 @@
     <Compile Include="unit\ParameterWeaving\Constructor\OnException\OnExceptionMethodParameterValueTest.cs" />
     <Compile Include="unit\ParameterWeaving\Constructor\OnFinally\OnFinallyMethodParameterTest.cs" />
     <Compile Include="unit\ParameterWeaving\Constructor\OnFinally\OnFinallyMethodParameterValueTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\ParameterConstructorWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\After\AfterMethodParameterTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\After\AfterMethodParameterValueTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\Before\BeforeMethodParameterTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\Before\BeforeMethodParameterValueTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\ParameterMethodWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\OnException\OnExceptionMethodParameterTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\OnException\OnExceptionMethodParameterValueTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\OnFinally\OnFinallyMethodParameterTest.cs" />
