@@ -10,12 +10,8 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
        [Test]
        public void CheckInstanceReferenced()
         {
-            throw new NotImplementedException();
           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
-                 .ByDefiningAssembly(simpleClassAndWeaver =>
-                  {
-                     simpleClassAndWeaver.AfterInterceptor.WithReferencedParameter<object>("instance");
-                  })
+                 .ByDefiningAssembly(simpleClassAndWeaver => simpleClassAndWeaver.AfterInterceptor.WithReferencedParameter<object>("instance"))
                   .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref the parameter 'instance' in the method After of the type 'A.MyAspectAttribute'")))
                   .AndLaunchTest();
        }
@@ -23,7 +19,6 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
         [Test]
         public void CheckInstanceBadType()
        {
-           throw new NotImplementedException();
            DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                     .ByDefiningAssembly(simpleClassAndWeaver =>
                    {
@@ -36,7 +31,6 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
        [Test]
        public void CheckInstanceWithObjectType()
         {
-            throw new NotImplementedException();
           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                    .ByDefiningAssembly(simpleClassAndWeaver =>
                    {
@@ -56,7 +50,6 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
        [Test]
         public void CheckInstanceWithRealType()
        {
-           throw new NotImplementedException();
            DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                     .ByDefiningAssembly(simpleClassAndWeaver =>
                     {                       
