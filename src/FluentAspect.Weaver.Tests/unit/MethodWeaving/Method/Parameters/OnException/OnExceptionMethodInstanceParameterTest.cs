@@ -10,7 +10,6 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExcep
        [Test]
        public void CheckInstanceReferenced()
         {
-            throw new NotImplementedException();
           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                  .ByDefiningAssembly(simpleClassAndWeaver =>
                   {

@@ -1,5 +1,7 @@
 ﻿using System;
 using FluentAspect.Weaver.Tests.Core;
+using FluentAspect.Weaver.Tests.Core.Model;
+using Mono.Cecil;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
@@ -10,6 +12,19 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
        [Test]
        public void CheckInstanceReferenced()
        {
+           string name = "Temp";
+           var assemblyDefinition = AssemblyDefinition.CreateAssembly(new AssemblyNameDefinition(name, new Version("1.0")), name, ModuleKind.Dll);
+            assemblyDefinition.Write(name + ".dll");
+           NetAspectAssembly assembly = new NetAspectAssembly(assemblyDefinition.MainModule);
+           var myClassToWeave = assembly.AddClass("MyClassToWeave");
+           var aspect = assembly.AddAspect("MyAspectAttribute");
+           myClassToWeave.AddMethod("MyMethodToWeave").WithAspect(aspect);
+
+           //var type = assembly.WithType(_typeName);
+           //var aspect = assembly.WithMethodWeavingAspect(_aspectName);
+           //var method = type.WithMethod(_methodName).AndReturn();
+           //method.AddAspect(aspect);
+
            DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                   .ByDefiningAssembly(simpleClassAndWeaver => simpleClassAndWeaver.AfterInterceptor.WithReferencedParameter<object>("instance"))
                    .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'instance' in the method After of the type 'A.MyAspectAttribute'")))

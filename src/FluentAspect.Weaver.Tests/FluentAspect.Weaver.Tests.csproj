@@ -67,6 +67,14 @@
     <Compile Include="Core\InstcurionsExtensions.cs" />
     <Compile Include="Core\MethodDefinitionDefiner.cs" />
     <Compile Include="Core\MethodWeavingAspectDefiner.cs" />
+    <Compile Include="Core\Model\INetAspectType.cs" />
+    <Compile Include="Core\Model\NetAspectAspect.cs" />
+    <Compile Include="Core\Model\NetAspectAssembly.cs" />
+    <Compile Include="Core\Model\NetAspectAssemblyExtensions.cs" />
+    <Compile Include="Core\Model\NetAspectClass.cs" />
+    <Compile Include="Core\Model\NetAspectField.cs" />
+    <Compile Include="Core\Model\NetAspectMethod.cs" />
+    <Compile Include="Core\Model\NetAspectVisibility.cs" />
     <Compile Include="Core\SimpleClassAndWeaver.cs" />
     <Compile Include="Core\TypeDefinitionDefiner.cs" />
     <Compile Include="Core\TypeDefinitionExtensions.cs" />
