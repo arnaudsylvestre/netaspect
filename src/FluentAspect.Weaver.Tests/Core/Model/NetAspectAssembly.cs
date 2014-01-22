@@ -7,7 +7,6 @@ namespace FluentAspect.Weaver.Tests.Core.Model
     public class NetAspectAssembly
     {
         private List<INetAspectType> types = new List<INetAspectType>();
-        private string name = "Temp";
 
 
         public NetAspectAssembly(AssemblyDefinition assemblyDefinition)

@@ -21,5 +21,10 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         {
             get { return _netAspectClass.DefaultConstructor; }
         }
+
+        public NetAspectMethod AddAfterInterceptor()
+        {
+            return _netAspectClass.AddMethod("After");
+        }
     }
 }

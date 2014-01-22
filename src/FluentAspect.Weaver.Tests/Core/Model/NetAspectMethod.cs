@@ -3,6 +3,34 @@ using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Tests.Core.Model
 {
+    public class NetAspectParameter
+    {
+        private readonly bool _isOut;
+        private ParameterDefinition parameterDefinition;
+        public TypeReference Type { get; set; }
+        public string Name { get; set; }
+
+        public NetAspectParameter(string name, TypeReference type, bool isOut)
+        {
+            _isOut = isOut;
+            Name = name;
+            Type = type;
+        }
+
+        public ParameterDefinition ParameterDefinition
+        {
+            get { if (parameterDefinition == null)
+            {
+                ParameterAttributes attributes = ParameterAttributes.None;
+                if (_isOut)
+                    attributes |= ParameterAttributes.Out;
+                parameterDefinition = new ParameterDefinition(Name, attributes, Type);
+            }
+            return parameterDefinition;
+            }
+        }
+    }
+
     public class NetAspectMethod
     {
         public string Name { get; private set; }
@@ -69,6 +97,11 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         {
             aspects.Add(aspect);
             return this;
+        }
+
+        public NetAspectMethod WithReferencedParameter<T>(string parameterName)
+        {
+            
         }
     }
 }
