@@ -62,7 +62,7 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             TypeDefinition def = new TypeDefinition("A", Name, attributes);
             foreach (var method in methods)
             {
-                def.Methods.Add(method.Generate());
+                def.Methods.Add(method.MethodDefinition);
             }
             foreach (var field in fields)
             {

@@ -19,11 +19,29 @@ namespace FluentAspect.Weaver.Tests.Core.Model
 
         public TypeReference Type { get; set; }
 
+        private MethodDefinition methodDefinition;
+
+        public MethodDefinition MethodDefinition
+        {
+            get
+            {
+                if (methodDefinition == null)
+                {
+                    methodDefinition = Generate();
+                }
+                return methodDefinition;
+            }
+        }
+
+
         private MethodDefinition Generate()
         {
             MethodAttributes attributes = Compute(Visibility);
             if (IsStatic)
                 attributes |= MethodAttributes.Static;
+            if (Name == ".ctor")
+                attributes |= MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.SpecialName |
+                              MethodAttributes.RTSpecialName;
             MethodDefinition def = new MethodDefinition(Name, attributes, Type);
             foreach (var aspect in aspects)
             {

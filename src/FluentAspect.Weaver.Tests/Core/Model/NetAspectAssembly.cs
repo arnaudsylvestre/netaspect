@@ -10,24 +10,25 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         private string name = "Temp";
 
 
-        public NetAspectAssembly(ModuleDefinition module)
+        public NetAspectAssembly(AssemblyDefinition assemblyDefinition)
         {
-            Module = module;
+            Assembly = assemblyDefinition;
         }
 
-        public ModuleDefinition Module { get; private set; }
+        public AssemblyDefinition Assembly { get; private set; }
 
         public void Add(NetAspectClass @class)
         {
             types.Add(@class);
         }
 
-        public void Generate()
+        public void Generate(string filename)
         {
             foreach (var type in types)
             {
-                Module.Types.Add(type.TypeDefinition);
+                Assembly.MainModule.Types.Add(type.TypeDefinition);
             }
+            Assembly.Write(filename);
         }
     }
 }

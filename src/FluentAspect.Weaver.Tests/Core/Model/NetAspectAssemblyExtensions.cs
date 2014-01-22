@@ -6,13 +6,13 @@ namespace FluentAspect.Weaver.Tests.Core.Model
     {
         public static NetAspectClass AddClass(this NetAspectAssembly assembly, string name)
         {
-            var c = new NetAspectClass(name, assembly.Module);
+            var c = new NetAspectClass(name, assembly.Assembly.MainModule);
             assembly.Add(c);
             return c;
         }
         public static NetAspectAspect AddAspect(this NetAspectAssembly assembly, string name)
         {
-            var c = new NetAspectClass(name, assembly.Module);
+            var c = new NetAspectClass(name, assembly.Assembly.MainModule);
             assembly.Add(c);
             return new NetAspectAspect(c);
         }

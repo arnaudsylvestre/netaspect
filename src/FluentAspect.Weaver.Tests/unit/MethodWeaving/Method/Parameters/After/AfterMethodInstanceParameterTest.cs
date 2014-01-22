@@ -14,11 +14,11 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
        {
            string name = "Temp";
            var assemblyDefinition = AssemblyDefinition.CreateAssembly(new AssemblyNameDefinition(name, new Version("1.0")), name, ModuleKind.Dll);
-            assemblyDefinition.Write(name + ".dll");
-           NetAspectAssembly assembly = new NetAspectAssembly(assemblyDefinition.MainModule);
+           NetAspectAssembly assembly = new NetAspectAssembly(assemblyDefinition);
            var myClassToWeave = assembly.AddClass("MyClassToWeave");
            var aspect = assembly.AddAspect("MyAspectAttribute");
            myClassToWeave.AddMethod("MyMethodToWeave").WithAspect(aspect);
+           assembly.Generate(name + ".dll");
 
            //var type = assembly.WithType(_typeName);
            //var aspect = assembly.WithMethodWeavingAspect(_aspectName);
