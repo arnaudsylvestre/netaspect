@@ -14,7 +14,7 @@ namespace FluentAspect.Weaver.Tests.Core.Model
 
         public void AddDefaultConstructor()
         {
-            _netAspectClass.AddConstructor();
+            _netAspectClass.AddMethod();
         }
 
         public MethodReference DefaultConstructor
