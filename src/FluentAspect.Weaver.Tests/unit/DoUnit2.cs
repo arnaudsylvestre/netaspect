@@ -5,6 +5,7 @@ using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Tests.Core;
 using FluentAspect.Weaver.Tests.Core.Model;
 using FluentAspect.Weaver.Tests.acceptance;
+using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Tests.unit
 {
@@ -37,7 +38,7 @@ namespace FluentAspect.Weaver.Tests.unit
                 }
             }
 
-          public DoAcceptanceConfiguration ByDefiningAssembly(Action<TSample> configure)
+          public DoAcceptanceConfiguration ByDefiningAssembly(Action<NetAspectAssembly> configure)
             {
                 this.configure = configure;
                 return this;
@@ -61,17 +62,18 @@ namespace FluentAspect.Weaver.Tests.unit
             {
                 var runner = CreateAppRunner();
 
-                var assembly = AssemblyBuilder.Create();
-               var sample_L = _acceptanceTestBuilder.CreateSample(assembly);
+                var assemblyDefinition = AssemblyDefinition.CreateAssembly(new AssemblyNameDefinition("Temp", new Version("1.0")), "Temp", ModuleKind.Dll);
+
+                NetAspectAssembly sample_L = new NetAspectAssembly(assemblyDefinition);
                configure(sample_L);
-                assembly.Save(dll_L);
+               sample_L.Generate(dll_L);
 
                 var errorHandler = new ErrorHandler();
                 errorHandlerProvider(errorHandler);
                 Console.Write(runner.Run(dll_L, errorHandler.Errors, errorHandler.Failures, errorHandler.Warnings));
 
                 runner = CreateAppRunner();
-                runner.Ensure(dll_L, _acceptanceTestBuilder, ensure);
+                runner.Ensure(dll_L, ensure);
             }
 
             private static AppDomainIsolatedTestRunner CreateAppRunner()

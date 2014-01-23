@@ -19,7 +19,21 @@ namespace FluentAspect.Weaver.Tests.Core.Model
 
         public TypeReference Type { get; set; }
 
-        public FieldDefinition Generate()
+       public string DefaultValue { get; set; }
+
+       private FieldDefinition field;
+
+       public FieldDefinition Field
+       {
+          get { if (field == null)
+          {
+             field = Generate();
+          }
+             return field;
+          }
+       }
+
+       private FieldDefinition Generate()
         {
             FieldAttributes attributes = Compute(Visibility);
             if (IsStatic)

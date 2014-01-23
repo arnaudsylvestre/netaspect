@@ -27,7 +27,10 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             {
                 Assembly.MainModule.Types.Add(type.TypeDefinition);
             }
-            Assembly.Write(filename);
+            Assembly.Write(filename, new WriterParameters()
+               {
+                  WriteSymbols = true
+               });
         }
     }
 }

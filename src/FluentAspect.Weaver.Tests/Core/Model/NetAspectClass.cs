@@ -32,7 +32,9 @@ namespace FluentAspect.Weaver.Tests.Core.Model
 
         private TypeDefinition definition;
 
-        public TypeDefinition TypeDefinition
+       public Type BaseType { get; set; }
+
+       public TypeDefinition TypeDefinition
         {
             get { 
                 if (definition == null)
@@ -43,7 +45,9 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             }
         }
 
-        public MethodReference DefaultConstructor
+       public IEnumerable<NetAspectField> Fields { get { return fields; } }
+
+       public MethodReference DefaultConstructor
         {
             get {
                 foreach (var method in TypeDefinition.Methods)
@@ -56,17 +60,21 @@ namespace FluentAspect.Weaver.Tests.Core.Model
 
         public TypeDefinition Generate()
         {
-            TypeAttributes attributes = TypeAttributes.Class;
+            TypeAttributes attributes = TypeAttributes.Class | TypeAttributes.Public;
             if (IsAbstract)
                 attributes = attributes | TypeAttributes.Abstract;
             TypeDefinition def = new TypeDefinition("A", Name, attributes);
+           var baseType = BaseType;
+           if (baseType == null)
+              baseType = typeof (object);
+           def.BaseType = Module.Import(baseType);
+           foreach (var field in fields)
+           {
+              def.Fields.Add(field.Field);
+           }
             foreach (var method in methods)
             {
                 def.Methods.Add(method.MethodDefinition);
-            }
-            foreach (var field in fields)
-            {
-                def.Fields.Add(field.Generate());
             }
             return def;
         }

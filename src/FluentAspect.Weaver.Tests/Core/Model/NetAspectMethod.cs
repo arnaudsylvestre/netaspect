@@ -1,5 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
+using Mono.Collections.Generic;
+using MethodAttributes = Mono.Cecil.MethodAttributes;
+using ParameterAttributes = Mono.Cecil.ParameterAttributes;
 
 namespace FluentAspect.Weaver.Tests.Core.Model
 {
@@ -31,16 +36,34 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         }
     }
 
+   public interface INetAspectMethodInstruction
+   {
+      void Generate(Collection<Instruction> instructions);
+   }
+
+   public class ReturnInstruction : INetAspectMethodInstruction
+   {
+      public void Generate(Collection<Instruction> instructions)
+      {
+         instructions.Add(Instruction.Create(OpCodes.Ret));
+      }
+   }
+
+
+
     public class NetAspectMethod
     {
         public string Name { get; private set; }
         public ModuleDefinition ModuleDefinition { get; set; }
+       List<INetAspectMethodInstruction> instructions = new List<INetAspectMethodInstruction>();
+       private INetAspectType declaringType;
 
-        public NetAspectMethod(string name, TypeReference type, ModuleDefinition moduleDefinition)
+        public NetAspectMethod(string name, TypeReference type, ModuleDefinition moduleDefinition, INetAspectType declaringType_P)
         {
             Name = name;
             Type = type;
             ModuleDefinition = moduleDefinition;
+           declaringType = declaringType_P;
         }
 
         public NetAspectVisibility Visibility { get; set; }
@@ -65,6 +88,11 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             }
         }
 
+       public void AddInstruction(INetAspectMethodInstruction instruction)
+       {
+          instructions.Add(instruction);
+       }
+
 
         private MethodDefinition Generate()
         {
@@ -74,12 +102,50 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             if (Name == ".ctor")
                 attributes |= MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.SpecialName |
                               MethodAttributes.RTSpecialName;
+
             MethodDefinition def = new MethodDefinition(Name, attributes, Type);
             foreach (var aspect in aspects)
             {
                 def.CustomAttributes.Add(new CustomAttribute(aspect.DefaultConstructor));
                 
             }
+           var instructions_L = def.Body.Instructions;
+
+           foreach (var parameter_L in parameters)
+           {
+              def.Parameters.Add(parameter_L.ParameterDefinition);
+           }
+           
+
+           if (Name == ".ctor")
+           {
+              var baseType_L = declaringType.BaseType;
+              if (baseType_L == null)
+                 baseType_L = typeof (object);
+
+              foreach (var fieldDefinition_L in declaringType.Fields)
+           {
+              if (fieldDefinition_L.DefaultValue != null)
+              {
+                 instructions_L.Add(Instruction.Create(OpCodes.Ldarg_0));
+                 instructions_L.Add(Instruction.Create(OpCodes.Ldstr, fieldDefinition_L.DefaultValue));
+                 instructions_L.Add(Instruction.Create(OpCodes.Stfld, fieldDefinition_L.Field));
+
+              }
+           }
+
+              var constructorInfo_L = baseType_L.GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)[0];
+              instructions_L.Add(Instruction.Create(OpCodes.Ldarg_0));
+              instructions_L.Add(Instruction.Create(OpCodes.Call, ModuleDefinition.Import(constructorInfo_L)));
+           }
+
+           foreach (var instruction_L in instructions)
+           {
+              instruction_L.Generate(instructions_L);
+           }
+
+           
+
             return def;
         }
 

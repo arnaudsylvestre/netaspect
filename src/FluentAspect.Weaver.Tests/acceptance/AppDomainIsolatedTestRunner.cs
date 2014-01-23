@@ -48,8 +48,13 @@ namespace FluentAspect.Weaver.Tests.acceptance
 
         public void Ensure<TSample, TActual>(string dll_L, IAcceptanceTestBuilder<TSample, TActual> context, Action<Assembly, TActual> ensure)
         {
-            var assemblyDll = Assembly.LoadFrom(dll_L);
-            ensure(assemblyDll, context.CreateActual(assemblyDll));
+           var assemblyDll = Assembly.LoadFrom(dll_L);
+           ensure(assemblyDll, context.CreateActual(assemblyDll));
+        }
+
+        public void Ensure(string dll_L,  Action<Assembly> ensure)
+        {
+           ensure(Assembly.LoadFrom(dll_L));
         }
     }
 }
