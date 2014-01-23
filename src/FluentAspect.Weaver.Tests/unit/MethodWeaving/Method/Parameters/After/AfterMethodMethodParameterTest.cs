@@ -11,20 +11,18 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
        [Test]
        public void CheckMethodReferenced()
         {
-            throw new NotImplementedException();
           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                  .ByDefiningAssembly(simpleClassAndWeaver =>
                   {
                      simpleClassAndWeaver.AfterInterceptor.WithReferencedParameter<MethodInfo>("method");
                   })
-                  .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref the parameter 'method' in the method After of the type 'A.MyAspectAttribute'")))
+                  .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'method' in the method After of the type 'A.MyAspectAttribute'")))
                   .AndLaunchTest();
        }
 
         [Test]
         public void CheckMethodBadType()
        {
-           throw new NotImplementedException();
            DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                     .ByDefiningAssembly(simpleClassAndWeaver =>
                    {
@@ -37,7 +35,6 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
        [Test]
         public void CheckMethodWithRealType()
         {
-            throw new NotImplementedException();
            DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
                     .ByDefiningAssembly(simpleClassAndWeaver =>
                     {                       
