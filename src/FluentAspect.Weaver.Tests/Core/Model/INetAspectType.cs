@@ -10,5 +10,6 @@ namespace FluentAspect.Weaver.Tests.Core.Model
        Type BaseType { get; }
        TypeDefinition TypeDefinition { get; }
        IEnumerable<NetAspectField> Fields { get; }
+        void Add(NetAspectField field);
     }
 }

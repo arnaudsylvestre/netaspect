@@ -10,7 +10,7 @@ namespace FluentAspect.Weaver.Tests.Core
       {
           var first = FindType(assembly, type);
 
-          return first.GetConstructors()[0].Invoke(parameters);
+          return Activator.CreateInstance(first, parameters);
       }
 
        public static Type FindType(this Assembly assembly, string type)
@@ -26,5 +26,11 @@ namespace FluentAspect.Weaver.Tests.Core
        {
            return o.GetType().GetField(fieldName).GetValue(o);
        }
+
+        public static object GetStaticFieldValue(this Assembly assembly, string typeName, string fieldName)
+       {
+           return assembly.FindType(typeName).GetField(fieldName).GetValue(null);
+            
+        }
    }
 }

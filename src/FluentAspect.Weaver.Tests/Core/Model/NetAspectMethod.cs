@@ -58,6 +58,11 @@ namespace FluentAspect.Weaver.Tests.Core.Model
        List<INetAspectMethodInstruction> instructions = new List<INetAspectMethodInstruction>();
        private INetAspectType declaringType;
 
+        public INetAspectType DeclaringType
+        {
+            get { return declaringType; }
+        }
+
         public NetAspectMethod(string name, TypeReference type, ModuleDefinition moduleDefinition, INetAspectType declaringType_P)
         {
             Name = name;

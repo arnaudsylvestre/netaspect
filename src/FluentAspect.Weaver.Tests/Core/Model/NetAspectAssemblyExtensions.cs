@@ -41,6 +41,12 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             return c;
         }
 
+        public static NetAspectClass WithDefaultConstructor(this NetAspectClass classe)
+        {
+            classe.AddConstructor().WithReturn();
+            return classe;
+        }
+
 
         public static NetAspectParameter WithReferencedParameter<T>(this NetAspectMethod method, string parameterName)
         {
@@ -53,9 +59,16 @@ namespace FluentAspect.Weaver.Tests.Core.Model
 
         public static NetAspectParameter WithOutParameter<T>(this NetAspectMethod method, string parameterName)
         {
-           var netAspectParameter = new NetAspectParameter(parameterName, new ByReferenceType(method.ModuleDefinition.Import(typeof(T))), true);
-           method.Add(netAspectParameter);
-           return netAspectParameter;
+            var netAspectParameter = new NetAspectParameter(parameterName, new ByReferenceType(method.ModuleDefinition.Import(typeof(T))), true);
+            method.Add(netAspectParameter);
+            return netAspectParameter;
+        }
+
+        public static NetAspectParameter WithParameter<T>(this NetAspectMethod method, string parameterName)
+        {
+            var netAspectParameter = new NetAspectParameter(parameterName, method.ModuleDefinition.Import(typeof(T)), false);
+            method.Add(netAspectParameter);
+            return netAspectParameter;
         }
 
 
