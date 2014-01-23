@@ -22,6 +22,11 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             Type = type;
         }
 
+        public NetAspectParameter(string parameterName, NetAspectClass parameterType, bool isOut)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public ParameterDefinition ParameterDefinition
         {
             get { if (parameterDefinition == null)

@@ -9,8 +9,6 @@ namespace FluentAspect.Weaver.Tests.Core.Model
 
         public NetAspectField(string name, TypeReference type)
         {
-            Name = name;
-            Type = type;
         }
 
         public NetAspectVisibility Visibility { get; set; }

@@ -1,28 +1,41 @@
 ﻿using System;
+using System.Reflection;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
+using FieldAttributes = Mono.Cecil.FieldAttributes;
+using MethodAttributes = Mono.Cecil.MethodAttributes;
+using TypeAttributes = Mono.Cecil.TypeAttributes;
 
 namespace FluentAspect.Weaver.Tests.Core.Model
 {
     public static class NetAspectAssemblyExtensions
     {
-        public static NetAspectClass AddClass(this NetAspectAssembly assembly, string name)
+        public static TypeDefinition AddClass(this AssemblyDefinition assembly, string name)
         {
-            var c = new NetAspectClass(name, assembly.Assembly.MainModule);
-            assembly.Add(c);
-            return c;
+            var typeDefinition = new TypeDefinition("A", name, TypeAttributes.Class | TypeAttributes.Public, assembly.MainModule.TypeSystem.Object);
+            assembly.MainModule.Types.Add(typeDefinition);
+            return typeDefinition;
         }
-        public static NetAspectAspect AddAspect(this NetAspectAssembly assembly, string name)
+
+        public static NetAspectAspect AddAspect(this AssemblyDefinition assembly, string name)
         {
-           var c = new NetAspectClass(name, assembly.Assembly.MainModule);
-           assembly.Add(c);
-           c.BaseType = typeof (Attribute);
-           var netAspectField_L = new NetAspectField("NetAspectAttributeKind", assembly.Assembly.MainModule.TypeSystem.String);
-           netAspectField_L.Visibility = NetAspectVisibility.Public;
-           netAspectField_L.DefaultValue = "MethodWeaving";
-           c.Add(netAspectField_L);
-           return new NetAspectAspect(c);
+            var typeDefinition = assembly.AddClass(name);
+            typeDefinition.BaseType = assembly.MainModule.Import(typeof (Attribute));
+            var fieldDefinition = new FieldDefinition("NetAspectAttributeKind", FieldAttributes.Public, assembly.MainModule.TypeSystem.String);
+            typeDefinition.Fields.Add(fieldDefinition);
+            var method = new MethodDefinition(".ctor", MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName, assembly.MainModule.TypeSystem.Void);
+            var instructions = method.Body.Instructions;
+            var constructorInfo_L = typeof(Attribute).GetConstructors(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)[0];
+            instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+            instructions.Add(Instruction.Create(OpCodes.Ldstr, "MethodWeaving"));
+            instructions.Add(Instruction.Create(OpCodes.Stfld, fieldDefinition));
+            instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+            instructions.Add(Instruction.Create(OpCodes.Call, assembly.MainModule.Import(constructorInfo_L)));
+            instructions.Add(Instruction.Create(OpCodes.Ret));
+            typeDefinition.Methods.Add(method);
+            return new NetAspectAspect(typeDefinition);
         }
-        public static NetAspectAspect AddDefaultAspect(this NetAspectAssembly assembly, string name)
+        public static NetAspectAspect AddDefaultAspect(this AssemblyDefinition assembly, string name)
         {
            var aspect = assembly.AddAspect(name);
            aspect.AddDefaultConstructor().WithReturn();

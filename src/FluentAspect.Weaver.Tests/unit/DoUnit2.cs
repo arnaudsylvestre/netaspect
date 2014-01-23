@@ -18,7 +18,7 @@ namespace FluentAspect.Weaver.Tests.unit
 
        public class DoAcceptanceConfiguration
         {
-          private Action<NetAspectAssembly> configure = definer => { };
+           private Action<AssemblyDefinition> configure = definer => { };
           private Action<Assembly> ensure = (assembly) => { };
             private Action<ErrorHandler> errorHandlerProvider = e => { };
 
@@ -38,7 +38,7 @@ namespace FluentAspect.Weaver.Tests.unit
                 }
             }
 
-          public DoAcceptanceConfiguration ByDefiningAssembly(Action<NetAspectAssembly> configure)
+          public DoAcceptanceConfiguration ByDefiningAssembly(Action<AssemblyDefinition> configure)
             {
                 this.configure = configure;
                 return this;
@@ -64,9 +64,11 @@ namespace FluentAspect.Weaver.Tests.unit
 
                 var assemblyDefinition = AssemblyDefinition.CreateAssembly(new AssemblyNameDefinition("Temp", new Version("1.0")), "Temp", ModuleKind.Dll);
 
-                NetAspectAssembly sample_L = new NetAspectAssembly(assemblyDefinition);
-               configure(sample_L);
-               sample_L.Generate(dll_L);
+                configure(assemblyDefinition);
+               assemblyDefinition.Write(dll_L, new WriterParameters()
+                   {
+                       WriteSymbols = true
+                   });
 
                 var errorHandler = new ErrorHandler();
                 errorHandlerProvider(errorHandler);

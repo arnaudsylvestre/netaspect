@@ -1,58 +1,78 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
+using FieldAttributes = Mono.Cecil.FieldAttributes;
+using MethodAttributes = Mono.Cecil.MethodAttributes;
+using ParameterAttributes = Mono.Cecil.ParameterAttributes;
 
 namespace FluentAspect.Weaver.Tests.Core.Model
 {
     public class NetAspectAspect
     {
-        private readonly NetAspectClass _netAspectClass;
+        private readonly TypeDefinition typeDefinition;
 
-        public NetAspectAspect(NetAspectClass netAspectClass)
+        public NetAspectAspect(TypeDefinition typeDefinition)
         {
-            _netAspectClass = netAspectClass;
+            this.typeDefinition = typeDefinition;
         }
 
-        public NetAspectMethod AddDefaultConstructor()
+        public MethodDefinition AddDefaultConstructor()
         {
-            return _netAspectClass.AddConstructor();
-        }
+            var constructor = new MethodDefinition(".ctor", MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName, typeDefinition.Module.TypeSystem.Void);
 
-        public MethodReference DefaultConstructor
-        {
-            get { return _netAspectClass.DefaultConstructor; }
+            var instructions = constructor.Body.Instructions;
+
+            var parentConstructor = (from m in typeDefinition.BaseType.Resolve().Methods where m.Name == ".ctor" && m.Parameters.Count == 0 select m).First();
+
+            instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+            instructions.Add(Instruction.Create(OpCodes.Call, parentConstructor));
+            instructions.Add(Instruction.Create(OpCodes.Ret));
+
+            return constructor;
         }
 
         public NetAspectInterceptor AddAfterInterceptor()
         {
-            return new NetAspectInterceptor(_netAspectClass.AddMethod("After"), _netAspectClass);
+            var interceptor = new MethodDefinition("After", MethodAttributes.Public, typeDefinition.Module.TypeSystem.Void);
+
+            return new NetAspectInterceptor(interceptor);
         }
     }
 
     public class NetAspectInterceptor
     {
-        private NetAspectMethod method;
-        private readonly NetAspectClass _netAspectClass;
+        private MethodDefinition definition;
 
-        public NetAspectInterceptor(NetAspectMethod method, NetAspectClass netAspectClass)
+        public NetAspectInterceptor(MethodDefinition definition)
         {
-            this.method = method;
-            _netAspectClass = netAspectClass;
+            this.definition = definition;
         }
 
 
-        public NetAspectParameter WithParameter<T>(string parameterName)
+        public NetAspectInterceptor WithParameter<T>(string parameterName)
         {
-            var netAspectParameter = new NetAspectParameter(parameterName, method.ModuleDefinition.Import(typeof(T)), false);
-            method.Add(netAspectParameter);
-            var netAspectField = new NetAspectField(method.Name + parameterName + "Field", method.ModuleDefinition.Import(typeof (T)))
+            var netAspectParameter = new ParameterDefinition(parameterName, ParameterAttributes.None,
+                                                             definition.Module.Import(typeof (T)));
+            definition.Parameters.Add(netAspectParameter);
+            var netAspectField = new FieldDefinition(definition.Name + parameterName + "Field", FieldAttributes.Public, definition.Module.Import(typeof(T)))
                 {
                     IsStatic = true
                 };
+            definition.DeclaringType.Fields.Add(netAspectField);
+
+            if (!fieldDefinition.IsStatic)
+                instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+            instructions.Add(Instruction.Create(OpCodes.Ldarg, parameterDefinition));
+
+            if (parameterDefinition.ParameterType.IsByReference)
+                instructions.Add(Instruction.Create(OpCodes.Ldind_Ref));
+            instructions.Add(Instruction.Create(fieldDefinition.IsStatic ? OpCodes.Stsfld : OpCodes.Stfld, fieldDefinition));
             _netAspectClass.Add(netAspectField);
             method.AddInstruction(new AffectFieldWithParameterInstruction(netAspectField, netAspectParameter));
-            return netAspectParameter;
+            return this;
         }
 
         public NetAspectInterceptor WithReturn()
@@ -61,7 +81,7 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             return this;
         }
 
-        public NetAspectParameter WithReferencedParameter<T>(string parameterName)
+        public NetAspectInterceptor WithReferencedParameter<T>(string parameterName)
         {
             var netAspectParameter = new NetAspectParameter(parameterName, new ByReferenceType(method.ModuleDefinition.Import(typeof(T))), false);
             method.Add(netAspectParameter);
@@ -71,10 +91,10 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             };
             _netAspectClass.Add(netAspectField);
             method.AddInstruction(new AffectFieldWithParameterInstruction(netAspectField, netAspectParameter));
-            return netAspectParameter;
+            return this;
         }
 
-        public NetAspectParameter WithOutParameter<T>(string parameterName)
+        public NetAspectInterceptor WithOutParameter<T>(string parameterName)
         {
             var netAspectParameter = new NetAspectParameter(parameterName, new ByReferenceType(method.ModuleDefinition.Import(typeof(T))), true);
             method.Add(netAspectParameter);
@@ -84,7 +104,20 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             };
             _netAspectClass.Add(netAspectField);
             method.AddInstruction(new AffectFieldWithParameterInstruction(netAspectField, netAspectParameter));
-            return netAspectParameter;
+            return this;
+        }
+
+        public NetAspectInterceptor WithParameter(string parameterName, NetAspectClass myClassToWeave)
+        {
+            var netAspectParameter = new NetAspectParameter(parameterName, myClassToWeave, false);
+            method.Add(netAspectParameter);
+            var netAspectField = new NetAspectField(method.Name + parameterName + "Field", myClassToWeave)
+            {
+                IsStatic = true
+            };
+            _netAspectClass.Add(netAspectField);
+            method.AddInstruction(new AffectFieldWithParameterInstruction(netAspectField, netAspectParameter));
+            return this;
         }
     }
 
@@ -106,6 +139,9 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             if (!fieldDefinition.IsStatic)
                 instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
             instructions.Add(Instruction.Create(OpCodes.Ldarg, parameterDefinition));
+
+            if (parameterDefinition.ParameterType.IsByReference)
+                instructions.Add(Instruction.Create(OpCodes.Ldind_Ref));
             instructions.Add(Instruction.Create(fieldDefinition.IsStatic ? OpCodes.Stsfld : OpCodes.Stfld, fieldDefinition));
         }
     }

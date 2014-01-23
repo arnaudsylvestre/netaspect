@@ -19,8 +19,8 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
               var myClassToWeave = assembly.AddClass("MyClassToWeave");
               var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
               aspect.AddAfterInterceptor()
-                 .WithReturn()
-                 .WithReferencedParameter<object>("instance");
+                 .WithReferencedParameter<object>("instance")
+                 .WithReturn();
               myClassToWeave.AddMethod("MyMethodToWeave")
                  .WithReturn()
                  .WithAspect(aspect);
@@ -37,8 +37,8 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
              var myClassToWeave = assembly.AddClass("MyClassToWeave");
              var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
              aspect.AddAfterInterceptor()
-                .WithReturn()
-                .WithOutParameter<object>("instance");
+                .WithOutParameter<object>("instance")
+                .WithReturn();
              myClassToWeave.AddMethod("MyMethodToWeave")
                 .WithReturn()
                 .WithAspect(aspect);
@@ -57,8 +57,8 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
                var myClassToWeave = assembly.AddClass("MyClassToWeave");
                var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
                aspect.AddAfterInterceptor()
-                  .WithReturn()
-                  .WithParameter<int>("instance");
+                  .WithParameter<int>("instance")
+                  .WithReturn();
                myClassToWeave.AddMethod("MyMethodToWeave")
                   .WithReturn()
                   .WithAspect(aspect);
@@ -99,19 +99,29 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
        [Test]
         public void CheckInstanceWithRealType()
        {
-           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
-                    .ByDefiningAssembly(simpleClassAndWeaver =>
-                    {                       
-                        simpleClassAndWeaver.AfterInterceptor.WithParameter("instance", simpleClassAndWeaver.ClassToWeave.Type);
-                    })
-                    .AndEnsureAssembly((assemblyP, result) =>
-                    {
-                       var o = result.CreateObjectFromClassToWeaveType();
-                       result.CallWeavedMethod(o);
-                       Assert.AreEqual(o, result.Aspect.AfterInstance);
+           DoUnit2.Test().ByDefiningAssembly(assembly =>
+           {
+               var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+               var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+               var netAspectInterceptor = aspect.AddAfterInterceptor();
+               netAspectInterceptor
+                  .WithParameter("instance", myClassToWeave);
+               netAspectInterceptor
+                   .WithReturn();
+               myClassToWeave.AddMethod("MyMethodToWeave")
+                  .WithReturn()
+                  .WithAspect(aspect);
 
-                    })
-                    .AndLaunchTest();
+           })
+                   .AndEnsureAssembly(assemblyP =>
+                   {
+
+                       var o = assemblyP.CreateObject("MyClassToWeave");
+                       o.CallMethod("MyMethodToWeave");
+                       Assert.AreEqual(o, assemblyP.GetStaticFieldValue("MyAspectAttribute", "AfterinstanceField"));
+
+                   })
+                   .AndLaunchTest();
         }
    }
 }
