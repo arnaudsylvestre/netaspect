@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentAspect.Weaver.Tests.Core;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
@@ -9,15 +10,14 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
        [Test]
        public void CheckParameterNameReferenced()
        {
-           throw new NotImplementedException();
-          //DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
-          //       .ByDefiningAssembly(simpleClassAndWeaver =>
-          //        {
-          //           simpleClassAndWeaver.AfterInterceptor.WithReferencedParameter<object[]>("parameters");
-          //           simpleClassAndWeaver.MethodToWeave.WithParameter<int>("first");
-          //        })
-          //        .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref the parameter 'parameters' in the method After of the type 'A.MyAspectAttribute'")))
-          //        .AndLaunchTest();
+           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
+                  .ByDefiningAssembly(simpleClassAndWeaver =>
+                   {
+                      simpleClassAndWeaver.AfterInterceptor.WithReferencedParameter<object[]>("parameters");
+                      simpleClassAndWeaver.MethodToWeave.WithParameter<int>("first");
+                   })
+                   .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref the parameter 'parameters' in the method After of the type 'A.MyAspectAttribute'")))
+                   .AndLaunchTest();
        }
 
         [Test]
