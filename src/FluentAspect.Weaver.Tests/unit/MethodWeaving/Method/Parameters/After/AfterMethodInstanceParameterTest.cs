@@ -17,7 +17,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
            NetAspectAssembly assembly = new NetAspectAssembly(assemblyDefinition);
            var myClassToWeave = assembly.AddClass("MyClassToWeave");
            var aspect = assembly.AddAspect("MyAspectAttribute");
-           var method = myClassToWeave.AddMethod("MyMethodToWeave").WithAspect(aspect);
+           myClassToWeave.AddMethod("MyMethodToWeave").WithAspect(aspect);
 
            aspect.AddAfterInterceptor().WithReferencedParameter<object>("instance");
            assembly.Generate(name + ".dll");

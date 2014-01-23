@@ -34,11 +34,13 @@ namespace FluentAspect.Weaver.Tests.Core.Model
     public class NetAspectMethod
     {
         public string Name { get; private set; }
+        public ModuleDefinition ModuleDefinition { get; set; }
 
-        public NetAspectMethod(string name, TypeReference type)
+        public NetAspectMethod(string name, TypeReference type, ModuleDefinition moduleDefinition)
         {
             Name = name;
             Type = type;
+            ModuleDefinition = moduleDefinition;
         }
 
         public NetAspectVisibility Visibility { get; set; }
@@ -46,6 +48,8 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         public bool IsStatic { get; set; }
 
         public TypeReference Type { get; set; }
+
+        List<NetAspectParameter> parameters = new List<NetAspectParameter>(); 
 
         private MethodDefinition methodDefinition;
 
@@ -99,9 +103,10 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             return this;
         }
 
-        public NetAspectMethod WithReferencedParameter<T>(string parameterName)
+        public NetAspectMethod Add(NetAspectParameter parameter)
         {
-            
+            parameters.Add(parameter);
+            return this;
         }
     }
 }

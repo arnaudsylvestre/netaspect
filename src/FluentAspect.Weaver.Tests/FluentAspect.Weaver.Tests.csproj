@@ -162,6 +162,7 @@
     <Compile Include="unit\CallWeaving\Properties\Update\PropertyUpdaterCallWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Update\StaticPropertyUpdaterCallWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Update\VisibilityPropertyUpdaterCallWeavingTest.cs" />
+    <Compile Include="unit\DoUnit2.cs" />
     <Compile Include="unit\DoUnit.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldColumnNumberParameterTest.cs" />
