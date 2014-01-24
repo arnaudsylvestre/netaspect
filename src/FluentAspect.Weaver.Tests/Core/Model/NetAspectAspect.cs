@@ -103,6 +103,17 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             return this;
         }
 
+       public NetAspectInterceptor WithUpdateParameter(string parameterName, int value)
+        {
+            definition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, value));
+            var parameterDefinition = definition.Parameters.First(p => p.Name == parameterName);
+            if (parameterDefinition.ParameterType.IsByReference)
+                definition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldelem_Ref));
+
+            definition.Body.Instructions.Add(Instruction.Create(OpCodes.Starg, parameterDefinition));
+           return this;
+        }
+
         public NetAspectInterceptor WithReferencedParameter<T>(string parameterName)
         {
            return WithParameter(parameterName, true, definition.Module.Import(typeof(T)), false);

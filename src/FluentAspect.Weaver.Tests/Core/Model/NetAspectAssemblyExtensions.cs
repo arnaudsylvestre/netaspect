@@ -47,14 +47,27 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         }
         public static MethodDefinition AddMethod(this TypeDefinition type, string name)
         {
-           var methodDefinition_L = new MethodDefinition(name, MethodAttributes.Public, type.Module.TypeSystem.Void);
-           type.Methods.Add(methodDefinition_L);
-           return methodDefinition_L;
+            var methodDefinition_L = new MethodDefinition(name, MethodAttributes.Public, type.Module.TypeSystem.Void);
+            type.Methods.Add(methodDefinition_L);
+            return methodDefinition_L;
+        }
+        public static MethodDefinition AddMethod<T>(this TypeDefinition type, string name)
+        {
+            var methodDefinition_L = new MethodDefinition(name, MethodAttributes.Public, type.Module.Import(typeof(T)));
+            type.Methods.Add(methodDefinition_L);
+            return methodDefinition_L;
         }
         public static MethodDefinition WithReturn(this MethodDefinition method)
         {
-           method.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
-           return method;
+            method.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+            return method;
+        }
+        public static MethodDefinition WithReturnParameter(this MethodDefinition method, string parameterName)
+        {
+            var parameterDefinition = method.Parameters.First(p => p.Name == parameterName);
+            method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg, parameterDefinition));
+            method.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+            return method;
         }
         public static MethodDefinition WithParameter<T>(this MethodDefinition method, string parameterName)
         {

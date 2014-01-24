@@ -24,7 +24,8 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
                  .WithReturn()
                  .WithAspect(aspect);
 
-           }).EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'method' in the method After of the type 'A.MyAspectAttribute'")))
+           })
+           .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'method' in the method After of the type 'A.MyAspectAttribute'")))
                    .AndLaunchTest();
        }
 

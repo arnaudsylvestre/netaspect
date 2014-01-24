@@ -12,11 +12,11 @@ namespace FluentAspect.Sample
 
     class Sample
     {
-        public static object Beforeinstance;
+        public static int Beforeinstance;
 
-        public static void Before(ref object instance)
+        public static void Before(ref int instance)
         {
-            Beforeinstance = instance;
+            instance = 3;
         }
     }
 }
