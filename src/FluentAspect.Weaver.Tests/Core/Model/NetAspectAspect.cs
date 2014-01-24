@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using Mono.Collections.Generic;
 using FieldAttributes = Mono.Cecil.FieldAttributes;
 using MethodAttributes = Mono.Cecil.MethodAttributes;
 using ParameterAttributes = Mono.Cecil.ParameterAttributes;
@@ -19,7 +18,12 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             this.typeDefinition = typeDefinition;
         }
 
-        public MethodDefinition AddDefaultConstructor()
+       public TypeDefinition TypeDefinition
+       {
+          get { return typeDefinition; }
+       }
+
+       public MethodDefinition AddDefaultConstructor()
         {
             var constructor = new MethodDefinition(".ctor", MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName, typeDefinition.Module.TypeSystem.Void);
 
@@ -37,7 +41,7 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         public NetAspectInterceptor AddAfterInterceptor()
         {
             var interceptor = new MethodDefinition("After", MethodAttributes.Public, typeDefinition.Module.TypeSystem.Void);
-
+           typeDefinition.Methods.Add(interceptor);
             return new NetAspectInterceptor(interceptor);
         }
     }
@@ -52,97 +56,61 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         }
 
 
+
         public NetAspectInterceptor WithParameter<T>(string parameterName)
         {
-            var netAspectParameter = new ParameterDefinition(parameterName, ParameterAttributes.None,
-                                                             definition.Module.Import(typeof (T)));
-            definition.Parameters.Add(netAspectParameter);
-            var netAspectField = new FieldDefinition(definition.Name + parameterName + "Field", FieldAttributes.Public, definition.Module.Import(typeof(T)))
-                {
-                    IsStatic = true
-                };
-            definition.DeclaringType.Fields.Add(netAspectField);
-
-            if (!fieldDefinition.IsStatic)
-                instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
-            instructions.Add(Instruction.Create(OpCodes.Ldarg, parameterDefinition));
-
-            if (parameterDefinition.ParameterType.IsByReference)
-                instructions.Add(Instruction.Create(OpCodes.Ldind_Ref));
-            instructions.Add(Instruction.Create(fieldDefinition.IsStatic ? OpCodes.Stsfld : OpCodes.Stfld, fieldDefinition));
-            _netAspectClass.Add(netAspectField);
-            method.AddInstruction(new AffectFieldWithParameterInstruction(netAspectField, netAspectParameter));
-            return this;
+           return WithParameter(parameterName, false, definition.Module.Import(typeof(T)), false);
+        }
+        public NetAspectInterceptor WithParameter(string parameterName, TypeReference type)
+        {
+           return WithParameter(parameterName, false, type, false);
         }
 
-        public NetAspectInterceptor WithReturn()
+       private NetAspectInterceptor WithParameter(string parameterName, bool isByReference, TypeReference parameterType_L, bool isOut)
+       {
+          var fieldType = parameterType_L;
+          if (isByReference)
+             parameterType_L = new ByReferenceType(parameterType_L);
+
+          var parameterDefinition = new ParameterDefinition(
+             parameterName,
+             ParameterAttributes.None,
+             parameterType_L);
+
+          parameterDefinition.IsOut = isOut;
+          definition.Parameters.Add(parameterDefinition);
+          var fieldDefinition = new FieldDefinition(definition.Name + parameterName + "Field", FieldAttributes.Public, fieldType)
+             {
+                IsStatic = true
+             };
+          definition.DeclaringType.Fields.Add(fieldDefinition);
+
+          var instructions = definition.Body.Instructions;
+
+          if (!fieldDefinition.IsStatic)
+             instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+          instructions.Add(Instruction.Create(OpCodes.Ldarg, parameterDefinition));
+
+          if (parameterDefinition.ParameterType.IsByReference)
+             instructions.Add(Instruction.Create(OpCodes.Ldind_Ref));
+          instructions.Add(Instruction.Create(fieldDefinition.IsStatic ? OpCodes.Stsfld : OpCodes.Stfld, fieldDefinition));
+          return this;
+       }
+
+       public NetAspectInterceptor WithReturn()
         {
-            method.WithReturn();
+            definition.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             return this;
         }
 
         public NetAspectInterceptor WithReferencedParameter<T>(string parameterName)
         {
-            var netAspectParameter = new NetAspectParameter(parameterName, new ByReferenceType(method.ModuleDefinition.Import(typeof(T))), false);
-            method.Add(netAspectParameter);
-            var netAspectField = new NetAspectField(method.Name + parameterName + "Field", method.ModuleDefinition.Import(typeof(T)))
-            {
-                IsStatic = true
-            };
-            _netAspectClass.Add(netAspectField);
-            method.AddInstruction(new AffectFieldWithParameterInstruction(netAspectField, netAspectParameter));
-            return this;
+           return WithParameter(parameterName, true, definition.Module.Import(typeof(T)), false);
         }
 
         public NetAspectInterceptor WithOutParameter<T>(string parameterName)
         {
-            var netAspectParameter = new NetAspectParameter(parameterName, new ByReferenceType(method.ModuleDefinition.Import(typeof(T))), true);
-            method.Add(netAspectParameter);
-            var netAspectField = new NetAspectField(method.Name + parameterName + "Field", method.ModuleDefinition.Import(typeof(T)))
-            {
-                IsStatic = true
-            };
-            _netAspectClass.Add(netAspectField);
-            method.AddInstruction(new AffectFieldWithParameterInstruction(netAspectField, netAspectParameter));
-            return this;
-        }
-
-        public NetAspectInterceptor WithParameter(string parameterName, NetAspectClass myClassToWeave)
-        {
-            var netAspectParameter = new NetAspectParameter(parameterName, myClassToWeave, false);
-            method.Add(netAspectParameter);
-            var netAspectField = new NetAspectField(method.Name + parameterName + "Field", myClassToWeave)
-            {
-                IsStatic = true
-            };
-            _netAspectClass.Add(netAspectField);
-            method.AddInstruction(new AffectFieldWithParameterInstruction(netAspectField, netAspectParameter));
-            return this;
-        }
-    }
-
-    public class AffectFieldWithParameterInstruction : INetAspectMethodInstruction
-    {
-        private readonly NetAspectField _netAspectField;
-        private readonly NetAspectParameter _netAspectParameter;
-
-        public AffectFieldWithParameterInstruction(NetAspectField netAspectField, NetAspectParameter netAspectParameter)
-        {
-            _netAspectField = netAspectField;
-            _netAspectParameter = netAspectParameter;
-        }
-
-        public void Generate(Collection<Instruction> instructions)
-        {
-            var parameterDefinition = _netAspectParameter.ParameterDefinition;
-            var fieldDefinition = _netAspectField.Field;
-            if (!fieldDefinition.IsStatic)
-                instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
-            instructions.Add(Instruction.Create(OpCodes.Ldarg, parameterDefinition));
-
-            if (parameterDefinition.ParameterType.IsByReference)
-                instructions.Add(Instruction.Create(OpCodes.Ldind_Ref));
-            instructions.Add(Instruction.Create(fieldDefinition.IsStatic ? OpCodes.Stsfld : OpCodes.Stfld, fieldDefinition));
+           return WithParameter(parameterName, true, definition.Module.Import(typeof(T)), true);
         }
     }
 }

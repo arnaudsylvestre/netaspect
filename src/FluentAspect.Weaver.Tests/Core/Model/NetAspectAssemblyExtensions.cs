@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -38,57 +40,39 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         public static NetAspectAspect AddDefaultAspect(this AssemblyDefinition assembly, string name)
         {
            var aspect = assembly.AddAspect(name);
-           aspect.AddDefaultConstructor().WithReturn();
+           var addDefaultConstructor_L = aspect.AddDefaultConstructor();
+           addDefaultConstructor_L.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
            return aspect;
         }
-        public static NetAspectMethod AddMethod(this NetAspectClass classe, string methodName)
+        public static MethodDefinition AddMethod(this TypeDefinition type, string name)
         {
-           var c = new NetAspectMethod(methodName, classe.Module.TypeSystem.Void, classe.Module, classe);
-            classe.Add(c);
-            return c;
+           var methodDefinition_L = new MethodDefinition(name, MethodAttributes.Public, type.Module.TypeSystem.Void);
+           type.Methods.Add(methodDefinition_L);
+           return methodDefinition_L;
         }
-        public static NetAspectMethod AddConstructor(this NetAspectClass classe)
+        public static MethodDefinition WithReturn(this MethodDefinition method)
         {
-           var c = new NetAspectMethod(".ctor", classe.Module.TypeSystem.Void, classe.Module, classe);
-            classe.Add(c);
-            return c;
-        }
-
-        public static NetAspectClass WithDefaultConstructor(this NetAspectClass classe)
-        {
-            classe.AddConstructor().WithReturn();
-            return classe;
-        }
-
-
-        public static NetAspectParameter WithReferencedParameter<T>(this NetAspectMethod method, string parameterName)
-        {
-           var netAspectParameter = new NetAspectParameter(parameterName, new ByReferenceType(method.ModuleDefinition.Import(typeof(T))), false);
-           method.Add(netAspectParameter);
-           return netAspectParameter;
-        }
-
-
-
-        public static NetAspectParameter WithOutParameter<T>(this NetAspectMethod method, string parameterName)
-        {
-            var netAspectParameter = new NetAspectParameter(parameterName, new ByReferenceType(method.ModuleDefinition.Import(typeof(T))), true);
-            method.Add(netAspectParameter);
-            return netAspectParameter;
-        }
-
-        public static NetAspectParameter WithParameter<T>(this NetAspectMethod method, string parameterName)
-        {
-            var netAspectParameter = new NetAspectParameter(parameterName, method.ModuleDefinition.Import(typeof(T)), false);
-            method.Add(netAspectParameter);
-            return netAspectParameter;
-        }
-
-
-        public static NetAspectMethod WithReturn(this NetAspectMethod method)
-        {
-           method.AddInstruction(new ReturnInstruction());
+           method.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
            return method;
+        }
+        public static MethodDefinition WithAspect(this MethodDefinition method, NetAspectAspect aspect)
+        {
+           method.CustomAttributes.Add(new CustomAttribute(aspect.TypeDefinition.GetDefaultConstructor()));
+           return method;
+        }
+        public static MethodDefinition GetDefaultConstructor(this TypeDefinition type)
+        {
+           return (from m in type.Methods where m.Name == ".ctor" && m.Parameters.Count == 0 select m).First();
+        }
+        public static TypeDefinition WithDefaultConstructor<T>(this TypeDefinition type)
+        {
+           var constructorInfo_L = typeof(T).GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)[0];
+           MethodWeavingAspectDefiner.AddEmptyConstructor(type, type.Module.Import(constructorInfo_L), new List<Instruction>());
+           return type;
+        }
+        public static TypeDefinition WithDefaultConstructor(this TypeDefinition type)
+        {
+           return type.WithDefaultConstructor<object>();
         }
     }
 }

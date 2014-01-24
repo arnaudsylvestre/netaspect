@@ -16,7 +16,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
        {
           DoUnit2.Test().ByDefiningAssembly(assembly =>
              {
-              var myClassToWeave = assembly.AddClass("MyClassToWeave");
+              var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
               var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
               aspect.AddAfterInterceptor()
                  .WithReferencedParameter<object>("instance")
