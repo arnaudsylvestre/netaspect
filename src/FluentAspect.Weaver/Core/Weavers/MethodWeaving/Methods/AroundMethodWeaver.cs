@@ -138,7 +138,9 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 
         private void EnsureOfType(ParameterInfo info, ErrorHandler handler, ParameterDefinition parameter)
         {
-            if (info.ParameterType.FullName.Replace("&", "") != parameter.ParameterType.FullName)
+            if (info.ParameterType == typeof(object))
+                return;
+            if (info.ParameterType.FullName.Replace("&", "") != parameter.ParameterType.FullName.Replace("&", ""))
             {
                 handler.Errors.Add(string.Format("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because of the type of this parameter in the method {5} of the type {6}",
                     info.Name, info.Member.Name, info.Member.DeclaringType.FullName, info.ParameterType.FullName,

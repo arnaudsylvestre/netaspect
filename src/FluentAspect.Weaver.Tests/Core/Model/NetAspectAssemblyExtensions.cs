@@ -62,18 +62,51 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             method.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             return method;
         }
+        public static MethodDefinition WithGenericType(this MethodDefinition method, string typeName)
+        {
+            method.GenericParameters.Add(new GenericParameter(typeName, method));
+            return method;
+        }
+        public static MethodDefinition WithGenericParameter(this MethodDefinition method, string parameterName, string typeName)
+        {
+            method.Parameters.Add(new ParameterDefinition(parameterName, ParameterAttributes.None, method.GenericParameters.First(p => p.Name == typeName)));
+            return method;
+        }
         public static MethodDefinition WithReturnParameter(this MethodDefinition method, string parameterName)
         {
             var parameterDefinition = method.Parameters.First(p => p.Name == parameterName);
             method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg, parameterDefinition));
+            if (parameterDefinition.ParameterType.IsByReference)
+                method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldind_Ref));
             method.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             return method;
         }
         public static MethodDefinition WithParameter<T>(this MethodDefinition method, string parameterName)
         {
-           method.Parameters.Add(new ParameterDefinition(parameterName, ParameterAttributes.None, method.Module.Import(typeof(T))));
-           return method;
+            method.Parameters.Add(new ParameterDefinition(parameterName, ParameterAttributes.None, method.Module.Import(typeof(T))));
+            return method;
         }
+        public static MethodDefinition WithReferencedParameter<T>(this MethodDefinition method, string parameterName)
+        {
+            method.Parameters.Add(new ParameterDefinition(parameterName, ParameterAttributes.None, new ByReferenceType(method.Module.Import(typeof(T)))));
+            return method;
+        }
+
+
+        public static MethodDefinition WithCallMethodWithParameter(this MethodDefinition method, string methodToCall, string parameterName)
+        {
+            var methodDefinition = method.DeclaringType.Methods.First(m => m.Name == methodToCall);
+            method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+            if (methodDefinition.Parameters[0].ParameterType.IsByReference)
+                method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarga,
+                                                                method.Parameters.First(p => p.Name == parameterName)));
+            else
+                method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg,
+                                                                method.Parameters.First(p => p.Name == parameterName)));
+            method.Body.Instructions.Add(Instruction.Create(OpCodes.Call, methodDefinition));
+            return method;
+        }
+
         public static MethodDefinition WithAspect(this MethodDefinition method, NetAspectAspect aspect)
         {
            method.CustomAttributes.Add(new CustomAttribute(aspect.TypeDefinition.GetDefaultConstructor()));

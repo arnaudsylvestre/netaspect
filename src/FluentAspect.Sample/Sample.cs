@@ -14,9 +14,14 @@ namespace FluentAspect.Sample
     {
         public static int Beforeinstance;
 
-        public static void Before(ref int instance)
+        public void Before(int instance)
         {
-            instance = 3;
+            Before2(instance);
+            
+        }
+        public void Before2(object instance)
+        {
+            instance = "intercepted";
         }
     }
 }

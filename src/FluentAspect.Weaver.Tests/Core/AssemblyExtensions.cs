@@ -22,6 +22,10 @@ namespace FluentAspect.Weaver.Tests.Core
        {
            return o.GetType().GetMethod(methodName).Invoke(o, parameters);
        }
+       public static object CallMethod<T>(this object o, string methodName, params object[] parameters)
+       {
+           return o.GetType().GetMethod(methodName).MakeGenericMethod(typeof(T)).Invoke(o, parameters);
+       }
        public static object GetFieldValue(this object o, string fieldName)
        {
            return o.GetType().GetField(fieldName).GetValue(o);

@@ -41,12 +41,17 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
             forParameters.Add(parameterName, p =>
                 {
                     Check(p, updateAllowed, parameter.ParameterType);
-                    il.Emit(p.ParameterType.IsByRef ? OpCodes.Ldarga : OpCodes.Ldarg, parameter);
+                    var moduleDefinition = ((MethodDefinition) parameter.Method).Module;
+                    il.Emit(p.ParameterType.IsByRef && !parameter.ParameterType.IsByReference ? OpCodes.Ldarga : OpCodes.Ldarg, parameter);
+                    if (parameter.ParameterType != moduleDefinition.TypeSystem.Object && p.ParameterType == typeof(Object))
+                        il.Emit(OpCodes.Box, parameter.ParameterType);
                 });
         }
 
         private void Check(ParameterInfo parameterInfo, bool updateAllowed, TypeReference variableType)
         {
+            if (parameterInfo.ParameterType == typeof (object))
+                return;
             if (!IsTypeCompliant(parameterInfo.ParameterType, variableType))
             {
                 throw new NotSupportedException("parameter type not supported");
@@ -61,7 +66,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
         {
             if (parameterType == null)
                 return false;
-            if (parameterType.FullName.Replace("&", "") == variableType.FullName)
+            if (parameterType.FullName.Replace("&", "") == variableType.FullName.Replace("&", ""))
                 return true;
             return IsTypeCompliant(parameterType.BaseType, variableType);
         }
