@@ -6,6 +6,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using FieldAttributes = Mono.Cecil.FieldAttributes;
 using MethodAttributes = Mono.Cecil.MethodAttributes;
+using ParameterAttributes = Mono.Cecil.ParameterAttributes;
 using TypeAttributes = Mono.Cecil.TypeAttributes;
 
 namespace FluentAspect.Weaver.Tests.Core.Model
@@ -53,6 +54,11 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         public static MethodDefinition WithReturn(this MethodDefinition method)
         {
            method.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+           return method;
+        }
+        public static MethodDefinition WithParameter<T>(this MethodDefinition method, string parameterName)
+        {
+           method.Parameters.Add(new ParameterDefinition(parameterName, ParameterAttributes.None, method.Module.Import(typeof(T))));
            return method;
         }
         public static MethodDefinition WithAspect(this MethodDefinition method, NetAspectAspect aspect)
