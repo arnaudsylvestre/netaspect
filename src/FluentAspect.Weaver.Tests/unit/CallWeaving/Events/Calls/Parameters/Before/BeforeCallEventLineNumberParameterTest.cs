@@ -10,20 +10,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Calls.Parameters.Bef
          [Test]
          public void CheckCallEventWithLineNumberAndNoDebuggingInformation()
          {
-          DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
-                 .ByDefiningAssembly(simpleClassAndWeaver =>
-                    {
-                       simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
-                          .WithParameter<int>("lineNumber");
-                    })
-                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter lineNumber in method BeforeCallEventValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
-                  .AndEnsureAssembly((assembly, actual) =>
-                      {
-                          var caller = actual.CreateCallerObject();
-                          actual.CallCallerMethod(caller);
-                          Assert.AreEqual(0, actual.Aspect.BeforeCallEventValueLineNumber);
-                      })
-                  .AndLaunchTest();
+
+            throw new NotImplementedException();
          }
 
          [Test]

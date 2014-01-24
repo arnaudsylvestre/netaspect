@@ -10,20 +10,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After
          [Test]
          public void CheckCallMethodWithFileNameAndNoDebuggingInformation()
          {
-          DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
-                 .ByDefiningAssembly(simpleClassAndWeaver =>
-                    {
-                       simpleClassAndWeaver.Aspect.AddAfterFieldAccess()
-                          .WithParameter<int>("fileName");
-                    })
-                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter fileName in method AfterCallMethodValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
-                  .AndEnsureAssembly((assembly, actual) =>
-                      {
-                          var caller = actual.CreateCallerObject();
-                          actual.CallCallerMethod(caller);
-                          Assert.AreEqual(0, actual.Aspect.AfterCallMethodValueFileName);
-                      })
-                  .AndLaunchTest();
+
+            throw new NotImplementedException();
          }
 
          [Test]

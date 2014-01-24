@@ -10,20 +10,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameter
          [Test]
          public void CheckGetPropertyWithCallerAndNoDebuggingInformation()
          {
-          DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
-                 .ByDefiningAssembly(simpleClassAndWeaver =>
-                    {
-                       simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
-                          .WithParameter<int>("caller");
-                    })
-                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter caller in method BeforeGetPropertyValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
-                  .AndEnsureAssembly((assembly, actual) =>
-                      {
-                          var caller = actual.CreateCallerObject();
-                          actual.CallCallerMethod(caller);
-                          Assert.AreEqual(0, actual.Aspect.BeforeGetPropertyValueCaller);
-                      })
-                  .AndLaunchTest();
+
+            throw new NotImplementedException();
          }
 
          [Test]

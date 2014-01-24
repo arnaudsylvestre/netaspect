@@ -11,43 +11,22 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
        [Test]
        public void CheckMethodReferenced()
         {
-          DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
-                 .ByDefiningAssembly(simpleClassAndWeaver =>
-                  {
-                     simpleClassAndWeaver.AfterInterceptor.WithReferencedParameter<MethodInfo>("method");
-                  })
-                  .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'method' in the method After of the type 'A.MyAspectAttribute'")))
-                  .AndLaunchTest();
+
+           throw new NotImplementedException();
        }
 
         [Test]
         public void CheckMethodBadType()
        {
-           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
-                    .ByDefiningAssembly(simpleClassAndWeaver =>
-                   {
-                      simpleClassAndWeaver.AfterInterceptor.WithParameter<int>("method");
-                   })
-                    .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("the method parameter in the method After of the type 'A.MyAspectAttribute' is declared with the type 'System.Int32' but it is expected to be System.Reflection.MethodInfo")))
-                    .AndLaunchTest();
+
+          throw new NotImplementedException();
         }
 
        [Test]
         public void CheckMethodWithRealType()
         {
-           DoUnit.Test(new SimpleClassAndWeaverAcceptanceTestBuilder())
-                    .ByDefiningAssembly(simpleClassAndWeaver =>
-                    {                       
-                        simpleClassAndWeaver.AfterInterceptor.WithParameter<MethodInfo>("method");
-                    })
-                    .AndEnsureAssembly((assemblyP, result) =>
-                    {
-                       var o = result.CreateObjectFromClassToWeaveType();
-                       result.CallWeavedMethod(o);
-                       Assert.AreEqual("MyMethodToWeave", ((MethodInfo)result.Aspect.AfterMethod).Name);
 
-                    })
-                    .AndLaunchTest();
+           throw new NotImplementedException();
         }
    }
 }

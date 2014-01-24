@@ -9,21 +9,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Subsribe.Parameters.
     {
          [Test]
          public void CheckSubscribeEventWithColumnNumberAndNoDebuggingInformation()
-         {
-          DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
-                 .ByDefiningAssembly(simpleClassAndWeaver =>
-                    {
-                       simpleClassAndWeaver.Aspect.AddBeforeFieldAccess()
-                          .WithParameter<int>("columnNumber");
-                    })
-                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter columnNumber in method BeforeSubscribeEventValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
-                  .AndEnsureAssembly((assembly, actual) =>
-                      {
-                          var caller = actual.CreateCallerObject();
-                          actual.CallCallerMethod(caller);
-                          Assert.AreEqual(0, actual.Aspect.BeforeSubscribeEventValueColumnNumber);
-                      })
-                  .AndLaunchTest();
+       {
+          throw new NotImplementedException();
          }
 
          [Test]

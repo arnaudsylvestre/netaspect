@@ -9,21 +9,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Calls.Parameters.Aft
     {
          [Test]
          public void CheckCallEventWithColumnNumberAndNoDebuggingInformation()
-         {
-          DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
-                 .ByDefiningAssembly(simpleClassAndWeaver =>
-                    {
-                       simpleClassAndWeaver.Aspect.AddAfterFieldAccess()
-                          .WithParameter<int>("columnNumber");
-                    })
-                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter columnNumber in method AfterCallEventValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
-                  .AndEnsureAssembly((assembly, actual) =>
-                      {
-                          var caller = actual.CreateCallerObject();
-                          actual.CallCallerMethod(caller);
-                          Assert.AreEqual(0, actual.Aspect.AfterCallEventValueColumnNumber);
-                      })
-                  .AndLaunchTest();
+       {
+          throw new NotImplementedException();
          }
 
          [Test]

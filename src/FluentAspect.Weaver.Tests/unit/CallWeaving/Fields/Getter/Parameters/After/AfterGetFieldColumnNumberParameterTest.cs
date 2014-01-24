@@ -11,20 +11,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Af
          [Test]
          public void CheckGetFieldWithColumnNumberAndNoDebuggingInformation()
          {
-          DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
-                 .ByDefiningAssembly(simpleClassAndWeaver =>
-                    {
-                       simpleClassAndWeaver.Aspect.AddAfterFieldAccess()
-                          .WithParameter<int>("columnNumber");
-                    })
-                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter columnNumber in method AfterGetFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
-                  .AndEnsureAssembly((assembly, actual) =>
-                      {
-                          var caller = actual.CreateCallerObject();
-                          actual.CallCallerMethod(caller);
-                          Assert.AreEqual(0, actual.Aspect.AfterGetFieldValueColumnNumber);
-                      })
-                  .AndLaunchTest();
+
+            throw new NotImplementedException();
          }
 
          [Test]

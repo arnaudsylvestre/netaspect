@@ -10,20 +10,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameter
          [Test]
          public void CheckGetPropertyWithLineNumberAndNoDebuggingInformation()
          {
-          DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
-                 .ByDefiningAssembly(simpleClassAndWeaver =>
-                    {
-                       simpleClassAndWeaver.Aspect.AddAfterFieldAccess()
-                          .WithParameter<int>("lineNumber");
-                    })
-                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter lineNumber in method AfterGetPropertyValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
-                  .AndEnsureAssembly((assembly, actual) =>
-                      {
-                          var caller = actual.CreateCallerObject();
-                          actual.CallCallerMethod(caller);
-                          Assert.AreEqual(0, actual.Aspect.AfterGetPropertyValueLineNumber);
-                      })
-                  .AndLaunchTest();
+
+            throw new NotImplementedException();
          }
 
          [Test]

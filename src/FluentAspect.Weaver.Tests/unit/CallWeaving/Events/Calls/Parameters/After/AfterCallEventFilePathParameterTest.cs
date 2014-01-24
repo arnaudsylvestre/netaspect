@@ -10,20 +10,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Calls.Parameters.Aft
          [Test]
          public void CheckCallEventWithFilePathAndNoDebuggingInformation()
          {
-          DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
-                 .ByDefiningAssembly(simpleClassAndWeaver =>
-                    {
-                       simpleClassAndWeaver.Aspect.AddAfterFieldAccess()
-                          .WithParameter<int>("filePath");
-                    })
-                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter filePath in method AfterCallEventValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
-                  .AndEnsureAssembly((assembly, actual) =>
-                      {
-                          var caller = actual.CreateCallerObject();
-                          actual.CallCallerMethod(caller);
-                          Assert.AreEqual(0, actual.Aspect.AfterCallEventValueFilePath);
-                      })
-                  .AndLaunchTest();
+
+            throw new NotImplementedException();
          }
 
          [Test]

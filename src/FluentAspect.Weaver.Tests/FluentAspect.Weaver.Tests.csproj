@@ -67,11 +67,8 @@
     <Compile Include="Core\InstcurionsExtensions.cs" />
     <Compile Include="Core\MethodDefinitionDefiner.cs" />
     <Compile Include="Core\MethodWeavingAspectDefiner.cs" />
-    <Compile Include="Core\Model\INetAspectType.cs" />
     <Compile Include="Core\Model\NetAspectAspect.cs" />
     <Compile Include="Core\Model\NetAspectAssemblyExtensions.cs" />
-    <Compile Include="Core\Model\NetAspectField.cs" />
-    <Compile Include="Core\Model\NetAspectVisibility.cs" />
     <Compile Include="Core\SimpleClassAndWeaver.cs" />
     <Compile Include="Core\TypeDefinitionDefiner.cs" />
     <Compile Include="Core\TypeDefinitionExtensions.cs" />
@@ -160,7 +157,6 @@
     <Compile Include="unit\CallWeaving\Properties\Update\StaticPropertyUpdaterCallWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Update\VisibilityPropertyUpdaterCallWeavingTest.cs" />
     <Compile Include="unit\DoUnit2.cs" />
-    <Compile Include="unit\DoUnit.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldColumnNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldFileNameParameterTest.cs" />
@@ -230,7 +226,6 @@
     <Compile Include="Core\SimpleClassAndWeaverActual.cs" />
     <Compile Include="Core\IAcceptanceTestBuilder.cs" />
     <Compile Include="Core\SimpleClassAndWeaverAcceptanceTestBuilder.cs" />
-    <Compile Include="Core\AssemblyFactory.cs" />
     <Compile Include="Core\AssemblyExtensions.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\BeforeMethodMethodParameterTest.cs" />
     <Compile Include="Core\NetAspectAttribute.cs" />

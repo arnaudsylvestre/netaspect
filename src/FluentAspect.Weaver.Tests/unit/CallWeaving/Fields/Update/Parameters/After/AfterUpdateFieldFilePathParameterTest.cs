@@ -11,20 +11,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Af
          [Test]
          public void CheckUpdateFieldWithFilePathAndNoDebuggingInformation()
          {
-          DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
-                 .ByDefiningAssembly(simpleClassAndWeaver =>
-                    {
-                       simpleClassAndWeaver.Aspect.AddAfterFieldAccess()
-                          .WithParameter<int>("filePath");
-                    })
-                    .EnsureErrorHandler(e => e.Warnings.Add("The parameter filePath in method AfterUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
-                  .AndEnsureAssembly((assembly, actual) =>
-                      {
-                          var caller = actual.CreateCallerObject();
-                          actual.CallCallerMethod(caller);
-                          Assert.AreEqual(0, actual.Aspect.AfterUpdateFieldValueFilePath);
-                      })
-                  .AndLaunchTest();
+
+            throw new NotImplementedException();
          }
 
          [Test]
