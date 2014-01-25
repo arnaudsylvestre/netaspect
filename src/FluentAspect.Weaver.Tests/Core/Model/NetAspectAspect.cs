@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using FieldAttributes = Mono.Cecil.FieldAttributes;
@@ -42,6 +40,13 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         {
             var interceptor = new MethodDefinition("After", MethodAttributes.Public, typeDefinition.Module.TypeSystem.Void);
            typeDefinition.Methods.Add(interceptor);
+            return new NetAspectInterceptor(interceptor);
+        }
+
+        public NetAspectInterceptor AddAfterPropertyGetInterceptor()
+        {
+            var interceptor = new MethodDefinition("AfterPropertyGet", MethodAttributes.Public, typeDefinition.Module.TypeSystem.Void);
+            typeDefinition.Methods.Add(interceptor);
             return new NetAspectInterceptor(interceptor);
         }
     }

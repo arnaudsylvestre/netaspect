@@ -18,9 +18,17 @@ namespace FluentAspect.Weaver.Core.Configuration
 
     public class FieldMatch
     {
-       public IEnumerable<AssemblyDefinition> AssembliesToScan { get; set; }
+        public IEnumerable<AssemblyDefinition> AssembliesToScan { get; set; }
 
-       public Func<FieldReference, bool> Matcher { get; set; }
-       public CallWeavingConfiguration CallWeavingInterceptors { get; set; }
+        public Func<FieldReference, bool> Matcher { get; set; }
+        public CallWeavingConfiguration CallWeavingInterceptors { get; set; }
+    }
+
+    public class PropertyMatch
+    {
+        public IEnumerable<AssemblyDefinition> AssembliesToScan { get; set; }
+
+        public Func<PropertyReference, bool> Matcher { get; set; }
+        public MethodWeavingConfiguration GetMethodWeavingInterceptors { get; set; }
     }
 }

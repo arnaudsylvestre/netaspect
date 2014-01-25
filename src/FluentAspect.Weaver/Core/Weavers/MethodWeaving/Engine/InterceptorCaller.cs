@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
@@ -43,8 +44,19 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
                     Check(p, updateAllowed, parameter.ParameterType);
                     var moduleDefinition = ((MethodDefinition) parameter.Method).Module;
                     il.Emit(p.ParameterType.IsByRef && !parameter.ParameterType.IsByReference ? OpCodes.Ldarga : OpCodes.Ldarg, parameter);
-                    if (parameter.ParameterType != moduleDefinition.TypeSystem.Object && p.ParameterType == typeof(Object))
-                        il.Emit(OpCodes.Box, parameter.ParameterType);
+                    if (parameter.ParameterType != moduleDefinition.TypeSystem.Object &&
+                        p.ParameterType == typeof (Object))
+                    {
+                        TypeReference reference = parameter.ParameterType;
+                        if (reference.IsByReference)
+                        {
+                            reference = ((MethodDefinition)parameter.Method).GenericParameters.First(t => t.Name == reference.Name.TrimEnd('&'));
+                            il.Emit(OpCodes.Ldobj, reference);
+                            
+                        }
+                            il.Emit(OpCodes.Box, reference);
+                    }
+                        
                 });
         }
 

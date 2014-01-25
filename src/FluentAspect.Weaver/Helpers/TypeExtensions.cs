@@ -25,19 +25,35 @@ namespace FluentAspect.Weaver.Helpers
        }
        public static List<FieldInfo> GetAllFields(this IEnumerable<Type> types, Func<FieldInfo, bool> filter)
        {
-          var methods = new List<FieldInfo>();
+           var methods = new List<FieldInfo>();
 
-          foreach (Type type in types)
-          {
-             methods.AddRange(
-                 from m in
-                    type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
-                                    BindingFlags.Instance)
-                 where filter(m)
-                 select m);
-          }
+           foreach (Type type in types)
+           {
+               methods.AddRange(
+                   from m in
+                       type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+                                       BindingFlags.Instance)
+                   where filter(m)
+                   select m);
+           }
 
-          return methods;
+           return methods;
+       }
+       public static List<PropertyInfo> GetAllProperties(this IEnumerable<Type> types, Func<PropertyInfo, bool> filter)
+       {
+           var methods = new List<PropertyInfo>();
+
+           foreach (Type type in types)
+           {
+               methods.AddRange(
+                   from m in
+                       type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+                                       BindingFlags.Instance)
+                   where filter(m)
+                   select m);
+           }
+
+           return methods;
        }
 
         public static List<ConstructorInfo> GetAllConstructors(this IEnumerable<Type> types,

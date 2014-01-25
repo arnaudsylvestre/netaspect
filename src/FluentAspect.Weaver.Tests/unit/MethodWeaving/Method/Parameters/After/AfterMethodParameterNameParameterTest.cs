@@ -235,5 +235,32 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
 
                    .AndLaunchTest();
        }
+
+       [Test]
+       public void CheckValueType()
+       {
+           throw new NotImplementedException();
+       }
+
+       [Test]
+       public void CheckValueTypeByReferenceInMethod()
+       {
+           throw new NotImplementedException();
+
+       }
+
+       [Test]
+       public void CheckValueTypeByReferenceInMethodAndReferenceInInterceptor()
+       {
+           throw new NotImplementedException();
+
+       }
+
+       [Test]
+       public void CheckValueTypeReferencedInInterceptor()
+       {
+           throw new NotImplementedException();
+
+       }
     }
 }

@@ -8,6 +8,12 @@ namespace FluentAspect.Weaver.Core.Model
         IType DeclaringType { get; }
         IEnumerable<IParameter> Parameters { get; }
     }
+    public interface IProperty
+    {
+        string Name { get; }
+        IType DeclaringType { get; }
+        IEnumerable<IParameter> Indices { get; }
+    }
 
     public interface IParameter
     {

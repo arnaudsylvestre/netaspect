@@ -18,6 +18,7 @@ namespace FluentAspect.Weaver.Core.Configuration
        private List<MethodMatch> _methods;
        private List<MethodMatch> _constructors;
        private List<FieldMatch> _fields;
+       private List<PropertyMatch> _properties;
 
         public WeavingConfiguration(IAssemblyDefinitionProvider assemblyDefinitionProvider)
         {
@@ -25,6 +26,12 @@ namespace FluentAspect.Weaver.Core.Configuration
             _methods = new List<MethodMatch>();
             _constructors = new List<MethodMatch>();
            _fields = new List<FieldMatch>();
+            _properties = new List<PropertyMatch>();
+        }
+
+        public IEnumerable<PropertyMatch> Properties
+        {
+            get { return _properties; }
         }
 
         public IEnumerable<MethodMatch> Methods
@@ -59,19 +66,33 @@ namespace FluentAspect.Weaver.Core.Configuration
            });
         }
 
-        public void AddField(Func<FieldReference, bool> matcher, IEnumerable<Assembly> assemblies,
-                              CallWeavingConfiguration callWeavingConfigurations, List<string> errors)
-        {
+       public void AddField(Func<FieldReference, bool> matcher, IEnumerable<Assembly> assemblies,
+                             CallWeavingConfiguration callWeavingConfigurations, List<string> errors)
+       {
            Check(callWeavingConfigurations, errors);
            if (errors.Count > 0)
-              return;
+               return;
            _fields.Add(new FieldMatch()
            {
-              AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
-              Matcher = matcher,
-              CallWeavingInterceptors = callWeavingConfigurations,
+               AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
+               Matcher = matcher,
+               CallWeavingInterceptors = callWeavingConfigurations,
            });
-        }
+       }
+
+       public void AddProperty(Func<PropertyReference, bool> matcher, IEnumerable<Assembly> assemblies,
+                             MethodWeavingConfiguration callWeavingConfigurations, List<string> errors)
+       {
+           Check(callWeavingConfigurations, errors);
+           if (errors.Count > 0)
+               return;
+           _properties.Add(new PropertyMatch()
+           {
+               AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
+               Matcher = matcher,
+               CallWeavingInterceptors = callWeavingConfigurations,
+           });
+       }
 
         private void Check(MethodWeavingConfiguration methodWeavingConfigurations, List<string> errors)
         {

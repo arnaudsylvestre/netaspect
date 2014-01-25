@@ -7,6 +7,7 @@ using Mono.Cecil.Cil;
 using FieldAttributes = Mono.Cecil.FieldAttributes;
 using MethodAttributes = Mono.Cecil.MethodAttributes;
 using ParameterAttributes = Mono.Cecil.ParameterAttributes;
+using PropertyAttributes = Mono.Cecil.PropertyAttributes;
 using TypeAttributes = Mono.Cecil.TypeAttributes;
 
 namespace FluentAspect.Weaver.Tests.Core.Model
@@ -51,6 +52,12 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             type.Methods.Add(methodDefinition_L);
             return methodDefinition_L;
         }
+        public static PropertyDefinition AddProperty<T>(this TypeDefinition type, string name)
+        {
+            var methodDefinition_L = new PropertyDefinition(name, PropertyAttributes.None, type.Module.Import(typeof(T)));
+            type.Properties.Add(methodDefinition_L);
+            return methodDefinition_L;
+        }
         public static MethodDefinition AddMethod<T>(this TypeDefinition type, string name)
         {
             var methodDefinition_L = new MethodDefinition(name, MethodAttributes.Public, type.Module.Import(typeof(T)));
@@ -59,6 +66,12 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         }
         public static MethodDefinition WithReturn(this MethodDefinition method)
         {
+            method.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+            return method;
+        }
+        public static MethodDefinition WithReturn(this MethodDefinition method, string stringValue)
+        {
+            method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldstr, stringValue));
             method.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
             return method;
         }
@@ -114,8 +127,23 @@ namespace FluentAspect.Weaver.Tests.Core.Model
 
         public static MethodDefinition WithAspect(this MethodDefinition method, NetAspectAspect aspect)
         {
-           method.CustomAttributes.Add(new CustomAttribute(aspect.TypeDefinition.GetDefaultConstructor()));
-           return method;
+            method.CustomAttributes.Add(new CustomAttribute(aspect.TypeDefinition.GetDefaultConstructor()));
+            return method;
+        }
+
+        public static PropertyDefinition WithAspect(this PropertyDefinition method, NetAspectAspect aspect)
+        {
+            method.CustomAttributes.Add(new CustomAttribute(aspect.TypeDefinition.GetDefaultConstructor()));
+            return method;
+        }
+
+        public static MethodDefinition AddGetMethod(this PropertyDefinition property)
+        {
+            property.GetMethod = new MethodDefinition("get_" + property.Name, MethodAttributes.Public |
+MethodAttributes.SpecialName |
+MethodAttributes.HideBySig, property.PropertyType);
+            property.DeclaringType.Methods.Add(property.GetMethod);
+            return property.GetMethod;
         }
         public static MethodDefinition GetDefaultConstructor(this TypeDefinition type)
         {

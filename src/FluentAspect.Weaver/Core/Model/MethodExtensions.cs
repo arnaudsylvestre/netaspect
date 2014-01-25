@@ -12,10 +12,14 @@ namespace FluentAspect.Weaver.Core.Model
           return m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName &&
                  ParametersEqual(m, info);
        }
-        public static bool AreEqual(this FieldReference m, FieldInfo info)
-         {
-             return m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName;
-         }
+       public static bool AreEqual(this FieldReference m, FieldInfo info)
+       {
+           return m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName;
+       }
+       public static bool AreEqual(this PropertyReference m, PropertyInfo info)
+       {
+           return m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName;
+       }
 
          private static bool ParametersEqual(IMethod method_P, MethodBase info_P)
          {
