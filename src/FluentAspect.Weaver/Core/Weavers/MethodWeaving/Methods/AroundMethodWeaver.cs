@@ -73,8 +73,10 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 
         private void CheckOnExceptionParameters(Interceptor onExceptionInterceptor, ErrorHandler errorHandler, MethodDefinition methodDefinition)
         {
+            if (onExceptionInterceptor.Method == null)
+                return;
             var checkers = new Dictionary<string, Action<ParameterInfo, ErrorHandler>>();
-            AddCommonCheckers(checkers, methodDefinition);
+            AddCommonCheckers(checkers, methodDefinition, errorHandler);
             checkers.Add("exception", (info, handler) =>
             {
                 EnsureOfType(info, handler, typeof(Exception).FullName);
@@ -99,8 +101,10 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 
         private void CheckAfterParameters(Interceptor after, ErrorHandler errorHandler, MethodDefinition methodDefinition)
         {
+            if (after.Method == null)
+                return;
             var checkers = new Dictionary<string, Action<ParameterInfo, ErrorHandler>>();
-            AddCommonCheckers(checkers, methodDefinition);
+            AddCommonCheckers(checkers, methodDefinition, errorHandler);
             checkers.Add("result", (info, handler) =>
                 {
                     EnsureResultOfType(info, handler, methodDefinition);
@@ -138,6 +142,13 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 
         private void EnsureOfType(ParameterInfo info, ErrorHandler handler, ParameterDefinition parameter)
         {
+            if (parameter.ParameterType.IsGenericParameter && info.ParameterType.IsByRef)
+            {
+                handler.Errors.Add(string.Format("Impossible to ref a generic parameter"));
+                return;
+            }
+                
+
             if (info.ParameterType == typeof(object))
                 return;
             if (info.ParameterType.FullName.Replace("&", "") != parameter.ParameterType.FullName.Replace("&", ""))
@@ -150,12 +161,14 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 
         private void CheckBeforeParameters(Interceptor before, ErrorHandler errorHandler, MethodDefinition methodDefinition)
         {
+            if (before.Method == null)
+                return;
             var checkers = new Dictionary<string, Action<ParameterInfo, ErrorHandler>>();
-            AddCommonCheckers(checkers, methodDefinition);
+            AddCommonCheckers(checkers, methodDefinition, errorHandler);
             Check(errorHandler, before, checkers);
         }
 
-        private void AddCommonCheckers(Dictionary<string, Action<ParameterInfo, ErrorHandler>> checkers, MethodDefinition methodDefinition)
+        private void AddCommonCheckers(Dictionary<string, Action<ParameterInfo, ErrorHandler>> checkers, MethodDefinition methodDefinition, ErrorHandler errorHandler)
         {
             checkers.Add("parameters", (p, handler) => { EnsureNotReferenced(p, handler);
                                                            EnsureOfType<object[]>(p, handler);
@@ -172,7 +185,13 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
             });
             foreach (var parameter in methodDefinition.Parameters)
             {
-                checkers.Add(parameter.Name, (p, handler) => { EnsureOfType(p, handler, parameter); });
+                if (checkers.ContainsKey(parameter.Name))
+                    errorHandler.Errors.Add(string.Format("The parameter {0} is already declared", parameter.Name));
+                else
+                {
+                    checkers.Add(parameter.Name, (p, handler) => { EnsureOfType(p, handler, parameter); });
+                    
+                }
                 
             }
         }

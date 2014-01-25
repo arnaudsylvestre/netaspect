@@ -184,13 +184,56 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
        [Test]
        public void CheckParameterNameWithGenericParameterAndRefObject()
        {
-           throw new NotImplementedException();
+           DoUnit2.Test()
+                   .ByDefiningAssembly(assembly =>
+                   {
+                       var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                       var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                       var netAspectInterceptor = aspect.AddAfterInterceptor();
+                       netAspectInterceptor
+                          .WithReferencedParameter<object>("first");
+                       netAspectInterceptor
+                           .WithReturn();
+                       myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithGenericType("T")
+                          .WithGenericParameter("first", "T")
+                          .WithReturn()
+                          .WithAspect(aspect);
+                   })
+                   .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("Impossible to ref a generic parameter")))
+                    
+                   .AndLaunchTest();
        }
 
        [Test]
        public void CheckParameterNameWithRefGenericParameterAndObject()
        {
-           throw new NotImplementedException();
+           DoUnit2.Test()
+                   .ByDefiningAssembly(assembly =>
+                   {
+                       var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                       var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                       var netAspectInterceptor = aspect.AddAfterInterceptor();
+                       netAspectInterceptor
+                          .WithParameter<object>("first");
+                       netAspectInterceptor
+                           .WithReturn();
+                       myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithGenericType("T")
+                          .WithReferencedGenericParameter("first", "T")
+                          .WithReturn()
+                          .WithAspect(aspect);
+                   })
+                   .AndEnsureAssembly(assembly =>
+                   {
+                       var o = assembly.CreateObject("MyClassToWeave");
+                       o.CallMethod<string>("MyMethodToWeave", new object[]{"12"});
+
+                       Assert.AreEqual("12", assembly.GetStaticFieldValue("MyAspectAttribute", "AfterfirstField"));
+
+                   })
+
+                   .AndLaunchTest();
        }
     }
 }

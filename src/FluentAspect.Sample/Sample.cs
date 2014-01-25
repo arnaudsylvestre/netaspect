@@ -14,7 +14,7 @@ namespace FluentAspect.Sample
     {
         public static int Beforeinstance;
 
-        public void Before(int instance)
+        public void Before<T>(T instance)
         {
             Before2(instance);
             

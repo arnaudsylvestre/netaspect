@@ -50,7 +50,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
 
         private void Check(ParameterInfo parameterInfo, bool updateAllowed, TypeReference variableType)
         {
-            if (parameterInfo.ParameterType == typeof (object))
+            if (parameterInfo.ParameterType == typeof(object))
                 return;
             if (!IsTypeCompliant(parameterInfo.ParameterType, variableType))
             {

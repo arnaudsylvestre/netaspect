@@ -72,6 +72,11 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             method.Parameters.Add(new ParameterDefinition(parameterName, ParameterAttributes.None, method.GenericParameters.First(p => p.Name == typeName)));
             return method;
         }
+        public static MethodDefinition WithReferencedGenericParameter(this MethodDefinition method, string parameterName, string typeName)
+        {
+            method.Parameters.Add(new ParameterDefinition(parameterName, ParameterAttributes.None, new ByReferenceType(method.GenericParameters.First(p => p.Name == typeName))));
+            return method;
+        }
         public static MethodDefinition WithReturnParameter(this MethodDefinition method, string parameterName)
         {
             var parameterDefinition = method.Parameters.First(p => p.Name == parameterName);

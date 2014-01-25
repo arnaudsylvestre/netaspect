@@ -43,14 +43,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
                    .WithAspect(aspect);
 
             })
-           .AndEnsureAssembly(assemblyP =>
-           {
-
-               var o = assemblyP.CreateObject("MyClassToWeave");
-               o.CallMethod("MyMethodToWeave");
-               Assert.AreEqual(o, assemblyP.GetStaticFieldValue("MyAspectAttribute", "AfterinstanceField"));
-
-           })
+           .EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("The parameter instance is already declared")))
                    .AndLaunchTest();
         }
     }
