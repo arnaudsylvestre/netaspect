@@ -197,6 +197,7 @@
     <Compile Include="unit\MethodWeaving\Method\MethodWeavingWithGenericsTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\AfterMethodMethodParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\AfterMethodParameterNameParameterTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\AfterMethodUnknownParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\BeforeMethodParameterNameParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\BeforeMethodInstanceParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\MethodWeavingAssemblyAttributeWeavingTest.cs" />
