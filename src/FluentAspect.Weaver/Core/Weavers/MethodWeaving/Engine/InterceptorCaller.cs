@@ -43,7 +43,27 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
                 {
                     Check(p, updateAllowed, parameter.ParameterType);
                     var moduleDefinition = ((MethodDefinition) parameter.Method).Module;
-                    il.Emit(p.ParameterType.IsByRef && !parameter.ParameterType.IsByReference ? OpCodes.Ldarga : OpCodes.Ldarg, parameter);
+                    if (p.ParameterType.IsByRef && !parameter.ParameterType.IsByReference)
+                    {
+                        il.Emit(OpCodes.Ldarga, parameter);
+                        
+                    }
+                    else if (!p.ParameterType.IsByRef && parameter.ParameterType.IsByReference)
+                    {
+                        il.Emit(OpCodes.Ldarg, parameter);
+                        if (p.ParameterType == typeof(int))
+                        il.Emit(OpCodes.Ldind_I4);
+                        else
+                        {
+                            il.Emit(OpCodes.Ldind_Ref);
+                        }
+
+                    }
+                    else
+                    {
+                        il.Emit(OpCodes.Ldarg, parameter);
+                        
+                    }
                     if (parameter.ParameterType != moduleDefinition.TypeSystem.Object &&
                         p.ParameterType == typeof (Object))
                     {

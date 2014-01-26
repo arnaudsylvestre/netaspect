@@ -245,7 +245,31 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
        [Test]
        public void CheckValueTypeByReferenceInMethod()
        {
-           throw new NotImplementedException();
+           DoUnit2.Test()
+                    .ByDefiningAssembly(assembly =>
+                    {
+                        var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                        var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                        var netAspectInterceptor = aspect.AddAfterInterceptor();
+                        netAspectInterceptor
+                           .WithParameter<int>("first");
+                        netAspectInterceptor
+                            .WithReturn();
+                        myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithReferencedParameter<int>("first")
+                           .WithReturn()
+                           .WithAspect(aspect);
+                    })
+                    .AndEnsureAssembly(assembly =>
+                    {
+                        var o = assembly.CreateObject("MyClassToWeave");
+                        var parameters = new object[] {12};
+                        o.CallMethod("MyMethodToWeave", parameters);
+
+                        Assert.AreEqual(12, parameters[0]);
+
+                    })
+                    .AndLaunchTest();
 
        }
 
