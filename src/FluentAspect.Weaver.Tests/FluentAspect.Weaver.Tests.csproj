@@ -266,6 +266,7 @@
     <Compile Include="unit\MethodWeaving\Properties\Getter\PropertyGetterReturnWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\PropertyGetterStaticMethodWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\VisibilityPropertyGetterWeavingTest.cs" />
+    <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\After\AfterPropertyUpdaterValueParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\PropertyUpdaterWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\PropertyUpdaterWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\After\AfterPropertyUpdaterInstanceParameterTest.cs" />

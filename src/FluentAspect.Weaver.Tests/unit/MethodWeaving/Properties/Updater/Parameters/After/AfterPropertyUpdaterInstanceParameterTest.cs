@@ -11,21 +11,77 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parame
        [Test]
        public void CheckInstanceReferenced()
         {
-            throw new NotImplementedException();
+            DoUnit2.Test().ByDefiningAssembly(assembly =>
+            {
+                var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                var netAspectInterceptor = aspect.AddAfterPropertySetInterceptor();
+                netAspectInterceptor
+                   .WithReferencedParameter<object>("instance");
+                netAspectInterceptor
+                    .WithReturn();
+                var propertyDefinition = myClassToWeave.AddProperty<string>("MyProperty")
+                    .WithAspect(aspect);
+                propertyDefinition.AddSetMethod()
+                   .WithReturn()
+                   ;
+                        
+}).EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'instance' in the method AfterPropertySet of the type 'A.MyAspectAttribute'")))
+           
+                      .AndLaunchTest();
           
        }
 
         [Test]
         public void CheckInstanceBadType()
        {
-           throw new NotImplementedException();
+           DoUnit2.Test().ByDefiningAssembly(assembly =>
+           {
+               var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+               var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+               var netAspectInterceptor = aspect.AddAfterPropertySetInterceptor();
+               netAspectInterceptor
+                  .WithParameter<int>("instance");
+               netAspectInterceptor
+                   .WithReturn();
+               var propertyDefinition = myClassToWeave.AddProperty<string>("MyProperty")
+                   .WithAspect(aspect);
+               propertyDefinition.AddSetMethod()
+                  .WithReturn()
+                  ;
+           }).EnsureErrorHandler(errorHandler => errorHandler.Errors.Add(string.Format("the instance parameter in the method AfterPropertySet of the type 'A.MyAspectAttribute' is declared with the type 'System.Int32' but it is expected to be System.Object or A.MyClassToWeave")))
+           .AndLaunchTest();
            
         }
 
        [Test]
        public void CheckInstanceWithObjectType()
         {
-            throw new NotImplementedException();
+            DoUnit2.Test().ByDefiningAssembly(assembly =>
+            {
+                var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                var netAspectInterceptor = aspect.AddAfterPropertySetInterceptor();
+                netAspectInterceptor
+                   .WithParameter<object>("instance");
+                netAspectInterceptor
+                    .WithReturn();
+                var propertyDefinition = myClassToWeave.AddProperty<string>("MyProperty")
+                    .WithAspect(aspect);
+                propertyDefinition.AddSetMethod()
+                   .WithReturn()
+                   ;
+
+            })
+                   .AndEnsureAssembly(assemblyP =>
+                   {
+
+                       var o = assemblyP.CreateObject("MyClassToWeave");
+                       o.UpdateProperty("MyProperty", "value");
+                       Assert.AreEqual(o, assemblyP.GetStaticFieldValue("MyAspectAttribute", "AfterPropertySetinstanceField"));
+
+                   })
+                   .AndLaunchTest();
           
        }
 
