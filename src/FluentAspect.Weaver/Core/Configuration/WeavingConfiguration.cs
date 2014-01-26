@@ -15,111 +15,99 @@ namespace FluentAspect.Weaver.Core.Configuration
     public class WeavingConfiguration
     {
        private readonly IAssemblyDefinitionProvider _assemblyDefinitionProvider;
-       private List<MethodMatch> _methods;
-       private List<MethodMatch> _constructors;
-       private List<FieldMatch> _fields;
-       private List<PropertyMatch> _properties;
+       private List<AspectMatch<IMethod>> _methods;
+       private List<AspectMatch<IMethod>> _constructors;
+       private List<AspectMatch<FieldReference>> _fields;
+       private List<AspectMatch<PropertyReference>> _properties;
 
         public WeavingConfiguration(IAssemblyDefinitionProvider assemblyDefinitionProvider)
         {
             _assemblyDefinitionProvider = assemblyDefinitionProvider;
-            _methods = new List<MethodMatch>();
-            _constructors = new List<MethodMatch>();
-           _fields = new List<FieldMatch>();
-            _properties = new List<PropertyMatch>();
+            _methods = new List<AspectMatch<IMethod>>();
+            _constructors = new List<AspectMatch<IMethod>>();
+           _fields = new List<AspectMatch<FieldReference>>();
+           _properties = new List<AspectMatch<PropertyReference>>();
         }
 
-        public IEnumerable<PropertyMatch> Properties
+        public IEnumerable<AspectMatch<PropertyReference>> Properties
         {
             get { return _properties; }
         }
 
-        public IEnumerable<MethodMatch> Methods
+        public IEnumerable<AspectMatch<IMethod>> Methods
         {
             get { return _methods; }
         }
 
-        public IEnumerable<MethodMatch> Constructors
+        public IEnumerable<AspectMatch<IMethod>> Constructors
         {
             get { return _constructors; }
         }
 
-       public List<FieldMatch> Fields
+        public List<AspectMatch<FieldReference>> Fields
        {
           get { return _fields; }
        }
 
        public void AddMethod(Func<IMethod, bool> matcher, IEnumerable<Assembly> assemblies,
-                              MethodWeavingConfiguration methodWeavingConfigurations,
-                              CallWeavingConfiguration callWeavingConfigurations, List<string> errors)
+                              NetAspectDefinition methodWeavingConfigurations, List<string> errors)
         {
-           Check(callWeavingConfigurations, errors);
            Check(methodWeavingConfigurations, errors);
            if (errors.Count > 0)
               return;
-           _methods.Add(new MethodMatch()
+           _methods.Add(new AspectMatch<IMethod>()
            {
               AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
               Matcher = matcher,
-              CallWeavingInterceptors = callWeavingConfigurations,
-              MethodWeavingInterceptors = methodWeavingConfigurations,
+              Aspect = methodWeavingConfigurations,
            });
         }
 
        public void AddField(Func<FieldReference, bool> matcher, IEnumerable<Assembly> assemblies,
-                             CallWeavingConfiguration callWeavingConfigurations, List<string> errors)
+                             NetAspectDefinition aspect, List<string> errors)
        {
-           Check(callWeavingConfigurations, errors);
+           Check(aspect, errors);
            if (errors.Count > 0)
                return;
-           _fields.Add(new FieldMatch()
+           _fields.Add(new AspectMatch<FieldReference>()
            {
                AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
                Matcher = matcher,
-               CallWeavingInterceptors = callWeavingConfigurations,
+               Aspect = aspect,
            });
        }
 
        public void AddProperty(Func<PropertyReference, bool> matcher, IEnumerable<Assembly> assemblies,
-                             MethodWeavingConfiguration callWeavingConfigurations, List<string> errors)
+                             NetAspectDefinition aspect, List<string> errors)
        {
-           Check(callWeavingConfigurations, errors);
+           Check(aspect, errors);
            if (errors.Count > 0)
                return;
-           _properties.Add(new PropertyMatch()
-           {
+           _properties.Add(new AspectMatch<PropertyReference>()
+               {
                AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
                Matcher = matcher,
-               CallWeavingInterceptors = callWeavingConfigurations,
+               Aspect = aspect,
            });
        }
 
-        private void Check(MethodWeavingConfiguration methodWeavingConfigurations, List<string> errors)
+        private void Check(NetAspectDefinition methodWeavingConfigurations, List<string> errors)
         {
             if (methodWeavingConfigurations != null && methodWeavingConfigurations.Type.GetConstructor(new Type[0]) == null)
                 errors.Add(string.Format("The type {0} must have a default constructor", methodWeavingConfigurations.Type.FullName));
         }
 
-        private static void Check(CallWeavingConfiguration callWeavingConfigurations, List<string> errors)
-        {
-            if (callWeavingConfigurations != null && callWeavingConfigurations.Type.GetConstructor(new Type[0]) == null)
-                errors.Add(string.Format("The type {0} must have a default constructor", callWeavingConfigurations.Type.FullName));
-        }
-
         public void AddConstructor(Func<IMethod, bool> matcher, IEnumerable<Assembly> assemblies,
-                              MethodWeavingConfiguration methodWeavingConfigurations,
-                              CallWeavingConfiguration callWeavingConfigurations, List<string> errors)
+                              NetAspectDefinition aspect, List<string> errors)
         {
-            Check(callWeavingConfigurations, errors);
-            Check(methodWeavingConfigurations, errors);
+            Check(aspect, errors);
             if (errors.Count > 0)
                 return;
-            _constructors.Add(new MethodMatch()
+            _constructors.Add(new AspectMatch<IMethod>()
             {
                 AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
                 Matcher = matcher,
-                CallWeavingInterceptors = callWeavingConfigurations,
-                MethodWeavingInterceptors = methodWeavingConfigurations,
+                Aspect = aspect,
             });
         }
     }

@@ -38,10 +38,10 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                 {
                                     if (methodMatch.Matcher(instruction.Operand as FieldReference))
                                     {
-                                        if (methodMatch.CallWeavingInterceptors != null)
+                                        if (methodMatch.Aspect != null)
                                         {
-                                           if (methodMatch.CallWeavingInterceptors.BeforeUpdateFieldValue.Method != null ||
-                                                methodMatch.CallWeavingInterceptors.AfterUpdateFieldValue.Method != null)
+                                           if (methodMatch.Aspect.BeforeUpdateFieldValue.Method != null ||
+                                                methodMatch.Aspect.AfterUpdateFieldValue.Method != null)
                                         {
                                            var methodPoint_L = new JoinPoint
                                               {
@@ -51,7 +51,12 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                            {
                                                updates.Add(methodPoint_L, new List<CallWeavingConfiguration>());
                                            }
-                                           updates[methodPoint_L].Add(methodMatch.CallWeavingInterceptors);
+                                           updates[methodPoint_L].Add(new CallWeavingConfiguration()
+                                               {
+                                                   Type = methodMatch.Aspect.Type,
+                                                   After = methodMatch.Aspect.AfterUpdateFieldValue,
+                                                   Before = methodMatch.Aspect.BeforeUpdateFieldValue,
+                                               });
                                            
                                         }
 
@@ -68,10 +73,10 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                 {
                                     if (methodMatch.Matcher(instruction.Operand as FieldReference))
                                     {
-                                        if (methodMatch.CallWeavingInterceptors != null)
+                                        if (methodMatch.Aspect != null)
                                         {
-                                            if (methodMatch.CallWeavingInterceptors.BeforeUpdateFieldValue.Method != null ||
-                                                 methodMatch.CallWeavingInterceptors.AfterUpdateFieldValue.Method != null)
+                                            if (methodMatch.Aspect.BeforeUpdateFieldValue.Method != null ||
+                                                 methodMatch.Aspect.AfterUpdateFieldValue.Method != null)
                                             {
                                                 var methodPoint_L = new JoinPoint
                                                 {
@@ -82,7 +87,12 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                                 {
                                                     getters.Add(methodPoint_L, new List<CallWeavingConfiguration>());
                                                 }
-                                                getters[methodPoint_L].Add(methodMatch.CallWeavingInterceptors);
+                                                getters[methodPoint_L].Add(new CallWeavingConfiguration()
+                                                {
+                                                    Type = methodMatch.Aspect.Type,
+                                                    After = methodMatch.Aspect.AfterUpdateFieldValue,
+                                                    Before = methodMatch.Aspect.BeforeUpdateFieldValue,
+                                                });
 
                                             }
 

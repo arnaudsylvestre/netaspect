@@ -25,7 +25,7 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         {
             var typeDefinition = assembly.AddClass(name);
             typeDefinition.BaseType = assembly.MainModule.Import(typeof (Attribute));
-            var fieldDefinition = new FieldDefinition("NetAspectAttributeKind", FieldAttributes.Public, assembly.MainModule.TypeSystem.String);
+            var fieldDefinition = new FieldDefinition("NetAspectAttribute", FieldAttributes.Public, assembly.MainModule.TypeSystem.String);
             typeDefinition.Fields.Add(fieldDefinition);
             var method = new MethodDefinition(".ctor", MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName, assembly.MainModule.TypeSystem.Void);
             var instructions = method.Body.Instructions;

@@ -13,23 +13,14 @@ namespace FluentAspect.Weaver.Core.Configuration.Attributes
             foreach (MethodInfo matchingMethod in assembly.GetTypes().GetAllMethods((m) => true))
             {
                 MethodBase info = matchingMethod;
-                foreach (var methodWeavingAspectAttribute_L in matchingMethod.GetMethodWeavingAspectAttributes())
+                foreach (var methodWeavingAspectAttribute_L in matchingMethod.GetNetAspectAttributes())
                 {
                     var errors = new List<string>();
                    configuration.AddMethod(m => m.AreEqual(info),
                      new List<Assembly>() { info.DeclaringType.Assembly },
                      methodWeavingAspectAttribute_L,
-                     null, errors);
+                     errors);
                    errorHandler.Errors.AddRange(errors);
-                }
-                foreach (var methodWeavingAspectAttribute_L in matchingMethod.GetCallWeavingAspectAttributes())
-                {
-                    var errors = new List<string>();
-                   configuration.AddMethod(m => m.AreEqual(info),
-                     new List<Assembly>() { info.DeclaringType.Assembly },
-                     null,
-                     methodWeavingAspectAttribute_L, errors);
-                    errorHandler.Errors.AddRange(errors);
                 }
             }
 

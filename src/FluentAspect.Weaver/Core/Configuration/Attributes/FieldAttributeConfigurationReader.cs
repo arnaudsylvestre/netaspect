@@ -13,7 +13,7 @@ namespace FluentAspect.Weaver.Core.Configuration.Attributes
             foreach (var matchingMethod in assembly.GetTypes().GetAllFields((m) => true))
             {
                 FieldInfo info = matchingMethod;
-                foreach (var methodWeavingAspectAttribute_L in matchingMethod.GetCallWeavingAspectAttributes())
+                foreach (var methodWeavingAspectAttribute_L in matchingMethod.GetNetAspectAttributes())
                 {
                     var errors = new List<string>();
                    configuration.AddField(m => m.AreEqual(info),

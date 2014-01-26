@@ -29,7 +29,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Fields
 
             foreach (var interceptorType in _toWeave.Interceptors)
             {
-                var method = interceptorType.BeforeUpdateFieldValue.Method;
+                var method = interceptorType.Before.Method;
                 if (method == null) continue;
                 parametersEngine.Fill(method.GetParameters(), beforeInstructions);
                 beforeInstructions.Add(Instruction.Create(OpCodes.Call,
@@ -43,7 +43,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Fields
         {
             foreach (var interceptorType in _toWeave.Interceptors)
             {
-                MethodInfo afterCallMethod = interceptorType.AfterUpdateFieldValue.Method;
+                MethodInfo afterCallMethod = interceptorType.After.Method;
                 if (afterCallMethod == null) continue;
                 parametersEngine.Fill(afterCallMethod.GetParameters(), instructions);
                 instructions.Add(Instruction.Create(OpCodes.Call, _toWeave.JoinPoint.Method.Module.Import(afterCallMethod)));
@@ -54,8 +54,8 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Fields
         {
             foreach (var netAspectAttribute in _toWeave.Interceptors)
             {
-                parametersEngine.Check(netAspectAttribute.BeforeUpdateFieldValue.GetParameters(), error);
-                parametersEngine.Check(netAspectAttribute.AfterUpdateFieldValue.GetParameters(), error);
+                parametersEngine.Check(netAspectAttribute.Before.GetParameters(), error);
+                parametersEngine.Check(netAspectAttribute.After.GetParameters(), error);
             }
         }
     }

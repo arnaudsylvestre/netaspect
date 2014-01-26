@@ -52,11 +52,11 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Methods
         {
             foreach (var interceptorType in _toWeave.Interceptors)
             {
-                if (interceptorType.BeforeInterceptor.Method == null) continue;
-                parametersEngine.Fill(interceptorType.BeforeInterceptor.Method.GetParameters(), instructions);
+                if (interceptorType.Before.Method == null) continue;
+                parametersEngine.Fill(interceptorType.Before.Method.GetParameters(), instructions);
                 instructions.Add(Instruction.Create(OpCodes.Call,
                                                     _toWeave.JoinPoint.Method.Module.Import(
-                                                        interceptorType.BeforeInterceptor
+                                                        interceptorType.Before
                                                                        .Method)));
             }
         }
@@ -65,7 +65,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Methods
         {
             foreach (var interceptorType in _toWeave.Interceptors)
             {
-                MethodInfo afterCallMethod = interceptorType.AfterInterceptor.Method;
+                MethodInfo afterCallMethod = interceptorType.After.Method;
                 if (afterCallMethod == null) continue;
                 parametersEngine.Fill(afterCallMethod.GetParameters(), instructions);
                 instructions.Add(Instruction.Create(OpCodes.Call, _toWeave.JoinPoint.Method.Module.Import(afterCallMethod)));
@@ -76,8 +76,8 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Methods
         {
             foreach (var netAspectAttribute in _toWeave.Interceptors)
             {
-                parametersEngine.Check(netAspectAttribute.BeforeInterceptor.GetParameters(), error);
-                parametersEngine.Check(netAspectAttribute.AfterInterceptor.GetParameters(), error);
+                parametersEngine.Check(netAspectAttribute.Before.GetParameters(), error);
+                parametersEngine.Check(netAspectAttribute.After.GetParameters(), error);
             }
         }
     }

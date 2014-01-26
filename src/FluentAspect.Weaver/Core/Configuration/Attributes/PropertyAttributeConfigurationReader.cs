@@ -13,7 +13,7 @@ namespace FluentAspect.Weaver.Core.Configuration.Attributes
             foreach (var matchingMethod in assembly.GetTypes().GetAllProperties((m) => true))
             {
                 PropertyInfo info = matchingMethod;
-                foreach (var methodWeavingAspectAttribute_L in matchingMethod.GetCallWeavingAspectAttributes())
+                foreach (var methodWeavingAspectAttribute_L in matchingMethod.GetNetAspectAttributes())
                 {
                     var errors = new List<string>();
                    configuration.AddProperty(m => m.AreEqual(info),

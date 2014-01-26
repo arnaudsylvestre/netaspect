@@ -19,9 +19,9 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
            var points = new Dictionary<JoinPoint, List<CallWeavingConfiguration>>();
 
            //var methodMatches = new List<MethodMatch>(configuration.Constructors);
-           var methodMatches = new List<MethodMatch>(configuration.Methods);
+           var methodMatches = new List<AspectMatch<IMethod>>(configuration.Methods);
            methodMatches.AddRange(configuration.Constructors);
-            foreach (MethodMatch m in methodMatches)
+            foreach (var m in methodMatches)
             {
                 foreach (var assemblyDefinition in m.AssembliesToScan)
                 {
@@ -41,10 +41,10 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                     if (methodMatch.Matcher(new MethodDefinitionAdapter(instruction.Operand as MethodReference)))
                                     {
 
-                                        if (methodMatch.CallWeavingInterceptors != null)
+                                        if (methodMatch.Aspect != null)
                                         {
-                                           if (methodMatch.CallWeavingInterceptors.BeforeInterceptor.Method != null ||
-                                                methodMatch.CallWeavingInterceptors.AfterInterceptor.Method != null)
+                                            if (methodMatch.Aspect.BeforeInterceptor.Method != null ||
+                                                methodMatch.Aspect.AfterInterceptor.Method != null)
                                         {
                                            var methodPoint_L = new JoinPoint
                                               {
@@ -54,7 +54,12 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                            {
                                               points.Add(methodPoint_L, new List<CallWeavingConfiguration>());
                                            }
-                                           points[methodPoint_L].Add(methodMatch.CallWeavingInterceptors);
+                                           points[methodPoint_L].Add(new CallWeavingConfiguration()
+                                           {
+                                               Type = methodMatch.Aspect.Type,
+                                               After = methodMatch.Aspect.AfterInterceptor,
+                                               Before = methodMatch.Aspect.BeforeInterceptor,
+                                           });
                                            
                                         }
 
