@@ -9,7 +9,7 @@ using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.WeaverBuilders
 {
-    public class AroundPropertyGetMethodBuilderWeaver : IWeaverBuilder
+    public class AroundPropertySetMethodBuilderWeaver : IWeaverBuilder
     {
         public IEnumerable<IWeaveable> BuildWeavers(WeavingConfiguration configuration)
         {
@@ -21,15 +21,15 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                  List<PropertyDefinition> methods = assemblyDefinition.GetAllProperties();
                  foreach (var methodDefinition_L in methods)
                  {
-                     if (methodMatch.Matcher(methodDefinition_L) && methodDefinition_L.GetMethod != null && methodMatch.Aspect != null)
+                     if (methodMatch.Matcher(methodDefinition_L) && methodDefinition_L.SetMethod != null && methodMatch.Aspect != null)
                     {
-                       if (!configurations.ContainsKey(methodDefinition_L.GetMethod))
-                           configurations.Add(methodDefinition_L.GetMethod, new List<MethodWeavingConfiguration>());
-                       configurations[methodDefinition_L.GetMethod].Add(new MethodWeavingConfiguration()
+                       if (!configurations.ContainsKey(methodDefinition_L.SetMethod))
+                           configurations.Add(methodDefinition_L.SetMethod, new List<MethodWeavingConfiguration>());
+                       configurations[methodDefinition_L.SetMethod].Add(new MethodWeavingConfiguration()
                        {
                            Type = methodMatch.Aspect.Type,
-                           After = methodMatch.Aspect.AfterPropertyGet,
-                           Before = methodMatch.Aspect.BeforePropertyGet,
+                           After = methodMatch.Aspect.AfterPropertySet,
+                           Before = methodMatch.Aspect.BeforePropertySet,
                            OnException = methodMatch.Aspect.OnException,
                        });
                     }

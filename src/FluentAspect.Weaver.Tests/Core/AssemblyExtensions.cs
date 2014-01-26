@@ -26,6 +26,10 @@ namespace FluentAspect.Weaver.Tests.Core
        {
            return o.GetType().GetProperty(propertyName).GetValue(o, indices);
        }
+       public static void UpdateProperty(this object o, string propertyName, object value, params object[] indices)
+       {
+           o.GetType().GetProperty(propertyName).SetValue(o, value, indices);
+       }
        public static object CallMethod<T>(this object o, string methodName, params object[] parameters)
        {
            return o.GetType().GetMethod(methodName).MakeGenericMethod(typeof(T)).Invoke(o, parameters);

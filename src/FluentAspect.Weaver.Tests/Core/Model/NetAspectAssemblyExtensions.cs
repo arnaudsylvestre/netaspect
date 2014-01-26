@@ -145,6 +145,15 @@ MethodAttributes.HideBySig, property.PropertyType);
             property.DeclaringType.Methods.Add(property.GetMethod);
             return property.GetMethod;
         }
+        public static MethodDefinition AddSetMethod(this PropertyDefinition property)
+        {
+            property.SetMethod = new MethodDefinition("set_" + property.Name, MethodAttributes.Public |
+MethodAttributes.SpecialName |
+MethodAttributes.HideBySig, property.Module.TypeSystem.Void);
+            property.DeclaringType.Methods.Add(property.SetMethod);
+            property.SetMethod.Parameters.Add(new ParameterDefinition("value", ParameterAttributes.None, property.PropertyType));
+            return property.SetMethod;
+        }
         public static MethodDefinition GetDefaultConstructor(this TypeDefinition type)
         {
            return (from m in type.Methods where m.Name == ".ctor" && m.Parameters.Count == 0 select m).First();

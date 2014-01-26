@@ -22,7 +22,8 @@ namespace FluentAspect.Weaver.Factory
                      new AroundConstructorBuilderWeaver(),
                      new CallMethodBuilderWeaver(),
                      new CallFieldBuilderWeaver(),
-                     new AroundPropertyGetMethodBuilderWeaver()))
+                     new AroundPropertyGetMethodBuilderWeaver(),
+                     new AroundPropertySetMethodBuilderWeaver()))
                 ;
         }
     }

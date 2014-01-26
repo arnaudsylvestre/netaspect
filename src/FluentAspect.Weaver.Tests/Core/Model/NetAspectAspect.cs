@@ -49,6 +49,13 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             typeDefinition.Methods.Add(interceptor);
             return new NetAspectInterceptor(interceptor);
         }
+
+        public NetAspectInterceptor AddAfterPropertySetInterceptor()
+        {
+            var interceptor = new MethodDefinition("AfterPropertySet", MethodAttributes.Public, typeDefinition.Module.TypeSystem.Void);
+            typeDefinition.Methods.Add(interceptor);
+            return new NetAspectInterceptor(interceptor);
+        }
     }
 
     public class NetAspectInterceptor

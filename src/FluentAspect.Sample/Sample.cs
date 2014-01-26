@@ -7,7 +7,10 @@ namespace FluentAspect.Sample
 {
     class Res
     {
-        public int field;
+        public int field
+        {
+            set {}
+        }
     }   
     
     public class EventClass

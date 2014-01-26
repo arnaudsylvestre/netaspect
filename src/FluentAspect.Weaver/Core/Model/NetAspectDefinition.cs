@@ -90,5 +90,15 @@ namespace FluentAspect.Weaver.Core.Model
         {
             get { return new Interceptor(_attribute.GetMethod("BeforePropertyGet")); }
         }
+
+        public Interceptor AfterPropertySet
+        {
+            get { return new Interceptor(_attribute.GetMethod("AfterPropertySet")); }
+        }
+
+        public Interceptor BeforePropertySet
+        {
+            get { return new Interceptor(_attribute.GetMethod("BeforePropertySet")); }
+        }
     }
 }
