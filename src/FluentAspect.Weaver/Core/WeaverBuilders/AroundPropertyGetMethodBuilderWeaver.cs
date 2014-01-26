@@ -28,8 +28,8 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                        configurations[methodDefinition_L.GetMethod].Add(new MethodWeavingConfiguration()
                        {
                            Type = methodMatch.Aspect.Type,
-                           After = methodMatch.Aspect.After,
-                           Before = methodMatch.Aspect.Before,
+                           After = methodMatch.Aspect.AfterPropertyGet,
+                           Before = methodMatch.Aspect.BeforePropertyGet,
                            OnException = methodMatch.Aspect.OnException,
                        });
                     }

@@ -80,5 +80,15 @@ namespace FluentAspect.Weaver.Core.Model
                                      BindingFlags.Instance) != null;
             }
         }
+
+        public Interceptor AfterPropertyGet
+        {
+            get { return new Interceptor(_attribute.GetMethod("AfterPropertyGet")); }
+        }
+
+        public Interceptor BeforePropertyGet
+        {
+            get { return new Interceptor(_attribute.GetMethod("BeforePropertyGet")); }
+        }
     }
 }
