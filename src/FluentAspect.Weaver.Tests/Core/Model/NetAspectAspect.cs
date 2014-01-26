@@ -104,7 +104,22 @@ namespace FluentAspect.Weaver.Tests.Core.Model
           instructions.Add(Instruction.Create(OpCodes.Ldarg, parameterDefinition));
 
           if (parameterDefinition.ParameterType.IsByReference)
-             instructions.Add(Instruction.Create(OpCodes.Ldind_Ref));
+          {
+              if (fieldDefinition.FieldType.IsValueType)
+              {
+
+                  instructions.Add(Instruction.Create(OpCodes.Ldind_I4));
+              }
+              else
+              {
+
+                  instructions.Add(Instruction.Create(OpCodes.Ldind_Ref));
+              }
+          }
+          else
+          {
+              
+          }
           instructions.Add(Instruction.Create(fieldDefinition.IsStatic ? OpCodes.Stsfld : OpCodes.Stfld, fieldDefinition));
           return this;
        }
