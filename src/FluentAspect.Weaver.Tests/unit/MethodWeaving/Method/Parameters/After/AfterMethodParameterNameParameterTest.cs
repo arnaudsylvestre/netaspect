@@ -263,10 +263,300 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
                     .AndEnsureAssembly(assembly =>
                     {
                         var o = assembly.CreateObject("MyClassToWeave");
-                        var parameters = new object[] {12};
+                        var parameters = new object[] { 12 };
                         o.CallMethod("MyMethodToWeave", parameters);
 
                         Assert.AreEqual(12, parameters[0]);
+
+                    })
+                    .AndLaunchTest();
+
+       }
+       [Test]
+       public void CheckShortByReferenceInMethod()
+       {
+           DoUnit2.Test()
+                    .ByDefiningAssembly(assembly =>
+                    {
+                        var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                        var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                        var netAspectInterceptor = aspect.AddAfterInterceptor();
+                        netAspectInterceptor
+                           .WithParameter<short>("first");
+                        netAspectInterceptor
+                            .WithReturn();
+                        myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithReferencedParameter<short>("first")
+                           .WithReturn()
+                           .WithAspect(aspect);
+                    })
+                    .AndEnsureAssembly(assembly =>
+                    {
+                        var o = assembly.CreateObject("MyClassToWeave");
+                        var parameters = new object[] { 12 };
+                        o.CallMethod("MyMethodToWeave", parameters);
+
+                        Assert.AreEqual(12, parameters[0]);
+
+                    })
+                    .AndLaunchTest();
+
+       }
+
+       [Test]
+       public void CheckByteByReferenceInMethod()
+       {
+           DoUnit2.Test()
+                    .ByDefiningAssembly(assembly =>
+                    {
+                        var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                        var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                        var netAspectInterceptor = aspect.AddAfterInterceptor();
+                        netAspectInterceptor
+                           .WithParameter<byte>("first");
+                        netAspectInterceptor
+                            .WithReturn();
+                        myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithReferencedParameter<byte>("first")
+                           .WithReturn()
+                           .WithAspect(aspect);
+                    })
+                    .AndEnsureAssembly(assembly =>
+                    {
+                        var o = assembly.CreateObject("MyClassToWeave");
+                        var parameters = new object[] { 12 };
+                        o.CallMethod("MyMethodToWeave", parameters);
+
+                        Assert.AreEqual(12, parameters[0]);
+
+                    })
+                    .AndLaunchTest();
+
+       }
+
+       [Test]
+       public void CheckUshortByReferenceInMethod()
+       {
+           DoUnit2.Test()
+                    .ByDefiningAssembly(assembly =>
+                    {
+                        var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                        var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                        var netAspectInterceptor = aspect.AddAfterInterceptor();
+                        netAspectInterceptor
+                           .WithParameter<ushort>("first");
+                        netAspectInterceptor
+                            .WithReturn();
+                        myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithReferencedParameter<ushort>("first")
+                           .WithReturn()
+                           .WithAspect(aspect);
+                    })
+                    .AndEnsureAssembly(assembly =>
+                    {
+                        var o = assembly.CreateObject("MyClassToWeave");
+                        var parameters = new object[] { 12 };
+                        o.CallMethod("MyMethodToWeave", parameters);
+
+                        Assert.AreEqual(12, parameters[0]);
+
+                    })
+                    .AndLaunchTest();
+
+       }
+
+       [Test]
+       public void ChecksbyteByReferenceInMethod()
+       {
+           DoUnit2.Test()
+                    .ByDefiningAssembly(assembly =>
+                    {
+                        var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                        var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                        var netAspectInterceptor = aspect.AddAfterInterceptor();
+                        netAspectInterceptor
+                           .WithParameter<sbyte>("first");
+                        netAspectInterceptor
+                            .WithReturn();
+                        myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithReferencedParameter<sbyte>("first")
+                           .WithReturn()
+                           .WithAspect(aspect);
+                    })
+                    .AndEnsureAssembly(assembly =>
+                    {
+                        var o = assembly.CreateObject("MyClassToWeave");
+                        var parameters = new object[] { 12 };
+                        o.CallMethod("MyMethodToWeave", parameters);
+
+                        Assert.AreEqual(12, parameters[0]);
+
+                    })
+                    .AndLaunchTest();
+
+       }
+
+       [Test]
+       public void Checkuint32ByReferenceInMethod()
+       {
+           DoUnit2.Test()
+                    .ByDefiningAssembly(assembly =>
+                    {
+                        var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                        var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                        var netAspectInterceptor = aspect.AddAfterInterceptor();
+                        netAspectInterceptor
+                           .WithParameter<UInt32>("first");
+                        netAspectInterceptor
+                            .WithReturn();
+                        myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithReferencedParameter<UInt32>("first")
+                           .WithReturn()
+                           .WithAspect(aspect);
+                    })
+                    .AndEnsureAssembly(assembly =>
+                    {
+                        var o = assembly.CreateObject("MyClassToWeave");
+                        var parameters = new object[] { 12 };
+                        o.CallMethod("MyMethodToWeave", parameters);
+
+                        Assert.AreEqual(12, parameters[0]);
+
+                    })
+                    .AndLaunchTest();
+
+       }
+
+       [Test]
+       public void Checkuint64ByReferenceInMethod()
+       {
+           DoUnit2.Test()
+                    .ByDefiningAssembly(assembly =>
+                    {
+                        var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                        var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                        var netAspectInterceptor = aspect.AddAfterInterceptor();
+                        netAspectInterceptor
+                           .WithParameter<UInt64>("first");
+                        netAspectInterceptor
+                            .WithReturn();
+                        myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithReferencedParameter<UInt64>("first")
+                           .WithReturn()
+                           .WithAspect(aspect);
+                    })
+                    .AndEnsureAssembly(assembly =>
+                    {
+                        var o = assembly.CreateObject("MyClassToWeave");
+                        var parameters = new object[] { 12 };
+                        o.CallMethod("MyMethodToWeave", parameters);
+
+                        Assert.AreEqual(12, parameters[0]);
+
+                    })
+                    .AndLaunchTest();
+
+       }
+
+       [Test]
+       public void Checkint64ByReferenceInMethod()
+       {
+           DoUnit2.Test()
+                    .ByDefiningAssembly(assembly =>
+                    {
+                        var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                        var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                        var netAspectInterceptor = aspect.AddAfterInterceptor();
+                        netAspectInterceptor
+                           .WithParameter<Int64>("first");
+                        netAspectInterceptor
+                            .WithReturn();
+                        myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithReferencedParameter<Int64>("first")
+                           .WithReturn()
+                           .WithAspect(aspect);
+                    })
+                    .AndEnsureAssembly(assembly =>
+                    {
+                        var o = assembly.CreateObject("MyClassToWeave");
+                        var parameters = new object[] { 12 };
+                        o.CallMethod("MyMethodToWeave", parameters);
+
+                        Assert.AreEqual(12, parameters[0]);
+
+                    })
+                    .AndLaunchTest();
+
+       }
+
+        public enum TestEnum
+        {
+            A,
+            B,
+            C,
+        }
+
+       [Test]
+       public void CheckEnumByReferenceInMethod()
+       {
+           DoUnit2.Test()
+                    .ByDefiningAssembly(assembly =>
+                    {
+                        var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                        var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                        var netAspectInterceptor = aspect.AddAfterInterceptor();
+                        netAspectInterceptor
+                           .WithParameter<TestEnum>("first");
+                        netAspectInterceptor
+                            .WithReturn();
+                        myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithReferencedParameter<TestEnum>("first")
+                           .WithReturn()
+                           .WithAspect(aspect);
+                    })
+                    .AndEnsureAssembly(assembly =>
+                    {
+                        var o = assembly.CreateObject("MyClassToWeave");
+                        var parameters = new object[] { TestEnum.A };
+                        o.CallMethod("MyMethodToWeave", parameters);
+
+                        Assert.AreEqual(TestEnum.A, parameters[0]);
+
+                    })
+                    .AndLaunchTest();
+
+       }
+
+        public struct TestStruct
+        {
+            public int A;
+        }
+
+        
+
+       [Test]
+       public void CheckStructByReferenceInMethod()
+       {
+           DoUnit2.Test()
+                    .ByDefiningAssembly(assembly =>
+                    {
+                        var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                        var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                        var netAspectInterceptor = aspect.AddAfterInterceptor();
+                        netAspectInterceptor
+                           .WithParameter<TestStruct>("first");
+                        netAspectInterceptor
+                            .WithReturn();
+                        myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithReferencedParameter<TestStruct>("first")
+                           .WithReturn()
+                           .WithAspect(aspect);
+                    })
+                    .AndEnsureAssembly(assembly =>
+                    {
+                        var o = assembly.CreateObject("MyClassToWeave");
+                        var parameters = new object[] { new TestStruct() {A = 1} };
+                        o.CallMethod("MyMethodToWeave", parameters);
 
                     })
                     .AndLaunchTest();
@@ -298,6 +588,61 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After
                         o.CallMethod("MyMethodToWeave", parameters);
 
                         Assert.AreEqual(true, parameters[0]);
+
+                    })
+                    .AndLaunchTest();
+
+       }
+       [Test]
+       public void CheckFloatParameterByReferenceInMethod()
+       {
+           DoUnit2.Test()
+                    .ByDefiningAssembly(assembly =>
+                    {
+                        var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                        var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                        var netAspectInterceptor = aspect.AddAfterInterceptor();
+                        netAspectInterceptor
+                           .WithParameter<float>("first");
+                        netAspectInterceptor
+                            .WithReturn();
+                        myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithReferencedParameter<float>("first")
+                           .WithReturn()
+                           .WithAspect(aspect);
+                    })
+                    .AndEnsureAssembly(assembly =>
+                    {
+                        var o = assembly.CreateObject("MyClassToWeave");
+                        o.CallMethod("MyMethodToWeave", 12.5f);
+
+                    })
+                    .AndLaunchTest();
+
+       }
+
+       [Test]
+       public void CheckDoubleParameterByReferenceInMethod()
+       {
+           DoUnit2.Test()
+                    .ByDefiningAssembly(assembly =>
+                    {
+                        var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                        var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                        var netAspectInterceptor = aspect.AddAfterInterceptor();
+                        netAspectInterceptor
+                           .WithParameter<double>("first");
+                        netAspectInterceptor
+                            .WithReturn();
+                        myClassToWeave.AddMethod("MyMethodToWeave")
+                           .WithReferencedParameter<double>("first")
+                           .WithReturn()
+                           .WithAspect(aspect);
+                    })
+                    .AndEnsureAssembly(assembly =>
+                    {
+                        var o = assembly.CreateObject("MyClassToWeave");
+                        o.CallMethod("MyMethodToWeave", 12.5d);
 
                     })
                     .AndLaunchTest();
