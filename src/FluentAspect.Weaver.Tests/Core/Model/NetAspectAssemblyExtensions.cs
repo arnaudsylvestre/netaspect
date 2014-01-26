@@ -104,6 +104,13 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             method.Parameters.Add(new ParameterDefinition(parameterName, ParameterAttributes.None, method.Module.Import(typeof(T))));
             return method;
         }
+        public static MethodDefinition WithParameter<T>(this MethodDefinition method, string parameterName, NetAspectAspect aspect)
+        {
+            var parameterDefinition = new ParameterDefinition(parameterName, ParameterAttributes.None, method.Module.Import(typeof (T)));
+            parameterDefinition.CustomAttributes.Add(new CustomAttribute(aspect.TypeDefinition.GetDefaultConstructor()));
+            method.Parameters.Add(parameterDefinition);
+            return method;
+        }
         public static MethodDefinition WithReferencedParameter<T>(this MethodDefinition method, string parameterName)
         {
             method.Parameters.Add(new ParameterDefinition(parameterName, ParameterAttributes.None, new ByReferenceType(method.Module.Import(typeof(T)))));
