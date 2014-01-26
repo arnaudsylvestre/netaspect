@@ -54,6 +54,12 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
                         if (p.ParameterType == typeof(int))
                         il.Emit(OpCodes.Ldind_I4);
                         else
+                        if (p.ParameterType == typeof(bool))
+                        {
+
+                            il.Emit(OpCodes.Ldind_I1);
+                        }
+                        else
                         {
                             il.Emit(OpCodes.Ldind_Ref);
                         }
