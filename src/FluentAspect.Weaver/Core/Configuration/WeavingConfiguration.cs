@@ -19,6 +19,7 @@ namespace FluentAspect.Weaver.Core.Configuration
        private List<AspectMatch<IMethod>> _constructors;
        private List<AspectMatch<FieldReference>> _fields;
        private List<AspectMatch<PropertyReference>> _properties;
+       private List<AspectMatch<ParameterReference>> _parameters;
 
         public WeavingConfiguration(IAssemblyDefinitionProvider assemblyDefinitionProvider)
         {
@@ -49,18 +50,32 @@ namespace FluentAspect.Weaver.Core.Configuration
           get { return _fields; }
        }
 
-       public void AddMethod(Func<IMethod, bool> matcher, IEnumerable<Assembly> assemblies,
-                              NetAspectDefinition methodWeavingConfigurations, List<string> errors)
+        public void AddMethod(Func<IMethod, bool> matcher, IEnumerable<Assembly> assemblies,
+                               NetAspectDefinition methodWeavingConfigurations, List<string> errors)
         {
-           Check(methodWeavingConfigurations, errors);
-           if (errors.Count > 0)
-              return;
-           _methods.Add(new AspectMatch<IMethod>()
-           {
-              AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
-              Matcher = matcher,
-              Aspect = methodWeavingConfigurations,
-           });
+            Check(methodWeavingConfigurations, errors);
+            if (errors.Count > 0)
+                return;
+            _methods.Add(new AspectMatch<IMethod>()
+            {
+                AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
+                Matcher = matcher,
+                Aspect = methodWeavingConfigurations,
+            });
+        }
+
+        public void AddParameter(Func<ParameterReference, bool> matcher, IEnumerable<Assembly> assemblies,
+                               NetAspectDefinition methodWeavingConfigurations, List<string> errors)
+        {
+            Check(methodWeavingConfigurations, errors);
+            if (errors.Count > 0)
+                return;
+            _parameters.Add(new AspectMatch<ParameterReference>()
+            {
+                AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
+                Matcher = matcher,
+                Aspect = methodWeavingConfigurations,
+            });
         }
 
        public void AddField(Func<FieldReference, bool> matcher, IEnumerable<Assembly> assemblies,

@@ -1,17 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FluentAspect.Weaver.Core.Model.Adapters;
 using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.Model
 {
     public static class MethodExtensions
     {
-       public static bool AreEqual(this IMethod m, MethodBase info)
-       {
-          return m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName &&
-                 ParametersEqual(m, info);
-       }
+        public static bool AreEqual(this IMethod m, MethodBase info)
+        {
+            return m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName &&
+                   ParametersEqual(m, info);
+        }
+        public static bool AreEqual(this ParameterDefinition m, ParameterInfo info)
+        {
+            if (!AreEqual(new MethodDefinitionAdapter((MethodReference) m.Method), (MethodBase) info.Member))
+                return false;
+            return m.Name == info.Name;
+        }
        public static bool AreEqual(this FieldReference m, FieldInfo info)
        {
            return m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName;

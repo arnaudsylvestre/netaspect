@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Core\AssemblyDefinitionProvider.cs" />
     <Compile Include="Core\Configuration\Attributes\ConstructorAttributeConfigurationReader.cs" />
+    <Compile Include="Core\Configuration\Attributes\ParameterAttributeConfigurationReader.cs" />
     <Compile Include="Core\Configuration\Attributes\PropertyAttributeConfigurationReader.cs" />
     <Compile Include="Core\Configuration\Attributes\FieldAttributeConfigurationReader.cs" />
     <Compile Include="Core\Configuration\Attributes\MethodAttributeConfigurationReader.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Core\WeaverBuilders\CallFieldBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\AroundPropertyGetMethodBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\AroundPropertySetMethodBuilderWeaver.cs" />
+    <Compile Include="Core\WeaverBuilders\AroundMethodParameterBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\MultiWeaverBuilder.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Checkers\Ensure.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\AroundInstructionWeaver.cs" />
