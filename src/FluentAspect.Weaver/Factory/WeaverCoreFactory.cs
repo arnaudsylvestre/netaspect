@@ -16,14 +16,16 @@ namespace FluentAspect.Weaver.Factory
                     new ConstructorAttributeConfigurationReader(),
                     new SelectorConfigurationReader(),
                     new FieldAttributeConfigurationReader(),
-                    new PropertyAttributeConfigurationReader()
+                    new PropertyAttributeConfigurationReader(),
+                    new ParameterAttributeConfigurationReader()
                     ),
                 new MultiWeaverBuilder(new AroundMethodBuilderWeaver(),
                      new AroundConstructorBuilderWeaver(),
                      new CallMethodBuilderWeaver(),
                      new CallFieldBuilderWeaver(),
                      new AroundPropertyGetMethodBuilderWeaver(),
-                     new AroundPropertySetMethodBuilderWeaver()))
+                     new AroundPropertySetMethodBuilderWeaver(),
+                     new AroundMethodParameterBuilderWeaver()))
                 ;
         }
     }

@@ -19,7 +19,7 @@ namespace FluentAspect.Weaver.Core.Configuration
        private List<AspectMatch<IMethod>> _constructors;
        private List<AspectMatch<FieldReference>> _fields;
        private List<AspectMatch<PropertyReference>> _properties;
-       private List<AspectMatch<ParameterReference>> _parameters;
+       private List<AspectMatch<ParameterDefinition>> _parameters;
 
         public WeavingConfiguration(IAssemblyDefinitionProvider assemblyDefinitionProvider)
         {
@@ -28,9 +28,10 @@ namespace FluentAspect.Weaver.Core.Configuration
             _constructors = new List<AspectMatch<IMethod>>();
            _fields = new List<AspectMatch<FieldReference>>();
            _properties = new List<AspectMatch<PropertyReference>>();
+           _parameters = new List<AspectMatch<ParameterDefinition>>();
         }
 
-        public IEnumerable<AspectMatch<ParameterReference>> Parameters
+        public IEnumerable<AspectMatch<ParameterDefinition>> Parameters
         {
             get { return _parameters; }
         }
@@ -69,13 +70,13 @@ namespace FluentAspect.Weaver.Core.Configuration
             });
         }
 
-        public void AddParameter(Func<ParameterReference, bool> matcher, IEnumerable<Assembly> assemblies,
+        public void AddParameter(Func<ParameterDefinition, bool> matcher, IEnumerable<Assembly> assemblies,
                                NetAspectDefinition methodWeavingConfigurations, List<string> errors)
         {
             Check(methodWeavingConfigurations, errors);
             if (errors.Count > 0)
                 return;
-            _parameters.Add(new AspectMatch<ParameterReference>()
+            _parameters.Add(new AspectMatch<ParameterDefinition>()
             {
                 AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
                 Matcher = matcher,

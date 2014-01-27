@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2158446B-9E58-4E9D-BDC4-27A5A90365D1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -198,6 +198,7 @@
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\AfterMethodMethodParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\AfterMethodParameterNameParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\AfterMethodUnknownParameterTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\AfterMethodResultParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\BeforeMethodParameterNameParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\BeforeMethodInstanceParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\MethodWeavingAssemblyAttributeWeavingTest.cs" />
