@@ -30,6 +30,11 @@ namespace FluentAspect.Weaver.Core.Configuration
            _properties = new List<AspectMatch<PropertyReference>>();
         }
 
+        public IEnumerable<AspectMatch<ParameterReference>> Parameters
+        {
+            get { return _parameters; }
+        }
+
         public IEnumerable<AspectMatch<PropertyReference>> Properties
         {
             get { return _properties; }

@@ -14,7 +14,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
         public IEnumerable<IWeaveable> BuildWeavers(WeavingConfiguration configuration)
         {
            var configurations = new Dictionary<MethodDefinition, List<MethodWeavingConfiguration>>();
-           foreach (var methodMatch in configuration.Methods)
+           foreach (var methodMatch in configuration.Parameters)
            {
               foreach (var assemblyDefinition in methodMatch.AssembliesToScan)
               {
@@ -23,16 +23,16 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                  {
                      foreach (var parameterDefinition in methodDefinition_L.Parameters)
                      {
-                         if (methodMatch.Matcher(new MethodDefinitionAdapter(methodDefinition_L)) && methodMatch.Aspect != null)
+                         if (methodMatch.Matcher(parameterDefinition) && methodMatch.Aspect != null)
                          {
                              if (!configurations.ContainsKey(methodDefinition_L))
                                  configurations.Add(methodDefinition_L, new List<MethodWeavingConfiguration>());
                              configurations[methodDefinition_L].Add(new MethodWeavingConfiguration()
                              {
                                  Type = methodMatch.Aspect.Type,
-                                 After = methodMatch.Aspect.After,
-                                 Before = methodMatch.Aspect.Before,
-                                 OnException = methodMatch.Aspect.OnException,
+                                 After = methodMatch.Aspect.AfterParameter,
+                                 Before = methodMatch.Aspect.BeforeParameter,
+                                 OnException = methodMatch.Aspect.OnExceptionParameter,
                              });
                          }
                      }
