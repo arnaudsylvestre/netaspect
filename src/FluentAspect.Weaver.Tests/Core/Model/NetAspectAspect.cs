@@ -36,12 +36,26 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             return constructor;
         }
 
-        public NetAspectInterceptor AddAfterInterceptor()
-        {
-            var interceptor = new MethodDefinition("After", MethodAttributes.Public, typeDefinition.Module.TypeSystem.Void);
+       public NetAspectInterceptor AddAfterInterceptor()
+       {
+           var interceptor = new MethodDefinition("After", MethodAttributes.Public, typeDefinition.Module.TypeSystem.Void);
            typeDefinition.Methods.Add(interceptor);
-            return new NetAspectInterceptor(interceptor);
-        }
+           return new NetAspectInterceptor(interceptor);
+       }
+
+       public NetAspectInterceptor AddBeforeCallEventInterceptor()
+       {
+           var interceptor = new MethodDefinition("BeforeCallEvent", MethodAttributes.Public, typeDefinition.Module.TypeSystem.Void);
+           typeDefinition.Methods.Add(interceptor);
+           return new NetAspectInterceptor(interceptor);
+       }
+
+       public NetAspectInterceptor AddAfterCallEventInterceptor()
+       {
+           var interceptor = new MethodDefinition("AfterCallEvent", MethodAttributes.Public | MethodAttributes.Static, typeDefinition.Module.TypeSystem.Void);
+           typeDefinition.Methods.Add(interceptor);
+           return new NetAspectInterceptor(interceptor);
+       }
 
         public NetAspectInterceptor AddAfterPropertyGetInterceptor()
         {
@@ -60,6 +74,13 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         public NetAspectInterceptor AddAfterParameterInterceptor()
         {
             var interceptor = new MethodDefinition("AfterParameter", MethodAttributes.Public, typeDefinition.Module.TypeSystem.Void);
+            typeDefinition.Methods.Add(interceptor);
+            return new NetAspectInterceptor(interceptor);
+        }
+
+        public NetAspectInterceptor AddAfterCallInterceptor()
+        {
+            var interceptor = new MethodDefinition("AfterCall", MethodAttributes.Public, typeDefinition.Module.TypeSystem.Void);
             typeDefinition.Methods.Add(interceptor);
             return new NetAspectInterceptor(interceptor);
         }

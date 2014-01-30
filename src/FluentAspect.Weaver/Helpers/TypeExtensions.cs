@@ -71,22 +71,40 @@ namespace FluentAspect.Weaver.Helpers
            return methods;
        }
 
-        public static List<ConstructorInfo> GetAllConstructors(this IEnumerable<Type> types,
-                                                               Func<ConstructorInfo, bool> filter)
-        {
-            var methods = new List<ConstructorInfo>();
+       public static List<ConstructorInfo> GetAllConstructors(this IEnumerable<Type> types,
+                                                              Func<ConstructorInfo, bool> filter)
+       {
+           var methods = new List<ConstructorInfo>();
 
-            foreach (Type type in types)
-            {
-                methods.AddRange(
-                    from m in
-                        type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
-                                             BindingFlags.Instance)
-                    where filter(m)
-                    select m);
-            }
+           foreach (Type type in types)
+           {
+               methods.AddRange(
+                   from m in
+                       type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+                                            BindingFlags.Instance)
+                   where filter(m)
+                   select m);
+           }
 
-            return methods;
-        }
+           return methods;
+       }
+
+       public static List<EventInfo> GetAllEvents(this IEnumerable<Type> types,
+                                                              Func<EventInfo, bool> filter)
+       {
+           var methods = new List<EventInfo>();
+
+           foreach (Type type in types)
+           {
+               methods.AddRange(
+                   from m in
+                       type.GetEvents(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+                                            BindingFlags.Instance)
+                   where filter(m)
+                   select m);
+           }
+
+           return methods;
+       }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using EventAttributes = Mono.Cecil.EventAttributes;
 using FieldAttributes = Mono.Cecil.FieldAttributes;
 using MethodAttributes = Mono.Cecil.MethodAttributes;
 using ParameterAttributes = Mono.Cecil.ParameterAttributes;
@@ -52,6 +53,77 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             type.Methods.Add(methodDefinition_L);
             return methodDefinition_L;
         }
+        public static EventDefinition AddEvent(this TypeDefinition type, string name, TypeReference eventType)
+        {
+            var eventDefinition = new EventDefinition(name, EventAttributes.None, eventType);
+            var fieldDefinition = new FieldDefinition(name, FieldAttributes.Public, eventType);
+            AddSubcsribeEvent(type, name, eventType, eventDefinition, fieldDefinition);
+            AddRemoveEvent(type, name, eventType, eventDefinition, fieldDefinition);
+            type.Events.Add(eventDefinition);
+            type.Fields.Add(fieldDefinition);
+            return eventDefinition;
+        }
+        public static EventDefinition AddEvent<T>(this TypeDefinition type, string name)
+        {
+            return type.AddEvent(name, type.Module.Import(typeof (T)));
+        }
+
+        public static MethodDefinition WhichCallEvent<T>(this MethodDefinition method, EventDefinition evt)
+        {
+            var fieldDefinition = evt.DeclaringType.Fields.First(f => f.Name == evt.Name);
+            method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+            method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldfld, fieldDefinition));
+            method.Body.Instructions.Add(Instruction.Create(OpCodes.Callvirt, method.Module.Import(typeof(T).GetMethod("Invoke"))));
+            return method;
+        }
+
+        private static void AddSubcsribeEvent(TypeDefinition type, string name, TypeReference eventType,
+                                              EventDefinition eventDefinition, FieldDefinition fieldDefinition)
+        {
+            eventDefinition.AddMethod = type.AddMethod("add_" + name);
+            eventDefinition.AddMethod.Parameters.Add(new ParameterDefinition(eventType));
+            eventDefinition.AddMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+            eventDefinition.AddMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+            eventDefinition.AddMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Ldfld, fieldDefinition));
+            eventDefinition.AddMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_1));
+            eventDefinition.AddMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Call,
+                                                                               type.Module.Import(
+                                                                                   typeof(Delegate).GetMethod("Combine",
+                                                                                                               new Type[]
+                                                                                                                   {
+                                                                                                                       typeof (
+                                                                                                                   Delegate),
+                                                                                                                       typeof (
+                                                                                                                   Delegate)
+                                                                                                                   }))));
+            eventDefinition.AddMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Castclass, eventType));
+            eventDefinition.AddMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Stfld, fieldDefinition));
+            eventDefinition.AddMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+        }
+        private static void AddRemoveEvent(TypeDefinition type, string name, TypeReference eventType,
+                                             EventDefinition eventDefinition, FieldDefinition fieldDefinition)
+        {
+            eventDefinition.RemoveMethod = type.AddMethod("remove_" + name);
+            eventDefinition.RemoveMethod.Parameters.Add(new ParameterDefinition(eventType));
+            eventDefinition.RemoveMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+            eventDefinition.RemoveMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+            eventDefinition.RemoveMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Ldfld, fieldDefinition));
+            eventDefinition.RemoveMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_1));
+            eventDefinition.RemoveMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Call,
+                                                                               type.Module.Import(
+                                                                                   typeof(Delegate).GetMethod("Remove",
+                                                                                                               new Type[]
+                                                                                                                   {
+                                                                                                                       typeof (
+                                                                                                                   Delegate),
+                                                                                                                       typeof (
+                                                                                                                   Delegate)
+                                                                                                                   }))));
+            eventDefinition.RemoveMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Castclass, eventType));
+            eventDefinition.RemoveMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Stfld, fieldDefinition));
+            eventDefinition.RemoveMethod.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+        }
+
         public static PropertyDefinition AddProperty<T>(this TypeDefinition type, string name)
         {
             var methodDefinition_L = new PropertyDefinition(name, PropertyAttributes.None, type.Module.Import(typeof(T)));
@@ -133,6 +205,12 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         }
 
         public static MethodDefinition WithAspect(this MethodDefinition method, NetAspectAspect aspect)
+        {
+            method.CustomAttributes.Add(new CustomAttribute(aspect.TypeDefinition.GetDefaultConstructor()));
+            return method;
+        }
+
+        public static EventDefinition WithAspect(this EventDefinition method, NetAspectAspect aspect)
         {
             method.CustomAttributes.Add(new CustomAttribute(aspect.TypeDefinition.GetDefaultConstructor()));
             return method;

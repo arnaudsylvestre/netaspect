@@ -48,7 +48,8 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                         {
                                            var methodPoint_L = new JoinPoint
                                               {
-                                                 Method = method, Instruction = instruction,
+                                                 Method = method, InstructionStart = instruction,
+                                                 InstructionEnd                                                 = instruction,
                                               };
                                            if (!points.ContainsKey(methodPoint_L))
                                            {

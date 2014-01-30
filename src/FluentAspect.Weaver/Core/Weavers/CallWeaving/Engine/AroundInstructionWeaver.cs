@@ -37,7 +37,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 
 
             InsertAfterJointPointInstructions(provider);
-            point.Method.InsertBefore(point.Instruction, instructions);
+            point.Method.InsertBefore(point.InstructionStart, instructions);
         }
 
         public void Check(ErrorHandler error)
@@ -49,7 +49,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
         {
             var afterInstructions = new List<Instruction>();
             provider.AddAfter(afterInstructions);
-            point.Method.InsertAfter(point.Instruction, afterInstructions);
+            point.Method.InsertAfter(point.InstructionEnd, afterInstructions);
         }
     }
 }

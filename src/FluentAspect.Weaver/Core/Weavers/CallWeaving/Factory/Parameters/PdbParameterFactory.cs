@@ -22,10 +22,10 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
 
             engine.AddPossibleParameter("linenumber", (info, handler) =>
             {
-                Ensure.SequencePoint(point.Instruction, handler, info);
+                Ensure.SequencePoint(point.InstructionStart, handler, info);
                 Ensure.ParameterType<int>(info, handler);
             },
-                (info, instructions) => instructions.Add(InstructionFactory.Create(point.Instruction.GetLastSequencePoint(), i => i.StartLine)));
+                (info, instructions) => instructions.Add(InstructionFactory.Create(point.InstructionStart.GetLastSequencePoint(), i => i.StartLine)));
         }
 
 
@@ -33,10 +33,10 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
         {
             engine.AddPossibleParameter("columnnumber", (info, handler) =>
             {
-                Ensure.SequencePoint(point.Instruction, handler, info);
+                Ensure.SequencePoint(point.InstructionStart, handler, info);
                 Ensure.ParameterType<int>(info, handler);
             },
-                (info, instructions) => instructions.Add(InstructionFactory.Create(point.Instruction.GetLastSequencePoint(), i => i.StartColumn)));
+                (info, instructions) => instructions.Add(InstructionFactory.Create(point.InstructionStart.GetLastSequencePoint(), i => i.StartColumn)));
         }
 
 
@@ -44,10 +44,10 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
         {
             engine.AddPossibleParameter("filename", (info, handler) =>
             {
-                Ensure.SequencePoint(point.Instruction, handler, info);
+                Ensure.SequencePoint(point.InstructionStart, handler, info);
                 Ensure.ParameterType<string>(info, handler);
             },
-                (info, instructions) => instructions.Add(InstructionFactory.Create(point.Instruction.GetLastSequencePoint(), i => Path.GetFileName(i.Document.Url))));
+                (info, instructions) => instructions.Add(InstructionFactory.Create(point.InstructionStart.GetLastSequencePoint(), i => Path.GetFileName(i.Document.Url))));
         }
 
 
@@ -55,10 +55,10 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
         {
             engine.AddPossibleParameter("filepath", (info, handler) =>
             {
-                Ensure.SequencePoint(joinPoint.Instruction, handler, info);
+                Ensure.SequencePoint(joinPoint.InstructionStart, handler, info);
                 Ensure.ParameterType<string>(info, handler);
             },
-                (info, instructions) => instructions.Add(InstructionFactory.Create(joinPoint.Instruction.GetLastSequencePoint(), i => i.Document.Url)));
+                (info, instructions) => instructions.Add(InstructionFactory.Create(joinPoint.InstructionStart.GetLastSequencePoint(), i => i.Document.Url)));
         }
     }
 }

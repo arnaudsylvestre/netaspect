@@ -20,6 +20,7 @@ namespace FluentAspect.Weaver.Core.Configuration
        private List<AspectMatch<FieldReference>> _fields;
        private List<AspectMatch<PropertyReference>> _properties;
        private List<AspectMatch<ParameterDefinition>> _parameters;
+       private List<AspectMatch<FieldReference>> _events;
 
         public WeavingConfiguration(IAssemblyDefinitionProvider assemblyDefinitionProvider)
         {
@@ -29,6 +30,7 @@ namespace FluentAspect.Weaver.Core.Configuration
            _fields = new List<AspectMatch<FieldReference>>();
            _properties = new List<AspectMatch<PropertyReference>>();
            _parameters = new List<AspectMatch<ParameterDefinition>>();
+           _events = new List<AspectMatch<FieldReference>>();
         }
 
         public IEnumerable<AspectMatch<ParameterDefinition>> Parameters
@@ -55,6 +57,11 @@ namespace FluentAspect.Weaver.Core.Configuration
        {
           get { return _fields; }
        }
+
+        public List<AspectMatch<FieldReference>> Events
+        {
+            get { return _events; }
+        }
 
         public void AddMethod(Func<IMethod, bool> matcher, IEnumerable<Assembly> assemblies,
                                NetAspectDefinition methodWeavingConfigurations, List<string> errors)
@@ -125,6 +132,20 @@ namespace FluentAspect.Weaver.Core.Configuration
             if (errors.Count > 0)
                 return;
             _constructors.Add(new AspectMatch<IMethod>()
+            {
+                AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
+                Matcher = matcher,
+                Aspect = aspect,
+            });
+        }
+
+        public void AddEvent(Func<FieldReference, bool> matcher, IEnumerable<Assembly> assemblies,
+                              NetAspectDefinition aspect, List<string> errors)
+        {
+            Check(aspect, errors);
+            if (errors.Count > 0)
+                return;
+            _events.Add(new AspectMatch<FieldReference>()
             {
                 AssembliesToScan = from a in assemblies select _assemblyDefinitionProvider.GetAssemblyDefinition(a),
                 Matcher = matcher,
