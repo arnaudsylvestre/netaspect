@@ -27,7 +27,17 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 
         public void Weave()
         {
-            WeaveMethod(definition, interceptorType);
+            MethodDefinition wrappedMethod = definition.Clone("-Weaved-" + definition.Name);
+
+            definition.Body.Instructions.Clear();
+            definition.Body.Variables.Clear();
+
+            var weaver = new WeavedMethodBuilder();
+            weaver.Build(new MethodToWeave(interceptorType.ToList(), new Method(definition)),
+                         wrappedMethod);
+            definition.Body.InitLocals = true;
+            MethodDefinition newMethod = wrappedMethod;
+            definition.DeclaringType.Methods.Add(newMethod);
         }
 
         public void Check(ErrorHandler errorHandler)
@@ -47,20 +57,6 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
                 CheckAfterParameters(attribute.After, errorHandler, definition);
                 CheckOnExceptionParameters(attribute.OnException, errorHandler, definition);
             }
-        }
-
-        public bool CanWeave()
-        {
-            foreach (var attribute in interceptorType)
-            {
-                if (attribute.Before.Method != null)
-                    return true;
-                if (attribute.After.Method != null)
-                    return true;
-                if (attribute.OnException.Method != null)
-                    return true;
-            }
-            return false;
         }
 
         private void EnsureNotReferenced(ParameterInfo parameterInfo, ErrorHandler errorHandler)
@@ -194,28 +190,6 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
                 }
                 
             }
-        }
-
-
-        public static void WeaveMethod(MethodDefinition methodDefinition, IEnumerable<MethodWeavingConfiguration> interceptorTypes)
-        {
-            MethodDefinition newMethod = CreateNewMethodBasedOnMethodToWeave(methodDefinition, interceptorTypes);
-            methodDefinition.DeclaringType.Methods.Add(newMethod);
-        }
-
-        private static MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition,
-                                                                            IEnumerable<MethodWeavingConfiguration> interceptor)
-        {
-            MethodDefinition wrappedMethod = methodDefinition.Clone("-Weaved-" + methodDefinition.Name);
-
-            methodDefinition.Body.Instructions.Clear();
-            methodDefinition.Body.Variables.Clear();
-
-           var weaver = new WeavedMethodBuilder();
-            weaver.Build(new MethodToWeave(interceptor.ToList(), new Method(methodDefinition)),
-                         wrappedMethod);
-            methodDefinition.Body.InitLocals = true;
-            return wrappedMethod;
         }
     }
 }

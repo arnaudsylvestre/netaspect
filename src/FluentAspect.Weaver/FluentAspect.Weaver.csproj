@@ -97,6 +97,7 @@
     <Compile Include="Core\Weavers\CallWeaving\Factory\Parameters\PdbParameterFactory.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\AroundConstructorWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\ConstructorAroundWeaver.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Methods\NewAroundMethodWeaver.cs" />
     <Compile Include="Helpers\IL\ILProcessorExtensions.cs" />
     <Compile Include="Helpers\IL\InstructionExtensions.cs" />
     <Compile Include="Helpers\IL\Method.cs" />

@@ -90,6 +90,25 @@ namespace FluentAspect.Weaver.Helpers.IL
             CreateExceptionHandler(MethodDefinition, startCatch, endCatch, beforeCatch);
         }
 
+        public void AddTryCatch(Action onTry, Action onCatch, Action onFinally, Instruction instructionStart)
+        {
+            Instruction beforeCatch = CreateNopForCatch(Il);
+            Instruction instruction_L = instructionStart;
+
+            onTry();
+
+            Il.AppendLeave(instruction_L);
+
+            Instruction startCatch = CreateNopForCatch(Il);
+            onCatch();
+            Instruction endCatch = Il.AppendLeave(instruction_L);
+            endCatch = Il.Create(OpCodes.Nop);
+            Il.Append(endCatch);
+
+            Il.Append(instruction_L);
+            CreateExceptionHandler(MethodDefinition, startCatch, endCatch, beforeCatch);
+        }
+
         private Instruction CreateNopForCatch(ILProcessor il)
         {
             Instruction nop = il.Create(OpCodes.Nop);
@@ -109,6 +128,7 @@ namespace FluentAspect.Weaver.Helpers.IL
                     HandlerStart = onCatch,
                     HandlerEnd = endCatch,
                     CatchType = method.Module.Import(typeof (Exception)),
+                                        
                 };
 
             method.Body.ExceptionHandlers.Add(handler);
