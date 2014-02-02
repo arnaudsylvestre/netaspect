@@ -47,4 +47,23 @@ namespace FluentAspect.Sample
         {
         }
     }
+
+    class TryFinallySample
+    {
+        public void Hello()
+        {
+            try
+            {
+                int a = 2;
+            }
+            catch (Exception)
+            {
+                int a = 3;
+            }
+            finally
+            {
+                int a = 4;
+            }
+        }
+    }
 }

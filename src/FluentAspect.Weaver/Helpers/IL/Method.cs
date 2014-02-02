@@ -90,14 +90,13 @@ namespace FluentAspect.Weaver.Helpers.IL
             CreateExceptionHandler(MethodDefinition, startCatch, endCatch, beforeCatch);
         }
 
-        public void AddTryCatch(Action onTry, Action onCatch, Action onFinally, Instruction instructionStart)
+        public void AddTryFinally(List<Instruction> inTry, List<Instruction> inFinally)
         {
-            Instruction beforeCatch = CreateNopForCatch(Il);
-            Instruction instruction_L = instructionStart;
+            Instruction beforeCatch = inTry.First();
+            Instruction lastCatch = inTry.Last();
 
-            onTry();
+            MethodDefinition.Body.Instructions.AddRange(inTry);
 
-            Il.AppendLeave(instruction_L);
 
             Instruction startCatch = CreateNopForCatch(Il);
             onCatch();
@@ -116,6 +115,25 @@ namespace FluentAspect.Weaver.Helpers.IL
             return nop;
         }
 
+        private void CreateFinallyHandler(MethodDefinition method,
+                                            Instruction onCatch,
+                                            Instruction endCatch,
+                                            Instruction beforeCatchP_P)
+        {
+            var handler = new ExceptionHandler(ExceptionHandlerType.Finally)
+            {
+                TryStart = beforeCatchP_P,
+                TryEnd = onCatch,
+                HandlerStart = onCatch,
+                HandlerEnd = endCatch,
+                CatchType = method.Module.Import(typeof(Exception)),
+
+
+            };
+
+            method.Body.ExceptionHandlers.Add(handler);
+        }
+
         private void CreateExceptionHandler(MethodDefinition method,
                                             Instruction onCatch,
                                             Instruction endCatch,
@@ -128,6 +146,7 @@ namespace FluentAspect.Weaver.Helpers.IL
                     HandlerStart = onCatch,
                     HandlerEnd = endCatch,
                     CatchType = method.Module.Import(typeof (Exception)),
+                                        
                                         
                 };
 
@@ -152,4 +171,5 @@ namespace FluentAspect.Weaver.Helpers.IL
             il.Emit(OpCodes.Ret);
         }
     }
+
 }
