@@ -17,11 +17,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
         private readonly Dictionary<string, Action<ParameterInfo>> forParameters =
             new Dictionary<string, Action<ParameterInfo>>();
 
-        private readonly ILProcessor il;
-
         public InterceptorCaller(Method method)
         {
-            il = method.Il;
             _methodDefinition = method.MethodDefinition;
         }
 
@@ -31,9 +28,9 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
                 {
                     Check(p, updateAllowed, variable.VariableType);
                     if (variable == null)
-                        il.Emit(OpCodes.Ldnull);
+                       _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldnull));
                     else
-                        il.Emit(p.ParameterType.IsByRef ? OpCodes.Ldloca : OpCodes.Ldloc, variable);
+                        _methodDefinition.Body.Instructions.Add(Instruction.Create(p.ParameterType.IsByRef ? OpCodes.Ldloca : OpCodes.Ldloc, variable));
                 });
         }
 
@@ -45,41 +42,41 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
                     var moduleDefinition = ((MethodDefinition) parameter.Method).Module;
                     if (p.ParameterType.IsByRef && !parameter.ParameterType.IsByReference)
                     {
-                        il.Emit(OpCodes.Ldarga, parameter);
+                        _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarga, parameter));
                         
                     }
                     else if (!p.ParameterType.IsByRef && parameter.ParameterType.IsByReference)
                     {
-                        il.Emit(OpCodes.Ldarg, parameter);
+                        _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter));
                         if (p.ParameterType == typeof(int))
-                        il.Emit(OpCodes.Ldind_I4);
+                        _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldind_I4));
                         else
                             if (p.ParameterType == typeof(bool))
                             {
 
-                                il.Emit(OpCodes.Ldind_I1);
+                                _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldind_I1));
                             }
                             else
                                 if (p.ParameterType == typeof(float))
                                 {
 
-                                    il.Emit(OpCodes.Ldind_R4);
+                                    _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldind_R4));
                                 }
                                 else
                                     if (p.ParameterType == typeof(double))
                                     {
 
-                                        il.Emit(OpCodes.Ldind_R8);
+                                        _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldind_R8));
                                     }
                         else
                         {
-                            il.Emit(OpCodes.Ldind_Ref);
+                            _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldind_Ref));
                         }
 
                     }
                     else
                     {
-                        il.Emit(OpCodes.Ldarg, parameter);
+                        _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter));
                         
                     }
                     if (parameter.ParameterType != moduleDefinition.TypeSystem.Object &&
@@ -89,10 +86,10 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
                         if (reference.IsByReference)
                         {
                             reference = ((MethodDefinition)parameter.Method).GenericParameters.First(t => t.Name == reference.Name.TrimEnd('&'));
-                            il.Emit(OpCodes.Ldobj, reference);
+                            _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldobj, reference));
                             
                         }
-                            il.Emit(OpCodes.Box, reference);
+                            _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Box, reference));
                     }
                         
                 });
@@ -123,7 +120,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
 
         public void AddThis(string parameterName)
         {
-            forParameters.Add(parameterName, (p) => il.Emit(OpCodes.Ldarg_0));
+            forParameters.Add(parameterName, (p) => _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0)));
         }
 
         public void AddParameters(IEnumerable<ParameterDefinition> parameters)
@@ -140,7 +137,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
         {
             if (method == null)
                 return;
-            il.Emit(OpCodes.Ldloc, interceptorVariable);
+            _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, interceptorVariable));
 
             foreach (ParameterInfo parameterInfo in method.GetParameters())
             {
@@ -151,7 +148,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
                                       _methodDefinition.DeclaringType.Name));
                 forParameters[parameterInfo.Name](parameterInfo);
             }
-            il.Emit(OpCodes.Call, _methodDefinition.Module.Import(method));
+            _methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Call, _methodDefinition.Module.Import(method)));
         }
 
         public void Call(MethodToWeave method, Variables variables,

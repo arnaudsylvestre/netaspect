@@ -4,108 +4,88 @@ using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Collections.Generic;
 
 namespace FluentAspect.Weaver.Helpers.IL
 {
     public class Method
     {
         private readonly MethodDefinition definition;
-        private readonly ILProcessor il;
+        //private readonly ILProcessor il;
 
         public Method(MethodDefinition definition)
         {
             this.definition = definition;
-            il = definition.Body.GetILProcessor();
+            //il = definition.Body.GetILProcessor();
         }
 
-        public ILProcessor Il
-        {
-            get { return il; }
-        }
+        //public ILProcessor Il
+        //{
+        //    get { return il; }
+        //}
 
         public MethodDefinition MethodDefinition
         {
             get { return definition; }
         }
 
-        public List<VariableDefinition> CreateAndInitializeVariable(IEnumerable<Type> types)
+        public List<VariableDefinition> CreateAndInitializeVariable(Collection<Instruction> instructions, IEnumerable<Type> types)
         {
-            return types.Select(type => il.CreateAndInitializeVariable(definition, type)).ToList();
+           return types.Select(type => instructions.CreateAndInitializeVariable(definition, type)).ToList();
         }
 
-        public VariableDefinition CreateArgsArrayFromParameters()
+        public VariableDefinition CreateArgsArrayFromParameters(Collection<Instruction> instructions)
         {
             VariableDefinition args = definition.CreateVariable<object[]>();
 
-            il.Emit(OpCodes.Ldc_I4, definition.Parameters.Count);
-            il.Emit(OpCodes.Newarr, definition.Module.Import(typeof (object)));
-            il.Emit(OpCodes.Stloc, args);
+            instructions.Add(Instruction.Create(OpCodes.Ldc_I4, definition.Parameters.Count));
+            instructions.Add(Instruction.Create(OpCodes.Newarr, definition.Module.Import(typeof (object))));
+            instructions.Add(Instruction.Create(OpCodes.Stloc, args));
 
             foreach (ParameterDefinition p in definition.Parameters.ToArray())
             {
-                il.Emit(OpCodes.Ldloc, args);
-                il.Emit(OpCodes.Ldc_I4, p.Index);
-                il.Emit(OpCodes.Ldarg, p);
+                instructions.Add(Instruction.Create(OpCodes.Ldloc, args));
+                instructions.Add(Instruction.Create(OpCodes.Ldc_I4, p.Index));
+                instructions.Add(Instruction.Create(OpCodes.Ldarg, p));
                 if (p.ParameterType.IsValueType || p.ParameterType is GenericParameter)
-                    il.Emit(OpCodes.Box, p.ParameterType);
-                il.Emit(OpCodes.Stelem_Ref);
+                    instructions.Add(Instruction.Create(OpCodes.Box, p.ParameterType));
+                instructions.Add(Instruction.Create(OpCodes.Stelem_Ref));
             }
 
             return args;
         }
 
 
-        public VariableDefinition CreateMethodInfo()
+        public VariableDefinition CreateMethodInfo(Collection<Instruction> instructions)
         {
             var methodInfo = definition.CreateVariable<MethodInfo>();
-            il.AppendCallToThisGetType(definition.Module);
-            il.AppendCallToGetMethod(definition.Name, definition.Module);
-            il.AppendSaveResultTo(methodInfo);
+            instructions.AppendCallToThisGetType(definition.Module);
+            instructions.AppendCallToGetMethod(definition.Name, definition.Module);
+            instructions.AppendSaveResultTo(methodInfo);
 
             return methodInfo;
         }
 
-        public void Append(IEnumerable<Instruction> callBaseInstructions_P)
+        public void AddTryFinally(Instruction tryStart_L, Instruction tryEnd_L, Instruction handlerStart_L, Instruction handlerEnd_L)
         {
-            foreach (var callBaseInstruction_L in callBaseInstructions_P)
-                il.Append(callBaseInstruction_L);
+           MethodDefinition.Body.ExceptionHandlers.Add(new ExceptionHandler(ExceptionHandlerType.Finally)
+           {
+              TryStart = tryStart_L,
+              TryEnd = tryEnd_L,
+              HandlerStart = handlerStart_L,
+              HandlerEnd = handlerEnd_L,
+           });
         }
 
-        public void AddTryCatch(Action onTry, Action onCatch)
+        public void AddTryCatch(Instruction tryStart_L, Instruction tryEnd_L, Instruction handlerStart_L, Instruction handlerEnd_L)
         {
-            Instruction beforeCatch = CreateNopForCatch(Il);
-            Instruction instruction_L = Il.Create(OpCodes.Nop);
-
-            onTry();
-
-            Il.AppendLeave(instruction_L);
-
-            Instruction startCatch = CreateNopForCatch(Il);
-            onCatch();
-            Instruction endCatch = Il.AppendLeave(instruction_L);
-            endCatch = Il.Create(OpCodes.Nop);
-            Il.Append(endCatch);
-
-            Il.Append(instruction_L);
-            CreateExceptionHandler(MethodDefinition, startCatch, endCatch, beforeCatch);
-        }
-
-        public void AddTryFinally(List<Instruction> inTry, List<Instruction> inFinally)
-        {
-            Instruction beforeCatch = inTry.First();
-            Instruction lastCatch = inTry.Last();
-
-            MethodDefinition.Body.Instructions.AddRange(inTry);
-
-
-            Instruction startCatch = CreateNopForCatch(Il);
-            onCatch();
-            Instruction endCatch = Il.AppendLeave(instruction_L);
-            endCatch = Il.Create(OpCodes.Nop);
-            Il.Append(endCatch);
-
-            Il.Append(instruction_L);
-            CreateExceptionHandler(MethodDefinition, startCatch, endCatch, beforeCatch);
+           MethodDefinition.Body.ExceptionHandlers.Add(new ExceptionHandler(ExceptionHandlerType.Catch)
+           {
+              TryStart = tryStart_L,
+              TryEnd = tryEnd_L,
+              HandlerStart = handlerStart_L,
+              HandlerEnd = handlerEnd_L,
+           });
         }
 
         private Instruction CreateNopForCatch(ILProcessor il)
@@ -115,24 +95,7 @@ namespace FluentAspect.Weaver.Helpers.IL
             return nop;
         }
 
-        private void CreateFinallyHandler(MethodDefinition method,
-                                            Instruction onCatch,
-                                            Instruction endCatch,
-                                            Instruction beforeCatchP_P)
-        {
-            var handler = new ExceptionHandler(ExceptionHandlerType.Finally)
-            {
-                TryStart = beforeCatchP_P,
-                TryEnd = onCatch,
-                HandlerStart = onCatch,
-                HandlerEnd = endCatch,
-                CatchType = method.Module.Import(typeof(Exception)),
-
-
-            };
-
-            method.Body.ExceptionHandlers.Add(handler);
-        }
+        
 
         private void CreateExceptionHandler(MethodDefinition method,
                                             Instruction onCatch,
@@ -164,11 +127,11 @@ namespace FluentAspect.Weaver.Helpers.IL
         }
 
 
-        public void Return(VariableDefinition weavedResult)
+        public void Return(VariableDefinition weavedResult, Collection<Instruction> instructions)
         {
             if (MethodDefinition.ReturnType.MetadataType != MetadataType.Void)
-                il.Emit(OpCodes.Ldloc, weavedResult);
-            il.Emit(OpCodes.Ret);
+                instructions.Add(Instruction.Create(OpCodes.Ldloc, weavedResult));
+            instructions.Add(Instruction.Create(OpCodes.Ret));
         }
     }
 

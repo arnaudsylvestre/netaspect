@@ -11,16 +11,16 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
                                             VariableDefinition weavedResult)
         {
             if (!wrappedMethod.IsStatic)
-                method.Method.Il.Emit(OpCodes.Ldarg_0);
+                method.Method.MethodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
             foreach (ParameterDefinition p in method.Method.MethodDefinition.Parameters.ToArray())
-                method.Method.Il.Emit(OpCodes.Ldarg, p);
+                method.Method.MethodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg, p));
 
             OpCode call = method.Method.MethodDefinition.IsStatic ? OpCodes.Call : OpCodes.Callvirt;
-            method.Method.Il.Emit(call,
-                                  wrappedMethod.MakeGeneric(method.Method.MethodDefinition.GenericParameters.ToArray()));
+            method.Method.MethodDefinition.Body.Instructions.Add(Instruction.Create(call,
+                                  wrappedMethod.MakeGeneric(method.Method.MethodDefinition.GenericParameters.ToArray())));
 
             if (method.Method.MethodDefinition.ReturnType.MetadataType != MetadataType.Void)
-                method.Method.Il.Emit(OpCodes.Stloc, weavedResult);
+                method.Method.MethodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Stloc, weavedResult));
         }
     }
 }

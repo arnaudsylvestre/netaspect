@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
+using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
@@ -10,11 +12,51 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 {
     public interface IMethodWeaver
     {
-        void Init(List<Instruction> initInstructions, Collection<VariableDefinition> variables);
-        void InsertBefore(List<Instruction> method);
-        void InsertAfter(List<Instruction> afterInstructions);
-        void InsertOnException(List<Instruction> onExceptionInstructions);
+       void Init(Collection<Instruction> initInstructions, Collection<VariableDefinition> variables);
+       void InsertBefore(Collection<Instruction> method);
+       void InsertAfter(Collection<Instruction> afterInstructions);
+       void InsertOnException(Collection<Instruction> onExceptionInstructions);
+       void InsertOnFinally(Collection<Instruction> onFinallyInstructions);
     }
+
+   public class MethodWeaver : IMethodWeaver
+   {
+      private MethodToWeave methodToWeave;
+
+      public MethodWeaver(MethodToWeave methodToWeave_P)
+      {
+         methodToWeave = methodToWeave_P;
+      }
+
+      private Variables variables;
+
+
+      public void Init(Collection<Instruction> initInstructions, Collection<VariableDefinition> variables)
+      {
+         this.variables = methodToWeave.CreateVariables(variables, initInstructions);
+      }
+
+      public void InsertBefore(Collection<Instruction> method)
+      {
+         methodToWeave.CallBefore();
+      }
+
+      public void InsertAfter(Collection<Instruction> afterInstructions)
+      {
+         throw new System.NotImplementedException();
+      }
+
+      public void InsertOnException(Collection<Instruction> onExceptionInstructions)
+      {
+         throw new System.NotImplementedException();
+      }
+
+      public void InsertOnFinally(Collection<Instruction> onFinallyInstructions)
+      {
+         throw new System.NotImplementedException();
+      }
+   }
+
 
     public class NewAroundMethodWeaver
     {
@@ -38,30 +80,73 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
             }
 
 
-            var initInstructions = new List<Instruction>();
-            var beforeInstructions = new List<Instruction>();
-            var afterInstructions = new List<Instruction>();
-            var onExceptionInstructions = new List<Instruction>();
-            Variables variables = method.CreateVariables();
+            var initInstructions = new Collection<Instruction>();
+            var beforeInstructions = new Collection<Instruction>();
+            var afterInstructions = new Collection<Instruction>();
+            var onExceptionInstructions = new Collection<Instruction>();
+            var onFinallyInstructions = new Collection<Instruction>();
+            Variables variables = method.CreateVariables(method.Method.MethodDefinition.Body.Variables, initInstructions);
             methodWeaver.Init(initInstructions, method.Method.MethodDefinition.Body.Variables);
             methodWeaver.InsertBefore(beforeInstructions);
-            methodWeaver.InsertAfter(afterInstructions);
             methodWeaver.InsertOnException(onExceptionInstructions);
+            methodWeaver.InsertAfter(afterInstructions);
+           methodWeaver.InsertOnFinally(onFinallyInstructions);
+           FixReturns(method.Method.MethodDefinition, variables.handleResult);
             var first = method.Method.MethodDefinition.Body.Instructions.First();
             var last = method.Method.MethodDefinition.Body.Instructions.Last();
-            if (onExceptionInstructions.Count() )
-                method.Method.AddTryCatch(() => Weave(methodWeaver, method, wrappedMethod, variables),
-                                                () => method.GenerateOnExceptionInterceptor(variables));
-            else
-                Weave(method, wrappedMethod, variables);
-            method.Method.Return(variables.handleResult);
+            var allInstructions = new List<Instruction>();
+            allInstructions.AddRange(beforeInstructions);
+            allInstructions.AddRange(method.Method.MethodDefinition.Body.Instructions);
+            allInstructions.AddRange(afterInstructions);
+
+
+            method.Method.Return(variables.handleResult, afterInstructions);
+            
+            allInstructions.AddRange(onExceptionInstructions);
+            allInstructions.AddRange(onFinallyInstructions);
+
+           method.Method.MethodDefinition.Body.Instructions.Clear();
+           method.Method.MethodDefinition.Body.Instructions.AddRange(allInstructions);
+
+           method.Method.AddTryCatch(first, last, onExceptionInstructions.First(), onExceptionInstructions.Last());
+           method.Method.AddTryFinally(first, last, onFinallyInstructions.First(), onFinallyInstructions.Last());
+
         }
 
-        private void Weave(IMethodWeaver methodWeaver, MethodToWeave myMethod, MethodDefinition wrappedMethod, Variables variables)
+        void FixReturns(MethodDefinition method, VariableDefinition handleResultP_P)
         {
-            myMethod.CallBefore(variables);
-            myMethod.CallWeavedMethod(wrappedMethod, variables.handleResult);
-            myMethod.CallAfter(variables);
+           if (method.ReturnType == method.Module.TypeSystem.Void)
+           {
+              var instructions = method.Body.Instructions;
+
+              for (var index = 0; index < instructions.Count - 1; index++)
+              {
+                 var instruction = instructions[index];
+                 if (instruction.OpCode == OpCodes.Ret)
+                 {
+                    instructions[index] = Instruction.Create(OpCodes.Leave, Instruction.Create(OpCodes.Ret));
+                 }
+              }
+           }
+           else
+           {
+              var instructions = method.Body.Instructions;
+
+              for (var index = 0; index < instructions.Count - 2; index++)
+              {
+                 var instruction = instructions[index];
+                 if (instruction.OpCode == OpCodes.Ret)
+                 {
+                    instructions[index] = Instruction.Create(OpCodes.Leave, Instruction.Create(OpCodes.Ldloc, handleResultP_P));
+                    instructions.Insert(index, Instruction.Create(OpCodes.Stloc, handleResultP_P));
+                    index++;
+                 }
+              }
+           }
         }
+
+
     }
+
+
 }

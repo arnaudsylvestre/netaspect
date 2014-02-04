@@ -11,12 +11,12 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
         {
             var exception = myMethod.Method.MethodDefinition.CreateVariable<Exception>();
             CallExceptionInterceptor(myMethod, variables, exception);
-            myMethod.Method.Il.AppendThrow();
+            myMethod.Method.MethodDefinition.Body.Instructions.AppendThrow();
         }
 
         private static void CallExceptionInterceptor(MethodToWeave method, Variables variables, VariableDefinition ex)
         {
-            method.Method.Il.Emit(OpCodes.Stloc, ex);
+             method.Method.MethodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Stloc, ex));
             var caller = new InterceptorCaller(method.Method);
             caller.AddCommonVariables(method.Method.MethodDefinition, variables);
             caller.AddVariable("exception", ex, false);

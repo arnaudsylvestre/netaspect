@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Helpers;
@@ -35,13 +36,14 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Constructors
         private MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition,
                                                                      IEnumerable<MethodWeavingConfiguration> interceptor)
         {
-            MethodDefinition wrappedMethod = methodDefinition.Clone("-Weaved-Constructor");
+           throw new NotImplementedException();
+            //MethodDefinition wrappedMethod = methodDefinition.Clone("-Weaved-Constructor");
 
 
-            var weaver = new ConstructorAroundWeaver();
-            weaver.CreateWeaver(methodDefinition, interceptor, wrappedMethod);
-            methodDefinition.Body.InitLocals = true;
-            return wrappedMethod;
+            //var weaver = new ConstructorAroundWeaver();
+            //weaver.CreateWeaver(methodDefinition, interceptor, wrappedMethod);
+            //methodDefinition.Body.InitLocals = true;
+            //return wrappedMethod;
         }
     }
 }

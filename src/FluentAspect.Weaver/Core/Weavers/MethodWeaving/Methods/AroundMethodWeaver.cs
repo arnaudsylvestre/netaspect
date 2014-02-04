@@ -27,17 +27,17 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 
         public void Weave()
         {
-            MethodDefinition wrappedMethod = definition.Clone("-Weaved-" + definition.Name);
+            //MethodDefinition wrappedMethod = definition.Clone("-Weaved-" + definition.Name);
 
-            definition.Body.Instructions.Clear();
-            definition.Body.Variables.Clear();
+            //definition.Body.Instructions.Clear();
+            //definition.Body.Variables.Clear();
 
-            var weaver = new WeavedMethodBuilder();
-            weaver.Build(new MethodToWeave(interceptorType.ToList(), new Method(definition)),
-                         wrappedMethod);
-            definition.Body.InitLocals = true;
-            MethodDefinition newMethod = wrappedMethod;
-            definition.DeclaringType.Methods.Add(newMethod);
+           var methodToWeave_L = new MethodToWeave(interceptorType.ToList(), new Method(definition));
+           var weaver = new NewAroundMethodWeaver(methodToWeave_L, new MethodWeaver(methodToWeave_L));
+            weaver.Weave();
+            //definition.Body.InitLocals = true;
+            //MethodDefinition newMethod = wrappedMethod;
+            //definition.DeclaringType.Methods.Add(newMethod);
         }
 
         public void Check(ErrorHandler errorHandler)
