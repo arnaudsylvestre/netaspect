@@ -36,24 +36,24 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
          this.variables = methodToWeave.CreateVariables(variables, initInstructions);
       }
 
-      public void InsertBefore(Collection<Instruction> method)
+      public void InsertBefore(Collection<Instruction> beforeInstructions)
       {
-         methodToWeave.CallBefore();
+          methodToWeave.CallBefore(variables, beforeInstructions);
       }
 
       public void InsertAfter(Collection<Instruction> afterInstructions)
       {
-         throw new System.NotImplementedException();
+          methodToWeave.CallAfter(variables, afterInstructions);
       }
 
       public void InsertOnException(Collection<Instruction> onExceptionInstructions)
       {
-         throw new System.NotImplementedException();
+          methodToWeave.GenerateOnExceptionInterceptor(variables, onExceptionInstructions);
       }
 
       public void InsertOnFinally(Collection<Instruction> onFinallyInstructions)
       {
-         throw new System.NotImplementedException();
+         onFinallyInstructions.Add(Instruction.Create(OpCodes.Nop));
       }
    }
 
