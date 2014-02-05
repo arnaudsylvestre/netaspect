@@ -12,7 +12,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 {
     public interface IMethodWeaver
     {
-       void Init(Collection<Instruction> initInstructions, Collection<VariableDefinition> variables);
+       void Init(Collection<Instruction> initInstructions, Collection<VariableDefinition> variables, VariableDefinition result);
        void InsertBefore(Collection<Instruction> method);
        void InsertAfter(Collection<Instruction> afterInstructions);
        void InsertOnException(Collection<Instruction> onExceptionInstructions);
@@ -31,9 +31,10 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
       private Variables variables;
 
 
-      public void Init(Collection<Instruction> initInstructions, Collection<VariableDefinition> variables)
+      public void Init(Collection<Instruction> initInstructions, Collection<VariableDefinition> variables, VariableDefinition result)
       {
          this.variables = methodToWeave.CreateVariables(variables, initInstructions);
+          this.variables.handleResult = result;
       }
 
       public void InsertBefore(Collection<Instruction> beforeInstructions)
@@ -44,7 +45,10 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
       public void InsertAfter(Collection<Instruction> afterInstructions)
       {
           methodToWeave.CallAfter(variables, afterInstructions);
+
       }
+
+      
 
       public void InsertOnException(Collection<Instruction> onExceptionInstructions)
       {
@@ -78,73 +82,81 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
             {
                 return;
             }
-
-
+            method.Method.MethodDefinition.Body.InitLocals = true;
+            var returnType = method.Method.MethodDefinition.ReturnType;
+            var result = returnType == method.Method.MethodDefinition.Module.TypeSystem.Void ? null : method.Method.MethodDefinition.CreateVariable(returnType);
             var initInstructions = new Collection<Instruction>();
             var beforeInstructions = new Collection<Instruction>();
+            var beforeAfter = Instruction.Create(OpCodes.Nop);
             var afterInstructions = new Collection<Instruction>();
             var onExceptionInstructions = new Collection<Instruction>();
             var onFinallyInstructions = new Collection<Instruction>();
-            Variables variables = method.CreateVariables(method.Method.MethodDefinition.Body.Variables, initInstructions);
-            methodWeaver.Init(initInstructions, method.Method.MethodDefinition.Body.Variables);
+            methodWeaver.Init(initInstructions, method.Method.MethodDefinition.Body.Variables, result);
             methodWeaver.InsertBefore(beforeInstructions);
             methodWeaver.InsertOnException(onExceptionInstructions);
             methodWeaver.InsertAfter(afterInstructions);
            methodWeaver.InsertOnFinally(onFinallyInstructions);
-           FixReturns(method.Method.MethodDefinition, variables.handleResult);
-            var first = method.Method.MethodDefinition.Body.Instructions.First();
-            var last = method.Method.MethodDefinition.Body.Instructions.Last();
+            var methodInstructions = new Collection<Instruction>(method.Method.MethodDefinition.Body.Instructions);
+            var end = FixReturns(method.Method.MethodDefinition, result, methodInstructions, beforeAfter);
             var allInstructions = new List<Instruction>();
+            allInstructions.AddRange(initInstructions);
             allInstructions.AddRange(beforeInstructions);
-            allInstructions.AddRange(method.Method.MethodDefinition.Body.Instructions);
+            allInstructions.AddRange(methodInstructions);
+            allInstructions.Add(beforeAfter);
             allInstructions.AddRange(afterInstructions);
+            allInstructions.AddRange(end);
 
 
-            method.Method.Return(variables.handleResult, afterInstructions);
             
-            allInstructions.AddRange(onExceptionInstructions);
-            allInstructions.AddRange(onFinallyInstructions);
+            //allInstructions.AddRange(onExceptionInstructions);
+            //allInstructions.AddRange(onFinallyInstructions);
 
            method.Method.MethodDefinition.Body.Instructions.Clear();
            method.Method.MethodDefinition.Body.Instructions.AddRange(allInstructions);
 
-           method.Method.AddTryCatch(first, last, onExceptionInstructions.First(), onExceptionInstructions.Last());
-           method.Method.AddTryFinally(first, last, onFinallyInstructions.First(), onFinallyInstructions.Last());
+
+           // if (onExceptions.Any())
+           //method.Method.AddTryCatch(first, last, onExceptionInstructions.First(), onExceptionInstructions.Last());
+           // if (onFinallyInstructions.Any())
+           //method.Method.AddTryFinally(first, last, onFinallyInstructions.First(), onFinallyInstructions.Last());
 
         }
 
-        void FixReturns(MethodDefinition method, VariableDefinition handleResultP_P)
+
+        List<Instruction> FixReturns(MethodDefinition method, VariableDefinition handleResultP_P, Collection<Instruction> instructions, Instruction beforeAfter)
         {
-           if (method.ReturnType == method.Module.TypeSystem.Void)
-           {
-              var instructions = method.Body.Instructions;
+            List<Instruction> end = new List<Instruction>();
+            if (method.ReturnType == method.Module.TypeSystem.Void)
+            {
+                end.Add(Instruction.Create(OpCodes.Ret));
 
-              for (var index = 0; index < instructions.Count - 1; index++)
-              {
-                 var instruction = instructions[index];
-                 if (instruction.OpCode == OpCodes.Ret)
-                 {
-                    instructions[index] = Instruction.Create(OpCodes.Leave, Instruction.Create(OpCodes.Ret));
-                 }
-              }
-           }
-           else
-           {
-              var instructions = method.Body.Instructions;
+                for (var index = 0; index < instructions.Count; index++)
+                {
+                    var instruction = instructions[index];
+                    if (instruction.OpCode == OpCodes.Ret)
+                    {
+                        instructions[index] = Instruction.Create(OpCodes.Leave, beforeAfter);
+                    }
+                }
+            }
+            else
+            {
+                end.Add(Instruction.Create(OpCodes.Ldloc, handleResultP_P));
+                        end.Add(Instruction.Create(OpCodes.Ret));
 
-              for (var index = 0; index < instructions.Count - 2; index++)
-              {
-                 var instruction = instructions[index];
-                 if (instruction.OpCode == OpCodes.Ret)
-                 {
-                    instructions[index] = Instruction.Create(OpCodes.Leave, Instruction.Create(OpCodes.Ldloc, handleResultP_P));
-                    instructions.Insert(index, Instruction.Create(OpCodes.Stloc, handleResultP_P));
-                    index++;
-                 }
-              }
-           }
+                for (var index = 0; index < instructions.Count; index++)
+                {
+                    var instruction = instructions[index];
+                    if (instruction.OpCode == OpCodes.Ret)
+                    {
+                        instructions[index] = Instruction.Create(OpCodes.Leave, beforeAfter);
+                        instructions.Insert(index, Instruction.Create(OpCodes.Stloc, handleResultP_P));
+                        index++;
+                    }
+                }
+            }
+            return end;
         }
-
 
     }
 

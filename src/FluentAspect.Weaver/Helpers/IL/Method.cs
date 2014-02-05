@@ -88,44 +88,6 @@ namespace FluentAspect.Weaver.Helpers.IL
            });
         }
 
-        private Instruction CreateNopForCatch(ILProcessor il)
-        {
-            Instruction nop = il.Create(OpCodes.Nop);
-            il.Append(nop);
-            return nop;
-        }
-
-        
-
-        private void CreateExceptionHandler(MethodDefinition method,
-                                            Instruction onCatch,
-                                            Instruction endCatch,
-                                            Instruction beforeCatchP_P)
-        {
-            var handler = new ExceptionHandler(ExceptionHandlerType.Catch)
-                {
-                    TryStart = beforeCatchP_P,
-                    TryEnd = onCatch,
-                    HandlerStart = onCatch,
-                    HandlerEnd = endCatch,
-                    CatchType = method.Module.Import(typeof (Exception)),
-                                        
-                                        
-                };
-
-            method.Body.ExceptionHandlers.Add(handler);
-        }
-
-
-        public VariableDefinition CreateWeavedResult()
-        {
-            if (MethodDefinition.ReturnType.MetadataType != MetadataType.Void)
-            {
-                return MethodDefinition.CreateVariable(MethodDefinition.ReturnType);
-            }
-            return null;
-        }
-
 
         public void Return(VariableDefinition weavedResult, Collection<Instruction> instructions)
         {

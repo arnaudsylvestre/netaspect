@@ -14,14 +14,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
                 {
                     Interceptors = CreateInterceptorInstances(method, instructions),
                     args = CreateArgs(method, instructions),
-                    handleResult = CreateResult(method),
                     methodInfo = CreateMethodInfo(method, instructions),
                 };
-        }
-
-        private static VariableDefinition CreateResult(this MethodToWeave myMethod)
-        {
-            return myMethod.Method.CreateWeavedResult();
         }
 
         private static VariableDefinition CreateMethodInfo(this MethodToWeave method, Collection<Instruction> instructions)
