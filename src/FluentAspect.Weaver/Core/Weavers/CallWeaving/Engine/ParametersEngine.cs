@@ -16,7 +16,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
             public Action<ParameterInfo, List<Instruction>> InstructionFiller;
         }
 
-        Dictionary<string, Parameter> possibleParameters = new Dictionary<string, Parameter>();
+        readonly Dictionary<string, Parameter> possibleParameters = new Dictionary<string, Parameter>();
 
         public void AddPossibleParameter(string linenumber, Action<ParameterInfo, ErrorHandler> check, Action<ParameterInfo, List<Instruction>> instructionFiller)
         {

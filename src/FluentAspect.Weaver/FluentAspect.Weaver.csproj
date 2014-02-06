@@ -97,6 +97,8 @@
     <Compile Include="Core\Weavers\CallWeaving\Factory\Parameters\PdbParameterFactory.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\AroundConstructorWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\ConstructorAroundWeaver.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Factory\ParametersEngineFactory.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\InstanceParametersFactory.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Methods\NewAroundMethodWeaver.cs" />
     <Compile Include="Helpers\IL\ILProcessorExtensions.cs" />
     <Compile Include="Helpers\IL\InstructionExtensions.cs" />
@@ -154,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Helpers\" />
+    <Folder Include="Core\Weavers\Engine\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
