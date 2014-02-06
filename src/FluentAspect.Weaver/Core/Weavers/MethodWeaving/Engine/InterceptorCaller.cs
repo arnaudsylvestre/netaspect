@@ -43,58 +43,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
             forParameters.Add(parameterName, p =>
                 {
                     Check(p, updateAllowed, parameter.ParameterType);
-                    var moduleDefinition = ((MethodDefinition) parameter.Method).Module;
-                    if (p.ParameterType.IsByRef && !parameter.ParameterType.IsByReference)
-                    {
-                        _instructions.Add(Instruction.Create(OpCodes.Ldarga, parameter));
-                        
-                    }
-                    else if (!p.ParameterType.IsByRef && parameter.ParameterType.IsByReference)
-                    {
-                        _instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter));
-                        if (p.ParameterType == typeof(int))
-                        _instructions.Add(Instruction.Create(OpCodes.Ldind_I4));
-                        else
-                            if (p.ParameterType == typeof(bool))
-                            {
-
-                                _instructions.Add(Instruction.Create(OpCodes.Ldind_I1));
-                            }
-                            else
-                                if (p.ParameterType == typeof(float))
-                                {
-
-                                    _instructions.Add(Instruction.Create(OpCodes.Ldind_R4));
-                                }
-                                else
-                                    if (p.ParameterType == typeof(double))
-                                    {
-
-                                        _instructions.Add(Instruction.Create(OpCodes.Ldind_R8));
-                                    }
-                        else
-                        {
-                            _instructions.Add(Instruction.Create(OpCodes.Ldind_Ref));
-                        }
-
-                    }
-                    else
-                    {
-                        _instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter));
-                        
-                    }
-                    if (parameter.ParameterType != moduleDefinition.TypeSystem.Object &&
-                        p.ParameterType == typeof (Object))
-                    {
-                        TypeReference reference = parameter.ParameterType;
-                        if (reference.IsByReference)
-                        {
-                            reference = ((MethodDefinition)parameter.Method).GenericParameters.First(t => t.Name == reference.Name.TrimEnd('&'));
-                            _instructions.Add(Instruction.Create(OpCodes.Ldobj, reference));
-                            
-                        }
-                            _instructions.Add(Instruction.Create(OpCodes.Box, reference));
-                    }
+                    
                         
                 });
         }
@@ -136,33 +85,23 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
             }
         }
 
-        public void Call(VariableDefinition interceptorVariable, MethodInfo method,
-                         MethodWeavingConfiguration netAspect_P)
-        {
-            if (method == null)
-                return;
-            _instructions.Add(Instruction.Create(OpCodes.Ldloc, interceptorVariable));
+        //public void Call(VariableDefinition interceptorVariable, MethodInfo method,
+        //                 MethodWeavingConfiguration netAspect_P)
+        //{
+        //    if (method == null)
+        //        return;
+        //    _instructions.Add(Instruction.Create(OpCodes.Ldloc, interceptorVariable));
 
-            foreach (ParameterInfo parameterInfo in method.GetParameters())
-            {
-                if (!forParameters.ContainsKey(parameterInfo.Name))
-                    throw new Exception(
-                        string.Format("Parameter {0} not recognized in interceptor {1}.{2} for method {3} in {4}",
-                                      parameterInfo.Name, netAspect_P.Type.Name, method.Name, _methodDefinition.Name,
-                                      _methodDefinition.DeclaringType.Name));
-                forParameters[parameterInfo.Name](parameterInfo);
-            }
-            _instructions.Add(Instruction.Create(OpCodes.Call, _methodDefinition.Module.Import(method)));
-        }
-
-        public void Call(MethodToWeave method, Variables variables,
-                         Func<MethodWeavingConfiguration, Interceptor> interceptorProvider)
-        {
-            for (int i = 0; i < method.Interceptors.Count; i++)
-            {
-                Call(variables.Interceptors[i], interceptorProvider(method.Interceptors[i]).Method,
-                     method.Interceptors[i]);
-            }
-        }
+        //    foreach (ParameterInfo parameterInfo in method.GetParameters())
+        //    {
+        //        if (!forParameters.ContainsKey(parameterInfo.Name))
+        //            throw new Exception(
+        //                string.Format("Parameter {0} not recognized in interceptor {1}.{2} for method {3} in {4}",
+        //                              parameterInfo.Name, netAspect_P.Type.Name, method.Name, _methodDefinition.Name,
+        //                              _methodDefinition.DeclaringType.Name));
+        //        forParameters[parameterInfo.Name](parameterInfo);
+        //    }
+        //    _instructions.Add(Instruction.Create(OpCodes.Call, _methodDefinition.Module.Import(method)));
+        //}
     }
 }

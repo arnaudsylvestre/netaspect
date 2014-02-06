@@ -114,8 +114,6 @@
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\VariablesBuilder.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\CallWeavedMethodHelper.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Model\MethodToWeave.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Engine\WeavedMethodBuilder.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Engine\WeavedMethodChecker.cs" />
     <Compile Include="Helpers\AssemblyExtensions.cs" />
     <Compile Include="Helpers\EnumParser.cs" />
     <Compile Include="Core\Model\Adapters\MethodDefinitionAdapter.cs" />

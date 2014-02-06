@@ -82,8 +82,61 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
                                         (p, handler) =>
                                         {
                                             Ensure.OfType(p, handler, parameter1);
-                                        }, (info, instructions) =>
-                                            Instruction.Create(OpCodes.Ldloc, methodDefinition.Parameters.First(p => p.Name == info.Name))
+                                        }, (p, _instructions) =>
+                                            {
+                                                var moduleDefinition = ((MethodDefinition)parameter.Method).Module;
+                                                if (p.ParameterType.IsByRef && !parameter.ParameterType.IsByReference)
+                                                {
+                                                    _instructions.Add(Instruction.Create(OpCodes.Ldarga, parameter));
+
+                                                }
+                                                else if (!p.ParameterType.IsByRef && parameter.ParameterType.IsByReference)
+                                                {
+                                                    _instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter));
+                                                    if (p.ParameterType == typeof(int))
+                                                        _instructions.Add(Instruction.Create(OpCodes.Ldind_I4));
+                                                    else
+                                                        if (p.ParameterType == typeof(bool))
+                                                        {
+
+                                                            _instructions.Add(Instruction.Create(OpCodes.Ldind_I1));
+                                                        }
+                                                        else
+                                                            if (p.ParameterType == typeof(float))
+                                                            {
+
+                                                                _instructions.Add(Instruction.Create(OpCodes.Ldind_R4));
+                                                            }
+                                                            else
+                                                                if (p.ParameterType == typeof(double))
+                                                                {
+
+                                                                    _instructions.Add(Instruction.Create(OpCodes.Ldind_R8));
+                                                                }
+                                                                else
+                                                                {
+                                                                    _instructions.Add(Instruction.Create(OpCodes.Ldind_Ref));
+                                                                }
+
+                                                }
+                                                else
+                                                {
+                                                    _instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter));
+
+                                                }
+                                                if (parameter.ParameterType != moduleDefinition.TypeSystem.Object &&
+                                                    p.ParameterType == typeof(Object))
+                                                {
+                                                    TypeReference reference = parameter.ParameterType;
+                                                    if (reference.IsByReference)
+                                                    {
+                                                        reference = ((MethodDefinition)parameter.Method).GenericParameters.First(t => t.Name == reference.Name.TrimEnd('&'));
+                                                        _instructions.Add(Instruction.Create(OpCodes.Ldobj, reference));
+
+                                                    }
+                                                    _instructions.Add(Instruction.Create(OpCodes.Box, reference));
+                                                }
+                                            }
                                             );
                 }
                 catch (Exception)
