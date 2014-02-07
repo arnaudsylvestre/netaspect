@@ -8,8 +8,7 @@ namespace FluentAspect.Weaver.Helpers.IL
     {
         public static VariableDefinition CreateVariable(this MethodDefinition method, Type type)
         {
-            TypeReference typeReference = method.Module.Import(type);
-            return CreateVariable(method, typeReference);
+            return CreateVariable(method, method.Module.Import(type));
         }
 
 

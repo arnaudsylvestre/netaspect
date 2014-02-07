@@ -29,9 +29,9 @@ namespace FluentAspect.Weaver.Helpers.IL
             get { return definition; }
         }
 
-        public List<VariableDefinition> CreateAndInitializeVariable(Collection<Instruction> instructions, IEnumerable<Type> types)
+        public List<VariableDefinition> CreateVariable(IEnumerable<Type> types)
         {
-           return types.Select(type => instructions.CreateAndInitializeVariable(definition, type)).ToList();
+            return types.Select(type => definition.CreateVariable(type)).ToList();
         }
 
         public VariableDefinition CreateArgsArrayFromParameters(Collection<Instruction> instructions)
@@ -56,14 +56,18 @@ namespace FluentAspect.Weaver.Helpers.IL
         }
 
 
-        public VariableDefinition CreateMethodInfo(Collection<Instruction> instructions)
+        public VariableDefinition CreateMethodInfo()
         {
-            var methodInfo = definition.CreateVariable<MethodInfo>();
+            return definition.CreateVariable<MethodInfo>();
+        }
+
+        public void FIllMethod(Collection<Instruction> instructions, VariableDefinition methodInfo)
+        {
+            if (methodInfo == null)
+                return;
             instructions.AppendCallToThisGetType(definition.Module);
             instructions.AppendCallToGetMethod(definition.Name, definition.Module);
             instructions.AppendSaveResultTo(methodInfo);
-
-            return methodInfo;
         }
 
         public void AddTryFinally(Instruction tryStart_L, Instruction tryEnd_L, Instruction handlerStart_L, Instruction handlerEnd_L)

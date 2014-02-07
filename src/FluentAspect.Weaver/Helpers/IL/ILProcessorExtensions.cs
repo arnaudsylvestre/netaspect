@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
@@ -30,13 +29,6 @@ namespace FluentAspect.Weaver.Helpers.IL
             instructions.Add(Instruction.Create(OpCodes.Stloc, variable));
         }
 
-        public static Instruction AppendLeave(this List<Instruction> instructions, Instruction instruction_P)
-        {
-            Instruction instruction_L = Instruction.Create(OpCodes.Leave, instruction_P);
-            instructions.Add(instruction_L);
-            return instruction_L;
-        }
-
         public static void AppendCreateNewObject(this Collection<Instruction> instructions,
                                                  VariableDefinition interceptor,
                                                  Type interceptorType,
@@ -47,12 +39,14 @@ namespace FluentAspect.Weaver.Helpers.IL
         }
 
 
-        public static VariableDefinition CreateAndInitializeVariable(this Collection<Instruction> instructions, MethodDefinition method,
-                                                                     Type type)
+        public static VariableDefinition Create(MethodDefinition method, Type type)
         {
-            VariableDefinition variable_L = method.CreateVariable(type);
-            instructions.AppendCreateNewObject(variable_L, type, method.Module);
-            return variable_L;
+            return method.CreateVariable(type);
+        }
+        public static void InitializeInterceptors(this Collection<Instruction> instructions, MethodDefinition method,
+                                                                     Type type, VariableDefinition variable)
+        {
+            instructions.AppendCreateNewObject(variable, type, method.Module);
         }
     }
 }

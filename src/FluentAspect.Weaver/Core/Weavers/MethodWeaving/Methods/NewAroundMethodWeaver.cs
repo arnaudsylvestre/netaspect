@@ -33,8 +33,6 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
       public MethodWeaver(MethodToWeave methodToWeave_P)
       {
          methodToWeave = methodToWeave_P;
-         beforeParametersEngine = ParametersEngineFactory.CreateForBeforeMethodWeaving(methodToWeave_P.Method.MethodDefinition);
-         afterParametersEngine = ParametersEngineFactory.CreateForAfterMethodWeaving(methodToWeave_P.Method.MethodDefinition);
       }
 
       private Variables variables;
@@ -46,6 +44,9 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
       {
          this.variables = methodToWeave.CreateVariables(variables, initInstructions);
           this.variables.handleResult = result;
+
+          beforeParametersEngine = ParametersEngineFactory.CreateForBeforeMethodWeaving(methodToWeave.Method.MethodDefinition);
+          afterParametersEngine = ParametersEngineFactory.CreateForAfterMethodWeaving(methodToWeave.Method.MethodDefinition);
       }
 
       public void InsertBefore(Collection<Instruction> beforeInstructions)
