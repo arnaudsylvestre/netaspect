@@ -13,17 +13,19 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
     {
         private readonly MethodDefinition definition;
         private readonly IEnumerable<MethodWeavingConfiguration> interceptorType;
+       private NewAroundMethodWeaver weaver;
 
-        public AroundMethodWeaver(IEnumerable<MethodWeavingConfiguration> interceptorType, MethodDefinition definition_P)
+       public AroundMethodWeaver(IEnumerable<MethodWeavingConfiguration> interceptorType, MethodDefinition definition_P)
         {
             this.interceptorType = interceptorType;
             definition = definition_P;
+
+            var methodToWeave_L = new MethodToWeave(interceptorType.ToList(), new Method(definition));
+            weaver = new NewAroundMethodWeaver(methodToWeave_L, new MethodWeaver(methodToWeave_L));
         }
 
         public void Weave()
         {
-           var methodToWeave_L = new MethodToWeave(interceptorType.ToList(), new Method(definition));
-           var weaver = new NewAroundMethodWeaver(methodToWeave_L, new MethodWeaver(methodToWeave_L));
             weaver.Weave();
         }
 
@@ -38,6 +40,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
                     errorHandler.Errors.Add(string.Format("An abstract method can not be weaved : {0}.{1}",
                                                       definition.DeclaringType.Name, definition.Name));
             }
+            weaver.Check(errorHandler);
         }
 
         

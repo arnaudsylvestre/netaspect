@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
+using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
+using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -26,9 +30,13 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
       public MethodWeaver(MethodToWeave methodToWeave_P)
       {
          methodToWeave = methodToWeave_P;
+         beforeParametersEngine = ParametersEngineFactory.CreateForBeforeMethodWeaving(methodToWeave_P.Method.MethodDefinition);
+         afterParametersEngine = ParametersEngineFactory.CreateForAfterMethodWeaving(methodToWeave_P.Method.MethodDefinition);
       }
 
       private Variables variables;
+      private ParametersEngine beforeParametersEngine;
+      private ParametersEngine afterParametersEngine;
 
 
       public void Init(Collection<Instruction> initInstructions, Collection<VariableDefinition> variables, VariableDefinition result)
@@ -39,12 +47,32 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 
       public void InsertBefore(Collection<Instruction> beforeInstructions)
       {
-          methodToWeave.CallBefore(variables, beforeInstructions);
+         Call(beforeInstructions, configuration_P => configuration_P.Before, beforeParametersEngine);
+      }
+
+      private void Call(Collection<Instruction> beforeInstructions, Func<MethodWeavingConfiguration, Interceptor> interceptorProvider, ParametersEngine parametersEngine)
+      {
+         for (int i = 0; i < methodToWeave.Interceptors.Count; i++)
+         {
+            var interceptorType = methodToWeave.Interceptors[i];
+            var interceptorProvider_L = interceptorProvider(interceptorType);
+            if (interceptorProvider_L.Method == null) continue;
+            List<Instruction> instructions = new List<Instruction>();
+            instructions.Add(Instruction.Create(OpCodes.Ldloc, variables.Interceptors[i]));
+            parametersEngine.Fill(interceptorProvider_L.Method.GetParameters(), instructions);
+            beforeInstructions.AddRange(instructions);
+            beforeInstructions.Add(
+               Instruction.Create(
+                  OpCodes.Call,
+                  methodToWeave.Method.MethodDefinition.Module.Import(
+                     interceptorProvider_L
+                                    .Method)));
+         }
       }
 
       public void InsertAfter(Collection<Instruction> afterInstructions)
       {
-          methodToWeave.CallAfter(variables, afterInstructions);
+         Call(afterInstructions, configuration_P => configuration_P.After, afterParametersEngine);
 
       }
 
@@ -52,12 +80,12 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 
       public void InsertOnException(Collection<Instruction> onExceptionInstructions)
       {
-          methodToWeave.GenerateOnExceptionInterceptor(variables, onExceptionInstructions);
+          //methodToWeave.GenerateOnExceptionInterceptor(variables, onExceptionInstructions);
       }
 
       public void InsertOnFinally(Collection<Instruction> onFinallyInstructions)
       {
-         onFinallyInstructions.Add(Instruction.Create(OpCodes.Nop));
+         //onFinallyInstructions.Add(Instruction.Create(OpCodes.Nop));
       }
    }
 
@@ -158,6 +186,13 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
             return end;
         }
 
+       public void Check(ErrorHandler errorHandlerP_P)
+       {
+          methodWeaver.CheckBefore(errorHandlerP_P);
+          methodWeaver.CheckOnException(errorHandlerP_P);
+          methodWeaver.CheckAfter(errorHandlerP_P);
+          methodWeaver.CheckOnFinally(errorHandlerP_P);
+       }
     }
 
 

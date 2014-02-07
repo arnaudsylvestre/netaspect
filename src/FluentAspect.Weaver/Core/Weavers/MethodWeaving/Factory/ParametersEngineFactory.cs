@@ -8,14 +8,18 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory
 {
     public static class ParametersEngineFactory
     {
-        public static ParametersEngine CreateForMethodWeaving(JoinPoint point, Dictionary<string, VariableDefinition> variablesForParameters)
-        {
-            var engine = new ParametersEngine();
-            engine.AddPdbParameters(point);
-            engine.AddCallerParams(point);
-            engine.AddCalledParameters(point.InstructionStart.Operand as MethodReference, variablesForParameters);
-            return engine;
-        }
+       public static ParametersEngine CreateForBeforeMethodWeaving(MethodDefinition methodDefinition)
+       {
+          var engine = new ParametersEngine();
+          engine.AddInstance(methodDefinition);
+          return engine;
+       }
+       public static ParametersEngine CreateForAfterMethodWeaving(MethodDefinition methodDefinition)
+       {
+          var engine = new ParametersEngine();
+          engine.AddInstance(methodDefinition);
+          return engine;
+       }
         
     }
 }

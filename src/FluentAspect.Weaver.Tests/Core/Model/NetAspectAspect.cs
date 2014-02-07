@@ -38,9 +38,16 @@ namespace FluentAspect.Weaver.Tests.Core.Model
 
        public NetAspectInterceptor AddAfterInterceptor()
        {
-           var interceptor = new MethodDefinition("After", MethodAttributes.Public, typeDefinition.Module.TypeSystem.Void);
-           typeDefinition.Methods.Add(interceptor);
-           return new NetAspectInterceptor(interceptor);
+          var interceptor = new MethodDefinition("After", MethodAttributes.Public, typeDefinition.Module.TypeSystem.Void);
+          typeDefinition.Methods.Add(interceptor);
+          return new NetAspectInterceptor(interceptor);
+       }
+
+       public NetAspectInterceptor AddBeforeInterceptor()
+       {
+          var interceptor = new MethodDefinition("Before", MethodAttributes.Public, typeDefinition.Module.TypeSystem.Void);
+          typeDefinition.Methods.Add(interceptor);
+          return new NetAspectInterceptor(interceptor);
        }
 
        public NetAspectInterceptor AddBeforeCallEventInterceptor()

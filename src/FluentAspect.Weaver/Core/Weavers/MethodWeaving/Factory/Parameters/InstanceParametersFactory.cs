@@ -19,7 +19,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
                                         {
                                             Ensure.NotReferenced(p, handler);
                                             Ensure.OfType(p, handler, typeof(object).FullName, methodDefinition.DeclaringType.FullName);
-                                        }, (info, instructions) => Instruction.Create(OpCodes.Ldarg_0));
+                                        }, (info, instructions) => instructions.Add(Instruction.Create(OpCodes.Ldarg_0)));
         }
 
         public static void AddParameters(this ParametersEngine engine, VariableDefinition parameters)
@@ -30,7 +30,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
                                             Ensure.NotReferenced(p, handler);
                                             Ensure.OfType<object[]>(p, handler);
                                         }, (info, instructions) =>
-                                            Instruction.Create(OpCodes.Ldloc, parameters)
+                                            instructions.Add(Instruction.Create(OpCodes.Ldloc, parameters))
                                             );
         }
 
@@ -42,7 +42,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
                                             Ensure.NotReferenced(p, handler);
                                             Ensure.OfType(p, handler, typeof(MethodInfo).FullName);
                                         }, (info, instructions) =>
-                                            Instruction.Create(OpCodes.Ldloc, methodVariable)
+                                            instructions.Add(Instruction.Create(OpCodes.Ldloc, methodVariable))
                                             );
 
         }
