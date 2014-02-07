@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
@@ -21,6 +22,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
        void InsertAfter(Collection<Instruction> afterInstructions);
        void InsertOnException(Collection<Instruction> onExceptionInstructions);
        void InsertOnFinally(Collection<Instruction> onFinallyInstructions);
+        void CheckBefore(ErrorHandler errorHandlerPP);
+        void CheckAfter(ErrorHandler errorHandler);
     }
 
    public class MethodWeaver : IMethodWeaver
@@ -87,6 +90,25 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
       {
          //onFinallyInstructions.Add(Instruction.Create(OpCodes.Nop));
       }
+
+       public void CheckBefore(ErrorHandler errorHandlerPP)
+       {
+           Check(errorHandlerPP, configuration => configuration.Before.Method, beforeParametersEngine);
+       }
+
+       private void Check(ErrorHandler errorHandlerPP, Func<MethodWeavingConfiguration, MethodInfo> methodProvider, ParametersEngine parametersEngine)
+       {
+           foreach (var interceptor in methodToWeave.Interceptors)
+           {
+               if (methodProvider(interceptor) == null) continue;
+               parametersEngine.Check(methodProvider(interceptor).GetParameters(), errorHandlerPP);
+           }
+       }
+
+       public void CheckAfter(ErrorHandler errorHandler)
+       {
+           Check(errorHandler, configuration => configuration.After.Method, afterParametersEngine);
+       }
    }
 
 
@@ -189,9 +211,9 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
        public void Check(ErrorHandler errorHandlerP_P)
        {
           methodWeaver.CheckBefore(errorHandlerP_P);
-          methodWeaver.CheckOnException(errorHandlerP_P);
+          //methodWeaver.CheckOnException(errorHandlerP_P);
           methodWeaver.CheckAfter(errorHandlerP_P);
-          methodWeaver.CheckOnFinally(errorHandlerP_P);
+          //methodWeaver.CheckOnFinally(errorHandlerP_P);
        }
     }
 
