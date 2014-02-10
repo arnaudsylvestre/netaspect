@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters;
+using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 

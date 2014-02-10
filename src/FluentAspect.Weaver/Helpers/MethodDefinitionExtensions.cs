@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -7,6 +8,25 @@ namespace FluentAspect.Weaver.Helpers
 {
     public static class MethodDefinitionExtensions
     {
+        public static VariableDefinition CreateVariable(this MethodDefinition method, Type type)
+        {
+            return CreateVariable(method, method.Module.Import(type));
+        }
+
+
+        public static VariableDefinition CreateVariable<T>(this MethodDefinition method)
+        {
+            return CreateVariable(method, typeof(T));
+        }
+
+        public static VariableDefinition CreateVariable(this MethodDefinition method,
+                                                        TypeReference typeReference)
+        {
+            var variableDefinition = new VariableDefinition(typeReference);
+            method.Body.Variables.Add(variableDefinition);
+            return variableDefinition;
+        }
+
        public static void InsertAfter(this MethodDefinition method, Instruction instruction, IEnumerable<Instruction> toInsert)
        {
           var instructions = method.Body.Instructions;

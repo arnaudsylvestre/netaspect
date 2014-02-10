@@ -5,13 +5,8 @@ using Mono.Collections.Generic;
 
 namespace FluentAspect.Weaver.Helpers.IL
 {
-    public static class ILProcessorExtensions
+    public static class InstructionsExtensions
     {
-        public static void AppendThrow(this Collection<Instruction> instructions)
-        {
-            instructions.Add(Instruction.Create(OpCodes.Rethrow));
-        }
-
         public static void AppendCallToThisGetType(this Collection<Instruction> instructions, ModuleDefinition module)
         {
             instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
@@ -39,10 +34,6 @@ namespace FluentAspect.Weaver.Helpers.IL
         }
 
 
-        public static VariableDefinition Create(MethodDefinition method, Type type)
-        {
-            return method.CreateVariable(type);
-        }
         public static void InitializeInterceptors(this Collection<Instruction> instructions, MethodDefinition method,
                                                                      Type type, VariableDefinition variable)
         {

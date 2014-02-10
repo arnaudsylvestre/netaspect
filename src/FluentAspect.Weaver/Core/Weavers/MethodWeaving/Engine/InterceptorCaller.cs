@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
-using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
@@ -18,12 +14,9 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
         private readonly Dictionary<string, Action<ParameterInfo>> forParameters =
             new Dictionary<string, Action<ParameterInfo>>();
 
-        private MethodDefinition _methodDefinition;
-
-        public InterceptorCaller(Collection<Instruction> instructions, MethodDefinition methodDefinition)
+        public InterceptorCaller(Collection<Instruction> instructions)
         {
             _instructions = instructions;
-            _methodDefinition = methodDefinition;
         }
 
         public void AddVariable(string parameterName, VariableDefinition variable, bool updateAllowed)

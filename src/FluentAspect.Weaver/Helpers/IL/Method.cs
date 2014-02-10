@@ -11,18 +11,11 @@ namespace FluentAspect.Weaver.Helpers.IL
     public class Method
     {
         private readonly MethodDefinition definition;
-        //private readonly ILProcessor il;
 
         public Method(MethodDefinition definition)
         {
             this.definition = definition;
-            //il = definition.Body.GetILProcessor();
         }
-
-        //public ILProcessor Il
-        //{
-        //    get { return il; }
-        //}
 
         public MethodDefinition MethodDefinition
         {

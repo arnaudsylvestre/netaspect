@@ -7,7 +7,7 @@ using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
+namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
 {
     public static class InstanceParametersFactory
     {

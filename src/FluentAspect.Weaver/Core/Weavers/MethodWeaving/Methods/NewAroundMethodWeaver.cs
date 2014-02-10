@@ -8,6 +8,7 @@ using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory;
+using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;

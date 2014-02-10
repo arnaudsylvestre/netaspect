@@ -5,6 +5,7 @@ using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model.Helpers;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory;
+using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil.Cil;
 

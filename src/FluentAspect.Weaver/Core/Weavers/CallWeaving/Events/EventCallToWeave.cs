@@ -3,7 +3,7 @@ using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using Mono.Cecil;
 
-namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Fields
+namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Events
 {
     public class EventCallToWeave
     {

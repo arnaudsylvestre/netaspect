@@ -100,10 +100,9 @@
     <Compile Include="Core\Weavers\MethodWeaving\Factory\ParametersEngineFactory.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\InstanceParametersFactory.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Methods\NewAroundMethodWeaver.cs" />
-    <Compile Include="Helpers\IL\ILProcessorExtensions.cs" />
+    <Compile Include="Helpers\IL\InstructionsExtensions.cs" />
     <Compile Include="Helpers\IL\InstructionExtensions.cs" />
     <Compile Include="Helpers\IL\Method.cs" />
-    <Compile Include="Helpers\IL\VariableExtensions.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\InterceptorCallerExtensions.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\MethodToWeaveExtensions.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\InterceptorCaller.cs" />
@@ -115,7 +114,6 @@
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\CallWeavedMethodHelper.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Engine\Model\MethodToWeave.cs" />
     <Compile Include="Helpers\AssemblyExtensions.cs" />
-    <Compile Include="Helpers\EnumParser.cs" />
     <Compile Include="Core\Model\Adapters\MethodDefinitionAdapter.cs" />
     <Compile Include="Helpers\MethodInfoExtensions.cs" />
     <Compile Include="Core\Model\Adapters\ParameterDefinitionAdapter.cs" />
