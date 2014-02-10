@@ -8,27 +8,23 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
 {
     public static class VariablesBuilder
     {
-        public static Variables CreateVariables(this MethodToWeave method, Collection<VariableDefinition> instructionsP_P, Collection<Instruction> instructions)
+        public static Variables CreateVariables(this MethodToWeave method)
         {
             return new Variables
             {
-                Interceptors = CreateInterceptorInstances(method, instructions),
-                args = CreateArgs(method, instructions),
-                methodInfo = CreateMethodInfo(method, instructions),
+                Interceptors = CreateInterceptorInstances(method),
+                args = CreateArgs(method),
+                methodInfo = CreateMethodInfo(method),
             };
         }
         public static void InitializeVariables(this MethodToWeave method, Variables variables, Collection<Instruction> instructions)
         {
             method.Method.FIllMethod(instructions, variables.methodInfo);
-            return new Variables
-            {
-                Interceptors = CreateInterceptorInstances(method, instructions),
-                args = CreateArgs(method, instructions),
-                methodInfo = CreateMethodInfo(method, instructions),
-            };
+           FillInterceptorInstances(method, instructions);
+           method.Method.FillArgsArrayFromParameters(instructions, variables.args);
         }
 
-        private static VariableDefinition CreateMethodInfo(this MethodToWeave method, Collection<Instruction> instructions)
+        private static VariableDefinition CreateMethodInfo(this MethodToWeave method)
         {
             VariableDefinition methodInfo = null;
 
@@ -37,22 +33,22 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
             return methodInfo;
         }
 
-        private static VariableDefinition CreateArgs(this MethodToWeave myMethod, Collection<Instruction> instructions)
+        private static VariableDefinition CreateArgs(this MethodToWeave myMethod)
         {
             VariableDefinition args = null;
             if (myMethod.Needs(Variables.ParameterParameters))
-               args = myMethod.Method.CreateArgsArrayFromParameters(instructions);
+               args = myMethod.Method.CreateArgsArrayFromParameters();
             return args;
         }
 
-        private static List<VariableDefinition> CreateInterceptorInstances(MethodToWeave myMethod, Collection<Instruction> instructions)
+        private static List<VariableDefinition> CreateInterceptorInstances(MethodToWeave myMethod)
         {
-            return myMethod.Method.CreateVariable(instructions, from i in myMethod.Interceptors select i.Type);
+            return myMethod.Method.CreateVariable(from i in myMethod.Interceptors select i.Type);
         }
 
-        private static List<VariableDefinition> FillInterceptorInstances(MethodToWeave myMethod, Collection<Instruction> instructions)
+        private static void FillInterceptorInstances(MethodToWeave myMethod, Collection<Instruction> instructions)
         {
-            return myMethod.Method.InitializeVariable(instructions, from i in myMethod.Interceptors select i.Type);
+           myMethod.Method.InitializeVariable(from i in myMethod.Interceptors select i.Type, instructions);
         }
     }
 }

@@ -31,32 +31,38 @@ namespace FluentAspect.Weaver.Helpers.IL
 
         public List<VariableDefinition> CreateVariable(IEnumerable<Type> types)
         {
-            return types.Select(type => definition.CreateVariable(type)).ToList();
+           return types.Select(type => definition.CreateVariable(type)).ToList();
         }
 
-        public VariableDefinition CreateArgsArrayFromParameters(Collection<Instruction> instructions)
+        public void InitializeVariable(IEnumerable<Type> types, Collection<Instruction> instructions)
         {
-            VariableDefinition args = definition.CreateVariable<object[]>();
-
-            instructions.Add(Instruction.Create(OpCodes.Ldc_I4, definition.Parameters.Count));
-            instructions.Add(Instruction.Create(OpCodes.Newarr, definition.Module.Import(typeof (object))));
-            instructions.Add(Instruction.Create(OpCodes.Stloc, args));
-
-            foreach (ParameterDefinition p in definition.Parameters.ToArray())
-            {
-                instructions.Add(Instruction.Create(OpCodes.Ldloc, args));
-                instructions.Add(Instruction.Create(OpCodes.Ldc_I4, p.Index));
-                instructions.Add(Instruction.Create(OpCodes.Ldarg, p));
-                if (p.ParameterType.IsValueType || p.ParameterType is GenericParameter)
-                    instructions.Add(Instruction.Create(OpCodes.Box, p.ParameterType));
-                instructions.Add(Instruction.Create(OpCodes.Stelem_Ref));
-            }
-
-            return args;
+           //return types.Select(type => instructions.InitializeVariable(definition, type)).ToList();
         }
 
+        public VariableDefinition CreateArgsArrayFromParameters()
+        {
+           return definition.CreateVariable<object[]>();
+        }
 
-        public VariableDefinition CreateMethodInfo()
+        public void FillArgsArrayFromParameters(Collection<Instruction> instructions, VariableDefinition args)
+       {
+          instructions.Add(Instruction.Create(OpCodes.Ldc_I4, definition.Parameters.Count));
+          instructions.Add(Instruction.Create(OpCodes.Newarr, definition.Module.Import(typeof (object))));
+          instructions.Add(Instruction.Create(OpCodes.Stloc, args));
+
+          foreach (ParameterDefinition p in definition.Parameters.ToArray())
+          {
+             instructions.Add(Instruction.Create(OpCodes.Ldloc, args));
+             instructions.Add(Instruction.Create(OpCodes.Ldc_I4, p.Index));
+             instructions.Add(Instruction.Create(OpCodes.Ldarg, p));
+             if (p.ParameterType.IsValueType || p.ParameterType is GenericParameter)
+                instructions.Add(Instruction.Create(OpCodes.Box, p.ParameterType));
+             instructions.Add(Instruction.Create(OpCodes.Stelem_Ref));
+          }
+       }
+
+
+       public VariableDefinition CreateMethodInfo()
         {
             return definition.CreateVariable<MethodInfo>();
         }

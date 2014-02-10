@@ -17,7 +17,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 {
     public interface IMethodWeaver
     {
-       void Init(Collection<Instruction> initInstructions, Collection<VariableDefinition> variables, VariableDefinition result);
+       void Init(Collection<VariableDefinition> variables, VariableDefinition result);
        void InsertBefore(Collection<Instruction> method);
        void InsertAfter(Collection<Instruction> afterInstructions);
        void InsertOnException(Collection<Instruction> onExceptionInstructions);
@@ -40,9 +40,9 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
       private ParametersEngine afterParametersEngine;
 
 
-      public void Init(Collection<Instruction> initInstructions, Collection<VariableDefinition> variables, VariableDefinition result)
+      public void Init(Collection<VariableDefinition> variables, VariableDefinition result)
       {
-         this.variables = methodToWeave.CreateVariables(variables, initInstructions);
+         this.variables = methodToWeave.CreateVariables();
           this.variables.handleResult = result;
 
           beforeParametersEngine = ParametersEngineFactory.CreateForBeforeMethodWeaving(methodToWeave.Method.MethodDefinition);
@@ -117,8 +117,9 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
     {
         private MethodToWeave method;
         private IMethodWeaver methodWeaver;
+       private VariableDefinition result;
 
-        public NewAroundMethodWeaver(MethodToWeave method, IMethodWeaver methodWeaver)
+       public NewAroundMethodWeaver(MethodToWeave method, IMethodWeaver methodWeaver)
         {
             this.method = method;
             this.methodWeaver = methodWeaver;
@@ -142,7 +143,6 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
             var afterInstructions = new Collection<Instruction>();
             var onExceptionInstructions = new Collection<Instruction>();
             var onFinallyInstructions = new Collection<Instruction>();
-            methodWeaver.Init(initInstructions, method.Method.MethodDefinition.Body.Variables, result);
             methodWeaver.InsertBefore(beforeInstructions);
             methodWeaver.InsertOnException(onExceptionInstructions);
             methodWeaver.InsertAfter(afterInstructions);
@@ -210,7 +210,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
         }
 
        public void Check(ErrorHandler errorHandlerP_P)
-       {
+        {
+           methodWeaver.Init(method.Method.MethodDefinition.Body.Variables, result);
           methodWeaver.CheckBefore(errorHandlerP_P);
           //methodWeaver.CheckOnException(errorHandlerP_P);
           methodWeaver.CheckAfter(errorHandlerP_P);
