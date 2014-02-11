@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
+using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
 
@@ -20,7 +21,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
         public static void InitializeVariables(this MethodToWeave method, Variables variables, Collection<Instruction> instructions)
         {
             method.Method.FIllMethod(instructions, variables.methodInfo);
-           FillInterceptorInstances(method, instructions);
+           FillInterceptorInstances(method, instructions, variables.Interceptors);
            method.Method.FillArgsArrayFromParameters(instructions, variables.args);
         }
 
@@ -46,9 +47,13 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
             return myMethod.Method.CreateVariable(from i in myMethod.Interceptors select i.Type);
         }
 
-        private static void FillInterceptorInstances(MethodToWeave myMethod, Collection<Instruction> instructions)
+        private static void FillInterceptorInstances(MethodToWeave myMethod, Collection<Instruction> instructions, List<VariableDefinition> variables)
         {
-           myMethod.Method.InitializeVariable(from i in myMethod.Interceptors select i.Type, instructions);
+            for (int i = 0; i < variables.Count; i++)
+            {
+                instructions.InitializeInterceptors(myMethod.Method.MethodDefinition, myMethod.Interceptors[i].Type, variables[i]);
+                
+            }
         }
     }
 }

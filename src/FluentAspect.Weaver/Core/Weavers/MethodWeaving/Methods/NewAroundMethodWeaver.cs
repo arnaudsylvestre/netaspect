@@ -25,6 +25,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
        void InsertOnFinally(Collection<Instruction> onFinallyInstructions);
         void CheckBefore(ErrorHandler errorHandlerPP);
         void CheckAfter(ErrorHandler errorHandler);
+        void InsertInitInstructions(Collection<Instruction> initInstructions);
     }
 
    public class MethodWeaver : IMethodWeaver
@@ -46,8 +47,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
          this.variables = methodToWeave.CreateVariables();
           this.variables.handleResult = result;
 
-          beforeParametersEngine = ParametersEngineFactory.CreateForBeforeMethodWeaving(methodToWeave.Method.MethodDefinition);
-          afterParametersEngine = ParametersEngineFactory.CreateForAfterMethodWeaving(methodToWeave.Method.MethodDefinition);
+          beforeParametersEngine = ParametersEngineFactory.CreateForBeforeMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args);
+          afterParametersEngine = ParametersEngineFactory.CreateForAfterMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, this.variables.handleResult);
       }
 
       public void InsertBefore(Collection<Instruction> beforeInstructions)
@@ -111,6 +112,11 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
        {
            Check(errorHandler, configuration => configuration.After.Method, afterParametersEngine);
        }
+
+       public void InsertInitInstructions(Collection<Instruction> initInstructions)
+       {
+           methodToWeave.InitializeVariables(variables, initInstructions);
+       }
    }
 
 
@@ -136,14 +142,13 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
                 return;
             }
             method.Method.MethodDefinition.Body.InitLocals = true;
-            var returnType = method.Method.MethodDefinition.ReturnType;
-            var result = returnType == method.Method.MethodDefinition.Module.TypeSystem.Void ? null : method.Method.MethodDefinition.CreateVariable(returnType);
             var initInstructions = new Collection<Instruction>();
             var beforeInstructions = new Collection<Instruction>();
             var beforeAfter = Instruction.Create(OpCodes.Nop);
             var afterInstructions = new Collection<Instruction>();
             var onExceptionInstructions = new Collection<Instruction>();
             var onFinallyInstructions = new Collection<Instruction>();
+            methodWeaver.InsertInitInstructions(initInstructions);
             methodWeaver.InsertBefore(beforeInstructions);
             methodWeaver.InsertOnException(onExceptionInstructions);
             methodWeaver.InsertAfter(afterInstructions);
@@ -211,7 +216,9 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
         }
 
        public void Check(ErrorHandler errorHandlerP_P)
-        {
+       {
+           if (method.Method.MethodDefinition.ReturnType != method.Method.MethodDefinition.Module.TypeSystem.Void)
+               result = method.Method.MethodDefinition.CreateVariable(method.Method.MethodDefinition.ReturnType);
            methodWeaver.Init(method.Method.MethodDefinition.Body.Variables, result);
           methodWeaver.CheckBefore(errorHandlerP_P);
           //methodWeaver.CheckOnException(errorHandlerP_P);

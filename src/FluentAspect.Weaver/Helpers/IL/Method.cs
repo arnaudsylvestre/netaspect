@@ -27,18 +27,15 @@ namespace FluentAspect.Weaver.Helpers.IL
            return types.Select(type => definition.CreateVariable(type)).ToList();
         }
 
-        public void InitializeVariable(IEnumerable<Type> types, Collection<Instruction> instructions)
-        {
-           //return types.Select(type => instructions.InitializeVariable(definition, type)).ToList();
-        }
-
         public VariableDefinition CreateArgsArrayFromParameters()
         {
            return definition.CreateVariable<object[]>();
         }
 
         public void FillArgsArrayFromParameters(Collection<Instruction> instructions, VariableDefinition args)
-       {
+        {
+            if (args == null)
+                return;
           instructions.Add(Instruction.Create(OpCodes.Ldc_I4, definition.Parameters.Count));
           instructions.Add(Instruction.Create(OpCodes.Newarr, definition.Module.Import(typeof (object))));
           instructions.Add(Instruction.Create(OpCodes.Stloc, args));

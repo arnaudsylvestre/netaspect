@@ -47,13 +47,14 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
 
         }
 
-        public static void AddResult(this ParametersEngine engine, MethodDefinition methodDefinition)
+        public static void AddResult(this ParametersEngine engine, MethodDefinition methodDefinition, VariableDefinition result)
         {
             engine.AddPossibleParameter("result",
                                         (p, handler) =>
                                         {
                                             Ensure.ResultOfType(p, handler, methodDefinition);
-                                        }, (info, instructions) => { throw new NotImplementedException(); }
+                                        }, (info, instructions) =>
+                                            instructions.Add(Instruction.Create(OpCodes.Ldloc, result))
 
                                             );
 

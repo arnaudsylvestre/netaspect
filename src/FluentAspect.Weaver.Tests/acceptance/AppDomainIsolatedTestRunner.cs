@@ -18,18 +18,6 @@ namespace FluentAspect.Weaver.Tests.acceptance
         }
 
 
-
-        public void Run(string dll_L, Action<ErrorHandler> checkErrors)
-        {
-
-            PEVerify verify_L = new PEVerify();
-            verify_L.Run(dll_L);
-            WeaverCore weaver = WeaverCoreFactory.Create();
-            ErrorHandler errorHandler = new ErrorHandler();
-            weaver.Weave(dll_L, errorHandler, (a) => a);
-            checkErrors(errorHandler);
-        }
-
         public string Run(string dll_L, List<string> checkErrors, List<string> failures, List<string> warnings)
         {
             PEVerify verify_L = new PEVerify();
