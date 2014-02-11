@@ -18,7 +18,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 {
     public interface IMethodWeaver
     {
-       void Init(Collection<VariableDefinition> variables, VariableDefinition result);
+       void Init(Collection<VariableDefinition> variables, VariableDefinition result, ErrorHandler errorHandler);
        void InsertBefore(Collection<Instruction> method);
        void InsertAfter(Collection<Instruction> afterInstructions);
        void InsertOnException(Collection<Instruction> onExceptionInstructions);
@@ -42,13 +42,13 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
       private ParametersEngine afterParametersEngine;
 
 
-      public void Init(Collection<VariableDefinition> variables, VariableDefinition result)
+      public void Init(Collection<VariableDefinition> variables, VariableDefinition result, ErrorHandler errorHandler)
       {
          this.variables = methodToWeave.CreateVariables();
           this.variables.handleResult = result;
 
-          beforeParametersEngine = ParametersEngineFactory.CreateForBeforeMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args);
-          afterParametersEngine = ParametersEngineFactory.CreateForAfterMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, this.variables.handleResult);
+          beforeParametersEngine = ParametersEngineFactory.CreateForBeforeMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, errorHandler);
+          afterParametersEngine = ParametersEngineFactory.CreateForAfterMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, this.variables.handleResult, errorHandler);
       }
 
       public void InsertBefore(Collection<Instruction> beforeInstructions)
@@ -219,7 +219,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
        {
            if (method.Method.MethodDefinition.ReturnType != method.Method.MethodDefinition.Module.TypeSystem.Void)
                result = method.Method.MethodDefinition.CreateVariable(method.Method.MethodDefinition.ReturnType);
-           methodWeaver.Init(method.Method.MethodDefinition.Body.Variables, result);
+           methodWeaver.Init(method.Method.MethodDefinition.Body.Variables, result, errorHandlerP_P);
           methodWeaver.CheckBefore(errorHandlerP_P);
           //methodWeaver.CheckOnException(errorHandlerP_P);
           methodWeaver.CheckAfter(errorHandlerP_P);
