@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
@@ -8,9 +9,9 @@ namespace FluentAspect.Weaver.Core.Configuration.Attributes
 {
     public class ConstructorAttributeConfigurationReader : IConfigurationReader
     {
-       public void ReadConfiguration(Assembly assembly, WeavingConfiguration configuration, ErrorHandler errorHandler)
+       public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration, ErrorHandler errorHandler)
         {
-            foreach (var matchingMethod in assembly.GetTypes().GetAllConstructors((m) => true))
+            foreach (var matchingMethod in types.GetAllConstructors((m) => true))
             {
                 MethodBase info = matchingMethod;
                var methodWeavingAspectAttributes_L = matchingMethod.GetNetAspectAttributes();

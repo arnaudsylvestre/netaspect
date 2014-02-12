@@ -65,7 +65,13 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         }
         public static EventDefinition AddEvent<T>(this TypeDefinition type, string name)
         {
-            return type.AddEvent(name, type.Module.Import(typeof (T)));
+            return type.AddEvent(name, type.Module.Import(typeof(T)));
+        }
+        public static FieldDefinition AddField<T>(this TypeDefinition type, string name)
+        {
+            var fieldDefinition = new FieldDefinition(name, FieldAttributes.Public, type.Module.Import(typeof (T)));
+            type.Fields.Add(fieldDefinition);
+            return fieldDefinition;
         }
 
         public static MethodDefinition WhichCallEvent<T>(this MethodDefinition method, EventDefinition evt)
@@ -74,6 +80,15 @@ namespace FluentAspect.Weaver.Tests.Core.Model
             method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
             method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldfld, fieldDefinition));
             method.Body.Instructions.Add(Instruction.Create(OpCodes.Callvirt, method.Module.Import(typeof(T).GetMethod("Invoke"))));
+            return method;
+        }
+
+        public static MethodDefinition WhichAffectField(this MethodDefinition method, FieldDefinition field, int value)
+        {
+            var fieldDefinition = method.DeclaringType.Fields.First(f => f.Name == field.Name);
+            method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+            method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, value));
+            method.Body.Instructions.Add(Instruction.Create(OpCodes.Stfld, fieldDefinition));
             return method;
         }
 
@@ -211,6 +226,12 @@ namespace FluentAspect.Weaver.Tests.Core.Model
         }
 
         public static EventDefinition WithAspect(this EventDefinition method, NetAspectAspect aspect)
+        {
+            method.CustomAttributes.Add(new CustomAttribute(aspect.TypeDefinition.GetDefaultConstructor()));
+            return method;
+        }
+
+        public static FieldDefinition WithAspect(this FieldDefinition method, NetAspectAspect aspect)
         {
             method.CustomAttributes.Add(new CustomAttribute(aspect.TypeDefinition.GetDefaultConstructor()));
             return method;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using FluentAspect.Weaver.Tests.Core;
+using FluentAspect.Weaver.Tests.Core.Model;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before
