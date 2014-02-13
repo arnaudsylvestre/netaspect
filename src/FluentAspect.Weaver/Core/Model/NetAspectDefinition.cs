@@ -7,9 +7,9 @@ namespace FluentAspect.Weaver.Core.Model
 {
     public class NetAspectDefinition
     {
-        private object _attribute;
+        private Type _attribute;
 
-        public NetAspectDefinition(object attribute)
+        public NetAspectDefinition(Type attribute)
         {
             _attribute = attribute;
         }
@@ -24,7 +24,7 @@ namespace FluentAspect.Weaver.Core.Model
 
         public Type Type
         {
-            get { return _attribute.GetType(); }
+            get { return _attribute; }
         }
 
         public Interceptor Before

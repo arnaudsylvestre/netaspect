@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -10,12 +11,12 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
 {
     public class SelectorConfigurationReader : IConfigurationReader
     {
-       public void ReadConfiguration(Assembly assembly, WeavingConfiguration configuration, ErrorHandler errorHandler)
+        public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration, ErrorHandler errorHandler)
         {
-            foreach (var attribute in assembly.GetNetAspectAttributes())
+            foreach (var attribute in types)
             {
-                   NetAspectDefinition attribute_L = attribute;
-                if (attribute.SelectorMethod != null)
+                   NetAspectDefinition attribute_L = new NetAspectDefinition(attribute);
+                   if (attribute_L.SelectorMethod != null)
                 {
                     var errors = new List<string>();
                     EnsureParameters(attribute_L.SelectorMethod, errors);
@@ -23,10 +24,10 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
                     if (errors.Count > 0)
                         continue;
                     errors = new List<string>();
-                    configuration.AddMethod(m => CheckMethod(m, attribute_L.SelectorMethod), GetAssemblies(attribute, assembly), attribute, errors);
+                    configuration.AddMethod(m => CheckMethod(m, attribute_L.SelectorMethod), GetAssemblies(attribute_L), attribute_L, errors);
                     errorHandler.Errors.AddRange(errors);
                 }
-               if (attribute.SelectorConstructor != null)
+                   if (attribute_L.SelectorConstructor != null)
                 {
                     var errors = new List<string>();
                     EnsureParameters(attribute_L.SelectorMethod, errors);
@@ -34,17 +35,17 @@ namespace FluentAspect.Weaver.Core.Configuration.Selector
                     if (errors.Count > 0)
                         continue;
                     errors = new List<string>();
-                    configuration.AddConstructor(m => CheckMethod(m, attribute_L.SelectorConstructor), GetAssemblies(attribute, assembly), attribute, errors);
+                    configuration.AddConstructor(m => CheckMethod(m, attribute_L.SelectorConstructor), GetAssemblies(attribute_L), attribute_L, errors);
                     errorHandler.Errors.AddRange(errors);
                 }
             }
         }
 
 
-        private IEnumerable<Assembly> GetAssemblies(NetAspectDefinition attribute_P, Assembly assembly_P)
+        private IEnumerable<Assembly> GetAssemblies(NetAspectDefinition attribute_P)
         {
            if (!attribute_P.AssembliesToWeave.Any())
-              return new List<Assembly> { assembly_P };
+               return new List<Assembly> { attribute_P.Type.Assembly };
            return attribute_P.AssembliesToWeave;
         }
 

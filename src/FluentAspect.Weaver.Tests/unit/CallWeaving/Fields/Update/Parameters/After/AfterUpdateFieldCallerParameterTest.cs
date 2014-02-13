@@ -1,4 +1,6 @@
 ﻿using System;
+using FluentAspect.Weaver.Tests.Core;
+using FluentAspect.Weaver.Tests.Core.Model;
 using FluentAspect.Weaver.Tests.acceptance;
 using NUnit.Framework;
 
@@ -7,74 +9,87 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Af
     [TestFixture]
     public class AfterUpdateFieldCallerParameterTest 
     {
-         [Test]
-         public void CheckUpdateFieldWithCallerAndNoDebuggingInformation()
-         {
+        [Test]
+        public void CheckCallEventWithCallerObject()
+        {
+            DoUnit2.Test().ByDefiningAssembly(assembly =>
+            {
+                var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                var netAspectInterceptor = aspect.AddAfterUpdateFieldInterceptor();
+                netAspectInterceptor
+                   .WithParameter<object>("caller");
+                netAspectInterceptor
+                    .WithReturn();
+                var fieldDefinition = myClassToWeave.AddField<int>("field")
+                    .WithAspect(aspect)
+                    ;
+                myClassToWeave.AddMethod("UpdateField")
+                    .WhichAffectField(fieldDefinition, 8)
+                    .WithReturn()
+                    ;
+
+            })
+                     .AndEnsureAssembly(assemblyP =>
+                     {
+
+                         var o = assemblyP.CreateObject("MyClassToWeave");
+                         o.GetType().GetEvent("MyEvent").AddEventHandler(o, new Action(() => { }));
+                         o.CallMethod("UpdateField");
+                         Assert.AreEqual(o, assemblyP.GetStaticFieldValue("MyAspectAttribute", "AfterUpdateFieldcallerField"));
+
+                     })
+                     .AndLaunchTest();
+
+        }
+
+        [Test]
+        public void CheckCallEventWithCallerRealType()
+        {
+            DoUnit2.Test().ByDefiningAssembly(assembly =>
+            {
+                var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+                var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+                var netAspectInterceptor = aspect.AddAfterUpdateFieldInterceptor();
+                netAspectInterceptor
+                   .WithParameter("caller", myClassToWeave);
+                netAspectInterceptor
+                    .WithReturn();
+                var fieldDefinition = myClassToWeave.AddField<int>("field")
+                    .WithAspect(aspect)
+                    ;
+                myClassToWeave.AddMethod("UpdateField")
+                    .WhichAffectField(fieldDefinition, 8)
+                    .WithReturn()
+                    ;
+
+            })
+                     .AndEnsureAssembly(assemblyP =>
+                     {
+
+                         var o = assemblyP.CreateObject("MyClassToWeave");
+                         o.GetType().GetEvent("MyEvent").AddEventHandler(o, new Action(() => { }));
+                         o.CallMethod("UpdateField");
+                         Assert.AreEqual(o, assemblyP.GetStaticFieldValue("MyAspectAttribute", "AfterUpdateFieldcallerField"));
+
+                     })
+                     .AndLaunchTest();
+        }
+
+
+        [Test]
+        public void CheckCallEventWithCallerWithBadlType()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        [Test]
+        public void CheckCallEventWithCallerRealTypeReferenced()
+        {
 
             throw new NotImplementedException();
-         }
-
-         [Test]
-         public void CheckUpdateFieldWithCallerAndDebuggingInformation()
-         {
-             throw new NotImplementedException();
-             //DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
-             //       .ByDefiningAssembly(simpleClassAndWeaver =>
-             //       {
-             //           simpleClassAndWeaver.Aspect.AddAfterFieldAccess()
-             //              .WithParameter<int>("caller");
-             //       })
-             //          .EnsureErrorHandler(e => e.Warnings.Add("The parameter caller in method AfterUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
-             //        .AndEnsureAssembly((assembly, actual) =>
-             //        {
-             //            var caller = actual.CreateCallerObject();
-             //            actual.CallCallerMethod(caller);
-             //            Assert.AreEqual(0, actual.Aspect.AfterUpdateFieldValueCaller);
-             //        })
-             //        .AndLaunchTest();
-         }
-
-
-         [Test]
-         public void CheckUpdateFieldWithCallerAndNoDebuggingInformationAndWrongType()
-         {
-             throw new NotImplementedException();
-             //DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
-             //       .ByDefiningAssembly(simpleClassAndWeaver =>
-             //       {
-             //           simpleClassAndWeaver.Aspect.AddAfterFieldAccess()
-             //              .WithParameter<string>("caller");
-             //       })
-             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter caller in method AfterUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
-             //        .AndEnsureAssembly((assembly, actual) =>
-             //        {
-             //            var caller = actual.CreateCallerObject();
-             //            actual.CallCallerMethod(caller);
-             //            Assert.False(actual.Aspect.AfterUpdateFieldValuePassed);
-             //        })
-             //        .AndLaunchTest();
-         }
-
-
-         [Test]
-         public void CheckUpdateFieldWithCallerAndNoDebuggingInformationAndReferenced()
-         {
-             throw new NotImplementedException();
-             //DoUnit.Test(new ClassAndAspectAndCallAcceptanceTestBuilder())
-             //       .ByDefiningAssembly(simpleClassAndWeaver =>
-             //       {
-             //           simpleClassAndWeaver.Aspect.AddAfterFieldAccess()
-             //              .WithReferencedParameter<int>("caller");
-             //       })
-             //          .EnsureErrorHandler(e => e.Errors.Add("The parameter caller in method AfterUpdateFieldValue of type A.MyAspectAttribute will have the default value because there is no debugging information"))
-             //        .AndEnsureAssembly((assembly, actual) =>
-             //        {
-             //            var caller = actual.CreateCallerObject();
-             //            actual.CallCallerMethod(caller);
-             //            Assert.False(actual.Aspect.AfterUpdateFieldValuePassed);
-             //        })
-             //        .AndLaunchTest();
-         }
+        }
 
     }
 }

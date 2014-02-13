@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
+using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Tests.Core;
 using FluentAspect.Weaver.Tests.Core.Model;
 using FluentAspect.Weaver.Tests.acceptance;
@@ -22,12 +23,8 @@ namespace FluentAspect.Weaver.Tests.unit
           private Action<Assembly> ensure = (assembly) => { };
             private Action<ErrorHandler> errorHandlerProvider = e => { };
 
-            public DoAcceptanceConfiguration()
-            {
-            }
 
-
-          private static string AssemblyDirectory
+           private static string AssemblyDirectory
             {
                 get
                 {
@@ -89,7 +86,19 @@ namespace FluentAspect.Weaver.Tests.unit
                                                                                  typeof(AppDomainIsolatedTestRunner).FullName)
                        as AppDomainIsolatedTestRunner;
             }
-        }
 
+            public static void Run<T>(Action<ErrorHandler> errorHandlerProvider, Action<Assembly> ensureAssembly)
+           {
+               var runner = CreateAppRunner();
+
+               var errorHandler = new ErrorHandler();
+               errorHandlerProvider(errorHandler);
+                var dll = typeof (DoAcceptanceConfiguration).Assembly.GetAssemblyPath();
+                Console.Write(runner.RunFromType(dll, typeof(T).FullName, errorHandler.Errors, errorHandler.Failures, errorHandler.Warnings));
+
+               runner = CreateAppRunner();
+               runner.Ensure(dll, ensureAssembly);
+           }
+        }
     }
 }

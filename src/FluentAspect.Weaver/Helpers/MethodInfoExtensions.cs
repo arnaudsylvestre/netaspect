@@ -11,7 +11,7 @@ namespace FluentAspect.Weaver.Helpers
     {
         public static IEnumerable<NetAspectDefinition> GetNetAspectAttributes(this ICustomAttributeProvider method)
         {
-            return method.GetCustomAttributes(true).Select(a => new NetAspectDefinition(a)).Where(m => m.IsValid);
+            return method.GetCustomAttributes(true).Select(a => new NetAspectDefinition(a.GetType())).Where(m => m.IsValid);
         }
         
     }
