@@ -232,7 +232,6 @@
     <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\OnExceptionMethodParameterNameParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\OnExceptionMethodInstanceParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\OnExceptionMethodMethodParameterTest.cs" />
-    <Compile Include="unit\MethodWeaving\Method\Parameters\After\AfterMethodParametersParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\BeforeMethodParametersParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\OnExceptionMethodParametersParameterTest.cs" />
     <Compile Include="Core\AssemblyExtensions.cs" />
@@ -355,6 +354,9 @@
       <Link>PEVerify.exe</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="unit\MethodWeaving\Method\Parameters\After\Result\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
