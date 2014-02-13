@@ -79,7 +79,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
                 try
                 {
                     ParameterDefinition parameter1 = parameter;
-                    engine.AddPossibleParameter("parameters",
+                    engine.AddPossibleParameter(parameter1.Name,
                                         (p, handler) =>
                                         {
                                             Ensure.OfType(p, handler, parameter1);
