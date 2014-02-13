@@ -1,41 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using FluentAspect.Weaver.Core.Errors;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit
 {
-    public class UnitTest
-    {
-        [Test]
-        public void Check()
-        {
-            DoUnit2.DoAcceptanceConfiguration.Run<ClassToWeave>(e => { }, a =>
-                {
+   [TestFixture]
+   public abstract class NetAspectTest<T>
+   {
+      [Test]
+      public void DoTest()
+      {
+         DoUnit2.DoAcceptanceConfiguration.Run<T>(CreateErrorHandlerProvider(), CreateEnsure());
+      }
 
-                });
-        }
-    }
+      protected virtual Action CreateEnsure()
+      {
+         return () =>
+            {
+            };
+      }
 
-    public class ClassToWeave
-    {
-        [MyAspect]
-        public void Weaved()
-        {
-            
-        }
-    }
+      protected virtual Action<ErrorHandler> CreateErrorHandlerProvider()
+      {
+         return e => { };
+      }
+   }
 
-    public class MyAspect : Attribute
-    {
-        public bool IsNetAspectAttribute = true;
-
-        public void After(object instance)
-        {
-            
-        }
-
-
-    }
+   
+    
 }

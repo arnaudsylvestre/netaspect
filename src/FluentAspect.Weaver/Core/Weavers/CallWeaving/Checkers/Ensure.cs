@@ -51,7 +51,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
 
         public static void ResultOfType(ParameterInfo info, ErrorHandler handler, MethodDefinition method)
         {
-            if (info.ParameterType.FullName.Replace("&", "") != method.ReturnType.FullName)
+           if (info.ParameterType.FullName.Replace("&", "") != method.ReturnType.FullName.Replace("/", "+"))
             {
                 handler.Errors.Add(string.Format("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because the return type of the method {5} in the type {6}",
                     info.Name, info.Member.Name, info.Member.DeclaringType.FullName, info.ParameterType.FullName,
@@ -61,11 +61,11 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
 
         public static void OfType(ParameterInfo info, ErrorHandler handler, params string[] types)
         {
-            if (!(from t in types where info.ParameterType.FullName.Replace("&", "") == t select t).Any())
+           if (!(from t in types where info.ParameterType.FullName.Replace("&", "") == t.Replace("/", "+") select t).Any())
             {
                 handler.Errors.Add(string.Format("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4}",
                     info.Name, info.Member.Name, info.Member.DeclaringType.FullName, info.ParameterType.FullName,
-                    string.Join(" or ", types)));
+                    string.Join(" or ", types.Select(type => type.Replace("/", "+")).ToArray())));
             }
         }
 
@@ -80,7 +80,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
 
             if (info.ParameterType == typeof(object))
                 return;
-            if (info.ParameterType.FullName.Replace("&", "") != parameter.ParameterType.FullName.Replace("&", ""))
+            if (info.ParameterType.FullName.Replace("&", "") != parameter.ParameterType.FullName.Replace("&", "").Replace("/", "+"))
             {
                 handler.Errors.Add(string.Format("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because of the type of this parameter in the method {5} of the type {6}",
                     info.Name, info.Member.Name, info.Member.DeclaringType.FullName, info.ParameterType.FullName,

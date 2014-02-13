@@ -18,7 +18,7 @@ namespace FluentAspect.Weaver.Core.Model.Adapters
 
         public string FullName
         {
-            get { return type.FullName; }
+           get { return type.FullName.Replace("/", "+"); }
         }
     }
 }

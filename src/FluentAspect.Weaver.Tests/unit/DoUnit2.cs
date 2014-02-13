@@ -87,7 +87,7 @@ namespace FluentAspect.Weaver.Tests.unit
                        as AppDomainIsolatedTestRunner;
             }
 
-            public static void Run<T>(Action<ErrorHandler> errorHandlerProvider, Action<Assembly> ensureAssembly)
+            public static void Run<T>(Action<ErrorHandler> errorHandlerProvider, Action ensureAssembly)
            {
                var runner = CreateAppRunner();
 
@@ -97,7 +97,7 @@ namespace FluentAspect.Weaver.Tests.unit
                 Console.Write(runner.RunFromType(dll, typeof(T).FullName, errorHandler.Errors, errorHandler.Failures, errorHandler.Warnings));
 
                runner = CreateAppRunner();
-               runner.Ensure(dll, ensureAssembly);
+               runner.Ensure(ensureAssembly);
            }
         }
     }

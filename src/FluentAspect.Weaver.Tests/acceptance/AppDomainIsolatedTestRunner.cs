@@ -38,8 +38,6 @@ namespace FluentAspect.Weaver.Tests.acceptance
         {
             var assembly = Assembly.LoadFrom(dll_L);
             var type = assembly.GetTypes().First(t => t.FullName == typeName);
-            PEVerify verify_L = new PEVerify();
-            verify_L.Run(dll_L);
             WeaverCore weaver = WeaverCoreFactory.Create();
             ErrorHandler errorHandler = new ErrorHandler();
             weaver.Weave(new[]{type}, errorHandler, (a) => a);
@@ -51,9 +49,14 @@ namespace FluentAspect.Weaver.Tests.acceptance
             return builder.ToString();
         }
 
-        public void Ensure(string dll_L,  Action<Assembly> ensure)
+        public void Ensure(string dll_L, Action<Assembly> ensure)
         {
            ensure(Assembly.LoadFrom(dll_L));
+        }
+
+        public void Ensure(Action ensure)
+        {
+           ensure();
         }
     }
 }

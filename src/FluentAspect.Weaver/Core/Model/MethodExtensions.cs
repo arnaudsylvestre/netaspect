@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Model.Adapters;
@@ -10,10 +11,18 @@ namespace FluentAspect.Weaver.Core.Model
     {
         public static bool AreEqual(this IMethod m, MethodBase info)
         {
-            return m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName &&
+           var declaringType_L = m.DeclaringType;
+           var type_L = info.DeclaringType;
+           return m.Name == info.Name && declaringType_L.AreEqual(type_L) &&
                    ParametersEqual(m, info);
         }
-        public static bool AreEqual(this EventReference m, EventInfo info)
+
+       public static bool AreEqual(this IType declaringType_L, Type type_L)
+       {
+          return declaringType_L.FullName == type_L.FullName;
+       }
+
+       public static bool AreEqual(this EventReference m, EventInfo info)
         {
             return m.Name == info.Name && m.DeclaringType.FullName == info.DeclaringType.FullName;
         }
