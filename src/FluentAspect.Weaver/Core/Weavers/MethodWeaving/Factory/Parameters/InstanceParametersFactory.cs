@@ -54,7 +54,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
                                         {
                                             Ensure.ResultOfType(p, handler, methodDefinition);
                                         }, (info, instructions) =>
-                                            instructions.Add(Instruction.Create(OpCodes.Ldloc, result))
+                                            instructions.Add(Instruction.Create(info.ParameterType.IsByRef ? OpCodes.Ldloca : OpCodes.Ldloc, result))
 
                                             );
 

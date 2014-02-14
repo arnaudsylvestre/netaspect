@@ -49,8 +49,19 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
 
 
 
+        public static void NotOut(ParameterInfo parameterInfo, ErrorHandler errorHandler)
+        {
+            if (parameterInfo.IsOut)
+            {
+                errorHandler.Errors.Add(string.Format("impossible to out the parameter '{0}' in the method {1} of the type '{2}'", parameterInfo.Name, parameterInfo.Member.Name, parameterInfo.Member.DeclaringType.FullName));
+            }
+        }
+
         public static void ResultOfType(ParameterInfo info, ErrorHandler handler, MethodDefinition method)
         {
+            NotOut(info, handler);
+            if (info.ParameterType == typeof(object))
+                return;
            if (info.ParameterType.FullName.Replace("&", "") != method.ReturnType.FullName.Replace("/", "+"))
             {
                 handler.Errors.Add(string.Format("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because the return type of the method {5} in the type {6}",

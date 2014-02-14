@@ -5,16 +5,11 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.R
 {
    public class AfterMethodResultParameterWithRealTypeOutTest : NetAspectTest<AfterMethodResultParameterWithRealTypeOutTest.ClassToWeave>
    {
-       protected override Action CreateEnsure()
-       {
-           return () =>
-           {
-               var classToWeave_L = new ClassToWeave();
-               var res = classToWeave_L.Weaved();
-               Assert.AreEqual("MyNewValue", res);
-           };
-       }
 
+       protected override Action<FluentAspect.Weaver.Core.Errors.ErrorHandler> CreateErrorHandlerProvider()
+       {
+           return errorHandler => errorHandler.Errors.Add(string.Format("impossible to out the parameter 'result' in the method After of the type '{0}'", typeof(MyAspect).FullName));
+       }
       public class ClassToWeave
       {
          [MyAspect]
@@ -28,9 +23,9 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.R
       {
          public bool NetAspectAttribute = true;
 
-         public void After(out string instance)
+         public void After(out string result)
          {
-            instance = "MyNewValue";
+            result = "MyNewValue";
          }
       }
    }

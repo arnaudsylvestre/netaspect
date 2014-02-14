@@ -12,7 +12,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.R
                 var classToWeave_L = new ClassToWeave();
                 var res = classToWeave_L.Weaved();
                 Assert.AreEqual("NeverUsedValue", res);
-                Assert.AreEqual("NeverUsedValue", MyAspect.Instance);
+                Assert.AreEqual("NeverUsedValue", MyAspect.Result);
             };
         }
 
@@ -29,12 +29,12 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.R
         {
             public bool NetAspectAttribute = true;
 
-            public static string Instance;
+            public static string Result;
 
-            public void After(string instance)
+            public void After(string result)
             {
-                Instance = instance;
-                instance = "MyNewValue";
+                Result = result;
+                result = "MyNewValue";
             }
         }
     
