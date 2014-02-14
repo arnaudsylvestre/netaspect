@@ -31,7 +31,15 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
         {
             foreach (var parameterInfo in parameters)
             {
-                possibleParameters[parameterInfo.Name.ToLower()].Checker(parameterInfo, errorHandler);
+               var key_L = parameterInfo.Name.ToLower();
+               if (possibleParameters.ContainsKey(key_L))
+               {
+                  possibleParameters[key_L].Checker(parameterInfo, errorHandler);
+               }
+               else
+               {
+                  errorHandler.Errors.Add(string.Format("The parameter '{0}' is unknown", parameterInfo.Name));
+               }
             }
         }
 

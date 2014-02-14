@@ -47,7 +47,9 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
          this.variables = methodToWeave.CreateVariables();
           this.variables.handleResult = result;
 
-          beforeParametersEngine = ParametersEngineFactory.CreateForBeforeMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, errorHandler);
+         if (methodToWeave.Interceptors.HasBefore())
+            beforeParametersEngine = ParametersEngineFactory.CreateForBeforeMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, errorHandler);
+         if (methodToWeave.Interceptors.HasAfter())
           afterParametersEngine = ParametersEngineFactory.CreateForAfterMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, this.variables.handleResult, errorHandler);
       }
 
