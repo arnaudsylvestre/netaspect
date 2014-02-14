@@ -54,8 +54,8 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
            if (info.ParameterType.FullName.Replace("&", "") != method.ReturnType.FullName.Replace("/", "+"))
             {
                 handler.Errors.Add(string.Format("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because the return type of the method {5} in the type {6}",
-                    info.Name, info.Member.Name, info.Member.DeclaringType.FullName, info.ParameterType.FullName,
-                    method.ReturnType.FullName, method.Name, method.DeclaringType.FullName));
+                    info.Name, info.Member.Name, info.Member.DeclaringType.FullName.Replace("/", "+"), info.ParameterType.FullName,
+                    method.ReturnType.FullName, method.Name, method.DeclaringType.FullName.Replace("/", "+")));
             }
         }
 
@@ -83,8 +83,8 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
             if (info.ParameterType.FullName.Replace("&", "") != parameter.ParameterType.FullName.Replace("&", "").Replace("/", "+"))
             {
                 handler.Errors.Add(string.Format("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because of the type of this parameter in the method {5} of the type {6}",
-                    info.Name, info.Member.Name, info.Member.DeclaringType.FullName, info.ParameterType.FullName,
-                    parameter.ParameterType.FullName, ((IMemberDefinition)parameter.Method).Name, ((IMemberDefinition)parameter.Method).DeclaringType.FullName));
+                    info.Name, info.Member.Name, info.Member.DeclaringType.FullName.Replace("/", "+"), info.ParameterType.FullName,
+                    parameter.ParameterType.FullName.Replace("/", "+"), ((IMemberDefinition)parameter.Method).Name, ((IMemberDefinition)parameter.Method).DeclaringType.FullName.Replace("/", "+")));
             }
         }
     }

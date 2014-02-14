@@ -8,7 +8,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
 
       protected override Action<FluentAspect.Weaver.Core.Errors.ErrorHandler> CreateErrorHandlerProvider()
       {
-         return errorHandler => errorHandler.Errors.Add(string.Format("the parameters parameter in the method After of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}", typeof(MyAspect).FullName, typeof(object[])));
+         return errorHandler => errorHandler.Errors.Add(string.Format("Impossible to ref a generic parameter"));
       }
 
       public class ClassToWeave

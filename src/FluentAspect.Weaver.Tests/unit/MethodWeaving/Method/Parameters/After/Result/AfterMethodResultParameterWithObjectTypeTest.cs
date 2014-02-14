@@ -31,9 +31,9 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.R
 
          public static object Result;
 
-         public void After(object instance)
+         public void After(object result)
          {
-            Result = instance;
+            Result = result;
          }
       }
    }

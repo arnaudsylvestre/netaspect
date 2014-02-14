@@ -11,7 +11,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
             {
                Assert.AreEqual(0, MyAspect.I);
                var classToWeave_L = new ClassToWeave();
-               Assert.AreEqual(3, classToWeave_L.Weaved(12));
+               Assert.AreEqual(12, classToWeave_L.Weaved(12));
                Assert.AreEqual(12, MyAspect.I);
             };
       }

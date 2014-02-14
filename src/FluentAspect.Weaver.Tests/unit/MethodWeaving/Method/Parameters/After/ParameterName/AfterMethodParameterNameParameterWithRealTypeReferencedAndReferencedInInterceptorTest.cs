@@ -12,7 +12,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
                Assert.AreEqual(0, MyAspect.I);
                var classToWeave_L = new ClassToWeave();
                int value = 12;
-               Assert.AreEqual(5, classToWeave_L.Weaved(ref value));
+               Assert.AreEqual(8, classToWeave_L.Weaved(ref value));
                Assert.AreEqual(8, MyAspect.I);
                Assert.AreEqual(5, value);
             };
