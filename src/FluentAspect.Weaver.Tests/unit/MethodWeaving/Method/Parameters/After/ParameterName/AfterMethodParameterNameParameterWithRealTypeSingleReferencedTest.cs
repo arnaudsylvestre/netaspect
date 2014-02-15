@@ -3,23 +3,24 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.ParameterName
 {
-    public class AfterMethodParameterNameParameterWithRealTypeSingleTest : NetAspectTest<AfterMethodParameterNameParameterWithRealTypeSingleTest.ClassToWeave>
+    public class AfterMethodParameterNameParameterWithRealTypeSingleReferencedTest : NetAspectTest<AfterMethodParameterNameParameterWithRealTypeSingleReferencedTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
             return () =>
-            {
-                Assert.AreEqual(0, MyAspect.I);
-                var classToWeave_L = new ClassToWeave();
-                classToWeave_L.Weaved(3F);
-                Assert.AreEqual(3F, MyAspect.I);
-            };
+                {
+                    Assert.AreEqual(0, MyAspect.I);
+                    var classToWeave_L = new ClassToWeave();
+                    float f = 3F;
+                    classToWeave_L.Weaved(ref f);
+                    Assert.AreEqual(3F, MyAspect.I);
+                };
         }
 
         public class ClassToWeave
         {
             [MyAspect]
-            public void Weaved(Single i)
+            public void Weaved(ref Single i)
             {
 
             }
