@@ -59,6 +59,12 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
 
         public static void ResultOfType(ParameterInfo info, ErrorHandler handler, MethodDefinition method)
         {
+            if (method.ReturnType == method.Module.TypeSystem.Void)
+            {
+                handler.Errors.Add(string.Format("Impossible to use the {0} parameter in the method {1} of the type '{2}' because the return type of the method {3} in the type {4} is void",
+                    info.Name, info.Member.Name, info.Member.DeclaringType.FullName.Replace("/", "+"), method.Name, method.DeclaringType.FullName.Replace("/", "+")));
+                return;
+            }
             NotOut(info, handler);
             if (info.ParameterType == typeof(object))
                 return;
