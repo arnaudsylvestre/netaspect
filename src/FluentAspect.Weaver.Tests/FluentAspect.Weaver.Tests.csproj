@@ -234,6 +234,7 @@
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeByteReferencedTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeByteReferencedInInterceptorTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeByteReferencedInBothTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\Copie de AfterMethodParameterNameParameterWithRealTypeDoubleTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\Parameters\AfterMethodParametersParameterWithBadTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\Parameters\AfterMethodParametersParameterWithRealTypeOutTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\Parameters\AfterMethodParametersParameterWithRealTypeReferencedTest.cs" />
