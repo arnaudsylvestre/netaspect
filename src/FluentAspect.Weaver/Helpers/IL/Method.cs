@@ -85,6 +85,7 @@ namespace FluentAspect.Weaver.Helpers.IL
               TryEnd = tryEnd_L,
               HandlerStart = handlerStart_L,
               HandlerEnd = handlerEnd_L,
+              CatchType = MethodDefinition.Module.Import(typeof(Exception))
            });
         }
 

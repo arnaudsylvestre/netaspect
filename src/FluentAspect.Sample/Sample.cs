@@ -50,19 +50,16 @@ namespace FluentAspect.Sample
 
     class TryFinallySample
     {
-        public void Hello()
+        public string Hello()
         {
             try
             {
-                int a = 2;
+                throw new Exception();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                int a = 3;
-            }
-            finally
-            {
-                int a = 4;
+                string a = e.Message;
+                throw;
             }
         }
     }

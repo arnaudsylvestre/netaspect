@@ -13,6 +13,7 @@ using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
+using FluentAspect.Weaver.Helpers;
 
 namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 {
@@ -92,7 +93,11 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 
       public void InsertOnException(Collection<Instruction> onExceptionInstructions)
       {
-         Call(onExceptionInstructions, configuration_P => configuration_P.OnException, onExceptionParametersEngine);
+          var exception = methodToWeave.Method.MethodDefinition.CreateVariable(typeof (Exception));
+          onExceptionInstructions.Add(Instruction.Create(OpCodes.Stloc, exception));
+          Call(onExceptionInstructions, configuration_P => configuration_P.OnException, onExceptionParametersEngine);
+          onExceptionInstructions.Add(Instruction.Create(OpCodes.Rethrow));
+          onExceptionInstructions.Add(Instruction.Create(OpCodes.Nop));
       }
 
       public void InsertOnFinally(Collection<Instruction> onFinallyInstructions)
@@ -167,24 +172,33 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
             var methodInstructions = new Collection<Instruction>(method.Method.MethodDefinition.Body.Instructions);
             var end = FixReturns(method.Method.MethodDefinition, result, methodInstructions, beforeAfter);
             var allInstructions = new List<Instruction>();
+            var methodEnd = Instruction.Create(OpCodes.Ret);
             allInstructions.AddRange(initInstructions);
             allInstructions.AddRange(beforeInstructions);
             allInstructions.AddRange(methodInstructions);
             allInstructions.Add(beforeAfter);
             allInstructions.AddRange(afterInstructions);
-            allInstructions.AddRange(end);
+            var lastTry = afterInstructions.Last();
+            if (end.Count == 0)
+            {
+
+                var gotoEnd = Instruction.Create(OpCodes.Leave, end.First());
+                allInstructions.Add(gotoEnd);
+                lastTry = gotoEnd;
+            }
 
 
             
             allInstructions.AddRange(onExceptionInstructions);
             //allInstructions.AddRange(onFinallyInstructions);
+            allInstructions.AddRange(end);
 
            method.Method.MethodDefinition.Body.Instructions.Clear();
            method.Method.MethodDefinition.Body.Instructions.AddRange(allInstructions);
 
 
            if (onExceptionInstructions.Any())
-              method.Method.AddTryCatch(methodInstructions.First(), end.Last(), onExceptionInstructions.First(), onExceptionInstructions.Last());
+               method.Method.AddTryCatch(methodInstructions.First(), lastTry, onExceptionInstructions.First(), onExceptionInstructions.Last());
            // if (onFinallyInstructions.Any())
            //method.Method.AddTryFinally(first, last, onFinallyInstructions.First(), onFinallyInstructions.Last());
 
@@ -196,27 +210,32 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
             List<Instruction> end = new List<Instruction>();
             if (method.ReturnType == method.Module.TypeSystem.Void)
             {
-                end.Add(Instruction.Create(OpCodes.Ret));
 
                 for (var index = 0; index < instructions.Count; index++)
                 {
                     var instruction = instructions[index];
                     if (instruction.OpCode == OpCodes.Ret)
                     {
+                        if (end.Count == 0)
+                            end.Add(Instruction.Create(OpCodes.Ret));
+
                         instructions[index] = Instruction.Create(OpCodes.Leave, beforeAfter);
                     }
                 }
             }
             else
             {
-                end.Add(Instruction.Create(OpCodes.Ldloc, handleResultP_P));
-                        end.Add(Instruction.Create(OpCodes.Ret));
 
                 for (var index = 0; index < instructions.Count; index++)
                 {
                     var instruction = instructions[index];
                     if (instruction.OpCode == OpCodes.Ret)
                     {
+                        if (end.Count == 0)
+                        {
+                            end.Add(Instruction.Create(OpCodes.Ldloc, handleResultP_P));
+                            end.Add(Instruction.Create(OpCodes.Ret));
+                        }
                         instructions[index] = Instruction.Create(OpCodes.Leave, beforeAfter);
                         instructions.Insert(index, Instruction.Create(OpCodes.Stloc, handleResultP_P));
                         index++;
