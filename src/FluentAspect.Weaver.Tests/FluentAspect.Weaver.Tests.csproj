@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2158446B-9E58-4E9D-BDC4-27A5A90365D1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -25,7 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -219,6 +219,9 @@
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeSingleReferencedInBothTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeSingleReferencedInInterceptorTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeSingleReferencedTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeStructReferencedInBothTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeStructReferencedInInterceptorTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeStructReferencedTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeReferencedInInterceptorTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithBadTypeTest.cs" />
@@ -229,6 +232,15 @@
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeReferencedAndReferencedInInterceptorTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeByteTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeShortTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeUInt32ReferencedInBothTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeUInt32ReferencedInInterceptorTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeUInt32ReferencedTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeUInt64ReferencedInBothTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeUInt64ReferencedInInterceptorTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeUInt64ReferencedTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeUshortReferencedInBothTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeUshortReferencedInInterceptorTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeUshortReferencedTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeUshortTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeSByteTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\ParameterName\AfterMethodParameterNameParameterWithRealTypeUInt32Test.cs" />
@@ -274,6 +286,10 @@
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Method\BeforeMethodMethodInfoParameterWithRealTypeOutTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Method\BeforeMethodMethodInfoParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Method\BeforeMethodMethodInfoParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\Before\ParameterName\BeforeMethodParameterNameParameterWithRealTypeByteReferencedInBothTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\Before\ParameterName\BeforeMethodParameterNameParameterWithRealTypeByteReferencedInInterceptorTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\Before\ParameterName\BeforeMethodParameterNameParameterWithRealTypeByteReferencedTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\Before\ParameterName\BeforeMethodParameterNameParameterWithRealTypeByteTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Parameters\BeforeMethodParametersParameterWithBadTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Parameters\BeforeMethodParametersParameterWithRealTypeOutTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Parameters\BeforeMethodParametersParameterWithRealTypeReferencedTest.cs" />
@@ -307,6 +323,42 @@
     <Compile Include="unit\CallWeaving\Methods\Parameters\OnException\OnExceptionCallMethodLineNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\Parameters\OnException\OnExceptionCallMethodParameterInCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\Parameters\OnException\OnExceptionCallMethodExceptionParameterTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Instance\OnExceptionMethodInstanceParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Instance\OnExceptionMethodInstanceParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Instance\OnExceptionMethodInstanceParameterWithRealTypeOutTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Instance\OnExceptionMethodInstanceParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Instance\OnExceptionMethodInstanceParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Instance\OnExceptionMethodInstanceParameterWithReferencedObjectTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Method\OnExceptionMethodMethodInfoParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Method\OnExceptionMethodMethodInfoParameterWithRealTypeOutTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Method\OnExceptionMethodMethodInfoParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Method\OnExceptionMethodMethodInfoParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\ParameterName\OnExceptionMethodParameterNameParameterWithRealTypeByteReferencedInBothTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\ParameterName\OnExceptionMethodParameterNameParameterWithRealTypeByteReferencedInInterceptorTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\ParameterName\OnExceptionMethodParameterNameParameterWithRealTypeByteReferencedTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\ParameterName\OnExceptionMethodParameterNameParameterWithRealTypeByteTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Parameters\OnExceptionMethodParametersParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Parameters\OnExceptionMethodParametersParameterWithRealTypeOutTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Parameters\OnExceptionMethodParametersParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnException\Parameters\OnExceptionMethodParametersParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Instance\OnFinallyMethodInstanceParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Instance\OnFinallyMethodInstanceParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Instance\OnFinallyMethodInstanceParameterWithRealTypeOutTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Instance\OnFinallyMethodInstanceParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Instance\OnFinallyMethodInstanceParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Instance\OnFinallyMethodInstanceParameterWithReferencedObjectTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Method\OnFinallyMethodMethodInfoParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Method\OnFinallyMethodMethodInfoParameterWithRealTypeOutTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Method\OnFinallyMethodMethodInfoParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Method\OnFinallyMethodMethodInfoParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\ParameterName\OnFinallyMethodParameterNameParameterWithRealTypeByteReferencedInBothTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\ParameterName\OnFinallyMethodParameterNameParameterWithRealTypeByteReferencedInInterceptorTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\ParameterName\OnFinallyMethodParameterNameParameterWithRealTypeByteReferencedTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\ParameterName\OnFinallyMethodParameterNameParameterWithRealTypeByteTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Parameters\OnFinallyMethodParametersParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Parameters\OnFinallyMethodParametersParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Parameters\OnFinallyMethodParametersParameterWithRealTypeOutTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Parameters\OnFinallyMethodParametersParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\ReturnWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\StaticMethodWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\VisibilityMethodWeavingTest.cs" />
@@ -398,10 +450,6 @@
       <Link>PEVerify.exe</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="unit\MethodWeaving\Method\Parameters\OnException\" />
-    <Folder Include="unit\MethodWeaving\Method\Parameters\OnFinally\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -37,6 +37,4 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
          }
       }
    }
-
-   
 }

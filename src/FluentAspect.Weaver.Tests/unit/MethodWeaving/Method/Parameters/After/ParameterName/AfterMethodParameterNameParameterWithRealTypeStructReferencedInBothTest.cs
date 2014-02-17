@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.ParameterName
 {
-   public class AfterMethodParameterNameParameterWithRealTypeStructTest : NetAspectTest<AfterMethodParameterNameParameterWithRealTypeStructTest.ClassToWeave>
+   public class AfterMethodParameterNameParameterWithRealTypeStructReferencedInBothTest : NetAspectTest<AfterMethodParameterNameParameterWithRealTypeStructReferencedInBothTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
       {
@@ -11,8 +11,10 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
             {
                Assert.AreEqual(0, MyAspect.I.A);
                var classToWeave_L = new ClassToWeave();
-               classToWeave_L.Weaved(new TestStruct { A = 12});
+               var testStruct_L = new TestStruct {A = 12};
+               classToWeave_L.Weaved(ref testStruct_L);
                Assert.AreEqual(12, MyAspect.I.A);
+               Assert.AreEqual(55, testStruct_L.A);
             };
       }
 
@@ -24,7 +26,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
       public class ClassToWeave
       {
          [MyAspect]
-         public void Weaved(TestStruct i)
+         public void Weaved(ref TestStruct i)
          {
 
          }
@@ -36,9 +38,13 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
 
          public static TestStruct I;
 
-         public void After(TestStruct i)
+         public void After(ref TestStruct i)
          {
             I = i;
+            i = new TestStruct()
+               {
+                  A = 55
+               };
          }
       }
    }

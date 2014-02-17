@@ -1,9 +1,9 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.ParameterName
+namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnException.ParameterName
 {
-   public class AfterMethodParameterNameParameterWithRealTypeUInt32Test : NetAspectTest<AfterMethodParameterNameParameterWithRealTypeUInt32Test.ClassToWeave>
+   public class OnExceptionMethodParameterNameParameterWithRealTypeByteTest : NetAspectTest<OnExceptionMethodParameterNameParameterWithRealTypeByteTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
       {
@@ -19,7 +19,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
       public class ClassToWeave
       {
          [MyAspect]
-         public void Weaved(UInt32 i)
+         public void Weaved(byte i)
          {
 
          }
@@ -29,12 +29,14 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
       {
          public bool NetAspectAttribute = true;
 
-         public static UInt32 I;
+         public static int I;
 
-         public void After(UInt32 i)
+         public void OnException(byte i)
          {
             I = i;
          }
       }
    }
+
+   
 }

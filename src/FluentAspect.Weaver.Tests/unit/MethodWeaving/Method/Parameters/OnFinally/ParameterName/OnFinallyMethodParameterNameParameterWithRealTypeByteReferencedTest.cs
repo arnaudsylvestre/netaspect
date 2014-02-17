@@ -1,9 +1,9 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.ParameterName
+namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinally.ParameterName
 {
-   public class AfterMethodParameterNameParameterWithRealTypeUInt32Test : NetAspectTest<AfterMethodParameterNameParameterWithRealTypeUInt32Test.ClassToWeave>
+   public class OnFinallyMethodParameterNameParameterWithRealTypeByteReferencedTest : NetAspectTest<OnFinallyMethodParameterNameParameterWithRealTypeByteReferencedTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
       {
@@ -11,7 +11,8 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
             {
                Assert.AreEqual(0, MyAspect.I);
                var classToWeave_L = new ClassToWeave();
-               classToWeave_L.Weaved(12);
+                byte i = 12;
+                classToWeave_L.Weaved(ref i);
                Assert.AreEqual(12, MyAspect.I);
             };
       }
@@ -19,7 +20,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
       public class ClassToWeave
       {
          [MyAspect]
-         public void Weaved(UInt32 i)
+         public void Weaved(ref byte i)
          {
 
          }
@@ -29,12 +30,14 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
       {
          public bool NetAspectAttribute = true;
 
-         public static UInt32 I;
+         public static int I;
 
-         public void After(UInt32 i)
+         public void OnFinally(byte i)
          {
             I = i;
          }
       }
    }
+
+   
 }

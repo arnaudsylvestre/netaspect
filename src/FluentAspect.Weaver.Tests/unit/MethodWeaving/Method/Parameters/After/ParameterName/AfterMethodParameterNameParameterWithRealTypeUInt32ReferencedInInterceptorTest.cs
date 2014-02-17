@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.ParameterName
 {
-   public class AfterMethodParameterNameParameterWithRealTypeUInt32Test : NetAspectTest<AfterMethodParameterNameParameterWithRealTypeUInt32Test.ClassToWeave>
+   public class AfterMethodParameterNameParameterWithRealTypeUInt32ReferencedInInterceptorTest : NetAspectTest<AfterMethodParameterNameParameterWithRealTypeUInt32ReferencedInInterceptorTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
       {
@@ -31,7 +31,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
 
          public static UInt32 I;
 
-         public void After(UInt32 i)
+         public void After(ref UInt32 i)
          {
             I = i;
          }

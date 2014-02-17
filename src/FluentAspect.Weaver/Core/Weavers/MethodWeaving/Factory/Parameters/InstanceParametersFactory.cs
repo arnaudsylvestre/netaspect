@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
@@ -94,31 +95,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
                                                 else if (!p.ParameterType.IsByRef && parameter.ParameterType.IsByReference)
                                                 {
                                                     _instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter));
-                                                    if (p.ParameterType == typeof(int))
-                                                        _instructions.Add(Instruction.Create(OpCodes.Ldind_I4));
-                                                    else
-                                                        if (p.ParameterType == typeof(bool))
-                                                        {
-
-                                                            _instructions.Add(Instruction.Create(OpCodes.Ldind_I1));
-                                                        }
-                                                        else
-                                                            if (p.ParameterType == typeof(float))
-                                                            {
-
-                                                                _instructions.Add(Instruction.Create(OpCodes.Ldind_R4));
-                                                            }
-                                                            else
-                                                                if (p.ParameterType == typeof(double))
-                                                                {
-
-                                                                    _instructions.Add(Instruction.Create(OpCodes.Ldind_R8));
-                                                                }
-                                                                else
-                                                                {
-                                                                    _instructions.Add(Instruction.Create(OpCodes.Ldind_Ref));
-                                                                }
-
+                                                    _instructions.Add(Instruction.Create(OpCodes.Ldobj, moduleDefinition.Import(p.ParameterType)));
                                                 }
                                                 else
                                                 {
