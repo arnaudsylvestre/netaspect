@@ -7,7 +7,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinal
 
       protected override Action<FluentAspect.Weaver.Core.Errors.ErrorHandler> CreateErrorHandlerProvider()
       {
-         return errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'method' in the method OnFinally of the type '{0}'", typeof(MyAspect).FullName));
+          return errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'parameters' in the method OnFinally of the type '{0}'", typeof(MyAspect).FullName));
       }
 
       public class ClassToWeave
@@ -23,9 +23,9 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinal
       {
          public bool NetAspectAttribute = true;
 
-         public void OnFinally(out object[] method)
+         public void OnFinally(out object[] parameters)
          {
-            method = null;
+             parameters = null;
          }
       }
    }

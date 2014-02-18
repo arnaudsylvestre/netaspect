@@ -9,11 +9,6 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
 {
     public static class MethodToWeaveExtensions
     {
-        public static bool HasInterceptorsOnException(this MethodToWeave methodToWeave)
-        {
-            return methodToWeave.Interceptors.Any(interceptorType => interceptorType.OnException.Method != null);
-        }
-
         public static bool Needs(this MethodToWeave methodToWeave, string variableName)
         {
             foreach (MethodWeavingConfiguration weavingConfiguration_L in methodToWeave.Interceptors)
@@ -22,6 +17,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
                 parameters.AddRange(weavingConfiguration_L.Before.GetParameters());
                 parameters.AddRange(weavingConfiguration_L.After.GetParameters());
                 parameters.AddRange(weavingConfiguration_L.OnException.GetParameters());
+                parameters.AddRange(weavingConfiguration_L.OnFinally.GetParameters());
                 if ((from p in parameters where p.Name == variableName select p.Name).Any())
                     return true;
             }

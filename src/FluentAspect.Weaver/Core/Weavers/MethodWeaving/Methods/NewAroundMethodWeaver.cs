@@ -59,7 +59,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
          if (methodToWeave.Interceptors.HasOnException())
             onExceptionParametersEngine = ParametersEngineFactory.CreateForOnExceptionMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, errorHandler);
          if (methodToWeave.Interceptors.HasOnFinally())
-             onExceptionParametersEngine = ParametersEngineFactory.CreateForOnFinallyMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, errorHandler);
+             onFinallyParametersEngine = ParametersEngineFactory.CreateForOnFinallyMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, errorHandler);
       }
 
       public void InsertBefore(Collection<Instruction> beforeInstructions)
@@ -168,7 +168,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
             var befores = from b in method.Interceptors where b.Before.Method != null select b;
             var afters = from b in method.Interceptors where b.After.Method != null select b;
             var onExceptions = from b in method.Interceptors where b.OnException.Method != null select b;
-            if (!befores.Any() && !afters.Any() && !onExceptions.Any())
+            var onFinallys = from b in method.Interceptors where b.OnFinally.Method != null select b;
+            if (!befores.Any() && !afters.Any() && !onExceptions.Any() && !onFinallys.Any())
             {
                 return;
             }
@@ -221,7 +222,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
            }
 
            if (onFinallyInstructions.Any())
-               method.Method.AddTryFinally(methodInstructions.First(), onFinallyInstructions.First(), onFinallyInstructions.First(), null);
+               method.Method.AddTryFinally(methodInstructions.First(), onFinallyInstructions.First(), onFinallyInstructions.First(), end.Count > 0 ? end.First() : null);
 
         }
 

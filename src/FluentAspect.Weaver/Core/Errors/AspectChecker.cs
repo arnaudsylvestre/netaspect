@@ -30,6 +30,7 @@ namespace FluentAspect.Weaver.Core.Errors
           if (netAspectAttributes.After.Method == null &&
                    netAspectAttributes.Before.Method == null &&
                    netAspectAttributes.OnException.Method == null &&
+                   netAspectAttributes.OnFinally.Method == null &&
               netAspectAttributes.BeforeInterceptor.Method == null &&
                    netAspectAttributes.AfterInterceptor.Method == null)
           {

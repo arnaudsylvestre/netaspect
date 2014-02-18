@@ -19,7 +19,12 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method
       [Test]
       public void CheckFinallyAndExceptionAndAfter()
       {
-         throw new NotImplementedException("Tester le OnException et OnFinally et After en même temps sans lever d'exception");
+          throw new NotImplementedException("Tester le OnException et OnFinally et After en même temps sans lever d'exception");
+      }
+      [Test]
+      public void CheckFinallyWhichThrowException()
+      {
+          throw new NotImplementedException("Tester le OnFinally avec une exception et After en même temps sans lever d'exception");
       }
    }
 }

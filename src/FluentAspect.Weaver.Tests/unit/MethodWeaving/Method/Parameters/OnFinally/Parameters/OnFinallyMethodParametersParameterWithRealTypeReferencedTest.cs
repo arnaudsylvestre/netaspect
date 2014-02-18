@@ -23,11 +23,11 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinal
       {
          public bool NetAspectAttribute = true;
 
-         public static object[] Method;
+         public static object[] Parameters;
 
-         public void OnFinally(ref object[] method)
+         public void OnFinally(ref object[] parameters)
          {
-            Method = method;
+             Parameters = parameters;
          }
       }
    }
