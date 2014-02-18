@@ -61,6 +61,10 @@ namespace FluentAspect.Sample
                 string a = e.Message;
                 throw;
             }
+            finally
+            {
+                int b = 2;
+            }
         }
     }
 }

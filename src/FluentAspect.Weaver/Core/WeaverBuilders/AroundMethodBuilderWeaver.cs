@@ -31,6 +31,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                            After = methodMatch.Aspect.After,
                            Before = methodMatch.Aspect.Before,
                            OnException = methodMatch.Aspect.OnException,
+                           OnFinally = methodMatch.Aspect.OnFinally,
                        });
                     }
                  }

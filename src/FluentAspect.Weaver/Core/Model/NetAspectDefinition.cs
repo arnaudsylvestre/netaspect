@@ -42,6 +42,11 @@ namespace FluentAspect.Weaver.Core.Model
             get { return new Interceptor(_attribute.GetMethod("OnException")); }
         }
 
+        public Interceptor OnFinally
+        {
+            get { return new Interceptor(_attribute.GetMethod("OnFinally")); }
+        }
+
         public MethodInfo SelectorConstructor
         {
             get { return _attribute.GetMethod("WeaveConstructor"); }

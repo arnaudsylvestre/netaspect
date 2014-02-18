@@ -17,7 +17,11 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model
       }
       public static bool HasOnException(this List<MethodWeavingConfiguration> interceptors)
       {
-         return interceptors.Any(interceptor_L => interceptor_L.OnException.Method != null);
+          return interceptors.Any(interceptor_L => interceptor_L.OnException.Method != null);
+      }
+      public static bool HasOnFinally(this List<MethodWeavingConfiguration> interceptors)
+      {
+          return interceptors.Any(interceptor_L => interceptor_L.OnFinally.Method != null);
       }
    }
 

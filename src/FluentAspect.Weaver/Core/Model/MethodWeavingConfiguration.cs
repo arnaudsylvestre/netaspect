@@ -14,5 +14,7 @@ namespace FluentAspect.Weaver.Core.Model
         public Interceptor After { get; set; }
 
         public Interceptor OnException { get; set; }
+
+        public Interceptor OnFinally { get; set; }
     }
 }
