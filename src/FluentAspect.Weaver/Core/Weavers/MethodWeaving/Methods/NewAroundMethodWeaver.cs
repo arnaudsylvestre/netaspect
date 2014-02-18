@@ -95,9 +95,10 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
       {
           var exception = methodToWeave.Method.MethodDefinition.CreateVariable(typeof (Exception));
           onExceptionInstructions.Add(Instruction.Create(OpCodes.Stloc, exception));
-          Call(onExceptionInstructions, configuration_P => configuration_P.OnException, onExceptionParametersEngine);
+          
+         
+         Call(onExceptionInstructions, configuration_P => configuration_P.OnException, onExceptionParametersEngine);
           onExceptionInstructions.Add(Instruction.Create(OpCodes.Rethrow));
-          onExceptionInstructions.Add(Instruction.Create(OpCodes.Nop));
       }
 
       public void InsertOnFinally(Collection<Instruction> onFinallyInstructions)
@@ -176,12 +177,12 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
             allInstructions.AddRange(initInstructions);
             allInstructions.AddRange(beforeInstructions);
             allInstructions.AddRange(methodInstructions);
-            allInstructions.Add(beforeAfter);
-            allInstructions.AddRange(afterInstructions);
-            var lastTry = afterInstructions.Last();
-            if (end.Count == 0)
+            var lastTry = allInstructions.Last();
+            if (end.Count != 0)
             {
 
+               allInstructions.Add(beforeAfter);
+               allInstructions.AddRange(afterInstructions);
                 var gotoEnd = Instruction.Create(OpCodes.Leave, end.First());
                 allInstructions.Add(gotoEnd);
                 lastTry = gotoEnd;
@@ -193,12 +194,19 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
             //allInstructions.AddRange(onFinallyInstructions);
             allInstructions.AddRange(end);
 
+            //if (end.Count == 0)
+            //{
+            //   allInstructions.Add(Instruction.Create(OpCodes.Ret));
+            //}
            method.Method.MethodDefinition.Body.Instructions.Clear();
            method.Method.MethodDefinition.Body.Instructions.AddRange(allInstructions);
 
 
            if (onExceptionInstructions.Any())
-               method.Method.AddTryCatch(methodInstructions.First(), lastTry, onExceptionInstructions.First(), onExceptionInstructions.Last());
+           {
+              method.Method.AddTryCatch(methodInstructions.First(), onExceptionInstructions.First(), onExceptionInstructions.First(), null);
+           }
+              
            // if (onFinallyInstructions.Any())
            //method.Method.AddTryFinally(first, last, onFinallyInstructions.First(), onFinallyInstructions.Last());
 

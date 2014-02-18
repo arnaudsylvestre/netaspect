@@ -9,10 +9,18 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExcep
       protected override Action CreateEnsure()
       {
          return () =>
-            {
-               Assert.IsNull(MyAspect.MethodInfo);
+         {
+            Assert.IsNull(MyAspect.MethodInfo);
                var classToWeave_L = new ClassToWeave();
-               classToWeave_L.Weaved();
+               try
+               {
+                  classToWeave_L.Weaved();
+                  Assert.Fail();
+               }
+               catch
+               {
+
+               }
                Assert.AreEqual(classToWeave_L.GetType().GetMethod("Weaved"), MyAspect.MethodInfo);
             };
       }
@@ -22,7 +30,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExcep
          [MyAspect]
          public void Weaved()
          {
-
+            throw new Exception();
          }
       }
 

@@ -11,8 +11,15 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExcep
             {
                Assert.AreEqual(0, MyAspect.I);
                var classToWeave_L = new ClassToWeave();
-                byte i = 12;
-                classToWeave_L.Weaved(i);
+               try
+               {
+                  classToWeave_L.Weaved(12);
+                  Assert.Fail();
+               }
+               catch
+               {
+
+               }
                Assert.AreEqual(12, MyAspect.I);
             };
       }
@@ -22,7 +29,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExcep
          [MyAspect]
          public void Weaved(byte i)
          {
-
+            throw new Exception();
          }
       }
 

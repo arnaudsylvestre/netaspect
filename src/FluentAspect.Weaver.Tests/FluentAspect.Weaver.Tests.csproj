@@ -196,6 +196,7 @@
     <Compile Include="unit\MethodWeaving\Constructor\VisibilityConstructorWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\MethodWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\MethodWeavingWithGenericsTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\MethodWeavingWithNoExceptionThrownTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\Errors\AfterMethodParameterNameUnkownTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\Errors\AfterMethodParameterNameSameAsKeywordTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\Instance\AfterMethodInstanceParameterWithObjectTypeTest.cs" />
