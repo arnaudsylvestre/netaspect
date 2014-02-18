@@ -7,7 +7,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.
 
       protected override Action<FluentAspect.Weaver.Core.Errors.ErrorHandler> CreateErrorHandlerProvider()
       {
-         return errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'method' in the method Before of the type '{0}'", typeof(MyAspect).FullName));
+         return errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'parameters' in the method Before of the type '{0}'", typeof(MyAspect).FullName));
       }
 
       public class ClassToWeave
@@ -23,9 +23,9 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.
       {
          public bool NetAspectAttribute = true;
 
-         public void Before(out object[] method)
+         public void Before(out object[] parameters)
          {
-            method = null;
+            parameters = null;
          }
       }
    }

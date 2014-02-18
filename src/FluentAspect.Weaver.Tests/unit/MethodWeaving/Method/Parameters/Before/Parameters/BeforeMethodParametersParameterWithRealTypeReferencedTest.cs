@@ -23,11 +23,11 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.
       {
          public bool NetAspectAttribute = true;
 
-         public static object[] Method;
+         public static object[] Parameters;
 
-         public void Before(ref object[] method)
+         public void Before(ref object[] parameters)
          {
-            Method = method;
+            Parameters = parameters;
          }
       }
    }

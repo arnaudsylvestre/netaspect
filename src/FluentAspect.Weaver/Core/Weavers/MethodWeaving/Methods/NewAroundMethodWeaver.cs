@@ -93,6 +93,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
 
       public void InsertOnException(Collection<Instruction> onExceptionInstructions)
       {
+         if (!methodToWeave.Interceptors.HasOnException())
+            return;
           var exception = methodToWeave.Method.MethodDefinition.CreateVariable(typeof (Exception));
           onExceptionInstructions.Add(Instruction.Create(OpCodes.Stloc, exception));
           
@@ -173,7 +175,6 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
             var methodInstructions = new Collection<Instruction>(method.Method.MethodDefinition.Body.Instructions);
             var end = FixReturns(method.Method.MethodDefinition, result, methodInstructions, beforeAfter);
             var allInstructions = new List<Instruction>();
-            var methodEnd = Instruction.Create(OpCodes.Ret);
             allInstructions.AddRange(initInstructions);
             allInstructions.AddRange(beforeInstructions);
             allInstructions.AddRange(methodInstructions);
