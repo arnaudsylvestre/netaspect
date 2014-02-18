@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2158446B-9E58-4E9D-BDC4-27A5A90365D1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -194,6 +194,11 @@
     <Compile Include="unit\MethodWeaving\Constructor\ConstructorWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\StaticConstructorWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\VisibilityConstructorWeavingTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Attributes\WeaveStaticMethodTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Attributes\WeaveInternalMethodTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Attributes\WeaveProtectedMethodTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Attributes\WeavePrivateMethodTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Attributes\WeavePublicMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\MethodWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\MethodWeavingWithGenericsTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\MethodWeavingWithNoExceptionThrownTest.cs" />
@@ -205,6 +210,7 @@
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\Instance\AfterMethodInstanceParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\Instance\AfterMethodInstanceParameterWithRealTypeOutTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\Instance\AfterMethodInstanceParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\After\Instance\AfterMethodInstanceParameterWithRealTypeInStaticTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\Method\AfterMethodMethodInfoParameterWithBadTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\Method\AfterMethodMethodInfoParameterWithRealTypeOutTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\After\Method\AfterMethodMethodInfoParameterWithRealTypeReferencedTest.cs" />
@@ -362,7 +368,6 @@
     <Compile Include="unit\MethodWeaving\Method\Parameters\OnFinally\Parameters\OnFinallyMethodParametersParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\ReturnWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\StaticMethodWeavingTest.cs" />
-    <Compile Include="unit\MethodWeaving\Method\VisibilityMethodWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\PropertyGetterWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\PropertyGetterWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Parameters\After\AfterPropertyGetterInstanceParameterTest.cs" />

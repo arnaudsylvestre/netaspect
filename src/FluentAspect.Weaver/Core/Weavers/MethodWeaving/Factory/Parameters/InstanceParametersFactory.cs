@@ -20,6 +20,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
                                         {
                                             Ensure.NotReferenced(p, handler);
                                             Ensure.OfType(p, handler, typeof(object).FullName, methodDefinition.DeclaringType.FullName);
+                                            Ensure.NotStatic(p, handler, methodDefinition);
                                         }, (info, instructions) => instructions.Add(Instruction.Create(OpCodes.Ldarg_0)));
         }
 

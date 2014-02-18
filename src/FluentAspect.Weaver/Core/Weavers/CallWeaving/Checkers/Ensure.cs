@@ -104,5 +104,11 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
                     parameter.ParameterType.FullName.Replace("/", "+"), ((IMemberDefinition)parameter.Method).Name, ((IMemberDefinition)parameter.Method).DeclaringType.FullName.Replace("/", "+")));
             }
         }
+
+        public static void NotStatic(ParameterInfo parameter, ErrorHandler handler, MethodDefinition definition)
+        {
+            if (definition.IsStatic)
+                handler.Errors.Add(string.Format("the {0} parameter can not be used for static method interceptors", parameter.Name));
+        }
     }
 }
