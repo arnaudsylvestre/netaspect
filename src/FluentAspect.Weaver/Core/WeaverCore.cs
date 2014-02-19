@@ -37,7 +37,10 @@ namespace FluentAspect.Weaver.Core
             configurationReader.ReadConfiguration(types, weavingConfiguration, errorHandler);
             AspectChecker.CheckAspects(errorHandler, weavingConfiguration);
 
-            foreach (IWeaveable weaver_L in weaverBuilder.BuildWeavers(weavingConfiguration))
+           var allAssemblies_L = weavingConfiguration.AllAssemblies;
+           TODO
+
+           foreach (IWeaveable weaver_L in weaverBuilder.BuildWeavers(weavingConfiguration))
             {
                 try
                 {

@@ -63,7 +63,23 @@ namespace FluentAspect.Weaver.Core.Configuration
             get { return _events; }
         }
 
-        public void AddMethod(Func<IMethod, bool> matcher, IEnumerable<Assembly> assemblies,
+       public IEnumerable<AssemblyDefinition> AllAssemblies
+       {
+          get {
+             List<AssemblyDefinition> assemblies_L = new List<AssemblyDefinition>();
+
+             assemblies_L.AddRange(_methods.GetAllAssemblies());
+             assemblies_L.AddRange(_constructors.GetAllAssemblies());
+             assemblies_L.AddRange(_fields.GetAllAssemblies());
+             assemblies_L.AddRange(_parameters.GetAllAssemblies());
+             assemblies_L.AddRange(_properties.GetAllAssemblies());
+             assemblies_L.AddRange(_events.GetAllAssemblies());
+
+             return new HashSet<AssemblyDefinition>(assemblies_L);
+          }
+       }
+
+       public void AddMethod(Func<IMethod, bool> matcher, IEnumerable<Assembly> assemblies,
                                NetAspectDefinition methodWeavingConfigurations, List<string> errors)
         {
             Check(methodWeavingConfigurations, errors);
