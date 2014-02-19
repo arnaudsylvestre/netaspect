@@ -1,22 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Errors;
+using FluentAspect.Weaver.Core.Model.Adapters;
+using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core
 {
 
-   public class ParameterWeaving
 
-   public class MethodWeavingBuilder
+   public class IlMethodInjector
    {
-      public IWeaveable Compute(MethodDefinition definition_P, WeavingConfiguration configuration_P)
+       public AssemblyDefinition Assembly { get { return Method.DeclaringType.Module.Assembly; } }
+
+       public MethodReference Method { get; private set; }
+
+       public IlMethodInjector(MethodDefinition method)
+       {
+           Method = method;
+       }
+
+       public void Weave()
+       {
+           
+       }
+       
+   }
+
+    public class MethodWeavingInjectorFiller : IInjectorFiller
+    {
+        public void AddInjectors(IlMethodInjector methodInjector, WeavingConfiguration configuration)
+        {
+            foreach (var aspectMatch in configuration.Methods)
+            {
+                if (aspectMatch.AssembliesToScan.Contains(methodInjector.Assembly))
+                {
+                    if (aspectMatch.Matcher(new MethodDefinitionAdapter(methodInjector.Method)) &&
+                        aspectMatch.Aspect != null)
+                    {
+                        
+                    }
+                }
+            }
+        }
+    }
+
+    public interface IInjectorFiller
+    {
+        void AddInjectors(IlMethodInjector methodInjector, WeavingConfiguration configuration);
+    }
+
+    public class MethodWeavingBuilder
+    {
+        private List<IInjectorFiller> fillers;
+
+        public MethodWeavingBuilder(List<IInjectorFiller> fillers)
+        {
+            this.fillers = fillers;
+        }
+
+        public IlMethodInjector Compute(MethodDefinition definition_P, WeavingConfiguration configuration_P)
       {
-         
+          var methodInjector = new IlMethodInjector(definition_P);
+            foreach (var filler in fillers)
+            {
+                filler.AddInjectors(methodInjector, configuration_P);
+            }
+            return methodInjector;
       }
    }
 
