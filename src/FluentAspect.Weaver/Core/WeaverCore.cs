@@ -9,6 +9,17 @@ using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core
 {
+
+   public class ParameterWeaving
+
+   public class MethodWeavingBuilder
+   {
+      public IWeaveable Compute(MethodDefinition definition_P, WeavingConfiguration configuration_P)
+      {
+         
+      }
+   }
+
     [Serializable]
     public class WeaverCore : ISerializable
     {
