@@ -36,7 +36,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
                                             );
         }
 
-        public static void AddMethod(this ParametersEngine engine, VariableDefinition methodVariable)
+        public static void AddMethod(this ParametersEngine engine, Func<VariableDefinition> methodVariable)
         {
             engine.AddPossibleParameter("method",
                                         (p, handler) =>
@@ -44,7 +44,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
                                             Ensure.NotReferenced(p, handler);
                                             Ensure.OfType(p, handler, typeof(MethodInfo).FullName);
                                         }, (info, instructions) =>
-                                            instructions.Add(Instruction.Create(OpCodes.Ldloc, methodVariable))
+                                            instructions.Add(Instruction.Create(OpCodes.Ldloc, methodVariable()))
                                             );
 
         }
