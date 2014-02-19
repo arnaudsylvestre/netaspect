@@ -37,7 +37,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
               }
            }
 
-           return configurations.Select(configuration_L => new AroundMethodWeaver(configuration_L.Value, configuration_L.Key)).Cast<IWeaveable>();
+           return configurations.Select(configuration_L => new AroundMethodWeaver(configuration_L.Value, configuration_L.Key, weave_P => new MethodWeaver(weave_P))).Cast<IWeaveable>();
         }
     }
 }

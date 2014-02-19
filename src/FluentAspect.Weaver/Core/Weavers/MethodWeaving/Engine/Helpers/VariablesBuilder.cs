@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
+using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
@@ -16,9 +18,16 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
                 Interceptors = CreateInterceptorInstances(method),
                 args = CreateArgs(method),
                 methodInfo = CreateMethodInfo(method),
+                exception = CreateException(method)
             };
         }
-        public static void InitializeVariables(this MethodToWeave method, Variables variables, Collection<Instruction> instructions)
+
+        private static VariableDefinition CreateException(MethodToWeave methodToWeave)
+        {
+           return methodToWeave.Needs(Variables.Exception) ? methodToWeave.Method.MethodDefinition.CreateVariable(typeof(Exception)) : null;
+        }
+
+       public static void InitializeVariables(this MethodToWeave method, Variables variables, Collection<Instruction> instructions)
         {
             method.Method.FIllMethod(instructions, variables.methodInfo);
            FillInterceptorInstances(method, instructions, variables.Interceptors);

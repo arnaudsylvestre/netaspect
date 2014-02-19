@@ -11,9 +11,15 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
 {
     public class AroundMethodParameterBuilderWeaver : IWeaverBuilder
     {
+       public class ParameterWeavingConfiguration
+       {
+          public MethodWeavingConfiguration Configuration { get; set; }
+          public ParameterDefinition Parameter { get; set; }
+       }
+
         public IEnumerable<IWeaveable> BuildWeavers(WeavingConfiguration configuration)
         {
-           var configurations = new Dictionary<MethodDefinition, List<MethodWeavingConfiguration>>();
+           var configurations = new Dictionary<MethodDefinition, List<ParameterWeavingConfiguration>>();
            foreach (var methodMatch in configuration.Parameters)
            {
               foreach (var assemblyDefinition in methodMatch.AssembliesToScan)
@@ -26,14 +32,16 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                          if (methodMatch.Matcher(parameterDefinition) && methodMatch.Aspect != null)
                          {
                              if (!configurations.ContainsKey(methodDefinition_L))
-                                 configurations.Add(methodDefinition_L, new List<MethodWeavingConfiguration>());
-                             configurations[methodDefinition_L].Add(new MethodWeavingConfiguration()
+                                 configurations.Add(methodDefinition_L, new List<ParameterWeavingConfiguration>());
+                             configurations[methodDefinition_L].Add(new ParameterWeavingConfiguration() 
+                             {
+                                Configuration = new MethodWeavingConfiguration()
                              {
                                  Type = methodMatch.Aspect.Type,
                                  After = methodMatch.Aspect.AfterParameter,
                                  Before = methodMatch.Aspect.BeforeParameter,
                                  OnException = methodMatch.Aspect.OnExceptionParameter,
-                             });
+                             }, Parameter = parameterDefinition});
                          }
                      }
                     
@@ -41,7 +49,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
               }
            }
 
-           return configurations.Select(configuration_L => new AroundMethodWeaver(configuration_L.Value, configuration_L.Key)).Cast<IWeaveable>();
+           return configurations.Select(configuration_L => new AroundMethodWeaver(configuration_L.Value.Select(a => a.Configuration).ToList(), configuration_L.Key, weave_P => new ParameterWeaver(weave_P, null))).Cast<IWeaveable>();
         }
     }
 }

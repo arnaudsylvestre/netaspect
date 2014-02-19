@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
@@ -12,16 +13,14 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
     public class AroundMethodWeaver : IWeaveable
     {
         private readonly MethodDefinition definition;
-        private readonly IEnumerable<MethodWeavingConfiguration> interceptorType;
        private NewAroundMethodWeaver weaver;
 
-       public AroundMethodWeaver(IEnumerable<MethodWeavingConfiguration> interceptorType, MethodDefinition definition_P)
+       public AroundMethodWeaver(IEnumerable<MethodWeavingConfiguration> interceptorType, MethodDefinition definition_P, Func<MethodToWeave, IMethodWeaver> methodWeaverFactory)
         {
-            this.interceptorType = interceptorType;
-            definition = definition_P;
+          definition = definition_P;
 
             var methodToWeave_L = new MethodToWeave(interceptorType.ToList(), new Method(definition));
-            weaver = new NewAroundMethodWeaver(methodToWeave_L, new MethodWeaver(methodToWeave_L));
+            weaver = new NewAroundMethodWeaver(methodToWeave_L, methodWeaverFactory(methodToWeave_L));
         }
 
         public void Weave()

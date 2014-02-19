@@ -37,11 +37,19 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory
           return engine;
        }
 
-        public static ParametersEngine CreateForOnExceptionMethodWeaving(MethodDefinition methodDefinition, VariableDefinition methodVariable, VariableDefinition parametersVariable, ErrorHandler errorHandler)
+        public static ParametersEngine CreateForOnExceptionMethodWeaving(MethodDefinition methodDefinition, VariableDefinition methodVariable, VariableDefinition parametersVariable, VariableDefinition exception, ErrorHandler errorHandler)
         {
            var engine = new ParametersEngine();
            FillCommon(engine, methodDefinition, methodVariable, parametersVariable, errorHandler);
+           engine.AddException(exception);
            return engine;
        }
+
+        public static ParametersEngine CreateForBeforeParameterWeaving(MethodDefinition methodDefinition, ParameterDefinition parameterDefinition_P, ErrorHandler errorHandler)
+        {
+           var engine = new ParametersEngine();
+           engine.AddParameterValue(parameterDefinition_P);
+           return engine;
+        }
     }
 }

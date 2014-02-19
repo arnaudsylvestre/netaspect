@@ -62,16 +62,30 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
 
         }
 
-        public static void AddException(this ParametersEngine engine)
+        public static void AddException(this ParametersEngine engine, VariableDefinition exception)
         {
 
             engine.AddPossibleParameter("exception",
                                         (p, handler) =>
                                         {
+                                           Ensure.NotReferenced(p, handler);
                                             Ensure.OfType(p, handler, typeof(Exception).FullName);
-                                        }, (info, instructions) => { throw new NotImplementedException(); }
+                                        }, (info, instructions) => { instructions.Add(Instruction.Create(OpCodes.Ldloc, exception)); }
 
                                             );
+        }
+
+        public static void AddParameterValue(this ParametersEngine engine, ParameterDefinition parameter)
+        {
+
+           engine.AddPossibleParameter("value",
+                                       (p, handler) =>
+                                       {
+                                          Ensure.NotOut(p, handler);
+                                          Ensure.OfType(p, handler, parameter.ParameterType.FullName.Replace("/", "+"));
+                                       }, (info, instructions) => { instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter)); }
+
+                                           );
         }
 
         public static void AddParameterNames(this ParametersEngine engine, MethodDefinition methodDefinition, ErrorHandler errorHandler)
