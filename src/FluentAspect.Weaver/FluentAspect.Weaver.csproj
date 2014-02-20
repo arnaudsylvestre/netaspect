@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{28912034-8A56-4B8E-BAA1-02C50149CA68}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -108,7 +108,12 @@
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\AroundConstructorWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\ConstructorAroundWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Factory\ParametersEngineFactory.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\IErrorListener.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\IInterceptorParameterChecker.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\InstanceInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\InstanceParametersFactory.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\InterceptorParametersCherckerFactory.cs" />
+    <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\SimpleErrorListener.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Methods\ParameterWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Methods\IMethodWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Methods\MethodWeaver.cs" />

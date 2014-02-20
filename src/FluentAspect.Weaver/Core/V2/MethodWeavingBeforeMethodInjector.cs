@@ -4,6 +4,7 @@ using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory;
+using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -24,8 +25,9 @@ namespace FluentAspect.Weaver.Core.V2
 
        public void Check(ErrorHandler errorHandler, IlInjectorAvailableVariables availableInformations)
        {
-          forBeforeMethodWeaving_L = ParametersEngineFactory.CreateForBeforeMethodWeaving(_method, () => availableInformations.CurrentMethodInfo, null, errorHandler);
-          forBeforeMethodWeaving_L.Check(interceptorMethod.GetParameters(), errorHandler);
+           var checker = new ParametersChecker();
+           checker.AddPossibleParameter("instance", InterceptorParametersCherckerFactory.CreateCheckerForInstanceParameter(_method));
+          checker.Check(interceptorMethod.GetParameters(), errorHandler);
        }
 
        public void Inject(List<Instruction> instructions, IlInjectorAvailableVariables availableInformations)

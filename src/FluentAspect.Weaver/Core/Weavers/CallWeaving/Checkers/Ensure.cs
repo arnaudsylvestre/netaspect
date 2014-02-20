@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
+using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -32,11 +33,11 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
                 errorHandler.Errors.Add(string.Format("Wrong parameter type for {0} in method {1} of type {2}", info.Name, info.Member.Name, info.Member.DeclaringType.FullName));
         }
 
-        public static void NotReferenced(ParameterInfo parameterInfo, ErrorHandler errorHandler)
+        public static void NotReferenced(ParameterInfo parameterInfo, IErrorListener errorHandler)
         {
             if (parameterInfo.ParameterType.IsByRef)
             {
-                errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter '{0}' in the method {1} of the type '{2}'", parameterInfo.Name, parameterInfo.Member.Name, parameterInfo.Member.DeclaringType.FullName));
+                errorHandler.OnError("impossible to ref/out the parameter '{0}' in the method {1} of the type '{2}'", parameterInfo.Name, parameterInfo.Member.Name, parameterInfo.Member.DeclaringType.FullName);
             }
         }
 
@@ -76,13 +77,13 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
             }
         }
 
-        public static void OfType(ParameterInfo info, ErrorHandler handler, params string[] types)
+        public static void OfType(ParameterInfo info, IErrorListener handler, params string[] types)
         {
            if (!(from t in types where info.ParameterType.FullName.Replace("&", "") == t.Replace("/", "+") select t).Any())
             {
-                handler.Errors.Add(string.Format("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4}",
+                handler.OnError("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4}",
                     info.Name, info.Member.Name, info.Member.DeclaringType.FullName, info.ParameterType.FullName,
-                    string.Join(" or ", types.Select(type => type.Replace("/", "+")).ToArray())));
+                    string.Join(" or ", types.Select(type => type.Replace("/", "+")).ToArray()));
             }
         }
 
@@ -105,10 +106,10 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
             }
         }
 
-        public static void NotStatic(ParameterInfo parameter, ErrorHandler handler, MethodDefinition definition)
+        public static void NotStatic(ParameterInfo parameter, IErrorListener handler, MethodDefinition definition)
         {
             if (definition.IsStatic)
-                handler.Errors.Add(string.Format("the {0} parameter can not be used for static method interceptors", parameter.Name));
+                handler.OnError("the {0} parameter can not be used for static method interceptors", parameter.Name);
         }
     }
 }

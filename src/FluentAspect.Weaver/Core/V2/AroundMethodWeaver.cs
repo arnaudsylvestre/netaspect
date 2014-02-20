@@ -2,6 +2,7 @@
 using System.Linq;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
+using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
@@ -17,11 +18,13 @@ namespace FluentAspect.Weaver.Core.V2
 
          VariableDefinition result = method.MethodDefinition.ReturnType == method.MethodDefinition.Module.TypeSystem.Void ? null : new VariableDefinition(method.MethodDefinition.ReturnType);
          variables = new IlInjectorAvailableVariables(result);
+          SimpleErrorListener errorListener = new SimpleErrorListener();
          methodWeavingModel.Befores.Check(errorHandlerP_P, variables);
          methodWeavingModel.Afters.Check(errorHandlerP_P, variables);
          methodWeavingModel.OnExceptions.Check(errorHandlerP_P, variables);
          methodWeavingModel.OnFinallys.Check(errorHandlerP_P, variables);
-         if (errorHandlerP_P.Errors)
+          if (errorListener.HasError)
+              return;
          if (!methodWeavingModel.Befores.Any() && !methodWeavingModel.Afters.Any() &&
             !methodWeavingModel.OnExceptions.Any() && !methodWeavingModel.OnFinallys.Any())
          {

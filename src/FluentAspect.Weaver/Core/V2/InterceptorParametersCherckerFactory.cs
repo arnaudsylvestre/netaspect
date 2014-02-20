@@ -1,41 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers;
-using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
-using Mono.Cecil;
-using Mono.Cecil.Cil;
+﻿using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
 {
-    public static class InstanceParametersFactory
+    public static class InterceptorParametersCherckerFactory
     {
-        public static void AddInstance(this ParametersEngine engine, MethodDefinition methodDefinition)
+        public static IInterceptorParameterChecker CreateCheckerForInstanceParameter(MethodDefinition method)
         {
-
-            engine.AddPossibleParameter("instance",
-                                        (p, handler) =>
-                                        {
-                                            Ensure.NotReferenced(p, handler);
-                                            Ensure.OfType(p, handler, typeof(object).FullName, methodDefinition.DeclaringType.FullName);
-                                            Ensure.NotStatic(p, handler, methodDefinition);
-                                        }, (info, instructions) => instructions.Add(Instruction.Create(OpCodes.Ldarg_0)));
+            return new InstanceInterceptorParametersChercker(method);
         }
+    }
 
-        public static void AddParameters(this ParametersEngine engine, VariableDefinition parameters)
-        {
-            engine.AddPossibleParameter("parameters",
-                                        (p, handler) =>
-                                        {
-                                            Ensure.NotReferenced(p, handler);
-                                            Ensure.OfType<object[]>(p, handler);
-                                        }, (info, instructions) =>
-                                            instructions.Add(Instruction.Create(OpCodes.Ldloc, parameters))
-                                            );
-        }
-
-        public static void AddMethod(this ParametersEngine engine, Func<VariableDefinition> methodVariable)
+    public static void AddMethod(this ParametersEngine engine, Func<VariableDefinition> methodVariable)
         {
             engine.AddPossibleParameter("method",
                                         (p, handler) =>
@@ -140,5 +115,4 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
             
             }
         }
-    }
 }

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters;
 
 namespace FluentAspect.Weaver.Core.Errors
 {
-    public class ErrorHandler
+    public class ErrorHandler : IErrorListener
     {
 
         public ErrorHandler()
@@ -15,5 +16,14 @@ namespace FluentAspect.Weaver.Core.Errors
         public List<string> Warnings { get; private set; }
         public List<string> Errors { get; private set; }
         public List<string> Failures { get; private set; }
+        public void OnError(string message, params object[] args)
+        {
+            Errors.Add(string.Format(message, args));
+        }
+
+        public void OnWarning(string message, params object[] args)
+        {
+            Warnings.Add(string.Format(message, args));
+        }
     }
 }
