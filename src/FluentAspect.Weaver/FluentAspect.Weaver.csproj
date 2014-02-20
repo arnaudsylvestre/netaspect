@@ -80,6 +80,7 @@
     <Compile Include="Core\V2\MultiMethodWeavingModelFiller.cs" />
     <Compile Include="Core\V2\Model\MethodWeavingModel.cs" />
     <Compile Include="Core\V2\New.cs" />
+    <Compile Include="Core\V2\ParametersChecker.cs" />
     <Compile Include="Core\WeaverBuilders\AroundConstructorBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\CallMethodBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\CallFieldBuilderWeaver.cs" />
@@ -108,12 +109,12 @@
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\AroundConstructorWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Constructors\ConstructorAroundWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Factory\ParametersEngineFactory.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\IErrorListener.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\IInterceptorParameterChecker.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\InstanceInterceptorParametersChercker.cs" />
+    <Compile Include="Core\V2\IErrorListener.cs" />
+    <Compile Include="Core\V2\IInterceptorParameterChecker.cs" />
+    <Compile Include="Core\V2\InstanceInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\InstanceParametersFactory.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\InterceptorParametersCherckerFactory.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\SimpleErrorListener.cs" />
+    <Compile Include="Core\V2\InterceptorParametersCherckerFactory.cs" />
+    <Compile Include="Core\V2\SimpleErrorListener.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Methods\ParameterWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Methods\IMethodWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Methods\MethodWeaver.cs" />

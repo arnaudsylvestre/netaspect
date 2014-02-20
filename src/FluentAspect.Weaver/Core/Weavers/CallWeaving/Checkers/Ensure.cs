@@ -50,20 +50,20 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
 
 
 
-        public static void NotOut(ParameterInfo parameterInfo, ErrorHandler errorHandler)
+        public static void NotOut(ParameterInfo parameterInfo, IErrorListener errorHandler)
         {
             if (parameterInfo.IsOut)
             {
-                errorHandler.Errors.Add(string.Format("impossible to out the parameter '{0}' in the method {1} of the type '{2}'", parameterInfo.Name, parameterInfo.Member.Name, parameterInfo.Member.DeclaringType.FullName));
+                errorHandler.OnError("impossible to out the parameter '{0}' in the method {1} of the type '{2}'", parameterInfo.Name, parameterInfo.Member.Name, parameterInfo.Member.DeclaringType.FullName);
             }
         }
 
-        public static void ResultOfType(ParameterInfo info, ErrorHandler handler, MethodDefinition method)
+        public static void ResultOfType(ParameterInfo info, IErrorListener handler, MethodDefinition method)
         {
             if (method.ReturnType == method.Module.TypeSystem.Void)
             {
-                handler.Errors.Add(string.Format("Impossible to use the {0} parameter in the method {1} of the type '{2}' because the return type of the method {3} in the type {4} is void",
-                    info.Name, info.Member.Name, info.Member.DeclaringType.FullName.Replace("/", "+"), method.Name, method.DeclaringType.FullName.Replace("/", "+")));
+                handler.OnError("Impossible to use the {0} parameter in the method {1} of the type '{2}' because the return type of the method {3} in the type {4} is void",
+                    info.Name, info.Member.Name, info.Member.DeclaringType.FullName.Replace("/", "+"), method.Name, method.DeclaringType.FullName.Replace("/", "+"));
                 return;
             }
             NotOut(info, handler);
@@ -71,9 +71,9 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
                 return;
            if (info.ParameterType.FullName.Replace("&", "") != method.ReturnType.FullName.Replace("/", "+"))
             {
-                handler.Errors.Add(string.Format("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because the return type of the method {5} in the type {6}",
+                handler.OnError("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because the return type of the method {5} in the type {6}",
                     info.Name, info.Member.Name, info.Member.DeclaringType.FullName.Replace("/", "+"), info.ParameterType.FullName,
-                    method.ReturnType.FullName, method.Name, method.DeclaringType.FullName.Replace("/", "+")));
+                    method.ReturnType.FullName, method.Name, method.DeclaringType.FullName.Replace("/", "+"));
             }
         }
 
