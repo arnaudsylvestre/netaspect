@@ -38,15 +38,20 @@ namespace FluentAspect.Weaver.Tests.acceptance
         {
             var assembly = Assembly.LoadFrom(dll_L);
             var type = assembly.GetTypes().First(t => t.FullName == typeName);
-            WeaverCore weaver = WeaverCoreFactory.Create();
-            ErrorHandler errorHandler = new ErrorHandler();
-            weaver.Weave(new[]{type}, errorHandler, (a) => a);
+            var weaver = WeaverCoreFactory.CreateV2();
+            var errorHandler = new ErrorHandler();
+            weaver.Weave(ComputeTypes(type), errorHandler, (a) => a);
             var builder = new StringBuilder();
             ErrorsTest.Dump(errorHandler, builder);
             Assert.AreEqual(warnings, errorHandler.Warnings);
             Assert.AreEqual(checkErrors, errorHandler.Errors);
             Assert.AreEqual(failures, errorHandler.Failures);
             return builder.ToString();
+        }
+
+        private static Type[] ComputeTypes(Type type)
+        {
+            return type.DeclaringType.GetNestedTypes();
         }
 
         public void Ensure(string dll_L, Action<Assembly> ensure)

@@ -26,13 +26,15 @@ namespace FluentAspect.Weaver.Core.V2
        public void Check(ErrorHandler errorHandler, IlInjectorAvailableVariables availableInformations)
        {
            var checker = new ParametersChecker();
-           checker.AddPossibleParameter("instance", InterceptorParametersCherckerFactory.CreateCheckerForInstanceParameter(_method));
+           checker.CreateCheckerForInstanceParameter(_method);
           checker.Check(interceptorMethod.GetParameters(), errorHandler);
        }
 
        public void Inject(List<Instruction> instructions, IlInjectorAvailableVariables availableInformations)
        {
-          forBeforeMethodWeaving_L.Fill(interceptorMethod.GetParameters(), instructions);
+           var parametersIlGenerator = new ParametersIlGenerator();
+           parametersIlGenerator.CreateIlGeneratorForInstanceParameter(_method);
+           parametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations);
         }
     }
 }

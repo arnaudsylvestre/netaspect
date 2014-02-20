@@ -11,7 +11,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.
             {
                Assert.IsNull(MyAspect.Instance);
                var classToWeave_L = new ClassToWeave();
-               classToWeave_L.Weaved();
+               classToWeave_L.WeavedForTest();
                Assert.AreEqual(classToWeave_L, MyAspect.Instance);
             };
       }
@@ -19,7 +19,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.
       public class ClassToWeave
       {
          [MyAspect]
-         public void Weaved()
+         public void WeavedForTest()
          {
 
          }

@@ -104,15 +104,6 @@ namespace FluentAspect.Weaver.Core
             configurationReader.ReadConfiguration(types, weavingConfiguration, errorHandler);
             AspectChecker.CheckAspects(errorHandler, weavingConfiguration);
 
-           var allAssemblies_L = weavingConfiguration.AllAssemblies;
-           foreach (var assembly_L in allAssemblies_L)
-           {
-              foreach (var method in assembly_L.GetAllMethods())
-              {
-                 
-              }
-           }
-
            foreach (IWeaveable weaver_L in weaverBuilder.BuildWeavers(weavingConfiguration))
             {
                 try
@@ -150,7 +141,7 @@ namespace FluentAspect.Weaver.Core
         }
 
 
-       private void WeaveOneAssembly(string getAssemblyPath, AssemblyDefinition assemblyDefinition, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
+       public static void WeaveOneAssembly(string getAssemblyPath, AssemblyDefinition assemblyDefinition, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
         {
             string targetFileName = newAssemblyNameProvider(getAssemblyPath);
             assemblyDefinition.Write(targetFileName, new WriterParameters
@@ -160,7 +151,7 @@ namespace FluentAspect.Weaver.Core
             CheckAssembly(targetFileName, errorHandler);
         }
 
-        private void CheckAssembly(string targetFileName, ErrorHandler errorHandler)
+        public static void CheckAssembly(string targetFileName, ErrorHandler errorHandler)
         {
             try
             {

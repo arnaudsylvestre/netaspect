@@ -2,12 +2,18 @@
 using FluentAspect.Weaver.Core.Configuration.Attributes;
 using FluentAspect.Weaver.Core.Configuration.Multi;
 using FluentAspect.Weaver.Core.Configuration.Selector;
+using FluentAspect.Weaver.Core.V2;
 using FluentAspect.Weaver.Core.WeaverBuilders;
 
 namespace FluentAspect.Weaver.Factory
 {
     public static class WeaverCoreFactory
     {
+        public static WeaverCore2 CreateV2()
+        {
+            return new WeaverCore2();
+        }
+
         public static WeaverCore Create()
         {
             return new WeaverCore(

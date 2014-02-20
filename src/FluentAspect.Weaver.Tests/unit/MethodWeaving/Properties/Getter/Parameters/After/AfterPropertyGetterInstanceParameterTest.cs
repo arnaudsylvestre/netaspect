@@ -11,7 +11,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Paramet
        [Test]
        public void CheckInstanceReferenced()
         {
-            DoUnit2.Test().ByDefiningAssembly(assembly =>
+            DoUnit.Test().ByDefiningAssembly(assembly =>
             {
                 var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
                 var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
@@ -34,7 +34,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Paramet
         [Test]
         public void CheckInstanceBadType()
        {
-           DoUnit2.Test().ByDefiningAssembly(assembly =>
+           DoUnit.Test().ByDefiningAssembly(assembly =>
            {
                var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
                var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
@@ -56,7 +56,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Paramet
        [Test]
        public void CheckInstanceWithObjectType()
         {
-            DoUnit2.Test().ByDefiningAssembly(assembly =>
+            DoUnit.Test().ByDefiningAssembly(assembly =>
             {
                 var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
                 var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
@@ -87,7 +87,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Paramet
        [Test]
         public void CheckInstanceWithRealType()
        {
-           DoUnit2.Test().ByDefiningAssembly(assembly =>
+           DoUnit.Test().ByDefiningAssembly(assembly =>
            {
                var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
                var aspect = assembly.AddDefaultAspect("MyAspectAttribute");

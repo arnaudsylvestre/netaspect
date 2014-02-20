@@ -18,7 +18,7 @@ namespace FluentAspect.Weaver.Tests.unit.ParameterWeaving.Method.After
        [Test]
         public void CheckInstanceWithRealType()
         {
-            DoUnit2.Test()
+            DoUnit.Test()
                     .ByDefiningAssembly(assembly =>
                     {
                         var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();

@@ -5,6 +5,7 @@ using System.Reflection;
 using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
+using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters;
 using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
@@ -41,7 +42,7 @@ namespace FluentAspect.Weaver.Core.V2
       public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
       {
          var aspectType = method.Module.Import(aspect.Type);
-         var isCompliant_L = method.CustomAttributes.Any(customAttribute_L => customAttribute_L.AttributeType == aspectType);
+         var isCompliant_L = method.CustomAttributes.Any(customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
          if (!isCompliant_L)
             return;
          if (aspect.Before.Method != null)
@@ -75,14 +76,13 @@ namespace FluentAspect.Weaver.Core.V2
 
    public class WeaverCore2
    {
-      public void Weave(Assembly assembly)
+       public void Weave(Type[] typesP_L, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
       {
-         var typesP_L = assembly.GetTypes();
          IWeavingModelFiller weavingModelFiller = new MultiWeavingModelFiller(new MethodAttributeWeavingModelFiller());
          AssemblyDefinitionProvider assemblyDefinitionProvider_L = new AssemblyDefinitionProvider();
          
          List<NetAspectDefinition> aspects = FindAspects(typesP_L);
-         HashSet<Assembly> assembliesToWeave = new HashSet<Assembly>(ComputeAssembliesToWeave(aspects));
+         HashSet<Assembly> assembliesToWeave = new HashSet<Assembly>(ComputeAssembliesToWeave(aspects, typesP_L[0].Assembly));
          Dictionary<MethodDefinition, WeavingModel> weavingModels = new Dictionary<MethodDefinition, WeavingModel>();
          foreach (var assembly_L in assembliesToWeave)
          {
@@ -93,27 +93,43 @@ namespace FluentAspect.Weaver.Core.V2
                {
                   weavingModelFiller.FillWeavingModel(method, aspect_L, model);
                }
+                if (!model.IsEmpty)
                weavingModels.Add(method, model);
             }
          }
 
          AroundMethodWeaver aroundMethodWeaver_L = new AroundMethodWeaver();
-         ErrorHandler errorHandler = new ErrorHandler();
          foreach (var weavingModel_L in weavingModels)
          {
             aroundMethodWeaver_L.Weave(new Method(weavingModel_L.Key), weavingModel_L.Value.Method, errorHandler);
          }
+
+          foreach (var def in assemblyDefinitionProvider_L.Asms)
+            {
+                WeaverCore.WeaveOneAssembly(def.Key.GetAssemblyPath(), def.Value, errorHandler, newAssemblyNameProvider);
+
+            }
+            foreach (var def in assemblyDefinitionProvider_L.Asms)
+            {
+                WeaverCore.CheckAssembly(def.Key.GetAssemblyPath(), errorHandler);
+
+            }
       }
 
-      private List<Assembly> ComputeAssembliesToWeave(List<NetAspectDefinition> aspects_P)
+      private IEnumerable<Assembly> ComputeAssembliesToWeave(List<NetAspectDefinition> aspects_P, Assembly defaultAssembly)
       {
-         List<Assembly> assemblies_L = new List<Assembly>();
-
+          HashSet<Assembly> assemblies_L = new HashSet<Assembly>();
+          assemblies_L.Add(defaultAssembly);
          foreach (var aspect_L in aspects_P)
          {
-            assemblies_L.AddRange(aspect_L.AssembliesToWeave);
+             var assembliesToWeave = aspect_L.AssembliesToWeave;
+             foreach (var assembly in assembliesToWeave)
+             {
+                 assemblies_L.Add(assembly);
+                 
+             }
          }
-         return assemblies_L;
+          return assemblies_L;
       }
 
       private List<NetAspectDefinition> FindAspects(Type[] types_P)

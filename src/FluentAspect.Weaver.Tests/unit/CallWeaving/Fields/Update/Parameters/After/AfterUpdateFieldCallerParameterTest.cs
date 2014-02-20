@@ -12,7 +12,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Af
         [Test]
         public void CheckCallEventWithCallerObject()
         {
-            DoUnit2.Test().ByDefiningAssembly(assembly =>
+            DoUnit.Test().ByDefiningAssembly(assembly =>
             {
                 var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
                 var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
@@ -46,7 +46,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Af
         [Test]
         public void CheckCallEventWithCallerRealType()
         {
-            DoUnit2.Test().ByDefiningAssembly(assembly =>
+            DoUnit.Test().ByDefiningAssembly(assembly =>
             {
                 var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
                 var aspect = assembly.AddDefaultAspect("MyAspectAttribute");

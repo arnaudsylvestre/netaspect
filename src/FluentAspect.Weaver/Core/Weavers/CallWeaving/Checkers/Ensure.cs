@@ -87,11 +87,11 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
             }
         }
 
-        public static void OfType(ParameterInfo info, ErrorHandler handler, ParameterDefinition parameter)
+        public static void OfType(ParameterInfo info, IErrorListener handler, ParameterDefinition parameter)
         {
             if (parameter.ParameterType.IsGenericParameter && info.ParameterType.IsByRef)
             {
-                handler.Errors.Add(string.Format("Impossible to ref a generic parameter"));
+                handler.OnError("Impossible to ref a generic parameter");
                 return;
             }
 
@@ -100,9 +100,9 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
                 return;
             if (info.ParameterType.FullName.Replace("&", "") != parameter.ParameterType.FullName.Replace("&", "").Replace("/", "+"))
             {
-                handler.Errors.Add(string.Format("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because of the type of this parameter in the method {5} of the type {6}",
+                handler.OnError("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because of the type of this parameter in the method {5} of the type {6}",
                     info.Name, info.Member.Name, info.Member.DeclaringType.FullName.Replace("/", "+"), info.ParameterType.FullName,
-                    parameter.ParameterType.FullName.Replace("/", "+"), ((IMemberDefinition)parameter.Method).Name, ((IMemberDefinition)parameter.Method).DeclaringType.FullName.Replace("/", "+")));
+                    parameter.ParameterType.FullName.Replace("/", "+"), ((IMemberDefinition)parameter.Method).Name, ((IMemberDefinition)parameter.Method).DeclaringType.FullName.Replace("/", "+"));
             }
         }
 

@@ -11,7 +11,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After
          [Test]
          public void CheckCallMethodWithCaller()
         {
-            DoUnit2.Test().ByDefiningAssembly(assembly =>
+            DoUnit.Test().ByDefiningAssembly(assembly =>
             {
                 var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
                 var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
