@@ -21,7 +21,7 @@ namespace FluentAspect.Weaver.Core.V2
          methodWeavingModel.Afters.Check(errorHandlerP_P, variables);
          methodWeavingModel.OnExceptions.Check(errorHandlerP_P, variables);
          methodWeavingModel.OnFinallys.Check(errorHandlerP_P, variables);
-
+         if (errorHandlerP_P.Errors)
          if (!methodWeavingModel.Befores.Any() && !methodWeavingModel.Afters.Any() &&
             !methodWeavingModel.OnExceptions.Any() && !methodWeavingModel.OnFinallys.Any())
          {

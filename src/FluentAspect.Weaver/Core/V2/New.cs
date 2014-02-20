@@ -101,7 +101,6 @@ namespace FluentAspect.Weaver.Core.V2
          ErrorHandler errorHandler = new ErrorHandler();
          foreach (var weavingModel_L in weavingModels)
          {
-            aroundMethodWeaver_L.Check(new Method(weavingModel_L.Key), weavingModel_L.Value.Method, errorHandler);
             aroundMethodWeaver_L.Weave(new Method(weavingModel_L.Key), weavingModel_L.Value.Method, errorHandler);
          }
       }
