@@ -35,13 +35,13 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods
          this.variables.handleResult = result;
 
          if (methodToWeave.Interceptors.HasBefore())
-            beforeParametersEngine = ParametersEngineFactory.CreateForBeforeMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, errorHandler);
+            beforeParametersEngine = ParametersEngineFactory.CreateForBeforeMethodWeaving(methodToWeave.Method.MethodDefinition, () => this.variables.methodInfo, this.variables.args, errorHandler);
          if (methodToWeave.Interceptors.HasAfter())
-            afterParametersEngine = ParametersEngineFactory.CreateForAfterMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, this.variables.handleResult, errorHandler);
+            afterParametersEngine = ParametersEngineFactory.CreateForAfterMethodWeaving(methodToWeave.Method.MethodDefinition, () => this.variables.methodInfo, this.variables.args, this.variables.handleResult, errorHandler);
          if (methodToWeave.Interceptors.HasOnException())
-            onExceptionParametersEngine = ParametersEngineFactory.CreateForOnExceptionMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, this.variables.exception, errorHandler);
+            onExceptionParametersEngine = ParametersEngineFactory.CreateForOnExceptionMethodWeaving(methodToWeave.Method.MethodDefinition, () => this.variables.methodInfo, this.variables.args, this.variables.exception, errorHandler);
          if (methodToWeave.Interceptors.HasOnFinally())
-            onFinallyParametersEngine = ParametersEngineFactory.CreateForOnFinallyMethodWeaving(methodToWeave.Method.MethodDefinition, this.variables.methodInfo, this.variables.args, errorHandler);
+            onFinallyParametersEngine = ParametersEngineFactory.CreateForOnFinallyMethodWeaving(methodToWeave.Method.MethodDefinition, () => this.variables.methodInfo, this.variables.args, errorHandler);
       }
 
       public void InsertBefore(Collection<Instruction> beforeInstructions)

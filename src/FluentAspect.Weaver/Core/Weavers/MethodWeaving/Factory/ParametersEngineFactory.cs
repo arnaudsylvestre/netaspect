@@ -1,4 +1,5 @@
-﻿using FluentAspect.Weaver.Core.Errors;
+﻿using System;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters;
 using Mono.Cecil;
@@ -8,20 +9,20 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory
 {
     public static class ParametersEngineFactory
     {
-        public static ParametersEngine CreateForBeforeMethodWeaving(MethodDefinition methodDefinition, VariableDefinition methodVariable, VariableDefinition parametersVariable, ErrorHandler errorHandler)
+        public static ParametersEngine CreateForBeforeMethodWeaving(MethodDefinition methodDefinition, Func<VariableDefinition> methodVariable, VariableDefinition parametersVariable, ErrorHandler errorHandler)
         {
             var engine = new ParametersEngine();
             FillCommon(engine, methodDefinition, methodVariable, parametersVariable, errorHandler);
             return engine;
         }
-        public static ParametersEngine CreateForOnFinallyMethodWeaving(MethodDefinition methodDefinition, VariableDefinition methodVariable, VariableDefinition parametersVariable, ErrorHandler errorHandler)
+        public static ParametersEngine CreateForOnFinallyMethodWeaving(MethodDefinition methodDefinition, Func<VariableDefinition> methodVariable, VariableDefinition parametersVariable, ErrorHandler errorHandler)
         {
             var engine = new ParametersEngine();
             FillCommon(engine, methodDefinition, methodVariable, parametersVariable, errorHandler);
             return engine;
         }
 
-        private static void FillCommon(ParametersEngine engine, MethodDefinition methodDefinition, VariableDefinition methodVariable, VariableDefinition parametersVariable, ErrorHandler errorHandler)
+        private static void FillCommon(ParametersEngine engine, MethodDefinition methodDefinition, Func<VariableDefinition> methodVariable, VariableDefinition parametersVariable, ErrorHandler errorHandler)
         {
             engine.AddInstance(methodDefinition);
             engine.AddMethod(methodVariable);
@@ -29,7 +30,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory
             engine.AddParameterNames(methodDefinition, errorHandler);
         }
 
-        public static ParametersEngine CreateForAfterMethodWeaving(MethodDefinition methodDefinition, VariableDefinition methodInfoVariable, VariableDefinition parametersVariable, VariableDefinition resultVariable, ErrorHandler errorHandler)
+        public static ParametersEngine CreateForAfterMethodWeaving(MethodDefinition methodDefinition, Func<VariableDefinition> methodInfoVariable, VariableDefinition parametersVariable, VariableDefinition resultVariable, ErrorHandler errorHandler)
        {
            var engine = new ParametersEngine();
             FillCommon(engine, methodDefinition, methodInfoVariable, parametersVariable, errorHandler);
@@ -37,7 +38,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory
           return engine;
        }
 
-        public static ParametersEngine CreateForOnExceptionMethodWeaving(MethodDefinition methodDefinition, VariableDefinition methodVariable, VariableDefinition parametersVariable, VariableDefinition exception, ErrorHandler errorHandler)
+        public static ParametersEngine CreateForOnExceptionMethodWeaving(MethodDefinition methodDefinition, Func<VariableDefinition> methodVariable, VariableDefinition parametersVariable, VariableDefinition exception, ErrorHandler errorHandler)
         {
            var engine = new ParametersEngine();
            FillCommon(engine, methodDefinition, methodVariable, parametersVariable, errorHandler);
