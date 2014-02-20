@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
@@ -25,6 +26,15 @@ namespace FluentAspect.Weaver.Helpers.IL
         }
 
         public static void AppendCreateNewObject(this Collection<Instruction> instructions,
+                                                 VariableDefinition interceptor,
+                                                 Type interceptorType,
+                                                 ModuleDefinition module)
+        {
+            instructions.Add(Instruction.Create(OpCodes.Newobj, module.Import(interceptorType.GetConstructors()[0])));
+            instructions.Add(Instruction.Create(OpCodes.Stloc, interceptor));
+        }
+
+        public static void AppendCreateNewObject(this List<Instruction> instructions,
                                                  VariableDefinition interceptor,
                                                  Type interceptorType,
                                                  ModuleDefinition module)

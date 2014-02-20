@@ -6,6 +6,8 @@ using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Methods;
+using FluentAspect.Weaver.Helpers;
+using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -15,12 +17,13 @@ namespace FluentAspect.Weaver.Core.V2
     {
        private readonly MethodDefinition _method;
        private MethodInfo interceptorMethod;
-       private ParametersEngine forBeforeMethodWeaving_L;
+        private readonly Type _aspectType;
 
-       public MethodWeavingBeforeMethodInjector(MethodDefinition method_P, MethodInfo interceptorMethod_P)
+        public MethodWeavingBeforeMethodInjector(MethodDefinition method_P, MethodInfo interceptorMethod_P, Type aspectType)
        {
           _method = method_P;
           interceptorMethod = interceptorMethod_P;
+           _aspectType = aspectType;
        }
 
        public void Check(ErrorHandler errorHandler, IlInjectorAvailableVariables availableInformations)
@@ -34,7 +37,16 @@ namespace FluentAspect.Weaver.Core.V2
        {
            var parametersIlGenerator = new ParametersIlGenerator();
            parametersIlGenerator.CreateIlGeneratorForInstanceParameter(_method);
-           parametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations);
+           var interceptor = _method.CreateVariable(_aspectType);
+           instructions.AppendCreateNewObject(interceptor, _aspectType, _method.Module);
+           instructions.Add(Instruction.Create(OpCodes.Ldloc, interceptor));
+               parametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations);
+               instructions.Add(
+                  Instruction.Create(
+                     OpCodes.Call,
+                     _method.Module.Import(
+                        interceptorMethod)));
+
         }
     }
 }

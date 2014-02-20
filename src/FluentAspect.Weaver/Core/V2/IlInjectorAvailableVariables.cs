@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
@@ -7,6 +8,12 @@ using Mono.Collections.Generic;
 
 namespace FluentAspect.Weaver.Core.V2
 {
+    public class IlInterceptor
+    {
+        public VariableDefinition Variable;
+        public MethodInfo MethodToCall;
+    }
+
    public class IlInjectorAvailableVariables
    {
       private readonly VariableDefinition _result;
@@ -14,13 +21,14 @@ namespace FluentAspect.Weaver.Core.V2
       private MethodDefinition method;
       private VariableDefinition currentMethodInfo;
 
-      public IlInjectorAvailableVariables(VariableDefinition result)
+      public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method)
       {
-         _result = result;
+          _result = result;
+          this.method = method;
       }
 
 
-      public VariableDefinition CurrentMethodInfo { get
+       public VariableDefinition CurrentMethodInfo { get
       {
          if (currentMethodInfo == null)
          {

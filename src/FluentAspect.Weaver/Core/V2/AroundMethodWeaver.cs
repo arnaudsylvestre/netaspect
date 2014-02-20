@@ -17,7 +17,7 @@ namespace FluentAspect.Weaver.Core.V2
       {
 
          VariableDefinition result = method.MethodDefinition.ReturnType == method.MethodDefinition.Module.TypeSystem.Void ? null : new VariableDefinition(method.MethodDefinition.ReturnType);
-         variables = new IlInjectorAvailableVariables(result);
+         variables = new IlInjectorAvailableVariables(result, method.MethodDefinition);
           SimpleErrorListener errorListener = new SimpleErrorListener();
          methodWeavingModel.Befores.Check(errorHandlerP_P, variables);
          methodWeavingModel.Afters.Check(errorHandlerP_P, variables);

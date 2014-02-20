@@ -47,7 +47,7 @@ namespace FluentAspect.Weaver.Core.V2
             return;
          if (aspect.Before.Method != null)
          {
-            weavingModel.Method.Befores.Add(new MethodWeavingBeforeMethodInjector(method, aspect.Before.Method));
+            weavingModel.Method.Befores.Add(new MethodWeavingBeforeMethodInjector(method, aspect.Before.Method, aspect.Type));
          }
       }
    }
