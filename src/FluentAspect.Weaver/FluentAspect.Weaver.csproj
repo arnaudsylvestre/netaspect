@@ -91,6 +91,7 @@
     <Compile Include="Core\V2\MethodInterceptorParametersChercker.cs" />
     <Compile Include="Core\V2\MethodInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\V2\MethodWeavingBeforeMethodInjector.cs" />
+    <Compile Include="Core\V2\MethodWeavingModelExtensions.cs" />
     <Compile Include="Core\V2\Model\WeavingModel.cs" />
     <Compile Include="Core\V2\MultiMethodWeavingModelFiller.cs" />
     <Compile Include="Core\V2\Model\MethodWeavingModel.cs" />

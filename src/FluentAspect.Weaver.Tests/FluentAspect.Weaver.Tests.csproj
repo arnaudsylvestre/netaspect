@@ -58,8 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="acceptance\AcceptanceTest.cs" />
     <Compile Include="acceptance\AppDomainIsolatedTestRunner.cs" />
+    <Compile Include="acceptance\ErrorsTest.cs" />
     <Compile Include="Core\MethodWeavingAspectDefiner.cs" />
     <Compile Include="Core\Model\NetAspectAspect.cs" />
     <Compile Include="Core\Model\NetAspectAssemblyExtensions.cs" />
@@ -172,7 +172,6 @@
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldValueParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldLineNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldValueParameterTest.cs" />
-    <Compile Include="acceptance\Weaving\Errors\ErrorsTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\ConstructorWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\AfterConstructorInstanceParameterTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\AfterConstructorMethodParameterTest.cs" />
@@ -304,7 +303,6 @@
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Parameters\BeforeMethodParametersParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Parameters\BeforeMethodParametersParameterWithRealTypeTest.cs" />
     <Compile Include="Core\AssemblyExtensions.cs" />
-    <Compile Include="docs\MyIntTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldColumnNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldFilePathParameterTest.cs" />
@@ -465,6 +463,9 @@
       <Link>PEVerify.exe</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="docs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

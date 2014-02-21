@@ -5,7 +5,6 @@ using System.Text;
 using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Factory;
-using FluentAspect.Weaver.Tests.acceptance.Weaving.Errors;
 using NUnit.Framework;
 using System.Linq;
 

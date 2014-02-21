@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
@@ -35,5 +36,12 @@ namespace FluentAspect.Weaver.Core.V2
            var weavingModels = weavingModelComputer.ComputeWeavingModels(assembliesToWeave, assemblyPool, aspects);
            return weavingModels;
        }
+
+       public void Weave(string assemblyFilePath, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
+        {
+            Assembly mainAssembly = Assembly.LoadFrom(assemblyFilePath);
+            var types = mainAssembly.GetTypes();
+            Weave(types, errorHandler, newAssemblyNameProvider);
+        }
    }
 }

@@ -14,7 +14,7 @@ namespace FluentAspect.Weaver.Tasks
             try
             {
                 var handler = new ErrorHandler();
-                WeaverCore weaverCore = WeaverCoreFactory.Create();
+                var weaverCore = WeaverCoreFactory.CreateV2();
                 weaverCore.Weave(configFile, handler, TargetFileName);
 
                 foreach (string warning_L in handler.Warnings)

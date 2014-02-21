@@ -8,11 +8,21 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 {
     public class ParametersIlGenerator
     {
-        private Dictionary<string, IInterceptorParameterIlGenerator> possibleParameters = new Dictionary<string, IInterceptorParameterIlGenerator>();
-
-        public void Add(string name, IInterceptorParameterIlGenerator checker)
+        private class Item
         {
-            possibleParameters.Add(name, checker);
+            public string Name;
+            public IInterceptorParameterIlGenerator Generator;
+        }
+
+        private List<Item> possibleParameters = new List<Item>();
+
+        public void Add(string name, IInterceptorParameterIlGenerator generator)
+        {
+            possibleParameters.Add(new Item
+                {
+                    Generator = generator,
+                    Name = name,
+                });
         }
 
         public void Generate(IEnumerable<ParameterInfo> parameters, List<Instruction> instructions, IlInjectorAvailableVariables info)
@@ -20,7 +30,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
             foreach (var parameterInfo in parameters)
             {
                 var key_L = parameterInfo.Name.ToLower();
-                possibleParameters[key_L].GenerateIl(parameterInfo, instructions, info);
+                possibleParameters.Find(i => i.Name == key_L).Generator.GenerateIl(parameterInfo, instructions, info);
             }
         }
     }

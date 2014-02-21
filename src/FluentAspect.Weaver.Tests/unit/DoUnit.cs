@@ -3,8 +3,6 @@ using System.IO;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Helpers;
-using FluentAspect.Weaver.Tests.Core;
-using FluentAspect.Weaver.Tests.Core.Model;
 using FluentAspect.Weaver.Tests.acceptance;
 using Mono.Cecil;
 
@@ -28,7 +26,7 @@ namespace FluentAspect.Weaver.Tests.unit
             {
                 get
                 {
-                    string codeBase = typeof(AcceptanceTest).Assembly.CodeBase;
+                    string codeBase = typeof(DoUnit).Assembly.CodeBase;
                     var uri = new UriBuilder(codeBase);
                     string path = Uri.UnescapeDataString(uri.Path);
                     return Path.GetDirectoryName(path);
