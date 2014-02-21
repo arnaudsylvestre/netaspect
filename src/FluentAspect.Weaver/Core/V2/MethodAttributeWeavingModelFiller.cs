@@ -17,4 +17,27 @@ namespace FluentAspect.Weaver.Core.V2
 
         
     }
+
+
+    public class PropertyGetAttributeWeavingModelFiller : IWeavingModelFiller
+    {
+        public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
+        {
+            var propertyDefinitions = method.DeclaringType.Properties;
+            foreach (var propertyDefinition in propertyDefinitions)
+            {
+                if (propertyDefinition.GetMethod == method)
+                {
+                    var aspectType = method.Module.Import(aspect.Type);
+                    var isCompliant_L = propertyDefinition.CustomAttributes.Any(customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
+                    if (!isCompliant_L)
+                        return;
+                    weavingModel.AddMethodWeavingModel(method, aspect, aspect.BeforePropertyGet, aspect.AfterPropertyGet, aspect.OnExceptionPropertyGet, aspect.OnFinallyPropertyGet);
+                    
+                }
+            }
+        }
+
+
+    }
 }
