@@ -32,67 +32,26 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using FluentAspect.Weaver.Core.Helpers;
 
 namespace FluentAspect.Weaver.Core.Errors
 {
     public class PEVerify
     {
-        public void Run(string assemblyFile)
+        public static void Run(string assemblyFile)
         {
             string command = null;
             string arguments = string.Empty;
 
-            switch ((int) Environment.OSVersion.Platform)
-            {
-                case (int) PlatformID.Unix:
-                case 128: // mono's PlatformID.Unix workaround on 1.1
-                    command = "pedump";
-                    arguments = "--verify all \"" + assemblyFile + "\"";
-                    break;
                 default: // Windows
                     command = "peverify.exe";
                     arguments = "\"" + assemblyFile + "\"";
                     break;
             }
-            int exitCode = 0;
-            string output = "";
-            Process p = StartProcess(@".\", command, arguments);
-            p.WaitForExit();
-            output = p.StandardOutput.ReadToEnd();
-            exitCode = p.ExitCode;
-            if (0 != exitCode)
-            {
-                throw new Exception(output);
-            }
+            ProcessHelper.Launch(command, arguments);
+            
         }
 
-        public Process StartProcess(string workingdir, string filename, string arguments)
-        {
-            var p = new Process
-                {
-                    StartInfo =
-                        {
-                            Arguments = arguments,
-                            CreateNoWindow = true,
-                            UseShellExecute = false,
-                            RedirectStandardOutput = true,
-                            RedirectStandardInput = true,
-                            RedirectStandardError = true,
-                            FileName = filename
-                        }
-                };
-
-            // Mono's pedump won't find the dependent assemblies if the output 
-            // directory is not in the path. It can also give problems with the 
-            // encoding if it's not forced to one.
-            if (Type.GetType("Mono.Runtime") != null)
-            {
-                p.StartInfo.EnvironmentVariables["MONO_PATH"] = workingdir;
-                p.StartInfo.StandardOutputEncoding = Encoding.UTF8;
-                p.StartInfo.StandardErrorEncoding = Encoding.UTF8;
-            }
-            p.Start();
-            return p;
-        }
+        
     }
 }

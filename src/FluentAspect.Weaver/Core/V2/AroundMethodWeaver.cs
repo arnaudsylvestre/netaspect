@@ -11,19 +11,17 @@ namespace FluentAspect.Weaver.Core.V2
 {
    public class AroundMethodWeaver
    {
-      IlInjectorAvailableVariables variables;
-
       public void Weave(Method method, MethodWeavingModel methodWeavingModel, ErrorHandler errorHandlerP_P)
       {
 
          VariableDefinition result = method.MethodDefinition.ReturnType == method.MethodDefinition.Module.TypeSystem.Void ? null : new VariableDefinition(method.MethodDefinition.ReturnType);
-         variables = new IlInjectorAvailableVariables(result, method.MethodDefinition);
+         IlInjectorAvailableVariables variables = new IlInjectorAvailableVariables(result, method.MethodDefinition);
           SimpleErrorListener errorListener = new SimpleErrorListener();
          methodWeavingModel.Befores.Check(errorHandlerP_P, variables);
          methodWeavingModel.Afters.Check(errorHandlerP_P, variables);
          methodWeavingModel.OnExceptions.Check(errorHandlerP_P, variables);
          methodWeavingModel.OnFinallys.Check(errorHandlerP_P, variables);
-          if (errorListener.HasError)
+         if (errorHandlerP_P.Errors.Count > 0)
               return;
          if (!methodWeavingModel.Befores.Any() && !methodWeavingModel.Afters.Any() &&
             !methodWeavingModel.OnExceptions.Any() && !methodWeavingModel.OnFinallys.Any())
@@ -38,7 +36,7 @@ namespace FluentAspect.Weaver.Core.V2
          var onFinallyInstructions = new List<Instruction>();
          var methodInstructions = new Collection<Instruction>(method.MethodDefinition.Body.Instructions);
 
-         var end = InstructionsHelper.FixReturns(method.MethodDefinition, this.variables.Result, methodInstructions, beforeAfter);
+         var end = InstructionsHelper.FixReturns(method.MethodDefinition, variables.Result, methodInstructions, beforeAfter);
 
          methodWeavingModel.Befores.Inject(beforeInstructions, variables);
          methodWeavingModel.OnExceptions.Inject(onExceptionInstructions, variables);

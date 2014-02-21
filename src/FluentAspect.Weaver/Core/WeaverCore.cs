@@ -155,8 +155,7 @@ namespace FluentAspect.Weaver.Core
         {
             try
             {
-                var peVerify = new PEVerify();
-                peVerify.Run(targetFileName);
+                PEVerify.Run(targetFileName);
             }
             catch (Exception e)
             {

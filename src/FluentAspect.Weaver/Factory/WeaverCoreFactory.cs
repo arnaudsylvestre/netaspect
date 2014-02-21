@@ -11,7 +11,7 @@ namespace FluentAspect.Weaver.Factory
     {
         public static WeaverCore2 CreateV2()
         {
-            return new WeaverCore2();
+            return new WeaverCore2(new WeavingModelComputer());
         }
 
         public static WeaverCore Create()
