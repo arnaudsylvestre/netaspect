@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{28912034-8A56-4B8E-BAA1-02C50149CA68}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -72,17 +72,37 @@
     <Compile Include="Core\Model\MethodWeavingConfiguration.cs" />
     <Compile Include="Core\Model\NetAspectDefinition.cs" />
     <Compile Include="Core\V2\AroundMethodWeaver.cs" />
+    <Compile Include="Core\V2\AssemblyPool.cs" />
+    <Compile Include="Core\V2\ExceptionInterceptorParametersChercker.cs" />
     <Compile Include="Core\V2\IIlInjector.cs" />
     <Compile Include="Core\V2\IIlInjectorsExtensions.cs" />
+    <Compile Include="Core\V2\IInstructionIlInjector.cs" />
+    <Compile Include="Core\V2\IInterceptorParameterIlGenerator.cs" />
     <Compile Include="Core\V2\IlInjectorAvailableVariables.cs" />
+    <Compile Include="Core\V2\IlInterceptor.cs" />
     <Compile Include="Core\V2\IMethodWeavingModelFiller.cs" />
+    <Compile Include="Core\V2\InsideMethodInstructionWeavingModelFiller.cs" />
+    <Compile Include="Core\V2\InstanceInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\V2\InstructionsHelper.cs" />
+    <Compile Include="Core\V2\InterceptorParametersChecker.cs" />
+    <Compile Include="Core\V2\InterceptorParametersIlGeneratorFactory.cs" />
+    <Compile Include="Core\V2\IWeavingModelFiller.cs" />
+    <Compile Include="Core\V2\MethodAttributeWeavingModelFiller.cs" />
+    <Compile Include="Core\V2\MethodInterceptorParametersChercker.cs" />
+    <Compile Include="Core\V2\MethodInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\V2\MethodWeavingBeforeMethodInjector.cs" />
+    <Compile Include="Core\V2\Model\WeavingModel.cs" />
     <Compile Include="Core\V2\MultiMethodWeavingModelFiller.cs" />
     <Compile Include="Core\V2\Model\MethodWeavingModel.cs" />
-    <Compile Include="Core\V2\New.cs" />
+    <Compile Include="Core\V2\MultiWeavingModelFiller.cs" />
+    <Compile Include="Core\V2\NetAspectDefinitionExtensions.cs" />
+    <Compile Include="Core\V2\ParameterNameInterceptorParametersChercker.cs" />
+    <Compile Include="Core\V2\ParameterNameInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\V2\ParametersChecker.cs" />
+    <Compile Include="Core\V2\ParametersIlGenerator.cs" />
+    <Compile Include="Core\V2\ResultInterceptorParametersChercker.cs" />
     <Compile Include="Core\V2\WeaverCore2.cs" />
+    <Compile Include="Core\V2\WeavingModelComputer.cs" />
     <Compile Include="Core\WeaverBuilders\AroundConstructorBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\CallMethodBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\CallFieldBuilderWeaver.cs" />

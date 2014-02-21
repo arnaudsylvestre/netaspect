@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
@@ -8,20 +9,17 @@ using Mono.Collections.Generic;
 
 namespace FluentAspect.Weaver.Core.V2
 {
-    public class IlInterceptor
-    {
-        public VariableDefinition Variable;
-        public MethodInfo MethodToCall;
-    }
-
-   public class IlInjectorAvailableVariables
+    public class IlInjectorAvailableVariables
    {
-      private readonly VariableDefinition _result;
-      public Collection<Instruction> Instructions = new Collection<Instruction>();
+       private readonly VariableDefinition _result;
+       public Collection<Instruction> Instructions = new Collection<Instruction>();
+       public Collection<Instruction> ExceptionManagementInstructions = new Collection<Instruction>();
       private MethodDefinition method;
       private VariableDefinition currentMethodInfo;
+        private VariableDefinition _parameters;
+        private VariableDefinition _exception;
 
-      public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method)
+        public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method)
       {
           _result = result;
           this.method = method;
@@ -45,5 +43,28 @@ namespace FluentAspect.Weaver.Core.V2
       {
          get { return _result; }
       }
+
+        public VariableDefinition Parameters
+        {
+            get { if (_parameters == null)
+            {
+                _parameters = method.CreateVariable<object[]>();
+
+                new Method(method).FillArgsArrayFromParameters(Instructions, _parameters);
+            }
+                return _parameters;
+            }
+        }
+
+        public VariableDefinition Exception
+        {
+            get { if (_exception == null)
+            {
+                _exception = method.CreateVariable<Exception>();
+                ExceptionManagementInstructions.Add(Instruction.Create(OpCodes.Stloc, _exception));
+            }
+                return _exception;
+            }
+        }
    }
 }

@@ -55,6 +55,7 @@ namespace FluentAspect.Weaver.Core.V2
          }
 
 
+         allInstructions.AddRange(variables.ExceptionManagementInstructions);
          allInstructions.AddRange(onExceptionInstructions);
          allInstructions.AddRange(onFinallyInstructions);
          allInstructions.AddRange(end);

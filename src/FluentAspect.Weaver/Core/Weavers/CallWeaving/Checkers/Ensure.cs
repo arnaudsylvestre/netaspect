@@ -43,7 +43,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
 
 
 
-        public static void OfType<T>(ParameterInfo info, ErrorHandler handler)
+        public static void OfType<T>(ParameterInfo info, IErrorListener handler)
         {
             Ensure.OfType(info, handler, typeof(T).FullName);
         }
