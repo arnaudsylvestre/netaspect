@@ -12,21 +12,23 @@ namespace FluentAspect.Weaver.Core.V2
             var isCompliant_L = method.CustomAttributes.Any(customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
             if (!isCompliant_L)
                 return;
+            // créer une méthode
+            jjjjj
             if (aspect.Before.Method != null)
             {
                 weavingModel.Method.Befores.Add(MethodWeavingMethodInjectorFactory.CreateForBefore(method, aspect.Before.Method, aspect.Type));
             }
             if (aspect.After.Method != null)
             {
-                weavingModel.Method.Befores.Add(MethodWeavingMethodInjectorFactory.CreateForAfter(method, aspect.After.Method, aspect.Type));
+                weavingModel.Method.Afters.Add(MethodWeavingMethodInjectorFactory.CreateForAfter(method, aspect.After.Method, aspect.Type));
             }
             if (aspect.OnException.Method != null)
             {
-                weavingModel.Method.Befores.Add(MethodWeavingMethodInjectorFactory.CreateForOnException(method, aspect.OnException.Method, aspect.Type));
+                weavingModel.Method.OnExceptions.Add(MethodWeavingMethodInjectorFactory.CreateForOnException(method, aspect.OnException.Method, aspect.Type));
             }
             if (aspect.OnFinally.Method != null)
             {
-                weavingModel.Method.Befores.Add(MethodWeavingMethodInjectorFactory.CreateForBefore(method, aspect.OnFinally.Method, aspect.Type));
+                weavingModel.Method.OnFinallys.Add(MethodWeavingMethodInjectorFactory.CreateForOnFinally(method, aspect.OnFinally.Method, aspect.Type));
             }
         }
     }

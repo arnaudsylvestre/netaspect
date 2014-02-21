@@ -25,6 +25,18 @@ namespace FluentAspect.Weaver.Core.V2
 
             return new MethodWeavingBeforeMethodInjector(method, interceptorMethod, aspectType, checker, parametersIlGenerator);
         }
+        public static IIlInjector CreateForOnFinally(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType)
+        {
+
+            var checker = new ParametersChecker();
+            FillCommon(method, checker);
+
+
+            var parametersIlGenerator = new ParametersIlGenerator();
+            FillCommon(method, parametersIlGenerator);
+
+            return new MethodWeavingBeforeMethodInjector(method, interceptorMethod, aspectType, checker, parametersIlGenerator);
+        }
 
         private static void FillCommon(MethodDefinition method, ParametersIlGenerator parametersIlGenerator)
         {
