@@ -1,9 +1,9 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Instance
+namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters.After.Instance
 {
-   public class AfterPropertyGetterInstanceParameterWithBadTypeTest : NetAspectTest<AfterMethodInstanceParameterWithBadTypeTest.ClassToWeave>
+    public class AfterPropertyGetterInstanceParameterWithBadTypeTest : NetAspectTest<AfterPropertyGetterInstanceParameterWithBadTypeTest.ClassToWeave>
    {
        protected override Action CreateEnsure()
        {
@@ -32,7 +32,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.I
 
           public static ClassToWeave Instance;
 
-         public void BeforeGetProperty(ClassToWeave instance)
+          public void BeforePropertyGet(ClassToWeave instance)
          {
              Instance = instance;
          }
