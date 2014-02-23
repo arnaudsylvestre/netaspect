@@ -147,7 +147,8 @@
     <Compile Include="unit\CallWeaving\Properties\Update\PropertyUpdaterCallWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Update\StaticPropertyUpdaterCallWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Update\VisibilityPropertyUpdaterCallWeavingTest.cs" />
-    <Compile Include="unit\MethodWeaving\Properties\Getter\Parameters\After\Instance\AfterPropertyGetterInstanceParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Properties\Getter\Parameters\After\Instance\AfterPropertyGetterInstanceParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Properties\Getter\Parameters\After\Method\AfterPropertyGetterInstanceParameterWithRealTypeTest.cs" />
     <Compile Include="unit\NetAspectTest.cs" />
     <Compile Include="unit\DoUnit.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldCallerParameterTest.cs" />

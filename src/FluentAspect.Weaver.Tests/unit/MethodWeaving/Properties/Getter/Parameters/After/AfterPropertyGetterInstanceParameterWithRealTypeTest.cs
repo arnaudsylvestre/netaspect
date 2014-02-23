@@ -1,18 +1,19 @@
 using System;
+using System.Reflection;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters.After.Instance
+namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters.After
 {
-    public class AfterPropertyGetterInstanceParameterWithBadTypeTest : NetAspectTest<AfterPropertyGetterInstanceParameterWithBadTypeTest.ClassToWeave>
+    public class AfterPropertyGetterPropertyParameterWithRealTypeTest : NetAspectTest<AfterPropertyGetterPropertyParameterWithRealTypeTest.ClassToWeave>
    {
        protected override Action CreateEnsure()
        {
            return () =>
            {
-               Assert.IsNull(MyAspect.Instance);
+               Assert.IsNull(MyAspect.Property);
                var classToWeave_L = new ClassToWeave();
                var property = classToWeave_L.MyProperty;
-               Assert.AreEqual(classToWeave_L, MyAspect.Instance);
+               Assert.AreEqual("MyProperty", MyAspect.Property.Name);
            };
        }
 
@@ -30,11 +31,11 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Paramet
       {
          public bool NetAspectAttribute = true;
 
-          public static ClassToWeave Instance;
+         public static PropertyInfo Property;
 
-          public void BeforePropertyGet(ClassToWeave instance)
+         public void BeforePropertyGet(PropertyInfo property)
          {
-             Instance = instance;
+             Property = property;
          }
       }
    }
