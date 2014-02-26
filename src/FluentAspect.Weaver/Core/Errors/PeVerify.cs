@@ -8,9 +8,6 @@ namespace FluentAspect.Weaver.Core.Errors
         public static void Run(string assemblyFile)
         {
             ProcessHelper.Launch("peverify.exe", "\"" + assemblyFile + "\"");
-            
         }
-
-        
     }
 }
