@@ -1,25 +1,24 @@
 using System;
-using System.Reflection;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.OnException.Method
+namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.OnException.Value
 {
-    public class OnExceptionPropertySetterMethodParameterWithRealTypeTest : NetAspectTest<OnExceptionPropertySetterMethodParameterWithRealTypeTest.ClassToWeave>
+    public class OnExceptionPropertySetterValueParameterWithRealTypeTest : NetAspectTest<OnExceptionPropertySetterValueParameterWithRealTypeTest.ClassToWeave>
    {
        protected override Action CreateEnsure()
        {
            return () =>
            {
-               Assert.IsNull(MyAspect.Method);
+               Assert.IsNull(MyAspect.Value);
                var classToWeave_L = new ClassToWeave();
                try
                {
-                   classToWeave_L.MyProperty = "";
+                   classToWeave_L.MyProperty = "Value";
                    Assert.Fail();
                }
                catch (System.Exception)
                {
-                   Assert.AreEqual("set_MyProperty", MyAspect.Method.Name);
+                   Assert.AreEqual("Value", MyAspect.Value);
                }
            };
        }
@@ -38,11 +37,11 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parame
       {
          public bool NetAspectAttribute = true;
 
-         public static MethodInfo Method;
+         public static string Value;
 
-          public void OnExceptionPropertySet(MethodInfo method)
+         public void OnExceptionPropertySet(string value)
          {
-             Method = method;
+             Value = value;
          }
       }
    }

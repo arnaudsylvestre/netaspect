@@ -11,8 +11,17 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parame
            {
                Assert.IsNull(MyAspect.Exception);
                var classToWeave_L = new ClassToWeave();
-               classToWeave_L.MyProperty = "";
-               Assert.AreEqual("Message", MyAspect.Exception.Message);
+               try
+               {
+                   classToWeave_L.MyProperty = "";
+                   Assert.Fail();
+               }
+               catch (System.Exception)
+               {
+                   Assert.AreEqual("Message", MyAspect.Exception.Message);
+               }
+               
+               
            };
        }
 

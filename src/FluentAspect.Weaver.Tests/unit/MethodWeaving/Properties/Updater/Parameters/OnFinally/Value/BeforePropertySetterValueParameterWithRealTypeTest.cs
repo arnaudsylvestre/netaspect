@@ -1,9 +1,9 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.After.Value
+namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.OnFinally.Result
 {
-    public class AfterPropertySetterValueParameterWithRealTypeTest : NetAspectTest<AfterPropertySetterValueParameterWithRealTypeTest.ClassToWeave>
+    public class OnFinallyPropertySetterValueParameterWithRealTypeTest : NetAspectTest<OnFinallyPropertySetterValueParameterWithRealTypeTest.ClassToWeave>
    {
        protected override Action CreateEnsure()
        {
@@ -21,8 +21,8 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parame
       {
          [MyAspect]
          public string MyProperty
-         {
-             set {  }
+          {
+              set { }
          }
       }
 
@@ -32,7 +32,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parame
 
          public static string Value;
 
-         public void BeforePropertySet(string value)
+         public void OnFinallyPropertySet(string value)
          {
              Value = value;
          }

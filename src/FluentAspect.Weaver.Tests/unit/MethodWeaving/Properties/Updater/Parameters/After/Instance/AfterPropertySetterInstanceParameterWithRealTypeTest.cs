@@ -32,7 +32,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parame
 
           public static ClassToWeave Instance;
 
-          public void BeforePropertySet(ClassToWeave instance)
+          public void AfterPropertySet(ClassToWeave instance)
          {
              Instance = instance;
          }

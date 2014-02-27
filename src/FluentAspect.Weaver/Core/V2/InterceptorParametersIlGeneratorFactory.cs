@@ -38,6 +38,13 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
             }
 
         }
+
+
+        public static void CreateIlGeneratorForPropertySetValueParameter(this ParametersIlGenerator ilGeneratoir, MethodDefinition method)
+        {
+            ilGeneratoir.Add("value", new ParameterNameInterceptorParametersIlGenerator(method.Parameters[0]));
+        }
+
         public static void CreateIlGeneratorForParametersParameter(this ParametersIlGenerator ilGeneratoir, MethodDefinition method)
         {
             ilGeneratoir.Add("parameters", new ParametersInterceptorParametersIlGenerator());

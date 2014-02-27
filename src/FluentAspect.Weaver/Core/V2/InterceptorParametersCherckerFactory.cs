@@ -63,26 +63,20 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
         public static void CreateCheckerForParameterNameParameter(this ParametersChecker checkers, MethodDefinition methodDefinition)
         {
             checkers.AddRange(methodDefinition.Parameters.Select(parameter => new InterceptorParametersChecker()
-                {
-                    ParameterName = parameter.Name, Checker = new ParameterNameInterceptorParametersChercker(parameter),
-                }));
+            {
+                ParameterName = parameter.Name,
+                Checker = new ParameterNameInterceptorParametersChercker(parameter),
+            }));
+        }
+        public static void CreateCheckerForPropertySetValueParameter(this ParametersChecker checkers, MethodDefinition methodDefinition)
+        {
+            checkers.AddRange(methodDefinition.Parameters.Select(parameter => new InterceptorParametersChecker()
+            {
+                ParameterName = "value",
+                Checker = new ParameterNameInterceptorParametersChercker(methodDefinition.Parameters[0]),
+            }));
         }
 
-        //    return new ParameterNameInterceptorParametersChercker();
-        //}
-
-        //public static void AddParameterValue(this ParametersEngine engine, ParameterDefinition parameter)
-        //{
-
-        //   engine.AddPossibleParameter("value",
-        //                               (p, handler) =>
-        //                               {
-        //                                  Ensure.NotOut(p, handler);
-        //                                  Ensure.OfType(p, handler, parameter.ParameterType.FullName.Replace("/", "+"));
-        //                               }, (info, instructions) => { instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter)); }
-
-        //                                   );
-        //}
 
         
     }
