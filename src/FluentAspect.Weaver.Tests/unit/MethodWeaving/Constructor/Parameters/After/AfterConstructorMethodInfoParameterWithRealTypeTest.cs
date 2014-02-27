@@ -2,9 +2,9 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Method
+namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
 {
-   public class AfterMethodMethodInfoParameterWithRealTypeTest : NetAspectTest<AfterMethodMethodInfoParameterWithRealTypeTest.ClassToWeave>
+    public class AfterConstructorMethodInfoParameterWithRealTypeTest : NetAspectTest<AfterConstructorMethodInfoParameterWithRealTypeTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
       {
@@ -12,18 +12,17 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.M
             {
                Assert.IsNull(MyAspect.MethodInfo);
                var classToWeave_L = new ClassToWeave();
-               classToWeave_L.Weaved();
-               Assert.AreEqual(classToWeave_L.GetType().GetMethod("Weaved"), MyAspect.MethodInfo);
+               Assert.AreEqual(".ctor", MyAspect.MethodInfo.Name);
             };
       }
 
       public class ClassToWeave
       {
-         [MyAspect]
-         public void Weaved()
-         {
-
-         }
+          [MyAspect]
+          public ClassToWeave()
+          {
+              
+          }
       }
 
       public class MyAspect : Attribute

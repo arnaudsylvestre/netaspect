@@ -26,14 +26,13 @@ namespace FluentAspect.Weaver.Core.V2
       }
 
 
-       public VariableDefinition CurrentMethodInfo { get
+       public VariableDefinition CurrentMethodBase { get
       {
          if (currentMethodInfo == null)
          {
-            currentMethodInfo = method.CreateVariable<MethodInfo>();
+            currentMethodInfo = method.CreateVariable<MethodBase>();
 
-            Instructions.AppendCallToThisGetType(method.Module);
-            Instructions.AppendCallToGetMethod(method.Name, method.Module);
+            Instructions.Add(Instruction.Create(OpCodes.Call, method.Module.Import(typeof(MethodBase).GetMethod("GetCurrentMethod", new Type[] {  }))));
             Instructions.AppendSaveResultTo(currentMethodInfo);
          }
          return currentMethodInfo;

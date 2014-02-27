@@ -9,7 +9,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
         public void Check(ParameterInfo parameter, IErrorListener errorListener)
         {
             Ensure.NotReferenced(parameter, errorListener);
-            Ensure.OfType(parameter, errorListener, typeof(MethodInfo).FullName);
+            Ensure.OfType(parameter, errorListener, typeof(MethodBase).FullName);
         }
     }
     public class PropertyInterceptorParametersChercker : IInterceptorParameterChecker

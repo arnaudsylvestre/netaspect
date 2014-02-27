@@ -4,6 +4,7 @@ using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters;
 using FluentAspect.Weaver.Helpers.IL;
+using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
 
@@ -35,7 +36,29 @@ namespace FluentAspect.Weaver.Core.V2
          var afterInstructions = new List<Instruction>();
          var onExceptionInstructions = new List<Instruction>();
          var onFinallyInstructions = new List<Instruction>();
-         var methodInstructions = new Collection<Instruction>(method.MethodDefinition.Body.Instructions);
+         var bodyInstructions = method.MethodDefinition.Body.Instructions;
+         var beforeAllInstructions = new Collection<Instruction>();
+         var methodInstructions = new Collection<Instruction>();
+          var callBaseConstructorDone = !method.MethodDefinition.IsConstructor;
+          foreach (var bodyInstruction in bodyInstructions)
+          {
+              if (callBaseConstructorDone)
+                methodInstructions.Add(bodyInstruction);
+              else
+              {
+                  beforeAllInstructions.Add(bodyInstruction);
+                  if (IsCallInstruction(bodyInstruction))
+                  {
+                      if (bodyInstruction.Operand is MethodReference)
+                      {
+                          var methodReference = bodyInstruction.Operand as MethodReference;
+                          if (methodReference.Name == ".ctor")
+                              callBaseConstructorDone = true;
+                      }
+                  }
+
+              }
+          }
           if (methodInstructions.Count == 0)
               methodInstructions.Add(Instruction.Create(OpCodes.Nop));
           var BeforeExceptionManagementInstructions = new List<Instruction>();
@@ -49,6 +72,7 @@ namespace FluentAspect.Weaver.Core.V2
          methodWeavingModel.Afters.Inject(afterInstructions, variables);
          methodWeavingModel.OnFinallys.Inject(onFinallyInstructions, variables);
          var allInstructions = new List<Instruction>();
+          allInstructions.AddRange(beforeAllInstructions);
          allInstructions.AddRange(variables.Instructions);
          allInstructions.AddRange(beforeInstructions);
          allInstructions.AddRange(methodInstructions);
@@ -96,5 +120,10 @@ namespace FluentAspect.Weaver.Core.V2
          if (onFinallyInstructions.Any())
             method.AddTryFinally(methodInstructions.First(), onFinallyInstructions.First(), onFinallyInstructions.First(), end.Count > 0 ? end.First() : null);
       }
+
+       private static bool IsCallInstruction(Instruction bodyInstruction)
+       {
+           return bodyInstruction.OpCode == OpCodes.Call || bodyInstruction.OpCode == OpCodes.Calli || bodyInstruction.OpCode == OpCodes.Callvirt;
+       }
    }
 }
