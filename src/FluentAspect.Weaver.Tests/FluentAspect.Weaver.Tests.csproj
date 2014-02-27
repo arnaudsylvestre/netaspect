@@ -220,11 +220,6 @@
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldValueParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldLineNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldValueParameterTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\ConstructorWeavingInAnotherAssemblyTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\ConstructorWeavingWithGenericsTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\ConstructorWeavingAssemblyAttributeWeavingTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\StaticConstructorWeavingTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\VisibilityConstructorWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Attributes\Static\WeaveStaticMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Attributes\Visibility\WeaveInternalMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Attributes\Visibility\WeaveProtectedMethodTest.cs" />
@@ -457,6 +452,8 @@
   <ItemGroup>
     <Folder Include="docs\" />
     <Folder Include="unit\MethodWeaving\Events\" />
+    <Folder Include="unit\MethodWeaving\Indexers\" />
+    <Folder Include="unit\MethodWeaving\Operators\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
