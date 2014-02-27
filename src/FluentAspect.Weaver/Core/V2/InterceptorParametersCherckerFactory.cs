@@ -34,6 +34,15 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
                 Checker = new MethodInterceptorParametersChercker(),
             });
         }
+        public static void CreateCheckerForPropertyParameter(this ParametersChecker checkers)
+        {
+
+            checkers.Add(new InterceptorParametersChecker()
+            {
+                ParameterName = "property",
+                Checker = new PropertyInterceptorParametersChercker(),
+            });
+        }
         public static void CreateCheckerForResultParameter(this ParametersChecker checkers, MethodDefinition method)
         {
 

@@ -12,4 +12,11 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
             instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentMethodInfo));
         }
     }
+    public class PropertyInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator
+    {
+        public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariables info)
+        {
+            instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentPropertyInfo));
+        }
+    }
 }

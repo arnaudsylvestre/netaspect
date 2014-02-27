@@ -32,5 +32,33 @@ namespace FluentAspect.Weaver.Core.V2
                                                                                                          aspect.Type));
             }
         }
+
+        public static void AddPropertyGetWeavingModel(this WeavingModel weavingModel, MethodDefinition method, NetAspectDefinition aspect,
+                                                 Interceptor before, Interceptor after, Interceptor onException,
+                                                 Interceptor onFinally)
+        {
+            if (before.Method != null)
+            {
+                weavingModel.Method.Befores.Add(MethodWeavingPropertyGetInjectorFactory.CreateForBefore(method, before.Method,
+                                                                                                   aspect.Type));
+            }
+            if (after.Method != null)
+            {
+                weavingModel.Method.Afters.Add(MethodWeavingPropertyGetInjectorFactory.CreateForAfter(method, after.Method,
+                                                                                                 aspect.Type));
+            }
+            if (onException.Method != null)
+            {
+                weavingModel.Method.OnExceptions.Add(MethodWeavingPropertyGetInjectorFactory.CreateForOnException(method,
+                                                                                                             onException.Method,
+                                                                                                             aspect.Type));
+            }
+            if (onFinally.Method != null)
+            {
+                weavingModel.Method.OnFinallys.Add(MethodWeavingPropertyGetInjectorFactory.CreateForOnFinally(method,
+                                                                                                         onFinally.Method,
+                                                                                                         aspect.Type));
+            }
+        }
     }
 }

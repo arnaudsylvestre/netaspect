@@ -73,6 +73,7 @@
     <Compile Include="Core\Model\NetAspectDefinition.cs" />
     <Compile Include="Core\V2\AroundMethodWeaver.cs" />
     <Compile Include="Core\V2\AssemblyPool.cs" />
+    <Compile Include="Core\V2\MethodWeavingPropertyGetInjectorFactory.cs" />
     <Compile Include="Core\V2\ExceptionInterceptorParametersChercker.cs" />
     <Compile Include="Core\V2\IIlInjector.cs" />
     <Compile Include="Core\V2\IIlInjectorsExtensions.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Core\V2\MethodInterceptorParametersChercker.cs" />
     <Compile Include="Core\V2\MethodInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\V2\MethodWeavingBeforeMethodInjector.cs" />
+    <Compile Include="Core\V2\MethodWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\V2\MethodWeavingModelExtensions.cs" />
     <Compile Include="Core\V2\Model\WeavingModel.cs" />
     <Compile Include="Core\V2\MultiMethodWeavingModelFiller.cs" />

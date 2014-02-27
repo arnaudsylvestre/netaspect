@@ -33,7 +33,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Paramet
 
          public static MethodInfo Method;
 
-          public void BeforePropertyGet(MethodInfo method)
+          public void AfterPropertyGet(MethodInfo method)
          {
              Method = method;
          }

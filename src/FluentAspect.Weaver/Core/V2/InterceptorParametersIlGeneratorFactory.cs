@@ -17,6 +17,10 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
         {
             ilGeneratoir.Add("method", new MethodInterceptorParametersIlGenerator());
         }
+        public static void CreateIlGeneratorForPropertyParameter(this ParametersIlGenerator ilGeneratoir)
+        {
+            ilGeneratoir.Add("property", new PropertyInterceptorParametersIlGenerator());
+        }
         public static void CreateIlGeneratorForResultParameter(this ParametersIlGenerator ilGeneratoir)
         {
             ilGeneratoir.Add("result", new ResultInterceptorParametersIlGenerator());

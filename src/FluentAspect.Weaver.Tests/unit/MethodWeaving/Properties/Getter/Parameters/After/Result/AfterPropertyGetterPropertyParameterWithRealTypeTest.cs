@@ -33,7 +33,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Paramet
 
          public static string Result;
 
-         public void BeforePropertyGet(string result)
+         public void AfterPropertyGet(string result)
          {
              Result = result;
          }

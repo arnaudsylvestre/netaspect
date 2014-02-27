@@ -12,4 +12,13 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
             Ensure.OfType(parameter, errorListener, typeof(MethodInfo).FullName);
         }
     }
+    public class PropertyInterceptorParametersChercker : IInterceptorParameterChecker
+    {
+
+        public void Check(ParameterInfo parameter, IErrorListener errorListener)
+        {
+            Ensure.NotReferenced(parameter, errorListener);
+            Ensure.OfType(parameter, errorListener, typeof(PropertyInfo).FullName);
+        }
+    }
 }
