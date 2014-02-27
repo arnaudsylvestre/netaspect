@@ -22,7 +22,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parame
          [MyAspect]
          public string MyProperty
          {
-             get { return ""; }
+             set { }
          }
       }
 
@@ -32,7 +32,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parame
 
           public static ClassToWeave Instance;
 
-          public void OnFinallyPropertyGet(ClassToWeave instance)
+          public void OnFinallyPropertySet(ClassToWeave instance)
          {
              Instance = instance;
          }

@@ -33,7 +33,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parame
 
          public static PropertyInfo Property;
 
-         public void BeforePropertyGet(PropertyInfo property)
+         public void BeforePropertySet(PropertyInfo property)
          {
              Property = property;
          }

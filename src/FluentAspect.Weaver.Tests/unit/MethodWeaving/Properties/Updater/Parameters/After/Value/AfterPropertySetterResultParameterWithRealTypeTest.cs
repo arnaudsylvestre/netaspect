@@ -12,7 +12,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parame
                Assert.IsNull(MyAspect.Value);
                var classToWeave_L = new ClassToWeave();
                classToWeave_L.MyProperty = "Value";
-               Assert.AreEqual("Return", MyAspect.Value);
+               Assert.AreEqual("Value", MyAspect.Value);
            };
        }
 
@@ -32,9 +32,9 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parame
 
          public static string Value;
 
-         public void BeforePropertyGet(string value)
+         public void BeforePropertySet(string value)
          {
-             Value = result;
+             Value = value;
          }
       }
    }

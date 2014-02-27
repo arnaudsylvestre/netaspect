@@ -23,7 +23,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parame
          [MyAspect]
          public string MyProperty
           {
-              get { throw new System.Exception(); }
+              set { throw new System.Exception(); }
          }
       }
 
@@ -33,7 +33,7 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parame
 
          public static PropertyInfo Property;
 
-         public void OnExceptionPropertyGet(PropertyInfo property)
+         public void OnExceptionPropertySet(PropertyInfo property)
          {
              Property = property;
          }
