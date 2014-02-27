@@ -54,7 +54,7 @@ namespace FluentAspect.Sample
         {
             try
             {
-                throw new Exception();
+                return "Hello";
             }
             catch (Exception e)
             {

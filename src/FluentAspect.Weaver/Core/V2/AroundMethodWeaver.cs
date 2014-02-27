@@ -36,8 +36,13 @@ namespace FluentAspect.Weaver.Core.V2
          var onExceptionInstructions = new List<Instruction>();
          var onFinallyInstructions = new List<Instruction>();
          var methodInstructions = new Collection<Instruction>(method.MethodDefinition.Body.Instructions);
+          if (methodInstructions.Count == 0)
+              methodInstructions.Add(Instruction.Create(OpCodes.Nop));
+          var BeforeExceptionManagementInstructions = new List<Instruction>();
+          var AfterExceptionManagementInstructions = new List<Instruction>();
 
          var end = InstructionsHelper.FixReturns(method.MethodDefinition, variables.Result, methodInstructions, beforeAfter);
+
 
          methodWeavingModel.Befores.Inject(beforeInstructions, variables);
          methodWeavingModel.OnExceptions.Inject(onExceptionInstructions, variables);
@@ -56,8 +61,17 @@ namespace FluentAspect.Weaver.Core.V2
          }
 
 
-         allInstructions.AddRange(variables.ExceptionManagementInstructions);
+         if (onExceptionInstructions.Any())
+         {
+             BeforeExceptionManagementInstructions.Add(Instruction.Create(OpCodes.Stloc, variables.Exception));
+             AfterExceptionManagementInstructions.Add(Instruction.Create(OpCodes.Rethrow));
+         }
+          if (end.Count > 0)
+              onFinallyInstructions.Add(Instruction.Create(OpCodes.Endfinally));
+
+         allInstructions.AddRange(BeforeExceptionManagementInstructions);
          allInstructions.AddRange(onExceptionInstructions);
+         allInstructions.AddRange(AfterExceptionManagementInstructions);
          allInstructions.AddRange(onFinallyInstructions);
          allInstructions.AddRange(end);
 
@@ -76,7 +90,7 @@ namespace FluentAspect.Weaver.Core.V2
                   lastCatchException = end.First();
             }
 
-            method.AddTryCatch(methodInstructions.First(), onExceptionInstructions.First(), onExceptionInstructions.First(), lastCatchException);
+            method.AddTryCatch(methodInstructions.First(), BeforeExceptionManagementInstructions.First(), BeforeExceptionManagementInstructions.First(), lastCatchException);
          }
 
          if (onFinallyInstructions.Any())

@@ -13,7 +13,6 @@ namespace FluentAspect.Weaver.Core.V2
    {
        private readonly VariableDefinition _result;
        public Collection<Instruction> Instructions = new Collection<Instruction>();
-       public Collection<Instruction> ExceptionManagementInstructions = new Collection<Instruction>();
        private MethodDefinition method;
        private VariableDefinition currentMethodInfo;
        private VariableDefinition currentPropertyInfo;
@@ -62,7 +61,6 @@ namespace FluentAspect.Weaver.Core.V2
             get { if (_exception == null)
             {
                 _exception = method.CreateVariable<Exception>();
-                ExceptionManagementInstructions.Add(Instruction.Create(OpCodes.Stloc, _exception));
             }
                 return _exception;
             }
@@ -77,7 +75,7 @@ namespace FluentAspect.Weaver.Core.V2
                     currentPropertyInfo = method.CreateVariable<PropertyInfo>();
 
                     Instructions.AppendCallToThisGetType(method.Module);
-                    Instructions.AppendCallToGetProperty(method.Name.Replace("get_", ""), method.Module);
+                    Instructions.AppendCallToGetProperty(method.Name.Replace("get_", "").Replace("set_", ""), method.Module);
                     Instructions.AppendSaveResultTo(currentPropertyInfo);
                 }
                 return currentPropertyInfo;
