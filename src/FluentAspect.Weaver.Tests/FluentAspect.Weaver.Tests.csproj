@@ -96,6 +96,7 @@
     <Compile Include="unit\CallWeaving\Events\Subsribe\Parameters\Before\BeforeSubscribeEventParameterInCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Subsribe\Parameters\Before\BeforeSubscribeEventValueParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\FieldGetterCallWeavingInAnotherAssemblyTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterMethodInstanceParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\VisibilityFieldGetterWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\FieldGetterCallWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\StaticFieldGetterWeavingTest.cs" />

@@ -82,7 +82,7 @@
     <Compile Include="Core\V2\IlInjectorAvailableVariables.cs" />
     <Compile Include="Core\V2\IlInterceptor.cs" />
     <Compile Include="Core\V2\IMethodWeavingModelFiller.cs" />
-    <Compile Include="Core\V2\InsideMethodInstructionWeavingModelFiller.cs" />
+    <Compile Include="Core\V2\CallMethodInstructionWeavingModelFiller.cs" />
     <Compile Include="Core\V2\InstanceInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\V2\InstructionsHelper.cs" />
     <Compile Include="Core\V2\InterceptorParametersChecker.cs" />
