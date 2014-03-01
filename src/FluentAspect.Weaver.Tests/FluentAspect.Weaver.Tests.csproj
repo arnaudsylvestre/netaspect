@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="acceptance\AppDomainIsolatedTestRunner.cs" />
-    <Compile Include="acceptance\ErrorsTest.cs" />
+    <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
     <Compile Include="Core\MethodWeavingAspectDefiner.cs" />
     <Compile Include="Core\Model\NetAspectAspect.cs" />
     <Compile Include="Core\Model\NetAspectAssemblyExtensions.cs" />

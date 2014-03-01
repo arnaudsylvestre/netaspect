@@ -5,10 +5,10 @@ using FluentAspect.Weaver.Core.Errors;
 
 namespace FluentAspect.Weaver.Tests.acceptance
 {
-    public static class ErrorsTest
+    public static class ErrorHandlerExtensions
     {
 
-        public static void Dump(ErrorHandler errorHandler, StringBuilder builder)
+        public static void Dump(this ErrorHandler errorHandler, StringBuilder builder)
         {
             Dump("Warnings", errorHandler.Warnings, builder);
             Dump("Errors", errorHandler.Errors, builder);
@@ -16,12 +16,12 @@ namespace FluentAspect.Weaver.Tests.acceptance
 
         }
 
-        private static void Dump(string format, IEnumerable<string> warnings, StringBuilder builder)
+        private static void Dump(string format, IEnumerable<string> content, StringBuilder builder)
         {
-            if (!warnings.Any())
+            if (!content.Any())
                 return;
             builder.AppendFormat("{0} :\n", format);
-            foreach (var error in warnings)
+            foreach (var error in content)
             {
                 builder.AppendFormat("\"{0}\",\n", error);
             }

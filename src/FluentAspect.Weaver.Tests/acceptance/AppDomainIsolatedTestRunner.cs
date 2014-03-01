@@ -12,26 +12,6 @@ namespace FluentAspect.Weaver.Tests.acceptance
 {
     public class AppDomainIsolatedTestRunner : MarshalByRefObject
     {
-        public void Run(Action action)
-        {
-            action();
-        }
-
-
-        public string Run(string dll_L, List<string> checkErrors, List<string> failures, List<string> warnings)
-        {
-            PEVerify.Run(dll_L);
-            WeaverCore weaver = WeaverCoreFactory.Create();
-            ErrorHandler errorHandler = new ErrorHandler();
-            weaver.Weave(dll_L, errorHandler, (a) => a);
-            var builder = new StringBuilder();
-            ErrorsTest.Dump(errorHandler, builder);
-            Assert.AreEqual(warnings, errorHandler.Warnings);
-            Assert.AreEqual(checkErrors, errorHandler.Errors);
-            Assert.AreEqual(failures, errorHandler.Failures);
-            return builder.ToString();
-        }
-
         public string RunFromType(string dll_L, string typeName, List<string> checkErrors, List<string> failures, List<string> warnings)
         {
             var assembly = Assembly.LoadFrom(dll_L);
@@ -40,7 +20,7 @@ namespace FluentAspect.Weaver.Tests.acceptance
             var errorHandler = new ErrorHandler();
             weaver.Weave(ComputeTypes(type), errorHandler, (a) => a);
             var builder = new StringBuilder();
-            ErrorsTest.Dump(errorHandler, builder);
+            ErrorHandlerExtensions.Dump(errorHandler, builder);
             Assert.AreEqual(warnings, errorHandler.Warnings);
             Assert.AreEqual(checkErrors, errorHandler.Errors);
             Assert.AreEqual(failures, errorHandler.Failures);
@@ -50,11 +30,6 @@ namespace FluentAspect.Weaver.Tests.acceptance
         private static Type[] ComputeTypes(Type type)
         {
             return type.DeclaringType.GetNestedTypes();
-        }
-
-        public void Ensure(string dll_L, Action<Assembly> ensure)
-        {
-           ensure(Assembly.LoadFrom(dll_L));
         }
 
         public void Ensure(Action ensure)
