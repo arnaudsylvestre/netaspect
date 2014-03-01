@@ -1,6 +1,4 @@
 ﻿using System;
-using FluentAspect.Weaver.Tests.Core;
-using FluentAspect.Weaver.Tests.Core.Model;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After

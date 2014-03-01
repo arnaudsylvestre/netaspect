@@ -1,6 +1,4 @@
 ﻿using System;
-using FluentAspect.Weaver.Tests.Core;
-using FluentAspect.Weaver.Tests.Core.Model;
 using FluentAspect.Weaver.Tests.acceptance;
 using NUnit.Framework;
 

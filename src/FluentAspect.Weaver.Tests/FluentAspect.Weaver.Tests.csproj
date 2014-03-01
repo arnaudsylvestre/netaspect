@@ -197,7 +197,7 @@
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\OnFinally\Property\OnFinallyPropertySetterPropertyParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\OnFinally\Value\BeforePropertySetterValueParameterWithRealTypeTest.cs" />
     <Compile Include="unit\NetAspectTest.cs" />
-    <Compile Include="unit\DoUnit.cs" />
+    <Compile Include="unit\RunWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldColumnNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterGetFieldFileNameParameterTest.cs" />
