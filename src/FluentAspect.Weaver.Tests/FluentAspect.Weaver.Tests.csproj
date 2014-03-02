@@ -94,6 +94,13 @@
     <Compile Include="unit\CallWeaving\Events\Subsribe\Parameters\Before\BeforeSubscribeEventValueParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\FieldGetterCallWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\AfterMethodInstanceParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Caller\AfterCallGetFieldCallerParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Caller\AfterCallGetFieldCallerParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Caller\AfterCallGetFieldCallerParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Caller\AfterCallGetFieldCallerParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\ColumnNumber\AfterCallGetFieldColumnNumberParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\ColumnNumber\AfterCallGetFieldColumnNumberParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\ColumnNumber\AfterCallGetFieldColumnNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\VisibilityFieldGetterWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\FieldGetterCallWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\StaticFieldGetterWeavingTest.cs" />
