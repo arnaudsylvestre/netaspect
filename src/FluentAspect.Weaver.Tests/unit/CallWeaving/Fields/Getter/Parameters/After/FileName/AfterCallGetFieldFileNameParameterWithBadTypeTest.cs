@@ -2,9 +2,9 @@ using System;
 using FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Instance;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.After.ColumnNumber
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.After.FileName
 {
-    public class AfterCallGetFieldColumnNumberParameterWithRealTypeReferencedTypeTest : NetAspectTest<AfterCallGetFieldColumnNumberParameterWithRealTypeReferencedTypeTest.ClassToWeave>
+    public class AfterCallGetFieldFileNameParameterWithBadTypeTest : NetAspectTest<AfterCallGetFieldFileNameParameterWithBadTypeTest.ClassToWeave>
    {
 
         protected override Action<FluentAspect.Weaver.Core.Errors.ErrorHandler> CreateErrorHandlerProvider()
@@ -28,8 +28,11 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Af
       {
          public bool NetAspectAttribute = true;
 
-         public void AfterGetField(ref int columnNumber)
+         public static int FileName;
+
+         public void AfterGetField(int fileName)
          {
+             FileName = fileName;
          }
       }
    }

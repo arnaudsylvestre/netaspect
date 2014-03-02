@@ -28,11 +28,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Af
       {
          public bool NetAspectAttribute = true;
 
-         public static int ColumnNumber;
-
-         public void AfterGetField(int columnNumber)
+         public void AfterGetField(string columnNumber)
          {
-             ColumnNumber = columnNumber;
          }
       }
    }
