@@ -58,11 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="acceptance\AppDomainIsolatedTestRunner.cs" />
+    <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
-    <Compile Include="Core\MethodWeavingAspectDefiner.cs" />
-    <Compile Include="Core\Model\NetAspectAspect.cs" />
-    <Compile Include="Core\Model\NetAspectAssemblyExtensions.cs" />
     <Compile Include="unit\CallWeaving\Events\Calls\EventCallWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Calls\EventCallWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Calls\Parameters\After\AfterCallEventCallerParameterTest.cs" />
@@ -330,7 +327,6 @@
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Parameters\BeforeMethodParametersParameterWithRealTypeOutTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Parameters\BeforeMethodParametersParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Parameters\BeforeMethodParametersParameterWithRealTypeTest.cs" />
-    <Compile Include="Core\AssemblyExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldColumnNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\Before\BeforeUpdateFieldFilePathParameterTest.cs" />
