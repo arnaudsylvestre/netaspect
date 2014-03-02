@@ -27,7 +27,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Af
       {
          public bool NetAspectAttribute = true;
 
-         public void AfterGetField(ref ClassToWeave caller)
+         public void AfterGetField(ref string fieldValue)
          {
          }
       }

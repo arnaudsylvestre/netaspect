@@ -29,9 +29,9 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Af
 
          public static int FieldValue;
 
-         public void AfterGetField(int caller)
+         public void AfterGetField(int fieldValue)
          {
-             FieldValue = caller;
+             FieldValue = fieldValue;
          }
       }
    }

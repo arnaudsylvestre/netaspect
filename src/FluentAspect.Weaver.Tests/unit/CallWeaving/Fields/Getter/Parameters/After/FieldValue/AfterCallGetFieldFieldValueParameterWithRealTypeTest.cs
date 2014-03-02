@@ -32,11 +32,11 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Af
       {
          public bool NetAspectAttribute = true;
 
-         public static ClassToWeave FieldValue;
+         public static string FieldValue;
 
-         public void AfterGetField(ClassToWeave caller)
+         public void AfterGetField(string fieldValue)
          {
-             FieldValue = caller;
+             FieldValue = fieldValue;
          }
       }
    }
