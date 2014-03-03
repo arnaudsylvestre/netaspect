@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using FluentAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Tests.acceptance
+namespace FluentAspect.Weaver.Tests.Helpers
 {
     public static class ErrorHandlerExtensions
     {

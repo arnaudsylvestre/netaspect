@@ -1,7 +1,7 @@
 using System;
 using FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before.FieldValue
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.Before.FieldValue
 {
     public class BeforeCallGetPropertyFieldValueParameterWithBadTypeTest : NetAspectTest<BeforeCallGetPropertyFieldValueParameterWithBadTypeTest.ClassToWeave>
    {
