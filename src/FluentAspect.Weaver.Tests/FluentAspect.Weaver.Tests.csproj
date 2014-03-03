@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2158446B-9E58-4E9D-BDC4-27A5A90365D1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -93,10 +93,10 @@
     <Compile Include="unit\CallWeaving\Events\Subsribe\Parameters\Before\BeforeSubscribeEventParameterInCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Events\Subsribe\Parameters\Before\BeforeSubscribeEventValueParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\FieldGetterCallWeavingInAnotherAssemblyTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCallerParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCallerParameterWithObjectTypeTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCallerParameterWithRealTypeReferencedTypeTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCallerParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CallerParameterName\AfterCallGetFieldCallerParameterNameParameterWithBadTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CallerParameterName\AfterCallGetFieldCallerParameterNameParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CallerParameterName\AfterCallGetFieldCallerParameterNameParameterWithRealTypeReferencedTest.cs" />
@@ -118,10 +118,13 @@
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CalledParameterName\AfterCallGetFieldCalledParameterNameParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CalledParameterName\AfterCallGetFieldCalledParameterNameReferencedParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CalledParameterName\AfterCallGetFieldCalledParameterNameReferencedParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CalledParameters\AfterCallGetFieldCallerParametersParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CalledParameters\AfterCallGetFieldCallerParametersParameterWithObjectTypeTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CalledParameters\AfterCallGetFieldCallerParametersParameterWithRealTypeReferencedTypeTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CalledParameters\AfterCallGetFieldCallerParametersParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CalledParameters\AfterCallGetFieldCalledParametersParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CalledParameters\AfterCallGetFieldCalledParametersParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CalledParameters\AfterCallGetFieldCalledParametersParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CalledParameters\AfterCallGetFieldCalledParametersParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Field\AfterCallGetFieldFieldParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Field\AfterCallGetFieldFieldParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Field\AfterCallGetFieldFieldParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\FileName\AfterCallGetFieldFileNameParameterWithBadTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\FileName\AfterCallGetFieldFileNameParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\FileName\AfterCallGetFieldFileNameParameterWithRealTypeTest.cs" />
@@ -139,6 +142,55 @@
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CallerParameters\AfterCallGetFieldCallerParametersParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CallerParameters\AfterCallGetFieldCallerParametersParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\CallerParameters\AfterCallGetFieldCallerParametersParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CalledParameterName\BeforeCallGetFieldCalledParameterNameParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CalledParameterName\BeforeCallGetFieldCalledParameterNameParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CalledParameterName\BeforeCallGetFieldCalledParameterNameParameterWithRealTypeOutTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CalledParameterName\BeforeCallGetFieldCalledParameterNameParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CalledParameterName\BeforeCallGetFieldCalledParameterNameParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CalledParameterName\BeforeCallGetFieldCalledParameterNameReferencedParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CalledParameterName\BeforeCallGetFieldCalledParameterNameReferencedParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CalledParameters\BeforeCallGetFieldCalledParametersParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CalledParameters\BeforeCallGetFieldCalledParametersParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CalledParameters\BeforeCallGetFieldCalledParametersParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CalledParameters\BeforeCallGetFieldCalledParametersParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\Called\BeforeCallGetFieldCalledParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\Called\BeforeCallGetFieldCalledParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\Called\BeforeCallGetFieldCalledParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\Called\BeforeCallGetFieldCalledParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CallerParameterName\BeforeCallGetFieldCallerParameterNameParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CallerParameterName\BeforeCallGetFieldCallerParameterNameParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CallerParameterName\BeforeCallGetFieldCallerParameterNameParameterWithRealTypeOutTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CallerParameterName\BeforeCallGetFieldCallerParameterNameParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CallerParameterName\BeforeCallGetFieldCallerParameterNameParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CallerParameterName\BeforeCallGetFieldCallerParameterNameReferencedParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CallerParameterName\BeforeCallGetFieldCallerParameterNameReferencedParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CallerParameters\BeforeCallGetFieldCallerParametersParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CallerParameters\BeforeCallGetFieldCallerParametersParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CallerParameters\BeforeCallGetFieldCallerParametersParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\CallerParameters\BeforeCallGetFieldCallerParametersParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\Caller\BeforeCallGetFieldCallerParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\Caller\BeforeCallGetFieldCallerParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\Caller\BeforeCallGetFieldCallerParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\Caller\BeforeCallGetFieldCallerParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\ColumnNumber\BeforeCallGetFieldColumnNumberParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\ColumnNumber\BeforeCallGetFieldColumnNumberParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\ColumnNumber\BeforeCallGetFieldColumnNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\FieldValue\BeforeCallGetFieldFieldValueParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\FieldValue\BeforeCallGetFieldFieldValueParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\FieldValue\BeforeCallGetFieldFieldValueParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\FieldValue\BeforeCallGetFieldFieldValueParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\Field\BeforeCallGetFieldFieldParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\Field\BeforeCallGetFieldFieldParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\Field\BeforeCallGetFieldFieldParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\FileName\BeforeCallGetFieldFileNameParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\FileName\BeforeCallGetFieldFileNameParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\FileName\BeforeCallGetFieldFileNameParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\FilePath\BeforeCallGetFieldFilePathParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\FilePath\BeforeCallGetFieldFilePathParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\FilePath\BeforeCallGetFieldFilePathParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\LineNumber\BeforeCallGetFieldLineNumberParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\LineNumber\BeforeCallGetFieldLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\LineNumber\BeforeCallGetFieldLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\VisibilityFieldGetterWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\FieldGetterCallWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\StaticFieldGetterWeavingTest.cs" />
@@ -240,13 +292,6 @@
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\OnFinally\Value\BeforePropertySetterValueParameterWithRealTypeTest.cs" />
     <Compile Include="unit\NetAspectTest.cs" />
     <Compile Include="unit\RunWeavingTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldCallerParameterTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldColumnNumberParameterTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldFileNameParameterTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldFilePathParameterTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldLineNumberParameterTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldParameterInCallerParameterTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\BeforeGetFieldValueParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldCallerParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldColumnNumberParameterTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\AfterUpdateFieldFileNameParameterTest.cs" />
