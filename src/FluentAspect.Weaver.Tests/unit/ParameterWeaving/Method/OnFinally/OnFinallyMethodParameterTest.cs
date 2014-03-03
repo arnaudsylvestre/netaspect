@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAspect.Weaver.Tests.Core;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.ParameterWeaving.Method.OnFinally

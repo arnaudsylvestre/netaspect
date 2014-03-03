@@ -32,8 +32,17 @@ namespace FluentAspect.Weaver.Core.V2
                     var isCompliant_L = propertyDefinition.CustomAttributes.Any(customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
                     if (!isCompliant_L)
                         return;
-                    weavingModel.AddMethodWeavingModel(method, aspect, aspect.BeforePropertyGet, aspect.AfterPropertyGet, aspect.OnExceptionPropertyGet, aspect.OnFinallyPropertyGet);
-                    
+                    weavingModel.AddPropertyGetWeavingModel(method, aspect, aspect.BeforePropertyGet, aspect.AfterPropertyGet, aspect.OnExceptionPropertyGet, aspect.OnFinallyPropertyGet);
+
+                }
+                if (propertyDefinition.SetMethod == method)
+                {
+                    var aspectType = method.Module.Import(aspect.Type);
+                    var isCompliant_L = propertyDefinition.CustomAttributes.Any(customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
+                    if (!isCompliant_L)
+                        return;
+                    weavingModel.AddPropertySetWeavingModel(method, aspect, aspect.BeforePropertySet, aspect.AfterPropertySet, aspect.OnExceptionPropertySet, aspect.OnFinallyPropertySet);
+
                 }
             }
         }

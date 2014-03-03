@@ -10,7 +10,7 @@ namespace FluentAspect.Weaver.Tests.unit
       [Test]
       public void DoTest()
       {
-         DoUnit.DoAcceptanceConfiguration.Run<T>(CreateErrorHandlerProvider(), CreateEnsure());
+         RunWeavingTest.For<T>(CreateErrorHandlerProvider(), CreateEnsure());
       }
 
       protected virtual Action CreateEnsure()

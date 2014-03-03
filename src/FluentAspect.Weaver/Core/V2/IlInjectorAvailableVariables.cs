@@ -13,9 +13,9 @@ namespace FluentAspect.Weaver.Core.V2
    {
        private readonly VariableDefinition _result;
        public Collection<Instruction> Instructions = new Collection<Instruction>();
-       public Collection<Instruction> ExceptionManagementInstructions = new Collection<Instruction>();
-      private MethodDefinition method;
-      private VariableDefinition currentMethodInfo;
+       private MethodDefinition method;
+       private VariableDefinition currentMethodInfo;
+       private VariableDefinition currentPropertyInfo;
         private VariableDefinition _parameters;
         private VariableDefinition _exception;
 
@@ -26,14 +26,13 @@ namespace FluentAspect.Weaver.Core.V2
       }
 
 
-       public VariableDefinition CurrentMethodInfo { get
+       public VariableDefinition CurrentMethodBase { get
       {
          if (currentMethodInfo == null)
          {
-            currentMethodInfo = method.CreateVariable<MethodInfo>();
+            currentMethodInfo = method.CreateVariable<MethodBase>();
 
-            Instructions.AppendCallToThisGetType(method.Module);
-            Instructions.AppendCallToGetMethod(method.Name, method.Module);
+            Instructions.Add(Instruction.Create(OpCodes.Call, method.Module.Import(typeof(MethodBase).GetMethod("GetCurrentMethod", new Type[] {  }))));
             Instructions.AppendSaveResultTo(currentMethodInfo);
          }
          return currentMethodInfo;
@@ -61,9 +60,24 @@ namespace FluentAspect.Weaver.Core.V2
             get { if (_exception == null)
             {
                 _exception = method.CreateVariable<Exception>();
-                ExceptionManagementInstructions.Add(Instruction.Create(OpCodes.Stloc, _exception));
             }
                 return _exception;
+            }
+        }
+
+        public VariableDefinition CurrentPropertyInfo
+        {
+            get
+            {
+                if (currentPropertyInfo == null)
+                {
+                    currentPropertyInfo = method.CreateVariable<PropertyInfo>();
+
+                    Instructions.AppendCallToThisGetType(method.Module);
+                    Instructions.AppendCallToGetProperty(method.Name.Replace("get_", "").Replace("set_", ""), method.Module);
+                    Instructions.AppendSaveResultTo(currentPropertyInfo);
+                }
+                return currentPropertyInfo;
             }
         }
    }

@@ -1,6 +1,4 @@
 ﻿using System;
-using FluentAspect.Weaver.Tests.Core;
-using FluentAspect.Weaver.Tests.Core.Model;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After
@@ -11,29 +9,32 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After
          [Test]
          public void CheckCallMethodWithCaller()
         {
-            DoUnit.Test().ByDefiningAssembly(assembly =>
-            {
-                var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
-                var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
-                var netAspectInterceptor = aspect.AddAfterCallInterceptor();
-                netAspectInterceptor
-                   .WithParameter("caller", myClassToWeave);
-                netAspectInterceptor
-                    .WithReturn();
-                myClassToWeave.AddMethod("MyMethodToWeave")
-                   .WithReturn()
-                   .WithAspect(aspect);
 
-            })
-                   .AndEnsureAssembly(assemblyP =>
-                   {
+            throw new NotImplementedException();
 
-                       var o = assemblyP.CreateObject("MyClassToWeave");
-                       o.CallMethod("MyMethodToWeave");
-                       Assert.AreEqual(o, assemblyP.GetStaticFieldValue("MyAspectAttribute", "AfterinstanceField"));
+            //DoUnit.Test().ByDefiningAssembly(assembly =>
+            //{
+            //    var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+            //    var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+            //    var netAspectInterceptor = aspect.AddAfterCallInterceptor();
+            //    netAspectInterceptor
+            //       .WithParameter("caller", myClassToWeave);
+            //    netAspectInterceptor
+            //        .WithReturn();
+            //    myClassToWeave.AddMethod("MyMethodToWeave")
+            //       .WithReturn()
+            //       .WithAspect(aspect);
 
-                   })
-                   .AndLaunchTest();
+            //})
+            //       .AndEnsureAssembly(assemblyP =>
+            //       {
+
+            //           var o = assemblyP.CreateObject("MyClassToWeave");
+            //           o.CallMethod("MyMethodToWeave");
+            //           Assert.AreEqual(o, assemblyP.GetStaticFieldValue("MyAspectAttribute", "AfterinstanceField"));
+
+            //       })
+            //       .AndLaunchTest();
          }
 
          [Test]

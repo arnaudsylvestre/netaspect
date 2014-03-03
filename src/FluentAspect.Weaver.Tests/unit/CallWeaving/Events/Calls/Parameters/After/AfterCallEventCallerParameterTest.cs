@@ -1,6 +1,4 @@
 ﻿using System;
-using FluentAspect.Weaver.Tests.Core;
-using FluentAspect.Weaver.Tests.Core.Model;
 using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Calls.Parameters.After
@@ -11,120 +9,125 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Calls.Parameters.Aft
          [Test]
          public void CheckCallEventWithCallerObject()
        {
-           DoUnit.Test().ByDefiningAssembly(assembly =>
-           {
-               var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
-               var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
-               var netAspectInterceptor = aspect.AddAfterCallEventInterceptor();
-               netAspectInterceptor
-                  .WithParameter<object>("caller");
-               netAspectInterceptor
-                   .WithReturn();
-               var eventDefinition = myClassToWeave.AddEvent<Action>("MyEvent")
-                   .WithAspect(aspect)
-                   ;
-               myClassToWeave.AddMethod("RaiseEvent")
-                   .WhichCallEvent<Action>(eventDefinition)
-                   .WithReturn()
-                   ;
+             throw new NotImplementedException();
+           //DoUnit.Test().ByDefiningAssembly(assembly =>
+           //{
+           //    var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+           //    var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+           //    var netAspectInterceptor = aspect.AddAfterCallEventInterceptor();
+           //    netAspectInterceptor
+           //       .WithParameter<object>("caller");
+           //    netAspectInterceptor
+           //        .WithReturn();
+           //    var eventDefinition = myClassToWeave.AddEvent<Action>("MyEvent")
+           //        .WithAspect(aspect)
+           //        ;
+           //    myClassToWeave.AddMethod("RaiseEvent")
+           //        .WhichCallEvent<Action>(eventDefinition)
+           //        .WithReturn()
+           //        ;
 
-           })
-                    .AndEnsureAssembly(assemblyP =>
-                    {
+           //})
+           //         .AndEnsureAssembly(assemblyP =>
+           //         {
 
-                        var o = assemblyP.CreateObject("MyClassToWeave");
-                        o.GetType().GetEvent("MyEvent").AddEventHandler(o, new Action(() => { }));
-                        o.CallMethod("RaiseEvent");
-                        Assert.AreEqual(o, assemblyP.GetStaticFieldValue("MyAspectAttribute", "AfterCallEventcallerField"));
+           //             var o = assemblyP.CreateObject("MyClassToWeave");
+           //             o.GetType().GetEvent("MyEvent").AddEventHandler(o, new Action(() => { }));
+           //             o.CallMethod("RaiseEvent");
+           //             Assert.AreEqual(o, assemblyP.GetStaticFieldValue("MyAspectAttribute", "AfterCallEventcallerField"));
 
-                    })
-                    .AndLaunchTest();
+           //         })
+           //         .AndLaunchTest();
           
          }
 
          [Test]
          public void CheckCallEventWithCallerRealType()
          {
-             DoUnit.Test().ByDefiningAssembly(assembly =>
-             {
-                 var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
-                 var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
-                 var netAspectInterceptor = aspect.AddAfterCallEventInterceptor();
-                 netAspectInterceptor
-                    .WithParameter("caller", myClassToWeave);
-                 netAspectInterceptor
-                     .WithReturn();
-                 var eventDefinition = myClassToWeave.AddEvent<Action>("MyEvent")
-                     .WithAspect(aspect)
-                     ;
-                 myClassToWeave.AddMethod("RaiseEvent")
-                     .WhichCallEvent<Action>(eventDefinition)
-                     .WithReturn()
-                     ;
+             throw new NotImplementedException();
+             //DoUnit.Test().ByDefiningAssembly(assembly =>
+             //{
+             //    var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+             //    var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+             //    var netAspectInterceptor = aspect.AddAfterCallEventInterceptor();
+             //    netAspectInterceptor
+             //       .WithParameter("caller", myClassToWeave);
+             //    netAspectInterceptor
+             //        .WithReturn();
+             //    var eventDefinition = myClassToWeave.AddEvent<Action>("MyEvent")
+             //        .WithAspect(aspect)
+             //        ;
+             //    myClassToWeave.AddMethod("RaiseEvent")
+             //        .WhichCallEvent<Action>(eventDefinition)
+             //        .WithReturn()
+             //        ;
 
-             })
-                    .AndEnsureAssembly(assemblyP =>
-                    {
+             //})
+             //       .AndEnsureAssembly(assemblyP =>
+             //       {
 
-                        var o = assemblyP.CreateObject("MyClassToWeave");
-                        o.GetType().GetEvent("MyEvent").AddEventHandler(o, new Action(() => { }));
-                        o.CallMethod("RaiseEvent");
-                        Assert.AreEqual(o, assemblyP.GetStaticFieldValue("MyAspectAttribute", "AfterCallEventcallerField"));
+             //           var o = assemblyP.CreateObject("MyClassToWeave");
+             //           o.GetType().GetEvent("MyEvent").AddEventHandler(o, new Action(() => { }));
+             //           o.CallMethod("RaiseEvent");
+             //           Assert.AreEqual(o, assemblyP.GetStaticFieldValue("MyAspectAttribute", "AfterCallEventcallerField"));
 
-                    })
-                    .AndLaunchTest();
+             //       })
+             //       .AndLaunchTest();
          }
 
 
          [Test]
          public void CheckCallEventWithCallerWithBadlType()
          {
-             DoUnit.Test().ByDefiningAssembly(assembly =>
-             {
-                 var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
-                 var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
-                 var netAspectInterceptor = aspect.AddAfterCallEventInterceptor();
-                 netAspectInterceptor
-                    .WithParameter<int>("caller");
-                 netAspectInterceptor
-                     .WithReturn();
-                 var eventDefinition = myClassToWeave.AddEvent<Action>("MyEvent")
-                     .WithAspect(aspect)
-                     ;
-                 myClassToWeave.AddMethod("RaiseEvent")
-                     .WhichCallEvent<Action>(eventDefinition)
-                     .WithReturn()
-                     ;
 
-             })
-             .EnsureErrorHandler(e => e.Errors.Add(""))
-                    .AndLaunchTest();
+             throw new NotImplementedException();
+             //DoUnit.Test().ByDefiningAssembly(assembly =>
+             //{
+             //    var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+             //    var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+             //    var netAspectInterceptor = aspect.AddAfterCallEventInterceptor();
+             //    netAspectInterceptor
+             //       .WithParameter<int>("caller");
+             //    netAspectInterceptor
+             //        .WithReturn();
+             //    var eventDefinition = myClassToWeave.AddEvent<Action>("MyEvent")
+             //        .WithAspect(aspect)
+             //        ;
+             //    myClassToWeave.AddMethod("RaiseEvent")
+             //        .WhichCallEvent<Action>(eventDefinition)
+             //        .WithReturn()
+             //        ;
+
+             //})
+             //.EnsureErrorHandler(e => e.Errors.Add(""))
+             //       .AndLaunchTest();
          }
 
 
          [Test]
          public void CheckCallEventWithCallerRealTypeReferenced()
          {
-             DoUnit.Test().ByDefiningAssembly(assembly =>
-             {
-                 var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
-                 var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
-                 var netAspectInterceptor = aspect.AddAfterCallEventInterceptor();
-                 netAspectInterceptor
-                    .WithReferencedParameter<object>("caller");
-                 netAspectInterceptor
-                     .WithReturn();
-                 var eventDefinition = myClassToWeave.AddEvent<Action>("MyEvent")
-                     .WithAspect(aspect)
-                     ;
-                 myClassToWeave.AddMethod("RaiseEvent")
-                     .WhichCallEvent<Action>(eventDefinition)
-                     .WithReturn()
-                     ;
+             throw new NotImplementedException();
+             //DoUnit.Test().ByDefiningAssembly(assembly =>
+             //{
+             //    var myClassToWeave = assembly.AddClass("MyClassToWeave").WithDefaultConstructor();
+             //    var aspect = assembly.AddDefaultAspect("MyAspectAttribute");
+             //    var netAspectInterceptor = aspect.AddAfterCallEventInterceptor();
+             //    netAspectInterceptor
+             //       .WithReferencedParameter<object>("caller");
+             //    netAspectInterceptor
+             //        .WithReturn();
+             //    var eventDefinition = myClassToWeave.AddEvent<Action>("MyEvent")
+             //        .WithAspect(aspect)
+             //        ;
+             //    myClassToWeave.AddMethod("RaiseEvent")
+             //        .WhichCallEvent<Action>(eventDefinition)
+             //        .WithReturn()
+             //        ;
 
-             })
-             .EnsureErrorHandler(e => e.Errors.Add(""))
-                    .AndLaunchTest();
+             //})
+             //.EnsureErrorHandler(e => e.Errors.Add(""))
+             //       .AndLaunchTest();
          }
 
     }

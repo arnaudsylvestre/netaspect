@@ -17,7 +17,13 @@ namespace FluentAspect.Weaver.Helpers.IL
         public static void AppendCallToGetMethod(this Collection<Instruction> instructions, string methodName, ModuleDefinition module)
         {
             instructions.Add(Instruction.Create(OpCodes.Ldstr, methodName));
-            instructions.Add(Instruction.Create(OpCodes.Callvirt, module.Import(typeof (Type).GetMethod("GetMethod", new[] {typeof (string)}))));
+            instructions.Add(Instruction.Create(OpCodes.Callvirt, module.Import(typeof(Type).GetMethod("GetMethod", new[] { typeof(string) }))));
+        }
+
+        public static void AppendCallToGetProperty(this Collection<Instruction> instructions, string propertyName, ModuleDefinition module)
+        {
+            instructions.Add(Instruction.Create(OpCodes.Ldstr, propertyName));
+            instructions.Add(Instruction.Create(OpCodes.Callvirt, module.Import(typeof(Type).GetMethod("GetProperty", new[] { typeof(string) }))));
         }
 
         public static void AppendSaveResultTo(this Collection<Instruction> instructions, VariableDefinition variable)

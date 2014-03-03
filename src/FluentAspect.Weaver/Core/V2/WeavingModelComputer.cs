@@ -8,7 +8,7 @@ namespace FluentAspect.Weaver.Core.V2
 {
     public class WeavingModelComputer
     {
-        IWeavingModelFiller weavingModelFiller = new MultiWeavingModelFiller(new MethodAttributeWeavingModelFiller(), new PropertyGetAttributeWeavingModelFiller());
+        IWeavingModelFiller weavingModelFiller = new MultiWeavingModelFiller(new MethodAttributeWeavingModelFiller(), new PropertyGetAttributeWeavingModelFiller(), new CallMethodInstructionWeavingModelFiller());
 
         public Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave, AssemblyPool assemblyDefinitionProvider, IEnumerable<NetAspectDefinition> aspects)
         {

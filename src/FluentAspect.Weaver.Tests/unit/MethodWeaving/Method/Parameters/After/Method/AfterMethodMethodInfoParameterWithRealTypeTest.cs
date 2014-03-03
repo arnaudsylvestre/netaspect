@@ -30,9 +30,9 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.M
       {
          public bool NetAspectAttribute = true;
 
-         public static MethodInfo MethodInfo;
+         public static MethodBase MethodInfo;
 
-         public void After(MethodInfo method)
+         public void After(MethodBase method)
          {
             MethodInfo = method;
          }
