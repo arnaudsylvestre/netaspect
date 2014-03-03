@@ -1,8 +1,7 @@
 using System;
 using FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance;
-using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before.CallerParameters
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Before.CallerParameters
 {
     public class BeforeCallUpdateFieldCallerParametersParameterWithRealTypeReferencedTypeTest : NetAspectTest<BeforeCallUpdateFieldCallerParametersParameterWithRealTypeReferencedTypeTest.ClassToWeave>
    {
