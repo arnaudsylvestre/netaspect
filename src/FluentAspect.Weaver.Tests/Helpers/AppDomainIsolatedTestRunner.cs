@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using FluentAspect.Weaver.Core;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Factory;
 using NUnit.Framework;
 using System.Linq;
 
-namespace FluentAspect.Weaver.Tests.acceptance
+namespace FluentAspect.Weaver.Tests.Helpers
 {
     public class AppDomainIsolatedTestRunner : MarshalByRefObject
     {
