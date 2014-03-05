@@ -1,14 +1,21 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.V2
 {
     public class WeavingModelComputer
     {
-        IWeavingModelFiller weavingModelFiller = new MultiWeavingModelFiller(new MethodAttributeWeavingModelFiller(), new PropertyGetAttributeWeavingModelFiller(), new CallMethodInstructionWeavingModelFiller());
+        IWeavingModelFiller weavingModelFiller = new MultiWeavingModelFiller(new MethodAttributeWeavingModelFiller(),
+            new PropertyGetAttributeWeavingModelFiller(),
+            new CallMethodInstructionWeavingModelFiller(),
+            new CallGetFieldInstructionWeavingModelFiller());
+
+        
 
         public Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave, AssemblyPool assemblyDefinitionProvider, IEnumerable<NetAspectDefinition> aspects)
         {
