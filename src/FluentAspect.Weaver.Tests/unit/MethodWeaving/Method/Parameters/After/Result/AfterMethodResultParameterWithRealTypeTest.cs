@@ -3,17 +3,18 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Result
 {
-   public class AfterMethodResultParameterWithRealTypeTest : NetAspectTest<AfterMethodResultParameterWithRealTypeTest.ClassToWeave>
+    public class AfterMethodResultParameterWithRealTypeTest :
+        NetAspectTest<AfterMethodResultParameterWithRealTypeTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
             return () =>
-            {
-                var classToWeave_L = new ClassToWeave();
-                var res = classToWeave_L.Weaved();
-                Assert.AreEqual("NeverUsedValue", res);
-                Assert.AreEqual("NeverUsedValue", MyAspect.Result);
-            };
+                {
+                    var classToWeave_L = new ClassToWeave();
+                    string res = classToWeave_L.Weaved();
+                    Assert.AreEqual("NeverUsedValue", res);
+                    Assert.AreEqual("NeverUsedValue", MyAspect.Result);
+                };
         }
 
         public class ClassToWeave
@@ -27,9 +28,8 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.R
 
         public class MyAspect : Attribute
         {
-            public bool NetAspectAttribute = true;
-
             public static string Result;
+            public bool NetAspectAttribute = true;
 
             public void After(string result)
             {
@@ -37,8 +37,5 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.R
                 result = "MyNewValue";
             }
         }
-    
-   }
-
-   
+    }
 }

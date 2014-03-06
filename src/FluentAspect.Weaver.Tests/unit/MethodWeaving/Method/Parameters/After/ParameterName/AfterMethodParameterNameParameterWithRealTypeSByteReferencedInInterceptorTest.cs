@@ -3,7 +3,8 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.ParameterName
 {
-    public class AfterMethodParameterNameParameterWithRealTypeSByteReferencedInInterceptorTest : NetAspectTest<AfterMethodParameterNameParameterWithRealTypeSByteReferencedInInterceptorTest.ClassToWeave>
+    public class AfterMethodParameterNameParameterWithRealTypeSByteReferencedInInterceptorTest :
+        NetAspectTest<AfterMethodParameterNameParameterWithRealTypeSByteReferencedInInterceptorTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
@@ -21,15 +22,13 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.P
             [MyAspect]
             public void Weaved(sbyte i)
             {
-
             }
         }
 
         public class MyAspect : Attribute
         {
-            public bool NetAspectAttribute = true;
-
             public static sbyte I;
+            public bool NetAspectAttribute = true;
 
             public void After(ref sbyte i)
             {

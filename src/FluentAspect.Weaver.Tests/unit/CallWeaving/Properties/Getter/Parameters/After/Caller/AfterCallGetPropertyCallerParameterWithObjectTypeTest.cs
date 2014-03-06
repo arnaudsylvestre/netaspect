@@ -3,43 +3,40 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.After.Caller
 {
-    public class AfterCallGetPropertyCallerParameterWithObjectTypeTest : NetAspectTest<AfterCallGetPropertyCallerParameterWithObjectTypeTest.ClassToWeave>
-   {
-      protected override Action CreateEnsure()
-      {
-         return () =>
+    public class AfterCallGetPropertyCallerParameterWithObjectTypeTest :
+        NetAspectTest<AfterCallGetPropertyCallerParameterWithObjectTypeTest.ClassToWeave>
+    {
+        protected override Action CreateEnsure()
+        {
+            return () =>
+                {
+                    Assert.IsNull(MyAspect.Caller);
+                    var classToWeave_L = new ClassToWeave();
+                    classToWeave_L.Weaved();
+                    Assert.AreEqual(classToWeave_L, MyAspect.Caller);
+                };
+        }
+
+        public class ClassToWeave
+        {
+            [MyAspect]
+            public string Property { get; set; }
+
+            public string Weaved()
             {
-               Assert.IsNull(MyAspect.Caller);
-               var classToWeave_L = new ClassToWeave();
-               classToWeave_L.Weaved();
-               Assert.AreEqual(classToWeave_L, MyAspect.Caller);
-            };
-      }
+                return Property;
+            }
+        }
 
-      public class ClassToWeave
-      {
+        public class MyAspect : Attribute
+        {
+            public static object Caller;
+            public bool NetAspectAttribute = true;
 
-          [MyAspect]
-          public string Property {get;set;}
-
-         public string Weaved()
-         {
-             return Property;
-         }
-      }
-
-      public class MyAspect : Attribute
-      {
-         public bool NetAspectAttribute = true;
-
-         public static object Caller;
-
-         public void AfterGetProperty(object caller)
-         {
-             Caller = caller;
-         }
-      }
-   }
-
-   
+            public void AfterGetProperty(object caller)
+            {
+                Caller = caller;
+            }
+        }
+    }
 }

@@ -8,19 +8,12 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 {
     public class ParametersEngine
     {
+        private readonly Dictionary<string, Parameter> possibleParameters = new Dictionary<string, Parameter>();
 
-        private class Parameter
+        public void AddPossibleParameter(string linenumber, Action<ParameterInfo, ErrorHandler> check,
+                                         Action<ParameterInfo, List<Instruction>> instructionFiller)
         {
-            public Action<ParameterInfo, ErrorHandler> Checker;
-
-            public Action<ParameterInfo, List<Instruction>> InstructionFiller;
-        }
-
-        readonly Dictionary<string, Parameter> possibleParameters = new Dictionary<string, Parameter>();
-
-        public void AddPossibleParameter(string linenumber, Action<ParameterInfo, ErrorHandler> check, Action<ParameterInfo, List<Instruction>> instructionFiller)
-        {
-            possibleParameters.Add(linenumber, new Parameter()
+            possibleParameters.Add(linenumber, new Parameter
                 {
                     Checker = check,
                     InstructionFiller = instructionFiller,
@@ -29,17 +22,17 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 
         public void Check(IEnumerable<ParameterInfo> parameters, ErrorHandler errorHandler)
         {
-            foreach (var parameterInfo in parameters)
+            foreach (ParameterInfo parameterInfo in parameters)
             {
-               var key_L = parameterInfo.Name.ToLower();
-               if (possibleParameters.ContainsKey(key_L))
-               {
-                  possibleParameters[key_L].Checker(parameterInfo, errorHandler);
-               }
-               else
-               {
-                  errorHandler.Errors.Add(string.Format("The parameter '{0}' is unknown", parameterInfo.Name));
-               }
+                string key_L = parameterInfo.Name.ToLower();
+                if (possibleParameters.ContainsKey(key_L))
+                {
+                    possibleParameters[key_L].Checker(parameterInfo, errorHandler);
+                }
+                else
+                {
+                    errorHandler.Errors.Add(string.Format("The parameter '{0}' is unknown", parameterInfo.Name));
+                }
             }
         }
 
@@ -49,6 +42,13 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
             {
                 possibleParameters[parameterInfo_L.Name.ToLower()].InstructionFiller(parameterInfo_L, instructions);
             }
+        }
+
+        private class Parameter
+        {
+            public Action<ParameterInfo, ErrorHandler> Checker;
+
+            public Action<ParameterInfo, List<Instruction>> InstructionFiller;
         }
     }
 }

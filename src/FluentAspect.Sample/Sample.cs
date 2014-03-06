@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FluentAspect.Sample
 {
-    class Res
+    internal class Res
     {
         public int field
         {
-            set {}
+            set { }
         }
-    }   
-    
+    }
+
     public class EventClass
     {
         public delegate void MyEventHandler(object sender, MyEventArgs e);
@@ -26,7 +23,7 @@ namespace FluentAspect.Sample
 
         public void RaisesMyEvent()
         {
-              MyEvent();
+            MyEvent();
         }
     }
 
@@ -34,21 +31,21 @@ namespace FluentAspect.Sample
     {
     }
 
-    class Sample
+    internal class Sample
     {
         public static int Beforeinstance;
 
         public void Before<T>(ref bool instance)
         {
             Before2(instance);
-            
         }
+
         public void Before2(bool instance)
         {
         }
     }
 
-    class TryFinallySample
+    internal class TryFinallySample
     {
         public string Hello()
         {

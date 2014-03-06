@@ -8,9 +8,10 @@ namespace FluentAspect.Weaver.Core.V2
 {
     public static class MethodWeavingMethodInjectorFactory
     {
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType)
+        public static IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
+                                                                                MethodInfo interceptorMethod,
+                                                                                Type aspectType)
         {
-
             var checker = new ParametersChecker();
             FillCommon(method, checker);
 
@@ -18,11 +19,15 @@ namespace FluentAspect.Weaver.Core.V2
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
 
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, aspectType, checker, parametersIlGenerator);
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod,
+                                                                                       aspectType, checker,
+                                                                                       parametersIlGenerator);
         }
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType)
-        {
 
+        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method,
+                                                                                   MethodInfo interceptorMethod,
+                                                                                   Type aspectType)
+        {
             var checker = new ParametersChecker();
             FillCommon(method, checker);
 
@@ -30,10 +35,13 @@ namespace FluentAspect.Weaver.Core.V2
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
 
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, aspectType, checker, parametersIlGenerator);
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod,
+                                                                                       aspectType, checker,
+                                                                                       parametersIlGenerator);
         }
 
-        private static void FillCommon(MethodDefinition method, ParametersIlGenerator<IlInjectorAvailableVariables> parametersIlGenerator)
+        private static void FillCommon(MethodDefinition method,
+                                       ParametersIlGenerator<IlInjectorAvailableVariables> parametersIlGenerator)
         {
             parametersIlGenerator.CreateIlGeneratorForInstanceParameter(method);
             parametersIlGenerator.CreateIlGeneratorForMethodParameter();
@@ -49,9 +57,10 @@ namespace FluentAspect.Weaver.Core.V2
             checker.CreateCheckerForParametersParameter();
         }
 
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType)
+        public static IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
+                                                                               MethodInfo interceptorMethod,
+                                                                               Type aspectType)
         {
-
             var checker = new ParametersChecker();
             FillCommon(method, checker);
             checker.CreateCheckerForResultParameter(method);
@@ -60,10 +69,14 @@ namespace FluentAspect.Weaver.Core.V2
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
             parametersIlGenerator.CreateIlGeneratorForResultParameter();
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, aspectType, checker, parametersIlGenerator);
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod,
+                                                                                       aspectType, checker,
+                                                                                       parametersIlGenerator);
         }
 
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnException(MethodDefinition method, MethodInfo methodInfo, Type aspectType)
+        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnException(MethodDefinition method,
+                                                                                     MethodInfo methodInfo,
+                                                                                     Type aspectType)
         {
             var checker = new ParametersChecker();
             FillCommon(method, checker);
@@ -73,7 +86,8 @@ namespace FluentAspect.Weaver.Core.V2
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
             parametersIlGenerator.CreateIlGeneratorForExceptionParameter();
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, methodInfo, aspectType, checker, parametersIlGenerator);
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, methodInfo, aspectType,
+                                                                                       checker, parametersIlGenerator);
         }
     }
 }

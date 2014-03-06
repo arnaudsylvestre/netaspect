@@ -7,9 +7,9 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter
     public class StaticPropertyGetterCallWeavingTest
     {
         [Test]
-         public void Check()
-         {
-             throw new NotImplementedException();
-         }
+        public void Check()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

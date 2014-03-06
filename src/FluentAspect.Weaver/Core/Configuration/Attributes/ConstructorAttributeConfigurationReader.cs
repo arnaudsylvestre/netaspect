@@ -9,21 +9,23 @@ namespace FluentAspect.Weaver.Core.Configuration.Attributes
 {
     public class ConstructorAttributeConfigurationReader : IConfigurationReader
     {
-       public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration, ErrorHandler errorHandler)
+        public void ReadConfiguration(IEnumerable<Type> types, WeavingConfiguration configuration,
+                                      ErrorHandler errorHandler)
         {
-            foreach (var matchingMethod in types.GetAllConstructors((m) => true))
+            foreach (ConstructorInfo matchingMethod in types.GetAllConstructors((m) => true))
             {
                 MethodBase info = matchingMethod;
-               var methodWeavingAspectAttributes_L = matchingMethod.GetNetAspectAttributes();
-               foreach (var methodWeavingAspectAttribute_L in methodWeavingAspectAttributes_L)
-               {
-                   var errors = new List<string>();
-                   configuration.AddConstructor(m => m.AreEqual(info),
-                    new List<Assembly>() { info.DeclaringType.Assembly },
-                    methodWeavingAspectAttribute_L,
-                    errors);
-                   errorHandler.Errors.AddRange(errors);
-               }
+                IEnumerable<NetAspectDefinition> methodWeavingAspectAttributes_L =
+                    matchingMethod.GetNetAspectAttributes();
+                foreach (NetAspectDefinition methodWeavingAspectAttribute_L in methodWeavingAspectAttributes_L)
+                {
+                    var errors = new List<string>();
+                    configuration.AddConstructor(m => m.AreEqual(info),
+                                                 new List<Assembly> {info.DeclaringType.Assembly},
+                                                 methodWeavingAspectAttribute_L,
+                                                 errors);
+                    errorHandler.Errors.AddRange(errors);
+                }
             }
         }
     }

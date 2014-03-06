@@ -6,17 +6,16 @@ namespace FluentAspect.Weaver.Tests.unit.ParameterWeaving.Constructor.OnFinally
     [TestFixture]
     public class OnFinallyConstructorParameterValueTest
     {
-       [Test]
-       public void CheckReferenced()
-       {
-          throw new NotImplementedException();
-       }
-
-
-       [Test]
+        [Test]
         public void CheckInstanceWithRealType()
         {
             throw new NotImplementedException();
         }
-   }
+
+        [Test]
+        public void CheckReferenced()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

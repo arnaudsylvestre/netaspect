@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Helpers;
-using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
@@ -17,8 +14,8 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 
     public class AroundInstructionWeaver : IWeaveable
     {
-        private JoinPoint point;
-        private ICallWeavingProvider provider;
+        private readonly JoinPoint point;
+        private readonly ICallWeavingProvider provider;
 
         public AroundInstructionWeaver(JoinPoint point, ICallWeavingProvider provider)
         {

@@ -7,7 +7,7 @@ namespace FluentAspect.Weaver.Core.Model
 {
     public class NetAspectDefinition
     {
-        private Type _attribute;
+        private readonly Type _attribute;
 
         public NetAspectDefinition(Type attribute)
         {
@@ -16,10 +16,7 @@ namespace FluentAspect.Weaver.Core.Model
 
         public IEnumerable<Assembly> AssembliesToWeave
         {
-            get
-            {
-                return _attribute.GetValueForField<IEnumerable<Assembly>>("AssembliesToWeave", () => new Assembly[0]);
-            }
+            get { return _attribute.GetValueForField<IEnumerable<Assembly>>("AssembliesToWeave", () => new Assembly[0]); }
         }
 
         public Type Type
@@ -81,7 +78,8 @@ namespace FluentAspect.Weaver.Core.Model
         {
             get
             {
-                return Type.GetField("NetAspectAttribute", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+                return Type.GetField("NetAspectAttribute",
+                                     BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
                                      BindingFlags.Instance) != null;
             }
         }
@@ -118,17 +116,17 @@ namespace FluentAspect.Weaver.Core.Model
 
         public Interceptor AfterParameter
         {
-           get { return new Interceptor(_attribute.GetMethod("AfterParameter")); }
+            get { return new Interceptor(_attribute.GetMethod("AfterParameter")); }
         }
 
         public Interceptor BeforeParameter
         {
-           get { return new Interceptor(_attribute.GetMethod("BeforeParameter")); }
+            get { return new Interceptor(_attribute.GetMethod("BeforeParameter")); }
         }
 
         public Interceptor OnExceptionParameter
         {
-           get { return new Interceptor(_attribute.GetMethod("OnExceptionParameter")); }
+            get { return new Interceptor(_attribute.GetMethod("OnExceptionParameter")); }
         }
 
         public Interceptor AfterCallEvent

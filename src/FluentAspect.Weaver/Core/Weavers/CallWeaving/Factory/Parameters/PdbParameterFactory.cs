@@ -3,7 +3,6 @@ using FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
-using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
 {
@@ -19,46 +18,57 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Parameters
 
         private static void AddLineNumber(this ParametersEngine engine, JoinPoint point)
         {
-
             engine.AddPossibleParameter("linenumber", (info, handler) =>
-            {
-                Ensure.SequencePoint(point.InstructionStart, handler, info);
-                Ensure.ParameterType<int>(info, handler);
-            },
-                (info, instructions) => instructions.Add(InstructionFactory.Create(point.InstructionStart.GetLastSequencePoint(), i => i.StartLine)));
+                {
+                    Ensure.SequencePoint(point.InstructionStart, handler, info);
+                    Ensure.ParameterType<int>(info, handler);
+                },
+                                        (info, instructions) =>
+                                        instructions.Add(
+                                            InstructionFactory.Create(point.InstructionStart.GetLastSequencePoint(),
+                                                                      i => i.StartLine)));
         }
 
 
         private static void AddColumnNumber(this ParametersEngine engine, JoinPoint point)
         {
             engine.AddPossibleParameter("columnnumber", (info, handler) =>
-            {
-                Ensure.SequencePoint(point.InstructionStart, handler, info);
-                Ensure.ParameterType<int>(info, handler);
-            },
-                (info, instructions) => instructions.Add(InstructionFactory.Create(point.InstructionStart.GetLastSequencePoint(), i => i.StartColumn)));
+                {
+                    Ensure.SequencePoint(point.InstructionStart, handler, info);
+                    Ensure.ParameterType<int>(info, handler);
+                },
+                                        (info, instructions) =>
+                                        instructions.Add(
+                                            InstructionFactory.Create(point.InstructionStart.GetLastSequencePoint(),
+                                                                      i => i.StartColumn)));
         }
 
 
         private static void AddFilename(this ParametersEngine engine, JoinPoint point)
         {
             engine.AddPossibleParameter("filename", (info, handler) =>
-            {
-                Ensure.SequencePoint(point.InstructionStart, handler, info);
-                Ensure.ParameterType<string>(info, handler);
-            },
-                (info, instructions) => instructions.Add(InstructionFactory.Create(point.InstructionStart.GetLastSequencePoint(), i => Path.GetFileName(i.Document.Url))));
+                {
+                    Ensure.SequencePoint(point.InstructionStart, handler, info);
+                    Ensure.ParameterType<string>(info, handler);
+                },
+                                        (info, instructions) =>
+                                        instructions.Add(
+                                            InstructionFactory.Create(point.InstructionStart.GetLastSequencePoint(),
+                                                                      i => Path.GetFileName(i.Document.Url))));
         }
 
 
         private static void AddFilepath(this ParametersEngine engine, JoinPoint joinPoint)
         {
             engine.AddPossibleParameter("filepath", (info, handler) =>
-            {
-                Ensure.SequencePoint(joinPoint.InstructionStart, handler, info);
-                Ensure.ParameterType<string>(info, handler);
-            },
-                (info, instructions) => instructions.Add(InstructionFactory.Create(joinPoint.InstructionStart.GetLastSequencePoint(), i => i.Document.Url)));
+                {
+                    Ensure.SequencePoint(joinPoint.InstructionStart, handler, info);
+                    Ensure.ParameterType<string>(info, handler);
+                },
+                                        (info, instructions) =>
+                                        instructions.Add(
+                                            InstructionFactory.Create(
+                                                joinPoint.InstructionStart.GetLastSequencePoint(), i => i.Document.Url)));
         }
     }
 }

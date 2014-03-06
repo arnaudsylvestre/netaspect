@@ -7,9 +7,9 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter
     public class FieldGetterCallWeavingInAnotherAssemblyTest
     {
         [Test]
-         public void Check()
-         {
-             throw new NotImplementedException();
-         }
+        public void Check()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

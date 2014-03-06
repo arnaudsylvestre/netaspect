@@ -2,10 +2,8 @@
 using System.Linq;
 using FluentAspect.Weaver.Core.Configuration;
 using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.Model.Adapters;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Events;
-using FluentAspect.Weaver.Core.Weavers.CallWeaving.Fields;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -16,15 +14,15 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
     {
         public IEnumerable<IWeaveable> BuildWeavers(WeavingConfiguration configuration)
         {
-           var updates = new Dictionary<JoinPoint, List<CallWeavingConfiguration>>();
+            var updates = new Dictionary<JoinPoint, List<CallWeavingConfiguration>>();
 
-           //var methodMatches = new List<MethodMatch>(configuration.Constructors);
-           var matches = configuration.Events;
+            //var methodMatches = new List<MethodMatch>(configuration.Constructors);
+            List<AspectMatch<FieldReference>> matches = configuration.Events;
             foreach (var evt in matches)
             {
-                foreach (var assemblyDefinition in evt.AssembliesToScan)
+                foreach (AssemblyDefinition assemblyDefinition in evt.AssembliesToScan)
                 {
-                   List<MethodDefinition> methods = assemblyDefinition.GetAllMethods();
+                    List<MethodDefinition> methods = assemblyDefinition.GetAllMethods();
                     foreach (MethodDefinition method in methods)
                     {
                         if (!method.HasBody)
@@ -34,7 +32,7 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                             if (IsCallInstruction(instruction))
                             {
                                 //foreach (MethodMatch methodMatch in configuration.Methods)v
-                                var methodMatch = evt;
+                                AspectMatch<FieldReference> methodMatch = evt;
                                 {
                                     if (methodMatch.Matcher(instruction.Operand as FieldReference))
                                     {
@@ -42,58 +40,58 @@ namespace FluentAspect.Weaver.Core.WeaverBuilders
                                         {
                                             if (methodMatch.Aspect.BeforeCallEvent.Method != null ||
                                                 methodMatch.Aspect.AfterCallEvent.Method != null)
-                                        {
-                                           var methodPoint_L = new JoinPoint
-                                              {
-                                                  Method = method,
-                                                  InstructionStart = instruction,
-                                                  InstructionEnd                                                  = instruction.Next,
-                                              };
-                                           if (!updates.ContainsKey(methodPoint_L))
-                                           {
-                                               updates.Add(methodPoint_L, new List<CallWeavingConfiguration>());
-                                           }
-                                           updates[methodPoint_L].Add(new CallWeavingConfiguration()
-                                               {
-                                                   Type = methodMatch.Aspect.Type,
-                                                   After = methodMatch.Aspect.AfterCallEvent,
-                                                   Before = methodMatch.Aspect.BeforeCallEvent,
-                                               });
-                                           
-                                        }
-
-
+                                            {
+                                                var methodPoint_L = new JoinPoint
+                                                    {
+                                                        Method = method,
+                                                        InstructionStart = instruction,
+                                                        InstructionEnd = instruction.Next,
+                                                    };
+                                                if (!updates.ContainsKey(methodPoint_L))
+                                                {
+                                                    updates.Add(methodPoint_L, new List<CallWeavingConfiguration>());
+                                                }
+                                                updates[methodPoint_L].Add(new CallWeavingConfiguration
+                                                    {
+                                                        Type = methodMatch.Aspect.Type,
+                                                        After = methodMatch.Aspect.AfterCallEvent,
+                                                        Before = methodMatch.Aspect.BeforeCallEvent,
+                                                    });
+                                            }
                                         }
                                     }
                                 }
                             }
-
                         }
                     }
                 }
-
             }
 
-            List<IWeaveable> weavables = new List<IWeaveable>();
-            weavables.AddRange(updates.Select(point_L => new AroundInstructionWeaver(point_L.Key, new UpdateCallEventWeaver(new EventCallToWeave()
-                {
-                    JoinPoint = point_L.Key, Interceptors = point_L.Value
-                }))).Cast<IWeaveable>());
+            var weavables = new List<IWeaveable>();
+            weavables.AddRange(
+                updates.Select(
+                    point_L => new AroundInstructionWeaver(point_L.Key, new UpdateCallEventWeaver(new EventCallToWeave
+                        {
+                            JoinPoint = point_L.Key,
+                            Interceptors = point_L.Value
+                        }))).Cast<IWeaveable>());
             return weavables;
         }
 
         private static bool IsCallInstruction(Instruction instruction)
         {
-            return 
-                 (instruction.OpCode == OpCodes.Ldfld && instruction.Operand is FieldReference ||
-                 instruction.OpCode == OpCodes.Ldsfld && instruction.Operand is FieldReference) && IsCallInvoke(instruction.Next);
+            return
+                (instruction.OpCode == OpCodes.Ldfld && instruction.Operand is FieldReference ||
+                 instruction.OpCode == OpCodes.Ldsfld && instruction.Operand is FieldReference) &&
+                IsCallInvoke(instruction.Next);
         }
 
         private static bool IsCallInvoke(Instruction instruction)
         {
             return
-                 (instruction.OpCode == OpCodes.Call && instruction.Operand is MethodReference ||
-                 instruction.OpCode == OpCodes.Callvirt && instruction.Operand is MethodReference) && (instruction.Operand as MethodReference).Name == "Invoke";
+                (instruction.OpCode == OpCodes.Call && instruction.Operand is MethodReference ||
+                 instruction.OpCode == OpCodes.Callvirt && instruction.Operand is MethodReference) &&
+                (instruction.Operand as MethodReference).Name == "Invoke";
         }
     }
 }

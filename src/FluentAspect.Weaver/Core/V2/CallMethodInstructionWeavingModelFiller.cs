@@ -8,16 +8,16 @@ namespace FluentAspect.Weaver.Core.V2
 {
     public class CallMethodInstructionWeavingModelFiller : IWeavingModelFiller
     {
-
         public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
         {
             if (method.Body == null)
                 return;
-            foreach (var instruction in method.Body.Instructions)
+            foreach (Instruction instruction in method.Body.Instructions)
             {
                 if (IsMethodCall(instruction, aspect, method))
                 {
-                    weavingModel.AddMethodCallWeavingModel(method, instruction, aspect, aspect.BeforeCallMethod, aspect.AfterCallMethod); 
+                    weavingModel.AddMethodCallWeavingModel(method, instruction, aspect, aspect.BeforeCallMethod,
+                                                           aspect.AfterCallMethod);
                 }
             }
         }
@@ -29,14 +29,16 @@ namespace FluentAspect.Weaver.Core.V2
             {
                 var methodReference = instruction.Operand as MethodReference;
 
-                var aspectType = method.Module.Import(aspect.Type);
-                var compliant = methodReference.Resolve().CustomAttributes.Any(customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
+                TypeReference aspectType = method.Module.Import(aspect.Type);
+                bool compliant =
+                    methodReference.Resolve()
+                                   .CustomAttributes.Any(
+                                       customAttribute_L =>
+                                       customAttribute_L.AttributeType.FullName == aspectType.FullName);
                 return compliant;
             }
             return false;
         }
-
-        
     }
 
     public class CallGetFieldInstructionWeavingModelFiller : IWeavingModelFiller
@@ -58,13 +60,15 @@ namespace FluentAspect.Weaver.Core.V2
             {
                 var fieldReference = instruction.Operand as FieldReference;
 
-                var aspectType = method.Module.Import(aspect.Type);
-                var compliant = fieldReference.Resolve().CustomAttributes.Any(customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
+                TypeReference aspectType = method.Module.Import(aspect.Type);
+                bool compliant =
+                    fieldReference.Resolve()
+                                  .CustomAttributes.Any(
+                                      customAttribute_L =>
+                                      customAttribute_L.AttributeType.FullName == aspectType.FullName);
                 return compliant;
             }
             return false;
         }
-
-
     }
 }

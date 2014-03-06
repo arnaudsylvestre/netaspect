@@ -3,24 +3,27 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.CallerParameterName
 {
-    public class AfterCallMethodCallerParameterNameParameterWithRealTypeReferencedTest : NetAspectTest<AfterCallMethodCallerParameterNameParameterWithRealTypeReferencedTest.ClassToWeave>
+    public class AfterCallMethodCallerParameterNameParameterWithRealTypeReferencedTest :
+        NetAspectTest<AfterCallMethodCallerParameterNameParameterWithRealTypeReferencedTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
             return () =>
-            {
-                Assert.AreEqual(0, MyAspect.ParameterName);
-                var classToWeave_L = new ClassToWeave();
-                classToWeave_L.Weaved(12);
-                Assert.AreEqual(12, MyAspect.ParameterName);
-            };
+                {
+                    Assert.AreEqual(0, MyAspect.ParameterName);
+                    var classToWeave_L = new ClassToWeave();
+                    classToWeave_L.Weaved(12);
+                    Assert.AreEqual(12, MyAspect.ParameterName);
+                };
         }
 
         public class ClassToWeave
         {
-
             [MyAspect]
-            public string Method() {return "Hello";}
+            public string Method()
+            {
+                return "Hello";
+            }
 
             public string Weaved(int param1)
             {
@@ -30,9 +33,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.Ca
 
         public class MyAspect : Attribute
         {
-            public bool NetAspectAttribute = true;
-
             public static int ParameterName;
+            public bool NetAspectAttribute = true;
 
             public void AfterCallMethod(ref int callerParam1)
             {
@@ -40,6 +42,4 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.Ca
             }
         }
     }
-
-
 }

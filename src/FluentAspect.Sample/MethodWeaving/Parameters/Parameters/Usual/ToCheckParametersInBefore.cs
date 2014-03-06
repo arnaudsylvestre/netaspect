@@ -7,13 +7,11 @@ namespace FluentAspect.Sample.MethodWeaving.Parameters.Parameters.Usual
         [ToCheckParametersInBeforeAspect]
         public void Check(string parameter1, int parameter2)
         {
-            
         }
     }
 
     public class ToCheckParametersInBeforeAspectAttribute : Attribute
     {
-
         public string NetAspectAttributeKind = "MethodWeaving";
 
         public void Before(object[] parameters)
@@ -24,11 +22,11 @@ namespace FluentAspect.Sample.MethodWeaving.Parameters.Parameters.Usual
 
     public class ParametersException : Exception
     {
-        public object[] Parameters { get; set; }
-
         public ParametersException(object[] parameters)
         {
             Parameters = parameters;
         }
+
+        public object[] Parameters { get; set; }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using FluentAspect.Weaver.Core.Model;
-using Mono.Cecil;
 using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.V2
@@ -11,7 +9,7 @@ namespace FluentAspect.Weaver.Core.V2
         {
             Method = new MethodWeavingModel();
             BeforeInstructions = new Dictionary<Instruction, IInstructionIlInjector>();
-            AfterInstructions= new Dictionary<Instruction, IInstructionIlInjector>();
+            AfterInstructions = new Dictionary<Instruction, IInstructionIlInjector>();
         }
 
         public MethodWeavingModel Method { get; set; }
@@ -20,10 +18,12 @@ namespace FluentAspect.Weaver.Core.V2
 
         public bool IsEmpty
         {
-            get { return Method.Afters.Count == 0 && 
-                         Method.Befores.Count == 0 && 
-                         Method.OnExceptions.Count == 0 &&
-                         Method.OnFinallys.Count == 0 && BeforeInstructions.Count == 0 && AfterInstructions.Count == 0;
+            get
+            {
+                return Method.Afters.Count == 0 &&
+                       Method.Befores.Count == 0 &&
+                       Method.OnExceptions.Count == 0 &&
+                       Method.OnFinallys.Count == 0 && BeforeInstructions.Count == 0 && AfterInstructions.Count == 0;
             }
         }
     }

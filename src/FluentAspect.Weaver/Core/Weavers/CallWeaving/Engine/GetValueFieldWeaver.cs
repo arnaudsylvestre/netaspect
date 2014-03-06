@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentAspect.Weaver.Core.Model;
 
 namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
@@ -7,7 +8,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
     {
         public GetValueFieldWeaver(JoinPoint key, List<CallWeavingConfiguration> value)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

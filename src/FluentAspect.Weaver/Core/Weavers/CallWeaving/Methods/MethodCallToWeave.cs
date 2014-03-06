@@ -9,6 +9,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Methods
     {
         public JoinPoint JoinPoint { get; set; }
         public IEnumerable<CallWeavingConfiguration> Interceptors { get; set; }
+
         public MethodReference CalledMethod
         {
             get { return JoinPoint.InstructionStart.Operand as MethodReference; }

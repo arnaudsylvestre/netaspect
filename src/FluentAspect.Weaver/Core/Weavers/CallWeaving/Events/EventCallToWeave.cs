@@ -9,10 +9,12 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Events
     {
         public JoinPoint JoinPoint { get; set; }
         public IEnumerable<CallWeavingConfiguration> Interceptors { get; set; }
+
         public MethodReference Call
         {
             get { return JoinPoint.InstructionEnd.Operand as MethodReference; }
         }
+
         public FieldReference Field
         {
             get { return JoinPoint.InstructionStart.Operand as FieldReference; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Collections.Generic;
 
 namespace FluentAspect.Weaver.Helpers
 {
@@ -16,7 +17,7 @@ namespace FluentAspect.Weaver.Helpers
 
         public static VariableDefinition CreateVariable<T>(this MethodDefinition method)
         {
-            return CreateVariable(method, typeof(T));
+            return CreateVariable(method, typeof (T));
         }
 
         public static VariableDefinition CreateVariable(this MethodDefinition method,
@@ -27,36 +28,39 @@ namespace FluentAspect.Weaver.Helpers
             return variableDefinition;
         }
 
-       public static void InsertAfter(this MethodDefinition method, Instruction instruction, IEnumerable<Instruction> toInsert)
-       {
-          var instructions = method.Body.Instructions;
-          for (int i = 0; i < instructions.Count; i++)
-          {
-             if (instructions[i] == instruction)
-             {
-                foreach (Instruction afterInstruction in toInsert.Reverse())
+        public static void InsertAfter(this MethodDefinition method, Instruction instruction,
+                                       IEnumerable<Instruction> toInsert)
+        {
+            Collection<Instruction> instructions = method.Body.Instructions;
+            for (int i = 0; i < instructions.Count; i++)
+            {
+                if (instructions[i] == instruction)
                 {
-                   instructions.Insert(i + 1, afterInstruction);
+                    foreach (Instruction afterInstruction in toInsert.Reverse())
+                    {
+                        instructions.Insert(i + 1, afterInstruction);
+                    }
+                    break;
                 }
-                break;
-             }
-          }
-       }
-       public static void InsertBefore(this MethodDefinition method, Instruction instruction, IEnumerable<Instruction> toInsert)
-       {
-          var instructions = method.Body.Instructions;
-          for (int i = 0; i < instructions.Count; i++)
-          {
-             if (instructions[i] == instruction)
-             {
-                foreach (Instruction beforeInstruction in toInsert.Reverse())
+            }
+        }
+
+        public static void InsertBefore(this MethodDefinition method, Instruction instruction,
+                                        IEnumerable<Instruction> toInsert)
+        {
+            Collection<Instruction> instructions = method.Body.Instructions;
+            for (int i = 0; i < instructions.Count; i++)
+            {
+                if (instructions[i] == instruction)
                 {
-                   instructions.Insert(i, beforeInstruction);
+                    foreach (Instruction beforeInstruction in toInsert.Reverse())
+                    {
+                        instructions.Insert(i, beforeInstruction);
+                    }
+                    break;
                 }
-                break;
-             }
-          }
-       }
+            }
+        }
 
         //public static MethodDefinition Clone(this MethodDefinition methodDefinition, string cloneMethodName)
         //{
