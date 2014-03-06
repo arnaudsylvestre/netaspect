@@ -1,42 +1,36 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.LineNumber
 {
-    public class AfterCallMethodLineNumberParameterWithBadTypeTest :
-        NetAspectTest<AfterCallMethodLineNumberParameterWithBadTypeTest.ClassToWeave>
-    {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+    public class AfterCallMethodLineNumberParameterWithBadTypeTest : NetAspectTest<AfterCallMethodLineNumberParameterWithBadTypeTest.ClassToWeave>
+   {
+
+        protected override Action<FluentAspect.Weaver.Core.Errors.ErrorHandler> CreateErrorHandlerProvider()
         {
-            return
-                errorHandler =>
-                errorHandler.Errors.Add(
-                    string.Format(
-                        "the instance parameter in the method After of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
-                        typeof (string).FullName, typeof (string).FullName));
+            return errorHandler => errorHandler.Errors.Add(string.Format("the instance parameter in the method After of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}", typeof(string).FullName, typeof(string).FullName));
         }
 
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public string Method()
-            {
-                return "Hello";
-            }
+      public class ClassToWeave
+      {
 
-            public string Weaved()
-            {
-                return Method();
-            }
-        }
+          [MyAspect]
+          public string Method() {return "Hello";}
 
-        public class MyAspect : Attribute
-        {
-            public bool NetAspectAttribute = true;
+         public string Weaved()
+         {
+             return Method();
+         }
+      }
 
-            public void AfterCallMethod(string lineNumber)
-            {
-            }
-        }
-    }
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public void AfterCallMethod(string lineNumber)
+         {
+         }
+      }
+   }
+
+   
 }

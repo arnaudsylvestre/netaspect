@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
@@ -10,34 +11,56 @@ namespace FluentAspect.Weaver.Core.V2
 {
     public class IlInjectorAvailableVariables : IlInstructionInjectorAvailableVariables
     {
-        private readonly VariableDefinition _result;
-        private readonly MethodDefinition method;
-        public Collection<Instruction> Instructions = new Collection<Instruction>();
-        private VariableDefinition _exception;
+       private readonly VariableDefinition _result;
+       public Collection<Instruction> Instructions = new Collection<Instruction>();
+       private MethodDefinition method;
+       private VariableDefinition currentMethodInfo;
+       private VariableDefinition currentPropertyInfo;
         private VariableDefinition _parameters;
-        private VariableDefinition currentMethodInfo;
-        private VariableDefinition currentPropertyInfo;
+        private VariableDefinition _exception;
 
         public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method)
-        {
-            _result = result;
-            this.method = method;
-        }
+      {
+          _result = result;
+          this.method = method;
+      }
 
 
-        public VariableDefinition Result
+       public VariableDefinition CurrentMethodBase { get
+      {
+         if (currentMethodInfo == null)
+         {
+            currentMethodInfo = method.CreateVariable<MethodBase>();
+
+            Instructions.Add(Instruction.Create(OpCodes.Call, method.Module.Import(typeof(MethodBase).GetMethod("GetCurrentMethod", new Type[] {  }))));
+            Instructions.AppendSaveResultTo(currentMethodInfo);
+         }
+         return currentMethodInfo;
+      } }
+
+      public VariableDefinition Result
+      {
+         get { return _result; }
+      }
+
+        public VariableDefinition Parameters
         {
-            get { return _result; }
+            get { if (_parameters == null)
+            {
+                _parameters = method.CreateVariable<object[]>();
+
+                new Method(method).FillArgsArrayFromParameters(Instructions, _parameters);
+            }
+                return _parameters;
+            }
         }
 
         public VariableDefinition Exception
         {
-            get
+            get { if (_exception == null)
             {
-                if (_exception == null)
-                {
-                    _exception = method.CreateVariable<Exception>();
-                }
+                _exception = method.CreateVariable<Exception>();
+            }
                 return _exception;
             }
         }
@@ -51,44 +74,11 @@ namespace FluentAspect.Weaver.Core.V2
                     currentPropertyInfo = method.CreateVariable<PropertyInfo>();
 
                     Instructions.AppendCallToThisGetType(method.Module);
-                    Instructions.AppendCallToGetProperty(method.Name.Replace("get_", "").Replace("set_", ""),
-                                                         method.Module);
+                    Instructions.AppendCallToGetProperty(method.Name.Replace("get_", "").Replace("set_", ""), method.Module);
                     Instructions.AppendSaveResultTo(currentPropertyInfo);
                 }
                 return currentPropertyInfo;
             }
         }
-
-        public VariableDefinition CurrentMethodBase
-        {
-            get
-            {
-                if (currentMethodInfo == null)
-                {
-                    currentMethodInfo = method.CreateVariable<MethodBase>();
-
-                    Instructions.Add(Instruction.Create(OpCodes.Call,
-                                                        method.Module.Import(
-                                                            typeof (MethodBase).GetMethod("GetCurrentMethod",
-                                                                                          new Type[] {}))));
-                    Instructions.AppendSaveResultTo(currentMethodInfo);
-                }
-                return currentMethodInfo;
-            }
-        }
-
-        public VariableDefinition Parameters
-        {
-            get
-            {
-                if (_parameters == null)
-                {
-                    _parameters = method.CreateVariable<object[]>();
-
-                    new Method(method).FillArgsArrayFromParameters(Instructions, _parameters);
-                }
-                return _parameters;
-            }
-        }
-    }
+   }
 }

@@ -11,15 +11,14 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods
         {
             throw new NotImplementedException();
         }
-
         [Test]
-        public void CheckWeaveWithReturnType()
+        public void CheckWeaveWithReturnVoid()
         {
             throw new NotImplementedException();
         }
 
         [Test]
-        public void CheckWeaveWithReturnVoid()
+        public void CheckWeaveWithReturnType()
         {
             throw new NotImplementedException();
         }

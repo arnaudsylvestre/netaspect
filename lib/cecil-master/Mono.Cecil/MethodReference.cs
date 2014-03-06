@@ -28,192 +28,187 @@
 
 using System;
 using System.Text;
+
 using Mono.Collections.Generic;
 
-namespace Mono.Cecil
-{
-    public class MethodReference : MemberReference, IMethodSignature, IGenericParameterProvider, IGenericContext
-    {
-        internal Collection<GenericParameter> generic_parameters;
-        internal ParameterDefinitionCollection parameters;
-        private MethodReturnType return_type;
+namespace Mono.Cecil {
 
-        internal MethodReference()
-        {
-            return_type = new MethodReturnType(this);
-            token = new MetadataToken(TokenType.MemberRef);
-        }
+	public class MethodReference : MemberReference, IMethodSignature, IGenericParameterProvider, IGenericContext {
 
-        public MethodReference(string name, TypeReference returnType)
-            : base(name)
-        {
-            if (returnType == null)
-                throw new ArgumentNullException("returnType");
+		internal ParameterDefinitionCollection parameters;
+		MethodReturnType return_type;
 
-            return_type = new MethodReturnType(this);
-            return_type.ReturnType = returnType;
-            token = new MetadataToken(TokenType.MemberRef);
-        }
+		bool has_this;
+		bool explicit_this;
+		MethodCallingConvention calling_convention;
+		internal Collection<GenericParameter> generic_parameters;
 
-        public MethodReference(string name, TypeReference returnType, TypeReference declaringType)
-            : this(name, returnType)
-        {
-            if (declaringType == null)
-                throw new ArgumentNullException("declaringType");
+		public virtual bool HasThis {
+			get { return has_this; }
+			set { has_this = value; }
+		}
 
-            DeclaringType = declaringType;
-        }
+		public virtual bool ExplicitThis {
+			get { return explicit_this; }
+			set { explicit_this = value; }
+		}
 
-        public override string FullName
-        {
-            get
-            {
-                var builder = new StringBuilder();
-                builder.Append(ReturnType.FullName)
-                       .Append(" ")
-                       .Append(MemberFullName());
-                this.MethodSignatureFullName(builder);
-                return builder.ToString();
-            }
-        }
+		public virtual MethodCallingConvention CallingConvention {
+			get { return calling_convention; }
+			set { calling_convention = value; }
+		}
 
-        public virtual bool IsGenericInstance
-        {
-            get { return false; }
-        }
+		public virtual bool HasParameters {
+			get { return !parameters.IsNullOrEmpty (); }
+		}
 
-        internal override bool ContainsGenericParameter
-        {
-            get
-            {
-                if (ReturnType.ContainsGenericParameter || base.ContainsGenericParameter)
-                    return true;
+		public virtual Collection<ParameterDefinition> Parameters {
+			get {
+				if (parameters == null)
+					parameters = new ParameterDefinitionCollection (this);
 
-                Collection<ParameterDefinition> parameters = Parameters;
+				return parameters;
+			}
+		}
 
-                for (int i = 0; i < parameters.Count; i++)
-                    if (parameters[i].ParameterType.ContainsGenericParameter)
-                        return true;
+		IGenericParameterProvider IGenericContext.Type {
+			get {
+				var declaring_type = this.DeclaringType;
+				var instance = declaring_type as GenericInstanceType;
+				if (instance != null)
+					return instance.ElementType;
 
-                return false;
-            }
-        }
+				return declaring_type;
+			}
+		}
 
-        IGenericParameterProvider IGenericContext.Type
-        {
-            get
-            {
-                TypeReference declaring_type = DeclaringType;
-                var instance = declaring_type as GenericInstanceType;
-                if (instance != null)
-                    return instance.ElementType;
+		IGenericParameterProvider IGenericContext.Method {
+			get { return this; }
+		}
 
-                return declaring_type;
-            }
-        }
+		GenericParameterType IGenericParameterProvider.GenericParameterType {
+			get { return GenericParameterType.Method; }
+		}
 
-        IGenericParameterProvider IGenericContext.Method
-        {
-            get { return this; }
-        }
+		public virtual bool HasGenericParameters {
+			get { return !generic_parameters.IsNullOrEmpty (); }
+		}
 
-        GenericParameterType IGenericParameterProvider.GenericParameterType
-        {
-            get { return GenericParameterType.Method; }
-        }
+		public virtual Collection<GenericParameter> GenericParameters {
+			get {
+				if (generic_parameters != null)
+					return generic_parameters;
 
-        public virtual bool HasGenericParameters
-        {
-            get { return !generic_parameters.IsNullOrEmpty(); }
-        }
+				return generic_parameters = new GenericParameterCollection (this);
+			}
+		}
 
-        public virtual Collection<GenericParameter> GenericParameters
-        {
-            get
-            {
-                if (generic_parameters != null)
-                    return generic_parameters;
+		public TypeReference ReturnType {
+			get {
+				var return_type = MethodReturnType;
+				return return_type != null ? return_type.ReturnType : null;
+			}
+			set {
+				var return_type = MethodReturnType;
+				if (return_type != null)
+					return_type.ReturnType = value;
+			}
+		}
 
-                return generic_parameters = new GenericParameterCollection(this);
-            }
-        }
+		public virtual MethodReturnType MethodReturnType {
+			get { return return_type; }
+			set { return_type = value; }
+		}
 
-        public virtual bool HasThis { get; set; }
+		public override string FullName {
+			get {
+				var builder = new StringBuilder ();
+				builder.Append (ReturnType.FullName)
+					.Append (" ")
+					.Append (MemberFullName ());
+				this.MethodSignatureFullName (builder);
+				return builder.ToString ();
+			}
+		}
 
-        public virtual bool ExplicitThis { get; set; }
+		public virtual bool IsGenericInstance {
+			get { return false; }
+		}
 
-        public virtual MethodCallingConvention CallingConvention { get; set; }
+		internal override bool ContainsGenericParameter {
+			get {
+				if (this.ReturnType.ContainsGenericParameter || base.ContainsGenericParameter)
+					return true;
 
-        public virtual bool HasParameters
-        {
-            get { return !parameters.IsNullOrEmpty(); }
-        }
+				var parameters = this.Parameters;
 
-        public virtual Collection<ParameterDefinition> Parameters
-        {
-            get
-            {
-                if (parameters == null)
-                    parameters = new ParameterDefinitionCollection(this);
+				for (int i = 0; i < parameters.Count; i++)
+					if (parameters [i].ParameterType.ContainsGenericParameter)
+						return true;
 
-                return parameters;
-            }
-        }
+				return false;
+			}
+		}
 
-        public TypeReference ReturnType
-        {
-            get
-            {
-                MethodReturnType return_type = MethodReturnType;
-                return return_type != null ? return_type.ReturnType : null;
-            }
-            set
-            {
-                MethodReturnType return_type = MethodReturnType;
-                if (return_type != null)
-                    return_type.ReturnType = value;
-            }
-        }
+		internal MethodReference ()
+		{
+			this.return_type = new MethodReturnType (this);
+			this.token = new MetadataToken (TokenType.MemberRef);
+		}
 
-        public virtual MethodReturnType MethodReturnType
-        {
-            get { return return_type; }
-            set { return_type = value; }
-        }
+		public MethodReference (string name, TypeReference returnType)
+			: base (name)
+		{
+			if (returnType == null)
+				throw new ArgumentNullException ("returnType");
 
-        public virtual MethodReference GetElementMethod()
-        {
-            return this;
-        }
+			this.return_type = new MethodReturnType (this);
+			this.return_type.ReturnType = returnType;
+			this.token = new MetadataToken (TokenType.MemberRef);
+		}
 
-        public virtual MethodDefinition Resolve()
-        {
-            ModuleDefinition module = Module;
-            if (module == null)
-                throw new NotSupportedException();
+		public MethodReference (string name, TypeReference returnType, TypeReference declaringType)
+			: this (name, returnType)
+		{
+			if (declaringType == null)
+				throw new ArgumentNullException ("declaringType");
 
-            return module.Resolve(this);
-        }
-    }
+			this.DeclaringType = declaringType;
+		}
 
-    static partial class Mixin
-    {
-        public static bool IsVarArg(this IMethodSignature self)
-        {
-            return (self.CallingConvention & MethodCallingConvention.VarArg) != 0;
-        }
+		public virtual MethodReference GetElementMethod ()
+		{
+			return this;
+		}
 
-        public static int GetSentinelPosition(this IMethodSignature self)
-        {
-            if (!self.HasParameters)
-                return -1;
+		public virtual MethodDefinition Resolve ()
+		{
+			var module = this.Module;
+			if (module == null)
+				throw new NotSupportedException ();
 
-            Collection<ParameterDefinition> parameters = self.Parameters;
-            for (int i = 0; i < parameters.Count; i++)
-                if (parameters[i].ParameterType.IsSentinel)
-                    return i;
+			return module.Resolve (this);
+		}
+	}
 
-            return -1;
-        }
-    }
+	static partial class Mixin {
+
+		public static bool IsVarArg (this IMethodSignature self)
+		{
+			return (self.CallingConvention & MethodCallingConvention.VarArg) != 0;
+		}
+
+		public static int GetSentinelPosition (this IMethodSignature self)
+		{
+			if (!self.HasParameters)
+				return -1;
+
+			var parameters = self.Parameters;
+			for (int i = 0; i < parameters.Count; i++)
+				if (parameters [i].ParameterType.IsSentinel)
+					return i;
+
+			return -1;
+		}
+	}
 }

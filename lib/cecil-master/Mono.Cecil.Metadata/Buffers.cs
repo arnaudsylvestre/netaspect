@@ -29,355 +29,345 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 using Mono.Cecil.PE;
+
 using RVA = System.UInt32;
 
 #if !READ_ONLY
 
-namespace Mono.Cecil.Metadata
-{
-    internal sealed class TableHeapBuffer : HeapBuffer
-    {
-        private readonly int[] coded_index_sizes = new int[13];
-        private readonly Func<Table, int> counter;
-        private readonly MetadataBuilder metadata;
-        private readonly ModuleDefinition module;
-        private bool large_blob;
-        private bool large_string;
-        internal MetadataTable[] tables = new MetadataTable[45];
+namespace Mono.Cecil.Metadata {
 
-        public TableHeapBuffer(ModuleDefinition module, MetadataBuilder metadata)
-            : base(24)
-        {
-            this.module = module;
-            this.metadata = metadata;
-            counter = GetTableLength;
-        }
+	sealed class TableHeapBuffer : HeapBuffer {
 
-        public override bool IsEmpty
-        {
-            get { return false; }
-        }
+		readonly ModuleDefinition module;
+		readonly MetadataBuilder metadata;
 
-        private int GetTableLength(Table table)
-        {
-            MetadataTable md_table = tables[(int) table];
-            return md_table != null ? md_table.Length : 0;
-        }
+		internal MetadataTable [] tables = new MetadataTable [45];
 
-        public TTable GetTable<TTable>(Table table) where TTable : MetadataTable, new()
-        {
-            var md_table = (TTable) tables[(int) table];
-            if (md_table != null)
-                return md_table;
+		bool large_string;
+		bool large_blob;
+		readonly int [] coded_index_sizes = new int [13];
+		readonly Func<Table, int> counter;
 
-            md_table = new TTable();
-            tables[(int) table] = md_table;
-            return md_table;
-        }
+		public override bool IsEmpty {
+			get { return false; }
+		}
 
-        public void WriteBySize(uint value, int size)
-        {
-            if (size == 4)
-                WriteUInt32(value);
-            else
-                WriteUInt16((ushort) value);
-        }
+		public TableHeapBuffer (ModuleDefinition module, MetadataBuilder metadata)
+			: base (24)
+		{
+			this.module = module;
+			this.metadata = metadata;
+			this.counter = GetTableLength;
+		}
 
-        public void WriteBySize(uint value, bool large)
-        {
-            if (large)
-                WriteUInt32(value);
-            else
-                WriteUInt16((ushort) value);
-        }
+		int GetTableLength (Table table)
+		{
+			var md_table = tables [(int) table];
+			return md_table != null ? md_table.Length : 0;
+		}
 
-        public void WriteString(uint @string)
-        {
-            WriteBySize(@string, large_string);
-        }
+		public TTable GetTable<TTable> (Table table) where TTable : MetadataTable, new ()
+		{
+			var md_table = (TTable) tables [(int) table];
+			if (md_table != null)
+				return md_table;
 
-        public void WriteBlob(uint blob)
-        {
-            WriteBySize(blob, large_blob);
-        }
+			md_table = new TTable ();
+			tables [(int) table] = md_table;
+			return md_table;
+		}
 
-        public void WriteRID(uint rid, Table table)
-        {
-            MetadataTable md_table = tables[(int) table];
-            WriteBySize(rid, md_table == null ? false : md_table.IsLarge);
-        }
+		public void WriteBySize (uint value, int size)
+		{
+			if (size == 4)
+				WriteUInt32 (value);
+			else
+				WriteUInt16 ((ushort) value);
+		}
 
-        private int GetCodedIndexSize(CodedIndex coded_index)
-        {
-            var index = (int) coded_index;
-            int size = coded_index_sizes[index];
-            if (size != 0)
-                return size;
+		public void WriteBySize (uint value, bool large)
+		{
+			if (large)
+				WriteUInt32 (value);
+			else
+				WriteUInt16 ((ushort) value);
+		}
 
-            return coded_index_sizes[index] = coded_index.GetSize(counter);
-        }
+		public void WriteString (uint @string)
+		{
+			WriteBySize (@string, large_string);
+		}
 
-        public void WriteCodedRID(uint rid, CodedIndex coded_index)
-        {
-            WriteBySize(rid, GetCodedIndexSize(coded_index));
-        }
+		public void WriteBlob (uint blob)
+		{
+			WriteBySize (blob, large_blob);
+		}
 
-        public void WriteTableHeap()
-        {
-            WriteUInt32(0); // Reserved
-            WriteByte(GetTableHeapVersion()); // MajorVersion
-            WriteByte(0); // MinorVersion
-            WriteByte(GetHeapSizes()); // HeapSizes
-            WriteByte(10); // Reserved2
-            WriteUInt64(GetValid()); // Valid
-            WriteUInt64(0x0016003301fa00); // Sorted
+		public void WriteRID (uint rid, Table table)
+		{
+			var md_table = tables [(int) table];
+			WriteBySize (rid, md_table == null ? false : md_table.IsLarge);
+		}
 
-            WriteRowCount();
-            WriteTables();
-        }
+		int GetCodedIndexSize (CodedIndex coded_index)
+		{
+			var index = (int) coded_index;
+			var size = coded_index_sizes [index];
+			if (size != 0)
+				return size;
 
-        private void WriteRowCount()
-        {
-            for (int i = 0; i < tables.Length; i++)
-            {
-                MetadataTable table = tables[i];
-                if (table == null || table.Length == 0)
-                    continue;
+			return coded_index_sizes [index] = coded_index.GetSize (counter);
+		}
 
-                WriteUInt32((uint) table.Length);
-            }
-        }
+		public void WriteCodedRID (uint rid, CodedIndex coded_index)
+		{
+			WriteBySize (rid, GetCodedIndexSize (coded_index));
+		}
 
-        private void WriteTables()
-        {
-            for (int i = 0; i < tables.Length; i++)
-            {
-                MetadataTable table = tables[i];
-                if (table == null || table.Length == 0)
-                    continue;
+		public void WriteTableHeap ()
+		{
+			WriteUInt32 (0);					// Reserved
+			WriteByte (GetTableHeapVersion ());	// MajorVersion
+			WriteByte (0);						// MinorVersion
+			WriteByte (GetHeapSizes ());		// HeapSizes
+			WriteByte (10);						// Reserved2
+			WriteUInt64 (GetValid ());			// Valid
+			WriteUInt64 (0x0016003301fa00);		// Sorted
 
-                table.Write(this);
-            }
-        }
+			WriteRowCount ();
+			WriteTables ();
+		}
 
-        private ulong GetValid()
-        {
-            ulong valid = 0;
+		void WriteRowCount ()
+		{
+			for (int i = 0; i < tables.Length; i++) {
+				var table = tables [i];
+				if (table == null || table.Length == 0)
+					continue;
 
-            for (int i = 0; i < tables.Length; i++)
-            {
-                MetadataTable table = tables[i];
-                if (table == null || table.Length == 0)
-                    continue;
+				WriteUInt32 ((uint) table.Length);
+			}
+		}
 
-                table.Sort();
-                valid |= (1UL << i);
-            }
+		void WriteTables ()
+		{
+			for (int i = 0; i < tables.Length; i++) {
+				var table = tables [i];
+				if (table == null || table.Length == 0)
+					continue;
 
-            return valid;
-        }
+				table.Write (this);
+			}
+		}
 
-        private byte GetHeapSizes()
-        {
-            byte heap_sizes = 0;
+		ulong GetValid ()
+		{
+			ulong valid = 0;
 
-            if (metadata.string_heap.IsLarge)
-            {
-                large_string = true;
-                heap_sizes |= 0x01;
-            }
+			for (int i = 0; i < tables.Length; i++) {
+				var table = tables [i];
+				if (table == null || table.Length == 0)
+					continue;
 
-            if (metadata.blob_heap.IsLarge)
-            {
-                large_blob = true;
-                heap_sizes |= 0x04;
-            }
+				table.Sort ();
+				valid |= (1UL << i);
+			}
 
-            return heap_sizes;
-        }
+			return valid;
+		}
 
-        private byte GetTableHeapVersion()
-        {
-            switch (module.Runtime)
-            {
-                case TargetRuntime.Net_1_0:
-                case TargetRuntime.Net_1_1:
-                    return 1;
-                default:
-                    return 2;
-            }
-        }
+		byte GetHeapSizes ()
+		{
+			byte heap_sizes = 0;
 
-        public void FixupData(RVA data_rva)
-        {
-            var table = GetTable<FieldRVATable>(Table.FieldRVA);
-            if (table.length == 0)
-                return;
+			if (metadata.string_heap.IsLarge) {
+				large_string = true;
+				heap_sizes |= 0x01;
+			}
 
-            int field_idx_size = GetTable<FieldTable>(Table.Field).IsLarge ? 4 : 2;
-            int previous = position;
+			if (metadata.blob_heap.IsLarge) {
+				large_blob = true;
+				heap_sizes |= 0x04;
+			}
 
-            base.position = table.position;
-            for (int i = 0; i < table.length; i++)
-            {
-                uint rva = ReadUInt32();
-                base.position -= 4;
-                WriteUInt32(rva + data_rva);
-                base.position += field_idx_size;
-            }
+			return heap_sizes;
+		}
 
-            base.position = previous;
-        }
-    }
+		byte GetTableHeapVersion ()
+		{
+			switch (module.Runtime) {
+			case TargetRuntime.Net_1_0:
+			case TargetRuntime.Net_1_1:
+				return 1;
+			default:
+				return 2;
+			}
+		}
 
-    internal sealed class ResourceBuffer : ByteBuffer
-    {
-        public ResourceBuffer()
-            : base(0)
-        {
-        }
+		public void FixupData (RVA data_rva)
+		{
+			var table = GetTable<FieldRVATable> (Table.FieldRVA);
+			if (table.length == 0)
+				return;
 
-        public uint AddResource(byte[] resource)
-        {
-            var offset = (uint) position;
-            WriteInt32(resource.Length);
-            WriteBytes(resource);
-            return offset;
-        }
-    }
+			var field_idx_size = GetTable<FieldTable> (Table.Field).IsLarge ? 4 : 2;
+			var previous = this.position;
 
-    internal sealed class DataBuffer : ByteBuffer
-    {
-        public DataBuffer()
-            : base(0)
-        {
-        }
+			base.position = table.position;
+			for (int i = 0; i < table.length; i++) {
+				var rva = ReadUInt32 ();
+				base.position -= 4;
+				WriteUInt32 (rva + data_rva);
+				base.position += field_idx_size;
+			}
 
-        public RVA AddData(byte[] data)
-        {
-            var rva = (RVA) position;
-            WriteBytes(data);
-            return rva;
-        }
-    }
+			base.position = previous;
+		}
+	}
 
-    internal abstract class HeapBuffer : ByteBuffer
-    {
-        protected HeapBuffer(int length)
-            : base(length)
-        {
-        }
+	sealed class ResourceBuffer : ByteBuffer {
 
-        public bool IsLarge
-        {
-            get { return base.length > 65535; }
-        }
+		public ResourceBuffer ()
+			: base (0)
+		{
+		}
 
-        public abstract bool IsEmpty { get; }
-    }
+		public uint AddResource (byte [] resource)
+		{
+			var offset = (uint) this.position;
+			WriteInt32 (resource.Length);
+			WriteBytes (resource);
+			return offset;
+		}
+	}
 
-    internal class StringHeapBuffer : HeapBuffer
-    {
-        private readonly Dictionary<string, uint> strings = new Dictionary<string, uint>(StringComparer.Ordinal);
+	sealed class DataBuffer : ByteBuffer {
 
-        public StringHeapBuffer()
-            : base(1)
-        {
-            WriteByte(0);
-        }
+		public DataBuffer ()
+			: base (0)
+		{
+		}
 
-        public override sealed bool IsEmpty
-        {
-            get { return length <= 1; }
-        }
+		public RVA AddData (byte [] data)
+		{
+			var rva = (RVA) position;
+			WriteBytes (data);
+			return rva;
+		}
+	}
 
-        public uint GetStringIndex(string @string)
-        {
-            uint index;
-            if (strings.TryGetValue(@string, out index))
-                return index;
+	abstract class HeapBuffer : ByteBuffer {
 
-            index = (uint) base.position;
-            WriteString(@string);
-            strings.Add(@string, index);
-            return index;
-        }
+		public bool IsLarge {
+			get { return base.length > 65535; }
+		}
 
-        protected virtual void WriteString(string @string)
-        {
-            WriteBytes(Encoding.UTF8.GetBytes(@string));
-            WriteByte(0);
-        }
-    }
+		public abstract bool IsEmpty { get; }
 
-    internal sealed class BlobHeapBuffer : HeapBuffer
-    {
-        private readonly Dictionary<ByteBuffer, uint> blobs =
-            new Dictionary<ByteBuffer, uint>(new ByteBufferEqualityComparer());
+		protected HeapBuffer (int length)
+			: base (length)
+		{
+		}
+	}
 
-        public BlobHeapBuffer()
-            : base(1)
-        {
-            WriteByte(0);
-        }
+	class StringHeapBuffer : HeapBuffer {
 
-        public override bool IsEmpty
-        {
-            get { return length <= 1; }
-        }
+		readonly Dictionary<string, uint> strings = new Dictionary<string, uint> (StringComparer.Ordinal);
 
-        public uint GetBlobIndex(ByteBuffer blob)
-        {
-            uint index;
-            if (blobs.TryGetValue(blob, out index))
-                return index;
+		public sealed override bool IsEmpty {
+			get { return length <= 1; }
+		}
 
-            index = (uint) base.position;
-            WriteBlob(blob);
-            blobs.Add(blob, index);
-            return index;
-        }
+		public StringHeapBuffer ()
+			: base (1)
+		{
+			WriteByte (0);
+		}
 
-        private void WriteBlob(ByteBuffer blob)
-        {
-            WriteCompressedUInt32((uint) blob.length);
-            WriteBytes(blob);
-        }
-    }
+		public uint GetStringIndex (string @string)
+		{
+			uint index;
+			if (strings.TryGetValue (@string, out index))
+				return index;
 
-    internal sealed class UserStringHeapBuffer : StringHeapBuffer
-    {
-        protected override void WriteString(string @string)
-        {
-            WriteCompressedUInt32((uint) @string.Length*2 + 1);
+			index = (uint) base.position;
+			WriteString (@string);
+			strings.Add (@string, index);
+			return index;
+		}
 
-            byte special = 0;
+		protected virtual void WriteString (string @string)
+		{
+			WriteBytes (Encoding.UTF8.GetBytes (@string));
+			WriteByte (0);
+		}
+	}
 
-            for (int i = 0; i < @string.Length; i++)
-            {
-                char @char = @string[i];
-                WriteUInt16(@char);
+	sealed class BlobHeapBuffer : HeapBuffer {
 
-                if (special == 1)
-                    continue;
+		readonly Dictionary<ByteBuffer, uint> blobs = new Dictionary<ByteBuffer, uint> (new ByteBufferEqualityComparer ());
 
-                if (@char < 0x20 || @char > 0x7e)
-                {
-                    if (@char > 0x7e
-                        || (@char >= 0x01 && @char <= 0x08)
-                        || (@char >= 0x0e && @char <= 0x1f)
-                        || @char == 0x27
-                        || @char == 0x2d)
-                    {
-                        special = 1;
-                    }
-                }
-            }
+		public override bool IsEmpty {
+			get { return length <= 1; }
+		}
 
-            WriteByte(special);
-        }
-    }
+		public BlobHeapBuffer ()
+			: base (1)
+		{
+			WriteByte (0);
+		}
+
+		public uint GetBlobIndex (ByteBuffer blob)
+		{
+			uint index;
+			if (blobs.TryGetValue (blob, out index))
+				return index;
+
+			index = (uint) base.position;
+			WriteBlob (blob);
+			blobs.Add (blob, index);
+			return index;
+		}
+
+		void WriteBlob (ByteBuffer blob)
+		{
+			WriteCompressedUInt32 ((uint) blob.length);
+			WriteBytes (blob);
+		}
+	}
+
+	sealed class UserStringHeapBuffer : StringHeapBuffer {
+
+		protected override void WriteString (string @string)
+		{
+			WriteCompressedUInt32 ((uint) @string.Length * 2 + 1);
+
+			byte special = 0;
+
+			for (int i = 0; i < @string.Length; i++) {
+				var @char = @string [i];
+				WriteUInt16 (@char);
+
+				if (special == 1)
+					continue;
+
+				if (@char < 0x20 || @char > 0x7e) {
+					if (@char > 0x7e
+						|| (@char >= 0x01 && @char <= 0x08)
+						|| (@char >= 0x0e && @char <= 0x1f)
+						|| @char == 0x27
+						|| @char == 0x2d) {
+
+						special = 1;
+					}
+				}
+			}
+
+			WriteByte (special);
+		}
+	}
 }
 
 #endif

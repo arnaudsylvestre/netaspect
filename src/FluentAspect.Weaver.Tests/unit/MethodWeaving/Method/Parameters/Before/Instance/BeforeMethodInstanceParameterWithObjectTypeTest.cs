@@ -3,37 +3,40 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance
 {
-    public class BeforeMethodInstanceParameterWithObjectTypeTest :
-        NetAspectTest<BeforeMethodInstanceParameterWithObjectTypeTest.ClassToWeave>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    Assert.IsNull(MyAspect.Instance);
-                    var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved();
-                    Assert.AreEqual(classToWeave_L, MyAspect.Instance);
-                };
-        }
-
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public void Weaved()
+   public class BeforeMethodInstanceParameterWithObjectTypeTest : NetAspectTest<BeforeMethodInstanceParameterWithObjectTypeTest.ClassToWeave>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
             {
-            }
-        }
+               Assert.IsNull(MyAspect.Instance);
+               var classToWeave_L = new ClassToWeave();
+               classToWeave_L.Weaved();
+               Assert.AreEqual(classToWeave_L, MyAspect.Instance);
+            };
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static object Instance;
-            public bool NetAspectAttribute = true;
+      public class ClassToWeave
+      {
+         [MyAspect]
+         public void Weaved()
+         {
 
-            public void Before(object instance)
-            {
-                Instance = instance;
-            }
-        }
-    }
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public static object Instance;
+
+         public void Before(object instance)
+         {
+            Instance = instance;
+         }
+      }
+   }
+
+   
 }

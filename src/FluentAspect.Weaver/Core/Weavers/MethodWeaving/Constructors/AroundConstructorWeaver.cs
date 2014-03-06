@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
+using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Constructors
@@ -11,8 +12,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Constructors
         private readonly MethodDefinition definition;
         private readonly IEnumerable<MethodWeavingConfiguration> interceptorType;
 
-        public AroundConstructorWeaver(IEnumerable<MethodWeavingConfiguration> interceptorType,
-                                       MethodDefinition definition_P)
+        public AroundConstructorWeaver(IEnumerable<MethodWeavingConfiguration> interceptorType, MethodDefinition definition_P)
         {
             this.interceptorType = interceptorType;
             definition = definition_P;
@@ -36,7 +36,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Constructors
         private MethodDefinition CreateNewMethodBasedOnMethodToWeave(MethodDefinition methodDefinition,
                                                                      IEnumerable<MethodWeavingConfiguration> interceptor)
         {
-            throw new NotImplementedException();
+           throw new NotImplementedException();
             //MethodDefinition wrappedMethod = methodDefinition.Clone("-Weaved-Constructor");
 
 

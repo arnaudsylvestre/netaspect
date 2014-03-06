@@ -14,9 +14,10 @@ namespace FluentAspect.Sample
 
     public class MyClassToWeave
     {
-        [CheckOnCallAfter]
+        [CheckOnCallAfterAttribute]
         public MyClassToWeave()
         {
+            
         }
 
         public void WeavedThroughAssembly()
@@ -182,30 +183,30 @@ namespace FluentAspect.Sample
         {
         }
 
-        public void CallWeavedOnCallAfterWithParameterCalled()
-        {
-            WeavedOnCallAfterWithParameters("Parameter", "intercepted");
-        }
+       public void CallWeavedOnCallAfterWithParameterCalled()
+       {
+           WeavedOnCallAfterWithParameters("Parameter", "intercepted");
+       }
 
 
-        [CheckParametersCalledOnCallAfter]
-        public void WeavedOnCallAfterWithParameters(string parameter1, string parameter2)
-        {
-        }
+       [CheckParametersCalledOnCallAfter]
+       public void WeavedOnCallAfterWithParameters(string parameter1, string parameter2)
+       {
+       }
 
-        [CheckAfterCallParameterTypeOnCallAfter]
-        public void AfterCallParametersWithWrongTypeCalled(string parameter1, string parameter2)
-        {
-        }
-
-        public void AfterCallParametersWithWrongType(string parameter1, string parameter2)
-        {
-            AfterCallParametersWithWrongTypeCalled(parameter1, parameter2);
-        }
+       [CheckAfterCallParameterTypeOnCallAfter]
+       public void AfterCallParametersWithWrongTypeCalled(string parameter1, string parameter2)
+       {
+       }
+       public void AfterCallParametersWithWrongType(string parameter1, string parameter2)
+       {
+           AfterCallParametersWithWrongTypeCalled(parameter1, parameter2);
+       }
     }
 
     public class CheckAfterCallParameterTypeOnCallAfterAttribute : Attribute
     {
+
         public string NetAspectAttributeKind = "CallWeaving";
 
         public static void AfterCall(string lineNumber, string columnNumber, int fileName, int filePath)
@@ -226,22 +227,22 @@ namespace FluentAspect.Sample
 
     public class CheckParametersCallerOnCallAfterAttribute : Attribute
     {
-        public string NetAspectAttributeKind = "CallWeaving";
+       public string NetAspectAttributeKind = "CallWeaving";
 
-        public static void AfterCall(string callerMethodParameterCaller)
-        {
-            throw new Exception(callerMethodParameterCaller);
-        }
+       public static void AfterCall(string callerMethodParameterCaller)
+       {
+          throw new Exception(callerMethodParameterCaller);
+       }
     }
 
     public class CheckParametersCalledOnCallAfter : Attribute
     {
-        public string NetAspectAttributeKind = "CallWeaving";
+       public string NetAspectAttributeKind = "CallWeaving";
 
-        public static void AfterCall(string parameter1Called, string parameter2Called)
-        {
-            throw new Exception(parameter1Called + " " + parameter2Called);
-        }
+       public static void AfterCall(string parameter1Called, string parameter2Called)
+       {
+           throw new Exception(parameter1Called + " " + parameter2Called);
+       }
     }
 
     public class CheckOnCallBeforeAttribute : Attribute

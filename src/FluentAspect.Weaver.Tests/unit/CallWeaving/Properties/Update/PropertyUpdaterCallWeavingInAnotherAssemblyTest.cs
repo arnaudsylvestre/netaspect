@@ -7,9 +7,9 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Update
     public class PropertyUpdaterCallWeavingInAnotherAssemblyTest
     {
         [Test]
-        public void Check()
-        {
-            throw new NotImplementedException();
-        }
+         public void Check()
+         {
+             throw new NotImplementedException();
+         }
     }
 }

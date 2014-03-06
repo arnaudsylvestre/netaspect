@@ -27,324 +27,261 @@
 //
 
 using System;
-using Mono.Cecil.Metadata;
+
 using Mono.Collections.Generic;
 
-namespace Mono.Cecil
-{
-    public sealed class GenericParameter : TypeReference, ICustomAttributeProvider
-    {
-        private ushort attributes;
-        private Collection<TypeReference> constraints;
-        private Collection<CustomAttribute> custom_attributes;
-        internal IGenericParameterProvider owner;
-        internal int position;
-        internal GenericParameterType type;
+using Mono.Cecil.Metadata;
 
-        public GenericParameter(IGenericParameterProvider owner)
-            : this(string.Empty, owner)
-        {
-        }
+namespace Mono.Cecil {
 
-        public GenericParameter(string name, IGenericParameterProvider owner)
-            : base(string.Empty, name)
-        {
-            if (owner == null)
-                throw new ArgumentNullException();
+	public sealed class GenericParameter : TypeReference, ICustomAttributeProvider {
 
-            position = -1;
-            this.owner = owner;
-            type = owner.GenericParameterType;
-            etype = ConvertGenericParameterType(type);
-        }
+		internal int position;
+		internal GenericParameterType type;
+		internal IGenericParameterProvider owner;
 
-        public GenericParameter(int position, GenericParameterType type, ModuleDefinition module)
-            : base(string.Empty, string.Empty)
-        {
-            if (module == null)
-                throw new ArgumentNullException();
+		ushort attributes;
+		Collection<TypeReference> constraints;
+		Collection<CustomAttribute> custom_attributes;
 
-            this.position = position;
-            this.type = type;
-            etype = ConvertGenericParameterType(type);
-            this.module = module;
-        }
+		public GenericParameterAttributes Attributes {
+			get { return (GenericParameterAttributes) attributes; }
+			set { attributes = (ushort) value; }
+		}
 
-        public GenericParameterAttributes Attributes
-        {
-            get { return (GenericParameterAttributes) attributes; }
-            set { attributes = (ushort) value; }
-        }
+		public int Position {
+			get { return position; }
+		}
 
-        public int Position
-        {
-            get { return position; }
-        }
+		public GenericParameterType Type {
+			get { return type; }
+		}
 
-        public GenericParameterType Type
-        {
-            get { return type; }
-        }
+		public IGenericParameterProvider Owner {
+			get { return owner; }
+		}
 
-        public IGenericParameterProvider Owner
-        {
-            get { return owner; }
-        }
+		public bool HasConstraints {
+			get {
+				if (constraints != null)
+					return constraints.Count > 0;
 
-        public bool HasConstraints
-        {
-            get
-            {
-                if (constraints != null)
-                    return constraints.Count > 0;
+				if (HasImage)
+					return Module.Read (this, (generic_parameter, reader) => reader.HasGenericConstraints (generic_parameter));
 
-                if (HasImage)
-                    return Module.Read(this,
-                                       (generic_parameter, reader) => reader.HasGenericConstraints(generic_parameter));
+				return false;
+			}
+		}
 
-                return false;
-            }
-        }
+		public Collection<TypeReference> Constraints {
+			get {
+				if (constraints != null)
+					return constraints;
 
-        public Collection<TypeReference> Constraints
-        {
-            get
-            {
-                if (constraints != null)
-                    return constraints;
+				if (HasImage)
+					return constraints = Module.Read (this, (generic_parameter, reader) => reader.ReadGenericConstraints (generic_parameter));
 
-                if (HasImage)
-                    return
-                        constraints =
-                        Module.Read(this,
-                                    (generic_parameter, reader) => reader.ReadGenericConstraints(generic_parameter));
+				return constraints = new Collection<TypeReference> ();
+			}
+		}
 
-                return constraints = new Collection<TypeReference>();
-            }
-        }
+		public bool HasCustomAttributes {
+			get {
+				if (custom_attributes != null)
+					return custom_attributes.Count > 0;
 
-        public override IMetadataScope Scope
-        {
-            get
-            {
-                if (owner == null)
-                    return null;
+				return this.GetHasCustomAttributes (Module);
+			}
+		}
 
-                return owner.GenericParameterType == GenericParameterType.Method
-                           ? ((MethodReference) owner).DeclaringType.Scope
-                           : ((TypeReference) owner).Scope;
-            }
-            set { throw new InvalidOperationException(); }
-        }
+		public Collection<CustomAttribute> CustomAttributes {
+			get { return custom_attributes ?? (custom_attributes = this.GetCustomAttributes (Module)); }
+		}
 
-        public override TypeReference DeclaringType
-        {
-            get { return owner as TypeReference; }
-            set { throw new InvalidOperationException(); }
-        }
+		public override IMetadataScope Scope {
+			get {
+				if (owner == null)
+					return null;
 
-        public MethodReference DeclaringMethod
-        {
-            get { return owner as MethodReference; }
-        }
+				return owner.GenericParameterType == GenericParameterType.Method
+					? ((MethodReference) owner).DeclaringType.Scope
+					: ((TypeReference) owner).Scope;
+			}
+			set { throw new InvalidOperationException (); }
+		}
 
-        public override ModuleDefinition Module
-        {
-            get { return module ?? owner.Module; }
-        }
+		public override TypeReference DeclaringType {
+			get { return owner as TypeReference; }
+			set { throw new InvalidOperationException (); }
+		}
 
-        public override string Name
-        {
-            get
-            {
-                if (!string.IsNullOrEmpty(base.Name))
-                    return base.Name;
+		public MethodReference DeclaringMethod {
+			get { return owner as MethodReference; }
+		}
 
-                return base.Name = (type == GenericParameterType.Method ? "!!" : "!") + position;
-            }
-        }
+		public override ModuleDefinition Module {
+			get { return module ?? owner.Module; }
+		}
 
-        public override string Namespace
-        {
-            get { return string.Empty; }
-            set { throw new InvalidOperationException(); }
-        }
+		public override string Name {
+			get {
+				if (!string.IsNullOrEmpty (base.Name))
+					return base.Name;
 
-        public override string FullName
-        {
-            get { return Name; }
-        }
+				return base.Name = (type == GenericParameterType.Method ? "!!" : "!") + position;
+			}
+		}
 
-        public override bool IsGenericParameter
-        {
-            get { return true; }
-        }
+		public override string Namespace {
+			get { return string.Empty; }
+			set { throw new InvalidOperationException (); }
+		}
 
-        internal override bool ContainsGenericParameter
-        {
-            get { return true; }
-        }
+		public override string FullName {
+			get { return Name; }
+		}
 
-        public override MetadataType MetadataType
-        {
-            get { return (MetadataType) etype; }
-        }
+		public override bool IsGenericParameter {
+			get { return true; }
+		}
 
-        #region GenericParameterAttributes
+		internal override bool ContainsGenericParameter {
+			get { return true; }
+		}
 
-        public bool IsNonVariant
-        {
-            get
-            {
-                return attributes.GetMaskedAttributes((ushort) GenericParameterAttributes.VarianceMask,
-                                                      (ushort) GenericParameterAttributes.NonVariant);
-            }
-            set
-            {
-                attributes = attributes.SetMaskedAttributes((ushort) GenericParameterAttributes.VarianceMask,
-                                                            (ushort) GenericParameterAttributes.NonVariant, value);
-            }
-        }
+		public override MetadataType MetadataType {
+			get { return (MetadataType) etype; }
+		}
 
-        public bool IsCovariant
-        {
-            get
-            {
-                return attributes.GetMaskedAttributes((ushort) GenericParameterAttributes.VarianceMask,
-                                                      (ushort) GenericParameterAttributes.Covariant);
-            }
-            set
-            {
-                attributes = attributes.SetMaskedAttributes((ushort) GenericParameterAttributes.VarianceMask,
-                                                            (ushort) GenericParameterAttributes.Covariant, value);
-            }
-        }
+		#region GenericParameterAttributes
 
-        public bool IsContravariant
-        {
-            get
-            {
-                return attributes.GetMaskedAttributes((ushort) GenericParameterAttributes.VarianceMask,
-                                                      (ushort) GenericParameterAttributes.Contravariant);
-            }
-            set
-            {
-                attributes = attributes.SetMaskedAttributes((ushort) GenericParameterAttributes.VarianceMask,
-                                                            (ushort) GenericParameterAttributes.Contravariant, value);
-            }
-        }
+		public bool IsNonVariant {
+			get { return attributes.GetMaskedAttributes ((ushort) GenericParameterAttributes.VarianceMask, (ushort) GenericParameterAttributes.NonVariant); }
+			set { attributes = attributes.SetMaskedAttributes ((ushort) GenericParameterAttributes.VarianceMask, (ushort) GenericParameterAttributes.NonVariant, value); }
+		}
 
-        public bool HasReferenceTypeConstraint
-        {
-            get { return attributes.GetAttributes((ushort) GenericParameterAttributes.ReferenceTypeConstraint); }
-            set { attributes = attributes.SetAttributes((ushort) GenericParameterAttributes.ReferenceTypeConstraint, value); }
-        }
+		public bool IsCovariant {
+			get { return attributes.GetMaskedAttributes ((ushort) GenericParameterAttributes.VarianceMask, (ushort) GenericParameterAttributes.Covariant); }
+			set { attributes = attributes.SetMaskedAttributes ((ushort) GenericParameterAttributes.VarianceMask, (ushort) GenericParameterAttributes.Covariant, value); }
+		}
 
-        public bool HasNotNullableValueTypeConstraint
-        {
-            get { return attributes.GetAttributes((ushort) GenericParameterAttributes.NotNullableValueTypeConstraint); }
-            set
-            {
-                attributes = attributes.SetAttributes(
-                    (ushort) GenericParameterAttributes.NotNullableValueTypeConstraint, value);
-            }
-        }
+		public bool IsContravariant {
+			get { return attributes.GetMaskedAttributes ((ushort) GenericParameterAttributes.VarianceMask, (ushort) GenericParameterAttributes.Contravariant); }
+			set { attributes = attributes.SetMaskedAttributes ((ushort) GenericParameterAttributes.VarianceMask, (ushort) GenericParameterAttributes.Contravariant, value); }
+		}
 
-        public bool HasDefaultConstructorConstraint
-        {
-            get { return attributes.GetAttributes((ushort) GenericParameterAttributes.DefaultConstructorConstraint); }
-            set
-            {
-                attributes = attributes.SetAttributes((ushort) GenericParameterAttributes.DefaultConstructorConstraint,
-                                                      value);
-            }
-        }
+		public bool HasReferenceTypeConstraint {
+			get { return attributes.GetAttributes ((ushort) GenericParameterAttributes.ReferenceTypeConstraint); }
+			set { attributes = attributes.SetAttributes ((ushort) GenericParameterAttributes.ReferenceTypeConstraint, value); }
+		}
 
-        #endregion
+		public bool HasNotNullableValueTypeConstraint {
+			get { return attributes.GetAttributes ((ushort) GenericParameterAttributes.NotNullableValueTypeConstraint); }
+			set { attributes = attributes.SetAttributes ((ushort) GenericParameterAttributes.NotNullableValueTypeConstraint, value); }
+		}
 
-        public bool HasCustomAttributes
-        {
-            get
-            {
-                if (custom_attributes != null)
-                    return custom_attributes.Count > 0;
+		public bool HasDefaultConstructorConstraint {
+			get { return attributes.GetAttributes ((ushort) GenericParameterAttributes.DefaultConstructorConstraint); }
+			set { attributes = attributes.SetAttributes ((ushort) GenericParameterAttributes.DefaultConstructorConstraint, value); }
+		}
 
-                return this.GetHasCustomAttributes(Module);
-            }
-        }
+		#endregion
 
-        public Collection<CustomAttribute> CustomAttributes
-        {
-            get { return custom_attributes ?? (custom_attributes = this.GetCustomAttributes(Module)); }
-        }
+		public GenericParameter (IGenericParameterProvider owner)
+			: this (string.Empty, owner)
+		{
+		}
 
-        private static ElementType ConvertGenericParameterType(GenericParameterType type)
-        {
-            switch (type)
-            {
-                case GenericParameterType.Type:
-                    return ElementType.Var;
-                case GenericParameterType.Method:
-                    return ElementType.MVar;
-            }
+		public GenericParameter (string name, IGenericParameterProvider owner)
+			: base (string.Empty, name)
+		{
+			if (owner == null)
+				throw new ArgumentNullException ();
 
-            throw new ArgumentOutOfRangeException();
-        }
+			this.position = -1;
+			this.owner = owner;
+			this.type = owner.GenericParameterType;
+			this.etype = ConvertGenericParameterType (this.type);
+		}
 
-        public override TypeDefinition Resolve()
-        {
-            return null;
-        }
-    }
+		public GenericParameter (int position, GenericParameterType type, ModuleDefinition module)
+			: base (string.Empty, string.Empty)
+		{
+			if (module == null)
+				throw new ArgumentNullException ();
 
-    internal sealed class GenericParameterCollection : Collection<GenericParameter>
-    {
-        private readonly IGenericParameterProvider owner;
+			this.position = position;
+			this.type = type;
+			this.etype = ConvertGenericParameterType (type);
+			this.module = module;
+		}
 
-        internal GenericParameterCollection(IGenericParameterProvider owner)
-        {
-            this.owner = owner;
-        }
+		static ElementType ConvertGenericParameterType (GenericParameterType type)
+		{
+			switch (type) {
+			case GenericParameterType.Type:
+				return ElementType.Var;
+			case GenericParameterType.Method:
+				return ElementType.MVar;
+			}
 
-        internal GenericParameterCollection(IGenericParameterProvider owner, int capacity)
-            : base(capacity)
-        {
-            this.owner = owner;
-        }
+			throw new ArgumentOutOfRangeException ();
+		}
 
-        protected override void OnAdd(GenericParameter item, int index)
-        {
-            UpdateGenericParameter(item, index);
-        }
+		public override TypeDefinition Resolve ()
+		{
+			return null;
+		}
+	}
 
-        protected override void OnInsert(GenericParameter item, int index)
-        {
-            UpdateGenericParameter(item, index);
+	sealed class GenericParameterCollection : Collection<GenericParameter> {
 
-            for (int i = index; i < size; i++)
-                items[i].position = i + 1;
-        }
+		readonly IGenericParameterProvider owner;
 
-        protected override void OnSet(GenericParameter item, int index)
-        {
-            UpdateGenericParameter(item, index);
-        }
+		internal GenericParameterCollection (IGenericParameterProvider owner)
+		{
+			this.owner = owner;
+		}
 
-        private void UpdateGenericParameter(GenericParameter item, int index)
-        {
-            item.owner = owner;
-            item.position = index;
-            item.type = owner.GenericParameterType;
-        }
+		internal GenericParameterCollection (IGenericParameterProvider owner, int capacity)
+			: base (capacity)
+		{
+			this.owner = owner;
+		}
 
-        protected override void OnRemove(GenericParameter item, int index)
-        {
-            item.owner = null;
-            item.position = -1;
-            item.type = GenericParameterType.Type;
+		protected override void OnAdd (GenericParameter item, int index)
+		{
+			UpdateGenericParameter (item, index);
+		}
 
-            for (int i = index + 1; i < size; i++)
-                items[i].position = i - 1;
-        }
-    }
+		protected override void OnInsert (GenericParameter item, int index)
+		{
+			UpdateGenericParameter (item, index);
+
+			for (int i = index; i < size; i++)
+				items[i].position = i + 1;
+		}
+
+		protected override void OnSet (GenericParameter item, int index)
+		{
+			UpdateGenericParameter (item, index);
+		}
+
+		void UpdateGenericParameter (GenericParameter item, int index)
+		{
+			item.owner = owner;
+			item.position = index;
+			item.type = owner.GenericParameterType;
+		}
+
+		protected override void OnRemove (GenericParameter item, int index)
+		{
+			item.owner = null;
+			item.position = -1;
+			item.type = GenericParameterType.Type;
+
+			for (int i = index + 1; i < size; i++)
+				items[i].position = i - 1;
+		}
+	}
 }

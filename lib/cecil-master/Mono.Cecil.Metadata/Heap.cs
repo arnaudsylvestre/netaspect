@@ -28,20 +28,21 @@
 
 using Mono.Cecil.PE;
 
-namespace Mono.Cecil.Metadata
-{
-    internal abstract class Heap
-    {
-        public readonly uint Offset;
-        public readonly Section Section;
-        public readonly uint Size;
-        public int IndexSize;
+namespace Mono.Cecil.Metadata {
 
-        protected Heap(Section section, uint offset, uint size)
-        {
-            Section = section;
-            Offset = offset;
-            Size = size;
-        }
-    }
+	abstract class Heap {
+
+		public int IndexSize;
+
+		public readonly Section Section;
+		public readonly uint Offset;
+		public readonly uint Size;
+
+		protected Heap (Section section, uint offset, uint size)
+		{
+			this.Section = section;
+			this.Offset = offset;
+			this.Size = size;
+		}
+	}
 }

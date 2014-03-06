@@ -3,42 +3,46 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.After.CallerParameters
 {
-    public class AfterCallUpdateFieldCallerParametersParameterWithRealTypeTest :
-        NetAspectTest<AfterCallUpdateFieldCallerParametersParameterWithRealTypeTest.ClassToWeave>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    Assert.IsNull(MyAspect.CallerParameters);
-                    var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved(1, 2);
-                    Assert.AreEqual(new object[]
-                        {
-                            1, 2
-                        }, MyAspect.CallerParameters);
-                };
-        }
-
-        public class ClassToWeave
-        {
-            [MyAspect] public string Field;
-
-            public void Weaved(int param1, int param2)
+    public class AfterCallUpdateFieldCallerParametersParameterWithRealTypeTest : NetAspectTest<AfterCallUpdateFieldCallerParametersParameterWithRealTypeTest.ClassToWeave>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
             {
-                Field = "Hello";
-            }
-        }
+               Assert.IsNull(MyAspect.CallerParameters);
+               var classToWeave_L = new ClassToWeave();
+               classToWeave_L.Weaved(1, 2);
+               Assert.AreEqual(new object[]
+                   {
+                       1,2
+                   }, MyAspect.CallerParameters);
+            };
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static object[] CallerParameters;
-            public bool NetAspectAttribute = true;
+      public class ClassToWeave
+      {
 
-            public void AfterUpdateField(object[] callerParameters)
-            {
-                CallerParameters = callerParameters;
-            }
-        }
-    }
+          [MyAspect]
+          public string Field;
+
+         public void Weaved(int param1, int param2)
+         {
+             Field = "Hello";
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public static object[] CallerParameters;
+
+         public void AfterUpdateField(object[] callerParameters)
+         {
+             CallerParameters = callerParameters;
+         }
+      }
+   }
+
+   
 }

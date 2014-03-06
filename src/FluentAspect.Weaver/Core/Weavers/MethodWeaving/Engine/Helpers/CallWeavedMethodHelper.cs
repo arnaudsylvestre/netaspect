@@ -17,10 +17,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
 
             OpCode call = method.Method.MethodDefinition.IsStatic ? OpCodes.Call : OpCodes.Callvirt;
             method.Method.MethodDefinition.Body.Instructions.Add(Instruction.Create(call,
-                                                                                    wrappedMethod.MakeGeneric(
-                                                                                        method.Method.MethodDefinition
-                                                                                              .GenericParameters.ToArray
-                                                                                            ())));
+                                  wrappedMethod.MakeGeneric(method.Method.MethodDefinition.GenericParameters.ToArray())));
 
             if (method.Method.MethodDefinition.ReturnType.MetadataType != MetadataType.Void)
                 method.Method.MethodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Stloc, weavedResult));

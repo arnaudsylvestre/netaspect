@@ -28,59 +28,56 @@
 
 using System;
 
-namespace Mono.Cecil
-{
-    public class FieldReference : MemberReference
-    {
-        private TypeReference field_type;
+namespace Mono.Cecil {
 
-        internal FieldReference()
-        {
-            token = new MetadataToken(TokenType.MemberRef);
-        }
+	public class FieldReference : MemberReference {
 
-        public FieldReference(string name, TypeReference fieldType)
-            : base(name)
-        {
-            if (fieldType == null)
-                throw new ArgumentNullException("fieldType");
+		TypeReference field_type;
 
-            field_type = fieldType;
-            token = new MetadataToken(TokenType.MemberRef);
-        }
+		public TypeReference FieldType {
+			get { return field_type; }
+			set { field_type = value; }
+		}
 
-        public FieldReference(string name, TypeReference fieldType, TypeReference declaringType)
-            : this(name, fieldType)
-        {
-            if (declaringType == null)
-                throw new ArgumentNullException("declaringType");
+		public override string FullName {
+			get { return field_type.FullName + " " + MemberFullName (); }
+		}
 
-            DeclaringType = declaringType;
-        }
+		internal override bool ContainsGenericParameter {
+			get { return field_type.ContainsGenericParameter || base.ContainsGenericParameter; }
+		}
 
-        public TypeReference FieldType
-        {
-            get { return field_type; }
-            set { field_type = value; }
-        }
+		internal FieldReference ()
+		{
+			this.token = new MetadataToken (TokenType.MemberRef);
+		}
 
-        public override string FullName
-        {
-            get { return field_type.FullName + " " + MemberFullName(); }
-        }
+		public FieldReference (string name, TypeReference fieldType)
+			: base (name)
+		{
+			if (fieldType == null)
+				throw new ArgumentNullException ("fieldType");
 
-        internal override bool ContainsGenericParameter
-        {
-            get { return field_type.ContainsGenericParameter || base.ContainsGenericParameter; }
-        }
+			this.field_type = fieldType;
+			this.token = new MetadataToken (TokenType.MemberRef);
+		}
 
-        public virtual FieldDefinition Resolve()
-        {
-            ModuleDefinition module = Module;
-            if (module == null)
-                throw new NotSupportedException();
+		public FieldReference (string name, TypeReference fieldType, TypeReference declaringType)
+			: this (name, fieldType)
+		{
+			if (declaringType == null)
+				throw new ArgumentNullException("declaringType");
 
-            return module.Resolve(this);
-        }
-    }
+			this.DeclaringType = declaringType;
+		}
+
+		public virtual FieldDefinition Resolve ()
+		{
+			var module = this.Module;
+			if (module == null)
+				throw new NotSupportedException ();
+
+			return module.Resolve (this);
+		}
+	}
 }

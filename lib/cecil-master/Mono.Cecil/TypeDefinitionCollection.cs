@@ -28,89 +28,91 @@
 
 using System;
 using System.Collections.Generic;
+
 using Mono.Cecil.Metadata;
+
 using Mono.Collections.Generic;
 
-namespace Mono.Cecil
-{
-    using Slot = Row<string, string>;
+namespace Mono.Cecil {
 
-    internal sealed class TypeDefinitionCollection : Collection<TypeDefinition>
-    {
-        private readonly ModuleDefinition container;
-        private readonly Dictionary<Slot, TypeDefinition> name_cache;
+	using Slot = Row<string, string>;
 
-        internal TypeDefinitionCollection(ModuleDefinition container)
-        {
-            this.container = container;
-            name_cache = new Dictionary<Slot, TypeDefinition>(new RowEqualityComparer());
-        }
+	sealed class TypeDefinitionCollection : Collection<TypeDefinition> {
 
-        internal TypeDefinitionCollection(ModuleDefinition container, int capacity)
-            : base(capacity)
-        {
-            this.container = container;
-            name_cache = new Dictionary<Slot, TypeDefinition>(capacity, new RowEqualityComparer());
-        }
+		readonly ModuleDefinition container;
+		readonly Dictionary<Slot, TypeDefinition> name_cache;
 
-        protected override void OnAdd(TypeDefinition item, int index)
-        {
-            Attach(item);
-        }
+		internal TypeDefinitionCollection (ModuleDefinition container)
+		{
+			this.container = container;
+			this.name_cache = new Dictionary<Slot, TypeDefinition> (new RowEqualityComparer ());
+		}
 
-        protected override void OnSet(TypeDefinition item, int index)
-        {
-            Attach(item);
-        }
+		internal TypeDefinitionCollection (ModuleDefinition container, int capacity)
+			: base (capacity)
+		{
+			this.container = container;
+			this.name_cache = new Dictionary<Slot, TypeDefinition> (capacity, new RowEqualityComparer ());
+		}
 
-        protected override void OnInsert(TypeDefinition item, int index)
-        {
-            Attach(item);
-        }
+		protected override void OnAdd (TypeDefinition item, int index)
+		{
+			Attach (item);
+		}
 
-        protected override void OnRemove(TypeDefinition item, int index)
-        {
-            Detach(item);
-        }
+		protected override void OnSet (TypeDefinition item, int index)
+		{
+			Attach (item);
+		}
 
-        protected override void OnClear()
-        {
-            foreach (TypeDefinition type in this)
-                Detach(type);
-        }
+		protected override void OnInsert (TypeDefinition item, int index)
+		{
+			Attach (item);
+		}
 
-        private void Attach(TypeDefinition type)
-        {
-            if (type.Module != null && type.Module != container)
-                throw new ArgumentException("Type already attached");
+		protected override void OnRemove (TypeDefinition item, int index)
+		{
+			Detach (item);
+		}
 
-            type.module = container;
-            type.scope = container;
-            name_cache[new Slot(type.Namespace, type.Name)] = type;
-        }
+		protected override void OnClear ()
+		{
+			foreach (var type in this)
+				Detach (type);
+		}
 
-        private void Detach(TypeDefinition type)
-        {
-            type.module = null;
-            type.scope = null;
-            name_cache.Remove(new Slot(type.Namespace, type.Name));
-        }
+		void Attach (TypeDefinition type)
+		{
+			if (type.Module != null && type.Module != container)
+				throw new ArgumentException ("Type already attached");
 
-        public TypeDefinition GetType(string fullname)
-        {
-            string @namespace, name;
-            TypeParser.SplitFullName(fullname, out @namespace, out name);
+			type.module = container;
+			type.scope = container;
+			name_cache [new Slot (type.Namespace, type.Name)] = type;
+		}
 
-            return GetType(@namespace, name);
-        }
+		void Detach (TypeDefinition type)
+		{
+			type.module = null;
+			type.scope = null;
+			name_cache.Remove (new Slot (type.Namespace, type.Name));
+		}
 
-        public TypeDefinition GetType(string @namespace, string name)
-        {
-            TypeDefinition type;
-            if (name_cache.TryGetValue(new Slot(@namespace, name), out type))
-                return type;
+		public TypeDefinition GetType (string fullname)
+		{
+			string @namespace, name;
+			TypeParser.SplitFullName (fullname, out @namespace, out name);
 
-            return null;
-        }
-    }
+			return GetType (@namespace, name);
+		}
+
+		public TypeDefinition GetType (string @namespace, string name)
+		{
+			TypeDefinition type;
+			if (name_cache.TryGetValue (new Slot (@namespace, name), out type))
+				return type;
+
+			return null;
+		}
+	}
 }

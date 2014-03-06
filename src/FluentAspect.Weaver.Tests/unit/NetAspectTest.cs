@@ -4,23 +4,28 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit
 {
-    [TestFixture]
-    public abstract class NetAspectTest<T>
-    {
-        protected virtual Action CreateEnsure()
-        {
-            return () => { };
-        }
+   [TestFixture]
+   public abstract class NetAspectTest<T>
+   {
+      [Test]
+      public void DoTest()
+      {
+         RunWeavingTest.For<T>(CreateErrorHandlerProvider(), CreateEnsure());
+      }
 
-        protected virtual Action<ErrorHandler> CreateErrorHandlerProvider()
-        {
-            return e => { };
-        }
+      protected virtual Action CreateEnsure()
+      {
+         return () =>
+            {
+            };
+      }
 
-        [Test]
-        public void DoTest()
-        {
-            RunWeavingTest.For<T>(CreateErrorHandlerProvider(), CreateEnsure());
-        }
-    }
+      protected virtual Action<ErrorHandler> CreateErrorHandlerProvider()
+      {
+         return e => { };
+      }
+   }
+
+   
+    
 }

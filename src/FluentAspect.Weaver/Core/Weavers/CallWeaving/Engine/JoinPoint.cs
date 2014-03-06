@@ -12,15 +12,14 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 
         protected bool Equals(JoinPoint other)
         {
-            return Equals(Method, other.Method) && Equals(InstructionStart, other.InstructionStart) &&
-                   Equals(InstructionEnd, other.InstructionEnd);
+            return Equals(Method, other.Method) && Equals(InstructionStart, other.InstructionStart) && Equals(InstructionEnd, other.InstructionEnd);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
+            if (obj.GetType() != this.GetType()) return false;
             return Equals((JoinPoint) obj);
         }
 
@@ -28,7 +27,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
         {
             unchecked
             {
-                int hashCode = (Method != null ? Method.GetHashCode() : 0);
+                var hashCode = (Method != null ? Method.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ (InstructionStart != null ? InstructionStart.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ (InstructionEnd != null ? InstructionEnd.GetHashCode() : 0);
                 return hashCode;

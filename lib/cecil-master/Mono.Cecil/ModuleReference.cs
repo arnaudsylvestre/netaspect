@@ -26,45 +26,42 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mono.Cecil
-{
-    public class ModuleReference : IMetadataScope
-    {
-        private string name;
+namespace Mono.Cecil {
 
-        internal MetadataToken token;
+	public class ModuleReference : IMetadataScope {
 
-        internal ModuleReference()
-        {
-            token = new MetadataToken(TokenType.ModuleRef);
-        }
+		string name;
 
-        public ModuleReference(string name)
-            : this()
-        {
-            this.name = name;
-        }
+		internal MetadataToken token;
 
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
+		public string Name {
+			get { return name; }
+			set { name = value; }
+		}
 
-        public virtual MetadataScopeType MetadataScopeType
-        {
-            get { return MetadataScopeType.ModuleReference; }
-        }
+		public virtual MetadataScopeType MetadataScopeType {
+			get { return MetadataScopeType.ModuleReference; }
+		}
 
-        public MetadataToken MetadataToken
-        {
-            get { return token; }
-            set { token = value; }
-        }
+		public MetadataToken MetadataToken {
+			get { return token; }
+			set { token = value; }
+		}
 
-        public override string ToString()
-        {
-            return name;
-        }
-    }
+		internal ModuleReference ()
+		{
+			this.token = new MetadataToken (TokenType.ModuleRef);
+		}
+
+		public ModuleReference (string name)
+			: this ()
+		{
+			this.name = name;
+		}
+
+		public override string ToString ()
+		{
+			return name;
+		}
+	}
 }

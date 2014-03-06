@@ -3,40 +3,43 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Subsribe.Parameters.Before.CalledParameterName
 {
-    public class BeforeCallSubscribeEventCalledParameterNameParameterWithRealTypeTest :
-        NetAspectTest<BeforeCallSubscribeEventCalledParameterNameParameterWithRealTypeTest.ClassToWeave>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    Assert.AreEqual(0, MyAspect.ParameterName);
-                    var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved(12);
-                    Assert.AreEqual(12, MyAspect.ParameterName);
-                };
-        }
-
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public event Action Event;
-
-            public void Weaved(int param1)
+    public class BeforeCallSubscribeEventCalledParameterNameParameterWithRealTypeTest : NetAspectTest<BeforeCallSubscribeEventCalledParameterNameParameterWithRealTypeTest.ClassToWeave>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
             {
-                Event += () => { };
-            }
-        }
+               Assert.AreEqual(0, MyAspect.ParameterName);
+               var classToWeave_L = new ClassToWeave();
+               classToWeave_L.Weaved(12);
+               Assert.AreEqual(12, MyAspect.ParameterName);
+            };
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static int ParameterName;
-            public bool NetAspectAttribute = true;
+      public class ClassToWeave
+      {
 
-            public void BeforeRaiseEvent(int calledParam1)
-            {
-                ParameterName = calledParam1;
-            }
-        }
-    }
+          [MyAspect]
+          public event Action Event;
+
+         public void Weaved(int param1)
+         {
+             Event += () => {};
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public static int ParameterName;
+
+         public void BeforeRaiseEvent(int calledParam1)
+         {
+             ParameterName = calledParam1;
+         }
+      }
+   }
+
+   
 }

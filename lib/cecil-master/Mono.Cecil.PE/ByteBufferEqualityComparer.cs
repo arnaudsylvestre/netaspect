@@ -26,36 +26,37 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
 using System.Collections.Generic;
 
-namespace Mono.Cecil.PE
-{
-    internal sealed class ByteBufferEqualityComparer : IEqualityComparer<ByteBuffer>
-    {
-        public bool Equals(ByteBuffer x, ByteBuffer y)
-        {
-            if (x.length != y.length)
-                return false;
+namespace Mono.Cecil.PE {
 
-            byte[] x_buffer = x.buffer;
-            byte[] y_buffer = y.buffer;
+	sealed class ByteBufferEqualityComparer : IEqualityComparer<ByteBuffer> {
 
-            for (int i = 0; i < x.length; i++)
-                if (x_buffer[i] != y_buffer[i])
-                    return false;
+		public bool Equals (ByteBuffer x, ByteBuffer y)
+		{
+			if (x.length != y.length)
+				return false;
 
-            return true;
-        }
+			var x_buffer = x.buffer;
+			var y_buffer = y.buffer;
 
-        public int GetHashCode(ByteBuffer buffer)
-        {
+			for (int i = 0; i < x.length; i++)
+				if (x_buffer [i] != y_buffer [i])
+					return false;
+
+			return true;
+		}
+
+		public int GetHashCode (ByteBuffer buffer)
+		{
 #if !BYTE_BUFFER_WELL_DISTRIBUTED_HASH
-            int hash = 0;
-            byte[] bytes = buffer.buffer;
-            for (int i = 0; i < buffer.length; i++)
-                hash = (hash*37) ^ bytes[i];
+			var hash = 0;
+			var bytes = buffer.buffer;
+			for (int i = 0; i < buffer.length; i++)
+				hash = (hash * 37) ^ bytes [i];
 
-            return hash;
+			return hash;
 #else
 			const uint p = 16777619;
 			uint hash = 2166136261;
@@ -72,6 +73,6 @@ namespace Mono.Cecil.PE
 
 			return (int) hash;
 #endif
-        }
-    }
+		}
+	}
 }

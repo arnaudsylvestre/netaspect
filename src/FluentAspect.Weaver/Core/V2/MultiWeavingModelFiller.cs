@@ -5,7 +5,7 @@ namespace FluentAspect.Weaver.Core.V2
 {
     public class MultiWeavingModelFiller : IWeavingModelFiller
     {
-        private readonly IWeavingModelFiller[] weavingModelFillers;
+        private IWeavingModelFiller[] weavingModelFillers;
 
         public MultiWeavingModelFiller(params IWeavingModelFiller[] weavingModelFillers_P)
         {
@@ -14,7 +14,7 @@ namespace FluentAspect.Weaver.Core.V2
 
         public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
         {
-            foreach (IWeavingModelFiller weavingModelFiller_L in weavingModelFillers)
+            foreach (var weavingModelFiller_L in weavingModelFillers)
             {
                 weavingModelFiller_L.FillWeavingModel(method, aspect, weavingModel);
             }

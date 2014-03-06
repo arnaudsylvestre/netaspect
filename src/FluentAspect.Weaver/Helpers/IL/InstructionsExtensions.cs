@@ -11,26 +11,19 @@ namespace FluentAspect.Weaver.Helpers.IL
         public static void AppendCallToThisGetType(this Collection<Instruction> instructions, ModuleDefinition module)
         {
             instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
-            instructions.Add(Instruction.Create(OpCodes.Call,
-                                                module.Import(typeof (object).GetMethod("GetType", new Type[0]))));
+            instructions.Add(Instruction.Create(OpCodes.Call, module.Import(typeof (object).GetMethod("GetType", new Type[0]))));
         }
 
-        public static void AppendCallToGetMethod(this Collection<Instruction> instructions, string methodName,
-                                                 ModuleDefinition module)
+        public static void AppendCallToGetMethod(this Collection<Instruction> instructions, string methodName, ModuleDefinition module)
         {
             instructions.Add(Instruction.Create(OpCodes.Ldstr, methodName));
-            instructions.Add(Instruction.Create(OpCodes.Callvirt,
-                                                module.Import(typeof (Type).GetMethod("GetMethod",
-                                                                                      new[] {typeof (string)}))));
+            instructions.Add(Instruction.Create(OpCodes.Callvirt, module.Import(typeof(Type).GetMethod("GetMethod", new[] { typeof(string) }))));
         }
 
-        public static void AppendCallToGetProperty(this Collection<Instruction> instructions, string propertyName,
-                                                   ModuleDefinition module)
+        public static void AppendCallToGetProperty(this Collection<Instruction> instructions, string propertyName, ModuleDefinition module)
         {
             instructions.Add(Instruction.Create(OpCodes.Ldstr, propertyName));
-            instructions.Add(Instruction.Create(OpCodes.Callvirt,
-                                                module.Import(typeof (Type).GetMethod("GetProperty",
-                                                                                      new[] {typeof (string)}))));
+            instructions.Add(Instruction.Create(OpCodes.Callvirt, module.Import(typeof(Type).GetMethod("GetProperty", new[] { typeof(string) }))));
         }
 
         public static void AppendSaveResultTo(this Collection<Instruction> instructions, VariableDefinition variable)
@@ -58,7 +51,7 @@ namespace FluentAspect.Weaver.Helpers.IL
 
 
         public static void InitializeInterceptors(this Collection<Instruction> instructions, MethodDefinition method,
-                                                  Type type, VariableDefinition variable)
+                                                                     Type type, VariableDefinition variable)
         {
             instructions.AppendCreateNewObject(variable, type, method.Module);
         }

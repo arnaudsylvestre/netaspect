@@ -3,26 +3,26 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.After.CalledParameterName
 {
-    public class AfterCallGetPropertyCalledParameterNameReferencedParameterWithRealTypeTest :
-        NetAspectTest<AfterCallGetPropertyCalledParameterNameReferencedParameterWithRealTypeTest.ClassToWeave>
+    public class AfterCallGetPropertyCalledParameterNameReferencedParameterWithRealTypeTest : NetAspectTest<AfterCallGetPropertyCalledParameterNameReferencedParameterWithRealTypeTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
             return () =>
-                {
-                    Assert.AreEqual(0, MyAspect.ParameterName);
-                    var classToWeave_L = new ClassToWeave();
-                    int val = 12;
-                    classToWeave_L.Weaved(ref val);
-                    Assert.AreEqual(25, val);
-                    Assert.AreEqual(12, MyAspect.ParameterName);
-                };
+            {
+                Assert.AreEqual(0, MyAspect.ParameterName);
+                var classToWeave_L = new ClassToWeave();
+                int val = 12;
+                classToWeave_L.Weaved(ref val);
+                Assert.AreEqual(25, val);
+                Assert.AreEqual(12, MyAspect.ParameterName);
+            };
         }
 
         public class ClassToWeave
         {
+
             [MyAspect]
-            public string Property { get; set; }
+            public string Property {get;set;}
 
             public string Weaved(ref int param1)
             {
@@ -32,8 +32,9 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameter
 
         public class MyAspect : Attribute
         {
-            public static int ParameterName;
             public bool NetAspectAttribute = true;
+
+            public static int ParameterName;
 
             public void AfterGetProperty(int calledParam1)
             {
@@ -41,4 +42,6 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameter
             }
         }
     }
+
+
 }

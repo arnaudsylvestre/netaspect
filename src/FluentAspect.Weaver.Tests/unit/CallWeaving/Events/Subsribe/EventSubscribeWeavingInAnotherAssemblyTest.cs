@@ -7,9 +7,9 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Subsribe
     public class EventSubscribeWeavingInAnotherAssemblyTest
     {
         [Test]
-        public void Check()
-        {
-            throw new NotImplementedException();
-        }
+         public void Check()
+         {
+             throw new NotImplementedException();
+         }
     }
 }

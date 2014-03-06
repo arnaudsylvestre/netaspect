@@ -6,7 +6,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
 {
     public class InstanceInterceptorParametersChercker : IInterceptorParameterChecker
     {
-        private readonly MethodDefinition methodDefinition;
+        private MethodDefinition methodDefinition;
 
         public InstanceInterceptorParametersChercker(MethodDefinition methodDefinition)
         {
@@ -16,7 +16,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
         public void Check(ParameterInfo parameter, IErrorListener errorListener)
         {
             Ensure.NotReferenced(parameter, errorListener);
-            Ensure.OfType(parameter, errorListener, typeof (object).FullName, methodDefinition.DeclaringType.FullName);
+            Ensure.OfType(parameter, errorListener, typeof(object).FullName, methodDefinition.DeclaringType.FullName);
             Ensure.NotStatic(parameter, errorListener, methodDefinition);
         }
     }

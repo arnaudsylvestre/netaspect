@@ -4,18 +4,19 @@ using NUnit.Framework;
 namespace FluentAspect.Weaver.Tests.unit.ParameterWeaving.Method.After
 {
     [TestFixture]
-    public class AfterMethodParameterTest
+   public class AfterMethodParameterTest
     {
-        [Test]
+       [Test]
+       public void CheckReferenced()
+       {
+          throw new NotImplementedException();
+       }
+
+
+       [Test]
         public void CheckInstanceWithRealType()
         {
             throw new NotImplementedException();
         }
-
-        [Test]
-        public void CheckReferenced()
-        {
-            throw new NotImplementedException();
-        }
-    }
+   }
 }

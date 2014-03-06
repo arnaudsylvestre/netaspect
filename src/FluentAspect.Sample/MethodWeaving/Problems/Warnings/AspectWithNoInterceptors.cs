@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace FluentAspect.Sample.MethodWeaving.Problems.Warnings
 {
@@ -7,6 +10,7 @@ namespace FluentAspect.Sample.MethodWeaving.Problems.Warnings
         [EmptyAspect]
         public void CheckWithNoInterceptors()
         {
+            
         }
     }
 

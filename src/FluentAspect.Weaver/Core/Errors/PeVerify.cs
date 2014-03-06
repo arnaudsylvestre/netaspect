@@ -1,4 +1,5 @@
-﻿using FluentAspect.Weaver.Core.Helpers;
+﻿
+using FluentAspect.Weaver.Core.Helpers;
 
 namespace FluentAspect.Weaver.Core.Errors
 {

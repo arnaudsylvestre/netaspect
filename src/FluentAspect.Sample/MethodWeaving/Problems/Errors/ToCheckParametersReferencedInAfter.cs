@@ -8,11 +8,13 @@ namespace FluentAspect.Sample.MethodWeaving.Problems.Errors
         [ToCheckParametersReferencedInAfterAspect]
         public void Check(string parameter1, int parameter2)
         {
+            
         }
     }
 
     public class ToCheckParametersReferencedInAfterAspectAttribute : Attribute
     {
+
         public string NetAspectAttributeKind = "MethodWeaving";
 
         public void After(ref object[] parameters)

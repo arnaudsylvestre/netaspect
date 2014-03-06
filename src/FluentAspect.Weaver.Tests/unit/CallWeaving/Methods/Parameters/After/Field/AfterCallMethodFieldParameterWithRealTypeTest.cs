@@ -4,43 +4,43 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.Field
 {
-    public class AfterCallMethodFieldParameterWithRealTypeTest :
-        NetAspectTest<AfterCallMethodFieldParameterWithRealTypeTest.ClassToWeave>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    Assert.AreEqual(null, MyAspect.Field);
-                    var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved();
-                    Assert.AreEqual("Field", MyAspect.Field.Name);
-                };
-        }
-
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public string Method()
+    public class AfterCallMethodFieldParameterWithRealTypeTest : NetAspectTest<AfterCallMethodFieldParameterWithRealTypeTest.ClassToWeave>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
             {
-                return "Hello";
-            }
+               Assert.AreEqual(null, MyAspect.Field);
+               var classToWeave_L = new ClassToWeave();
+               classToWeave_L.Weaved();
+               Assert.AreEqual("Field", MyAspect.Field.Name);
+            };
+      }
 
-            public string Weaved()
-            {
-                return Method();
-            }
-        }
+      public class ClassToWeave
+      {
 
-        public class MyAspect : Attribute
-        {
-            public static FieldInfo Field;
-            public bool NetAspectAttribute = true;
+          [MyAspect]
+          public string Method() {return "Hello";}
 
-            public void AfterCallMethod(FieldInfo columnNumber)
-            {
-                Field = columnNumber;
-            }
-        }
-    }
+         public string Weaved()
+         {
+             return Method();
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public static FieldInfo Field;
+
+         public void AfterCallMethod(FieldInfo columnNumber)
+         {
+             Field = columnNumber;
+         }
+      }
+   }
+
+   
 }

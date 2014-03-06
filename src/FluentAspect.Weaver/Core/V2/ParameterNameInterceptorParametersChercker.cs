@@ -15,6 +15,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
 
         public void Check(ParameterInfo parameter, IErrorListener errorListener)
         {
+
             Ensure.OfType(parameter, errorListener, _parameterName);
         }
     }

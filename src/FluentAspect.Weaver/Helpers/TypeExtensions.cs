@@ -23,13 +23,11 @@ namespace FluentAspect.Weaver.Helpers
 
             return methods;
         }
-
-        public static List<ParameterInfo> GetAllParameters(this IEnumerable<Type> types,
-                                                           Func<ParameterInfo, bool> filter)
+        public static List<ParameterInfo> GetAllParameters(this IEnumerable<Type> types, Func<ParameterInfo, bool> filter)
         {
             var parameters = new List<ParameterInfo>();
 
-            foreach (MethodInfo methodInfo in GetAllMethods(types, info => true))
+            foreach (var methodInfo in GetAllMethods(types, info => true))
             {
                 parameters.AddRange(
                     from m in
@@ -40,75 +38,73 @@ namespace FluentAspect.Weaver.Helpers
 
             return parameters;
         }
+       public static List<FieldInfo> GetAllFields(this IEnumerable<Type> types, Func<FieldInfo, bool> filter)
+       {
+           var methods = new List<FieldInfo>();
 
-        public static List<FieldInfo> GetAllFields(this IEnumerable<Type> types, Func<FieldInfo, bool> filter)
-        {
-            var methods = new List<FieldInfo>();
-
-            foreach (Type type in types)
-            {
-                methods.AddRange(
-                    from m in
-                        type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+           foreach (Type type in types)
+           {
+               methods.AddRange(
+                   from m in
+                       type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
                                        BindingFlags.Instance)
-                    where filter(m)
-                    select m);
-            }
+                   where filter(m)
+                   select m);
+           }
 
-            return methods;
-        }
+           return methods;
+       }
+       public static List<PropertyInfo> GetAllProperties(this IEnumerable<Type> types, Func<PropertyInfo, bool> filter)
+       {
+           var methods = new List<PropertyInfo>();
 
-        public static List<PropertyInfo> GetAllProperties(this IEnumerable<Type> types, Func<PropertyInfo, bool> filter)
-        {
-            var methods = new List<PropertyInfo>();
-
-            foreach (Type type in types)
-            {
-                methods.AddRange(
-                    from m in
-                        type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
-                                           BindingFlags.Instance)
-                    where filter(m)
-                    select m);
-            }
-
-            return methods;
-        }
-
-        public static List<ConstructorInfo> GetAllConstructors(this IEnumerable<Type> types,
-                                                               Func<ConstructorInfo, bool> filter)
-        {
-            var methods = new List<ConstructorInfo>();
-
-            foreach (Type type in types)
-            {
-                methods.AddRange(
-                    from m in
-                        type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
-                                             BindingFlags.Instance)
-                    where filter(m)
-                    select m);
-            }
-
-            return methods;
-        }
-
-        public static List<EventInfo> GetAllEvents(this IEnumerable<Type> types,
-                                                   Func<EventInfo, bool> filter)
-        {
-            var methods = new List<EventInfo>();
-
-            foreach (Type type in types)
-            {
-                methods.AddRange(
-                    from m in
-                        type.GetEvents(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+           foreach (Type type in types)
+           {
+               methods.AddRange(
+                   from m in
+                       type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
                                        BindingFlags.Instance)
-                    where filter(m)
-                    select m);
-            }
+                   where filter(m)
+                   select m);
+           }
 
-            return methods;
-        }
+           return methods;
+       }
+
+       public static List<ConstructorInfo> GetAllConstructors(this IEnumerable<Type> types,
+                                                              Func<ConstructorInfo, bool> filter)
+       {
+           var methods = new List<ConstructorInfo>();
+
+           foreach (Type type in types)
+           {
+               methods.AddRange(
+                   from m in
+                       type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+                                            BindingFlags.Instance)
+                   where filter(m)
+                   select m);
+           }
+
+           return methods;
+       }
+
+       public static List<EventInfo> GetAllEvents(this IEnumerable<Type> types,
+                                                              Func<EventInfo, bool> filter)
+       {
+           var methods = new List<EventInfo>();
+
+           foreach (Type type in types)
+           {
+               methods.AddRange(
+                   from m in
+                       type.GetEvents(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+                                            BindingFlags.Instance)
+                   where filter(m)
+                   select m);
+           }
+
+           return methods;
+       }
     }
 }

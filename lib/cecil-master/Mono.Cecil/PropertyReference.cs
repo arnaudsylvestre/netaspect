@@ -27,25 +27,33 @@
 //
 
 using System;
+
 using Mono.Collections.Generic;
 
-namespace Mono.Cecil
-{
-    public abstract class PropertyReference : MemberReference
-    {
-        internal PropertyReference(string name, TypeReference propertyType)
-            : base(name)
-        {
-            if (propertyType == null)
-                throw new ArgumentNullException("propertyType");
+namespace Mono.Cecil {
 
-            PropertyType = propertyType;
-        }
+	public abstract class PropertyReference : MemberReference {
 
-        public TypeReference PropertyType { get; set; }
+		TypeReference property_type;
 
-        public abstract Collection<ParameterDefinition> Parameters { get; }
+		public TypeReference PropertyType {
+			get { return property_type; }
+			set { property_type = value; }
+		}
 
-        public abstract PropertyDefinition Resolve();
-    }
+		public abstract Collection<ParameterDefinition> Parameters {
+			get;
+		}
+
+		internal PropertyReference (string name, TypeReference propertyType)
+			: base (name)
+		{
+			if (propertyType == null)
+				throw new ArgumentNullException ("propertyType");
+
+			property_type = propertyType;
+		}
+
+		public abstract PropertyDefinition Resolve ();
+	}
 }

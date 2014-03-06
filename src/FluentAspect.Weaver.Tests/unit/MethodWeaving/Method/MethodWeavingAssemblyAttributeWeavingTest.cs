@@ -6,10 +6,10 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method
     [TestFixture]
     public class MethodWeavingAssemblyAttributeWeavingTest
     {
-        [Test]
-        public void Check()
-        {
-            throw new NotImplementedException();
-        }
+         [Test]
+         public void Check()
+         {
+             throw new NotImplementedException();
+         }
     }
 }

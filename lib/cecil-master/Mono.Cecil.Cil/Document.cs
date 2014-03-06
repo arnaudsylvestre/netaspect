@@ -26,83 +26,87 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mono.Cecil.Cil
-{
-    public enum DocumentType
-    {
-        Other,
-        Text,
-    }
+using System;
 
-    public enum DocumentHashAlgorithm
-    {
-        None,
-        MD5,
-        SHA1,
-    }
+namespace Mono.Cecil.Cil {
 
-    public enum DocumentLanguage
-    {
-        Other,
-        C,
-        Cpp,
-        CSharp,
-        Basic,
-        Java,
-        Cobol,
-        Pascal,
-        Cil,
-        JScript,
-        Smc,
-        MCpp,
-        FSharp,
-    }
+	public enum DocumentType {
+		Other,
+		Text,
+	}
 
-    public enum DocumentLanguageVendor
-    {
-        Other,
-        Microsoft,
-    }
+	public enum DocumentHashAlgorithm {
+		None,
+		MD5,
+		SHA1,
+	}
 
-    public sealed class Document
-    {
-        private byte hash_algorithm;
-        private byte language;
-        private byte language_vendor;
-        private byte type;
+	public enum DocumentLanguage {
+		Other,
+		C,
+		Cpp,
+		CSharp,
+		Basic,
+		Java,
+		Cobol,
+		Pascal,
+		Cil,
+		JScript,
+		Smc,
+		MCpp,
+		FSharp,
+	}
 
-        public Document(string url)
-        {
-            this.Url = url;
-            Hash = Empty<byte>.Array;
-        }
+	public enum DocumentLanguageVendor {
+		Other,
+		Microsoft,
+	}
 
-        public string Url { get; set; }
+	public sealed class Document {
 
-        public DocumentType Type
-        {
-            get { return (DocumentType) type; }
-            set { type = (byte) value; }
-        }
+		string url;
 
-        public DocumentHashAlgorithm HashAlgorithm
-        {
-            get { return (DocumentHashAlgorithm) hash_algorithm; }
-            set { hash_algorithm = (byte) value; }
-        }
+		byte type;
+		byte hash_algorithm;
+		byte language;
+		byte language_vendor;
 
-        public DocumentLanguage Language
-        {
-            get { return (DocumentLanguage) language; }
-            set { language = (byte) value; }
-        }
+		byte [] hash;
 
-        public DocumentLanguageVendor LanguageVendor
-        {
-            get { return (DocumentLanguageVendor) language_vendor; }
-            set { language_vendor = (byte) value; }
-        }
+		public string Url {
+			get { return url; }
+			set { url = value; }
+		}
 
-        public byte[] Hash { get; set; }
-    }
+		public DocumentType Type {
+			get { return (DocumentType) type; }
+			set { type = (byte) value; }
+		}
+
+		public DocumentHashAlgorithm HashAlgorithm {
+			get { return (DocumentHashAlgorithm) hash_algorithm; }
+			set { hash_algorithm = (byte) value; }
+		}
+
+		public DocumentLanguage Language {
+			get { return (DocumentLanguage) language; }
+			set { language = (byte) value; }
+		}
+
+		public DocumentLanguageVendor LanguageVendor {
+			get { return (DocumentLanguageVendor) language_vendor; }
+			set { language_vendor = (byte) value; }
+		}
+
+		public byte [] Hash {
+			get { return hash; }
+			set { hash = value; }
+		}
+
+		public Document (string url)
+		{
+			this.url = url;
+			this.hash = Empty<byte>.Array;
+		}
+	}
 }

@@ -31,114 +31,99 @@ using System.Text;
 using Mono.Collections.Generic;
 using MD = Mono.Cecil.Metadata;
 
-namespace Mono.Cecil
-{
-    public sealed class FunctionPointerType : TypeSpecification, IMethodSignature
-    {
-        private readonly MethodReference function;
+namespace Mono.Cecil {
 
-        public FunctionPointerType()
-            : base(null)
-        {
-            function = new MethodReference();
-            function.Name = "method";
-            etype = MD.ElementType.FnPtr;
-        }
+	public sealed class FunctionPointerType : TypeSpecification, IMethodSignature {
 
-        public override string Name
-        {
-            get { return function.Name; }
-            set { throw new InvalidOperationException(); }
-        }
+		readonly MethodReference function;
 
-        public override string Namespace
-        {
-            get { return string.Empty; }
-            set { throw new InvalidOperationException(); }
-        }
+		public bool HasThis {
+			get { return function.HasThis; }
+			set { function.HasThis = value; }
+		}
 
-        public override ModuleDefinition Module
-        {
-            get { return ReturnType.Module; }
-        }
+		public bool ExplicitThis {
+			get { return function.ExplicitThis; }
+			set { function.ExplicitThis = value; }
+		}
 
-        public override IMetadataScope Scope
-        {
-            get { return function.ReturnType.Scope; }
-            set { throw new InvalidOperationException(); }
-        }
+		public MethodCallingConvention CallingConvention {
+			get { return function.CallingConvention; }
+			set { function.CallingConvention = value; }
+		}
 
-        public override bool IsFunctionPointer
-        {
-            get { return true; }
-        }
+		public bool HasParameters {
+			get { return function.HasParameters; }
+		}
 
-        internal override bool ContainsGenericParameter
-        {
-            get { return function.ContainsGenericParameter; }
-        }
+		public Collection<ParameterDefinition> Parameters {
+			get { return function.Parameters; }
+		}
 
-        public override string FullName
-        {
-            get
-            {
-                var signature = new StringBuilder();
-                signature.Append(function.Name);
-                signature.Append(" ");
-                signature.Append(function.ReturnType.FullName);
-                signature.Append(" *");
-                this.MethodSignatureFullName(signature);
-                return signature.ToString();
-            }
-        }
+		public TypeReference ReturnType {
+			get { return function.MethodReturnType.ReturnType; }
+			set { function.MethodReturnType.ReturnType = value; }
+		}
 
-        public bool HasThis
-        {
-            get { return function.HasThis; }
-            set { function.HasThis = value; }
-        }
+		public MethodReturnType MethodReturnType {
+			get { return function.MethodReturnType; }
+		}
 
-        public bool ExplicitThis
-        {
-            get { return function.ExplicitThis; }
-            set { function.ExplicitThis = value; }
-        }
+		public override string Name {
+			get { return function.Name; }
+			set { throw new InvalidOperationException (); }
+		}
 
-        public MethodCallingConvention CallingConvention
-        {
-            get { return function.CallingConvention; }
-            set { function.CallingConvention = value; }
-        }
+		public override string Namespace {
+			get { return string.Empty; }
+			set { throw new InvalidOperationException (); }
+		}
 
-        public bool HasParameters
-        {
-            get { return function.HasParameters; }
-        }
+		public override ModuleDefinition Module {
+			get { return ReturnType.Module; }
+		}
 
-        public Collection<ParameterDefinition> Parameters
-        {
-            get { return function.Parameters; }
-        }
+		public override IMetadataScope Scope {
+			get { return function.ReturnType.Scope; }
+			set { throw new InvalidOperationException (); }
+		}
 
-        public TypeReference ReturnType
-        {
-            get { return function.MethodReturnType.ReturnType; }
-            set { function.MethodReturnType.ReturnType = value; }
-        }
+		public override bool IsFunctionPointer {
+			get { return true; }
+		}
 
-        public MethodReturnType MethodReturnType
-        {
-            get { return function.MethodReturnType; }
-        }
+		internal override bool ContainsGenericParameter {
+			get { return function.ContainsGenericParameter; }
+		}
 
-        public override TypeDefinition Resolve()
-        {
-            return null;
-        }
+		public override string FullName {
+			get {
+				var signature = new StringBuilder ();
+				signature.Append (function.Name);
+				signature.Append (" ");
+				signature.Append (function.ReturnType.FullName);
+				signature.Append (" *");
+				this.MethodSignatureFullName (signature);
+				return signature.ToString ();
+			}
+		}
 
-        public override TypeReference GetElementType()
-        {
-            return this;
-        }
-    }
+		public FunctionPointerType ()
+			: base (null)
+		{
+			this.function = new MethodReference ();
+			this.function.Name = "method";
+			this.etype = MD.ElementType.FnPtr;
+		}
+
+		public override TypeDefinition Resolve ()
+		{
+			return null;
+		}
+
+		public override TypeReference GetElementType ()
+		{
+			return this;
+		}
+	}
 }

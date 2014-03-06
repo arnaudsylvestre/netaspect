@@ -1,19 +1,13 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
+using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Result
 {
-    public class AfterMethodResultParameterWithReferencedObjectTest :
-        NetAspectTest<AfterMethodResultParameterWithReferencedObjectTest.ClassToWeave>
+    public class AfterMethodResultParameterWithReferencedObjectTest : NetAspectTest<AfterMethodResultParameterWithReferencedObjectTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<FluentAspect.Weaver.Core.Errors.ErrorHandler> CreateErrorHandlerProvider()
         {
-            return
-                errorHandler =>
-                errorHandler.Errors.Add(
-                    string.Format(
-                        "the result parameter in the method After of the type '{0}' is declared with the type 'System.Object&' but it is expected to be System.String because the return type of the method Weaved in the type {1}",
-                        typeof (MyAspect).FullName, typeof (ClassToWeave).FullName));
+            return errorHandler => errorHandler.Errors.Add(string.Format("the result parameter in the method After of the type '{0}' is declared with the type 'System.Object&' but it is expected to be System.String because the return type of the method Weaved in the type {1}", typeof(MyAspect).FullName, typeof(ClassToWeave).FullName));
         }
 
 
@@ -36,4 +30,6 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.R
             }
         }
     }
+
+   
 }

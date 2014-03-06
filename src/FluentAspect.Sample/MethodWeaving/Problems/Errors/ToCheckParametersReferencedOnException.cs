@@ -14,6 +14,7 @@ namespace FluentAspect.Sample.MethodWeaving.Problems.Errors
 
     public class ToCheckParametersReferencedOnExceptionAspectAttribute : Attribute
     {
+
         public string NetAspectAttributeKind = "MethodWeaving";
 
         public void OnException(ref object[] parameters)

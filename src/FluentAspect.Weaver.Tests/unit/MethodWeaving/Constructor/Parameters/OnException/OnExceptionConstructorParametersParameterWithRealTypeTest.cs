@@ -3,44 +3,47 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnException
 {
-    public class OnExceptionConstructorParametersParameterWithRealTypeTest :
-        NetAspectTest<OnExceptionConstructorParametersParameterWithRealTypeTest.ClassToWeave>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
+   public class OnExceptionConstructorParametersParameterWithRealTypeTest : NetAspectTest<OnExceptionConstructorParametersParameterWithRealTypeTest.ClassToWeave>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
+            {
+               Assert.IsNull(MyAspect.Parameters);
+                try
                 {
-                    Assert.IsNull(MyAspect.Parameters);
-                    try
-                    {
-                        var classToWeave_L = new ClassToWeave(12);
-                        Assert.Fail();
-                    }
-                    catch (Exception)
-                    {
-                        Assert.AreEqual(new object[] {12}, MyAspect.Parameters);
-                    }
-                };
-        }
+                    var classToWeave_L = new ClassToWeave(12);
+                    Assert.Fail();
+                }
+                catch (Exception)
+                {
+                Assert.AreEqual(new object[] {12}, MyAspect.Parameters);
+                    
+                }
+            };
+      }
 
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public ClassToWeave(int i)
-            {
-                throw new Exception();
-            }
-        }
+      public class ClassToWeave
+      {
+         [MyAspect]
+          public ClassToWeave(int i)
+         {
+             throw new Exception();
+         }
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static object[] Parameters;
-            public bool NetAspectAttribute = true;
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
 
-            public void OnException(object[] parameters)
-            {
-                Parameters = parameters;
-            }
-        }
-    }
+         public static object[] Parameters;
+
+         public void OnException(object[] parameters)
+         {
+            Parameters = parameters;
+         }
+      }
+   }
+
+   
 }

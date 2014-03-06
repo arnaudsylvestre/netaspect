@@ -1,38 +1,37 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
+using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Instance
 {
-    public class AfterMethodInstanceParameterWithRealTypeReferencedTest :
-        NetAspectTest<AfterMethodInstanceParameterWithRealTypeReferencedTest.ClassToWeave>
-    {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
-        {
-            return
-                errorHandler =>
-                errorHandler.Errors.Add(
-                    string.Format(
-                        "impossible to ref/out the parameter 'instance' in the method After of the type '{0}'",
-                        typeof (MyAspect).FullName));
-        }
+   public class AfterMethodInstanceParameterWithRealTypeReferencedTest : NetAspectTest<AfterMethodInstanceParameterWithRealTypeReferencedTest.ClassToWeave>
+   {
 
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public void Weaved()
-            {
-            }
-        }
+      protected override Action<FluentAspect.Weaver.Core.Errors.ErrorHandler> CreateErrorHandlerProvider()
+      {
+         return errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'instance' in the method After of the type '{0}'", typeof(MyAspect).FullName));
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static ClassToWeave Instance;
-            public bool NetAspectAttribute = true;
+      public class ClassToWeave
+      {
+         [MyAspect]
+         public void Weaved()
+         {
 
-            public void After(ref ClassToWeave instance)
-            {
-                Instance = instance;
-            }
-        }
-    }
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public static ClassToWeave Instance;
+
+         public void After(ref ClassToWeave instance)
+         {
+            Instance = instance;
+         }
+      }
+   }
+
+   
 }

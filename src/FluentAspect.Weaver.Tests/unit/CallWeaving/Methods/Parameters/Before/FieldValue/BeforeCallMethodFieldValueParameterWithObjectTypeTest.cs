@@ -3,43 +3,43 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.Before.FieldValue
 {
-    public class BeforeCallMethodFieldValueParameterWithObjectTypeTest :
-        NetAspectTest<BeforeCallMethodFieldValueParameterWithObjectTypeTest.ClassToWeave>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    Assert.IsNull(MyAspect.FieldValue);
-                    var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved();
-                    Assert.AreEqual(classToWeave_L, MyAspect.FieldValue);
-                };
-        }
-
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public string Method()
+    public class BeforeCallMethodFieldValueParameterWithObjectTypeTest : NetAspectTest<BeforeCallMethodFieldValueParameterWithObjectTypeTest.ClassToWeave>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
             {
-                return "Hello";
-            }
+               Assert.IsNull(MyAspect.FieldValue);
+               var classToWeave_L = new ClassToWeave();
+               classToWeave_L.Weaved();
+               Assert.AreEqual(classToWeave_L, MyAspect.FieldValue);
+            };
+      }
 
-            public string Weaved()
-            {
-                return Method();
-            }
-        }
+      public class ClassToWeave
+      {
 
-        public class MyAspect : Attribute
-        {
-            public static object FieldValue;
-            public bool NetAspectAttribute = true;
+          [MyAspect]
+          public string Method() {return "Hello";}
 
-            public void BeforeCallMethod(object fieldValue)
-            {
-                FieldValue = fieldValue;
-            }
-        }
-    }
+         public string Weaved()
+         {
+             return Method();
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public static object FieldValue;
+
+         public void BeforeCallMethod(object fieldValue)
+         {
+             FieldValue = fieldValue;
+         }
+      }
+   }
+
+   
 }

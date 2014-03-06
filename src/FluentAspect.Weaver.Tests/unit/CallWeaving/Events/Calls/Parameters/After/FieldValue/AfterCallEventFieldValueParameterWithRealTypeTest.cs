@@ -3,40 +3,43 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Calls.Parameters.After.FieldValue
 {
-    public class AfterCallEventFieldValueParameterWithRealTypeTest :
-        NetAspectTest<AfterCallEventFieldValueParameterWithRealTypeTest.ClassToWeave>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    Assert.IsNull(MyAspect.FieldValue);
-                    var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved();
-                    Assert.AreEqual(classToWeave_L, MyAspect.FieldValue);
-                };
-        }
-
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public event Action Event;
-
-            public void Weaved()
+    public class AfterCallEventFieldValueParameterWithRealTypeTest : NetAspectTest<AfterCallEventFieldValueParameterWithRealTypeTest.ClassToWeave>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
             {
-                Event();
-            }
-        }
+               Assert.IsNull(MyAspect.FieldValue);
+               var classToWeave_L = new ClassToWeave();
+               classToWeave_L.Weaved();
+               Assert.AreEqual(classToWeave_L, MyAspect.FieldValue);
+            };
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static string FieldValue;
-            public bool NetAspectAttribute = true;
+      public class ClassToWeave
+      {
 
-            public void AfterRaiseEvent(string fieldValue)
-            {
-                FieldValue = fieldValue;
-            }
-        }
-    }
+          [MyAspect]
+          public event Action Event;
+
+         public void Weaved()
+         {
+             Event();
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public static string FieldValue;
+
+         public void AfterRaiseEvent(string fieldValue)
+         {
+             FieldValue = fieldValue;
+         }
+      }
+   }
+
+   
 }

@@ -3,24 +3,24 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.Before.CalledParameterName
 {
-    public class BeforeCallUpdatePropertyCalledParameterNameParameterWithRealTypeReferencedTest :
-        NetAspectTest<BeforeCallUpdatePropertyCalledParameterNameParameterWithRealTypeReferencedTest.ClassToWeave>
+    public class BeforeCallUpdatePropertyCalledParameterNameParameterWithRealTypeReferencedTest : NetAspectTest<BeforeCallUpdatePropertyCalledParameterNameParameterWithRealTypeReferencedTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
             return () =>
-                {
-                    Assert.AreEqual(0, MyAspect.ParameterName);
-                    var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved(12);
-                    Assert.AreEqual(12, MyAspect.ParameterName);
-                };
+            {
+                Assert.AreEqual(0, MyAspect.ParameterName);
+                var classToWeave_L = new ClassToWeave();
+                classToWeave_L.Weaved(12);
+                Assert.AreEqual(12, MyAspect.ParameterName);
+            };
         }
 
         public class ClassToWeave
         {
+
             [MyAspect]
-            public string Property { get; set; }
+            public string Property {get;set;}
 
             public void Weaved(int param1)
             {
@@ -30,8 +30,9 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameter
 
         public class MyAspect : Attribute
         {
-            public static int ParameterName;
             public bool NetAspectAttribute = true;
+
+            public static int ParameterName;
 
             public void BeforeUpdateProperty(ref int calledParam1)
             {
@@ -39,4 +40,6 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameter
             }
         }
     }
+
+
 }

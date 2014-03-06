@@ -1,27 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.V2;
 using FluentAspect.Weaver.Factory;
 using NUnit.Framework;
+using System.Linq;
 
 namespace FluentAspect.Weaver.Tests.Helpers
 {
     public class AppDomainIsolatedTestRunner : MarshalByRefObject
     {
-        public string RunFromType(string dll_L, string typeName, List<string> checkErrors, List<string> failures,
-                                  List<string> warnings)
+        public string RunFromType(string dll_L, string typeName, List<string> checkErrors, List<string> failures, List<string> warnings)
         {
-            Assembly assembly = Assembly.LoadFrom(dll_L);
-            Type type = assembly.GetTypes().First(t => t.FullName == typeName);
-            WeaverCore weaver = WeaverCoreFactory.Create();
+            var assembly = Assembly.LoadFrom(dll_L);
+            var type = assembly.GetTypes().First(t => t.FullName == typeName);
+            var weaver = WeaverCoreFactory.Create();
             var errorHandler = new ErrorHandler();
             weaver.Weave(ComputeTypes(type), errorHandler, (a) => a);
             var builder = new StringBuilder();
-            errorHandler.Dump(builder);
+            ErrorHandlerExtensions.Dump(errorHandler, builder);
             Assert.AreEqual(warnings, errorHandler.Warnings);
             Assert.AreEqual(checkErrors, errorHandler.Errors);
             Assert.AreEqual(failures, errorHandler.Failures);
@@ -35,7 +33,7 @@ namespace FluentAspect.Weaver.Tests.Helpers
 
         public void Ensure(Action ensure)
         {
-            ensure();
+           ensure();
         }
     }
 }

@@ -30,10 +30,12 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Mono.Cecil.Mdb")]
-[assembly: AssemblyProduct("Mono.Cecil")]
-[assembly: AssemblyCopyright("Copyright © 2008 - 2011 Jb Evain")]
-[assembly: CLSCompliant(false)]
-[assembly: ComVisible(false)]
-[assembly: AssemblyVersion("0.9.5.0")]
-[assembly: AssemblyFileVersion("0.9.5.0")]
+[assembly: AssemblyTitle ("Mono.Cecil.Mdb")]
+[assembly: AssemblyProduct ("Mono.Cecil")]
+[assembly: AssemblyCopyright ("Copyright © 2008 - 2011 Jb Evain")]
+
+[assembly: CLSCompliant (false)]
+[assembly: ComVisible (false)]
+
+[assembly: AssemblyVersion ("0.9.5.0")]
+[assembly: AssemblyFileVersion ("0.9.5.0")]

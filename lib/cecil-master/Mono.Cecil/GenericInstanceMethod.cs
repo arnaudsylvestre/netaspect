@@ -26,65 +26,60 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
 using System.Text;
+
 using Mono.Collections.Generic;
 
-namespace Mono.Cecil
-{
-    public sealed class GenericInstanceMethod : MethodSpecification, IGenericInstance, IGenericContext
-    {
-        private Collection<TypeReference> arguments;
+namespace Mono.Cecil {
 
-        public GenericInstanceMethod(MethodReference method)
-            : base(method)
-        {
-        }
+	public sealed class GenericInstanceMethod : MethodSpecification, IGenericInstance, IGenericContext {
 
-        public override bool IsGenericInstance
-        {
-            get { return true; }
-        }
+		Collection<TypeReference> arguments;
 
-        internal override bool ContainsGenericParameter
-        {
-            get { return this.ContainsGenericParameter() || base.ContainsGenericParameter; }
-        }
+		public bool HasGenericArguments {
+			get { return !arguments.IsNullOrEmpty (); }
+		}
 
-        public override string FullName
-        {
-            get
-            {
-                var signature = new StringBuilder();
-                MethodReference method = ElementMethod;
-                signature.Append(method.ReturnType.FullName)
-                         .Append(" ")
-                         .Append(method.DeclaringType.FullName)
-                         .Append("::")
-                         .Append(method.Name);
-                this.GenericInstanceFullName(signature);
-                this.MethodSignatureFullName(signature);
-                return signature.ToString();
-            }
-        }
+		public Collection<TypeReference> GenericArguments {
+			get { return arguments ?? (arguments = new Collection<TypeReference> ()); }
+		}
 
-        IGenericParameterProvider IGenericContext.Method
-        {
-            get { return ElementMethod; }
-        }
+		public override bool IsGenericInstance {
+			get { return true; }
+		}
 
-        IGenericParameterProvider IGenericContext.Type
-        {
-            get { return ElementMethod.DeclaringType; }
-        }
+		IGenericParameterProvider IGenericContext.Method {
+			get { return ElementMethod; }
+		}
 
-        public bool HasGenericArguments
-        {
-            get { return !arguments.IsNullOrEmpty(); }
-        }
+		IGenericParameterProvider IGenericContext.Type {
+			get { return ElementMethod.DeclaringType; }
+		}
 
-        public Collection<TypeReference> GenericArguments
-        {
-            get { return arguments ?? (arguments = new Collection<TypeReference>()); }
-        }
-    }
+		internal override bool ContainsGenericParameter {
+			get { return this.ContainsGenericParameter () || base.ContainsGenericParameter; }
+		}
+
+		public override string FullName {
+			get {
+				var signature = new StringBuilder ();
+				var method = this.ElementMethod;
+				signature.Append (method.ReturnType.FullName)
+					.Append (" ")
+					.Append (method.DeclaringType.FullName)
+					.Append ("::")
+					.Append (method.Name);
+				this.GenericInstanceFullName (signature);
+				this.MethodSignatureFullName (signature);
+				return signature.ToString ();
+
+			}
+		}
+
+		public GenericInstanceMethod (MethodReference method)
+			: base (method)
+		{
+		}
+	}
 }

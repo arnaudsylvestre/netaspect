@@ -3,39 +3,43 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.After.CalledParameterName
 {
-    public class AfterCallGetFieldCalledParameterNameParameterWithObjectTypeTest :
-        NetAspectTest<AfterCallGetFieldCalledParameterNameParameterWithObjectTypeTest.ClassToWeave>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    Assert.AreEqual(0, MyAspect.ParameterName);
-                    var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved(12);
-                    Assert.AreEqual(12, MyAspect.ParameterName);
-                };
-        }
-
-        public class ClassToWeave
-        {
-            [MyAspect] public string Field;
-
-            public string Weaved(int param1)
+    public class AfterCallGetFieldCalledParameterNameParameterWithObjectTypeTest : NetAspectTest<AfterCallGetFieldCalledParameterNameParameterWithObjectTypeTest.ClassToWeave>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
             {
-                return Field;
-            }
-        }
+               Assert.AreEqual(0, MyAspect.ParameterName);
+               var classToWeave_L = new ClassToWeave();
+               classToWeave_L.Weaved(12);
+               Assert.AreEqual(12, MyAspect.ParameterName);
+            };
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static object ParameterName;
-            public bool NetAspectAttribute = true;
+      public class ClassToWeave
+      {
 
-            public void AfterGetField(object calledParam1)
-            {
-                ParameterName = calledParam1;
-            }
-        }
-    }
+          [MyAspect]
+          public string Field;
+
+         public string Weaved(int param1)
+         {
+             return Field;
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public static object ParameterName;
+
+         public void AfterGetField(object calledParam1)
+         {
+             ParameterName = calledParam1;
+         }
+      }
+   }
+
+   
 }

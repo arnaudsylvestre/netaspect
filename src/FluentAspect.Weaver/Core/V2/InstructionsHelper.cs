@@ -7,15 +7,15 @@ namespace FluentAspect.Weaver.Core.V2
 {
     public static class InstructionsHelper
     {
-        public static List<Instruction> FixReturns(MethodDefinition method, VariableDefinition handleResultP_P,
-                                                   Collection<Instruction> instructions, Instruction beforeAfter)
+        public static List<Instruction> FixReturns(MethodDefinition method, VariableDefinition handleResultP_P, Collection<Instruction> instructions, Instruction beforeAfter)
         {
-            var end = new List<Instruction>();
+            List<Instruction> end = new List<Instruction>();
             if (method.ReturnType == method.Module.TypeSystem.Void)
             {
-                for (int index = 0; index < instructions.Count; index++)
+
+                for (var index = 0; index < instructions.Count; index++)
                 {
-                    Instruction instruction = instructions[index];
+                    var instruction = instructions[index];
                     if (instruction.OpCode == OpCodes.Ret)
                     {
                         if (end.Count == 0)
@@ -27,9 +27,10 @@ namespace FluentAspect.Weaver.Core.V2
             }
             else
             {
-                for (int index = 0; index < instructions.Count; index++)
+
+                for (var index = 0; index < instructions.Count; index++)
                 {
-                    Instruction instruction = instructions[index];
+                    var instruction = instructions[index];
                     if (instruction.OpCode == OpCodes.Ret)
                     {
                         if (end.Count == 0)

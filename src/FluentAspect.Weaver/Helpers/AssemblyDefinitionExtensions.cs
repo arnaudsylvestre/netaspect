@@ -13,7 +13,6 @@ namespace FluentAspect.Weaver.Helpers
                     from methodDefinition in typeDefinition.Methods
                     select methodDefinition).ToList();
         }
-
         public static List<PropertyDefinition> GetAllProperties(this AssemblyDefinition assemblyDefinition)
         {
             return (from moduleDefinition in assemblyDefinition.Modules
@@ -21,13 +20,12 @@ namespace FluentAspect.Weaver.Helpers
                     from methodDefinition in typeDefinition.Properties
                     select methodDefinition).ToList();
         }
-
-        public static List<FieldDefinition> GetAllFields(this AssemblyDefinition assemblyDefinition)
-        {
-            return (from moduleDefinition in assemblyDefinition.Modules
-                    from typeDefinition in moduleDefinition.GetTypes()
-                    from fieldDefinition_L in typeDefinition.Fields
-                    select fieldDefinition_L).ToList();
-        }
+       public static List<FieldDefinition> GetAllFields(this AssemblyDefinition assemblyDefinition)
+       {
+          return (from moduleDefinition in assemblyDefinition.Modules
+                  from typeDefinition in moduleDefinition.GetTypes()
+                  from fieldDefinition_L in typeDefinition.Fields
+                  select fieldDefinition_L).ToList();
+       }
     }
 }

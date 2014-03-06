@@ -3,40 +3,43 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Subsribe.Parameters.After.FileName
 {
-    public class AfterCallSubscribeEventFileNameParameterWithRealTypeTest :
-        NetAspectTest<AfterCallSubscribeEventFileNameParameterWithRealTypeTest.ClassToWeave>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    Assert.AreEqual(null, MyAspect.FileName);
-                    var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved();
-                    Assert.AreEqual("", MyAspect.FileName);
-                };
-        }
-
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public event Action Event;
-
-            public void Weaved()
+    public class AfterCallSubscribeEventFileNameParameterWithRealTypeTest : NetAspectTest<AfterCallSubscribeEventFileNameParameterWithRealTypeTest.ClassToWeave>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
             {
-                Event += () => { };
-            }
-        }
+               Assert.AreEqual(null, MyAspect.FileName);
+               var classToWeave_L = new ClassToWeave();
+               classToWeave_L.Weaved();
+               Assert.AreEqual("", MyAspect.FileName);
+            };
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static string FileName;
-            public bool NetAspectAttribute = true;
+      public class ClassToWeave
+      {
 
-            public void AfterSubscribeEvent(string fileName)
-            {
-                FileName = fileName;
-            }
-        }
-    }
+          [MyAspect]
+          public event Action Event;
+
+         public void Weaved()
+         {
+             Event += () => {};
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public static string FileName;
+
+         public void AfterSubscribeEvent(string fileName)
+         {
+             FileName = fileName;
+         }
+      }
+   }
+
+   
 }

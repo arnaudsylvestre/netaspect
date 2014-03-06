@@ -3,45 +3,48 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnException.Parameters
 {
-    public class OnExceptionMethodParametersParameterWithRealTypeTest :
-        NetAspectTest<OnExceptionMethodParametersParameterWithRealTypeTest.ClassToWeave>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    Assert.IsNull(MyAspect.Parameters);
-                    var classToWeave_L = new ClassToWeave();
-                    try
-                    {
-                        classToWeave_L.Weaved(12);
-                        Assert.Fail();
-                    }
-                    catch
-                    {
-                    }
-                    Assert.AreEqual(new object[] {12}, MyAspect.Parameters);
-                };
-        }
-
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public void Weaved(int i)
+   public class OnExceptionMethodParametersParameterWithRealTypeTest : NetAspectTest<OnExceptionMethodParametersParameterWithRealTypeTest.ClassToWeave>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
             {
-                throw new Exception();
-            }
-        }
+               Assert.IsNull(MyAspect.Parameters);
+               var classToWeave_L = new ClassToWeave();
+               try
+               {
+                  classToWeave_L.Weaved(12);
+                  Assert.Fail();
+               }
+               catch
+               {
 
-        public class MyAspect : Attribute
-        {
-            public static object[] Parameters;
-            public bool NetAspectAttribute = true;
+               }
+               Assert.AreEqual(new object[] {12}, MyAspect.Parameters);
+            };
+      }
 
-            public void OnException(object[] parameters)
-            {
-                Parameters = parameters;
-            }
-        }
-    }
+      public class ClassToWeave
+      {
+         [MyAspect]
+         public void Weaved(int i)
+         {
+            throw new Exception();
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public static object[] Parameters;
+
+         public void OnException(object[] parameters)
+         {
+            Parameters = parameters;
+         }
+      }
+   }
+
+   
 }

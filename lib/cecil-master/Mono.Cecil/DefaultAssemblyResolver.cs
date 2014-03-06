@@ -29,42 +29,42 @@
 using System;
 using System.Collections.Generic;
 
-namespace Mono.Cecil
-{
-    public class DefaultAssemblyResolver : BaseAssemblyResolver
-    {
-        private readonly IDictionary<string, AssemblyDefinition> cache;
+namespace Mono.Cecil {
 
-        public DefaultAssemblyResolver()
-        {
-            cache = new Dictionary<string, AssemblyDefinition>(StringComparer.Ordinal);
-        }
+	public class DefaultAssemblyResolver : BaseAssemblyResolver {
 
-        public override AssemblyDefinition Resolve(AssemblyNameReference name)
-        {
-            if (name == null)
-                throw new ArgumentNullException("name");
+		readonly IDictionary<string, AssemblyDefinition> cache;
 
-            AssemblyDefinition assembly;
-            if (cache.TryGetValue(name.FullName, out assembly))
-                return assembly;
+		public DefaultAssemblyResolver ()
+		{
+			cache = new Dictionary<string, AssemblyDefinition> (StringComparer.Ordinal);
+		}
 
-            assembly = base.Resolve(name);
-            cache[name.FullName] = assembly;
+		public override AssemblyDefinition Resolve (AssemblyNameReference name)
+		{
+			if (name == null)
+				throw new ArgumentNullException ("name");
 
-            return assembly;
-        }
+			AssemblyDefinition assembly;
+			if (cache.TryGetValue (name.FullName, out assembly))
+				return assembly;
 
-        protected void RegisterAssembly(AssemblyDefinition assembly)
-        {
-            if (assembly == null)
-                throw new ArgumentNullException("assembly");
+			assembly = base.Resolve (name);
+			cache [name.FullName] = assembly;
 
-            string name = assembly.Name.FullName;
-            if (cache.ContainsKey(name))
-                return;
+			return assembly;
+		}
 
-            cache[name] = assembly;
-        }
-    }
+		protected void RegisterAssembly (AssemblyDefinition assembly)
+		{
+			if (assembly == null)
+				throw new ArgumentNullException ("assembly");
+
+			var name = assembly.Name.FullName;
+			if (cache.ContainsKey (name))
+				return;
+
+			cache [name] = assembly;
+		}
+	}
 }

@@ -28,74 +28,68 @@
 
 using System;
 
-namespace Mono.Cecil
-{
-    public abstract class TypeSpecification : TypeReference
-    {
-        private readonly TypeReference element_type;
+using Mono.Cecil.Metadata;
 
-        internal TypeSpecification(TypeReference type)
-            : base(null, null)
-        {
-            element_type = type;
-            token = new MetadataToken(TokenType.TypeSpec);
-        }
+namespace Mono.Cecil {
 
-        public TypeReference ElementType
-        {
-            get { return element_type; }
-        }
+	public abstract class TypeSpecification : TypeReference {
 
-        public override string Name
-        {
-            get { return element_type.Name; }
-            set { throw new InvalidOperationException(); }
-        }
+		readonly TypeReference element_type;
 
-        public override string Namespace
-        {
-            get { return element_type.Namespace; }
-            set { throw new InvalidOperationException(); }
-        }
+		public TypeReference ElementType {
+			get { return element_type; }
+		}
 
-        public override IMetadataScope Scope
-        {
-            get { return element_type.Scope; }
-            set { throw new InvalidOperationException(); }
-        }
+		public override string Name {
+			get { return element_type.Name; }
+			set { throw new InvalidOperationException (); }
+		}
 
-        public override ModuleDefinition Module
-        {
-            get { return element_type.Module; }
-        }
+		public override string Namespace {
+			get { return element_type.Namespace; }
+			set { throw new InvalidOperationException (); }
+		}
 
-        public override string FullName
-        {
-            get { return element_type.FullName; }
-        }
+		public override IMetadataScope Scope {
+			get { return element_type.Scope; }
+			set { throw new InvalidOperationException (); }
+		}
 
-        internal override bool ContainsGenericParameter
-        {
-            get { return element_type.ContainsGenericParameter; }
-        }
+		public override ModuleDefinition Module {
+			get { return element_type.Module; }
+		}
 
-        public override MetadataType MetadataType
-        {
-            get { return (MetadataType) etype; }
-        }
+		public override string FullName {
+			get { return element_type.FullName; }
+		}
 
-        public override TypeReference GetElementType()
-        {
-            return element_type.GetElementType();
-        }
-    }
+		internal override bool ContainsGenericParameter {
+			get { return element_type.ContainsGenericParameter; }
+		}
 
-    static partial class Mixin
-    {
-        public static void CheckType(TypeReference type)
-        {
-            if (type == null)
-                throw new ArgumentNullException("type");
-        }
-    }
+		public override MetadataType MetadataType {
+			get { return (MetadataType) etype; }
+		}
+
+		internal TypeSpecification (TypeReference type)
+			: base (null, null)
+		{
+			this.element_type = type;
+			this.token = new MetadataToken (TokenType.TypeSpec);
+		}
+
+		public override TypeReference GetElementType ()
+		{
+			return element_type.GetElementType ();
+		}
+	}
+
+	static partial class Mixin {
+
+		public static void CheckType (TypeReference type)
+		{
+			if (type == null)
+				throw new ArgumentNullException ("type");
+		}
+	}
 }

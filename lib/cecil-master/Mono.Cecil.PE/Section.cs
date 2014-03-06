@@ -26,17 +26,18 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
+
 using RVA = System.UInt32;
 
-namespace Mono.Cecil.PE
-{
-    internal sealed class Section
-    {
-        public byte[] Data;
-        public string Name;
-        public uint PointerToRawData;
-        public uint SizeOfRawData;
-        public RVA VirtualAddress;
-        public uint VirtualSize;
-    }
+namespace Mono.Cecil.PE {
+
+	sealed class Section {
+		public string Name;
+		public RVA VirtualAddress;
+		public uint VirtualSize;
+		public uint SizeOfRawData;
+		public uint PointerToRawData;
+		public byte [] Data;
+	}
 }

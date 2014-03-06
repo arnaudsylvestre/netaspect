@@ -6,16 +6,17 @@ namespace FluentAspect.Weaver.Tests.unit.ParameterWeaving.Constructor.OnExceptio
     [TestFixture]
     public class OnExceptionConstructorParameterValueTest
     {
-        [Test]
+       [Test]
+       public void CheckReferenced()
+       {
+          throw new NotImplementedException();
+       }
+
+
+       [Test]
         public void CheckInstanceWithRealType()
         {
             throw new NotImplementedException();
         }
-
-        [Test]
-        public void CheckReferenced()
-        {
-            throw new NotImplementedException();
-        }
-    }
+   }
 }

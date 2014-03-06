@@ -9,16 +9,14 @@ namespace FluentAspect.Weaver.Core.V2
 {
     public class AssemblyPool
     {
-        private readonly Dictionary<Assembly, AssemblyDefinition> asms = new Dictionary<Assembly, AssemblyDefinition>();
+        Dictionary<Assembly, AssemblyDefinition> asms = new Dictionary<Assembly, AssemblyDefinition>();
 
         public void Add(Assembly assembly)
         {
-            asms.Add(assembly,
-                     AssemblyDefinition.ReadAssembly(assembly.GetAssemblyPath(),
-                                                     new ReaderParameters(ReadingMode.Immediate)
-                                                         {
-                                                             ReadSymbols = true
-                                                         }));
+            asms.Add(assembly, AssemblyDefinition.ReadAssembly(assembly.GetAssemblyPath(), new ReaderParameters(ReadingMode.Immediate)
+                {
+                    ReadSymbols = true
+                }));
         }
 
         public AssemblyDefinition GetAssemblyDefinition(Assembly assembly)
@@ -35,8 +33,7 @@ namespace FluentAspect.Weaver.Core.V2
         }
 
 
-        public static void WeaveOneAssembly(string getAssemblyPath, AssemblyDefinition assemblyDefinition,
-                                            ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
+        public static void WeaveOneAssembly(string getAssemblyPath, AssemblyDefinition assemblyDefinition, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
         {
             string targetFileName = newAssemblyNameProvider(getAssemblyPath);
             assemblyDefinition.Write(targetFileName, new WriterParameters
@@ -45,6 +42,7 @@ namespace FluentAspect.Weaver.Core.V2
                 });
             CheckAssembly(targetFileName, errorHandler);
         }
+
 
 
         public static void CheckAssembly(string targetFileName, ErrorHandler errorHandler)

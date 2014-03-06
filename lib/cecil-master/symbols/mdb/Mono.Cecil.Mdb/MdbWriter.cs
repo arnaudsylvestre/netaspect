@@ -29,230 +29,223 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
 using Mono.CompilerServices.SymbolWriter;
 
-namespace Mono.Cecil.Mdb
-{
+namespace Mono.Cecil.Mdb {
+
 #if !READ_ONLY
-    public class MdbWriterProvider : ISymbolWriterProvider
-    {
-        public ISymbolWriter GetSymbolWriter(ModuleDefinition module, string fileName)
-        {
-            return new MdbWriter(module.Mvid, fileName);
-        }
+	public class MdbWriterProvider : ISymbolWriterProvider {
 
-        public ISymbolWriter GetSymbolWriter(ModuleDefinition module, Stream symbolStream)
-        {
-            throw new NotImplementedException();
-        }
-    }
+		public ISymbolWriter GetSymbolWriter (ModuleDefinition module, string fileName)
+		{
+			return new MdbWriter (module.Mvid, fileName);
+		}
 
-    public class MdbWriter : ISymbolWriter
-    {
-        private static readonly byte[] empty_header = new byte[0];
-        private readonly Guid mvid;
-        private readonly Dictionary<string, SourceFile> source_files;
-        private readonly MonoSymbolWriter writer;
+		public ISymbolWriter GetSymbolWriter (ModuleDefinition module, Stream symbolStream)
+		{
+			throw new NotImplementedException ();
+		}
+	}
 
-        public MdbWriter(Guid mvid, string assembly)
-        {
-            this.mvid = mvid;
-            writer = new MonoSymbolWriter(assembly);
-            source_files = new Dictionary<string, SourceFile>();
-        }
+	public class MdbWriter : ISymbolWriter {
 
-        public void Write(MethodBody body)
-        {
-            var method = new SourceMethod(body.Method);
+		readonly Guid mvid;
+		readonly MonoSymbolWriter writer;
+		readonly Dictionary<string, SourceFile> source_files;
 
-            Collection<Instruction> instructions = GetInstructions(body);
-            int count = instructions.Count;
-            if (count == 0)
-                return;
+		public MdbWriter (Guid mvid, string assembly)
+		{
+			this.mvid = mvid;
+			this.writer = new MonoSymbolWriter (assembly);
+			this.source_files = new Dictionary<string, SourceFile> ();
+		}
 
-            var offsets = new int[count];
-            var start_rows = new int[count];
-            var start_cols = new int[count];
+		static Collection<Instruction> GetInstructions (MethodBody body)
+		{
+			var instructions = new Collection<Instruction> ();
+			foreach (var instruction in body.Instructions)
+				if (instruction.SequencePoint != null)
+					instructions.Add (instruction);
 
-            SourceFile file;
-            Populate(instructions, offsets, start_rows, start_cols, out file);
+			return instructions;
+		}
 
-            SourceMethodBuilder builder = writer.OpenMethod(file.CompilationUnit, 0, method);
+		SourceFile GetSourceFile (Document document)
+		{
+			var url = document.Url;
 
-            for (int i = 0; i < count; i++)
-                builder.MarkSequencePoint(
-                    offsets[i],
-                    file.CompilationUnit.SourceFile,
-                    start_rows[i],
-                    start_cols[i],
-                    false);
+			SourceFile source_file;
+			if (source_files.TryGetValue (url, out source_file))
+				return source_file;
 
-            if (body.HasVariables)
-                AddVariables(body.Variables);
+			var entry = writer.DefineDocument (url);
+			var compile_unit = writer.DefineCompilationUnit (entry);
 
-            writer.CloseMethod();
-        }
+			source_file = new SourceFile (compile_unit, entry);
+			source_files.Add (url, source_file);
+			return source_file;
+		}
 
-        public bool GetDebugHeader(out ImageDebugDirectory directory, out byte[] header)
-        {
-            directory = new ImageDebugDirectory();
-            header = empty_header;
-            return false;
-        }
+		void Populate (Collection<Instruction> instructions, int [] offsets,
+			int [] startRows, int [] startCols, out SourceFile file)
+		{
+			SourceFile source_file = null;
 
-        public void Write(MethodSymbols symbols)
-        {
-            var method = new SourceMethodSymbol(symbols);
+			for (int i = 0; i < instructions.Count; i++) {
+				var instruction = instructions [i];
+				offsets [i] = instruction.Offset;
 
-            SourceFile file = GetSourceFile(symbols.Instructions[0].SequencePoint.Document);
-            SourceMethodBuilder builder = writer.OpenMethod(file.CompilationUnit, 0, method);
-            int count = symbols.Instructions.Count;
+				var sequence_point = instruction.SequencePoint;
+				if (source_file == null)
+					source_file = GetSourceFile (sequence_point.Document);
 
-            for (int i = 0; i < count; i++)
-            {
-                InstructionSymbol instruction = symbols.Instructions[i];
-                SequencePoint sequence_point = instruction.SequencePoint;
+				startRows [i] = sequence_point.StartLine;
+				startCols [i] = sequence_point.StartColumn;
+			}
 
-                builder.MarkSequencePoint(
-                    instruction.Offset,
-                    GetSourceFile(sequence_point.Document).CompilationUnit.SourceFile,
-                    sequence_point.StartLine,
-                    sequence_point.EndLine,
-                    false);
-            }
+			file = source_file;
+		}
 
-            if (symbols.HasVariables)
-                AddVariables(symbols.Variables);
+		public void Write (MethodBody body)
+		{
+			var method = new SourceMethod (body.Method);
 
-            writer.CloseMethod();
-        }
+			var instructions = GetInstructions (body);
+			int count = instructions.Count;
+			if (count == 0)
+				return;
 
-        public void Dispose()
-        {
-            writer.WriteSymbolFile(mvid);
-        }
+			var offsets = new int [count];
+			var start_rows = new int [count];
+			var start_cols = new int [count];
 
-        private static Collection<Instruction> GetInstructions(MethodBody body)
-        {
-            var instructions = new Collection<Instruction>();
-            foreach (Instruction instruction in body.Instructions)
-                if (instruction.SequencePoint != null)
-                    instructions.Add(instruction);
+			SourceFile file;
+			Populate (instructions, offsets, start_rows, start_cols, out file);
 
-            return instructions;
-        }
+			var builder = writer.OpenMethod (file.CompilationUnit, 0, method);
 
-        private SourceFile GetSourceFile(Document document)
-        {
-            string url = document.Url;
+			for (int i = 0; i < count; i++)
+				builder.MarkSequencePoint (
+					offsets [i],
+					file.CompilationUnit.SourceFile,
+					start_rows [i],
+					start_cols [i],
+					false);
 
-            SourceFile source_file;
-            if (source_files.TryGetValue(url, out source_file))
-                return source_file;
+			if (body.HasVariables)
+				AddVariables (body.Variables);
 
-            SourceFileEntry entry = writer.DefineDocument(url);
-            CompileUnitEntry compile_unit = writer.DefineCompilationUnit(entry);
+			writer.CloseMethod ();
+		}
 
-            source_file = new SourceFile(compile_unit, entry);
-            source_files.Add(url, source_file);
-            return source_file;
-        }
+		readonly static byte [] empty_header = new byte [0];
 
-        private void Populate(Collection<Instruction> instructions, int[] offsets,
-                              int[] startRows, int[] startCols, out SourceFile file)
-        {
-            SourceFile source_file = null;
+		public bool GetDebugHeader (out ImageDebugDirectory directory, out byte [] header)
+		{
+			directory = new ImageDebugDirectory ();
+			header = empty_header;
+			return false;
+		}
 
-            for (int i = 0; i < instructions.Count; i++)
-            {
-                Instruction instruction = instructions[i];
-                offsets[i] = instruction.Offset;
+		void AddVariables (IList<VariableDefinition> variables)
+		{
+			for (int i = 0; i < variables.Count; i++) {
+				var variable = variables [i];
+				writer.DefineLocalVariable (i, variable.Name);
+			}
+		}
 
-                SequencePoint sequence_point = instruction.SequencePoint;
-                if (source_file == null)
-                    source_file = GetSourceFile(sequence_point.Document);
+		public void Write (MethodSymbols symbols)
+		{
+			var method = new SourceMethodSymbol (symbols);
 
-                startRows[i] = sequence_point.StartLine;
-                startCols[i] = sequence_point.StartColumn;
-            }
+			var file = GetSourceFile (symbols.Instructions [0].SequencePoint.Document);
+			var builder = writer.OpenMethod (file.CompilationUnit, 0, method);
+			var count = symbols.Instructions.Count;
 
-            file = source_file;
-        }
+			for (int i = 0; i < count; i++) {
+				var instruction = symbols.Instructions [i];
+				var sequence_point = instruction.SequencePoint;
 
-        private void AddVariables(IList<VariableDefinition> variables)
-        {
-            for (int i = 0; i < variables.Count; i++)
-            {
-                VariableDefinition variable = variables[i];
-                writer.DefineLocalVariable(i, variable.Name);
-            }
-        }
+				builder.MarkSequencePoint (
+					instruction.Offset,
+					GetSourceFile (sequence_point.Document).CompilationUnit.SourceFile,
+					sequence_point.StartLine,
+					sequence_point.EndLine,
+					false);
+			}
 
-        private class SourceFile : ISourceFile
-        {
-            private readonly CompileUnitEntry compilation_unit;
-            private readonly SourceFileEntry entry;
+			if (symbols.HasVariables)
+				AddVariables (symbols.Variables);
 
-            public SourceFile(CompileUnitEntry comp_unit, SourceFileEntry entry)
-            {
-                compilation_unit = comp_unit;
-                this.entry = entry;
-            }
+			writer.CloseMethod ();
+		}
 
-            public CompileUnitEntry CompilationUnit
-            {
-                get { return compilation_unit; }
-            }
+		public void Dispose ()
+		{
+			writer.WriteSymbolFile (mvid);
+		}
 
-            public SourceFileEntry Entry
-            {
-                get { return entry; }
-            }
-        }
+		class SourceFile : ISourceFile {
 
-        private class SourceMethod : IMethodDef
-        {
-            private readonly MethodDefinition method;
+			readonly CompileUnitEntry compilation_unit;
+			readonly SourceFileEntry entry;
 
-            public SourceMethod(MethodDefinition method)
-            {
-                this.method = method;
-            }
+			public SourceFileEntry Entry {
+				get { return entry; }
+			}
 
-            public string Name
-            {
-                get { return method.Name; }
-            }
+			public CompileUnitEntry CompilationUnit {
+				get { return compilation_unit; }
+			}
 
-            public int Token
-            {
-                get { return method.MetadataToken.ToInt32(); }
-            }
-        }
+			public SourceFile (CompileUnitEntry comp_unit, SourceFileEntry entry)
+			{
+				this.compilation_unit = comp_unit;
+				this.entry = entry;
+			}
+		}
 
-        private class SourceMethodSymbol : IMethodDef
-        {
-            private readonly string name;
-            private readonly int token;
+		class SourceMethodSymbol : IMethodDef {
 
-            public SourceMethodSymbol(MethodSymbols symbols)
-            {
-                name = symbols.MethodName;
-                token = symbols.MethodToken.ToInt32();
-            }
+			readonly string name;
+			readonly int token;
 
-            public string Name
-            {
-                get { return name; }
-            }
+			public string Name {
+				get { return name;}
+			}
 
-            public int Token
-            {
-                get { return token; }
-            }
-        }
-    }
+			public int Token {
+				get { return token; }
+			}
+
+			public SourceMethodSymbol (MethodSymbols symbols)
+			{
+				name = symbols.MethodName;
+				token = symbols.MethodToken.ToInt32 ();
+			}
+		}
+
+		class SourceMethod : IMethodDef {
+
+			readonly MethodDefinition method;
+
+			public string Name {
+				get { return method.Name; }
+			}
+
+			public int Token {
+				get { return method.MetadataToken.ToInt32 (); }
+			}
+
+			public SourceMethod (MethodDefinition method)
+			{
+				this.method = method;
+			}
+		}
+	}
 #endif
 }

@@ -7,9 +7,9 @@ namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method
     public class MethodWeavingInAnotherAssemblyTest
     {
         [Test]
-        public void Check()
-        {
-            throw new NotImplementedException();
-        }
+         public void Check()
+         {
+             throw new NotImplementedException();
+         }
     }
 }

@@ -3,43 +3,43 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.Before.Caller
 {
-    public class BeforeCallMethodCallerParameterWithObjectTypeTest :
-        NetAspectTest<BeforeCallMethodCallerParameterWithObjectTypeTest.ClassToWeave>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    Assert.IsNull(MyAspect.Caller);
-                    var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved();
-                    Assert.AreEqual(classToWeave_L, MyAspect.Caller);
-                };
-        }
-
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public string Method()
+    public class BeforeCallMethodCallerParameterWithObjectTypeTest : NetAspectTest<BeforeCallMethodCallerParameterWithObjectTypeTest.ClassToWeave>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
             {
-                return "Hello";
-            }
+               Assert.IsNull(MyAspect.Caller);
+               var classToWeave_L = new ClassToWeave();
+               classToWeave_L.Weaved();
+               Assert.AreEqual(classToWeave_L, MyAspect.Caller);
+            };
+      }
 
-            public string Weaved()
-            {
-                return Method();
-            }
-        }
+      public class ClassToWeave
+      {
 
-        public class MyAspect : Attribute
-        {
-            public static object Caller;
-            public bool NetAspectAttribute = true;
+          [MyAspect]
+          public string Method() {return "Hello";}
 
-            public void BeforeCallMethod(object caller)
-            {
-                Caller = caller;
-            }
-        }
-    }
+         public string Weaved()
+         {
+             return Method();
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public static object Caller;
+
+         public void BeforeCallMethod(object caller)
+         {
+             Caller = caller;
+         }
+      }
+   }
+
+   
 }

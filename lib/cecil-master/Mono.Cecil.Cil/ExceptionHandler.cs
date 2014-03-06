@@ -26,35 +26,64 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mono.Cecil.Cil
-{
-    public enum ExceptionHandlerType
-    {
-        Catch = 0,
-        Filter = 1,
-        Finally = 2,
-        Fault = 4,
-    }
+namespace Mono.Cecil.Cil {
 
-    public sealed class ExceptionHandler
-    {
-        public ExceptionHandler(ExceptionHandlerType handlerType)
-        {
-            HandlerType = handlerType;
-        }
+	public enum ExceptionHandlerType {
+		Catch = 0,
+		Filter = 1,
+		Finally = 2,
+		Fault = 4,
+	}
 
-        public Instruction TryStart { get; set; }
+	public sealed class ExceptionHandler {
 
-        public Instruction TryEnd { get; set; }
+		Instruction try_start;
+		Instruction try_end;
+		Instruction filter_start;
+		Instruction handler_start;
+		Instruction handler_end;
 
-        public Instruction FilterStart { get; set; }
+		TypeReference catch_type;
+		ExceptionHandlerType handler_type;
 
-        public Instruction HandlerStart { get; set; }
+		public Instruction TryStart {
+			get { return try_start; }
+			set { try_start = value; }
+		}
 
-        public Instruction HandlerEnd { get; set; }
+		public Instruction TryEnd {
+			get { return try_end; }
+			set { try_end = value; }
+		}
 
-        public TypeReference CatchType { get; set; }
+		public Instruction FilterStart {
+			get { return filter_start; }
+			set { filter_start = value; }
+		}
 
-        public ExceptionHandlerType HandlerType { get; set; }
-    }
+		public Instruction HandlerStart {
+			get { return handler_start; }
+			set { handler_start = value; }
+		}
+
+		public Instruction HandlerEnd {
+			get { return handler_end; }
+			set { handler_end = value; }
+		}
+
+		public TypeReference CatchType {
+			get { return catch_type; }
+			set { catch_type = value; }
+		}
+
+		public ExceptionHandlerType HandlerType {
+			get { return handler_type; }
+			set { handler_type = value; }
+		}
+
+		public ExceptionHandler (ExceptionHandlerType handlerType)
+		{
+			this.handler_type = handlerType;
+		}
+	}
 }

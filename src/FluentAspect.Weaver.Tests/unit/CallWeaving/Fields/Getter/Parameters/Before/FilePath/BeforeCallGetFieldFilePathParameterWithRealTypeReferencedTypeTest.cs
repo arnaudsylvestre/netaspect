@@ -1,40 +1,38 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance;
+using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before.FilePath
 {
-    public class BeforeCallGetFieldFilePathParameterWithRealTypeReferencedTypeTest :
-        NetAspectTest<BeforeCallGetFieldFilePathParameterWithRealTypeReferencedTypeTest.ClassToWeave>
-    {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+    public class BeforeCallGetFieldFilePathParameterWithRealTypeReferencedTypeTest : NetAspectTest<BeforeCallGetFieldFilePathParameterWithRealTypeReferencedTypeTest.ClassToWeave>
+   {
+
+        protected override Action<FluentAspect.Weaver.Core.Errors.ErrorHandler> CreateErrorHandlerProvider()
         {
-            return
-                errorHandler =>
-                errorHandler.Errors.Add(
-                    string.Format(
-                        "the instance parameter in the method Before of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
-                        typeof (BeforeMethodInstanceParameterWithBadTypeTest.MyAspect).FullName,
-                        typeof (BeforeMethodInstanceParameterWithBadTypeTest.ClassToWeave).FullName));
+            return errorHandler => errorHandler.Errors.Add(string.Format("the instance parameter in the method Before of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}", typeof(BeforeMethodInstanceParameterWithBadTypeTest.MyAspect).FullName, typeof(BeforeMethodInstanceParameterWithBadTypeTest.ClassToWeave).FullName));
         }
 
-        public class ClassToWeave
-        {
-            [MyAspect] public string Field;
+      public class ClassToWeave
+      {
 
-            public string Weaved()
-            {
-                return Field;
-            }
-        }
+          [MyAspect]
+          public string Field;
 
-        public class MyAspect : Attribute
-        {
-            public bool NetAspectAttribute = true;
+         public string Weaved()
+         {
+             return Field;
+         }
+      }
 
-            public void BeforeGetField(ref string filePath)
-            {
-            }
-        }
-    }
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public void BeforeGetField(ref string filePath)
+         {
+         }
+      }
+   }
+
+   
 }

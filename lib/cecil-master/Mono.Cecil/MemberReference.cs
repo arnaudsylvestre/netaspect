@@ -26,82 +26,76 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mono.Cecil
-{
-    public abstract class MemberReference : IMetadataTokenProvider
-    {
-        private TypeReference declaring_type;
-        private string name;
+namespace Mono.Cecil {
 
-        internal MetadataToken token;
+	public abstract class MemberReference : IMetadataTokenProvider {
 
-        internal MemberReference()
-        {
-        }
+		string name;
+		TypeReference declaring_type;
 
-        internal MemberReference(string name)
-        {
-            this.name = name ?? string.Empty;
-        }
+		internal MetadataToken token;
 
-        public virtual string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
+		public virtual string Name {
+			get { return name; }
+			set { name = value; }
+		}
 
-        public abstract string FullName { get; }
+		public abstract string FullName {
+			get;
+		}
 
-        public virtual TypeReference DeclaringType
-        {
-            get { return declaring_type; }
-            set { declaring_type = value; }
-        }
+		public virtual TypeReference DeclaringType {
+			get { return declaring_type; }
+			set { declaring_type = value; }
+		}
 
-        internal bool HasImage
-        {
-            get
-            {
-                ModuleDefinition module = Module;
-                if (module == null)
-                    return false;
+		public MetadataToken MetadataToken {
+			get { return token; }
+			set { token = value; }
+		}
 
-                return module.HasImage;
-            }
-        }
+		internal bool HasImage {
+			get {
+				var module = Module;
+				if (module == null)
+					return false;
 
-        public virtual ModuleDefinition Module
-        {
-            get { return declaring_type != null ? declaring_type.Module : null; }
-        }
+				return module.HasImage;
+			}
+		}
 
-        public virtual bool IsDefinition
-        {
-            get { return false; }
-        }
+		public virtual ModuleDefinition Module {
+			get { return declaring_type != null ? declaring_type.Module : null; }
+		}
 
-        internal virtual bool ContainsGenericParameter
-        {
-            get { return declaring_type != null && declaring_type.ContainsGenericParameter; }
-        }
+		public virtual bool IsDefinition {
+			get { return false; }
+		}
 
-        public MetadataToken MetadataToken
-        {
-            get { return token; }
-            set { token = value; }
-        }
+		internal virtual bool ContainsGenericParameter {
+			get { return declaring_type != null && declaring_type.ContainsGenericParameter; }
+		}
 
-        internal string MemberFullName()
-        {
-            if (declaring_type == null)
-                return name;
+		internal MemberReference ()
+		{
+		}
 
-            return declaring_type.FullName + "::" + name;
-        }
+		internal MemberReference (string name)
+		{
+			this.name = name ?? string.Empty;
+		}
 
-        public override string ToString()
-        {
-            return FullName;
-        }
-    }
+		internal string MemberFullName ()
+		{
+			if (declaring_type == null)
+				return name;
+
+			return declaring_type.FullName + "::" + name;
+		}
+
+		public override string ToString ()
+		{
+			return FullName;
+		}
+	}
 }

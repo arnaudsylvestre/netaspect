@@ -5,19 +5,20 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
 {
     public class MethodInterceptorParametersChercker : IInterceptorParameterChecker
     {
+
         public void Check(ParameterInfo parameter, IErrorListener errorListener)
         {
             Ensure.NotReferenced(parameter, errorListener);
-            Ensure.OfType(parameter, errorListener, typeof (MethodBase).FullName);
+            Ensure.OfType(parameter, errorListener, typeof(MethodBase).FullName);
         }
     }
-
     public class PropertyInterceptorParametersChercker : IInterceptorParameterChecker
     {
+
         public void Check(ParameterInfo parameter, IErrorListener errorListener)
         {
             Ensure.NotReferenced(parameter, errorListener);
-            Ensure.OfType(parameter, errorListener, typeof (PropertyInfo).FullName);
+            Ensure.OfType(parameter, errorListener, typeof(PropertyInfo).FullName);
         }
     }
 }

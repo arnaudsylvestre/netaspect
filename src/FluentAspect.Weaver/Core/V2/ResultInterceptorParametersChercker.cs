@@ -6,7 +6,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
 {
     public class ResultInterceptorParametersChercker : IInterceptorParameterChecker
     {
-        private readonly MethodDefinition methodDefinition;
+        private MethodDefinition methodDefinition;
 
         public ResultInterceptorParametersChercker(MethodDefinition methodDefinition)
         {

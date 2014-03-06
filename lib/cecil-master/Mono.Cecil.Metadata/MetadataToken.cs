@@ -26,82 +26,80 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mono.Cecil
-{
-    public struct MetadataToken
-    {
-        public static readonly MetadataToken Zero = new MetadataToken((uint) 0);
-        private readonly uint token;
+namespace Mono.Cecil {
 
-        public MetadataToken(uint token)
-        {
-            this.token = token;
-        }
+	public struct MetadataToken {
 
-        public MetadataToken(TokenType type)
-            : this(type, 0)
-        {
-        }
+		readonly uint token;
 
-        public MetadataToken(TokenType type, uint rid)
-        {
-            token = (uint) type | rid;
-        }
+		public uint RID	{
+			get { return token & 0x00ffffff; }
+		}
 
-        public MetadataToken(TokenType type, int rid)
-        {
-            token = (uint) type | (uint) rid;
-        }
+		public TokenType TokenType {
+			get { return (TokenType) (token & 0xff000000); }
+		}
 
-        public uint RID
-        {
-            get { return token & 0x00ffffff; }
-        }
+		public static readonly MetadataToken Zero = new MetadataToken ((uint) 0);
 
-        public TokenType TokenType
-        {
-            get { return (TokenType) (token & 0xff000000); }
-        }
+		public MetadataToken (uint token)
+		{
+			this.token = token;
+		}
 
-        public int ToInt32()
-        {
-            return (int) token;
-        }
+		public MetadataToken (TokenType type)
+			: this (type, 0)
+		{
+		}
 
-        public uint ToUInt32()
-        {
-            return token;
-        }
+		public MetadataToken (TokenType type, uint rid)
+		{
+			token = (uint) type | rid;
+		}
 
-        public override int GetHashCode()
-        {
-            return (int) token;
-        }
+		public MetadataToken (TokenType type, int rid)
+		{
+			token = (uint) type | (uint) rid;
+		}
 
-        public override bool Equals(object obj)
-        {
-            if (obj is MetadataToken)
-            {
-                var other = (MetadataToken) obj;
-                return other.token == token;
-            }
+		public int ToInt32 ()
+		{
+			return (int) token;
+		}
 
-            return false;
-        }
+		public uint ToUInt32 ()
+		{
+			return token;
+		}
 
-        public static bool operator ==(MetadataToken one, MetadataToken other)
-        {
-            return one.token == other.token;
-        }
+		public override int GetHashCode ()
+		{
+			return (int) token;
+		}
 
-        public static bool operator !=(MetadataToken one, MetadataToken other)
-        {
-            return one.token != other.token;
-        }
+		public override bool Equals (object obj)
+		{
+			if (obj is MetadataToken) {
+				var other = (MetadataToken) obj;
+				return other.token == token;
+			}
 
-        public override string ToString()
-        {
-            return string.Format("[{0}:0x{1}]", TokenType, RID.ToString("x4"));
-        }
-    }
+			return false;
+		}
+
+		public static bool operator == (MetadataToken one, MetadataToken other)
+		{
+			return one.token == other.token;
+		}
+
+		public static bool operator != (MetadataToken one, MetadataToken other)
+		{
+			return one.token != other.token;
+		}
+
+		public override string ToString ()
+		{
+			return string.Format ("[{0}:0x{1}]", TokenType, RID.ToString ("x4"));
+		}
+	}
 }

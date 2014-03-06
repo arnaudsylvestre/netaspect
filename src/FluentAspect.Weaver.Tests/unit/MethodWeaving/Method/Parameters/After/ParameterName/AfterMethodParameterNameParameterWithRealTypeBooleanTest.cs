@@ -3,37 +3,40 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.ParameterName
 {
-    public class AfterMethodParameterNameParameterWithRealTypeBooleanTest :
-        NetAspectTest<AfterMethodParameterNameParameterWithRealTypeBooleanTest.ClassToWeave>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    Assert.AreEqual(false, MyAspect.I);
-                    var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved(true);
-                    Assert.AreEqual(true, MyAspect.I);
-                };
-        }
-
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public void Weaved(Boolean i)
+   public class AfterMethodParameterNameParameterWithRealTypeBooleanTest : NetAspectTest<AfterMethodParameterNameParameterWithRealTypeBooleanTest.ClassToWeave>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
             {
-            }
-        }
+               Assert.AreEqual(false, MyAspect.I);
+               var classToWeave_L = new ClassToWeave();
+               classToWeave_L.Weaved(true);
+               Assert.AreEqual(true, MyAspect.I);
+            };
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static Boolean I;
-            public bool NetAspectAttribute = true;
+      public class ClassToWeave
+      {
+         [MyAspect]
+         public void Weaved(Boolean i)
+         {
 
-            public void After(Boolean i)
-            {
-                I = i;
-            }
-        }
-    }
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public static Boolean I;
+
+         public void After(Boolean i)
+         {
+            I = i;
+         }
+      }
+   }
+
+   
 }

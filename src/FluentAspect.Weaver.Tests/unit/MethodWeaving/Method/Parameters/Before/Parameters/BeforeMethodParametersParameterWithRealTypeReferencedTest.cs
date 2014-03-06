@@ -1,38 +1,36 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Parameters
 {
-    public class BeforeMethodParametersParameterWithRealTypeReferencedTest :
-        NetAspectTest<BeforeMethodParametersParameterWithRealTypeReferencedTest.ClassToWeave>
-    {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
-        {
-            return
-                errorHandler =>
-                errorHandler.Errors.Add(
-                    string.Format(
-                        "impossible to ref/out the parameter 'parameters' in the method Before of the type '{0}'",
-                        typeof (MyAspect).FullName));
-        }
+   public class BeforeMethodParametersParameterWithRealTypeReferencedTest : NetAspectTest<BeforeMethodParametersParameterWithRealTypeReferencedTest.ClassToWeave>
+   {
 
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public void Weaved()
-            {
-            }
-        }
+      protected override Action<FluentAspect.Weaver.Core.Errors.ErrorHandler> CreateErrorHandlerProvider()
+      {
+         return errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'parameters' in the method Before of the type '{0}'", typeof(MyAspect).FullName));
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static object[] Parameters;
-            public bool NetAspectAttribute = true;
+      public class ClassToWeave
+      {
+         [MyAspect]
+         public void Weaved()
+         {
 
-            public void Before(ref object[] parameters)
-            {
-                Parameters = parameters;
-            }
-        }
-    }
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public static object[] Parameters;
+
+         public void Before(ref object[] parameters)
+         {
+            Parameters = parameters;
+         }
+      }
+   }
+
+   
 }

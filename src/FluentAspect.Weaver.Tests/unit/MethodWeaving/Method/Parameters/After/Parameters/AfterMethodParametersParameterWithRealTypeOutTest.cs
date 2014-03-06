@@ -1,37 +1,34 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Parameters
 {
-    public class AfterMethodParametersParameterWithRealTypeOutTest :
-        NetAspectTest<AfterMethodParametersParameterWithRealTypeOutTest.ClassToWeave>
-    {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
-        {
-            return
-                errorHandler =>
-                errorHandler.Errors.Add(
-                    string.Format(
-                        "impossible to ref/out the parameter 'parameters' in the method After of the type '{0}'",
-                        typeof (MyAspect).FullName));
-        }
+   public class AfterMethodParametersParameterWithRealTypeOutTest : NetAspectTest<AfterMethodParametersParameterWithRealTypeOutTest.ClassToWeave>
+   {
 
-        public class ClassToWeave
-        {
-            [MyAspect]
-            public void Weaved()
-            {
-            }
-        }
+      protected override Action<FluentAspect.Weaver.Core.Errors.ErrorHandler> CreateErrorHandlerProvider()
+      {
+         return errorHandler => errorHandler.Errors.Add(string.Format("impossible to ref/out the parameter 'parameters' in the method After of the type '{0}'", typeof(MyAspect).FullName));
+      }
 
-        public class MyAspect : Attribute
-        {
-            public bool NetAspectAttribute = true;
+      public class ClassToWeave
+      {
+         [MyAspect]
+         public void Weaved()
+         {
 
-            public void After(out object[] parameters)
-            {
-                parameters = null;
-            }
-        }
-    }
+         }
+      }
+
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
+
+         public void After(out object[] parameters)
+         {
+            parameters = null;
+         }
+      }
+   }
+
+   
 }

@@ -29,77 +29,77 @@
 using System;
 using System.IO;
 
-namespace Mono.Cecil
-{
-    public sealed class EmbeddedResource : Resource
-    {
-        private readonly byte[] data;
-        private readonly MetadataReader reader;
-        private readonly Stream stream;
-        private uint? offset;
+namespace Mono.Cecil {
 
-        public EmbeddedResource(string name, ManifestResourceAttributes attributes, byte[] data) :
-            base(name, attributes)
-        {
-            this.data = data;
-        }
+	public sealed class EmbeddedResource : Resource {
 
-        public EmbeddedResource(string name, ManifestResourceAttributes attributes, Stream stream) :
-            base(name, attributes)
-        {
-            this.stream = stream;
-        }
+		readonly MetadataReader reader;
 
-        internal EmbeddedResource(string name, ManifestResourceAttributes attributes, uint offset, MetadataReader reader)
-            : base(name, attributes)
-        {
-            this.offset = offset;
-            this.reader = reader;
-        }
+		uint? offset;
+		byte [] data;
+		Stream stream;
 
-        public override ResourceType ResourceType
-        {
-            get { return ResourceType.Embedded; }
-        }
+		public override ResourceType ResourceType {
+			get { return ResourceType.Embedded; }
+		}
 
-        public Stream GetResourceStream()
-        {
-            if (stream != null)
-                return stream;
+		public EmbeddedResource (string name, ManifestResourceAttributes attributes, byte [] data) :
+			base (name, attributes)
+		{
+			this.data = data;
+		}
 
-            if (data != null)
-                return new MemoryStream(data);
+		public EmbeddedResource (string name, ManifestResourceAttributes attributes, Stream stream) :
+			base (name, attributes)
+		{
+			this.stream = stream;
+		}
 
-            if (offset.HasValue)
-                return reader.GetManagedResourceStream(offset.Value);
+		internal EmbeddedResource (string name, ManifestResourceAttributes attributes, uint offset, MetadataReader reader)
+			: base (name, attributes)
+		{
+			this.offset = offset;
+			this.reader = reader;
+		}
 
-            throw new InvalidOperationException();
-        }
+		public Stream GetResourceStream ()
+		{
+			if (stream != null)
+				return stream;
 
-        public byte[] GetResourceData()
-        {
-            if (stream != null)
-                return ReadStream(stream);
+			if (data != null)
+				return new MemoryStream (data);
 
-            if (data != null)
-                return data;
+			if (offset.HasValue)
+				return reader.GetManagedResourceStream (offset.Value);
 
-            if (offset.HasValue)
-                return reader.GetManagedResourceStream(offset.Value).ToArray();
+			throw new InvalidOperationException ();
+		}
 
-            throw new InvalidOperationException();
-        }
+		public byte [] GetResourceData ()
+		{
+			if (stream != null)
+				return ReadStream (stream);
 
-        private static byte[] ReadStream(Stream stream)
-        {
-            var length = (int) stream.Length;
-            var data = new byte[length];
-            int offset = 0, read;
+			if (data != null)
+				return data;
 
-            while ((read = stream.Read(data, offset, length - offset)) > 0)
-                offset += read;
+			if (offset.HasValue)
+				return reader.GetManagedResourceStream (offset.Value).ToArray ();
 
-            return data;
-        }
-    }
+			throw new InvalidOperationException ();
+		}
+
+		static byte [] ReadStream (Stream stream)
+		{
+			var length = (int) stream.Length;
+			var data = new byte [length];
+			int offset = 0, read;
+
+			while ((read = stream.Read (data, offset, length - offset)) > 0)
+				offset += read;
+
+			return data;
+		}
+	}
 }

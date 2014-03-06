@@ -12,7 +12,5 @@ namespace FluentAspect.Weaver.Core.V2
 
     public interface IlInstructionInjectorAvailableVariables
     {
-        VariableDefinition CurrentMethodBase { get; }
-        VariableDefinition Parameters { get; }
     }
 }

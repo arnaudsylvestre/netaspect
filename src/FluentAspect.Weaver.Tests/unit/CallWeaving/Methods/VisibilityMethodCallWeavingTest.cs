@@ -7,7 +7,22 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods
     public class VisibilityMethodCallWeavingTest
     {
         [Test]
-        public void CheckCallerInternal()
+        public void CheckPrivate()
+        {
+            throw new NotImplementedException();
+        }
+        [Test]
+        public void CheckPublic()
+        {
+            throw new NotImplementedException();
+        }
+        [Test]
+        public void CheckProtected()
+        {
+            throw new NotImplementedException();
+        }
+        [Test]
+        public void CheckInternal()
         {
             throw new NotImplementedException();
         }
@@ -17,39 +32,18 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods
         {
             throw new NotImplementedException();
         }
-
-        [Test]
-        public void CheckCallerProtected()
-        {
-            throw new NotImplementedException();
-        }
-
         [Test]
         public void CheckCallerPublic()
         {
             throw new NotImplementedException();
         }
-
         [Test]
-        public void CheckInternal()
+        public void CheckCallerProtected()
         {
             throw new NotImplementedException();
         }
-
         [Test]
-        public void CheckPrivate()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void CheckProtected()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void CheckPublic()
+        public void CheckCallerInternal()
         {
             throw new NotImplementedException();
         }

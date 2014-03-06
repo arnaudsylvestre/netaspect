@@ -24,35 +24,35 @@ namespace FluentAspect.Weaver.Helpers.IL
 
         public List<VariableDefinition> CreateVariable(IEnumerable<Type> types)
         {
-            return types.Select(type => definition.CreateVariable(type)).ToList();
+           return types.Select(type => definition.CreateVariable(type)).ToList();
         }
 
         public VariableDefinition CreateArgsArrayFromParameters()
         {
-            return definition.CreateVariable<object[]>();
+           return definition.CreateVariable<object[]>();
         }
 
         public void FillArgsArrayFromParameters(Collection<Instruction> instructions, VariableDefinition args)
         {
             if (args == null)
                 return;
-            instructions.Add(Instruction.Create(OpCodes.Ldc_I4, definition.Parameters.Count));
-            instructions.Add(Instruction.Create(OpCodes.Newarr, definition.Module.Import(typeof (object))));
-            instructions.Add(Instruction.Create(OpCodes.Stloc, args));
+          instructions.Add(Instruction.Create(OpCodes.Ldc_I4, definition.Parameters.Count));
+          instructions.Add(Instruction.Create(OpCodes.Newarr, definition.Module.Import(typeof (object))));
+          instructions.Add(Instruction.Create(OpCodes.Stloc, args));
 
-            foreach (ParameterDefinition p in definition.Parameters.ToArray())
-            {
-                instructions.Add(Instruction.Create(OpCodes.Ldloc, args));
-                instructions.Add(Instruction.Create(OpCodes.Ldc_I4, p.Index));
-                instructions.Add(Instruction.Create(OpCodes.Ldarg, p));
-                if (p.ParameterType.IsValueType || p.ParameterType is GenericParameter)
-                    instructions.Add(Instruction.Create(OpCodes.Box, p.ParameterType));
-                instructions.Add(Instruction.Create(OpCodes.Stelem_Ref));
-            }
-        }
+          foreach (ParameterDefinition p in definition.Parameters.ToArray())
+          {
+             instructions.Add(Instruction.Create(OpCodes.Ldloc, args));
+             instructions.Add(Instruction.Create(OpCodes.Ldc_I4, p.Index));
+             instructions.Add(Instruction.Create(OpCodes.Ldarg, p));
+             if (p.ParameterType.IsValueType || p.ParameterType is GenericParameter)
+                instructions.Add(Instruction.Create(OpCodes.Box, p.ParameterType));
+             instructions.Add(Instruction.Create(OpCodes.Stelem_Ref));
+          }
+       }
 
 
-        public VariableDefinition CreateMethodInfo()
+       public VariableDefinition CreateMethodInfo()
         {
             return definition.CreateVariable<MethodInfo>();
         }
@@ -66,29 +66,28 @@ namespace FluentAspect.Weaver.Helpers.IL
             instructions.AppendSaveResultTo(methodInfo);
         }
 
-        public void AddTryFinally(Instruction tryStart_L, Instruction tryEnd_L, Instruction handlerStart_L,
-                                  Instruction handlerEnd_L)
+        public void AddTryFinally(Instruction tryStart_L, Instruction tryEnd_L, Instruction handlerStart_L, Instruction handlerEnd_L)
         {
-            MethodDefinition.Body.ExceptionHandlers.Add(new ExceptionHandler(ExceptionHandlerType.Finally)
-                {
-                    TryStart = tryStart_L,
-                    TryEnd = tryEnd_L,
-                    HandlerStart = handlerStart_L,
-                    HandlerEnd = handlerEnd_L,
-                });
+           MethodDefinition.Body.ExceptionHandlers.Add(new ExceptionHandler(ExceptionHandlerType.Finally)
+           {
+              TryStart = tryStart_L,
+              TryEnd = tryEnd_L,
+              HandlerStart = handlerStart_L,
+              HandlerEnd = handlerEnd_L,
+           });
         }
 
-        public void AddTryCatch(Instruction tryStart_L, Instruction tryEnd_L, Instruction handlerStart_L,
-                                Instruction handlerEnd_L)
+        public void AddTryCatch(Instruction tryStart_L, Instruction tryEnd_L, Instruction handlerStart_L, Instruction handlerEnd_L)
         {
-            MethodDefinition.Body.ExceptionHandlers.Add(new ExceptionHandler(ExceptionHandlerType.Catch)
-                {
-                    TryStart = tryStart_L,
-                    TryEnd = tryEnd_L,
-                    HandlerStart = handlerStart_L,
-                    HandlerEnd = handlerEnd_L,
-                    CatchType = MethodDefinition.Module.Import(typeof (Exception)),
-                });
+           MethodDefinition.Body.ExceptionHandlers.Add(new ExceptionHandler(ExceptionHandlerType.Catch)
+           {
+              TryStart = tryStart_L,
+              TryEnd = tryEnd_L,
+              HandlerStart = handlerStart_L,
+              HandlerEnd = handlerEnd_L,
+              CatchType = MethodDefinition.Module.Import(typeof(Exception)),
+                            
+           });
         }
 
 
@@ -99,4 +98,5 @@ namespace FluentAspect.Weaver.Helpers.IL
             instructions.Add(Instruction.Create(OpCodes.Ret));
         }
     }
+
 }

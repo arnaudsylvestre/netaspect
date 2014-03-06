@@ -29,261 +29,249 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using Mono.Collections.Generic;
 using SR = System.Reflection;
 
-namespace Mono.Cecil.Cil
-{
-    [StructLayout(LayoutKind.Sequential)]
-    public struct ImageDebugDirectory
-    {
-        public int Characteristics;
-        public int TimeDateStamp;
-        public short MajorVersion;
-        public short MinorVersion;
-        public int Type;
-        public int SizeOfData;
-        public int AddressOfRawData;
-        public int PointerToRawData;
-    }
+using Mono.Collections.Generic;
 
-    public sealed class Scope : IVariableDefinitionProvider
-    {
-        private Collection<Scope> scopes;
-        private Collection<VariableDefinition> variables;
+namespace Mono.Cecil.Cil {
 
-        public Instruction Start { get; set; }
+	[StructLayout (LayoutKind.Sequential)]
+	public struct ImageDebugDirectory {
+		public int Characteristics;
+		public int TimeDateStamp;
+		public short MajorVersion;
+		public short MinorVersion;
+		public int Type;
+		public int SizeOfData;
+		public int AddressOfRawData;
+		public int PointerToRawData;
+	}
 
-        public Instruction End { get; set; }
+	public sealed class Scope : IVariableDefinitionProvider {
 
-        public bool HasScopes
-        {
-            get { return !scopes.IsNullOrEmpty(); }
-        }
+		Instruction start;
+		Instruction end;
 
-        public Collection<Scope> Scopes
-        {
-            get
-            {
-                if (scopes == null)
-                    scopes = new Collection<Scope>();
+		Collection<Scope> scopes;
+		Collection<VariableDefinition> variables;
 
-                return scopes;
-            }
-        }
+		public Instruction Start {
+			get { return start; }
+			set { start = value; }
+		}
 
-        public bool HasVariables
-        {
-            get { return !variables.IsNullOrEmpty(); }
-        }
+		public Instruction End {
+			get { return end; }
+			set { end = value; }
+		}
 
-        public Collection<VariableDefinition> Variables
-        {
-            get
-            {
-                if (variables == null)
-                    variables = new Collection<VariableDefinition>();
+		public bool HasScopes {
+			get { return !scopes.IsNullOrEmpty (); }
+		}
 
-                return variables;
-            }
-        }
-    }
+		public Collection<Scope> Scopes {
+			get {
+				if (scopes == null)
+					scopes = new Collection<Scope> ();
 
-    public struct InstructionSymbol
-    {
-        public readonly int Offset;
-        public readonly SequencePoint SequencePoint;
+				return scopes;
+			}
+		}
 
-        public InstructionSymbol(int offset, SequencePoint sequencePoint)
-        {
-            Offset = offset;
-            SequencePoint = sequencePoint;
-        }
-    }
+		public bool HasVariables {
+			get { return !variables.IsNullOrEmpty (); }
+		}
 
-    public sealed class MethodSymbols
-    {
-        internal int code_size;
-        internal Collection<InstructionSymbol> instructions;
-        internal MetadataToken local_var_token;
-        internal string method_name;
-        internal MetadataToken method_token;
-        internal Collection<VariableDefinition> variables;
+		public Collection<VariableDefinition> Variables {
+			get {
+				if (variables == null)
+					variables = new Collection<VariableDefinition> ();
 
-        internal MethodSymbols(string methodName)
-        {
-            method_name = methodName;
-        }
+				return variables;
+			}
+		}
+	}
 
-        public MethodSymbols(MetadataToken methodToken)
-        {
-            method_token = methodToken;
-        }
+	public struct InstructionSymbol {
 
-        public bool HasVariables
-        {
-            get { return !variables.IsNullOrEmpty(); }
-        }
+		public readonly int Offset;
+		public readonly SequencePoint SequencePoint;
 
-        public Collection<VariableDefinition> Variables
-        {
-            get
-            {
-                if (variables == null)
-                    variables = new Collection<VariableDefinition>();
+		public InstructionSymbol (int offset, SequencePoint sequencePoint)
+		{
+			this.Offset = offset;
+			this.SequencePoint = sequencePoint;
+		}
+	}
 
-                return variables;
-            }
-        }
+	public sealed class MethodSymbols {
 
-        public Collection<InstructionSymbol> Instructions
-        {
-            get
-            {
-                if (instructions == null)
-                    instructions = new Collection<InstructionSymbol>();
+		internal int code_size;
+		internal string method_name;
+		internal MetadataToken method_token;
+		internal MetadataToken local_var_token;
+		internal Collection<VariableDefinition> variables;
+		internal Collection<InstructionSymbol> instructions;
 
-                return instructions;
-            }
-        }
+		public bool HasVariables {
+			get { return !variables.IsNullOrEmpty (); }
+		}
 
-        public int CodeSize
-        {
-            get { return code_size; }
-        }
+		public Collection<VariableDefinition> Variables {
+			get {
+				if (variables == null)
+					variables = new Collection<VariableDefinition> ();
 
-        public string MethodName
-        {
-            get { return method_name; }
-        }
+				return variables;
+			}
+		}
 
-        public MetadataToken MethodToken
-        {
-            get { return method_token; }
-        }
+		public Collection<InstructionSymbol> Instructions {
+			get {
+				if (instructions == null)
+					instructions = new Collection<InstructionSymbol> ();
 
-        public MetadataToken LocalVarToken
-        {
-            get { return local_var_token; }
-        }
-    }
+				return instructions;
+			}
+		}
 
-    public delegate Instruction InstructionMapper(int offset);
+		public int CodeSize {
+			get { return code_size; }
+		}
 
-    public interface ISymbolReader : IDisposable
-    {
-        bool ProcessDebugHeader(ImageDebugDirectory directory, byte[] header);
-        void Read(MethodBody body, InstructionMapper mapper);
-        void Read(MethodSymbols symbols);
-    }
+		public string MethodName {
+			get { return method_name; }
+		}
 
-    public interface ISymbolReaderProvider
-    {
-        ISymbolReader GetSymbolReader(ModuleDefinition module, string fileName);
-        ISymbolReader GetSymbolReader(ModuleDefinition module, Stream symbolStream);
-    }
+		public MetadataToken MethodToken {
+			get { return method_token; }
+		}
 
-    internal static class SymbolProvider
-    {
-        private static readonly string symbol_kind = Type.GetType("Mono.Runtime") != null ? "Mdb" : "Pdb";
+		public MetadataToken LocalVarToken {
+			get { return local_var_token; }
+		}
 
-        private static SR.AssemblyName GetPlatformSymbolAssemblyName()
-        {
-            SR.AssemblyName cecil_name = typeof (SymbolProvider).Assembly.GetName();
+		internal MethodSymbols (string methodName)
+		{
+			this.method_name = methodName;
+		}
 
-            var name = new SR.AssemblyName
-                {
-                    Name = "Mono.Cecil." + symbol_kind,
-                    Version = cecil_name.Version,
-                };
+		public MethodSymbols (MetadataToken methodToken)
+		{
+			this.method_token = methodToken;
+		}
+	}
 
-            name.SetPublicKeyToken(cecil_name.GetPublicKeyToken());
+	public delegate Instruction InstructionMapper (int offset);
 
-            return name;
-        }
+	public interface ISymbolReader : IDisposable {
 
-        private static Type GetPlatformType(string fullname)
-        {
-            Type type = Type.GetType(fullname);
-            if (type != null)
-                return type;
+		bool ProcessDebugHeader (ImageDebugDirectory directory, byte [] header);
+		void Read (MethodBody body, InstructionMapper mapper);
+		void Read (MethodSymbols symbols);
+	}
 
-            SR.AssemblyName assembly_name = GetPlatformSymbolAssemblyName();
+	public interface ISymbolReaderProvider {
 
-            type = Type.GetType(fullname + ", " + assembly_name.FullName);
-            if (type != null)
-                return type;
+		ISymbolReader GetSymbolReader (ModuleDefinition module, string fileName);
+		ISymbolReader GetSymbolReader (ModuleDefinition module, Stream symbolStream);
+	}
 
-            try
-            {
-                SR.Assembly assembly = SR.Assembly.Load(assembly_name);
-                if (assembly != null)
-                    return assembly.GetType(fullname);
-            }
-            catch (FileNotFoundException)
-            {
+	static class SymbolProvider {
+
+		static readonly string symbol_kind = Type.GetType ("Mono.Runtime") != null ? "Mdb" : "Pdb";
+
+		static SR.AssemblyName GetPlatformSymbolAssemblyName ()
+		{
+			var cecil_name = typeof (SymbolProvider).Assembly.GetName ();
+
+			var name = new SR.AssemblyName {
+				Name = "Mono.Cecil." + symbol_kind,
+				Version = cecil_name.Version,
+			};
+
+			name.SetPublicKeyToken (cecil_name.GetPublicKeyToken ());
+
+			return name;
+		}
+
+		static Type GetPlatformType (string fullname)
+		{
+			var type = Type.GetType (fullname);
+			if (type != null)
+				return type;
+
+			var assembly_name = GetPlatformSymbolAssemblyName ();
+
+			type = Type.GetType (fullname + ", " + assembly_name.FullName);
+			if (type != null)
+				return type;
+
+			try {
+				var assembly = SR.Assembly.Load (assembly_name);
+				if (assembly != null)
+					return assembly.GetType (fullname);
+			} catch (FileNotFoundException) {
 #if !CF
-            }
-            catch (FileLoadException)
-            {
+			} catch (FileLoadException) {
 #endif
-            }
+			}
 
-            return null;
-        }
+			return null;
+		}
 
-        private static ISymbolReaderProvider reader_provider;
+		static ISymbolReaderProvider reader_provider;
 
-        public static ISymbolReaderProvider GetPlatformReaderProvider()
-        {
-            if (reader_provider != null)
-                return reader_provider;
+		public static ISymbolReaderProvider GetPlatformReaderProvider ()
+		{
+			if (reader_provider != null)
+				return reader_provider;
 
-            Type type = GetPlatformType(GetProviderTypeName("ReaderProvider"));
-            if (type == null)
-                return null;
+			var type = GetPlatformType (GetProviderTypeName ("ReaderProvider"));
+			if (type == null)
+				return null;
 
-            return reader_provider = (ISymbolReaderProvider) Activator.CreateInstance(type);
-        }
+			return reader_provider = (ISymbolReaderProvider) Activator.CreateInstance (type);
+		}
 
-        private static string GetProviderTypeName(string name)
-        {
-            return "Mono.Cecil." + symbol_kind + "." + symbol_kind + name;
-        }
+		static string GetProviderTypeName (string name)
+		{
+			return "Mono.Cecil." + symbol_kind + "." + symbol_kind + name;
+		}
 
 #if !READ_ONLY
 
-        private static ISymbolWriterProvider writer_provider;
+		static ISymbolWriterProvider writer_provider;
 
-        public static ISymbolWriterProvider GetPlatformWriterProvider()
-        {
-            if (writer_provider != null)
-                return writer_provider;
+		public static ISymbolWriterProvider GetPlatformWriterProvider ()
+		{
+			if (writer_provider != null)
+				return writer_provider;
 
-            Type type = GetPlatformType(GetProviderTypeName("WriterProvider"));
-            if (type == null)
-                return null;
+			var type = GetPlatformType (GetProviderTypeName ("WriterProvider"));
+			if (type == null)
+				return null;
 
-            return writer_provider = (ISymbolWriterProvider) Activator.CreateInstance(type);
-        }
+			return writer_provider = (ISymbolWriterProvider) Activator.CreateInstance (type);
+		}
 
 #endif
-    }
+	}
 
 #if !READ_ONLY
 
-    public interface ISymbolWriter : IDisposable
-    {
-        bool GetDebugHeader(out ImageDebugDirectory directory, out byte[] header);
-        void Write(MethodBody body);
-        void Write(MethodSymbols symbols);
-    }
+	public interface ISymbolWriter : IDisposable {
 
-    public interface ISymbolWriterProvider
-    {
-        ISymbolWriter GetSymbolWriter(ModuleDefinition module, string fileName);
-        ISymbolWriter GetSymbolWriter(ModuleDefinition module, Stream symbolStream);
-    }
+		bool GetDebugHeader (out ImageDebugDirectory directory, out byte [] header);
+		void Write (MethodBody body);
+		void Write (MethodSymbols symbols);
+	}
+
+	public interface ISymbolWriterProvider {
+
+		ISymbolWriter GetSymbolWriter (ModuleDefinition module, string fileName);
+		ISymbolWriter GetSymbolWriter (ModuleDefinition module, Stream symbolStream);
+	}
 
 #endif
 }

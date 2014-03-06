@@ -28,367 +28,368 @@
 
 using System;
 using System.Collections.Generic;
+
 using Mono.Cecil.Metadata;
 
-namespace Mono.Cecil
-{
-    internal struct Range
-    {
-        public uint Length;
-        public uint Start;
+namespace Mono.Cecil {
 
-        public Range(uint index, uint length)
-        {
-            Start = index;
-            Length = length;
-        }
-    }
+	struct Range {
+		public uint Start;
+		public uint Length;
 
-    internal sealed class MetadataSystem
-    {
-        private static Dictionary<string, Row<ElementType, bool>> primitive_value_types;
-        internal AssemblyNameReference[] AssemblyReferences;
-        internal Dictionary<uint, Row<ushort, uint>> ClassLayouts;
-        internal Dictionary<MetadataToken, Row<ElementType, uint>> Constants;
-        internal Dictionary<MetadataToken, Range[]> CustomAttributes;
-        internal Dictionary<uint, Range> Events;
-        internal Dictionary<uint, uint> FieldLayouts;
-        internal Dictionary<MetadataToken, uint> FieldMarshals;
-        internal Dictionary<uint, uint> FieldRVAs;
-        internal FieldDefinition[] Fields;
-        internal Dictionary<uint, MetadataToken[]> GenericConstraints;
-        internal Dictionary<MetadataToken, Range[]> GenericParameters;
-        internal Dictionary<uint, MetadataToken[]> Interfaces;
-        internal MemberReference[] MemberReferences;
-        internal MethodDefinition[] Methods;
-        internal ModuleReference[] ModuleReferences;
-        internal Dictionary<uint, uint[]> NestedTypes;
-        internal Dictionary<uint, MetadataToken[]> Overrides;
-        internal Dictionary<uint, Row<PInvokeAttributes, uint, uint>> PInvokes;
-        internal Dictionary<uint, Range> Properties;
-        internal Dictionary<uint, uint> ReverseNestedTypes;
-        internal Dictionary<MetadataToken, Range[]> SecurityDeclarations;
-        internal Dictionary<uint, Row<MethodSemanticsAttributes, MetadataToken>> Semantics;
-        internal TypeReference[] TypeReferences;
-        internal TypeDefinition[] Types;
+		public Range (uint index, uint length)
+		{
+			this.Start = index;
+			this.Length = length;
+		}
+	}
 
-        private static void InitializePrimitives()
-        {
-            primitive_value_types = new Dictionary<string, Row<ElementType, bool>>(18, StringComparer.Ordinal)
-                {
-                    {"Void", new Row<ElementType, bool>(ElementType.Void, false)},
-                    {"Boolean", new Row<ElementType, bool>(ElementType.Boolean, true)},
-                    {"Char", new Row<ElementType, bool>(ElementType.Char, true)},
-                    {"SByte", new Row<ElementType, bool>(ElementType.I1, true)},
-                    {"Byte", new Row<ElementType, bool>(ElementType.U1, true)},
-                    {"Int16", new Row<ElementType, bool>(ElementType.I2, true)},
-                    {"UInt16", new Row<ElementType, bool>(ElementType.U2, true)},
-                    {"Int32", new Row<ElementType, bool>(ElementType.I4, true)},
-                    {"UInt32", new Row<ElementType, bool>(ElementType.U4, true)},
-                    {"Int64", new Row<ElementType, bool>(ElementType.I8, true)},
-                    {"UInt64", new Row<ElementType, bool>(ElementType.U8, true)},
-                    {"Single", new Row<ElementType, bool>(ElementType.R4, true)},
-                    {"Double", new Row<ElementType, bool>(ElementType.R8, true)},
-                    {"String", new Row<ElementType, bool>(ElementType.String, false)},
-                    {"TypedReference", new Row<ElementType, bool>(ElementType.TypedByRef, false)},
-                    {"IntPtr", new Row<ElementType, bool>(ElementType.I, true)},
-                    {"UIntPtr", new Row<ElementType, bool>(ElementType.U, true)},
-                    {"Object", new Row<ElementType, bool>(ElementType.Object, false)},
-                };
-        }
+	sealed class MetadataSystem {
 
-        public static void TryProcessPrimitiveTypeReference(TypeReference type)
-        {
-            if (type.Namespace != "System")
-                return;
+		internal AssemblyNameReference [] AssemblyReferences;
+		internal ModuleReference [] ModuleReferences;
 
-            IMetadataScope scope = type.scope;
-            if (scope == null || scope.MetadataScopeType != MetadataScopeType.AssemblyNameReference)
-                return;
+		internal TypeDefinition [] Types;
+		internal TypeReference [] TypeReferences;
 
-            Row<ElementType, bool> primitive_data;
-            if (!TryGetPrimitiveData(type, out primitive_data))
-                return;
+		internal FieldDefinition [] Fields;
+		internal MethodDefinition [] Methods;
+		internal MemberReference [] MemberReferences;
 
-            type.etype = primitive_data.Col1;
-            type.IsValueType = primitive_data.Col2;
-        }
+		internal Dictionary<uint, uint []> NestedTypes;
+		internal Dictionary<uint, uint> ReverseNestedTypes;
+		internal Dictionary<uint, MetadataToken []> Interfaces;
+		internal Dictionary<uint, Row<ushort, uint>> ClassLayouts;
+		internal Dictionary<uint, uint> FieldLayouts;
+		internal Dictionary<uint, uint> FieldRVAs;
+		internal Dictionary<MetadataToken, uint> FieldMarshals;
+		internal Dictionary<MetadataToken, Row<ElementType, uint>> Constants;
+		internal Dictionary<uint, MetadataToken []> Overrides;
+		internal Dictionary<MetadataToken, Range []> CustomAttributes;
+		internal Dictionary<MetadataToken, Range []> SecurityDeclarations;
+		internal Dictionary<uint, Range> Events;
+		internal Dictionary<uint, Range> Properties;
+		internal Dictionary<uint, Row<MethodSemanticsAttributes, MetadataToken>> Semantics;
+		internal Dictionary<uint, Row<PInvokeAttributes, uint, uint>> PInvokes;
+		internal Dictionary<MetadataToken, Range []> GenericParameters;
+		internal Dictionary<uint, MetadataToken []> GenericConstraints;
 
-        public static bool TryGetPrimitiveElementType(TypeDefinition type, out ElementType etype)
-        {
-            etype = ElementType.None;
+		static Dictionary<string, Row<ElementType, bool>> primitive_value_types;
 
-            if (type.Namespace != "System")
-                return false;
+		static void InitializePrimitives ()
+		{
+			primitive_value_types = new Dictionary<string, Row<ElementType, bool>> (18, StringComparer.Ordinal) {
+				{ "Void", new Row<ElementType, bool> (ElementType.Void, false) },
+				{ "Boolean", new Row<ElementType, bool> (ElementType.Boolean, true) },
+				{ "Char", new Row<ElementType, bool> (ElementType.Char, true) },
+				{ "SByte", new Row<ElementType, bool> (ElementType.I1, true) },
+				{ "Byte", new Row<ElementType, bool> (ElementType.U1, true) },
+				{ "Int16", new Row<ElementType, bool> (ElementType.I2, true) },
+				{ "UInt16", new Row<ElementType, bool> (ElementType.U2, true) },
+				{ "Int32", new Row<ElementType, bool> (ElementType.I4, true) },
+				{ "UInt32", new Row<ElementType, bool> (ElementType.U4, true) },
+				{ "Int64", new Row<ElementType, bool> (ElementType.I8, true) },
+				{ "UInt64", new Row<ElementType, bool> (ElementType.U8, true) },
+				{ "Single", new Row<ElementType, bool> (ElementType.R4, true) },
+				{ "Double", new Row<ElementType, bool> (ElementType.R8, true) },
+				{ "String", new Row<ElementType, bool> (ElementType.String, false) },
+				{ "TypedReference", new Row<ElementType, bool> (ElementType.TypedByRef, false) },
+				{ "IntPtr", new Row<ElementType, bool> (ElementType.I, true) },
+				{ "UIntPtr", new Row<ElementType, bool> (ElementType.U, true) },
+				{ "Object", new Row<ElementType, bool> (ElementType.Object, false) },
+			};
+		}
 
-            Row<ElementType, bool> primitive_data;
-            if (TryGetPrimitiveData(type, out primitive_data) && primitive_data.Col1.IsPrimitive())
-            {
-                etype = primitive_data.Col1;
-                return true;
-            }
+		public static void TryProcessPrimitiveTypeReference (TypeReference type)
+		{
+			if (type.Namespace != "System")
+				return;
 
-            return false;
-        }
+			var scope = type.scope;
+			if (scope == null || scope.MetadataScopeType != MetadataScopeType.AssemblyNameReference)
+				return;
 
-        private static bool TryGetPrimitiveData(TypeReference type, out Row<ElementType, bool> primitive_data)
-        {
-            if (primitive_value_types == null)
-                InitializePrimitives();
+			Row<ElementType, bool> primitive_data;
+			if (!TryGetPrimitiveData (type, out primitive_data))
+				return;
 
-            return primitive_value_types.TryGetValue(type.Name, out primitive_data);
-        }
+			type.etype = primitive_data.Col1;
+			type.IsValueType = primitive_data.Col2;
+		}
 
-        public void Clear()
-        {
-            if (NestedTypes != null) NestedTypes.Clear();
-            if (ReverseNestedTypes != null) ReverseNestedTypes.Clear();
-            if (Interfaces != null) Interfaces.Clear();
-            if (ClassLayouts != null) ClassLayouts.Clear();
-            if (FieldLayouts != null) FieldLayouts.Clear();
-            if (FieldRVAs != null) FieldRVAs.Clear();
-            if (FieldMarshals != null) FieldMarshals.Clear();
-            if (Constants != null) Constants.Clear();
-            if (Overrides != null) Overrides.Clear();
-            if (CustomAttributes != null) CustomAttributes.Clear();
-            if (SecurityDeclarations != null) SecurityDeclarations.Clear();
-            if (Events != null) Events.Clear();
-            if (Properties != null) Properties.Clear();
-            if (Semantics != null) Semantics.Clear();
-            if (PInvokes != null) PInvokes.Clear();
-            if (GenericParameters != null) GenericParameters.Clear();
-            if (GenericConstraints != null) GenericConstraints.Clear();
-        }
+		public static bool TryGetPrimitiveElementType (TypeDefinition type, out ElementType etype)
+		{
+			etype = ElementType.None;
 
-        public TypeDefinition GetTypeDefinition(uint rid)
-        {
-            if (rid < 1 || rid > Types.Length)
-                return null;
+			if (type.Namespace != "System")
+				return false;
 
-            return Types[rid - 1];
-        }
+			Row<ElementType, bool> primitive_data;
+			if (TryGetPrimitiveData (type, out primitive_data) && primitive_data.Col1.IsPrimitive ()) {
+				etype = primitive_data.Col1;
+				return true;
+			}
 
-        public void AddTypeDefinition(TypeDefinition type)
-        {
-            Types[type.token.RID - 1] = type;
-        }
+			return false;
+		}
 
-        public TypeReference GetTypeReference(uint rid)
-        {
-            if (rid < 1 || rid > TypeReferences.Length)
-                return null;
+		static bool TryGetPrimitiveData (TypeReference type, out Row<ElementType, bool> primitive_data)
+		{
+			if (primitive_value_types == null)
+				InitializePrimitives ();
 
-            return TypeReferences[rid - 1];
-        }
+			return primitive_value_types.TryGetValue (type.Name, out primitive_data);
+		}
 
-        public void AddTypeReference(TypeReference type)
-        {
-            TypeReferences[type.token.RID - 1] = type;
-        }
+		public void Clear ()
+		{
+			if (NestedTypes != null) NestedTypes.Clear ();
+			if (ReverseNestedTypes != null) ReverseNestedTypes.Clear ();
+			if (Interfaces != null) Interfaces.Clear ();
+			if (ClassLayouts != null) ClassLayouts.Clear ();
+			if (FieldLayouts != null) FieldLayouts.Clear ();
+			if (FieldRVAs != null) FieldRVAs.Clear ();
+			if (FieldMarshals != null) FieldMarshals.Clear ();
+			if (Constants != null) Constants.Clear ();
+			if (Overrides != null) Overrides.Clear ();
+			if (CustomAttributes != null) CustomAttributes.Clear ();
+			if (SecurityDeclarations != null) SecurityDeclarations.Clear ();
+			if (Events != null) Events.Clear ();
+			if (Properties != null) Properties.Clear ();
+			if (Semantics != null) Semantics.Clear ();
+			if (PInvokes != null) PInvokes.Clear ();
+			if (GenericParameters != null) GenericParameters.Clear ();
+			if (GenericConstraints != null) GenericConstraints.Clear ();
+		}
 
-        public FieldDefinition GetFieldDefinition(uint rid)
-        {
-            if (rid < 1 || rid > Fields.Length)
-                return null;
+		public TypeDefinition GetTypeDefinition (uint rid)
+		{
+			if (rid < 1 || rid > Types.Length)
+				return null;
 
-            return Fields[rid - 1];
-        }
+			return Types [rid - 1];
+		}
 
-        public void AddFieldDefinition(FieldDefinition field)
-        {
-            Fields[field.token.RID - 1] = field;
-        }
+		public void AddTypeDefinition (TypeDefinition type)
+		{
+			Types [type.token.RID - 1] = type;
+		}
 
-        public MethodDefinition GetMethodDefinition(uint rid)
-        {
-            if (rid < 1 || rid > Methods.Length)
-                return null;
+		public TypeReference GetTypeReference (uint rid)
+		{
+			if (rid < 1 || rid > TypeReferences.Length)
+				return null;
 
-            return Methods[rid - 1];
-        }
+			return TypeReferences [rid - 1];
+		}
 
-        public void AddMethodDefinition(MethodDefinition method)
-        {
-            Methods[method.token.RID - 1] = method;
-        }
+		public void AddTypeReference (TypeReference type)
+		{
+			TypeReferences [type.token.RID - 1] = type;
+		}
 
-        public MemberReference GetMemberReference(uint rid)
-        {
-            if (rid < 1 || rid > MemberReferences.Length)
-                return null;
+		public FieldDefinition GetFieldDefinition (uint rid)
+		{
+			if (rid < 1 || rid > Fields.Length)
+				return null;
 
-            return MemberReferences[rid - 1];
-        }
+			return Fields [rid - 1];
+		}
 
-        public void AddMemberReference(MemberReference member)
-        {
-            MemberReferences[member.token.RID - 1] = member;
-        }
+		public void AddFieldDefinition (FieldDefinition field)
+		{
+			Fields [field.token.RID - 1] = field;
+		}
 
-        public bool TryGetNestedTypeMapping(TypeDefinition type, out uint[] mapping)
-        {
-            return NestedTypes.TryGetValue(type.token.RID, out mapping);
-        }
+		public MethodDefinition GetMethodDefinition (uint rid)
+		{
+			if (rid < 1 || rid > Methods.Length)
+				return null;
 
-        public void SetNestedTypeMapping(uint type_rid, uint[] mapping)
-        {
-            NestedTypes[type_rid] = mapping;
-        }
+			return Methods [rid - 1];
+		}
 
-        public void RemoveNestedTypeMapping(TypeDefinition type)
-        {
-            NestedTypes.Remove(type.token.RID);
-        }
+		public void AddMethodDefinition (MethodDefinition method)
+		{
+			Methods [method.token.RID - 1] = method;
+		}
 
-        public bool TryGetReverseNestedTypeMapping(TypeDefinition type, out uint declaring)
-        {
-            return ReverseNestedTypes.TryGetValue(type.token.RID, out declaring);
-        }
+		public MemberReference GetMemberReference (uint rid)
+		{
+			if (rid < 1 || rid > MemberReferences.Length)
+				return null;
 
-        public void SetReverseNestedTypeMapping(uint nested, uint declaring)
-        {
-            ReverseNestedTypes.Add(nested, declaring);
-        }
+			return MemberReferences [rid - 1];
+		}
 
-        public void RemoveReverseNestedTypeMapping(TypeDefinition type)
-        {
-            ReverseNestedTypes.Remove(type.token.RID);
-        }
+		public void AddMemberReference (MemberReference member)
+		{
+			MemberReferences [member.token.RID - 1] = member;
+		}
 
-        public bool TryGetInterfaceMapping(TypeDefinition type, out MetadataToken[] mapping)
-        {
-            return Interfaces.TryGetValue(type.token.RID, out mapping);
-        }
+		public bool TryGetNestedTypeMapping (TypeDefinition type, out uint [] mapping)
+		{
+			return NestedTypes.TryGetValue (type.token.RID, out mapping);
+		}
 
-        public void SetInterfaceMapping(uint type_rid, MetadataToken[] mapping)
-        {
-            Interfaces[type_rid] = mapping;
-        }
+		public void SetNestedTypeMapping (uint type_rid, uint [] mapping)
+		{
+			NestedTypes [type_rid] = mapping;
+		}
 
-        public void RemoveInterfaceMapping(TypeDefinition type)
-        {
-            Interfaces.Remove(type.token.RID);
-        }
+		public void RemoveNestedTypeMapping (TypeDefinition type)
+		{
+			NestedTypes.Remove (type.token.RID);
+		}
 
-        public void AddPropertiesRange(uint type_rid, Range range)
-        {
-            Properties.Add(type_rid, range);
-        }
+		public bool TryGetReverseNestedTypeMapping (TypeDefinition type, out uint declaring)
+		{
+			return ReverseNestedTypes.TryGetValue (type.token.RID, out declaring);
+		}
 
-        public bool TryGetPropertiesRange(TypeDefinition type, out Range range)
-        {
-            return Properties.TryGetValue(type.token.RID, out range);
-        }
+		public void SetReverseNestedTypeMapping (uint nested, uint declaring)
+		{
+			ReverseNestedTypes.Add (nested, declaring);
+		}
 
-        public void RemovePropertiesRange(TypeDefinition type)
-        {
-            Properties.Remove(type.token.RID);
-        }
+		public void RemoveReverseNestedTypeMapping (TypeDefinition type)
+		{
+			ReverseNestedTypes.Remove (type.token.RID);
+		}
 
-        public void AddEventsRange(uint type_rid, Range range)
-        {
-            Events.Add(type_rid, range);
-        }
+		public bool TryGetInterfaceMapping (TypeDefinition type, out MetadataToken [] mapping)
+		{
+			return Interfaces.TryGetValue (type.token.RID, out mapping);
+		}
 
-        public bool TryGetEventsRange(TypeDefinition type, out Range range)
-        {
-            return Events.TryGetValue(type.token.RID, out range);
-        }
+		public void SetInterfaceMapping (uint type_rid, MetadataToken [] mapping)
+		{
+			Interfaces [type_rid] = mapping;
+		}
 
-        public void RemoveEventsRange(TypeDefinition type)
-        {
-            Events.Remove(type.token.RID);
-        }
+		public void RemoveInterfaceMapping (TypeDefinition type)
+		{
+			Interfaces.Remove (type.token.RID);
+		}
 
-        public bool TryGetGenericParameterRanges(IGenericParameterProvider owner, out Range[] ranges)
-        {
-            return GenericParameters.TryGetValue(owner.MetadataToken, out ranges);
-        }
+		public void AddPropertiesRange (uint type_rid, Range range)
+		{
+			Properties.Add (type_rid, range);
+		}
 
-        public void RemoveGenericParameterRange(IGenericParameterProvider owner)
-        {
-            GenericParameters.Remove(owner.MetadataToken);
-        }
+		public bool TryGetPropertiesRange (TypeDefinition type, out Range range)
+		{
+			return Properties.TryGetValue (type.token.RID, out range);
+		}
 
-        public bool TryGetCustomAttributeRanges(ICustomAttributeProvider owner, out Range[] ranges)
-        {
-            return CustomAttributes.TryGetValue(owner.MetadataToken, out ranges);
-        }
+		public void RemovePropertiesRange (TypeDefinition type)
+		{
+			Properties.Remove (type.token.RID);
+		}
 
-        public void RemoveCustomAttributeRange(ICustomAttributeProvider owner)
-        {
-            CustomAttributes.Remove(owner.MetadataToken);
-        }
+		public void AddEventsRange (uint type_rid, Range range)
+		{
+			Events.Add (type_rid, range);
+		}
 
-        public bool TryGetSecurityDeclarationRanges(ISecurityDeclarationProvider owner, out Range[] ranges)
-        {
-            return SecurityDeclarations.TryGetValue(owner.MetadataToken, out ranges);
-        }
+		public bool TryGetEventsRange (TypeDefinition type, out Range range)
+		{
+			return Events.TryGetValue (type.token.RID, out range);
+		}
 
-        public void RemoveSecurityDeclarationRange(ISecurityDeclarationProvider owner)
-        {
-            SecurityDeclarations.Remove(owner.MetadataToken);
-        }
+		public void RemoveEventsRange (TypeDefinition type)
+		{
+			Events.Remove (type.token.RID);
+		}
 
-        public bool TryGetGenericConstraintMapping(GenericParameter generic_parameter, out MetadataToken[] mapping)
-        {
-            return GenericConstraints.TryGetValue(generic_parameter.token.RID, out mapping);
-        }
+		public bool TryGetGenericParameterRanges (IGenericParameterProvider owner, out Range [] ranges)
+		{
+			return GenericParameters.TryGetValue (owner.MetadataToken, out ranges);
+		}
 
-        public void SetGenericConstraintMapping(uint gp_rid, MetadataToken[] mapping)
-        {
-            GenericConstraints[gp_rid] = mapping;
-        }
+		public void RemoveGenericParameterRange (IGenericParameterProvider owner)
+		{
+			GenericParameters.Remove (owner.MetadataToken);
+		}
 
-        public void RemoveGenericConstraintMapping(GenericParameter generic_parameter)
-        {
-            GenericConstraints.Remove(generic_parameter.token.RID);
-        }
+		public bool TryGetCustomAttributeRanges (ICustomAttributeProvider owner, out Range [] ranges)
+		{
+			return CustomAttributes.TryGetValue (owner.MetadataToken, out ranges);
+		}
 
-        public bool TryGetOverrideMapping(MethodDefinition method, out MetadataToken[] mapping)
-        {
-            return Overrides.TryGetValue(method.token.RID, out mapping);
-        }
+		public void RemoveCustomAttributeRange (ICustomAttributeProvider owner)
+		{
+			CustomAttributes.Remove (owner.MetadataToken);
+		}
 
-        public void SetOverrideMapping(uint rid, MetadataToken[] mapping)
-        {
-            Overrides[rid] = mapping;
-        }
+		public bool TryGetSecurityDeclarationRanges (ISecurityDeclarationProvider owner, out Range [] ranges)
+		{
+			return SecurityDeclarations.TryGetValue (owner.MetadataToken, out ranges);
+		}
 
-        public void RemoveOverrideMapping(MethodDefinition method)
-        {
-            Overrides.Remove(method.token.RID);
-        }
+		public void RemoveSecurityDeclarationRange (ISecurityDeclarationProvider owner)
+		{
+			SecurityDeclarations.Remove (owner.MetadataToken);
+		}
 
-        public TypeDefinition GetFieldDeclaringType(uint field_rid)
-        {
-            return BinaryRangeSearch(Types, field_rid, true);
-        }
+		public bool TryGetGenericConstraintMapping (GenericParameter generic_parameter, out MetadataToken [] mapping)
+		{
+			return GenericConstraints.TryGetValue (generic_parameter.token.RID, out mapping);
+		}
 
-        public TypeDefinition GetMethodDeclaringType(uint method_rid)
-        {
-            return BinaryRangeSearch(Types, method_rid, false);
-        }
+		public void SetGenericConstraintMapping (uint gp_rid, MetadataToken [] mapping)
+		{
+			GenericConstraints [gp_rid] = mapping;
+		}
 
-        private static TypeDefinition BinaryRangeSearch(TypeDefinition[] types, uint rid, bool field)
-        {
-            int min = 0;
-            int max = types.Length - 1;
-            while (min <= max)
-            {
-                int mid = min + ((max - min)/2);
-                TypeDefinition type = types[mid];
-                Range range = field ? type.fields_range : type.methods_range;
+		public void RemoveGenericConstraintMapping (GenericParameter generic_parameter)
+		{
+			GenericConstraints.Remove (generic_parameter.token.RID);
+		}
 
-                if (rid < range.Start)
-                    max = mid - 1;
-                else if (rid >= range.Start + range.Length)
-                    min = mid + 1;
-                else
-                    return type;
-            }
+		public bool TryGetOverrideMapping (MethodDefinition method, out MetadataToken [] mapping)
+		{
+			return Overrides.TryGetValue (method.token.RID, out mapping);
+		}
 
-            return null;
-        }
-    }
+		public void SetOverrideMapping (uint rid, MetadataToken [] mapping)
+		{
+			Overrides [rid] = mapping;
+		}
+
+		public void RemoveOverrideMapping (MethodDefinition method)
+		{
+			Overrides.Remove (method.token.RID);
+		}
+
+		public TypeDefinition GetFieldDeclaringType (uint field_rid)
+		{
+			return BinaryRangeSearch (Types, field_rid, true);
+		}
+
+		public TypeDefinition GetMethodDeclaringType (uint method_rid)
+		{
+			return BinaryRangeSearch (Types, method_rid, false);
+		}
+
+		static TypeDefinition BinaryRangeSearch (TypeDefinition [] types, uint rid, bool field)
+		{
+			int min = 0;
+			int max = types.Length - 1;
+			while (min <= max) {
+				int mid = min + ((max - min) / 2);
+				var type = types [mid];
+				var range = field ? type.fields_range : type.methods_range;
+
+				if (rid < range.Start)
+					max = mid - 1;
+				else if (rid >= range.Start + range.Length)
+					min = mid + 1;
+				else
+					return type;
+			}
+
+			return null;
+		}
+	}
 }
