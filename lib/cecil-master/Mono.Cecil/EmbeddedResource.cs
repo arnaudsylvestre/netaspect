@@ -29,77 +29,77 @@
 using System;
 using System.IO;
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public sealed class EmbeddedResource : Resource
+    {
+        private readonly byte[] data;
+        private readonly MetadataReader reader;
+        private readonly Stream stream;
+        private uint? offset;
 
-	public sealed class EmbeddedResource : Resource {
+        public EmbeddedResource(string name, ManifestResourceAttributes attributes, byte[] data) :
+            base(name, attributes)
+        {
+            this.data = data;
+        }
 
-		readonly MetadataReader reader;
+        public EmbeddedResource(string name, ManifestResourceAttributes attributes, Stream stream) :
+            base(name, attributes)
+        {
+            this.stream = stream;
+        }
 
-		uint? offset;
-		byte [] data;
-		Stream stream;
+        internal EmbeddedResource(string name, ManifestResourceAttributes attributes, uint offset, MetadataReader reader)
+            : base(name, attributes)
+        {
+            this.offset = offset;
+            this.reader = reader;
+        }
 
-		public override ResourceType ResourceType {
-			get { return ResourceType.Embedded; }
-		}
+        public override ResourceType ResourceType
+        {
+            get { return ResourceType.Embedded; }
+        }
 
-		public EmbeddedResource (string name, ManifestResourceAttributes attributes, byte [] data) :
-			base (name, attributes)
-		{
-			this.data = data;
-		}
+        public Stream GetResourceStream()
+        {
+            if (stream != null)
+                return stream;
 
-		public EmbeddedResource (string name, ManifestResourceAttributes attributes, Stream stream) :
-			base (name, attributes)
-		{
-			this.stream = stream;
-		}
+            if (data != null)
+                return new MemoryStream(data);
 
-		internal EmbeddedResource (string name, ManifestResourceAttributes attributes, uint offset, MetadataReader reader)
-			: base (name, attributes)
-		{
-			this.offset = offset;
-			this.reader = reader;
-		}
+            if (offset.HasValue)
+                return reader.GetManagedResourceStream(offset.Value);
 
-		public Stream GetResourceStream ()
-		{
-			if (stream != null)
-				return stream;
+            throw new InvalidOperationException();
+        }
 
-			if (data != null)
-				return new MemoryStream (data);
+        public byte[] GetResourceData()
+        {
+            if (stream != null)
+                return ReadStream(stream);
 
-			if (offset.HasValue)
-				return reader.GetManagedResourceStream (offset.Value);
+            if (data != null)
+                return data;
 
-			throw new InvalidOperationException ();
-		}
+            if (offset.HasValue)
+                return reader.GetManagedResourceStream(offset.Value).ToArray();
 
-		public byte [] GetResourceData ()
-		{
-			if (stream != null)
-				return ReadStream (stream);
+            throw new InvalidOperationException();
+        }
 
-			if (data != null)
-				return data;
+        private static byte[] ReadStream(Stream stream)
+        {
+            var length = (int) stream.Length;
+            var data = new byte[length];
+            int offset = 0, read;
 
-			if (offset.HasValue)
-				return reader.GetManagedResourceStream (offset.Value).ToArray ();
+            while ((read = stream.Read(data, offset, length - offset)) > 0)
+                offset += read;
 
-			throw new InvalidOperationException ();
-		}
-
-		static byte [] ReadStream (Stream stream)
-		{
-			var length = (int) stream.Length;
-			var data = new byte [length];
-			int offset = 0, read;
-
-			while ((read = stream.Read (data, offset, length - offset)) > 0)
-				offset += read;
-
-			return data;
-		}
-	}
+            return data;
+        }
+    }
 }

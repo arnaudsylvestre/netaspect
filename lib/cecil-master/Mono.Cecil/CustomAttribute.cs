@@ -27,206 +27,230 @@
 //
 
 using System;
-
 using Mono.Collections.Generic;
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public struct CustomAttributeArgument
+    {
+        private readonly TypeReference type;
+        private readonly object value;
 
-	public struct CustomAttributeArgument {
+        public CustomAttributeArgument(TypeReference type, object value)
+        {
+            Mixin.CheckType(type);
+            this.type = type;
+            this.value = value;
+        }
 
-		readonly TypeReference type;
-		readonly object value;
+        public TypeReference Type
+        {
+            get { return type; }
+        }
 
-		public TypeReference Type {
-			get { return type; }
-		}
+        public object Value
+        {
+            get { return value; }
+        }
+    }
 
-		public object Value {
-			get { return value; }
-		}
+    public struct CustomAttributeNamedArgument
+    {
+        private readonly CustomAttributeArgument argument;
+        private readonly string name;
 
-		public CustomAttributeArgument (TypeReference type, object value)
-		{
-			Mixin.CheckType (type);
-			this.type = type;
-			this.value = value;
-		}
-	}
+        public CustomAttributeNamedArgument(string name, CustomAttributeArgument argument)
+        {
+            Mixin.CheckName(name);
+            this.name = name;
+            this.argument = argument;
+        }
 
-	public struct CustomAttributeNamedArgument {
+        public string Name
+        {
+            get { return name; }
+        }
 
-		readonly string name;
-		readonly CustomAttributeArgument argument;
+        public CustomAttributeArgument Argument
+        {
+            get { return argument; }
+        }
+    }
 
-		public string Name {
-			get { return name; }
-		}
+    public interface ICustomAttribute
+    {
+        TypeReference AttributeType { get; }
 
-		public CustomAttributeArgument Argument {
-			get { return argument; }
-		}
+        bool HasFields { get; }
+        bool HasProperties { get; }
+        Collection<CustomAttributeNamedArgument> Fields { get; }
+        Collection<CustomAttributeNamedArgument> Properties { get; }
+    }
 
-		public CustomAttributeNamedArgument (string name, CustomAttributeArgument argument)
-		{
-			Mixin.CheckName (name);
-			this.name = name;
-			this.argument = argument;
-		}
-	}
+    public sealed class CustomAttribute : ICustomAttribute
+    {
+        internal readonly uint signature;
+        internal Collection<CustomAttributeArgument> arguments;
+        private byte[] blob;
+        private MethodReference constructor;
+        internal Collection<CustomAttributeNamedArgument> fields;
+        internal Collection<CustomAttributeNamedArgument> properties;
+        internal bool resolved;
 
-	public interface ICustomAttribute {
+        internal CustomAttribute(uint signature, MethodReference constructor)
+        {
+            this.signature = signature;
+            this.constructor = constructor;
+            resolved = false;
+        }
 
-		TypeReference AttributeType { get; }
+        public CustomAttribute(MethodReference constructor)
+        {
+            this.constructor = constructor;
+            resolved = true;
+        }
 
-		bool HasFields { get; }
-		bool HasProperties { get; }
-		Collection<CustomAttributeNamedArgument> Fields { get; }
-		Collection<CustomAttributeNamedArgument> Properties { get; }
-	}
+        public CustomAttribute(MethodReference constructor, byte[] blob)
+        {
+            this.constructor = constructor;
+            resolved = false;
+            this.blob = blob;
+        }
 
-	public sealed class CustomAttribute : ICustomAttribute {
+        public MethodReference Constructor
+        {
+            get { return constructor; }
+            set { constructor = value; }
+        }
 
-		readonly internal uint signature;
-		internal bool resolved;
-		MethodReference constructor;
-		byte [] blob;
-		internal Collection<CustomAttributeArgument> arguments;
-		internal Collection<CustomAttributeNamedArgument> fields;
-		internal Collection<CustomAttributeNamedArgument> properties;
+        public bool IsResolved
+        {
+            get { return resolved; }
+        }
 
-		public MethodReference Constructor {
-			get { return constructor; }
-			set { constructor = value; }
-		}
+        public bool HasConstructorArguments
+        {
+            get
+            {
+                Resolve();
 
-		public TypeReference AttributeType {
-			get { return constructor.DeclaringType; }
-		}
+                return !arguments.IsNullOrEmpty();
+            }
+        }
 
-		public bool IsResolved {
-			get { return resolved; }
-		}
+        public Collection<CustomAttributeArgument> ConstructorArguments
+        {
+            get
+            {
+                Resolve();
 
-		public bool HasConstructorArguments {
-			get {
-				Resolve ();
+                return arguments ?? (arguments = new Collection<CustomAttributeArgument>());
+            }
+        }
 
-				return !arguments.IsNullOrEmpty ();
-			}
-		}
+        internal bool HasImage
+        {
+            get { return constructor != null && constructor.HasImage; }
+        }
 
-		public Collection<CustomAttributeArgument> ConstructorArguments {
-			get {
-				Resolve ();
+        internal ModuleDefinition Module
+        {
+            get { return constructor.Module; }
+        }
 
-				return arguments ?? (arguments = new Collection<CustomAttributeArgument> ());
-			}
-		}
+        public TypeReference AttributeType
+        {
+            get { return constructor.DeclaringType; }
+        }
 
-		public bool HasFields {
-			get {
-				Resolve ();
+        public bool HasFields
+        {
+            get
+            {
+                Resolve();
 
-				return !fields.IsNullOrEmpty ();
-			}
-		}
+                return !fields.IsNullOrEmpty();
+            }
+        }
 
-		public Collection<CustomAttributeNamedArgument> Fields {
-			get {
-				Resolve ();
+        public Collection<CustomAttributeNamedArgument> Fields
+        {
+            get
+            {
+                Resolve();
 
-				return fields ?? (fields = new Collection<CustomAttributeNamedArgument> ());
-			}
-		}
+                return fields ?? (fields = new Collection<CustomAttributeNamedArgument>());
+            }
+        }
 
-		public bool HasProperties {
-			get {
-				Resolve ();
+        public bool HasProperties
+        {
+            get
+            {
+                Resolve();
 
-				return !properties.IsNullOrEmpty ();
-			}
-		}
+                return !properties.IsNullOrEmpty();
+            }
+        }
 
-		public Collection<CustomAttributeNamedArgument> Properties {
-			get {
-				Resolve ();
+        public Collection<CustomAttributeNamedArgument> Properties
+        {
+            get
+            {
+                Resolve();
 
-				return properties ?? (properties = new Collection<CustomAttributeNamedArgument> ());
-			}
-		}
+                return properties ?? (properties = new Collection<CustomAttributeNamedArgument>());
+            }
+        }
 
-		internal bool HasImage {
-			get { return constructor != null && constructor.HasImage; }
-		}
+        public byte[] GetBlob()
+        {
+            if (blob != null)
+                return blob;
 
-		internal ModuleDefinition Module {
-			get { return constructor.Module; }
-		}
+            if (!HasImage)
+                throw new NotSupportedException();
 
-		internal CustomAttribute (uint signature, MethodReference constructor)
-		{
-			this.signature = signature;
-			this.constructor = constructor;
-			this.resolved = false;
-		}
+            return blob = Module.Read(this, (attribute, reader) => reader.ReadCustomAttributeBlob(attribute.signature));
+        }
 
-		public CustomAttribute (MethodReference constructor)
-		{
-			this.constructor = constructor;
-			this.resolved = true;
-		}
+        private void Resolve()
+        {
+            if (resolved || !HasImage)
+                return;
 
-		public CustomAttribute (MethodReference constructor, byte [] blob)
-		{
-			this.constructor = constructor;
-			this.resolved = false;
-			this.blob = blob;
-		}
+            try
+            {
+                Module.Read(this, (attribute, reader) =>
+                    {
+                        reader.ReadCustomAttributeSignature(attribute);
+                        return this;
+                    });
 
-		public byte [] GetBlob ()
-		{
-			if (blob != null)
-				return blob;
+                resolved = true;
+            }
+            catch (ResolutionException)
+            {
+                if (arguments != null)
+                    arguments.Clear();
+                if (fields != null)
+                    fields.Clear();
+                if (properties != null)
+                    properties.Clear();
 
-			if (!HasImage)
-				throw new NotSupportedException ();
+                resolved = false;
+            }
+        }
+    }
 
-			return blob = Module.Read (this, (attribute, reader) => reader.ReadCustomAttributeBlob (attribute.signature));
-		}
-
-		void Resolve ()
-		{
-			if (resolved || !HasImage)
-				return;
-
-			try {
-				Module.Read (this, (attribute, reader) => {
-					reader.ReadCustomAttributeSignature (attribute);
-					return this;
-				});
-
-				resolved = true;
-			} catch (ResolutionException) {
-				if (arguments != null)
-					arguments.Clear ();
-				if (fields != null)
-					fields.Clear ();
-				if (properties != null)
-					properties.Clear ();
-
-				resolved = false;
-			}
-		}
-	}
-
-	static partial class Mixin {
-
-		public static void CheckName (string name)
-		{
-			if (name == null)
-				throw new ArgumentNullException ("name");
-			if (name.Length == 0)
-				throw new ArgumentException ("Empty name");
-		}
-	}
+    static partial class Mixin
+    {
+        public static void CheckName(string name)
+        {
+            if (name == null)
+                throw new ArgumentNullException("name");
+            if (name.Length == 0)
+                throw new ArgumentException("Empty name");
+        }
+    }
 }

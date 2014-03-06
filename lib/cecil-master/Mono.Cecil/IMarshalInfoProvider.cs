@@ -26,30 +26,30 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public interface IMarshalInfoProvider : IMetadataTokenProvider
+    {
+        bool HasMarshalInfo { get; }
+        MarshalInfo MarshalInfo { get; set; }
+    }
 
-	public interface IMarshalInfoProvider : IMetadataTokenProvider {
+    static partial class Mixin
+    {
+        public static bool GetHasMarshalInfo(
+            this IMarshalInfoProvider self,
+            ModuleDefinition module)
+        {
+            return module.HasImage() && module.Read(self, (provider, reader) => reader.HasMarshalInfo(provider));
+        }
 
-		bool HasMarshalInfo { get; }
-		MarshalInfo MarshalInfo { get; set; }
-	}
-
-	static partial class Mixin {
-
-		public static bool GetHasMarshalInfo (
-			this IMarshalInfoProvider self,
-			ModuleDefinition module)
-		{
-			return module.HasImage () && module.Read (self, (provider, reader) => reader.HasMarshalInfo (provider));
-		}
-
-		public static MarshalInfo GetMarshalInfo (
-			this IMarshalInfoProvider self,
-			ModuleDefinition module)
-		{
-			return module.HasImage ()
-				? module.Read (self, (provider, reader) => reader.ReadMarshalInfo (provider))
-				: null;
-		}
-	}
+        public static MarshalInfo GetMarshalInfo(
+            this IMarshalInfoProvider self,
+            ModuleDefinition module)
+        {
+            return module.HasImage()
+                       ? module.Read(self, (provider, reader) => reader.ReadMarshalInfo(provider))
+                       : null;
+        }
+    }
 }

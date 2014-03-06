@@ -5,7 +5,6 @@ namespace FluentAspect.Weaver.Core.Errors
 {
     public class ErrorHandler : IErrorListener
     {
-
         public ErrorHandler()
         {
             Warnings = new List<string>();
@@ -16,6 +15,7 @@ namespace FluentAspect.Weaver.Core.Errors
         public List<string> Warnings { get; private set; }
         public List<string> Errors { get; private set; }
         public List<string> Failures { get; private set; }
+
         public void OnError(string message, params object[] args)
         {
             Errors.Add(string.Format(message, args));

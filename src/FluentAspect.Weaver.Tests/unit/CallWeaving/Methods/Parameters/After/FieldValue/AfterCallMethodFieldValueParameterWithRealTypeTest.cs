@@ -3,43 +3,43 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.FieldValue
 {
-    public class AfterCallMethodFieldValueParameterWithRealTypeTest : NetAspectTest<AfterCallMethodFieldValueParameterWithRealTypeTest.ClassToWeave>
-   {
-      protected override Action CreateEnsure()
-      {
-         return () =>
+    public class AfterCallMethodFieldValueParameterWithRealTypeTest :
+        NetAspectTest<AfterCallMethodFieldValueParameterWithRealTypeTest.ClassToWeave>
+    {
+        protected override Action CreateEnsure()
+        {
+            return () =>
+                {
+                    Assert.IsNull(MyAspect.FieldValue);
+                    var classToWeave_L = new ClassToWeave();
+                    classToWeave_L.Weaved();
+                    Assert.AreEqual(classToWeave_L, MyAspect.FieldValue);
+                };
+        }
+
+        public class ClassToWeave
+        {
+            [MyAspect]
+            public string Method()
             {
-               Assert.IsNull(MyAspect.FieldValue);
-               var classToWeave_L = new ClassToWeave();
-               classToWeave_L.Weaved();
-               Assert.AreEqual(classToWeave_L, MyAspect.FieldValue);
-            };
-      }
+                return "Hello";
+            }
 
-      public class ClassToWeave
-      {
+            public string Weaved()
+            {
+                return Method();
+            }
+        }
 
-          [MyAspect]
-          public string Method() {return "Hello";}
+        public class MyAspect : Attribute
+        {
+            public static string FieldValue;
+            public bool NetAspectAttribute = true;
 
-         public string Weaved()
-         {
-             return Method();
-         }
-      }
-
-      public class MyAspect : Attribute
-      {
-         public bool NetAspectAttribute = true;
-
-         public static string FieldValue;
-
-         public void AfterCallMethod(string fieldValue)
-         {
-             FieldValue = fieldValue;
-         }
-      }
-   }
-
-   
+            public void AfterCallMethod(string fieldValue)
+            {
+                FieldValue = fieldValue;
+            }
+        }
+    }
 }

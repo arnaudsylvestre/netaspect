@@ -4,44 +4,40 @@ using NUnit.Framework;
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Attributes.Visibility
 {
     public class WeaveProtectedMethodTest : NetAspectTest<WeaveProtectedMethodTest.ClassToWeave>
-   {
-      protected override Action CreateEnsure()
-      {
-         return () =>
+    {
+        protected override Action CreateEnsure()
+        {
+            return () =>
+                {
+                    Assert.IsNull(MyAspect.Instance);
+                    var classToWeave_L = new ClassToWeave();
+                    classToWeave_L.CallWeaved();
+                    Assert.AreEqual(classToWeave_L, MyAspect.Instance);
+                };
+        }
+
+        public class ClassToWeave
+        {
+            public void CallWeaved()
             {
-               Assert.IsNull(MyAspect.Instance);
-               var classToWeave_L = new ClassToWeave();
-               classToWeave_L.CallWeaved();
-               Assert.AreEqual(classToWeave_L, MyAspect.Instance);
-            };
-      }
+                Weaved();
+            }
 
-      public class ClassToWeave
-      {
-          public void CallWeaved()
-          {
-              Weaved();
-          }
+            [MyAspect]
+            protected void Weaved()
+            {
+            }
+        }
 
-         [MyAspect]
-         protected void Weaved()
-         {
+        public class MyAspect : Attribute
+        {
+            public static ClassToWeave Instance;
+            public bool NetAspectAttribute = true;
 
-         }
-      }
-
-      public class MyAspect : Attribute
-      {
-         public bool NetAspectAttribute = true;
-
-         public static ClassToWeave Instance;
-
-         public void Before(ClassToWeave instance)
-         {
-            Instance = instance;
-         }
-      }
-   }
-
-   
+            public void Before(ClassToWeave instance)
+            {
+                Instance = instance;
+            }
+        }
+    }
 }

@@ -29,39 +29,39 @@
 using System;
 using Mono.Collections.Generic;
 
-namespace Mono {
-
-	static class Empty<T> {
-
-		public static readonly T [] Array = new T [0];
-	}
+namespace Mono
+{
+    internal static class Empty<T>
+    {
+        public static readonly T[] Array = new T[0];
+    }
 }
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    static partial class Mixin
+    {
+        public static bool IsNullOrEmpty<T>(this T[] self)
+        {
+            return self == null || self.Length == 0;
+        }
 
-	static partial class Mixin {
+        public static bool IsNullOrEmpty<T>(this Collection<T> self)
+        {
+            return self == null || self.size == 0;
+        }
 
-		public static bool IsNullOrEmpty<T> (this T [] self)
-		{
-			return self == null || self.Length == 0;
-		}
-
-		public static bool IsNullOrEmpty<T> (this Collection<T> self)
-		{
-			return self == null || self.size == 0;
-		}
-
-		public static T [] Resize<T> (this T [] self, int length)
-		{
+        public static T[] Resize<T>(this T[] self, int length)
+        {
 #if !CF
-			Array.Resize (ref self, length);
+            Array.Resize(ref self, length);
 #else
 			var copy = new T [length];
 			Array.Copy (self, copy, self.Length);
 			self = copy;
 #endif
 
-			return self;
-		}
-	}
+            return self;
+        }
+    }
 }

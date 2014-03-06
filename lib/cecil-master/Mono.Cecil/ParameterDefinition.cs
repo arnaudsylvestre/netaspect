@@ -28,145 +28,165 @@
 
 using Mono.Collections.Generic;
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public sealed class ParameterDefinition : ParameterReference, ICustomAttributeProvider, IConstantProvider,
+                                              IMarshalInfoProvider
+    {
+        private ushort attributes;
 
-	public sealed class ParameterDefinition : ParameterReference, ICustomAttributeProvider, IConstantProvider, IMarshalInfoProvider {
+        private object constant = Mixin.NotResolved;
+        private Collection<CustomAttribute> custom_attributes;
+        private MarshalInfo marshal_info;
+        internal IMethodSignature method;
 
-		ushort attributes;
+        internal ParameterDefinition(TypeReference parameterType, IMethodSignature method)
+            : this(string.Empty, ParameterAttributes.None, parameterType)
+        {
+            this.method = method;
+        }
 
-		internal IMethodSignature method;
+        public ParameterDefinition(TypeReference parameterType)
+            : this(string.Empty, ParameterAttributes.None, parameterType)
+        {
+        }
 
-		object constant = Mixin.NotResolved;
-		Collection<CustomAttribute> custom_attributes;
-		MarshalInfo marshal_info;
+        public ParameterDefinition(string name, ParameterAttributes attributes, TypeReference parameterType)
+            : base(name, parameterType)
+        {
+            this.attributes = (ushort) attributes;
+            token = new MetadataToken(TokenType.Param);
+        }
 
-		public ParameterAttributes Attributes {
-			get { return (ParameterAttributes) attributes; }
-			set { attributes = (ushort) value; }
-		}
+        public ParameterAttributes Attributes
+        {
+            get { return (ParameterAttributes) attributes; }
+            set { attributes = (ushort) value; }
+        }
 
-		public IMethodSignature Method {
-			get { return method; }
-		}
+        public IMethodSignature Method
+        {
+            get { return method; }
+        }
 
-		public int Sequence {
-			get {
-				if (method == null)
-					return -1;
+        public int Sequence
+        {
+            get
+            {
+                if (method == null)
+                    return -1;
 
-				return method.HasImplicitThis () ? index + 1 : index;
-			}
-		}
+                return method.HasImplicitThis() ? index + 1 : index;
+            }
+        }
 
-		public bool HasConstant {
-			get {
-				ResolveConstant ();
+        public bool HasConstant
+        {
+            get
+            {
+                ResolveConstant();
 
-				return constant != Mixin.NoValue;
-			}
-			set { if (!value) constant = Mixin.NoValue; }
-		}
+                return constant != Mixin.NoValue;
+            }
+            set { if (!value) constant = Mixin.NoValue; }
+        }
 
-		public object Constant {
-			get { return HasConstant ? constant : null;	}
-			set { constant = value; }
-		}
+        public object Constant
+        {
+            get { return HasConstant ? constant : null; }
+            set { constant = value; }
+        }
 
-		void ResolveConstant ()
-		{
-			if (constant != Mixin.NotResolved)
-				return;
+        public bool HasCustomAttributes
+        {
+            get
+            {
+                if (custom_attributes != null)
+                    return custom_attributes.Count > 0;
 
-			this.ResolveConstant (ref constant, parameter_type.Module);
-		}
+                return this.GetHasCustomAttributes(parameter_type.Module);
+            }
+        }
 
-		public bool HasCustomAttributes {
-			get {
-				if (custom_attributes != null)
-					return custom_attributes.Count > 0;
+        public Collection<CustomAttribute> CustomAttributes
+        {
+            get { return custom_attributes ?? (custom_attributes = this.GetCustomAttributes(parameter_type.Module)); }
+        }
 
-				return this.GetHasCustomAttributes (parameter_type.Module);
-			}
-		}
+        public bool HasMarshalInfo
+        {
+            get
+            {
+                if (marshal_info != null)
+                    return true;
 
-		public Collection<CustomAttribute> CustomAttributes {
-			get { return custom_attributes ?? (custom_attributes = this.GetCustomAttributes (parameter_type.Module)); }
-		}
+                return this.GetHasMarshalInfo(parameter_type.Module);
+            }
+        }
 
-		public bool HasMarshalInfo {
-			get {
-				if (marshal_info != null)
-					return true;
+        public MarshalInfo MarshalInfo
+        {
+            get { return marshal_info ?? (marshal_info = this.GetMarshalInfo(parameter_type.Module)); }
+            set { marshal_info = value; }
+        }
 
-				return this.GetHasMarshalInfo (parameter_type.Module);
-			}
-		}
+        #region ParameterAttributes
 
-		public MarshalInfo MarshalInfo {
-			get { return marshal_info ?? (marshal_info = this.GetMarshalInfo (parameter_type.Module)); }
-			set { marshal_info = value; }
-		}
+        public bool IsIn
+        {
+            get { return attributes.GetAttributes((ushort) ParameterAttributes.In); }
+            set { attributes = attributes.SetAttributes((ushort) ParameterAttributes.In, value); }
+        }
 
-		#region ParameterAttributes
+        public bool IsOut
+        {
+            get { return attributes.GetAttributes((ushort) ParameterAttributes.Out); }
+            set { attributes = attributes.SetAttributes((ushort) ParameterAttributes.Out, value); }
+        }
 
-		public bool IsIn {
-			get { return attributes.GetAttributes ((ushort) ParameterAttributes.In); }
-			set { attributes = attributes.SetAttributes ((ushort) ParameterAttributes.In, value); }
-		}
+        public bool IsLcid
+        {
+            get { return attributes.GetAttributes((ushort) ParameterAttributes.Lcid); }
+            set { attributes = attributes.SetAttributes((ushort) ParameterAttributes.Lcid, value); }
+        }
 
-		public bool IsOut {
-			get { return attributes.GetAttributes ((ushort) ParameterAttributes.Out); }
-			set { attributes = attributes.SetAttributes ((ushort) ParameterAttributes.Out, value); }
-		}
+        public bool IsReturnValue
+        {
+            get { return attributes.GetAttributes((ushort) ParameterAttributes.Retval); }
+            set { attributes = attributes.SetAttributes((ushort) ParameterAttributes.Retval, value); }
+        }
 
-		public bool IsLcid {
-			get { return attributes.GetAttributes ((ushort) ParameterAttributes.Lcid); }
-			set { attributes = attributes.SetAttributes ((ushort) ParameterAttributes.Lcid, value); }
-		}
+        public bool IsOptional
+        {
+            get { return attributes.GetAttributes((ushort) ParameterAttributes.Optional); }
+            set { attributes = attributes.SetAttributes((ushort) ParameterAttributes.Optional, value); }
+        }
 
-		public bool IsReturnValue {
-			get { return attributes.GetAttributes ((ushort) ParameterAttributes.Retval); }
-			set { attributes = attributes.SetAttributes ((ushort) ParameterAttributes.Retval, value); }
-		}
+        public bool HasDefault
+        {
+            get { return attributes.GetAttributes((ushort) ParameterAttributes.HasDefault); }
+            set { attributes = attributes.SetAttributes((ushort) ParameterAttributes.HasDefault, value); }
+        }
 
-		public bool IsOptional {
-			get { return attributes.GetAttributes ((ushort) ParameterAttributes.Optional); }
-			set { attributes = attributes.SetAttributes ((ushort) ParameterAttributes.Optional, value); }
-		}
+        public bool HasFieldMarshal
+        {
+            get { return attributes.GetAttributes((ushort) ParameterAttributes.HasFieldMarshal); }
+            set { attributes = attributes.SetAttributes((ushort) ParameterAttributes.HasFieldMarshal, value); }
+        }
 
-		public bool HasDefault {
-			get { return attributes.GetAttributes ((ushort) ParameterAttributes.HasDefault); }
-			set { attributes = attributes.SetAttributes ((ushort) ParameterAttributes.HasDefault, value); }
-		}
+        #endregion
 
-		public bool HasFieldMarshal {
-			get { return attributes.GetAttributes ((ushort) ParameterAttributes.HasFieldMarshal); }
-			set { attributes = attributes.SetAttributes ((ushort) ParameterAttributes.HasFieldMarshal, value); }
-		}
+        private void ResolveConstant()
+        {
+            if (constant != Mixin.NotResolved)
+                return;
 
-		#endregion
+            this.ResolveConstant(ref constant, parameter_type.Module);
+        }
 
-		internal ParameterDefinition (TypeReference parameterType, IMethodSignature method)
-			: this (string.Empty, ParameterAttributes.None, parameterType)
-		{
-			this.method = method;
-		}
-
-		public ParameterDefinition (TypeReference parameterType)
-			: this (string.Empty, ParameterAttributes.None, parameterType)
-		{
-		}
-
-		public ParameterDefinition (string name, ParameterAttributes attributes, TypeReference parameterType)
-			: base (name, parameterType)
-		{
-			this.attributes = (ushort) attributes;
-			this.token = new MetadataToken (TokenType.Param);
-		}
-
-		public override ParameterDefinition Resolve ()
-		{
-			return this;
-		}
-	}
+        public override ParameterDefinition Resolve()
+        {
+            return this;
+        }
+    }
 }

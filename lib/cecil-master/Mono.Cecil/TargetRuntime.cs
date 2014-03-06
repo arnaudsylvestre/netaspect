@@ -26,12 +26,13 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mono.Cecil {
-
-	public enum TargetRuntime {
-		Net_1_0,
-		Net_1_1,
-		Net_2_0,
-		Net_4_0,
-	}
+namespace Mono.Cecil
+{
+    public enum TargetRuntime
+    {
+        Net_1_0,
+        Net_1_1,
+        Net_2_0,
+        Net_4_0,
+    }
 }

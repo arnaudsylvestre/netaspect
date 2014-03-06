@@ -3,43 +3,39 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.After.FileName
 {
-    public class AfterCallGetFieldFileNameParameterWithRealTypeTest : NetAspectTest<AfterCallGetFieldFileNameParameterWithRealTypeTest.ClassToWeave>
-   {
-      protected override Action CreateEnsure()
-      {
-         return () =>
+    public class AfterCallGetFieldFileNameParameterWithRealTypeTest :
+        NetAspectTest<AfterCallGetFieldFileNameParameterWithRealTypeTest.ClassToWeave>
+    {
+        protected override Action CreateEnsure()
+        {
+            return () =>
+                {
+                    Assert.AreEqual(null, MyAspect.FileName);
+                    var classToWeave_L = new ClassToWeave();
+                    classToWeave_L.Weaved();
+                    Assert.AreEqual("", MyAspect.FileName);
+                };
+        }
+
+        public class ClassToWeave
+        {
+            [MyAspect] public string Field;
+
+            public string Weaved()
             {
-               Assert.AreEqual(null, MyAspect.FileName);
-               var classToWeave_L = new ClassToWeave();
-               classToWeave_L.Weaved();
-               Assert.AreEqual("", MyAspect.FileName);
-            };
-      }
+                return Field;
+            }
+        }
 
-      public class ClassToWeave
-      {
+        public class MyAspect : Attribute
+        {
+            public static string FileName;
+            public bool NetAspectAttribute = true;
 
-          [MyAspect]
-          public string Field;
-
-         public string Weaved()
-         {
-             return Field;
-         }
-      }
-
-      public class MyAspect : Attribute
-      {
-         public bool NetAspectAttribute = true;
-
-         public static string FileName;
-
-         public void AfterGetField(string fileName)
-         {
-             FileName = fileName;
-         }
-      }
-   }
-
-   
+            public void AfterGetField(string fileName)
+            {
+                FileName = fileName;
+            }
+        }
+    }
 }

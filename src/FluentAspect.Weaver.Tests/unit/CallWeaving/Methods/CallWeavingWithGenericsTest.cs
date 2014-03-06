@@ -11,6 +11,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods
         {
             throw new NotImplementedException();
         }
+
         [Test]
         public void CheckWeaveWithReturnGenerics()
         {

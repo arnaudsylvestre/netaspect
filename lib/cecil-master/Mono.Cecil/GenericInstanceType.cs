@@ -28,56 +28,62 @@
 
 using System;
 using System.Text;
-
 using Mono.Collections.Generic;
-
 using MD = Mono.Cecil.Metadata;
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public sealed class GenericInstanceType : TypeSpecification, IGenericInstance, IGenericContext
+    {
+        private Collection<TypeReference> arguments;
 
-	public sealed class GenericInstanceType : TypeSpecification, IGenericInstance, IGenericContext {
+        public GenericInstanceType(TypeReference type)
+            : base(type)
+        {
+            base.IsValueType = type.IsValueType;
+            etype = MD.ElementType.GenericInst;
+        }
 
-		Collection<TypeReference> arguments;
+        public override TypeReference DeclaringType
+        {
+            get { return ElementType.DeclaringType; }
+            set { throw new NotSupportedException(); }
+        }
 
-		public bool HasGenericArguments {
-			get { return !arguments.IsNullOrEmpty (); }
-		}
+        public override string FullName
+        {
+            get
+            {
+                var name = new StringBuilder();
+                name.Append(base.FullName);
+                this.GenericInstanceFullName(name);
+                return name.ToString();
+            }
+        }
 
-		public Collection<TypeReference> GenericArguments {
-			get { return arguments ?? (arguments = new Collection<TypeReference> ()); }
-		}
+        public override bool IsGenericInstance
+        {
+            get { return true; }
+        }
 
-		public override TypeReference DeclaringType {
-			get { return ElementType.DeclaringType; }
-			set { throw new NotSupportedException (); }
-		}
+        internal override bool ContainsGenericParameter
+        {
+            get { return this.ContainsGenericParameter() || base.ContainsGenericParameter; }
+        }
 
-		public override string FullName {
-			get {
-				var name = new StringBuilder ();
-				name.Append (base.FullName);
-				this.GenericInstanceFullName (name);
-				return name.ToString ();
-			}
-		}
+        IGenericParameterProvider IGenericContext.Type
+        {
+            get { return ElementType; }
+        }
 
-		public override bool IsGenericInstance {
-			get { return true; }
-		}
+        public bool HasGenericArguments
+        {
+            get { return !arguments.IsNullOrEmpty(); }
+        }
 
-		internal override bool ContainsGenericParameter {
-			get { return this.ContainsGenericParameter () || base.ContainsGenericParameter; }
-		}
-
-		IGenericParameterProvider IGenericContext.Type {
-			get { return ElementType; }
-		}
-
-		public GenericInstanceType (TypeReference type)
-			: base (type)
-		{
-			base.IsValueType = type.IsValueType;
-			this.etype = MD.ElementType.GenericInst;
-		}
-	}
+        public Collection<TypeReference> GenericArguments
+        {
+            get { return arguments ?? (arguments = new Collection<TypeReference>()); }
+        }
+    }
 }

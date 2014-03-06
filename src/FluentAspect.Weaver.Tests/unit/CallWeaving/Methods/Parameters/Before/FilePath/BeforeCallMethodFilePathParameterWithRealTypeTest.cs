@@ -3,43 +3,43 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.Before.FilePath
 {
-    public class BeforeCallMethodFilePathParameterWithRealTypeTest : NetAspectTest<BeforeCallMethodFilePathParameterWithRealTypeTest.ClassToWeave>
-   {
-      protected override Action CreateEnsure()
-      {
-         return () =>
+    public class BeforeCallMethodFilePathParameterWithRealTypeTest :
+        NetAspectTest<BeforeCallMethodFilePathParameterWithRealTypeTest.ClassToWeave>
+    {
+        protected override Action CreateEnsure()
+        {
+            return () =>
+                {
+                    Assert.AreEqual(null, MyAspect.FilePath);
+                    var classToWeave_L = new ClassToWeave();
+                    classToWeave_L.Weaved();
+                    Assert.AreEqual("", MyAspect.FilePath);
+                };
+        }
+
+        public class ClassToWeave
+        {
+            [MyAspect]
+            public string Method()
             {
-               Assert.AreEqual(null, MyAspect.FilePath);
-               var classToWeave_L = new ClassToWeave();
-               classToWeave_L.Weaved();
-               Assert.AreEqual("", MyAspect.FilePath);
-            };
-      }
+                return "Hello";
+            }
 
-      public class ClassToWeave
-      {
+            public string Weaved()
+            {
+                return Method();
+            }
+        }
 
-          [MyAspect]
-          public string Method() {return "Hello";}
+        public class MyAspect : Attribute
+        {
+            public static string FilePath;
+            public bool NetAspectAttribute = true;
 
-         public string Weaved()
-         {
-             return Method();
-         }
-      }
-
-      public class MyAspect : Attribute
-      {
-         public bool NetAspectAttribute = true;
-
-         public static string FilePath;
-
-         public void BeforeCallMethod(string filePath)
-         {
-             FilePath = filePath;
-         }
-      }
-   }
-
-   
+            public void BeforeCallMethod(string filePath)
+            {
+                FilePath = filePath;
+            }
+        }
+    }
 }

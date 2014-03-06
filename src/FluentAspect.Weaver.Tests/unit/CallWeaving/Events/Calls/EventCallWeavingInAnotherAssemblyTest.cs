@@ -7,9 +7,9 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Calls
     public class EventCallWeavingInAnotherAssemblyTest
     {
         [Test]
-         public void Check()
-         {
-             throw new NotImplementedException();
-         }
+        public void Check()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

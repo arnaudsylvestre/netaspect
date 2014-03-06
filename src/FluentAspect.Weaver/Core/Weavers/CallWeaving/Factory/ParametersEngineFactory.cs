@@ -8,7 +8,8 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory
 {
     public static class ParametersEngineFactory
     {
-        public static ParametersEngine CreateForMethodCall(JoinPoint point, Dictionary<string, VariableDefinition> variablesForParameters)
+        public static ParametersEngine CreateForMethodCall(JoinPoint point,
+                                                           Dictionary<string, VariableDefinition> variablesForParameters)
         {
             var engine = new ParametersEngine();
             engine.AddPdbParameters(point);
@@ -16,6 +17,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory
             engine.AddCalledParameters(point.InstructionStart.Operand as MethodReference, variablesForParameters);
             return engine;
         }
+
         public static ParametersEngine CreateForUpdateField(JoinPoint point, VariableDefinition value)
         {
             var engine = new ParametersEngine();

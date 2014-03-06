@@ -26,16 +26,18 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public enum MetadataScopeType
+    {
+        AssemblyNameReference,
+        ModuleReference,
+        ModuleDefinition,
+    }
 
-	public enum MetadataScopeType {
-		AssemblyNameReference,
-		ModuleReference,
-		ModuleDefinition,
-	}
-
-	public interface IMetadataScope : IMetadataTokenProvider {
-		MetadataScopeType MetadataScopeType { get; }
-		string Name { get; set; }
-	}
+    public interface IMetadataScope : IMetadataTokenProvider
+    {
+        MetadataScopeType MetadataScopeType { get; }
+        string Name { get; set; }
+    }
 }

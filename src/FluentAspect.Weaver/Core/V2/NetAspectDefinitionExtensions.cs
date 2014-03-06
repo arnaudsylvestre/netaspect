@@ -8,28 +8,25 @@ namespace FluentAspect.Weaver.Core.V2
 {
     public static class NetAspectDefinitionExtensions
     {
-
-
         public static List<NetAspectDefinition> FindAspects(IEnumerable<Type> types_P)
         {
             return types_P.
                 Select(t => new NetAspectDefinition(t)).
                 Where(t => t.IsValid)
                           .ToList();
-
         }
 
-        public static IEnumerable<Assembly> GetAssembliesToWeave(this IEnumerable<NetAspectDefinition> aspects_P, Assembly defaultAssembly)
+        public static IEnumerable<Assembly> GetAssembliesToWeave(this IEnumerable<NetAspectDefinition> aspects_P,
+                                                                 Assembly defaultAssembly)
         {
-            HashSet<Assembly> assemblies_L = new HashSet<Assembly>();
+            var assemblies_L = new HashSet<Assembly>();
             assemblies_L.Add(defaultAssembly);
-            foreach (var aspect_L in aspects_P)
+            foreach (NetAspectDefinition aspect_L in aspects_P)
             {
-                var assembliesToWeave = aspect_L.AssembliesToWeave;
-                foreach (var assembly in assembliesToWeave)
+                IEnumerable<Assembly> assembliesToWeave = aspect_L.AssembliesToWeave;
+                foreach (Assembly assembly in assembliesToWeave)
                 {
                     assemblies_L.Add(assembly);
-
                 }
             }
             return assemblies_L;

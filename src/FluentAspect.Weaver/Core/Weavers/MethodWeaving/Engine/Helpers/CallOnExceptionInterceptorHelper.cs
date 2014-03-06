@@ -1,10 +1,4 @@
-﻿using System;
-using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model;
-using FluentAspect.Weaver.Helpers.IL;
-using Mono.Cecil.Cil;
-using Mono.Collections.Generic;
-
-namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
+﻿namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Helpers
 {
     public static class CallOnExceptionInterceptorHelper
     {

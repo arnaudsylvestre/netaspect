@@ -4,8 +4,13 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
 {
     public class SimpleErrorListener : IErrorListener
     {
-        private List<string> errors = new List<string>();
-        private List<string> warnings = new List<string>(); 
+        private readonly List<string> errors = new List<string>();
+        private readonly List<string> warnings = new List<string>();
+
+        public bool HasError
+        {
+            get { return errors.Count != 0; }
+        }
 
         public void OnError(string message, params object[] args)
         {
@@ -16,7 +21,5 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
         {
             warnings.Add(string.Format(message, args));
         }
-
-        public bool HasError { get { return errors.Count != 0; }}
     }
 }

@@ -3,43 +3,43 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.Caller
 {
-    public class AfterCallMethodCallerParameterWithObjectTypeTest : NetAspectTest<AfterCallMethodCallerParameterWithObjectTypeTest.ClassToWeave>
-   {
-      protected override Action CreateEnsure()
-      {
-         return () =>
+    public class AfterCallMethodCallerParameterWithObjectTypeTest :
+        NetAspectTest<AfterCallMethodCallerParameterWithObjectTypeTest.ClassToWeave>
+    {
+        protected override Action CreateEnsure()
+        {
+            return () =>
+                {
+                    Assert.IsNull(MyAspect.Caller);
+                    var classToWeave_L = new ClassToWeave();
+                    classToWeave_L.Weaved();
+                    Assert.AreEqual(classToWeave_L, MyAspect.Caller);
+                };
+        }
+
+        public class ClassToWeave
+        {
+            [MyAspect]
+            public string Method()
             {
-               Assert.IsNull(MyAspect.Caller);
-               var classToWeave_L = new ClassToWeave();
-               classToWeave_L.Weaved();
-               Assert.AreEqual(classToWeave_L, MyAspect.Caller);
-            };
-      }
+                return "Hello";
+            }
 
-      public class ClassToWeave
-      {
+            public string Weaved()
+            {
+                return Method();
+            }
+        }
 
-          [MyAspect]
-          public string Method() {return "Hello";}
+        public class MyAspect : Attribute
+        {
+            public static object Caller;
+            public bool NetAspectAttribute = true;
 
-         public string Weaved()
-         {
-             return Method();
-         }
-      }
-
-      public class MyAspect : Attribute
-      {
-         public bool NetAspectAttribute = true;
-
-         public static object Caller;
-
-         public void AfterCallMethod(object caller)
-         {
-             Caller = caller;
-         }
-      }
-   }
-
-   
+            public void AfterCallMethod(object caller)
+            {
+                Caller = caller;
+            }
+        }
+    }
 }

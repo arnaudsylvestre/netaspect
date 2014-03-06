@@ -12,9 +12,8 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine.Model
 
         public List<VariableDefinition> Interceptors;
         public VariableDefinition args;
+        public VariableDefinition exception;
         public VariableDefinition handleResult;
         public VariableDefinition methodInfo;
-       public VariableDefinition exception;
-
     }
 }

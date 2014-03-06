@@ -26,75 +26,77 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public interface IMemberDefinition : ICustomAttributeProvider
+    {
+        string Name { get; set; }
+        string FullName { get; }
 
-	public interface IMemberDefinition : ICustomAttributeProvider {
+        bool IsSpecialName { get; set; }
+        bool IsRuntimeSpecialName { get; set; }
 
-		string Name { get; set; }
-		string FullName { get; }
+        TypeDefinition DeclaringType { get; set; }
+    }
 
-		bool IsSpecialName { get; set; }
-		bool IsRuntimeSpecialName { get; set; }
+    static partial class Mixin
+    {
+        public static bool GetAttributes(this uint self, uint attributes)
+        {
+            return (self & attributes) != 0;
+        }
 
-		TypeDefinition DeclaringType { get; set; }
-	}
+        public static uint SetAttributes(this uint self, uint attributes, bool value)
+        {
+            if (value)
+                return self | attributes;
 
-	static partial class Mixin {
+            return self & ~attributes;
+        }
 
-		public static bool GetAttributes (this uint self, uint attributes)
-		{
-			return (self & attributes) != 0;
-		}
+        public static bool GetMaskedAttributes(this uint self, uint mask, uint attributes)
+        {
+            return (self & mask) == attributes;
+        }
 
-		public static uint SetAttributes (this uint self, uint attributes, bool value)
-		{
-			if (value)
-				return self | attributes;
+        public static uint SetMaskedAttributes(this uint self, uint mask, uint attributes, bool value)
+        {
+            if (value)
+            {
+                self &= ~mask;
+                return self | attributes;
+            }
 
-			return self & ~attributes;
-		}
+            return self & ~(mask & attributes);
+        }
 
-		public static bool GetMaskedAttributes (this uint self, uint mask, uint attributes)
-		{
-			return (self & mask) == attributes;
-		}
+        public static bool GetAttributes(this ushort self, ushort attributes)
+        {
+            return (self & attributes) != 0;
+        }
 
-		public static uint SetMaskedAttributes (this uint self, uint mask, uint attributes, bool value)
-		{
-			if (value) {
-				self &= ~mask;
-				return self | attributes;
-			}
+        public static ushort SetAttributes(this ushort self, ushort attributes, bool value)
+        {
+            if (value)
+                return (ushort) (self | attributes);
 
-			return self & ~(mask & attributes);
-		}
+            return (ushort) (self & ~attributes);
+        }
 
-		public static bool GetAttributes (this ushort self, ushort attributes)
-		{
-			return (self & attributes) != 0;
-		}
+        public static bool GetMaskedAttributes(this ushort self, ushort mask, uint attributes)
+        {
+            return (self & mask) == attributes;
+        }
 
-		public static ushort SetAttributes (this ushort self, ushort attributes, bool value)
-		{
-			if (value)
-				return (ushort) (self | attributes);
+        public static ushort SetMaskedAttributes(this ushort self, ushort mask, uint attributes, bool value)
+        {
+            if (value)
+            {
+                self = (ushort) (self & ~mask);
+                return (ushort) (self | attributes);
+            }
 
-			return (ushort) (self & ~attributes);
-		}
-
-		public static bool GetMaskedAttributes (this ushort self, ushort mask, uint attributes)
-		{
-			return (self & mask) == attributes;
-		}
-
-		public static ushort SetMaskedAttributes (this ushort self, ushort mask, uint attributes, bool value)
-		{
-			if (value) {
-				self = (ushort) (self & ~mask);
-				return (ushort) (self | attributes);
-			}
-
-			return (ushort) (self & ~(mask & attributes));
-		}
-	}
+            return (ushort) (self & ~(mask & attributes));
+        }
+    }
 }

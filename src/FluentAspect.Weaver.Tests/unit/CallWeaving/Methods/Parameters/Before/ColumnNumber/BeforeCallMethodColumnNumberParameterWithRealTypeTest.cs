@@ -3,43 +3,43 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.Before.ColumnNumber
 {
-    public class BeforeCallMethodColumnNumberParameterWithRealTypeTest : NetAspectTest<BeforeCallMethodColumnNumberParameterWithRealTypeTest.ClassToWeave>
-   {
-      protected override Action CreateEnsure()
-      {
-         return () =>
+    public class BeforeCallMethodColumnNumberParameterWithRealTypeTest :
+        NetAspectTest<BeforeCallMethodColumnNumberParameterWithRealTypeTest.ClassToWeave>
+    {
+        protected override Action CreateEnsure()
+        {
+            return () =>
+                {
+                    Assert.AreEqual(0, MyAspect.ColumnNumber);
+                    var classToWeave_L = new ClassToWeave();
+                    classToWeave_L.Weaved();
+                    Assert.AreEqual(12, MyAspect.ColumnNumber);
+                };
+        }
+
+        public class ClassToWeave
+        {
+            [MyAspect]
+            public string Method()
             {
-               Assert.AreEqual(0, MyAspect.ColumnNumber);
-               var classToWeave_L = new ClassToWeave();
-               classToWeave_L.Weaved();
-               Assert.AreEqual(12, MyAspect.ColumnNumber);
-            };
-      }
+                return "Hello";
+            }
 
-      public class ClassToWeave
-      {
+            public string Weaved()
+            {
+                return Method();
+            }
+        }
 
-          [MyAspect]
-          public string Method() {return "Hello";}
+        public class MyAspect : Attribute
+        {
+            public static int ColumnNumber;
+            public bool NetAspectAttribute = true;
 
-         public string Weaved()
-         {
-             return Method();
-         }
-      }
-
-      public class MyAspect : Attribute
-      {
-         public bool NetAspectAttribute = true;
-
-         public static int ColumnNumber;
-
-         public void BeforeCallMethod(int columnNumber)
-         {
-             ColumnNumber = columnNumber;
-         }
-      }
-   }
-
-   
+            public void BeforeCallMethod(int columnNumber)
+            {
+                ColumnNumber = columnNumber;
+            }
+        }
+    }
 }

@@ -1,24 +1,31 @@
 using System;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Subsribe.Parameters.Before.CalledParameterName
 {
-    public class BeforeCallSubscribeEventCalledParameterNameParameterWithRealTypeOutTest : NetAspectTest<BeforeCallSubscribeEventCalledParameterNameParameterWithRealTypeOutTest.ClassToWeave>
+    public class BeforeCallSubscribeEventCalledParameterNameParameterWithRealTypeOutTest :
+        NetAspectTest<BeforeCallSubscribeEventCalledParameterNameParameterWithRealTypeOutTest.ClassToWeave>
     {
-        protected override Action<FluentAspect.Weaver.Core.Errors.ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
-            return errorHandler => errorHandler.Errors.Add(string.Format("the instance parameter in the method Before of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}", typeof(BeforeMethodInstanceParameterWithBadTypeTest.MyAspect).FullName, typeof(BeforeMethodInstanceParameterWithBadTypeTest.ClassToWeave).FullName));
+            return
+                errorHandler =>
+                errorHandler.Errors.Add(
+                    string.Format(
+                        "the instance parameter in the method Before of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
+                        typeof (BeforeMethodInstanceParameterWithBadTypeTest.MyAspect).FullName,
+                        typeof (BeforeMethodInstanceParameterWithBadTypeTest.ClassToWeave).FullName));
         }
 
         public class ClassToWeave
         {
-
             [MyAspect]
             public event Action Event;
 
             public void Weaved(int param1)
             {
-                Event += () => {};
+                Event += () => { };
             }
         }
 
@@ -32,6 +39,4 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Subsribe.Parameters.
             }
         }
     }
-
-
 }

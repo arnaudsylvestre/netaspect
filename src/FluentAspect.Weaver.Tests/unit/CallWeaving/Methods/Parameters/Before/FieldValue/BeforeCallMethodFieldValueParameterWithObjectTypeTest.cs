@@ -3,43 +3,43 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.Before.FieldValue
 {
-    public class BeforeCallMethodFieldValueParameterWithObjectTypeTest : NetAspectTest<BeforeCallMethodFieldValueParameterWithObjectTypeTest.ClassToWeave>
-   {
-      protected override Action CreateEnsure()
-      {
-         return () =>
+    public class BeforeCallMethodFieldValueParameterWithObjectTypeTest :
+        NetAspectTest<BeforeCallMethodFieldValueParameterWithObjectTypeTest.ClassToWeave>
+    {
+        protected override Action CreateEnsure()
+        {
+            return () =>
+                {
+                    Assert.IsNull(MyAspect.FieldValue);
+                    var classToWeave_L = new ClassToWeave();
+                    classToWeave_L.Weaved();
+                    Assert.AreEqual(classToWeave_L, MyAspect.FieldValue);
+                };
+        }
+
+        public class ClassToWeave
+        {
+            [MyAspect]
+            public string Method()
             {
-               Assert.IsNull(MyAspect.FieldValue);
-               var classToWeave_L = new ClassToWeave();
-               classToWeave_L.Weaved();
-               Assert.AreEqual(classToWeave_L, MyAspect.FieldValue);
-            };
-      }
+                return "Hello";
+            }
 
-      public class ClassToWeave
-      {
+            public string Weaved()
+            {
+                return Method();
+            }
+        }
 
-          [MyAspect]
-          public string Method() {return "Hello";}
+        public class MyAspect : Attribute
+        {
+            public static object FieldValue;
+            public bool NetAspectAttribute = true;
 
-         public string Weaved()
-         {
-             return Method();
-         }
-      }
-
-      public class MyAspect : Attribute
-      {
-         public bool NetAspectAttribute = true;
-
-         public static object FieldValue;
-
-         public void BeforeCallMethod(object fieldValue)
-         {
-             FieldValue = fieldValue;
-         }
-      }
-   }
-
-   
+            public void BeforeCallMethod(object fieldValue)
+            {
+                FieldValue = fieldValue;
+            }
+        }
+    }
 }

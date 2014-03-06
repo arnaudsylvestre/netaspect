@@ -29,42 +29,42 @@
 using System;
 using System.Collections.Generic;
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public class DefaultAssemblyResolver : BaseAssemblyResolver
+    {
+        private readonly IDictionary<string, AssemblyDefinition> cache;
 
-	public class DefaultAssemblyResolver : BaseAssemblyResolver {
+        public DefaultAssemblyResolver()
+        {
+            cache = new Dictionary<string, AssemblyDefinition>(StringComparer.Ordinal);
+        }
 
-		readonly IDictionary<string, AssemblyDefinition> cache;
+        public override AssemblyDefinition Resolve(AssemblyNameReference name)
+        {
+            if (name == null)
+                throw new ArgumentNullException("name");
 
-		public DefaultAssemblyResolver ()
-		{
-			cache = new Dictionary<string, AssemblyDefinition> (StringComparer.Ordinal);
-		}
+            AssemblyDefinition assembly;
+            if (cache.TryGetValue(name.FullName, out assembly))
+                return assembly;
 
-		public override AssemblyDefinition Resolve (AssemblyNameReference name)
-		{
-			if (name == null)
-				throw new ArgumentNullException ("name");
+            assembly = base.Resolve(name);
+            cache[name.FullName] = assembly;
 
-			AssemblyDefinition assembly;
-			if (cache.TryGetValue (name.FullName, out assembly))
-				return assembly;
+            return assembly;
+        }
 
-			assembly = base.Resolve (name);
-			cache [name.FullName] = assembly;
+        protected void RegisterAssembly(AssemblyDefinition assembly)
+        {
+            if (assembly == null)
+                throw new ArgumentNullException("assembly");
 
-			return assembly;
-		}
+            string name = assembly.Name.FullName;
+            if (cache.ContainsKey(name))
+                return;
 
-		protected void RegisterAssembly (AssemblyDefinition assembly)
-		{
-			if (assembly == null)
-				throw new ArgumentNullException ("assembly");
-
-			var name = assembly.Name.FullName;
-			if (cache.ContainsKey (name))
-				return;
-
-			cache [name] = assembly;
-		}
-	}
+            cache[name] = assembly;
+        }
+    }
 }

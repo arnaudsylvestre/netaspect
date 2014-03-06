@@ -26,56 +26,55 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
 using System.Collections.Generic;
 using System.Text;
-
 using Mono.Cecil.PE;
 
-namespace Mono.Cecil.Metadata {
+namespace Mono.Cecil.Metadata
+{
+    internal class StringHeap : Heap
+    {
+        private readonly Dictionary<uint, string> strings = new Dictionary<uint, string>();
 
-	class StringHeap : Heap {
+        public StringHeap(Section section, uint start, uint size)
+            : base(section, start, size)
+        {
+        }
 
-		readonly Dictionary<uint, string> strings = new Dictionary<uint, string> ();
+        public string Read(uint index)
+        {
+            if (index == 0)
+                return string.Empty;
 
-		public StringHeap (Section section, uint start, uint size)
-			: base (section, start, size)
-		{
-		}
+            string @string;
+            if (strings.TryGetValue(index, out @string))
+                return @string;
 
-		public string Read (uint index)
-		{
-			if (index == 0)
-				return string.Empty;
+            if (index > Size - 1)
+                return string.Empty;
 
-			string @string;
-			if (strings.TryGetValue (index, out @string))
-				return @string;
+            @string = ReadStringAt(index);
+            if (@string.Length != 0)
+                strings.Add(index, @string);
 
-			if (index > Size - 1)
-				return string.Empty;
+            return @string;
+        }
 
-			@string = ReadStringAt (index);
-			if (@string.Length != 0)
-				strings.Add (index, @string);
+        protected virtual string ReadStringAt(uint index)
+        {
+            int length = 0;
+            byte[] data = Section.Data;
+            var start = (int) (index + Offset);
 
-			return @string;
-		}
+            for (int i = start;; i++)
+            {
+                if (data[i] == 0)
+                    break;
 
-		protected virtual string ReadStringAt (uint index)
-		{
-			int length = 0;
-			byte [] data = Section.Data;
-			int start = (int) (index + Offset);
+                length++;
+            }
 
-			for (int i = start; ; i++) {
-				if (data [i] == 0)
-					break;
-
-				length++;
-			}
-
-			return Encoding.UTF8.GetString (data, start, length);
-		}
-	}
+            return Encoding.UTF8.GetString(data, start, length);
+        }
+    }
 }

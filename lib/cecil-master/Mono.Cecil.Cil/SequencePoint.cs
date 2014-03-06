@@ -26,45 +26,23 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mono.Cecil.Cil {
+namespace Mono.Cecil.Cil
+{
+    public sealed class SequencePoint
+    {
+        public SequencePoint(Document document)
+        {
+            this.Document = document;
+        }
 
-	public sealed class SequencePoint {
+        public int StartLine { get; set; }
 
-		Document document;
+        public int StartColumn { get; set; }
 
-		int start_line;
-		int start_column;
-		int end_line;
-		int end_column;
+        public int EndLine { get; set; }
 
-		public int StartLine {
-			get { return start_line; }
-			set { start_line = value; }
-		}
+        public int EndColumn { get; set; }
 
-		public int StartColumn {
-			get { return start_column; }
-			set { start_column = value; }
-		}
-
-		public int EndLine {
-			get { return end_line; }
-			set { end_line = value; }
-		}
-
-		public int EndColumn {
-			get { return end_column; }
-			set { end_column = value; }
-		}
-
-		public Document Document {
-			get { return document; }
-			set { document = value; }
-		}
-
-		public SequencePoint (Document document)
-		{
-			this.document = document;
-		}
-	}
+        public Document Document { get; set; }
+    }
 }

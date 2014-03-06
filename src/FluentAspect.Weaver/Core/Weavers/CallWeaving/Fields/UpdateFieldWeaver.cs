@@ -1,21 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
+using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.Model.Helpers;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory;
 using FluentAspect.Weaver.Helpers;
-using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Fields
 {
-
     public class UpdateFieldWeaver : ICallWeavingProvider
     {
         private readonly FieldToWeave _toWeave;
-        private ParametersEngine parametersEngine;
-        VariableDefinition value;
+        private readonly ParametersEngine parametersEngine;
+        private readonly VariableDefinition value;
 
         public UpdateFieldWeaver(FieldToWeave toWeave)
         {
@@ -28,32 +27,33 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Fields
         {
             beforeInstructions.Add(Instruction.Create(OpCodes.Stloc, value));
 
-            foreach (var interceptorType in _toWeave.Interceptors)
+            foreach (CallWeavingConfiguration interceptorType in _toWeave.Interceptors)
             {
-                var method = interceptorType.Before.Method;
+                MethodInfo method = interceptorType.Before.Method;
                 if (method == null) continue;
                 parametersEngine.Fill(method.GetParameters(), beforeInstructions);
                 beforeInstructions.Add(Instruction.Create(OpCodes.Call,
-                                                                   _toWeave.JoinPoint.Method.Module.Import(
-                                                                       method)));
+                                                          _toWeave.JoinPoint.Method.Module.Import(
+                                                              method)));
             }
             beforeInstructions.Add(Instruction.Create(OpCodes.Ldloc, value));
         }
 
         public void AddAfter(List<Instruction> instructions)
         {
-            foreach (var interceptorType in _toWeave.Interceptors)
+            foreach (CallWeavingConfiguration interceptorType in _toWeave.Interceptors)
             {
                 MethodInfo afterCallMethod = interceptorType.After.Method;
                 if (afterCallMethod == null) continue;
                 parametersEngine.Fill(afterCallMethod.GetParameters(), instructions);
-                instructions.Add(Instruction.Create(OpCodes.Call, _toWeave.JoinPoint.Method.Module.Import(afterCallMethod)));
+                instructions.Add(Instruction.Create(OpCodes.Call,
+                                                    _toWeave.JoinPoint.Method.Module.Import(afterCallMethod)));
             }
         }
 
         public void Check(ErrorHandler error)
         {
-            foreach (var netAspectAttribute in _toWeave.Interceptors)
+            foreach (CallWeavingConfiguration netAspectAttribute in _toWeave.Interceptors)
             {
                 parametersEngine.Check(netAspectAttribute.Before.GetParameters(), error);
                 parametersEngine.Check(netAspectAttribute.After.GetParameters(), error);

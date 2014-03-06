@@ -4,19 +4,18 @@ using NUnit.Framework;
 namespace FluentAspect.Weaver.Tests.unit.ParameterWeaving.Method.OnFinally
 {
     [TestFixture]
-   public class OnFinallyMethodParameterValueTest
+    public class OnFinallyMethodParameterValueTest
     {
-       [Test]
-       public void CheckReferenced()
-       {
-          throw new NotImplementedException();
-       }
-
-
-       [Test]
+        [Test]
         public void CheckInstanceWithRealType()
         {
             throw new NotImplementedException();
         }
-   }
+
+        [Test]
+        public void CheckReferenced()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

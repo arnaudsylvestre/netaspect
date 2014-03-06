@@ -25,7 +25,7 @@ namespace FluentAspect.Weaver.Tests.unit
 
         public static void For<T>(Action<ErrorHandler> errorHandlerProvider, Action ensureAssembly)
         {
-            var assembly = typeof(RunWeavingTest).Assembly;
+            Assembly assembly = typeof (RunWeavingTest).Assembly;
             AppDomainIsolatedTestRunner runner = CreateAppRunner(assembly);
 
             var errorHandler = new ErrorHandler();

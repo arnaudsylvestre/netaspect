@@ -26,21 +26,22 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mono.Cecil.Metadata {
-
-	enum CodedIndex {
-		TypeDefOrRef,
-		HasConstant,
-		HasCustomAttribute,
-		HasFieldMarshal,
-		HasDeclSecurity,
-		MemberRefParent,
-		HasSemantics,
-		MethodDefOrRef,
-		MemberForwarded,
-		Implementation,
-		CustomAttributeType,
-		ResolutionScope,
-		TypeOrMethodDef
-	}
+namespace Mono.Cecil.Metadata
+{
+    internal enum CodedIndex
+    {
+        TypeDefOrRef,
+        HasConstant,
+        HasCustomAttribute,
+        HasFieldMarshal,
+        HasDeclSecurity,
+        MemberRefParent,
+        HasSemantics,
+        MethodDefOrRef,
+        MemberForwarded,
+        Implementation,
+        CustomAttributeType,
+        ResolutionScope,
+        TypeOrMethodDef
+    }
 }

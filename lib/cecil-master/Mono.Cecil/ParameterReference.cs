@@ -28,48 +28,52 @@
 
 using System;
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public abstract class ParameterReference : IMetadataTokenProvider
+    {
+        internal int index = -1;
+        private string name;
+        protected TypeReference parameter_type;
+        internal MetadataToken token;
 
-	public abstract class ParameterReference : IMetadataTokenProvider {
+        internal ParameterReference(string name, TypeReference parameterType)
+        {
+            if (parameterType == null)
+                throw new ArgumentNullException("parameterType");
 
-		string name;
-		internal int index = -1;
-		protected TypeReference parameter_type;
-		internal MetadataToken token;
+            this.name = name ?? string.Empty;
+            parameter_type = parameterType;
+        }
 
-		public string Name {
-			get { return name; }
-			set { name = value; }
-		}
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
 
-		public int Index {
-			get { return index; }
-		}
+        public int Index
+        {
+            get { return index; }
+        }
 
-		public TypeReference ParameterType {
-			get { return parameter_type; }
-			set { parameter_type = value; }
-		}
+        public TypeReference ParameterType
+        {
+            get { return parameter_type; }
+            set { parameter_type = value; }
+        }
 
-		public MetadataToken MetadataToken {
-			get { return token; }
-			set { token = value; }
-		}
+        public MetadataToken MetadataToken
+        {
+            get { return token; }
+            set { token = value; }
+        }
 
-		internal ParameterReference (string name, TypeReference parameterType)
-		{
-			if (parameterType == null)
-				throw new ArgumentNullException ("parameterType");
+        public override string ToString()
+        {
+            return name;
+        }
 
-			this.name = name ?? string.Empty;
-			this.parameter_type = parameterType;
-		}
-
-		public override string ToString ()
-		{
-			return name;
-		}
-
-		public abstract ParameterDefinition Resolve ();
-	}
+        public abstract ParameterDefinition Resolve();
+    }
 }

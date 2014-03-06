@@ -27,33 +27,32 @@
 //
 
 using System;
-
 using Mono.Cecil.PE;
 
-namespace Mono.Cecil.Metadata {
+namespace Mono.Cecil.Metadata
+{
+    internal sealed class BlobHeap : Heap
+    {
+        public BlobHeap(Section section, uint start, uint size)
+            : base(section, start, size)
+        {
+        }
 
-	sealed class BlobHeap : Heap {
+        public byte[] Read(uint index)
+        {
+            if (index == 0 || index > Size - 1)
+                return Empty<byte>.Array;
 
-		public BlobHeap (Section section, uint start, uint size)
-			: base (section, start, size)
-		{
-		}
+            byte[] data = Section.Data;
 
-		public byte [] Read (uint index)
-		{
-			if (index == 0 || index > Size - 1)
-				return Empty<byte>.Array;
+            var position = (int) (index + Offset);
+            var length = (int) data.ReadCompressedUInt32(ref position);
 
-			var data = Section.Data;
+            var buffer = new byte[length];
 
-			int position = (int) (index + Offset);
-			int length = (int) data.ReadCompressedUInt32 (ref position);
+            Buffer.BlockCopy(data, position, buffer, 0, length);
 
-			var buffer = new byte [length];
-
-			Buffer.BlockCopy (data, position, buffer, 0, length);
-
-			return buffer;
-		}
-	}
+            return buffer;
+        }
+    }
 }

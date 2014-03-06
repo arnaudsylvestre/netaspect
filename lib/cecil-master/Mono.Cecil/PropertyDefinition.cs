@@ -27,239 +27,267 @@
 //
 
 using System.Text;
-
 using Mono.Collections.Generic;
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public sealed class PropertyDefinition : PropertyReference, IMemberDefinition, IConstantProvider
+    {
+        private ushort attributes;
+        private object constant = Mixin.NotResolved;
 
-	public sealed class PropertyDefinition : PropertyReference, IMemberDefinition, IConstantProvider {
+        private Collection<CustomAttribute> custom_attributes;
 
-		bool? has_this;
-		ushort attributes;
+        internal MethodDefinition get_method;
+        private bool? has_this;
+        internal Collection<MethodDefinition> other_methods;
+        internal MethodDefinition set_method;
 
-		Collection<CustomAttribute> custom_attributes;
+        public PropertyDefinition(string name, PropertyAttributes attributes, TypeReference propertyType)
+            : base(name, propertyType)
+        {
+            this.attributes = (ushort) attributes;
+            token = new MetadataToken(TokenType.Property);
+        }
 
-		internal MethodDefinition get_method;
-		internal MethodDefinition set_method;
-		internal Collection<MethodDefinition> other_methods;
+        public PropertyAttributes Attributes
+        {
+            get { return (PropertyAttributes) attributes; }
+            set { attributes = (ushort) value; }
+        }
 
-		object constant = Mixin.NotResolved;
+        public bool HasThis
+        {
+            get
+            {
+                if (has_this.HasValue)
+                    return has_this.Value;
 
-		public PropertyAttributes Attributes {
-			get { return (PropertyAttributes) attributes; }
-			set { attributes = (ushort) value; }
-		}
+                if (GetMethod != null)
+                    return get_method.HasThis;
 
-		public bool HasThis {
-			get {
-				if (has_this.HasValue)
-					return has_this.Value;
+                if (SetMethod != null)
+                    return set_method.HasThis;
 
-				if (GetMethod != null)
-					return get_method.HasThis;
+                return false;
+            }
+            set { has_this = value; }
+        }
 
-				if (SetMethod != null)
-					return set_method.HasThis;
+        public MethodDefinition GetMethod
+        {
+            get
+            {
+                if (get_method != null)
+                    return get_method;
 
-				return false;
-			}
-			set { has_this = value; }
-		}
+                InitializeMethods();
+                return get_method;
+            }
+            set { get_method = value; }
+        }
 
-		public bool HasCustomAttributes {
-			get {
-				if (custom_attributes != null)
-					return custom_attributes.Count > 0;
+        public MethodDefinition SetMethod
+        {
+            get
+            {
+                if (set_method != null)
+                    return set_method;
 
-				return this.GetHasCustomAttributes (Module);
-			}
-		}
+                InitializeMethods();
+                return set_method;
+            }
+            set { set_method = value; }
+        }
 
-		public Collection<CustomAttribute> CustomAttributes {
-			get { return custom_attributes ?? (custom_attributes = this.GetCustomAttributes (Module)); }
-		}
+        public bool HasOtherMethods
+        {
+            get
+            {
+                if (other_methods != null)
+                    return other_methods.Count > 0;
 
-		public MethodDefinition GetMethod {
-			get {
-				if (get_method != null)
-					return get_method;
+                InitializeMethods();
+                return !other_methods.IsNullOrEmpty();
+            }
+        }
 
-				InitializeMethods ();
-				return get_method;
-			}
-			set { get_method = value; }
-		}
+        public Collection<MethodDefinition> OtherMethods
+        {
+            get
+            {
+                if (other_methods != null)
+                    return other_methods;
 
-		public MethodDefinition SetMethod {
-			get {
-				if (set_method != null)
-					return set_method;
+                InitializeMethods();
 
-				InitializeMethods ();
-				return set_method;
-			}
-			set { set_method = value; }
-		}
+                if (other_methods != null)
+                    return other_methods;
 
-		public bool HasOtherMethods {
-			get {
-				if (other_methods != null)
-					return other_methods.Count > 0;
+                return other_methods = new Collection<MethodDefinition>();
+            }
+        }
 
-				InitializeMethods ();
-				return !other_methods.IsNullOrEmpty ();
-			}
-		}
+        public bool HasParameters
+        {
+            get
+            {
+                InitializeMethods();
 
-		public Collection<MethodDefinition> OtherMethods {
-			get {
-				if (other_methods != null)
-					return other_methods;
+                if (get_method != null)
+                    return get_method.HasParameters;
 
-				InitializeMethods ();
+                if (set_method != null)
+                    return set_method.HasParameters && set_method.Parameters.Count > 1;
 
-				if (other_methods != null)
-					return other_methods;
+                return false;
+            }
+        }
 
-				return other_methods = new Collection<MethodDefinition> ();
-			}
-		}
+        public override Collection<ParameterDefinition> Parameters
+        {
+            get
+            {
+                InitializeMethods();
 
-		public bool HasParameters {
-			get {
-				InitializeMethods ();
+                if (get_method != null)
+                    return MirrorParameters(get_method, 0);
 
-				if (get_method != null)
-					return get_method.HasParameters;
+                if (set_method != null)
+                    return MirrorParameters(set_method, 1);
 
-				if (set_method != null)
-					return set_method.HasParameters && set_method.Parameters.Count > 1;
+                return new Collection<ParameterDefinition>();
+            }
+        }
 
-				return false;
-			}
-		}
+        public override bool IsDefinition
+        {
+            get { return true; }
+        }
 
-		public override Collection<ParameterDefinition> Parameters {
-			get {
-				InitializeMethods ();
+        public bool HasConstant
+        {
+            get
+            {
+                ResolveConstant();
 
-				if (get_method != null)
-					return MirrorParameters (get_method, 0);
+                return constant != Mixin.NoValue;
+            }
+            set { if (!value) constant = Mixin.NoValue; }
+        }
 
-				if (set_method != null)
-					return MirrorParameters (set_method, 1);
+        public object Constant
+        {
+            get { return HasConstant ? constant : null; }
+            set { constant = value; }
+        }
 
-				return new Collection<ParameterDefinition> ();
-			}
-		}
+        public bool HasCustomAttributes
+        {
+            get
+            {
+                if (custom_attributes != null)
+                    return custom_attributes.Count > 0;
 
-		static Collection<ParameterDefinition> MirrorParameters (MethodDefinition method, int bound)
-		{
-			var parameters = new Collection<ParameterDefinition> ();
-			if (!method.HasParameters)
-				return parameters;
+                return this.GetHasCustomAttributes(Module);
+            }
+        }
 
-			var original_parameters = method.Parameters;
-			var end = original_parameters.Count - bound;
+        public Collection<CustomAttribute> CustomAttributes
+        {
+            get { return custom_attributes ?? (custom_attributes = this.GetCustomAttributes(Module)); }
+        }
 
-			for (int i = 0; i < end; i++)
-				parameters.Add (original_parameters [i]);
+        public new TypeDefinition DeclaringType
+        {
+            get { return (TypeDefinition) base.DeclaringType; }
+            set { base.DeclaringType = value; }
+        }
 
-			return parameters;
-		}
+        public override string FullName
+        {
+            get
+            {
+                var builder = new StringBuilder();
+                builder.Append(PropertyType);
+                builder.Append(' ');
+                builder.Append(MemberFullName());
+                builder.Append('(');
+                if (HasParameters)
+                {
+                    Collection<ParameterDefinition> parameters = Parameters;
+                    for (int i = 0; i < parameters.Count; i++)
+                    {
+                        if (i > 0)
+                            builder.Append(',');
+                        builder.Append(parameters[i].ParameterType.FullName);
+                    }
+                }
+                builder.Append(')');
+                return builder.ToString();
+            }
+        }
 
-		public bool HasConstant {
-			get {
-				ResolveConstant ();
+        private static Collection<ParameterDefinition> MirrorParameters(MethodDefinition method, int bound)
+        {
+            var parameters = new Collection<ParameterDefinition>();
+            if (!method.HasParameters)
+                return parameters;
 
-				return constant != Mixin.NoValue;
-			}
-			set { if (!value) constant = Mixin.NoValue; }
-		}
+            Collection<ParameterDefinition> original_parameters = method.Parameters;
+            int end = original_parameters.Count - bound;
 
-		public object Constant {
-			get { return HasConstant ? constant : null;	}
-			set { constant = value; }
-		}
+            for (int i = 0; i < end; i++)
+                parameters.Add(original_parameters[i]);
 
-		void ResolveConstant ()
-		{
-			if (constant != Mixin.NotResolved)
-				return;
+            return parameters;
+        }
 
-			this.ResolveConstant (ref constant, Module);
-		}
+        private void ResolveConstant()
+        {
+            if (constant != Mixin.NotResolved)
+                return;
 
-		#region PropertyAttributes
+            this.ResolveConstant(ref constant, Module);
+        }
 
-		public bool IsSpecialName {
-			get { return attributes.GetAttributes ((ushort) PropertyAttributes.SpecialName); }
-			set { attributes = attributes.SetAttributes ((ushort) PropertyAttributes.SpecialName, value); }
-		}
+        private void InitializeMethods()
+        {
+            if (get_method != null || set_method != null)
+                return;
 
-		public bool IsRuntimeSpecialName {
-			get { return attributes.GetAttributes ((ushort) PropertyAttributes.RTSpecialName); }
-			set { attributes = attributes.SetAttributes ((ushort) PropertyAttributes.RTSpecialName, value); }
-		}
+            ModuleDefinition module = Module;
+            if (!module.HasImage())
+                return;
 
-		public bool HasDefault {
-			get { return attributes.GetAttributes ((ushort) PropertyAttributes.HasDefault); }
-			set { attributes = attributes.SetAttributes ((ushort) PropertyAttributes.HasDefault, value); }
-		}
+            module.Read(this, (property, reader) => reader.ReadMethods(property));
+        }
 
-		#endregion
+        public override PropertyDefinition Resolve()
+        {
+            return this;
+        }
 
-		public new TypeDefinition DeclaringType {
-			get { return (TypeDefinition) base.DeclaringType; }
-			set { base.DeclaringType = value; }
-		}
+        #region PropertyAttributes
 
-		public override bool IsDefinition {
-			get { return true; }
-		}
+        public bool HasDefault
+        {
+            get { return attributes.GetAttributes((ushort) PropertyAttributes.HasDefault); }
+            set { attributes = attributes.SetAttributes((ushort) PropertyAttributes.HasDefault, value); }
+        }
 
-		public override string FullName {
-			get {
-				var builder = new StringBuilder ();
-				builder.Append (PropertyType.ToString ());
-				builder.Append (' ');
-				builder.Append (MemberFullName ());
-				builder.Append ('(');
-				if (HasParameters) {
-					var parameters = Parameters;
-					for (int i = 0; i < parameters.Count; i++) {
-						if (i > 0)
-							builder.Append (',');
-						builder.Append (parameters [i].ParameterType.FullName);
-					}
-				}
-				builder.Append (')');
-				return builder.ToString ();
-			}
-		}
+        public bool IsSpecialName
+        {
+            get { return attributes.GetAttributes((ushort) PropertyAttributes.SpecialName); }
+            set { attributes = attributes.SetAttributes((ushort) PropertyAttributes.SpecialName, value); }
+        }
 
-		public PropertyDefinition (string name, PropertyAttributes attributes, TypeReference propertyType)
-			: base (name, propertyType)
-		{
-			this.attributes = (ushort) attributes;
-			this.token = new MetadataToken (TokenType.Property);
-		}
+        public bool IsRuntimeSpecialName
+        {
+            get { return attributes.GetAttributes((ushort) PropertyAttributes.RTSpecialName); }
+            set { attributes = attributes.SetAttributes((ushort) PropertyAttributes.RTSpecialName, value); }
+        }
 
-		void InitializeMethods ()
-		{
-			if (get_method != null || set_method != null)
-				return;
-
-			var module = this.Module;
-			if (!module.HasImage ())
-				return;
-
-			module.Read (this, (property, reader) => reader.ReadMethods (property));
-		}
-
-		public override PropertyDefinition Resolve ()
-		{
-			return this;
-		}
-	}
+        #endregion
+    }
 }

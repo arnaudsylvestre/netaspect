@@ -3,43 +3,39 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.After.FieldValue
 {
-    public class AfterCallGetFieldFieldValueParameterWithObjectTypeTest : NetAspectTest<AfterCallGetFieldFieldValueParameterWithObjectTypeTest.ClassToWeave>
-   {
-      protected override Action CreateEnsure()
-      {
-         return () =>
+    public class AfterCallGetFieldFieldValueParameterWithObjectTypeTest :
+        NetAspectTest<AfterCallGetFieldFieldValueParameterWithObjectTypeTest.ClassToWeave>
+    {
+        protected override Action CreateEnsure()
+        {
+            return () =>
+                {
+                    Assert.IsNull(MyAspect.FieldValue);
+                    var classToWeave_L = new ClassToWeave();
+                    classToWeave_L.Weaved();
+                    Assert.AreEqual(classToWeave_L, MyAspect.FieldValue);
+                };
+        }
+
+        public class ClassToWeave
+        {
+            [MyAspect] public string Field;
+
+            public string Weaved()
             {
-               Assert.IsNull(MyAspect.FieldValue);
-               var classToWeave_L = new ClassToWeave();
-               classToWeave_L.Weaved();
-               Assert.AreEqual(classToWeave_L, MyAspect.FieldValue);
-            };
-      }
+                return Field;
+            }
+        }
 
-      public class ClassToWeave
-      {
+        public class MyAspect : Attribute
+        {
+            public static object FieldValue;
+            public bool NetAspectAttribute = true;
 
-          [MyAspect]
-          public string Field;
-
-         public string Weaved()
-         {
-             return Field;
-         }
-      }
-
-      public class MyAspect : Attribute
-      {
-         public bool NetAspectAttribute = true;
-
-         public static object FieldValue;
-
-         public void AfterGetField(object fieldValue)
-         {
-             FieldValue = fieldValue;
-         }
-      }
-   }
-
-   
+            public void AfterGetField(object fieldValue)
+            {
+                FieldValue = fieldValue;
+            }
+        }
+    }
 }

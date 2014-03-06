@@ -3,41 +3,39 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.After.Value
 {
-    public class AfterPropertySetterValueParameterWithRealTypeTest : NetAspectTest<AfterPropertySetterValueParameterWithRealTypeTest.ClassToWeave>
-   {
-       protected override Action CreateEnsure()
-       {
-           return () =>
-           {
-               Assert.IsNull(MyAspect.Value);
-               var classToWeave_L = new ClassToWeave();
-               classToWeave_L.MyProperty = "Value";
-               Assert.AreEqual("Value", MyAspect.Value);
-           };
-       }
+    public class AfterPropertySetterValueParameterWithRealTypeTest :
+        NetAspectTest<AfterPropertySetterValueParameterWithRealTypeTest.ClassToWeave>
+    {
+        protected override Action CreateEnsure()
+        {
+            return () =>
+                {
+                    Assert.IsNull(MyAspect.Value);
+                    var classToWeave_L = new ClassToWeave();
+                    classToWeave_L.MyProperty = "Value";
+                    Assert.AreEqual("Value", MyAspect.Value);
+                };
+        }
 
 
-      public class ClassToWeave
-      {
-         [MyAspect]
-         public string MyProperty
-         {
-             set {  }
-         }
-      }
+        public class ClassToWeave
+        {
+            [MyAspect]
+            public string MyProperty
+            {
+                set { }
+            }
+        }
 
-      public class MyAspect : Attribute
-      {
-         public bool NetAspectAttribute = true;
+        public class MyAspect : Attribute
+        {
+            public static string Value;
+            public bool NetAspectAttribute = true;
 
-         public static string Value;
-
-         public void AfterPropertySet(string value)
-         {
-             Value = value;
-         }
-      }
-   }
-
-   
+            public void AfterPropertySet(string value)
+            {
+                Value = value;
+            }
+        }
+    }
 }

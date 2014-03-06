@@ -27,49 +27,50 @@
 //
 
 using System.Text;
-
 using Mono.Collections.Generic;
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public interface IMethodSignature : IMetadataTokenProvider
+    {
+        bool HasThis { get; set; }
+        bool ExplicitThis { get; set; }
+        MethodCallingConvention CallingConvention { get; set; }
 
-	public interface IMethodSignature : IMetadataTokenProvider {
+        bool HasParameters { get; }
+        Collection<ParameterDefinition> Parameters { get; }
+        TypeReference ReturnType { get; set; }
+        MethodReturnType MethodReturnType { get; }
+    }
 
-		bool HasThis { get; set; }
-		bool ExplicitThis { get; set; }
-		MethodCallingConvention CallingConvention { get; set; }
+    static partial class Mixin
+    {
+        public static bool HasImplicitThis(this IMethodSignature self)
+        {
+            return self.HasThis && !self.ExplicitThis;
+        }
 
-		bool HasParameters { get; }
-		Collection<ParameterDefinition> Parameters { get; }
-		TypeReference ReturnType { get; set; }
-		MethodReturnType MethodReturnType { get; }
-	}
+        public static void MethodSignatureFullName(this IMethodSignature self, StringBuilder builder)
+        {
+            builder.Append("(");
 
-	static partial class Mixin {
+            if (self.HasParameters)
+            {
+                Collection<ParameterDefinition> parameters = self.Parameters;
+                for (int i = 0; i < parameters.Count; i++)
+                {
+                    ParameterDefinition parameter = parameters[i];
+                    if (i > 0)
+                        builder.Append(",");
 
-		public static bool HasImplicitThis (this IMethodSignature self)
-		{
-			return self.HasThis && !self.ExplicitThis;
-		}
+                    if (parameter.ParameterType.IsSentinel)
+                        builder.Append("...,");
 
-		public static void MethodSignatureFullName (this IMethodSignature self, StringBuilder builder)
-		{
-			builder.Append ("(");
+                    builder.Append(parameter.ParameterType.FullName);
+                }
+            }
 
-			if (self.HasParameters) {
-				var parameters = self.Parameters;
-				for (int i = 0; i < parameters.Count; i++) {
-					var parameter = parameters [i];
-					if (i > 0)
-						builder.Append (",");
-
-					if (parameter.ParameterType.IsSentinel)
-						builder.Append ("...,");
-
-					builder.Append (parameter.ParameterType.FullName);
-				}
-			}
-
-			builder.Append (")");
-		}
-	}
+            builder.Append(")");
+        }
+    }
 }

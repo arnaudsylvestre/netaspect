@@ -25,25 +25,21 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Engine
                 {
                     Check(p, updateAllowed, variable.VariableType);
                     if (variable == null)
-                       _instructions.Add(Instruction.Create(OpCodes.Ldnull));
+                        _instructions.Add(Instruction.Create(OpCodes.Ldnull));
                     else
-                        _instructions.Add(Instruction.Create(p.ParameterType.IsByRef ? OpCodes.Ldloca : OpCodes.Ldloc, variable));
+                        _instructions.Add(Instruction.Create(p.ParameterType.IsByRef ? OpCodes.Ldloca : OpCodes.Ldloc,
+                                                             variable));
                 });
         }
 
         public void AddParameter(string parameterName, ParameterDefinition parameter, bool updateAllowed)
         {
-            forParameters.Add(parameterName, p =>
-                {
-                    Check(p, updateAllowed, parameter.ParameterType);
-                    
-                        
-                });
+            forParameters.Add(parameterName, p => { Check(p, updateAllowed, parameter.ParameterType); });
         }
 
         private void Check(ParameterInfo parameterInfo, bool updateAllowed, TypeReference variableType)
         {
-            if (parameterInfo.ParameterType == typeof(object))
+            if (parameterInfo.ParameterType == typeof (object))
                 return;
             if (!IsTypeCompliant(parameterInfo.ParameterType, variableType))
             {

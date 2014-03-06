@@ -7,9 +7,9 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods
     public class StaticMethodCallWeavingTest
     {
         [Test]
-         public void Check()
-         {
-             throw new NotImplementedException();
-         }
+        public void Check()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

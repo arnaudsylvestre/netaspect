@@ -26,76 +26,82 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public abstract class MemberReference : IMetadataTokenProvider
+    {
+        private TypeReference declaring_type;
+        private string name;
 
-	public abstract class MemberReference : IMetadataTokenProvider {
+        internal MetadataToken token;
 
-		string name;
-		TypeReference declaring_type;
+        internal MemberReference()
+        {
+        }
 
-		internal MetadataToken token;
+        internal MemberReference(string name)
+        {
+            this.name = name ?? string.Empty;
+        }
 
-		public virtual string Name {
-			get { return name; }
-			set { name = value; }
-		}
+        public virtual string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
 
-		public abstract string FullName {
-			get;
-		}
+        public abstract string FullName { get; }
 
-		public virtual TypeReference DeclaringType {
-			get { return declaring_type; }
-			set { declaring_type = value; }
-		}
+        public virtual TypeReference DeclaringType
+        {
+            get { return declaring_type; }
+            set { declaring_type = value; }
+        }
 
-		public MetadataToken MetadataToken {
-			get { return token; }
-			set { token = value; }
-		}
+        internal bool HasImage
+        {
+            get
+            {
+                ModuleDefinition module = Module;
+                if (module == null)
+                    return false;
 
-		internal bool HasImage {
-			get {
-				var module = Module;
-				if (module == null)
-					return false;
+                return module.HasImage;
+            }
+        }
 
-				return module.HasImage;
-			}
-		}
+        public virtual ModuleDefinition Module
+        {
+            get { return declaring_type != null ? declaring_type.Module : null; }
+        }
 
-		public virtual ModuleDefinition Module {
-			get { return declaring_type != null ? declaring_type.Module : null; }
-		}
+        public virtual bool IsDefinition
+        {
+            get { return false; }
+        }
 
-		public virtual bool IsDefinition {
-			get { return false; }
-		}
+        internal virtual bool ContainsGenericParameter
+        {
+            get { return declaring_type != null && declaring_type.ContainsGenericParameter; }
+        }
 
-		internal virtual bool ContainsGenericParameter {
-			get { return declaring_type != null && declaring_type.ContainsGenericParameter; }
-		}
+        public MetadataToken MetadataToken
+        {
+            get { return token; }
+            set { token = value; }
+        }
 
-		internal MemberReference ()
-		{
-		}
+        internal string MemberFullName()
+        {
+            if (declaring_type == null)
+                return name;
 
-		internal MemberReference (string name)
-		{
-			this.name = name ?? string.Empty;
-		}
+            return declaring_type.FullName + "::" + name;
+        }
 
-		internal string MemberFullName ()
-		{
-			if (declaring_type == null)
-				return name;
-
-			return declaring_type.FullName + "::" + name;
-		}
-
-		public override string ToString ()
-		{
-			return FullName;
-		}
-	}
+        public override string ToString()
+        {
+            return FullName;
+        }
+    }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using FluentAspect.Weaver.Core.Configuration;
-using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.WeaverBuilders
 {

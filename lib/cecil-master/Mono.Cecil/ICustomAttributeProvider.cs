@@ -26,35 +26,33 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 using Mono.Collections.Generic;
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public interface ICustomAttributeProvider : IMetadataTokenProvider
+    {
+        Collection<CustomAttribute> CustomAttributes { get; }
 
-	public interface ICustomAttributeProvider : IMetadataTokenProvider {
+        bool HasCustomAttributes { get; }
+    }
 
-		Collection<CustomAttribute> CustomAttributes { get; }
+    static partial class Mixin
+    {
+        public static bool GetHasCustomAttributes(
+            this ICustomAttributeProvider self,
+            ModuleDefinition module)
+        {
+            return module.HasImage() && module.Read(self, (provider, reader) => reader.HasCustomAttributes(provider));
+        }
 
-		bool HasCustomAttributes { get; }
-	}
-
-	static partial class Mixin {
-
-		public static bool GetHasCustomAttributes (
-			this ICustomAttributeProvider self,
-			ModuleDefinition module)
-		{
-			return module.HasImage () && module.Read (self, (provider, reader) => reader.HasCustomAttributes (provider));
-		}
-
-		public static Collection<CustomAttribute> GetCustomAttributes (
-			this ICustomAttributeProvider self,
-			ModuleDefinition module)
-		{
-			return module.HasImage ()
-				? module.Read (self, (provider, reader) => reader.ReadCustomAttributes (provider))
-				: new Collection<CustomAttribute> ();
-		}
-	}
+        public static Collection<CustomAttribute> GetCustomAttributes(
+            this ICustomAttributeProvider self,
+            ModuleDefinition module)
+        {
+            return module.HasImage()
+                       ? module.Read(self, (provider, reader) => reader.ReadCustomAttributes(provider))
+                       : new Collection<CustomAttribute>();
+        }
+    }
 }

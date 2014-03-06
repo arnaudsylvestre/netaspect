@@ -26,104 +26,102 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #if !READ_ONLY
-
 using RVA = System.UInt32;
 
-namespace Mono.Cecil.PE {
+namespace Mono.Cecil.PE
+{
+    internal enum TextSegment
+    {
+        ImportAddressTable,
+        CLIHeader,
+        Code,
+        Resources,
+        Data,
+        StrongNameSignature,
 
-	enum TextSegment {
-		ImportAddressTable,
-		CLIHeader,
-		Code,
-		Resources,
-		Data,
-		StrongNameSignature,
+        // Metadata
+        MetadataHeader,
+        TableHeap,
+        StringHeap,
+        UserStringHeap,
+        GuidHeap,
+        BlobHeap,
+        // End Metadata
 
-		// Metadata
-		MetadataHeader,
-		TableHeap,
-		StringHeap,
-		UserStringHeap,
-		GuidHeap,
-		BlobHeap,
-		// End Metadata
+        DebugDirectory,
+        ImportDirectory,
+        ImportHintNameTable,
+        StartupStub,
+    }
 
-		DebugDirectory,
-		ImportDirectory,
-		ImportHintNameTable,
-		StartupStub,
-	}
+    internal sealed class TextMap
+    {
+        private readonly Range[] map = new Range[16 /*Enum.GetValues (typeof (TextSegment)).Length*/];
 
-	sealed class TextMap {
+        public void AddMap(TextSegment segment, int length)
+        {
+            map[(int) segment] = new Range(GetStart(segment), (uint) length);
+        }
 
-		readonly Range [] map = new Range [16 /*Enum.GetValues (typeof (TextSegment)).Length*/];
+        public void AddMap(TextSegment segment, int length, int align)
+        {
+            align--;
 
-		public void AddMap (TextSegment segment, int length)
-		{
-			map [(int) segment] = new Range (GetStart (segment), (uint) length);
-		}
+            AddMap(segment, (length + align) & ~align);
+        }
 
-		public void AddMap (TextSegment segment, int length, int align)
-		{
-			align--;
+        public void AddMap(TextSegment segment, Range range)
+        {
+            map[(int) segment] = range;
+        }
 
-			AddMap (segment, (length + align) & ~align);
-		}
+        public Range GetRange(TextSegment segment)
+        {
+            return map[(int) segment];
+        }
 
-		public void AddMap (TextSegment segment, Range range)
-		{
-			map [(int) segment] = range;
-		}
+        public DataDirectory GetDataDirectory(TextSegment segment)
+        {
+            Range range = map[(int) segment];
 
-		public Range GetRange (TextSegment segment)
-		{
-			return map [(int) segment];
-		}
+            return new DataDirectory(range.Length == 0 ? 0 : range.Start, range.Length);
+        }
 
-		public DataDirectory GetDataDirectory (TextSegment segment)
-		{
-			var range = map [(int) segment];
+        public RVA GetRVA(TextSegment segment)
+        {
+            return map[(int) segment].Start;
+        }
 
-			return new DataDirectory (range.Length == 0 ? 0 : range.Start, range.Length);
-		}
+        public RVA GetNextRVA(TextSegment segment)
+        {
+            var i = (int) segment;
+            return map[i].Start + map[i].Length;
+        }
 
-		public RVA GetRVA (TextSegment segment)
-		{
-			return map [(int) segment].Start;
-		}
+        public int GetLength(TextSegment segment)
+        {
+            return (int) map[(int) segment].Length;
+        }
 
-		public RVA GetNextRVA (TextSegment segment)
-		{
-			var i = (int) segment;
-			return map [i].Start + map [i].Length;
-		}
+        private RVA GetStart(TextSegment segment)
+        {
+            var index = (int) segment;
+            return index == 0 ? ImageWriter.text_rva : ComputeStart(index);
+        }
 
-		public int GetLength (TextSegment segment)
-		{
-			return (int) map [(int) segment].Length;
-		}
+        private RVA ComputeStart(int index)
+        {
+            index--;
+            return map[index].Start + map[index].Length;
+        }
 
-		RVA GetStart (TextSegment segment)
-		{
-			var index = (int) segment;
-			return index == 0 ? ImageWriter.text_rva : ComputeStart (index);
-		}
-
-		RVA ComputeStart (int index)
-		{
-			index--;
-			return map [index].Start + map [index].Length;
-		}
-
-		public uint GetLength ()
-		{
-			var range = map [(int) TextSegment.StartupStub];
-			return range.Start - ImageWriter.text_rva + range.Length;
-		}
-	}
+        public uint GetLength()
+        {
+            Range range = map[(int) TextSegment.StartupStub];
+            return range.Start - ImageWriter.text_rva + range.Length;
+        }
+    }
 }
 
 #endif

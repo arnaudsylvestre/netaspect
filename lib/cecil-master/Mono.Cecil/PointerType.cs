@@ -27,35 +27,38 @@
 //
 
 using System;
-
 using MD = Mono.Cecil.Metadata;
 
-namespace Mono.Cecil {
+namespace Mono.Cecil
+{
+    public sealed class PointerType : TypeSpecification
+    {
+        public PointerType(TypeReference type)
+            : base(type)
+        {
+            Mixin.CheckType(type);
+            etype = MD.ElementType.Ptr;
+        }
 
-	public sealed class PointerType : TypeSpecification {
+        public override string Name
+        {
+            get { return base.Name + "*"; }
+        }
 
-		public override string Name {
-			get { return base.Name + "*"; }
-		}
+        public override string FullName
+        {
+            get { return base.FullName + "*"; }
+        }
 
-		public override string FullName {
-			get { return base.FullName + "*"; }
-		}
+        public override bool IsValueType
+        {
+            get { return false; }
+            set { throw new InvalidOperationException(); }
+        }
 
-		public override bool IsValueType {
-			get { return false; }
-			set { throw new InvalidOperationException (); }
-		}
-
-		public override bool IsPointer {
-			get { return true; }
-		}
-
-		public PointerType (TypeReference type)
-			: base (type)
-		{
-			Mixin.CheckType (type);
-			this.etype = MD.ElementType.Ptr;
-		}
-	}
+        public override bool IsPointer
+        {
+            get { return true; }
+        }
+    }
 }

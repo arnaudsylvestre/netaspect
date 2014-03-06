@@ -6,10 +6,10 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter
     [TestFixture]
     public class PropertyGetterCallWeavingAssemblyAttributeWeavingTest
     {
-         [Test]
-         public void Check()
-         {
-             throw new NotImplementedException();
-         }
+        [Test]
+        public void Check()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

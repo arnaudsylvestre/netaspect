@@ -26,10 +26,10 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Mono.Cecil {
-
-	public interface IMetadataTokenProvider {
-
-		MetadataToken MetadataToken { get; set; }
-	}
+namespace Mono.Cecil
+{
+    public interface IMetadataTokenProvider
+    {
+        MetadataToken MetadataToken { get; set; }
+    }
 }
