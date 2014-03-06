@@ -6,7 +6,11 @@ namespace FluentAspect.Weaver.Core.V2
 {
     public interface IInstructionIlInjector
     {
-        void Check(ErrorHandler errorHandler, IlInjectorAvailableVariables availableInformations);
-        void Inject(List<Instruction> instructions, IlInjectorAvailableVariables availableInformations);
+        void Check(ErrorHandler errorHandler, IlInstructionInjectorAvailableVariables availableInformations);
+        void Inject(List<Instruction> instructions, IlInstructionInjectorAvailableVariables availableInformations);
+    }
+
+    public interface IlInstructionInjectorAvailableVariables
+    {
     }
 }

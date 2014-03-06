@@ -4,9 +4,9 @@ using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.V2
 {
-   public interface IIlInjector
+   public interface IIlInjector<T>
    {
-      void Check(ErrorHandler errorHandler, IlInjectorAvailableVariables availableInformations);
-      void Inject(List<Instruction> instructions, IlInjectorAvailableVariables availableInformations);
+      void Check(ErrorHandler errorHandler, T availableInformations);
+      void Inject(List<Instruction> instructions, T availableInformations);
    }
 }

@@ -5,8 +5,8 @@ using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
 {
-    public interface IInterceptorParameterIlGenerator
+    public interface IInterceptorParameterIlGenerator<T>
     {
-        void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariables info);
+        void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, T info);
     }
 }

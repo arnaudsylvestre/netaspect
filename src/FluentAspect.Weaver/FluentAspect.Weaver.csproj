@@ -80,8 +80,6 @@
     <Compile Include="Core\V2\IInstructionIlInjector.cs" />
     <Compile Include="Core\V2\IInterceptorParameterIlGenerator.cs" />
     <Compile Include="Core\V2\IlInjectorAvailableVariables.cs" />
-    <Compile Include="Core\V2\IlInterceptor.cs" />
-    <Compile Include="Core\V2\IMethodWeavingModelFiller.cs" />
     <Compile Include="Core\V2\CallMethodInstructionWeavingModelFiller.cs" />
     <Compile Include="Core\V2\InstanceInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\V2\InstructionsHelper.cs" />
@@ -95,7 +93,6 @@
     <Compile Include="Core\V2\MethodWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\V2\MethodWeavingModelExtensions.cs" />
     <Compile Include="Core\V2\Model\WeavingModel.cs" />
-    <Compile Include="Core\V2\MultiMethodWeavingModelFiller.cs" />
     <Compile Include="Core\V2\Model\MethodWeavingModel.cs" />
     <Compile Include="Core\V2\MultiWeavingModelFiller.cs" />
     <Compile Include="Core\V2\NetAspectDefinitionExtensions.cs" />
@@ -104,7 +101,7 @@
     <Compile Include="Core\V2\ParametersChecker.cs" />
     <Compile Include="Core\V2\ParametersIlGenerator.cs" />
     <Compile Include="Core\V2\ResultInterceptorParametersChercker.cs" />
-    <Compile Include="Core\V2\WeaverCore2.cs" />
+    <Compile Include="Core\V2\WeaverCore.cs" />
     <Compile Include="Core\V2\WeavingModelComputer.cs" />
     <Compile Include="Core\WeaverBuilders\AroundConstructorBuilderWeaver.cs" />
     <Compile Include="Core\WeaverBuilders\CallMethodBuilderWeaver.cs" />

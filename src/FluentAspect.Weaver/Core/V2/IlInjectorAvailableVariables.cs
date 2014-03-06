@@ -9,8 +9,8 @@ using Mono.Collections.Generic;
 
 namespace FluentAspect.Weaver.Core.V2
 {
-    public class IlInjectorAvailableVariables
-   {
+    public class IlInjectorAvailableVariables : IlInstructionInjectorAvailableVariables
+    {
        private readonly VariableDefinition _result;
        public Collection<Instruction> Instructions = new Collection<Instruction>();
        private MethodDefinition method;

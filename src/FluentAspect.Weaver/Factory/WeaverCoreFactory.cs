@@ -4,9 +4,9 @@ namespace FluentAspect.Weaver.Factory
 {
     public static class WeaverCoreFactory
     {
-        public static WeaverCore2 CreateV2()
+        public static WeaverCore Create()
         {
-            return new WeaverCore2(new WeavingModelComputer());
+            return new WeaverCore(new WeavingModelComputer());
         }
     }
 }

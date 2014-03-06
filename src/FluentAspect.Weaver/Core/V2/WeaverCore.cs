@@ -7,12 +7,12 @@ using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.V2
 {
-    public class WeaverCore2
+    public class WeaverCore
    {
       private WeavingModelComputer weavingModelComputer;
       AroundMethodWeaver aroundMethodWeaver_L = new AroundMethodWeaver();
 
-      public WeaverCore2(WeavingModelComputer weavingModelComputer_P)
+      public WeaverCore(WeavingModelComputer weavingModelComputer_P)
       {
          weavingModelComputer = weavingModelComputer_P;
       }
@@ -23,7 +23,7 @@ namespace FluentAspect.Weaver.Core.V2
 
           foreach (var weavingModel in ComputeWeavingModels(typesP_L, assemblyPool))
          {
-            aroundMethodWeaver_L.Weave(new Method(weavingModel.Key), weavingModel.Value.Method, errorHandler);
+            aroundMethodWeaver_L.Weave(new Method(weavingModel.Key), weavingModel.Value, errorHandler);
          }
 
          assemblyPool.Save(errorHandler, newAssemblyNameProvider);

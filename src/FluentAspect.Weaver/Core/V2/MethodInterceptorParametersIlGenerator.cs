@@ -5,14 +5,14 @@ using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
 {
-    public class MethodInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator
+    public class MethodInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator<IlInjectorAvailableVariables>
     {
         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariables info)
         {
             instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentMethodBase));
         }
     }
-    public class PropertyInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator
+    public class PropertyInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator<IlInjectorAvailableVariables>
     {
         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariables info)
         {

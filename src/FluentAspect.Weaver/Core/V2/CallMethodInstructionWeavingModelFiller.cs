@@ -13,9 +13,13 @@ namespace FluentAspect.Weaver.Core.V2
         {
             if (method.Body == null)
                 return;
-            if (!method.Body.Instructions.Any(instruction_L => IsMethodCall(instruction_L, aspect, method)))
-                return;
-            weavingModel.AddMethodCallWeavingModel(method, aspect, aspect.BeforeCallMethod, aspect.AfterCallMethod);
+            foreach (var instruction in method.Body.Instructions)
+            {
+                if (IsMethodCall(instruction, aspect, method))
+                {
+                    weavingModel.AddMethodCallWeavingModel(method, instruction, aspect, aspect.BeforeCallMethod, aspect.AfterCallMethod); 
+                }
+            }
         }
 
         private static bool IsMethodCall(Instruction instruction, NetAspectDefinition aspect, MethodDefinition method)

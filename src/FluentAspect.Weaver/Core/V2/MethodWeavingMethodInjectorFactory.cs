@@ -8,32 +8,32 @@ namespace FluentAspect.Weaver.Core.V2
 {
     public static class MethodWeavingMethodInjectorFactory
     {
-        public static IIlInjector CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType)
+        public static IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType)
         {
 
             var checker = new ParametersChecker();
             FillCommon(method, checker);
 
 
-            var parametersIlGenerator = new ParametersIlGenerator();
+            var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
 
-            return new MethodWeavingBeforeMethodInjector(method, interceptorMethod, aspectType, checker, parametersIlGenerator);
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, aspectType, checker, parametersIlGenerator);
         }
-        public static IIlInjector CreateForOnFinally(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType)
+        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType)
         {
 
             var checker = new ParametersChecker();
             FillCommon(method, checker);
 
 
-            var parametersIlGenerator = new ParametersIlGenerator();
+            var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
 
-            return new MethodWeavingBeforeMethodInjector(method, interceptorMethod, aspectType, checker, parametersIlGenerator);
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, aspectType, checker, parametersIlGenerator);
         }
 
-        private static void FillCommon(MethodDefinition method, ParametersIlGenerator parametersIlGenerator)
+        private static void FillCommon(MethodDefinition method, ParametersIlGenerator<IlInjectorAvailableVariables> parametersIlGenerator)
         {
             parametersIlGenerator.CreateIlGeneratorForInstanceParameter(method);
             parametersIlGenerator.CreateIlGeneratorForMethodParameter();
@@ -49,7 +49,7 @@ namespace FluentAspect.Weaver.Core.V2
             checker.CreateCheckerForParametersParameter();
         }
 
-        public static IIlInjector CreateForAfter(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType)
+        public static IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType)
         {
 
             var checker = new ParametersChecker();
@@ -57,23 +57,23 @@ namespace FluentAspect.Weaver.Core.V2
             checker.CreateCheckerForResultParameter(method);
 
 
-            var parametersIlGenerator = new ParametersIlGenerator();
+            var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
             parametersIlGenerator.CreateIlGeneratorForResultParameter();
-            return new MethodWeavingBeforeMethodInjector(method, interceptorMethod, aspectType, checker, parametersIlGenerator);
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, aspectType, checker, parametersIlGenerator);
         }
 
-        public static IIlInjector CreateForOnException(MethodDefinition method, MethodInfo methodInfo, Type aspectType)
+        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnException(MethodDefinition method, MethodInfo methodInfo, Type aspectType)
         {
             var checker = new ParametersChecker();
             FillCommon(method, checker);
             checker.CreateCheckerForExceptionParameter();
 
 
-            var parametersIlGenerator = new ParametersIlGenerator();
+            var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
             parametersIlGenerator.CreateIlGeneratorForExceptionParameter();
-            return new MethodWeavingBeforeMethodInjector(method, methodInfo, aspectType, checker, parametersIlGenerator);
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, methodInfo, aspectType, checker, parametersIlGenerator);
         }
     }
 }

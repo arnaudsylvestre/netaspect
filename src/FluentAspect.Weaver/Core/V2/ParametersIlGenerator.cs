@@ -6,17 +6,17 @@ using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
 {
-    public class ParametersIlGenerator
+    public class ParametersIlGenerator<T>
     {
         private class Item
         {
             public string Name;
-            public IInterceptorParameterIlGenerator Generator;
+            public IInterceptorParameterIlGenerator<T> Generator;
         }
 
         private List<Item> possibleParameters = new List<Item>();
 
-        public void Add(string name, IInterceptorParameterIlGenerator generator)
+        public void Add(string name, IInterceptorParameterIlGenerator<T> generator)
         {
             possibleParameters.Add(new Item
                 {
@@ -25,7 +25,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine
                 });
         }
 
-        public void Generate(IEnumerable<ParameterInfo> parameters, List<Instruction> instructions, IlInjectorAvailableVariables info)
+        public void Generate(IEnumerable<ParameterInfo> parameters, List<Instruction> instructions, T info)
         {
             foreach (var parameterInfo in parameters)
             {

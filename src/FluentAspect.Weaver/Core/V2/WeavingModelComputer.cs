@@ -12,8 +12,8 @@ namespace FluentAspect.Weaver.Core.V2
     {
         IWeavingModelFiller weavingModelFiller = new MultiWeavingModelFiller(new MethodAttributeWeavingModelFiller(),
             new PropertyGetAttributeWeavingModelFiller(),
-            new CallMethodInstructionWeavingModelFiller(),
-            new CallGetFieldInstructionWeavingModelFiller());
+            new CallMethodInstructionWeavingModelFiller()/*,
+            new CallGetFieldInstructionWeavingModelFiller()*/);
 
         
 

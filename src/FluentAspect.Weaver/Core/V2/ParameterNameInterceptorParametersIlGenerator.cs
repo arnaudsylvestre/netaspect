@@ -8,7 +8,7 @@ using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
 {
-    public class ParameterNameInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator
+    public class ParameterNameInterceptorParametersIlGenerator<T> : IInterceptorParameterIlGenerator<T>
     {
         private ParameterDefinition parameter;
 
@@ -17,7 +17,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
             this.parameter = parameter;
         }
 
-        public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariables info)
+        public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, T info)
         {
             var moduleDefinition = ((MethodDefinition)parameter.Method).Module;
             if (parameterInfo.ParameterType.IsByRef && !parameter.ParameterType.IsByReference)

@@ -12,18 +12,46 @@ namespace FluentAspect.Weaver.Core.V2
 {
    public class AroundMethodWeaver
    {
-      public void Weave(Method method, MethodWeavingModel methodWeavingModel, ErrorHandler errorHandlerP_P)
+      public void Weave(Method method, WeavingModel weavingModel, ErrorHandler errorHandler)
       {
 
-         VariableDefinition result = method.MethodDefinition.ReturnType == method.MethodDefinition.Module.TypeSystem.Void ? null : new VariableDefinition(method.MethodDefinition.ReturnType);
-         IlInjectorAvailableVariables variables = new IlInjectorAvailableVariables(result, method.MethodDefinition);
+         var result = method.MethodDefinition.ReturnType == method.MethodDefinition.Module.TypeSystem.Void ? null : new VariableDefinition(method.MethodDefinition.ReturnType);
+         var variables = new IlInjectorAvailableVariables(result, method.MethodDefinition);
+
+          var newInstructions = new Collection<Instruction>();
+         foreach (var instruction in method.MethodDefinition.Body.Instructions)
+          {
+              if (weavingModel.BeforeInstructions.ContainsKey(instruction))
+              {
+                  var instructionIlInjector = weavingModel.BeforeInstructions[instruction];
+                  instructionIlInjector.Check(errorHandler, variables);
+                  var beforeInstruction = new List<Instruction>();
+                  instructionIlInjector.Inject(beforeInstruction, variables);
+                  newInstructions.AddRange(beforeInstruction);
+              }
+             newInstructions.Add(instruction);
+
+             if (weavingModel.AfterInstructions.ContainsKey(instruction))
+             {
+                 var instructionIlInjector = weavingModel.AfterInstructions[instruction];
+                 instructionIlInjector.Check(errorHandler, variables);
+                 var beforeInstruction = new List<Instruction>();
+                 instructionIlInjector.Inject(beforeInstruction, variables);
+                 newInstructions.AddRange(beforeInstruction);
+             }
+          }
+         method.MethodDefinition.Body.Instructions.Clear();
+          method.MethodDefinition.Body.Instructions.AddRange(newInstructions);
+
+          var methodWeavingModel = weavingModel.Method;
+
           if (result != null)
             method.MethodDefinition.Body.Variables.Add(result);
-         methodWeavingModel.Befores.Check(errorHandlerP_P, variables);
-         methodWeavingModel.Afters.Check(errorHandlerP_P, variables);
-         methodWeavingModel.OnExceptions.Check(errorHandlerP_P, variables);
-         methodWeavingModel.OnFinallys.Check(errorHandlerP_P, variables);
-         if (errorHandlerP_P.Errors.Count > 0)
+         methodWeavingModel.Befores.Check(errorHandler, variables);
+         methodWeavingModel.Afters.Check(errorHandler, variables);
+         methodWeavingModel.OnExceptions.Check(errorHandler, variables);
+         methodWeavingModel.OnFinallys.Check(errorHandler, variables);
+         if (errorHandler.Errors.Count > 0)
               return;
          if (!methodWeavingModel.Befores.Any() && !methodWeavingModel.Afters.Any() &&
             !methodWeavingModel.OnExceptions.Any() && !methodWeavingModel.OnFinallys.Any())

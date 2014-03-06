@@ -6,14 +6,14 @@ namespace FluentAspect.Weaver.Core.V2
 {
    public static class IIlInjectorsExtensions
    {
-      public static void Check(this IEnumerable<IIlInjector> injectors, ErrorHandler errorHandler, IlInjectorAvailableVariables info)
+       public static void Check<T>(this IEnumerable<IIlInjector<T>> injectors, ErrorHandler errorHandler, T info)
       {
          foreach (var ilInjector in injectors)
          {
             ilInjector.Check(errorHandler, info);
          }
       }
-      public static void Inject(this IEnumerable<IIlInjector> injectors, List<Instruction> instructions, IlInjectorAvailableVariables info)
+       public static void Inject<T>(this IEnumerable<IIlInjector<T>> injectors, List<Instruction> instructions, T info)
       {
          foreach (var ilInjector in injectors)
          {

@@ -15,7 +15,7 @@ namespace FluentAspect.Weaver.Tests.Helpers
         {
             var assembly = Assembly.LoadFrom(dll_L);
             var type = assembly.GetTypes().First(t => t.FullName == typeName);
-            var weaver = WeaverCoreFactory.CreateV2();
+            var weaver = WeaverCoreFactory.Create();
             var errorHandler = new ErrorHandler();
             weaver.Weave(ComputeTypes(type), errorHandler, (a) => a);
             var builder = new StringBuilder();
