@@ -7,6 +7,14 @@ namespace FluentAspect.Weaver.Core.V2
 {
     public class MethodAttributeWeavingModelFiller : IWeavingModelFiller
     {
+        public bool CanHandle(NetAspectDefinition aspect)
+        {
+            return aspect.Before.Method != null || 
+                aspect.After.Method != null || 
+                aspect.OnException.Method != null || 
+                aspect.OnFinally.Method != null;
+        }
+
         public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
         {
             TypeReference aspectType = method.Module.Import(aspect.Type);
@@ -23,6 +31,18 @@ namespace FluentAspect.Weaver.Core.V2
 
     public class PropertyGetAttributeWeavingModelFiller : IWeavingModelFiller
     {
+        public bool CanHandle(NetAspectDefinition aspect)
+        {
+            return aspect.BeforePropertyGet.Method != null ||
+                aspect.AfterPropertyGet.Method != null ||
+                aspect.OnExceptionPropertyGet.Method != null ||
+                aspect.OnFinallyPropertyGet.Method != null ||
+                aspect.BeforePropertySet.Method != null ||
+                aspect.AfterPropertySet.Method != null ||
+                aspect.OnExceptionPropertySet.Method != null ||
+                aspect.OnFinallyPropertySet.Method != null;
+        }
+
         public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
         {
             Collection<PropertyDefinition> propertyDefinitions = method.DeclaringType.Properties;

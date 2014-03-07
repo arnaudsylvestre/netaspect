@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Helpers;
@@ -23,18 +26,20 @@ namespace FluentAspect.Weaver.Core.V2
             foreach (Assembly assembly_L in assembliesToWeave)
             {
                 assemblyDefinitionProvider.Add(assembly_L);
-                foreach (
-                    MethodDefinition method in
-                        assemblyDefinitionProvider.GetAssemblyDefinition(assembly_L).GetAllMethods())
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+                foreach (var method in assemblyDefinitionProvider.GetAssemblyDefinition(assembly_L).GetAllMethods())
                 {
                     var model = new WeavingModel();
-                    foreach (NetAspectDefinition aspect_L in aspects)
+                    foreach (var aspect_L in aspects)
                     {
                         weavingModelFiller.FillWeavingModel(method, aspect_L, model);
                     }
                     if (!model.IsEmpty)
                         weavingModels.Add(method, model);
                 }
+                stopWatch.Stop();
+                File.WriteAllText(@"C:\tempo.txt", stopWatch.Elapsed.ToString());
             }
             return weavingModels;
         }

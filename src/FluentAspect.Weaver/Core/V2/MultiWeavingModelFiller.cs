@@ -12,11 +12,17 @@ namespace FluentAspect.Weaver.Core.V2
             weavingModelFillers = weavingModelFillers_P;
         }
 
+        public bool CanHandle(NetAspectDefinition aspect)
+        {
+            return true;
+        }
+
         public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
         {
             foreach (IWeavingModelFiller weavingModelFiller_L in weavingModelFillers)
             {
-                weavingModelFiller_L.FillWeavingModel(method, aspect, weavingModel);
+                if (weavingModelFiller_L.CanHandle(aspect))
+                    weavingModelFiller_L.FillWeavingModel(method, aspect, weavingModel);
             }
         }
     }

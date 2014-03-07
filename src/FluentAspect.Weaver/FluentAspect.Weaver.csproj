@@ -51,8 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\AssemblyDefinitionProvider.cs" />
-    <Compile Include="Core\Configuration\AspectMatch.cs" />
     <Compile Include="Core\Errors\PeVerify.cs" />
     <Compile Include="Core\Helpers\ProcessHelper.cs" />
     <Compile Include="Core\Model\IMethod.cs" />
@@ -97,14 +95,10 @@
     <Compile Include="Core\V2\WeavingModelComputer.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Checkers\Ensure.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\AroundInstructionWeaver.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Events\UpdateCallEventWeaver.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Factory\Parameters\FieldParametersFactory.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Events\EventCallToWeave.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Fields\FieldToWeave.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Methods\CallMethodWeaver.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\JoinPoint.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Engine\ParametersEngine.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Fields\UpdateFieldWeaver.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Methods\MethodCallToWeave.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Factory\ParametersEngineFactory.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Factory\Helpers\InstructionFactory.cs" />
@@ -119,7 +113,6 @@
     <Compile Include="Core\V2\InstanceInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\InstanceParametersFactory.cs" />
     <Compile Include="Core\V2\InterceptorParametersCherckerFactory.cs" />
-    <Compile Include="Core\V2\SimpleErrorListener.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Methods\ParameterWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Methods\IMethodWeaver.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Methods\MethodWeaver.cs" />
@@ -145,10 +138,8 @@
     <Compile Include="Core\Errors\ErrorHandler.cs" />
     <Compile Include="Core\Model\Adapters\TypeDefinitionAdapter.cs" />
     <Compile Include="Helpers\AssemblyDefinitionExtensions.cs" />
-    <Compile Include="Core\Configuration\IConfigurationReader.cs" />
     <Compile Include="Core\IWeaveable.cs" />
     <Compile Include="Core\Weavers\MethodWeaving\Methods\AroundMethodWeaver.cs" />
-    <Compile Include="Core\Configuration\WeavingConfiguration.cs" />
     <Compile Include="Factory\WeaverCoreFactory.cs" />
     <Compile Include="Helpers\MethodDefinitionExtensions.cs" />
     <Compile Include="Helpers\MethodReferenceExtensions.cs" />
@@ -170,10 +161,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\Configuration\Attributes\" />
-    <Folder Include="Core\Configuration\Multi\" />
-    <Folder Include="Core\Configuration\Selector\" />
     <Folder Include="Core\WeaverBuilders\" />
+    <Folder Include="Core\Weavers\CallWeaving\Events\" />
+    <Folder Include="Core\Weavers\CallWeaving\Fields\" />
     <Folder Include="Core\Weavers\Engine\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

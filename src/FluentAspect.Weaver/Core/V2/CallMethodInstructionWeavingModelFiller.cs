@@ -8,6 +8,12 @@ namespace FluentAspect.Weaver.Core.V2
 {
     public class CallMethodInstructionWeavingModelFiller : IWeavingModelFiller
     {
+        public bool CanHandle(NetAspectDefinition aspect)
+        {
+            return aspect.BeforeCallMethod.Method != null ||
+                aspect.AfterCallMethod.Method != null;
+        }
+
         public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
         {
             if (method.Body == null)
@@ -43,6 +49,11 @@ namespace FluentAspect.Weaver.Core.V2
 
     public class CallGetFieldInstructionWeavingModelFiller : IWeavingModelFiller
     {
+        public bool CanHandle(NetAspectDefinition aspect)
+        {
+            throw new NotImplementedException();
+        }
+
         public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
         {
             if (method.Body == null)
