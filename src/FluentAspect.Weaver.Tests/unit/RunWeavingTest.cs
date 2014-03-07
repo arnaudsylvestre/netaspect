@@ -31,7 +31,7 @@ namespace FluentAspect.Weaver.Tests.unit
             var errorHandler = new ErrorHandler();
             errorHandlerProvider(errorHandler);
             string dll = assembly.GetAssemblyPath();
-            Console.Write(runner.RunFromType(dll, typeof (T).FullName, typeof(U).FullName, errorHandler.Errors, errorHandler.Failures,
+            Console.Write(runner.RunFromType(dll, typeof (T).FullName, errorHandler.Errors, errorHandler.Failures,
                                              errorHandler.Warnings));
 
             runner = CreateAppRunner(assembly);
