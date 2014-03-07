@@ -18,7 +18,7 @@ namespace FluentAspect.Weaver.Core.V2
             weavingModelComputer = weavingModelComputer_P;
         }
 
-        public void Weave(Type[] typesP_L, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
+        public void Weave(Type[] typesP_L, Type[] typesP_L, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
         {
             var assemblyPool = new AssemblyPool();
 

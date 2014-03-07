@@ -26,8 +26,6 @@ namespace FluentAspect.Weaver.Core.V2
             foreach (Assembly assembly_L in assembliesToWeave)
             {
                 assemblyDefinitionProvider.Add(assembly_L);
-                Stopwatch stopWatch = new Stopwatch();
-                stopWatch.Start();
                 foreach (var method in assemblyDefinitionProvider.GetAssemblyDefinition(assembly_L).GetAllMethods())
                 {
                     var model = new WeavingModel();
@@ -38,8 +36,6 @@ namespace FluentAspect.Weaver.Core.V2
                     if (!model.IsEmpty)
                         weavingModels.Add(method, model);
                 }
-                stopWatch.Stop();
-                File.WriteAllText(@"C:\tempo.txt", stopWatch.Elapsed.ToString());
             }
             return weavingModels;
         }

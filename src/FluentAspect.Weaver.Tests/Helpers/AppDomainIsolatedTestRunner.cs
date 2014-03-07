@@ -12,14 +12,13 @@ namespace FluentAspect.Weaver.Tests.Helpers
 {
     public class AppDomainIsolatedTestRunner : MarshalByRefObject
     {
-        public string RunFromType(string dll_L, string typeName, List<string> checkErrors, List<string> failures,
-                                  List<string> warnings)
+        public string RunFromType(string dll_L, string typeName, List<string> checkErrors, List<string> failures, List<string> warnings)
         {
             Assembly assembly = Assembly.LoadFrom(dll_L);
             Type type = assembly.GetTypes().First(t => t.FullName == typeName);
             WeaverCore weaver = WeaverCoreFactory.Create();
             var errorHandler = new ErrorHandler();
-            weaver.Weave(ComputeTypes(type), errorHandler, (a) => a);
+            weaver.Weave(ComputeTypes(type), ComputeTypes(type), errorHandler, (a) => a);
             var builder = new StringBuilder();
             errorHandler.Dump(builder);
             Assert.AreEqual(warnings, errorHandler.Warnings);
