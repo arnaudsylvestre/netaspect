@@ -18,11 +18,11 @@ namespace FluentAspect.Weaver.Core.V2
             weavingModelComputer = weavingModelComputer_P;
         }
 
-        public void Weave(Type[] typesP_L, Type[] typesP_L, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
+        public void Weave(Type[] typesP_L, Type[] filter, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
         {
             var assemblyPool = new AssemblyPool();
 
-            foreach (var weavingModel in ComputeWeavingModels(typesP_L, assemblyPool))
+            foreach (var weavingModel in ComputeWeavingModels(typesP_L, filter, assemblyPool))
             {
                 aroundMethodWeaver_L.Weave(new Method(weavingModel.Key), weavingModel.Value, errorHandler);
             }
@@ -30,13 +30,12 @@ namespace FluentAspect.Weaver.Core.V2
             assemblyPool.Save(errorHandler, newAssemblyNameProvider);
         }
 
-        private Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(Type[] typesP_L,
-                                                                                AssemblyPool assemblyPool)
+        private Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(Type[] typesP_L, Type[] filter, AssemblyPool assemblyPool)
         {
             List<NetAspectDefinition> aspects = NetAspectDefinitionExtensions.FindAspects(typesP_L);
             IEnumerable<Assembly> assembliesToWeave = aspects.GetAssembliesToWeave(typesP_L[0].Assembly);
             Dictionary<MethodDefinition, WeavingModel> weavingModels =
-                weavingModelComputer.ComputeWeavingModels(assembliesToWeave, assemblyPool, aspects);
+                weavingModelComputer.ComputeWeavingModels(assembliesToWeave, filter, assemblyPool, aspects);
             return weavingModels;
         }
 
@@ -45,7 +44,7 @@ namespace FluentAspect.Weaver.Core.V2
         {
             Assembly mainAssembly = Assembly.LoadFrom(assemblyFilePath);
             Type[] types = mainAssembly.GetTypes();
-            Weave(types, errorHandler, newAssemblyNameProvider);
+            Weave(types, null, errorHandler, newAssemblyNameProvider);
         }
     }
 }

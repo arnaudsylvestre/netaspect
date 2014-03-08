@@ -18,15 +18,13 @@ namespace FluentAspect.Weaver.Core.V2
             new CallGetFieldInstructionWeavingModelFiller()*/);
 
 
-        public Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave,
-                                                                               AssemblyPool assemblyDefinitionProvider,
-                                                                               IEnumerable<NetAspectDefinition> aspects)
+        public Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave, Type[] filter, AssemblyPool assemblyDefinitionProvider, IEnumerable<NetAspectDefinition> aspects)
         {
             var weavingModels = new Dictionary<MethodDefinition, WeavingModel>();
             foreach (Assembly assembly_L in assembliesToWeave)
             {
                 assemblyDefinitionProvider.Add(assembly_L);
-                foreach (var method in assemblyDefinitionProvider.GetAssemblyDefinition(assembly_L).GetAllMethods())
+                foreach (var method in assemblyDefinitionProvider.GetAssemblyDefinition(assembly_L).GetAllMethods(filter))
                 {
                     var model = new WeavingModel();
                     foreach (var aspect_L in aspects)
