@@ -13,7 +13,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.Ca
                 errorHandler.Errors.Add(
                     string.Format(
                         "the caller parameter in the method AfterCallMethod of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
-                        typeof(ClassToWeave).FullName, typeof(ClassToWeave).FullName));
+                        typeof(MyAspect).FullName, typeof(ClassToWeave).FullName));
         }
 
         public class ClassToWeave

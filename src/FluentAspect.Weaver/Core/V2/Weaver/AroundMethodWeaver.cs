@@ -44,8 +44,6 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
                     newInstructions.AddRange(beforeInstruction);
                 }
             }
-            method.MethodDefinition.Body.Instructions.Clear();
-            method.MethodDefinition.Body.Instructions.AddRange(newInstructions);
 
             MethodWeavingModel methodWeavingModel = weavingModel.Method;
 
@@ -57,6 +55,8 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
             methodWeavingModel.OnFinallys.Check(errorHandler, variables);
             if (errorHandler.Errors.Count > 0)
                 return;
+            method.MethodDefinition.Body.Instructions.Clear();
+            method.MethodDefinition.Body.Instructions.AddRange(newInstructions);
             if (!methodWeavingModel.Befores.Any() && !methodWeavingModel.Afters.Any() &&
                 !methodWeavingModel.OnExceptions.Any() && !methodWeavingModel.OnFinallys.Any())
             {
