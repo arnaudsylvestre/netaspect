@@ -10,6 +10,11 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
         {
             ilGeneratoir.Add("instance", new InstanceInterceptorParametersIlGenerator<T>());
         }
+        public static void CreateIlGeneratorForCallerParameter<T>(this ParametersIlGenerator<T> ilGeneratoir,
+                                                                    MethodDefinition method)
+        {
+            ilGeneratoir.Add("caller", new InstanceInterceptorParametersIlGenerator<T>());
+        }
 
         public static void CreateIlGeneratorForMethodParameter(
             this ParametersIlGenerator<IlInjectorAvailableVariables> ilGeneratoir)

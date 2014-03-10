@@ -65,9 +65,10 @@
     <Compile Include="Core\V2\Weaver\AroundMethodWeaver.cs" />
     <Compile Include="Core\V2\Assemblies\AssemblyPool.cs" />
     <Compile Include="Core\V2\Weaver\Call\IlInstructionInjectorAvailableVariables.cs" />
+    <Compile Include="Core\V2\Weaver\Call\MethodWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\V2\Weaver\Checkers\ParametersInterceptorParametersChercker.cs" />
     <Compile Include="Core\V2\Weaver\Checkers\PropertyInterceptorParametersChercker.cs" />
-    <Compile Include="Core\V2\Weaver\Engine\MetchodCallInjector.cs" />
+    <Compile Include="Core\V2\Weaver\Call\MetchodCallInjector.cs" />
     <Compile Include="Core\V2\Weaver\Fillers\CallGetFieldInstructionWeavingModelFiller.cs" />
     <Compile Include="Core\V2\Weaver\Generators\ExceptionInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\V2\Weaver\Generators\ParametersInterceptorParametersIlGenerator.cs" />
@@ -78,7 +79,6 @@
     <Compile Include="Core\V2\Weaver\Fillers\PropertyGetAttributeWeavingModelFiller.cs" />
     <Compile Include="Core\V2\Weaver\IIlInjector.cs" />
     <Compile Include="Core\V2\Weaver\Helpers\IIlInjectorsExtensions.cs" />
-    <Compile Include="Core\V2\Weaver\Call\IInstructionIlInjector.cs" />
     <Compile Include="Core\V2\Weaver\Generators\IInterceptorParameterIlGenerator.cs" />
     <Compile Include="Core\V2\Weaver\Method\IlInjectorAvailableVariables.cs" />
     <Compile Include="Core\V2\Weaver\Fillers\CallMethodInstructionWeavingModelFiller.cs" />

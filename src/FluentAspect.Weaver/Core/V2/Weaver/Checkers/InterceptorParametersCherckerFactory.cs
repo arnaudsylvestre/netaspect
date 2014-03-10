@@ -9,10 +9,18 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Checkers
         public static void CreateCheckerForInstanceParameter(this ParametersChecker checkers, MethodDefinition method)
         {
             checkers.Add(new InterceptorParametersChecker
-                {
-                    ParameterName = "instance",
-                    Checker = new InstanceInterceptorParametersChercker(method),
-                });
+            {
+                ParameterName = "instance",
+                Checker = new InstanceInterceptorParametersChercker(method),
+            });
+        }
+        public static void CreateCheckerForCallerParameter(this ParametersChecker checkers, MethodDefinition method)
+        {
+            checkers.Add(new InterceptorParametersChecker
+            {
+                ParameterName = "caller",
+                Checker = new InstanceInterceptorParametersChercker(method),
+            });
         }
 
         public static void CreateCheckerForParametersParameter(this ParametersChecker checkers)

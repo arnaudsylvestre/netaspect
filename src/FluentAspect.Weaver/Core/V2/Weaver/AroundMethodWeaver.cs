@@ -27,7 +27,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
             {
                 if (weavingModel.BeforeInstructions.ContainsKey(instruction))
                 {
-                    IInstructionIlInjector instructionIlInjector = weavingModel.BeforeInstructions[instruction];
+                    var instructionIlInjector = weavingModel.BeforeInstructions[instruction];
                     instructionIlInjector.Check(errorHandler, variables);
                     var beforeInstruction = new List<Instruction>();
                     instructionIlInjector.Inject(beforeInstruction, variables);
@@ -37,7 +37,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
 
                 if (weavingModel.AfterInstructions.ContainsKey(instruction))
                 {
-                    IInstructionIlInjector instructionIlInjector = weavingModel.AfterInstructions[instruction];
+                    var instructionIlInjector = weavingModel.AfterInstructions[instruction];
                     instructionIlInjector.Check(errorHandler, variables);
                     var beforeInstruction = new List<Instruction>();
                     instructionIlInjector.Inject(beforeInstruction, variables);

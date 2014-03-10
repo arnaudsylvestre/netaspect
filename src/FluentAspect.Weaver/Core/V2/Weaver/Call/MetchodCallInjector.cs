@@ -11,7 +11,7 @@ using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.V2.Weaver.Engine
 {
-    public class MetchodCallInjector : IInstructionIlInjector
+    public class MetchodCallInjector : IIlInjector<IlInstructionInjectorAvailableVariables>
     {
         private readonly Type _aspectType;
         private readonly MethodDefinition _method;

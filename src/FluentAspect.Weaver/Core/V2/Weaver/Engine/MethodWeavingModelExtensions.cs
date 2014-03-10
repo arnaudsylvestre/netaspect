@@ -29,20 +29,8 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Engine
             MethodInfo afterCallInterceptorMethod = afterCallMethod.Method;
             if (afterCallInterceptorMethod != null)
             {
-                var parametersChecker = new ParametersChecker();
-                var parametersIlGenerator = new ParametersIlGenerator<IlInstructionInjectorAvailableVariables>();
-                parametersChecker.Add(new InterceptorParametersChecker()
-                    {
-                        ParameterName = "called",
-                        Checker = new InstanceInterceptorParametersChercker(method)
-                    });
-                parametersIlGenerator.Add("called",
-                                          new InstanceInterceptorParametersIlGenerator
-                                              <IlInstructionInjectorAvailableVariables>());
                 weavingModel.AfterInstructions.Add(beforeInstruction,
-                                                   new MetchodCallInjector(method, aspect.Type, parametersChecker,
-                                                                           parametersIlGenerator,
-                                                                           afterCallInterceptorMethod));
+                                                   CallWeavingMethodInjectorFactory.CreateForBefore(method, afterCallInterceptorMethod, aspect.Type));
             }
         }
 
