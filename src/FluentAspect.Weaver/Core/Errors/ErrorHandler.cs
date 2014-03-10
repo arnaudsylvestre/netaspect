@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FluentAspect.Weaver.Core.V2.Weaver.Errors;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters;
 
 namespace FluentAspect.Weaver.Core.Errors

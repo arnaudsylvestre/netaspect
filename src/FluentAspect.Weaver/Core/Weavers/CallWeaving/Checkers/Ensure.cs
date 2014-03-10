@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
+using FluentAspect.Weaver.Core.V2.Weaver.Errors;
 using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;

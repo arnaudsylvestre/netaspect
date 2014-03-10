@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using FluentAspect.Weaver.Core.V2.Weaver.Call;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.V2
+namespace FluentAspect.Weaver.Core.V2.Model
 {
     public class WeavingModel
     {

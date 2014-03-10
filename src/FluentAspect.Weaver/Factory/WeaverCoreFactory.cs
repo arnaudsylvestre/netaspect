@@ -1,4 +1,5 @@
 ﻿using FluentAspect.Weaver.Core.V2;
+using FluentAspect.Weaver.Core.V2.Weaver.Engine;
 
 namespace FluentAspect.Weaver.Factory
 {

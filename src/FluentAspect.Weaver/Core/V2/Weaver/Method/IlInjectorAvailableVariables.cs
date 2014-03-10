@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Reflection;
+using FluentAspect.Weaver.Core.V2.Weaver.Call;
 using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
 
-namespace FluentAspect.Weaver.Core.V2
+namespace FluentAspect.Weaver.Core.V2.Weaver.Method
 {
     public class IlInjectorAvailableVariables : IlInstructionInjectorAvailableVariables
     {
@@ -56,7 +57,7 @@ namespace FluentAspect.Weaver.Core.V2
                 {
                     _parameters = method.CreateVariable<object[]>();
 
-                    new Method(method).FillArgsArrayFromParameters(Instructions, _parameters);
+                    new FluentAspect.Weaver.Helpers.IL.Method(method).FillArgsArrayFromParameters(Instructions, _parameters);
                 }
                 return _parameters;
             }
