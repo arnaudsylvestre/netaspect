@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Engine;
 using Mono.Cecil;
@@ -85,7 +86,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
 
     public class ParametersInterceptorParametersChercker : IInterceptorParameterChecker
     {
-        public void Check(ParameterInfo parameter, IErrorListener errorListener)
+        public void Check(ParameterInfo parameter, ErrorHandler errorListener)
         {
             Ensure.NotReferenced(parameter, errorListener);
             Ensure.OfType<object[]>(parameter, errorListener);

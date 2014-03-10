@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers;
 using Mono.Cecil;
 
@@ -13,7 +14,7 @@ namespace FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters
             _parameterName = parameterName;
         }
 
-        public void Check(ParameterInfo parameter, IErrorListener errorListener)
+        public void Check(ParameterInfo parameter, ErrorHandler errorListener)
         {
             Ensure.OfType(parameter, errorListener, _parameterName);
         }

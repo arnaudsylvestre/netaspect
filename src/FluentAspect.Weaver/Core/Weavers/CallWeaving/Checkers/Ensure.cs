@@ -49,13 +49,13 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
         }
 
 
-        public static void OfType<T>(ParameterInfo info, IErrorListener handler)
+        public static void OfType<T>(ParameterInfo info, ErrorHandler handler)
         {
             OfType(info, handler, typeof (T).FullName);
         }
 
 
-        public static void NotOut(ParameterInfo parameterInfo, IErrorListener errorHandler)
+        public static void NotOut(ParameterInfo parameterInfo, ErrorHandler errorHandler)
         {
             if (parameterInfo.IsOut)
             {
@@ -65,7 +65,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
             }
         }
 
-        public static void ResultOfType(ParameterInfo info, IErrorListener handler, MethodDefinition method)
+        public static void ResultOfType(ParameterInfo info, ErrorHandler handler, MethodDefinition method)
         {
             if (method.ReturnType == method.Module.TypeSystem.Void)
             {
@@ -101,7 +101,7 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
             }
         }
 
-        public static void OfType(ParameterInfo info, IErrorListener handler, ParameterDefinition parameter)
+        public static void OfType(ParameterInfo info, ErrorHandler handler, ParameterDefinition parameter)
         {
             if (parameter.ParameterType.IsGenericParameter && info.ParameterType.IsByRef)
             {
