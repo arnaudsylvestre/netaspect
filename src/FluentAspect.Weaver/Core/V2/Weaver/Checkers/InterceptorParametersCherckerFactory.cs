@@ -22,6 +22,14 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Checkers
                 Checker = new InstanceInterceptorParametersChercker(method),
             });
         }
+        public static void CreateCheckerForCalledParametersName(this ParametersChecker checkers, MethodDefinition method)
+        {
+            checkers.AddRange(method.Parameters.Select(parameter => new InterceptorParametersChecker
+            {
+                ParameterName = parameter.Name,
+                Checker = new ParameterNameInterceptorParametersChercker(parameter),
+            }));
+        }
 
         public static void CreateCheckerForParametersParameter(this ParametersChecker checkers)
         {

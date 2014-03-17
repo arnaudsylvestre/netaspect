@@ -31,7 +31,8 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Fillers
                 }
                 if (IsEventCall(instruction, aspect, method))
                 {
-                    throw new NotImplementedException();
+                    weavingModel.AddBeforeEventRaiseCallWeavingModel(method, instruction, aspect, aspect.BeforeRaiseEvent);
+                    weavingModel.AddAfterEventRaiseCallWeavingModel(method, instruction.Next, aspect, aspect.AfterRaiseEvent);
                 }
             }
         }

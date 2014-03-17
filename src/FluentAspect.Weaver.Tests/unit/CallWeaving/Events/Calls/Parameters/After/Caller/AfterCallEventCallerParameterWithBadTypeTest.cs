@@ -13,9 +13,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Calls.Parameters.Aft
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the instance parameter in the method After of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
-                        typeof (AfterMethodInstanceParameterWithBadTypeTest.MyAspect).FullName,
-                        typeof (AfterMethodInstanceParameterWithBadTypeTest.ClassToWeave).FullName));
+                        "the caller parameter in the method AfterRaiseEvent of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
+                        typeof(MyAspect).FullName, typeof(ClassToWeave).FullName));
         }
 
         public class ClassToWeave

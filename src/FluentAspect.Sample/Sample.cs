@@ -15,15 +15,26 @@ namespace FluentAspect.Sample
         public delegate void MyEventHandler(object sender, MyEventArgs e);
 
         public event Action MyEvent;
+        public event Action<int,int> MyEventWithParameter;
 
         public void RegisterEvent()
         {
-            MyEvent();
+            GetEvent()();
+        }
+
+        private Action GetEvent()
+        {
+            return MyEvent;
         }
 
         public void RaisesMyEvent()
         {
             MyEvent();
+        }
+
+        public void RaisesMyEventWithParameters()
+        {
+            MyEventWithParameter(1, 2);
         }
     }
 

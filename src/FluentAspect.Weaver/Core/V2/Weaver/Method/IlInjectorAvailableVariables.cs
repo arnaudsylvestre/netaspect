@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using FluentAspect.Weaver.Core.V2.Weaver.Call;
 using FluentAspect.Weaver.Helpers;
@@ -23,6 +24,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Method
         {
             _result = result;
             this.method = method;
+            VariablesByInstruction = new Dictionary<Instruction, Dictionary<string, VariableDefinition>>();
         }
 
 
@@ -91,5 +93,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Method
                 return currentPropertyInfo;
             }
         }
+
+        public Dictionary<Instruction, Dictionary<string, VariableDefinition>> VariablesByInstruction { get; private set; }
     }
 }

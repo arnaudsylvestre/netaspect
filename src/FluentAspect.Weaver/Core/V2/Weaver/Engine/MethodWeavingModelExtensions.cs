@@ -16,42 +16,38 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Engine
                                                      Instruction beforeInstruction, NetAspectDefinition aspect,
                                                      Interceptor beforeCallMethod, Interceptor afterCallMethod)
         {
-            MethodInfo beforCallInterceptorMethod = beforeCallMethod.Method;
+            var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
             {
-                var parametersChecker = new ParametersChecker();
-                var parametersIlGenerator = new ParametersIlGenerator<IlInstructionInjectorAvailableVariables>();
-                weavingModel.BeforeInstructions.Add(beforeInstruction,
-                                                    new MetchodCallInjector(method, aspect.Type, parametersChecker,
-                                                                            parametersIlGenerator,
-                                                                            beforCallInterceptorMethod));
+                weavingModel.AfterInstructions.Add(beforeInstruction,
+                                                   CallWeavingMethodInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type));
             }
-            MethodInfo afterCallInterceptorMethod = afterCallMethod.Method;
+            var afterCallInterceptorMethod = afterCallMethod.Method;
             if (afterCallInterceptorMethod != null)
             {
                 weavingModel.AfterInstructions.Add(beforeInstruction,
-                                                   CallWeavingMethodInjectorFactory.CreateForBefore(method, afterCallInterceptorMethod, aspect.Type));
+                                                   CallWeavingMethodInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type));
             }
         }
-        public static void AddEventRaiseCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
+        public static void AddBeforeEventRaiseCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
                                                      Instruction beforeInstruction, NetAspectDefinition aspect,
-                                                     Interceptor beforeCallMethod, Interceptor afterCallMethod)
+                                                     Interceptor beforeCallMethod)
         {
-            MethodInfo beforCallInterceptorMethod = beforeCallMethod.Method;
+            var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
             {
-                var parametersChecker = new ParametersChecker();
-                var parametersIlGenerator = new ParametersIlGenerator<IlInstructionInjectorAvailableVariables>();
-                weavingModel.BeforeInstructions.Add(beforeInstruction,
-                                                    new MetchodCallInjector(method, aspect.Type, parametersChecker,
-                                                                            parametersIlGenerator,
-                                                                            beforCallInterceptorMethod));
+                weavingModel.AfterInstructions.Add(beforeInstruction,
+                                                   CallWeavingEventInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction));
             }
-            MethodInfo afterCallInterceptorMethod = afterCallMethod.Method;
+        }
+        public static void AddAfterEventRaiseCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
+                                                     Instruction beforeInstruction, NetAspectDefinition aspect,Interceptor afterCallMethod)
+        {
+            var afterCallInterceptorMethod = afterCallMethod.Method;
             if (afterCallInterceptorMethod != null)
             {
                 weavingModel.AfterInstructions.Add(beforeInstruction,
-                                                   CallWeavingMethodInjectorFactory.CreateForBefore(method, afterCallInterceptorMethod, aspect.Type));
+                                                   CallWeavingEventInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type));
             }
         }
 

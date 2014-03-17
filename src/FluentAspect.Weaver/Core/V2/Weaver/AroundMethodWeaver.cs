@@ -2,7 +2,6 @@
 using System.Linq;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.V2.Model;
-using FluentAspect.Weaver.Core.V2.Weaver.Call;
 using FluentAspect.Weaver.Core.V2.Weaver.Helpers;
 using FluentAspect.Weaver.Core.V2.Weaver.Method;
 using FluentAspect.Weaver.Helpers.IL;
@@ -20,17 +19,47 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
                                         method.MethodDefinition.Module.TypeSystem.Void
                                             ? null
                                             : new VariableDefinition(method.MethodDefinition.ReturnType);
-            var variables = new IlInjectorAvailableVariables(result, method.MethodDefinition);
+
 
             var newInstructions = new Collection<Instruction>();
+            var variablesForInstructionCall = new IlInjectorAvailableVariables(result, method.MethodDefinition);
             foreach (Instruction instruction in method.MethodDefinition.Body.Instructions)
             {
+                if (weavingModel.BeforeInstructions.ContainsKey(instruction) ||
+                    weavingModel.AfterInstructions.ContainsKey(instruction))
+                {
+                    var initInstructions = new List<Instruction>();
+                    var recallInstructions = new List<Instruction>();
+                    if (instruction.IsACallInstruction())
+                    {
+                        var calledMethod = instruction.GetCalledMethod();
+                        variablesForInstructionCall.VariablesByInstruction.Add(instruction, new Dictionary<string, VariableDefinition>());
+                        foreach (var parameter in calledMethod.Parameters.Reverse())
+                        {
+                            var variableDefinition = new VariableDefinition(parameter.ParameterType);
+                            variablesForInstructionCall.VariablesByInstruction[instruction].Add("called" + parameter.Name, variableDefinition);
+                            initInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                        }
+                        if (!calledMethod.IsStatic)
+                        {
+                            var variableDefinition = new VariableDefinition(calledMethod.DeclaringType);
+                            variablesForInstructionCall.VariablesByInstruction[instruction].Add("called", variableDefinition);
+                            initInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                            recallInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
+                        }
+                        foreach (var parameter in calledMethod.Parameters)
+                        {
+                            recallInstructions.Add(Instruction.Create(OpCodes.Ldloc, variablesForInstructionCall.VariablesByInstruction[instruction]["called" + parameter.Name]));
+                        }
+                    }
+                }
+
                 if (weavingModel.BeforeInstructions.ContainsKey(instruction))
                 {
                     var instructionIlInjector = weavingModel.BeforeInstructions[instruction];
-                    instructionIlInjector.Check(errorHandler, variables);
+                    instructionIlInjector.Check(errorHandler, variablesForInstructionCall);
                     var beforeInstruction = new List<Instruction>();
-                    instructionIlInjector.Inject(beforeInstruction, variables);
+                    instructionIlInjector.Inject(beforeInstruction, variablesForInstructionCall);
                     newInstructions.AddRange(beforeInstruction);
                 }
                 newInstructions.Add(instruction);
@@ -38,13 +67,13 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
                 if (weavingModel.AfterInstructions.ContainsKey(instruction))
                 {
                     var instructionIlInjector = weavingModel.AfterInstructions[instruction];
-                    instructionIlInjector.Check(errorHandler, variables);
+                    instructionIlInjector.Check(errorHandler, variablesForInstructionCall);
                     var beforeInstruction = new List<Instruction>();
-                    instructionIlInjector.Inject(beforeInstruction, variables);
+                    instructionIlInjector.Inject(beforeInstruction, variablesForInstructionCall);
                     newInstructions.AddRange(beforeInstruction);
                 }
             }
-
+            var variables = new IlInjectorAvailableVariables(result, method.MethodDefinition);
             MethodWeavingModel methodWeavingModel = weavingModel.Method;
 
             if (result != null)
@@ -60,9 +89,9 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
             if (!methodWeavingModel.Befores.Any() && !methodWeavingModel.Afters.Any() &&
                 !methodWeavingModel.OnExceptions.Any() && !methodWeavingModel.OnFinallys.Any())
             {
+                Finalize(method.MethodDefinition);
                 return;
             }
-            method.MethodDefinition.Body.InitLocals = true;
             var beforeInstructions = new List<Instruction>();
             Instruction beforeAfter = Instruction.Create(OpCodes.Nop);
             var afterInstructions = new List<Instruction>();
@@ -153,6 +182,14 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
             if (onFinallyInstructions.Any())
                 method.AddTryFinally(methodInstructions.First(), onFinallyInstructions.First(),
                                      onFinallyInstructions.First(), end.Count > 0 ? end.First() : null);
+
+
+            Finalize(method.MethodDefinition);
+        }
+
+        private static void Finalize(MethodDefinition methodDefinition)
+        {
+            methodDefinition.Body.InitLocals = methodDefinition.Body.HasVariables;
         }
 
         private static bool IsCallInstruction(Instruction bodyInstruction)

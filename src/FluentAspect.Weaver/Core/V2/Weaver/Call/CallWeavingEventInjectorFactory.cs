@@ -5,17 +5,17 @@ using FluentAspect.Weaver.Core.V2.Weaver.Engine;
 using FluentAspect.Weaver.Core.V2.Weaver.Generators;
 using FluentAspect.Weaver.Core.V2.Weaver.Method;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.V2.Weaver.Call
 {
     public static class CallWeavingEventInjectorFactory
     {
-        public static IIlInjector<IlInstructionInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
-                                                                                MethodInfo interceptorMethod,
-                                                                                Type aspectType)
+        public static IIlInjector<IlInstructionInjectorAvailableVariables> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType, Instruction instruction)
         {
+            var calledMethod = (instruction.Next.Operand as MethodReference).Resolve();
             var checker = new ParametersChecker();
-            FillCommon(method, checker);
+            FillCommon(method, checker, calledMethod);
 
 
             var parametersIlGenerator = new ParametersIlGenerator<IlInstructionInjectorAvailableVariables>();
@@ -29,14 +29,16 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Call
                                        ParametersIlGenerator<IlInstructionInjectorAvailableVariables> parametersIlGenerator)
         {
             parametersIlGenerator.CreateIlGeneratorForCallerParameter(method);
+            parametersIlGenerator.CreateIlGeneratorForCalledParametersName(method);
             //parametersIlGenerator.CreateIlGeneratorForMethodParameter();
             //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
             //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
         }
 
-        private static void FillCommon(MethodDefinition method, ParametersChecker checker)
+        private static void FillCommon(MethodDefinition method, ParametersChecker checker, MethodDefinition calledMethod)
         {
             checker.CreateCheckerForCallerParameter(method);
+            checker.CreateCheckerForCalledParametersName(calledMethod);
             //checker.CreateCheckerForMethodParameter();
             //checker.CreateCheckerForParameterNameParameter(method);
             //checker.CreateCheckerForParametersParameter();
@@ -44,10 +46,11 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Call
 
         public static IIlInjector<IlInstructionInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
-                                                                               Type aspectType)
+                                                                               Type aspectType, Instruction instruction)
         {
+            var calledMethod = (instruction.Operand as MethodReference).Resolve();
             var checker = new ParametersChecker();
-            FillCommon(method, checker);
+            FillCommon(method, checker, calledMethod);
             //checker.CreateCheckerForResultParameter(method);
 
 
