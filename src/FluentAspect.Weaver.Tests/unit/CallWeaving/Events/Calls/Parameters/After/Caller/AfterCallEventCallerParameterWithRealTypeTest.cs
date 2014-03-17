@@ -12,6 +12,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Events.Calls.Parameters.Aft
                 {
                     Assert.IsNull(MyAspect.Caller);
                     var classToWeave_L = new ClassToWeave();
+                    classToWeave_L.Event += () => { };
                     classToWeave_L.Weaved();
                     Assert.AreEqual(classToWeave_L, MyAspect.Caller);
                 };

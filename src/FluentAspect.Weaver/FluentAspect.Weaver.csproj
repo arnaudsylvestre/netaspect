@@ -64,8 +64,9 @@
     <Compile Include="Core\Model\NetAspectDefinition.cs" />
     <Compile Include="Core\V2\Weaver\AroundMethodWeaver.cs" />
     <Compile Include="Core\V2\Assemblies\AssemblyPool.cs" />
+    <Compile Include="Core\V2\Weaver\Call\CallWeavingEventInjectorFactory.cs" />
     <Compile Include="Core\V2\Weaver\Call\IlInstructionInjectorAvailableVariables.cs" />
-    <Compile Include="Core\V2\Weaver\Call\MethodWeavingMethodInjectorFactory.cs" />
+    <Compile Include="Core\V2\Weaver\Call\CallWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\V2\Weaver\Checkers\ParametersInterceptorParametersChercker.cs" />
     <Compile Include="Core\V2\Weaver\Checkers\PropertyInterceptorParametersChercker.cs" />
     <Compile Include="Core\V2\Weaver\Call\MetchodCallInjector.cs" />
