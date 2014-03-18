@@ -1,4 +1,5 @@
-﻿using FluentAspect.Weaver.Core.V2.Weaver.Call;
+﻿using System;
+using FluentAspect.Weaver.Core.V2.Weaver.Call;
 using FluentAspect.Weaver.Core.V2.Weaver.Method;
 using Mono.Cecil;
 
@@ -19,8 +20,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
         public static void CreateIlGeneratorForCalledParametersName(this ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGeneratoir,
                                                                     MethodDefinition calledMethod)
         {
-            ilGeneratoir.
-
+            throw new NotImplementedException();
             foreach (ParameterDefinition parameterDefinition in calledMethod.Parameters)
             {
                 ilGeneratoir.Add(parameterDefinition.Name.ToLower(),
