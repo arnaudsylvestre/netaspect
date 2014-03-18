@@ -9,7 +9,7 @@ using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.V2.Weaver.Call
 {
-    public static class CallWeavingEventInjectorFactory
+    public static class CallWeavingFieldInjectorFactory
     {
         public static IIlInjector<IlInstructionInjectorAvailableVariables> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType, Instruction instruction)
         {
