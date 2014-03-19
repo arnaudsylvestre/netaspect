@@ -12,6 +12,13 @@ namespace FluentAspect.Weaver.Helpers.IL
                 instruction.OpCode == OpCodes.Calli ||
                 instruction.OpCode == OpCodes.Callvirt;
         }
+        public static bool IsAnAccessField(this Instruction instruction)
+        {
+            return instruction.OpCode == OpCodes.Ldsfld ||
+                instruction.OpCode == OpCodes.Ldfld ||
+                instruction.OpCode == OpCodes.Ldflda ||
+                instruction.OpCode == OpCodes.Ldsflda;
+        }
         public static MethodDefinition GetCalledMethod(this Instruction instruction)
         {
             return ((MethodReference)instruction.Operand).Resolve();

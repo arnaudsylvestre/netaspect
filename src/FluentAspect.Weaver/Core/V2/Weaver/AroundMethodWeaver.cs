@@ -23,6 +23,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
 
             var newInstructions = new Collection<Instruction>();
             var variablesForInstructionCall = new IlInjectorAvailableVariables(result, method.MethodDefinition);
+            List<VariableDefinition> variablesToAdd = new List<VariableDefinition>();
             foreach (Instruction instruction in method.MethodDefinition.Body.Instructions)
             {
                 if (weavingModel.BeforeInstructions.ContainsKey(instruction) ||
@@ -43,13 +44,25 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
                         if (!calledMethod.IsStatic)
                         {
                             var variableDefinition = new VariableDefinition(calledMethod.DeclaringType);
-                            variablesForInstructionCall.VariablesByInstruction[instruction].Add("called", variableDefinition);
+                            variablesForInstructionCall.VariablesCalled.Add(instruction, variableDefinition);
                             initInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
                             recallInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
                         }
                         foreach (var parameter in calledMethod.Parameters)
                         {
                             recallInstructions.Add(Instruction.Create(OpCodes.Ldloc, variablesForInstructionCall.VariablesByInstruction[instruction]["called" + parameter.Name]));
+                        }
+                    }
+                    if (instruction.IsAnAccessField())
+                    {
+                        if (instruction.OpCode == OpCodes.Ldfld || instruction.OpCode == OpCodes.Ldflda)
+                        {
+                            var fieldReference = (instruction.Operand as FieldReference).Resolve();
+                            var variableDefinition = new VariableDefinition(fieldReference.DeclaringType);
+                            variablesToAdd.Add(variableDefinition);
+                            variablesForInstructionCall.VariablesCalled.Add(instruction, variableDefinition);
+                            initInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                            recallInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
                         }
                     }
                 }
@@ -84,6 +97,12 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
             methodWeavingModel.OnFinallys.Check(errorHandler, variables);
             if (errorHandler.Errors.Count > 0)
                 return;
+
+            foreach (var variableDefinition in variablesToAdd)
+            {
+                method.MethodDefinition.Body.Variables.Add(variableDefinition);
+            }
+
             method.MethodDefinition.Body.Instructions.Clear();
             method.MethodDefinition.Body.Instructions.AddRange(newInstructions);
             if (!methodWeavingModel.Befores.Any() && !methodWeavingModel.Afters.Any() &&

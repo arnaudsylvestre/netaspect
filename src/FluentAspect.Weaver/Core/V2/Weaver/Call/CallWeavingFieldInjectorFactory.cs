@@ -13,32 +13,32 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Call
     {
         public static IIlInjector<IlInstructionInjectorAvailableVariables> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType, Instruction instruction)
         {
-            var calledMethod = (instruction.Next.Operand as MethodReference).Resolve();
+            var calledField = (instruction.Next.Operand as FieldReference).Resolve();
             var checker = new ParametersChecker();
-            FillCommon(method, checker, calledMethod);
+            FillCommon(method, checker, calledField);
 
 
             var parametersIlGenerator = new ParametersIlGenerator<IlInstructionInjectorAvailableVariables>();
-            FillCommon(method, parametersIlGenerator);
+            FillCommon(method, parametersIlGenerator, instruction);
 
             return new MethodWeavingBeforeMethodInjector<IlInstructionInjectorAvailableVariables>(method, interceptorMethod,
                                                                                        aspectType, checker,
                                                                                        parametersIlGenerator);
         }
         private static void FillCommon(MethodDefinition method,
-                                       ParametersIlGenerator<IlInstructionInjectorAvailableVariables> parametersIlGenerator)
+                                       ParametersIlGenerator<IlInstructionInjectorAvailableVariables> parametersIlGenerator, Instruction instruction)
         {
-            parametersIlGenerator.CreateIlGeneratorForCallerParameter(method);
-            parametersIlGenerator.CreateIlGeneratorForCalledParametersName(method);
+            //parametersIlGenerator.CreateIlGeneratorForCallerParameter(method);
+            parametersIlGenerator.CreateIlGeneratorForCalledParameter(instruction);
             //parametersIlGenerator.CreateIlGeneratorForMethodParameter();
             //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
             //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
         }
 
-        private static void FillCommon(MethodDefinition method, ParametersChecker checker, MethodDefinition calledMethod)
+        private static void FillCommon(MethodDefinition method, ParametersChecker checker, FieldDefinition calledField)
         {
-            checker.CreateCheckerForCallerParameter(method);
-            checker.CreateCheckerForCalledParametersName(calledMethod);
+            //checker.CreateCheckerForCallerParameter(method);
+            checker.CreateCheckerForCalledParameter(calledField);
             //checker.CreateCheckerForMethodParameter();
             //checker.CreateCheckerForParameterNameParameter(method);
             //checker.CreateCheckerForParametersParameter();
@@ -48,14 +48,14 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Call
                                                                                MethodInfo interceptorMethod,
                                                                                Type aspectType, Instruction instruction)
         {
-            var calledMethod = (instruction.Operand as MethodReference).Resolve();
+            var calledField = (instruction.Operand as FieldReference).Resolve();
             var checker = new ParametersChecker();
-            FillCommon(method, checker, calledMethod);
+            FillCommon(method, checker, calledField);
             //checker.CreateCheckerForResultParameter(method);
 
 
             var parametersIlGenerator = new ParametersIlGenerator<IlInstructionInjectorAvailableVariables>();
-            FillCommon(method, parametersIlGenerator);
+            FillCommon(method, parametersIlGenerator, instruction);
             //parametersIlGenerator.CreateIlGeneratorForResultParameter();
             return new MethodWeavingBeforeMethodInjector<IlInstructionInjectorAvailableVariables>(method, interceptorMethod,
                                                                                        aspectType, checker,

@@ -4,6 +4,7 @@ using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.V2.Model;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using FluentAspect.Weaver.Core.V2.Weaver.Engine;
 
 namespace FluentAspect.Weaver.Core.V2.Weaver.Fillers
 {
@@ -11,16 +12,23 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Fillers
     {
         public bool CanHandle(NetAspectDefinition aspect)
         {
-            throw new NotImplementedException();
+            return aspect.BeforeGetField.Method != null ||
+                   aspect.AfterGetField.Method != null;
         }
 
         public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
         {
             if (method.Body == null)
                 return;
-            if (!method.Body.Instructions.Any(instruction_L => IsFieldCall(instruction_L, aspect, method)))
-                return;
-            throw new NotImplementedException();
+            foreach (var instruction in method.Body.Instructions)
+            {
+                if (IsFieldCall(instruction, aspect, method))
+                {
+                    weavingModel.AddGetFieldCallWeavingModel(method, instruction, aspect, aspect.BeforeGetField,
+                                                             aspect.AfterGetField);
+
+                }
+            }
         }
 
         private static bool IsFieldCall(Instruction instruction, NetAspectDefinition aspect, MethodDefinition method)

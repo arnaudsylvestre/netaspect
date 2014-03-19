@@ -1,9 +1,6 @@
-﻿using System.Reflection;
-using FluentAspect.Weaver.Core.Model;
+﻿using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.V2.Model;
 using FluentAspect.Weaver.Core.V2.Weaver.Call;
-using FluentAspect.Weaver.Core.V2.Weaver.Checkers;
-using FluentAspect.Weaver.Core.V2.Weaver.Generators;
 using FluentAspect.Weaver.Core.V2.Weaver.Method;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -27,6 +24,24 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Engine
             {
                 weavingModel.AfterInstructions.Add(beforeInstruction,
                                                    CallWeavingMethodInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type));
+            }
+        }
+
+        public static void AddGetFieldCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
+                                                     Instruction beforeInstruction, NetAspectDefinition aspect,
+                                                     Interceptor beforeCallMethod, Interceptor afterCallMethod)
+        {
+            var beforCallInterceptorMethod = beforeCallMethod.Method;
+            if (beforCallInterceptorMethod != null)
+            {
+                weavingModel.AfterInstructions.Add(beforeInstruction,
+                                                   CallWeavingFieldInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction));
+            }
+            var afterCallInterceptorMethod = afterCallMethod.Method;
+            if (afterCallInterceptorMethod != null)
+            {
+                weavingModel.AfterInstructions.Add(beforeInstruction,
+                                                   CallWeavingFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction));
             }
         }
         

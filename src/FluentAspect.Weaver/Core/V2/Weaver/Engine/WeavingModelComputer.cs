@@ -15,8 +15,8 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Engine
         private readonly IWeavingModelFiller weavingModelFiller =
             new MultiWeavingModelFiller(new MethodAttributeWeavingModelFiller(),
                                         new PropertyGetAttributeWeavingModelFiller(),
-                                        new CallMethodInstructionWeavingModelFiller() /*,
-            new CallGetFieldInstructionWeavingModelFiller()*/);
+                                        new CallMethodInstructionWeavingModelFiller(),
+            new CallGetFieldInstructionWeavingModelFiller());
 
 
         public Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave, Type[] filter, AssemblyPool assemblyDefinitionProvider, IEnumerable<NetAspectDefinition> aspects)

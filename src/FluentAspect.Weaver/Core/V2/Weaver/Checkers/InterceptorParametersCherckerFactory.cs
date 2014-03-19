@@ -30,6 +30,14 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Checkers
                 Checker = new ParameterNameInterceptorParametersChercker(parameter),
             }));
         }
+        public static void CreateCheckerForCalledParameter(this ParametersChecker checkers, FieldDefinition calledType)
+        {
+            checkers.Add(new InterceptorParametersChecker
+            {
+                ParameterName = "called",
+                Checker = new CalledInterceptorParametersChercker(calledType),
+            });
+        }
 
         public static void CreateCheckerForParametersParameter(this ParametersChecker checkers)
         {

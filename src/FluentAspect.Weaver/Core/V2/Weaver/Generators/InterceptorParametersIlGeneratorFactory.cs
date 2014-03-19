@@ -2,6 +2,7 @@
 using FluentAspect.Weaver.Core.V2.Weaver.Call;
 using FluentAspect.Weaver.Core.V2.Weaver.Method;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
 {
@@ -26,6 +27,11 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
                 ilGeneratoir.Add(parameterDefinition.Name.ToLower(),
                                  new ParameterNameInterceptorParametersIlGenerator<IlInstructionInjectorAvailableVariables>(parameterDefinition));
             }
+        }
+        public static void CreateIlGeneratorForCalledParameter(this ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGeneratoir,
+                                                                    Instruction instruction)
+        {
+            ilGeneratoir.Add("called", new CalledInterceptorParametersIlGenerator(instruction));
         }
 
         public static void CreateIlGeneratorForMethodParameter(

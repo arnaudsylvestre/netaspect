@@ -25,6 +25,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Method
             _result = result;
             this.method = method;
             VariablesByInstruction = new Dictionary<Instruction, Dictionary<string, VariableDefinition>>();
+            VariablesCalled = new Dictionary<Instruction, VariableDefinition>();
         }
 
 
@@ -95,5 +96,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Method
         }
 
         public Dictionary<Instruction, Dictionary<string, VariableDefinition>> VariablesByInstruction { get; private set; }
+        public Dictionary<Instruction, VariableDefinition> VariablesCalled { get; private set; }
+
     }
 }
