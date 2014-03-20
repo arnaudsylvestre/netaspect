@@ -13,10 +13,17 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
         {
             ilGeneratoir.Add("instance", new InstanceInterceptorParametersIlGenerator<T>());
         }
-        public static void CreateIlGeneratorForCallerParameter<T>(this ParametersIlGenerator<T> ilGeneratoir,
-                                                                    MethodDefinition method)
+        public static void CreateIlGeneratorForCallerParameter<T>(this ParametersIlGenerator<T> ilGeneratoir)
         {
             ilGeneratoir.Add("caller", new InstanceInterceptorParametersIlGenerator<T>());
+        }
+        public static void CreateIlGeneratorForColumnNumber<T>(this ParametersIlGenerator<T> ilGeneratoir, Instruction instruction)
+        {
+            ilGeneratoir.Add("columnnumber", new ColumnNumberInterceptorParametersIlGenerator<T>(instruction));
+        }
+        public static void CreateIlGeneratorForCallerParameters(this ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGeneratoir)
+        {
+            ilGeneratoir.Add("callerparameters", new ParametersInterceptorParametersIlGenerator<IlInstructionInjectorAvailableVariables>());
         }
         public static void CreateIlGeneratorForCalledParametersName(this ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGeneratoir,
                                                                     MethodDefinition calledMethod)
@@ -25,6 +32,15 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
             foreach (ParameterDefinition parameterDefinition in calledMethod.Parameters)
             {
                 ilGeneratoir.Add(parameterDefinition.Name.ToLower(),
+                                 new ParameterNameInterceptorParametersIlGenerator<IlInstructionInjectorAvailableVariables>(parameterDefinition));
+            }
+        }
+        public static void CreateIlGeneratorForCallerParametersName(this ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGeneratoir,
+                                                                    MethodDefinition callerMethod)
+        {
+            foreach (ParameterDefinition parameterDefinition in callerMethod.Parameters)
+            {
+                ilGeneratoir.Add("caller" + parameterDefinition.Name.ToLower(),
                                  new ParameterNameInterceptorParametersIlGenerator<IlInstructionInjectorAvailableVariables>(parameterDefinition));
             }
         }
@@ -78,7 +94,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
         public static void CreateIlGeneratorForParametersParameter(
             this ParametersIlGenerator<IlInjectorAvailableVariables> ilGeneratoir, MethodDefinition method)
         {
-            ilGeneratoir.Add("parameters", new ParametersInterceptorParametersIlGenerator());
+            ilGeneratoir.Add("parameters", new ParametersInterceptorParametersIlGenerator<IlInjectorAvailableVariables>());
         }
     }
 }

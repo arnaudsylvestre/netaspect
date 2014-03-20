@@ -1,10 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using FluentAspect.Weaver.Core.V2.Weaver.Call;
+using FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Helpers;
+using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
 {
+    public class ColumnNumberInterceptorParametersIlGenerator<T> : IInterceptorParameterIlGenerator<T>
+    {
+        private Instruction instruction;
+
+        public ColumnNumberInterceptorParametersIlGenerator(Instruction instruction)
+        {
+            this.instruction = instruction;
+        }
+
+        public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, T info)
+        {
+            instructions.Add(InstructionFactory.Create(instruction.GetLastSequencePoint(),
+                                                                      i => i.StartColumn));
+        }
+    }
+
+
     public class InstanceInterceptorParametersIlGenerator<T> : IInterceptorParameterIlGenerator<T>
     {
         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, T info)

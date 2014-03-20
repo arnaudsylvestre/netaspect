@@ -65,6 +65,8 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
                             recallInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
                         }
                     }
+                    newInstructions.AddRange(initInstructions);
+                    newInstructions.AddRange(recallInstructions);
                 }
 
                 if (weavingModel.BeforeInstructions.ContainsKey(instruction))
@@ -73,6 +75,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
                     instructionIlInjector.Check(errorHandler, variablesForInstructionCall);
                     var beforeInstruction = new List<Instruction>();
                     instructionIlInjector.Inject(beforeInstruction, variablesForInstructionCall);
+                    newInstructions.AddRange(variablesForInstructionCall.Instructions);
                     newInstructions.AddRange(beforeInstruction);
                 }
                 newInstructions.Add(instruction);
@@ -83,6 +86,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver
                     instructionIlInjector.Check(errorHandler, variablesForInstructionCall);
                     var beforeInstruction = new List<Instruction>();
                     instructionIlInjector.Inject(beforeInstruction, variablesForInstructionCall);
+                    newInstructions.AddRange(variablesForInstructionCall.Instructions);
                     newInstructions.AddRange(beforeInstruction);
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using FluentAspect.Weaver.Core.V2.Weaver.Engine;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.V2.Weaver.Checkers
 {
@@ -22,11 +23,83 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Checkers
                 Checker = new InstanceInterceptorParametersChercker(method),
             });
         }
+
+
+
+        //private static void AddLineNumber(this ParametersEngine engine, JoinPoint point)
+        //{
+        //    engine.AddPossibleParameter("linenumber", (info, handler) =>
+        //    {
+        //        Ensure.SequencePoint(point.InstructionStart, handler, info);
+        //        Ensure.ParameterType<int>(info, handler);
+        //    },
+        //                                (info, instructions) =>
+        //                                instructions.Add(
+        //                                    InstructionFactory.Create(point.InstructionStart.GetLastSequencePoint(),
+        //                                                              i => i.StartLine)));
+        //}
+
+
+
+        //private static void AddFilename(this ParametersEngine engine, JoinPoint point)
+        //{
+        //    engine.AddPossibleParameter("filename", (info, handler) =>
+        //    {
+        //        Ensure.SequencePoint(point.InstructionStart, handler, info);
+        //        Ensure.ParameterType<string>(info, handler);
+        //    },
+        //                                (info, instructions) =>
+        //                                instructions.Add(
+        //                                    InstructionFactory.Create(point.InstructionStart.GetLastSequencePoint(),
+        //                                                              i => Path.GetFileName(i.Document.Url))));
+        //}
+
+
+        //private static void AddFilepath(this ParametersEngine engine, JoinPoint joinPoint)
+        //{
+        //    engine.AddPossibleParameter("filepath", (info, handler) =>
+        //    {
+        //        Ensure.SequencePoint(joinPoint.InstructionStart, handler, info);
+        //        Ensure.ParameterType<string>(info, handler);
+        //    },
+        //                                (info, instructions) =>
+        //                                instructions.Add(
+        //                                    InstructionFactory.Create(
+        //                                        joinPoint.InstructionStart.GetLastSequencePoint(), i => i.Document.Url)));
+        //}
+
+
+
+        public static void CreateCheckerForColumnNumberParameter(this ParametersChecker checkers, Instruction instruction)
+        {
+            checkers.Add(new InterceptorParametersChecker
+            {
+                ParameterName = "columnnumber",
+                Checker = new ColumnNumberInterceptorParametersChercker(instruction),
+            });
+        }
+        public static void CreateCheckerForCallerParameters(this ParametersChecker checkers, MethodDefinition method)
+        {
+
+            checkers.Add(new InterceptorParametersChecker
+            {
+                ParameterName = "callerparameters",
+                Checker = new ParametersInterceptorParametersChercker(),
+            });
+        }
         public static void CreateCheckerForCalledParametersName(this ParametersChecker checkers, MethodDefinition method)
         {
             checkers.AddRange(method.Parameters.Select(parameter => new InterceptorParametersChecker
             {
                 ParameterName = parameter.Name,
+                Checker = new ParameterNameInterceptorParametersChercker(parameter),
+            }));
+        }
+        public static void CreateCheckerForCallerParametersName(this ParametersChecker checkers, MethodDefinition callerMethod)
+        {
+            checkers.AddRange(callerMethod.Parameters.Select(parameter => new InterceptorParametersChecker
+            {
+                ParameterName = "caller" + parameter.Name,
                 Checker = new ParameterNameInterceptorParametersChercker(parameter),
             }));
         }

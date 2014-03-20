@@ -28,7 +28,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Method
         private static void FillCommon(MethodDefinition method,
                                        ParametersIlGenerator<IlInstructionInjectorAvailableVariables> parametersIlGenerator)
         {
-            parametersIlGenerator.CreateIlGeneratorForCallerParameter(method);
+            parametersIlGenerator.CreateIlGeneratorForCallerParameter();
             //parametersIlGenerator.CreateIlGeneratorForMethodParameter();
             //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
             //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);

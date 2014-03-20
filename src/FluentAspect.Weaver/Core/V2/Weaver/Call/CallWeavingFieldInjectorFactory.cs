@@ -15,7 +15,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Call
         {
             var calledField = (instruction.Next.Operand as FieldReference).Resolve();
             var checker = new ParametersChecker();
-            FillCommon(method, checker, calledField);
+            FillCommon(method, checker, calledField, instruction);
 
 
             var parametersIlGenerator = new ParametersIlGenerator<IlInstructionInjectorAvailableVariables>();
@@ -28,18 +28,24 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Call
         private static void FillCommon(MethodDefinition method,
                                        ParametersIlGenerator<IlInstructionInjectorAvailableVariables> parametersIlGenerator, Instruction instruction)
         {
-            //parametersIlGenerator.CreateIlGeneratorForCallerParameter(method);
             parametersIlGenerator.CreateIlGeneratorForCalledParameter(instruction);
+            parametersIlGenerator.CreateIlGeneratorForCallerParameter();
+            parametersIlGenerator.CreateIlGeneratorForCallerParameters();
+            parametersIlGenerator.CreateIlGeneratorForCallerParametersName(method);
+            parametersIlGenerator.CreateIlGeneratorForColumnNumber(instruction);
             //parametersIlGenerator.CreateIlGeneratorForMethodParameter();
             //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
             //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
         }
 
-        private static void FillCommon(MethodDefinition method, ParametersChecker checker, FieldDefinition calledField)
+        private static void FillCommon(MethodDefinition method, ParametersChecker checker, FieldDefinition calledField, Instruction instruction)
         {
             //checker.CreateCheckerForCallerParameter(method);
             checker.CreateCheckerForCalledParameter(calledField);
-            //checker.CreateCheckerForMethodParameter();
+            checker.CreateCheckerForCallerParameter(method);
+            checker.CreateCheckerForCallerParameters(method);
+            checker.CreateCheckerForCallerParametersName(method);
+            checker.CreateCheckerForColumnNumberParameter(instruction);
             //checker.CreateCheckerForParameterNameParameter(method);
             //checker.CreateCheckerForParametersParameter();
         }
@@ -50,7 +56,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Call
         {
             var calledField = (instruction.Operand as FieldReference).Resolve();
             var checker = new ParametersChecker();
-            FillCommon(method, checker, calledField);
+            FillCommon(method, checker, calledField, instruction);
             //checker.CreateCheckerForResultParameter(method);
 
 

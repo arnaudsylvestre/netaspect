@@ -11,28 +11,43 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Af
             return () =>
                 {
                     Assert.IsNull(MyAspect.Called);
-                    var classToWeave_L = new ClassToWeave();
+                    ClassCalled called = new ClassCalled();
+                    var classToWeave_L = new ClassToWeave(called);
                     classToWeave_L.Weaved();
-                    Assert.AreEqual(classToWeave_L, MyAspect.Called);
+                    Assert.AreEqual(called, MyAspect.Called);
                 };
+        }
+
+        public class ClassCalled
+        {
+            [MyAspect]
+            public string Field = "Value";
+            
+
         }
 
         public class ClassToWeave
         {
-            [MyAspect] public string Field;
+            ClassCalled called;
+
+            public ClassToWeave(ClassCalled called)
+            {
+                this.called = called;
+            }
 
             public string Weaved()
             {
-                return Field;
+                
+                return called.Field;
             }
         }
 
         public class MyAspect : Attribute
         {
-            public static ClassToWeave Called;
+            public static ClassCalled Called;
             public bool NetAspectAttribute = true;
 
-            public void AfterGetField(ClassToWeave called)
+            public void AfterGetField(ClassCalled called)
             {
                 Called = called;
             }

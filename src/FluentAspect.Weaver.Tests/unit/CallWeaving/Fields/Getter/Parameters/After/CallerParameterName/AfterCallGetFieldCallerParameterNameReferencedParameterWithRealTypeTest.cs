@@ -14,7 +14,6 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Af
                     var classToWeave_L = new ClassToWeave();
                     int val = 12;
                     classToWeave_L.Weaved(ref val);
-                    Assert.AreEqual(25, val);
                     Assert.AreEqual(12, MyAspect.ParameterName);
                 };
         }
