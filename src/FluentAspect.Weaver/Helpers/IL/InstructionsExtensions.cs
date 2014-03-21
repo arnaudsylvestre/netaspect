@@ -8,23 +8,32 @@ namespace FluentAspect.Weaver.Helpers.IL
 {
     public static class InstructionsExtensions
     {
-        public static void AppendCallToThisGetType(this Collection<Instruction> instructions, ModuleDefinition module)
+        public static void AppendCallToThisGetType(this List<Instruction> instructions, ModuleDefinition module)
         {
             instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
             instructions.Add(Instruction.Create(OpCodes.Call,
                                                 module.Import(typeof (object).GetMethod("GetType", new Type[0]))));
         }
 
-        public static void AppendCallToGetMethod(this Collection<Instruction> instructions, string methodName,
+        public static void AppendCallToGetMethod(this List<Instruction> instructions, string methodName,
                                                  ModuleDefinition module)
         {
             instructions.Add(Instruction.Create(OpCodes.Ldstr, methodName));
             instructions.Add(Instruction.Create(OpCodes.Callvirt,
-                                                module.Import(typeof (Type).GetMethod("GetMethod",
-                                                                                      new[] {typeof (string)}))));
+                                                module.Import(typeof(Type).GetMethod("GetMethod",
+                                                                                      new[] { typeof(string) }))));
         }
 
-        public static void AppendCallToGetProperty(this Collection<Instruction> instructions, string propertyName,
+        public static void AppendCallToGetField(this List<Instruction> instructions, string fieldName,
+                                                 ModuleDefinition module)
+        {
+            instructions.Add(Instruction.Create(OpCodes.Ldstr, fieldName));
+            instructions.Add(Instruction.Create(OpCodes.Callvirt,
+                                                module.Import(typeof(Type).GetMethod("GetField",
+                                                                                      new[] { typeof(string) }))));
+        }
+
+        public static void AppendCallToGetProperty(this List<Instruction> instructions, string propertyName,
                                                    ModuleDefinition module)
         {
             instructions.Add(Instruction.Create(OpCodes.Ldstr, propertyName));
@@ -33,7 +42,7 @@ namespace FluentAspect.Weaver.Helpers.IL
                                                                                       new[] {typeof (string)}))));
         }
 
-        public static void AppendSaveResultTo(this Collection<Instruction> instructions, VariableDefinition variable)
+        public static void AppendSaveResultTo(this List<Instruction> instructions, VariableDefinition variable)
         {
             instructions.Add(Instruction.Create(OpCodes.Stloc, variable));
         }

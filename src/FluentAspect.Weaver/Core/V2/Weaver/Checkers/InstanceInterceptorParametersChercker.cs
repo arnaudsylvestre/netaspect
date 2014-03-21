@@ -36,7 +36,17 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Checkers
         public void Check(ParameterInfo parameter, ErrorHandler errorListener)
         {
             Ensure.SequencePoint(instruction, errorListener, parameter);
-                Ensure.ParameterType<int>(parameter, errorListener);
+            Ensure.NotReferenced(parameter, errorListener);
+            Ensure.OfType<int>(parameter, errorListener);
+        }
+    }
+
+    public class FieldInterceptorParametersChercker : IInterceptorParameterChecker
+    {
+        public void Check(ParameterInfo parameter, ErrorHandler errorListener)
+        {
+            Ensure.NotReferenced(parameter, errorListener);
+            Ensure.OfType<FieldInfo>(parameter, errorListener);
         }
     }
 

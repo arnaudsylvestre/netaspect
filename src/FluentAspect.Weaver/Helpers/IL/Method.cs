@@ -32,7 +32,7 @@ namespace FluentAspect.Weaver.Helpers.IL
             return definition.CreateVariable<object[]>();
         }
 
-        public void FillArgsArrayFromParameters(Collection<Instruction> instructions, VariableDefinition args)
+        public void FillArgsArrayFromParameters(List<Instruction> instructions, VariableDefinition args)
         {
             if (args == null)
                 return;
@@ -57,14 +57,6 @@ namespace FluentAspect.Weaver.Helpers.IL
             return definition.CreateVariable<MethodInfo>();
         }
 
-        public void FIllMethod(Collection<Instruction> instructions, VariableDefinition methodInfo)
-        {
-            if (methodInfo == null)
-                return;
-            instructions.AppendCallToThisGetType(definition.Module);
-            instructions.AppendCallToGetMethod(definition.Name, definition.Module);
-            instructions.AppendSaveResultTo(methodInfo);
-        }
 
         public void AddTryFinally(Instruction tryStart_L, Instruction tryEnd_L, Instruction handlerStart_L,
                                   Instruction handlerEnd_L)

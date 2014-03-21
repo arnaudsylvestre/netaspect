@@ -78,6 +78,15 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Checkers
                 Checker = new ColumnNumberInterceptorParametersChercker(instruction),
             });
         }
+
+        public static void CreateCheckerForField(this ParametersChecker checkers)
+        {
+            checkers.Add(new InterceptorParametersChecker
+            {
+                ParameterName = "field",
+                Checker = new FieldInterceptorParametersChercker(),
+            });
+        }
         public static void CreateCheckerForCallerParameters(this ParametersChecker checkers, MethodDefinition method)
         {
 

@@ -33,6 +33,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Call
             parametersIlGenerator.CreateIlGeneratorForCallerParameters();
             parametersIlGenerator.CreateIlGeneratorForCallerParametersName(method);
             parametersIlGenerator.CreateIlGeneratorForColumnNumber(instruction);
+            parametersIlGenerator.CreateIlGeneratorForField(instruction, method.Module);
             //parametersIlGenerator.CreateIlGeneratorForMethodParameter();
             //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
             //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
@@ -46,6 +47,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Call
             checker.CreateCheckerForCallerParameters(method);
             checker.CreateCheckerForCallerParametersName(method);
             checker.CreateCheckerForColumnNumberParameter(instruction);
+            checker.CreateCheckerForField();
             //checker.CreateCheckerForParameterNameParameter(method);
             //checker.CreateCheckerForParametersParameter();
         }

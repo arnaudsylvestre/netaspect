@@ -21,6 +21,10 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
         {
             ilGeneratoir.Add("columnnumber", new ColumnNumberInterceptorParametersIlGenerator<T>(instruction));
         }
+        public static void CreateIlGeneratorForField<T>(this ParametersIlGenerator<T> ilGeneratoir, Instruction instruction, ModuleDefinition module) where T : IlInstructionInjectorAvailableVariables
+        {
+            ilGeneratoir.Add("field", new FieldInterceptorParametersIlGenerator<T>(instruction, module));
+        }
         public static void CreateIlGeneratorForCallerParameters(this ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGeneratoir)
         {
             ilGeneratoir.Add("callerparameters", new ParametersInterceptorParametersIlGenerator<IlInstructionInjectorAvailableVariables>());

@@ -14,11 +14,12 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Method
     {
         private readonly VariableDefinition _result;
         private readonly MethodDefinition method;
-        public Collection<Instruction> Instructions = new Collection<Instruction>();
+        public List<Instruction> Instructions = new List<Instruction>();
         private VariableDefinition _exception;
         private VariableDefinition _parameters;
         private VariableDefinition currentMethodInfo;
         private VariableDefinition currentPropertyInfo;
+        private VariableDefinition _field;
 
         public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method)
         {
@@ -97,6 +98,13 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Method
 
         public Dictionary<Instruction, Dictionary<string, VariableDefinition>> VariablesByInstruction { get; private set; }
         public Dictionary<Instruction, VariableDefinition> VariablesCalled { get; private set; }
-
+        public VariableDefinition Field { get
+        {
+            if (_field == null)
+            {
+                _field = method.CreateVariable<FieldInfo>();
+            }
+            return _field;
+        }}
     }
 }

@@ -7,5 +7,6 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Call
     {
         VariableDefinition Parameters { get; }
         Dictionary<Instruction, VariableDefinition> VariablesCalled { get; }
+        VariableDefinition Field { get; }
     }
 }
