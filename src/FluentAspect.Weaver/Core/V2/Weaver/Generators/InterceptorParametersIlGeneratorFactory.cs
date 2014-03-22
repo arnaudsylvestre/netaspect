@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using FluentAspect.Weaver.Core.V2.Weaver.Call;
 using FluentAspect.Weaver.Core.V2.Weaver.Method;
 using Mono.Cecil;
@@ -19,7 +20,19 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
         }
         public static void CreateIlGeneratorForColumnNumber<T>(this ParametersIlGenerator<T> ilGeneratoir, Instruction instruction)
         {
-            ilGeneratoir.Add("columnnumber", new ColumnNumberInterceptorParametersIlGenerator<T>(instruction));
+            ilGeneratoir.Add("columnnumber", new SequencePointIntInterceptorParametersIlGenerator<T>(instruction, point => point.StartColumn));
+        }
+        public static void CreateIlGeneratorForLineNumber<T>(this ParametersIlGenerator<T> ilGeneratoir, Instruction instruction)
+        {
+            ilGeneratoir.Add("linenumber", new SequencePointIntInterceptorParametersIlGenerator<T>(instruction, point => point.StartLine));
+        }
+        public static void CreateIlGeneratorForFilename<T>(this ParametersIlGenerator<T> ilGeneratoir, Instruction instruction)
+        {
+            ilGeneratoir.Add("filename", new SequencePointStringInterceptorParametersIlGenerator<T>(instruction, i => Path.GetFileName(i.Document.Url)));
+        }
+        public static void CreateIlGeneratorForFilePath<T>(this ParametersIlGenerator<T> ilGeneratoir, Instruction instruction)
+        {
+            ilGeneratoir.Add("filepath", new SequencePointStringInterceptorParametersIlGenerator<T>(instruction, i => i.Document.Url));
         }
         public static void CreateIlGeneratorForField<T>(this ParametersIlGenerator<T> ilGeneratoir, Instruction instruction, ModuleDefinition module) where T : IlInstructionInjectorAvailableVariables
         {

@@ -13,9 +13,8 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Af
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the instance parameter in the method After of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
-                        typeof (AfterMethodInstanceParameterWithBadTypeTest.MyAspect).FullName,
-                        typeof (AfterMethodInstanceParameterWithBadTypeTest.ClassToWeave).FullName));
+                        "the fileName parameter in the method AfterGetField of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.String",
+                        typeof (MyAspect).FullName));
         }
 
         public class ClassToWeave

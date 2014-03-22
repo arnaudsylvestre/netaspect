@@ -79,6 +79,31 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Checkers
             });
         }
 
+        public static void CreateCheckerForLineNumberParameter(this ParametersChecker checkers, Instruction instruction)
+        {
+            checkers.Add(new InterceptorParametersChecker
+            {
+                ParameterName = "linenumber",
+                Checker = new ColumnNumberInterceptorParametersChercker(instruction),
+            });
+        }
+        public static void CreateCheckerForFilenameParameter(this ParametersChecker checkers, Instruction instruction)
+        {
+            checkers.Add(new InterceptorParametersChecker
+            {
+                ParameterName = "filename",
+                Checker = new FilenameInterceptorParametersChercker(instruction),
+            });
+        }
+        public static void CreateCheckerForFilePathParameter(this ParametersChecker checkers, Instruction instruction)
+        {
+            checkers.Add(new InterceptorParametersChecker
+            {
+                ParameterName = "filepath",
+                Checker = new FilenameInterceptorParametersChercker(instruction),
+            });
+        }
+
         public static void CreateCheckerForField(this ParametersChecker checkers)
         {
             checkers.Add(new InterceptorParametersChecker

@@ -13,7 +13,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Af
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the callerParam1 parameter in the method AfterGetField of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Object or {1}",
+                        "the callerParam1 parameter in the method AfterGetField of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Int32 because of the type of this parameter in the method Weaved of the type {1}",
                         typeof (MyAspect).FullName,
                         typeof (ClassToWeave).FullName));
         }

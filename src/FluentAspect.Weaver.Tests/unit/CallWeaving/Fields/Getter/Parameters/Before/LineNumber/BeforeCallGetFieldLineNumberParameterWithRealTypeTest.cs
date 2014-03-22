@@ -13,7 +13,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Be
                     Assert.AreEqual(0, MyAspect.LineNumber);
                     var classToWeave_L = new ClassToWeave();
                     classToWeave_L.Weaved();
-                    Assert.AreEqual(12, MyAspect.LineNumber);
+                    Assert.AreEqual(26, MyAspect.LineNumber);
                 };
         }
 

@@ -13,7 +13,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Call
     {
         public static IIlInjector<IlInstructionInjectorAvailableVariables> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType, Instruction instruction)
         {
-            var calledField = (instruction.Next.Operand as FieldReference).Resolve();
+            var calledField = (instruction.Operand as FieldReference).Resolve();
             var checker = new ParametersChecker();
             FillCommon(method, checker, calledField, instruction);
 
@@ -33,6 +33,9 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Call
             parametersIlGenerator.CreateIlGeneratorForCallerParameters();
             parametersIlGenerator.CreateIlGeneratorForCallerParametersName(method);
             parametersIlGenerator.CreateIlGeneratorForColumnNumber(instruction);
+            parametersIlGenerator.CreateIlGeneratorForLineNumber(instruction);
+            parametersIlGenerator.CreateIlGeneratorForFilename(instruction);
+            parametersIlGenerator.CreateIlGeneratorForFilePath(instruction);
             parametersIlGenerator.CreateIlGeneratorForField(instruction, method.Module);
             //parametersIlGenerator.CreateIlGeneratorForMethodParameter();
             //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
@@ -47,6 +50,9 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Call
             checker.CreateCheckerForCallerParameters(method);
             checker.CreateCheckerForCallerParametersName(method);
             checker.CreateCheckerForColumnNumberParameter(instruction);
+            checker.CreateCheckerForLineNumberParameter(instruction);
+            checker.CreateCheckerForFilenameParameter(instruction);
+            checker.CreateCheckerForFilePathParameter(instruction);
             checker.CreateCheckerForField();
             //checker.CreateCheckerForParameterNameParameter(method);
             //checker.CreateCheckerForParametersParameter();

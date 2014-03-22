@@ -33,9 +33,9 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Be
             public static FieldInfo Field;
             public bool NetAspectAttribute = true;
 
-            public void BeforeGetField(FieldInfo columnNumber)
+            public void BeforeGetField(FieldInfo field)
             {
-                Field = columnNumber;
+                Field = field;
             }
         }
     }

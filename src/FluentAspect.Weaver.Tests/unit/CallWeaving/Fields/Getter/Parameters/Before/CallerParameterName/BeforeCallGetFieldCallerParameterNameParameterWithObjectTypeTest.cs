@@ -10,7 +10,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Be
         {
             return () =>
                 {
-                    Assert.AreEqual(0, MyAspect.ParameterName);
+                    Assert.AreEqual(null, MyAspect.ParameterName);
                     var classToWeave_L = new ClassToWeave();
                     classToWeave_L.Weaved(12);
                     Assert.AreEqual(12, MyAspect.ParameterName);

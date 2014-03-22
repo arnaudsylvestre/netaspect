@@ -17,6 +17,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Checkers
         public void Check(ParameterInfo parameter, ErrorHandler errorListener)
         {
             Ensure.OfType(parameter, errorListener, _parameterName);
+            Ensure.NotOut(parameter, errorListener);
         }
     }
 }

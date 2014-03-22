@@ -13,7 +13,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Be
                     Assert.AreEqual(null, MyAspect.FileName);
                     var classToWeave_L = new ClassToWeave();
                     classToWeave_L.Weaved();
-                    Assert.AreEqual("", MyAspect.FileName);
+                    Assert.AreEqual("BeforeCallGetFieldFileNameParameterWithRealTypeTest.cs", MyAspect.FileName);
                 };
         }
 
