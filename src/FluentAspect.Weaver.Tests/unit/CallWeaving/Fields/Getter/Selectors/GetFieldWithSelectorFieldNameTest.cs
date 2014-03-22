@@ -3,8 +3,8 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before.Caller
 {
-    public class GetFieldWithSelectorTest :
-        NetAspectTest<GetFieldWithSelectorTest.ClassToWeave>
+    public class GetFieldWithSelectorFieldNameTest :
+        NetAspectTest<GetFieldWithSelectorFieldNameTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
@@ -37,7 +37,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Be
                 Caller = caller;
             }
 
-            public bool SelectField(string fieldName)
+            public static bool SelectField(string fieldName)
             {
                 return fieldName == "Field";
             }

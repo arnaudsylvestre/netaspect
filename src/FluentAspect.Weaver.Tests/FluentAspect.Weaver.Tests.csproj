@@ -60,7 +60,7 @@
   <ItemGroup>
     <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\GetFieldWithSelectorTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\GetFieldWithSelectorFieldNameTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\FieldGetterCallWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithBadTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithObjectTypeTest.cs" />
@@ -798,6 +798,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="docs\" />
+    <Folder Include="unit\CallWeaving\Fields\Getter\Selectors\Errors\" />
     <Folder Include="unit\MethodWeaving\Events\" />
     <Folder Include="unit\MethodWeaving\Indexers\" />
     <Folder Include="unit\MethodWeaving\Operators\" />

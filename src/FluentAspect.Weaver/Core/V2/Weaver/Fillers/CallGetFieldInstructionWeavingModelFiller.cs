@@ -55,13 +55,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Fillers
             {
                 var fieldReference = instruction.Operand as FieldReference;
 
-                TypeReference aspectType = method.Module.Import(aspect.Type);
-                bool compliant =
-                    fieldReference.Resolve()
-                                  .CustomAttributes.Any(
-                                      customAttribute_L =>
-                                      customAttribute_L.AttributeType.FullName == aspectType.FullName);
-                return compliant;
+                return AspectApplier.CanApply(fieldReference.Resolve(), aspect);
             }
             return false;
         }
