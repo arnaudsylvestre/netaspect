@@ -171,9 +171,14 @@ namespace FluentAspect.Weaver.Core.Model
             get { return new Interceptor(_attribute.GetMethod("AfterCallMethod")); }
         }
 
-        public Selector FieldSelector
+        public Selector<FieldDefinition> FieldSelector
         {
-            get { return new Selector(_attribute.GetMethod("SelectField")); } 
+            get
+            {
+                var selectorParametersGenerator = new SelectorParametersGenerator<FieldDefinition>();
+                selectorParametersGenerator.AddPossibleParameter<string>("fieldName", field => field.Name);
+                return new Selector<FieldDefinition>(_attribute.GetMethod("SelectField"), selectorParametersGenerator);
+            }
         }
     }
 
@@ -201,8 +206,7 @@ namespace FluentAspect.Weaver.Core.Model
             var parameters = new List<object>();
             foreach (var parameterInfo in method.GetParameters())
             {
-                var possibleParameter = possibleParameters[parameterInfo.Name.ToLower()];
-                if (possibleParameter.Type != parameterInfo.ParameterType)
+                parameters.Add(possibleParameters[parameterInfo.Name.ToLower()].Provider(data));
             }
             return parameters.ToArray();
         }
@@ -214,29 +218,32 @@ namespace FluentAspect.Weaver.Core.Model
             {
                 var possibleParameter = possibleParameters[parameterInfo.Name.ToLower()];
                 if (possibleParameter.Type != parameterInfo.ParameterType)
-                    errorHandler.Errors.Add();
+                    errorHandler.Errors.Add("Type different");
             }
-            return parameters.ToArray();
         }
     }
 
-    public class Selector
+    public class Selector<T>
     {
         private readonly MethodInfo _method;
+        private SelectorParametersGenerator<T> selectorParametersGenerator;
 
-        public Selector(MethodInfo method)
+        public Selector(MethodInfo method, SelectorParametersGenerator<T> selectorParametersGenerator)
         {
             _method = method;
+            this.selectorParametersGenerator = selectorParametersGenerator;
         }
 
-        public bool IsCompliant(FieldDefinition field)
+        public void Check(ErrorHandler errorHandler)
         {
+            selectorParametersGenerator.Check(_method, errorHandler);
+            if (_method.ReturnType != typeof(bool))
+                errorHandler.Errors.Add("Selector must return bool value");
+        }
 
-
-            var parameters = new List<object>();
-
-
-            _method.Invoke(null, new object[])
+        public bool IsCompliant(T member)
+        {
+            return (bool)_method.Invoke(null, selectorParametersGenerator.Generate(_method, member));
         }
     }
 }
