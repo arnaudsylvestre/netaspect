@@ -8,6 +8,20 @@ using FluentAspect.Weaver.Core.V2.Weaver.Engine;
 
 namespace FluentAspect.Weaver.Core.V2.Weaver.Fillers
 {
+    public class AspectApplier
+    {
+        public bool CanApply(FieldDefinition field, NetAspectDefinition netAspect)
+        {
+            TypeReference aspectType = field.Module.Import(netAspect.Type);
+            bool compliant = field.CustomAttributes.Any(
+                                  customAttribute_L =>
+                                  customAttribute_L.AttributeType.FullName == aspectType.FullName);
+            if (compliant)
+                return true;
+            if (netAspect.FieldSelector.)
+        }
+    }
+
     public class CallGetFieldInstructionWeavingModelFiller : IWeavingModelFiller
     {
         public bool CanHandle(NetAspectDefinition aspect)

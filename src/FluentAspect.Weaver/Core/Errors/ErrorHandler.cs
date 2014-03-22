@@ -4,6 +4,16 @@ using FluentAspect.Weaver.Core.Weavers.MethodWeaving.Factory.Parameters;
 
 namespace FluentAspect.Weaver.Core.Errors
 {
+    public enum ErrorKind
+    {
+        
+    }
+
+    public class NetAspectError
+    {
+        public ErrorKind Kind 
+    }
+
     public class ErrorHandler : IErrorListener
     {
         public ErrorHandler()

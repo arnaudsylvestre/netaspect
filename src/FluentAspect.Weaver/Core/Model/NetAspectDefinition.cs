@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Helpers;
+using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.Model
 {
@@ -167,6 +169,74 @@ namespace FluentAspect.Weaver.Core.Model
         public Interceptor AfterCallMethod
         {
             get { return new Interceptor(_attribute.GetMethod("AfterCallMethod")); }
+        }
+
+        public Selector FieldSelector
+        {
+            get { return new Selector(_attribute.GetMethod("SelectField")); } 
+        }
+    }
+
+    public class SelectorParametersGenerator<T>
+    {
+        class PossibleParameter
+        {
+            public Type Type;
+            public Func<T, object> Provider;
+        }
+
+        Dictionary<string, PossibleParameter> possibleParameters = new Dictionary<string, PossibleParameter>();
+
+        public void AddPossibleParameter<TParameter>(string parameterName, Func<T, object> valueProvider)
+        {
+            possibleParameters.Add(parameterName.ToLower(), new PossibleParameter()
+                {
+                    Provider                    = valueProvider,
+                    Type                    = typeof(TParameter)
+                });
+        }
+
+        public object[] Generate(MethodInfo method, T data)
+        {
+            var parameters = new List<object>();
+            foreach (var parameterInfo in method.GetParameters())
+            {
+                var possibleParameter = possibleParameters[parameterInfo.Name.ToLower()];
+                if (possibleParameter.Type != parameterInfo.ParameterType)
+            }
+            return parameters.ToArray();
+        }
+
+        public void Check(MethodInfo method, ErrorHandler errorHandler)
+        {
+            var parameters = new List<object>();
+            foreach (var parameterInfo in method.GetParameters())
+            {
+                var possibleParameter = possibleParameters[parameterInfo.Name.ToLower()];
+                if (possibleParameter.Type != parameterInfo.ParameterType)
+                    errorHandler.Errors.Add();
+            }
+            return parameters.ToArray();
+        }
+    }
+
+    public class Selector
+    {
+        private readonly MethodInfo _method;
+
+        public Selector(MethodInfo method)
+        {
+            _method = method;
+        }
+
+        public bool IsCompliant(FieldDefinition field)
+        {
+
+
+            var parameters = new List<object>();
+
+
+            _method.Invoke(null, new object[])
         }
     }
 }

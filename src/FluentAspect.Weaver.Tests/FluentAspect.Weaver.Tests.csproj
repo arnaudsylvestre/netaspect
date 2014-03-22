@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\GetFieldWithSelectorTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\FieldGetterCallWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithBadTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithObjectTypeTest.cs" />
@@ -130,7 +131,6 @@
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\LineNumber\BeforeCallGetFieldLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\LineNumber\BeforeCallGetFieldLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\VisibilityFieldGetterWeavingTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\FieldGetterCallWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\StaticFieldGetterWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\FieldUpdaterCallWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\FieldUpdaterCallWeavingAssemblyAttributeWeavingTest.cs" />
