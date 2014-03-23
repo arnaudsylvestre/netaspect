@@ -3,8 +3,8 @@ using FluentAspect.Weaver.Core.Errors;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors.Errors
 {
-    public class GetFieldWithSelectorFieldNotStaticTest :
-        NetAspectTest<GetFieldWithSelectorFieldNotStaticTest.ClassToWeave>
+    public class GetFieldWithSelectorFieldNotBooleanTest :
+        NetAspectTest<GetFieldWithSelectorFieldNotBooleanTest.ClassToWeave>
     {
         protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
@@ -12,7 +12,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors.Err
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "The selector SelectField in the aspect {0} must be static",
+                        "The selector SelectField in the aspect {0} must return boolean value",
                         typeof(MyAspect).FullName));
         }
 
@@ -36,9 +36,9 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors.Err
                 Caller = caller;
             }
 
-            public bool SelectField(string fieldName)
+            public static int SelectField(string fieldName)
             {
-                return fieldName == "Field";
+                return 1;
             }
         }
     }

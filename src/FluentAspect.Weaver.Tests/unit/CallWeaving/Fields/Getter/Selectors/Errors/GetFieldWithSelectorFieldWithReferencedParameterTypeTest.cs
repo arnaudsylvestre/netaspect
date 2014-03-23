@@ -1,10 +1,11 @@
 using System;
 using FluentAspect.Weaver.Core.Errors;
+using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors.Errors
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before.Caller
 {
-    public class GetFieldWithSelectorFieldNotStaticTest :
-        NetAspectTest<GetFieldWithSelectorFieldNotStaticTest.ClassToWeave>
+    public class GetFieldWithSelectorFieldWithReferencedParameterTypeTest :
+        NetAspectTest<GetFieldWithSelectorFieldWithReferencedParameterTypeTest.ClassToWeave>
     {
         protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
@@ -12,7 +13,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors.Err
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "The selector SelectField in the aspect {0} must be static",
+                        "The parameter fieldName in the method SelectField of the aspect {0} is expected to be System.String",
                         typeof(MyAspect).FullName));
         }
 
@@ -36,9 +37,9 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors.Err
                 Caller = caller;
             }
 
-            public bool SelectField(string fieldName)
+            public static bool SelectField(ref string fieldName)
             {
-                return fieldName == "Field";
+                return true;
             }
         }
     }

@@ -60,6 +60,9 @@
   <ItemGroup>
     <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldWithReferencedParameterTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldWithBadParameterTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldNotBooleanTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldNotStaticTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\GetFieldWithSelectorFieldNameTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\FieldGetterCallWeavingInAnotherAssemblyTest.cs" />

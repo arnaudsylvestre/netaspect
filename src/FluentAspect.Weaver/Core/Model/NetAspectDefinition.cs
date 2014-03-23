@@ -213,12 +213,11 @@ namespace FluentAspect.Weaver.Core.Model
 
         public void Check(MethodInfo method, ErrorHandler errorHandler)
         {
-            var parameters = new List<object>();
             foreach (var parameterInfo in method.GetParameters())
             {
                 var possibleParameter = possibleParameters[parameterInfo.Name.ToLower()];
                 if (possibleParameter.Type != parameterInfo.ParameterType)
-                    errorHandler.Errors.Add("Type different");
+                    errorHandler.OnError("The parameter {0} in the method {1} of the aspect {2} is expected to be {3}", parameterInfo.Name, method.Name, method.DeclaringType.FullName, possibleParameter.Type);
             }
         }
     }
@@ -243,7 +242,7 @@ namespace FluentAspect.Weaver.Core.Model
                 errorHandler.OnError("The selector {0} in the aspect {1} must be static", _method.Name, _method.DeclaringType.FullName);
 
             if (_method.ReturnType != typeof(bool))
-                errorHandler.OnError("The selector {0} in the aspect {1} must be return boolean value", _method.Name, _method.DeclaringType.FullName);
+                errorHandler.OnError("The selector {0} in the aspect {1} must return boolean value", _method.Name, _method.DeclaringType.FullName);
         }
 
         public bool IsCompliant(T member)
