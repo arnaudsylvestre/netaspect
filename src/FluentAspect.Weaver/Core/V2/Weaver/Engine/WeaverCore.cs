@@ -23,7 +23,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Engine
         {
             var assemblyPool = new AssemblyPool();
 
-            foreach (var weavingModel in ComputeWeavingModels(typesP_L, filter, assemblyPool))
+            foreach (var weavingModel in ComputeWeavingModels(typesP_L, filter, assemblyPool, errorHandler))
             {
                 aroundMethodWeaver_L.Weave(new FluentAspect.Weaver.Helpers.IL.Method(weavingModel.Key), weavingModel.Value, errorHandler);
             }
@@ -31,13 +31,22 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Engine
             assemblyPool.Save(errorHandler, newAssemblyNameProvider);
         }
 
-        private Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(Type[] typesP_L, Type[] filter, AssemblyPool assemblyPool)
+        private Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(Type[] typesP_L, Type[] filter, AssemblyPool assemblyPool, ErrorHandler errorHandler)
         {
             List<NetAspectDefinition> aspects = NetAspectDefinitionExtensions.FindAspects(typesP_L);
+            CheckAspects(aspects, errorHandler);
             IEnumerable<Assembly> assembliesToWeave = aspects.GetAssembliesToWeave(typesP_L[0].Assembly);
             Dictionary<MethodDefinition, WeavingModel> weavingModels =
                 weavingModelComputer.ComputeWeavingModels(assembliesToWeave, filter, assemblyPool, aspects);
             return weavingModels;
+        }
+
+        private void CheckAspects(IEnumerable<NetAspectDefinition> aspects, ErrorHandler errorHandler)
+        {
+            foreach (var aspect in aspects)
+            {
+                aspect.FieldSelector.Check(errorHandler);
+            }
         }
 
         public void Weave(string assemblyFilePath, ErrorHandler errorHandler,
