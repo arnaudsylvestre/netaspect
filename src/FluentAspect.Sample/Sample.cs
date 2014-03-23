@@ -21,6 +21,10 @@ namespace FluentAspect.Sample
         {
             GetEvent()();
         }
+        public T CreateDefault<T>()
+        {
+            return default(T);
+        }
 
         private Action GetEvent()
         {

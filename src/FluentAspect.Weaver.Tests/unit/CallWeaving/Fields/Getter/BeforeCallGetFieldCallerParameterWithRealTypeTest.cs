@@ -1,10 +1,10 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before.Caller
 {
-    public class GetFieldWithSelectorFieldNameTest :
-        NetAspectTest<GetFieldWithSelectorFieldNameTest.ClassToWeave>
+    public class StaticCallGetFieldWeavingTest :
+        NetAspectTest<StaticCallGetFieldWeavingTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
@@ -19,7 +19,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors
 
         public class ClassToWeave
         {
-            public string Field;
+            [MyAspect] public static string Field;
 
             public string Weaved()
             {
@@ -35,11 +35,6 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors
             public void BeforeGetField(ClassToWeave caller)
             {
                 Caller = caller;
-            }
-
-            public static bool SelectField(string fieldName)
-            {
-                return fieldName == "Field";
             }
         }
     }
