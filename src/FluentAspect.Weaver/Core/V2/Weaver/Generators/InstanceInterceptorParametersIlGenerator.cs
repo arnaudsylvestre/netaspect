@@ -85,8 +85,9 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInstructionInjectorAvailableVariables info)
         {
             if (!info.VariablesCalled.ContainsKey(instruction))
-
-            instructions.Add(Instruction.Create(OpCodes.Ldloc, info.VariablesCalled[instruction]));
+                instructions.Add(Instruction.Create(OpCodes.Ldnull));
+            else
+                instructions.Add(Instruction.Create(OpCodes.Ldloc, info.VariablesCalled[instruction]));
         }
     }
 }

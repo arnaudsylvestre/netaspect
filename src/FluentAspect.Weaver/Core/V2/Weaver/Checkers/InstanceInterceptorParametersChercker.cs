@@ -82,7 +82,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Checkers
         {
             Ensure.NotReferenced(parameter, errorListener);
             Ensure.OfType(parameter, errorListener, typeof(object).FullName, fieldDefinition.DeclaringType.FullName);
-            Ensure.NotStatic(parameter, errorListener, fieldDefinition);
+            Ensure.NotStaticButDefaultValue(parameter, errorListener, fieldDefinition);
         }
     }
 }

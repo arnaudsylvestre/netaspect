@@ -136,5 +136,11 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
             if (definition.IsStatic)
                 handler.OnError("the {0} parameter can not be used for static method interceptors", parameter.Name);
         }
+
+        public static void NotStaticButDefaultValue(ParameterInfo parameter, IErrorListener handler, FieldDefinition definition)
+        {
+            if (definition.IsStatic)
+                handler.OnWarning("the {0} parameter in the method {1} of the type '{2}' is not available for static field : default value will be passed", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+        }
     }
 }
