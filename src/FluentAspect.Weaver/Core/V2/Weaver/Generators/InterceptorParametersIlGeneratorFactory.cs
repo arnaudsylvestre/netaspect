@@ -61,8 +61,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
                                  new ParameterNameInterceptorParametersIlGenerator<IlInstructionInjectorAvailableVariables>(parameterDefinition));
             }
         }
-        public static void CreateIlGeneratorForCalledParameter(this ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGeneratoir,
-                                                                    Instruction instruction)
+        public static void CreateIlGeneratorForCalledParameter(this ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGeneratoir, Instruction instruction)
         {
             ilGeneratoir.Add("called", new CalledInterceptorParametersIlGenerator(instruction));
         }

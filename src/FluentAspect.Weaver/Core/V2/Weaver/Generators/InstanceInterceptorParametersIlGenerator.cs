@@ -86,9 +86,8 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
         {
             if (!info.VariablesCalled.ContainsKey(instruction))
             {
-                if (parameterInfo.Member.DeclaringType)
-            }
                 instructions.Add(Instruction.Create(OpCodes.Ldnull));
+            }
             else
                 instructions.Add(Instruction.Create(OpCodes.Ldloc, info.VariablesCalled[instruction]));
         }

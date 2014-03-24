@@ -140,7 +140,13 @@ namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
         public static void NotStaticButDefaultValue(ParameterInfo parameter, IErrorListener handler, FieldDefinition definition)
         {
             if (definition.IsStatic)
-                handler.OnWarning("the {0} parameter in the method {1} of the type '{2}' is not available for static field : default value will be passed", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+            {
+                if (definition.DeclaringType.IsValueType)
+                    handler.OnError("the {0} parameter in the method {1} of the type '{2}' is not available for static field in struct", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+                else
+                    handler.OnWarning("the {0} parameter in the method {1} of the type '{2}' is not available for static field : default value will be passed", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+            }
+                
         }
     }
 }

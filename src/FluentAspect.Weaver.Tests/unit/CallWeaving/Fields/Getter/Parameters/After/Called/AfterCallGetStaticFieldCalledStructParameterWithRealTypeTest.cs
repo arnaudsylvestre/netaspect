@@ -17,19 +17,6 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Af
                         typeof(MyAspect).FullName));
         }
 
-
-        protected override Action CreateEnsure()
-        {
-            return () =>
-            {
-                Assert.IsNull(MyAspect.Called);
-                ClassCalled called = new ClassCalled();
-                var classToWeave_L = new ClassToWeave(called);
-                classToWeave_L.Weaved();
-                Assert.AreEqual(null, MyAspect.Called);
-            };
-        }
-
         public struct ClassCalled
         {
             [MyAspect]
