@@ -24,7 +24,7 @@ namespace FluentAspect.Sample.AOP
 
     public class SelectorWithNoDefaultConstructorAttribute : Attribute
     {
-        public IEnumerable<Assembly> AssembliesToWeave = new List<Assembly> {typeof (DepClassToWeave).Assembly};
+        public IEnumerable<Assembly> AssembliesToWeave = new List<Assembly> { typeof(DepClassWhichCallField).Assembly };
         public string NetAspectAttributeKind = "MethodWeaving";
 
         public SelectorWithNoDefaultConstructorAttribute(string toto)

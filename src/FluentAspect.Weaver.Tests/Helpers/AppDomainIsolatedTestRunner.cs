@@ -13,13 +13,15 @@ namespace FluentAspect.Weaver.Tests.Helpers
 {
     public class AppDomainIsolatedTestRunner : MarshalByRefObject
     {
-        public string RunFromType(string dll_L, string typeName, List<string> checkErrors, List<string> failures, List<string> warnings)
+        public string RunFromType(string dll_L, string typeName, List<string> checkErrors, List<string> failures, List<string> warnings, string otherDll, string otherTypeName)
         {
             Assembly assembly = Assembly.LoadFrom(dll_L);
+            Assembly otherAssembly = Assembly.LoadFrom(otherDll);
             Type type = assembly.GetTypes().First(t => t.FullName == typeName);
+            Type otherType = otherAssembly.GetTypes().First(t => t.FullName == otherTypeName);
             WeaverCore weaver = WeaverCoreFactory.Create();
             var errorHandler = new ErrorHandler();
-            weaver.Weave(ComputeTypes(type), ComputeTypes(type), errorHandler, (a) => a);
+            weaver.Weave(ComputeTypes(type, otherType), ComputeTypes(type, otherType), errorHandler, (a) => a);
             var builder = new StringBuilder();
             errorHandler.Dump(builder);
             Assert.AreEqual(warnings, errorHandler.Warnings);
@@ -28,9 +30,11 @@ namespace FluentAspect.Weaver.Tests.Helpers
             return builder.ToString();
         }
 
-        private static Type[] ComputeTypes(Type type)
+        private static Type[] ComputeTypes(Type type, Type otherType)
         {
-            return type.DeclaringType.GetNestedTypes();
+            var computeTypes = type.DeclaringType.GetNestedTypes().ToList();
+            computeTypes.Add(otherType);
+            return computeTypes.ToArray();
         }
 
         public void Ensure(Action ensure)

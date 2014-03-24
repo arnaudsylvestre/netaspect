@@ -60,7 +60,7 @@
   <ItemGroup>
     <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\StaticCallGetFieldWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\AnotherAssembly\CallGetPublicFieldWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetStaticFieldCalledParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetStaticFieldCalledStructParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldWithReferencedParameterTypeTest.cs" />
@@ -137,7 +137,6 @@
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\LineNumber\BeforeCallGetFieldLineNumberParameterWithBadTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\LineNumber\BeforeCallGetFieldLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\LineNumber\BeforeCallGetFieldLineNumberParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\VisibilityFieldGetterWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Visibility\CallGetPrivateFieldWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Visibility\CallGetInternalFieldWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Visibility\CallGetProtectedFieldWeavingTest.cs" />
@@ -790,6 +789,10 @@
     <ProjectReference Include="..\..\lib\cecil-master\symbols\pdb\Mono.Cecil.Pdb.csproj">
       <Project>{63E6915C-7EA4-4D76-AB28-0D7191EEA626}</Project>
       <Name>Mono.Cecil.Pdb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FluentAspect.Sample.Dep\FluentAspect.Sample.Dep.csproj">
+      <Project>{584095D8-E7A6-42EF-B3C1-6A34F15B4B40}</Project>
+      <Name>FluentAspect.Sample.Dep</Name>
     </ProjectReference>
     <ProjectReference Include="..\FluentAspect.Sample\FluentAspect.Sample.csproj">
       <Project>{6E481F61-CF92-4881-8F88-46C83B3018F7}</Project>

@@ -1,9 +1,19 @@
 ﻿namespace FluentAspect.Sample.Dep
 {
-    public class DepClassToWeave
+    public class DepClassWithField
     {
-        public void EnsureNotNull(string s)
+        public string Field;
+    }
+
+    public class DepClassWhichCallField
+    {
+        public string CallField(string fieldValue)
         {
+            var c = new DepClassWithField()
+                {
+                    Field = fieldValue
+                };
+            return c.Field;
         }
     }
 }

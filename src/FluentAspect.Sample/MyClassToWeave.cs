@@ -119,11 +119,6 @@ namespace FluentAspect.Sample
             return parameter.Value;
         }
 
-        public void CheckDependency(string o)
-        {
-            new DepClassToWeave().EnsureNotNull(o);
-        }
-
         [CheckNotRenameInAssembly]
         public string CheckNotRenameInAssembly()
         {

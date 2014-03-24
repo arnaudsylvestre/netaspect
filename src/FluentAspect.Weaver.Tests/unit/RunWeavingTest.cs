@@ -25,14 +25,16 @@ namespace FluentAspect.Weaver.Tests.unit
 
         public static void For<T, U>(Action<ErrorHandler> errorHandlerProvider, Action ensureAssembly)
         {
-            Assembly assembly = typeof (RunWeavingTest).Assembly;
+            Assembly assembly = typeof(T).Assembly;
+            Assembly otherAssembly = typeof(U).Assembly;
             AppDomainIsolatedTestRunner runner = CreateAppRunner(assembly);
 
             var errorHandler = new ErrorHandler();
             errorHandlerProvider(errorHandler);
             string dll = assembly.GetAssemblyPath();
-            Console.Write(runner.RunFromType(dll, typeof (T).FullName, errorHandler.Errors, errorHandler.Failures,
-                                             errorHandler.Warnings));
+            var otherDll = otherAssembly.GetAssemblyPath();
+            Console.Write(runner.RunFromType(dll, typeof(T).FullName, errorHandler.Errors, errorHandler.Failures,
+                                             errorHandler.Warnings, otherDll, typeof(U).FullName));
 
             runner = CreateAppRunner(assembly);
             runner.Ensure(ensureAssembly);
