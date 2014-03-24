@@ -60,7 +60,7 @@
   <ItemGroup>
     <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\BeforeCallGetFieldCallerParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\StaticCallGetFieldWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetStaticFieldCalledParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetStaticFieldCalledStructParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldWithReferencedParameterTypeTest.cs" />
@@ -138,7 +138,10 @@
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\LineNumber\BeforeCallGetFieldLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\LineNumber\BeforeCallGetFieldLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\VisibilityFieldGetterWeavingTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\StaticFieldGetterWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Visibility\CallGetPrivateFieldWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Visibility\CallGetInternalFieldWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Visibility\CallGetProtectedFieldWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Visibility\CallGetPublicFieldWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\FieldUpdaterCallWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\FieldUpdaterCallWeavingAssemblyAttributeWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Parameters\After\CalledParameterName\AfterCallUpdateFieldCalledParameterNameParameterWithBadTypeTest.cs" />

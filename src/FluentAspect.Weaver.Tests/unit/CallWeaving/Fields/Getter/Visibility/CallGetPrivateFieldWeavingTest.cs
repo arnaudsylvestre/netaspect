@@ -1,10 +1,10 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before.Caller
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Visibility
 {
-    public class StaticCallGetFieldWeavingTest :
-        NetAspectTest<StaticCallGetFieldWeavingTest.ClassToWeave>
+    public class CallGetPrivateFieldWeavingTest :
+        NetAspectTest<CallGetPrivateFieldWeavingTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
@@ -19,7 +19,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Be
 
         public class ClassToWeave
         {
-            [MyAspect] public static string Field;
+            [MyAspect] private static string Field;
 
             public string Weaved()
             {
