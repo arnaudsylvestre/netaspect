@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FluentAspect.Sample.MethodWeaving.Problems.Warnings
+﻿namespace FluentAspect.Sample.MethodWeaving.Problems.Warnings
 {
     public class AspectWithNoInterceptors
     {
@@ -8,10 +6,5 @@ namespace FluentAspect.Sample.MethodWeaving.Problems.Warnings
         public void CheckWithNoInterceptors()
         {
         }
-    }
-
-    public class EmptyAspectAttribute : Attribute
-    {
-        public string NetAspectAttributeKind = "MethodWeaving";
     }
 }

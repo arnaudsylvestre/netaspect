@@ -4,14 +4,6 @@ using FluentAspect.Sample.Dep;
 
 namespace FluentAspect.Sample
 {
-    public static class MyClassToWeaveFactory
-    {
-        public static MyClassToWeave Create()
-        {
-            return new MyClassToWeave();
-        }
-    }
-
     public class MyClassToWeave
     {
         [CheckOnCallAfter]
@@ -196,96 +188,6 @@ namespace FluentAspect.Sample
         public void AfterCallParametersWithWrongType(string parameter1, string parameter2)
         {
             AfterCallParametersWithWrongTypeCalled(parameter1, parameter2);
-        }
-    }
-
-    public class CheckAfterCallParameterTypeOnCallAfterAttribute : Attribute
-    {
-        public string NetAspectAttributeKind = "CallWeaving";
-
-        public static void AfterCall(string lineNumber, string columnNumber, int fileName, int filePath)
-        {
-            throw new NotSupportedException();
-        }
-    }
-
-    public class CheckCallerAttribute : Attribute
-    {
-        public string NetAspectAttributeKind = "CallWeaving";
-
-        public static void AfterCall(object caller)
-        {
-            throw new Exception(caller.GetType() == typeof (MyClassToWeave) ? "OK" : "KO");
-        }
-    }
-
-    public class CheckParametersCallerOnCallAfterAttribute : Attribute
-    {
-        public string NetAspectAttributeKind = "CallWeaving";
-
-        public static void AfterCall(string callerMethodParameterCaller)
-        {
-            throw new Exception(callerMethodParameterCaller);
-        }
-    }
-
-    public class CheckParametersCalledOnCallAfter : Attribute
-    {
-        public string NetAspectAttributeKind = "CallWeaving";
-
-        public static void AfterCall(string parameter1Called, string parameter2Called)
-        {
-            throw new Exception(parameter1Called + " " + parameter2Called);
-        }
-    }
-
-    public class CheckOnCallBeforeAttribute : Attribute
-    {
-        public string NetAspectAttributeKind = "CallWeaving";
-
-        public static void BeforeCall()
-        {
-            throw new NotSupportedException();
-        }
-    }
-
-    public class CheckOnCallAfterAttribute : Attribute
-    {
-        public string NetAspectAttributeKind = "CallWeaving";
-
-        public static void AfterCall()
-        {
-            throw new NotSupportedException();
-        }
-    }
-
-    public class CheckLineNumberOnCallAfterAttribute : Attribute
-    {
-        public string NetAspectAttributeKind = "CallWeaving";
-
-        public static void AfterCall(int lineNumber, int columnNumber, string filename)
-        {
-            throw new Exception(lineNumber.ToString() + " : " + columnNumber.ToString() + " : " + filename);
-        }
-    }
-
-    public class CheckReturnSimpleTypeAttribute : Attribute
-    {
-        public string NetAspectAttributeKind = "MethodWeaving";
-
-        public void After(ref int result)
-        {
-            result = 5;
-        }
-    }
-
-    public class CheckWithParameterNameInterceptorAttribute : Attribute
-    {
-        public string NetAspectAttributeKind = "MethodWeaving";
-
-        public void Before(int first, ref int second)
-        {
-            second = first + 1;
         }
     }
 }

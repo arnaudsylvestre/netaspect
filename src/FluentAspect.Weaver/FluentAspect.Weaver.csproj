@@ -51,7 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Errors\ErrorKind.cs" />
+    <Compile Include="Core\Errors\FailureKind.cs" />
+    <Compile Include="Core\Errors\IErrorTextProvider.cs" />
+    <Compile Include="Core\Errors\NetAspectError.cs" />
     <Compile Include="Core\Errors\PeVerify.cs" />
+    <Compile Include="Core\Errors\WarningKind.cs" />
     <Compile Include="Core\Helpers\ProcessHelper.cs" />
     <Compile Include="Core\Model\IMethod.cs" />
     <Compile Include="Core\Model\Interceptor.cs" />
@@ -62,19 +67,30 @@
     <Compile Include="Core\Model\MethodExtensions.cs" />
     <Compile Include="Core\Model\MethodWeavingConfiguration.cs" />
     <Compile Include="Core\Model\NetAspectDefinition.cs" />
+    <Compile Include="Core\Model\Selector.cs" />
+    <Compile Include="Core\Model\SelectorParametersGenerator.cs" />
     <Compile Include="Core\V2\Weaver\AroundMethodWeaver.cs" />
     <Compile Include="Core\V2\Assemblies\AssemblyPool.cs" />
     <Compile Include="Core\V2\Weaver\Call\CallWeavingFieldInjectorFactory.cs" />
     <Compile Include="Core\V2\Weaver\Call\IlInstructionInjectorAvailableVariables.cs" />
     <Compile Include="Core\V2\Weaver\Call\CallWeavingMethodInjectorFactory.cs" />
+    <Compile Include="Core\V2\Weaver\Checkers\CalledInterceptorParametersChercker.cs" />
+    <Compile Include="Core\V2\Weaver\Checkers\ColumnNumberInterceptorParametersChercker.cs" />
+    <Compile Include="Core\V2\Weaver\Checkers\FieldInterceptorParametersChercker.cs" />
+    <Compile Include="Core\V2\Weaver\Checkers\FilenameInterceptorParametersChercker.cs" />
     <Compile Include="Core\V2\Weaver\Checkers\ParametersInterceptorParametersChercker.cs" />
     <Compile Include="Core\V2\Weaver\Checkers\PropertyInterceptorParametersChercker.cs" />
     <Compile Include="Core\V2\Weaver\Call\MetchodCallInjector.cs" />
+    <Compile Include="Core\V2\Weaver\Fillers\AspectApplier.cs" />
     <Compile Include="Core\V2\Weaver\Fillers\CallGetFieldInstructionWeavingModelFiller.cs" />
+    <Compile Include="Core\V2\Weaver\Generators\CalledInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\V2\Weaver\Generators\ExceptionInterceptorParametersIlGenerator.cs" />
+    <Compile Include="Core\V2\Weaver\Generators\FieldInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\V2\Weaver\Generators\ParametersInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\V2\Weaver\Generators\PropertyInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\V2\Weaver\Generators\ResultInterceptorParametersIlGenerator.cs" />
+    <Compile Include="Core\V2\Weaver\Generators\SequencePointIntInterceptorParametersIlGenerator.cs" />
+    <Compile Include="Core\V2\Weaver\Generators\SequencePointStringInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\V2\Weaver\Method\MethodWeavingPropertyGetInjectorFactory.cs" />
     <Compile Include="Core\V2\Weaver\Checkers\ExceptionInterceptorParametersChercker.cs" />
     <Compile Include="Core\V2\Weaver\Fillers\PropertyGetAttributeWeavingModelFiller.cs" />

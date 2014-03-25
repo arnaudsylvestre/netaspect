@@ -85,15 +85,4 @@ namespace FluentAspect.Sample
             return CheckBeforeWithAttributesProtected(beforeParameter);
         }
     }
-
-
-    public class GetPropertyAttribute : Attribute
-    {
-        public string NetAspectAttributeKind = "MethodWeaving";
-
-        public void After(ref string result)
-        {
-            result = "3";
-        }
-    }
 }

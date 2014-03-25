@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.V2.Weaver.Call;
+using FluentAspect.Weaver.Core.V2.Weaver.Engine;
 using FluentAspect.Weaver.Core.V2.Weaver.Generators;
 using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.V2.Weaver.Engine
+namespace FluentAspect.Weaver.Core.V2.Weaver.Call
 {
     public class MetchodCallInjector : IIlInjector<IlInstructionInjectorAvailableVariables>
     {

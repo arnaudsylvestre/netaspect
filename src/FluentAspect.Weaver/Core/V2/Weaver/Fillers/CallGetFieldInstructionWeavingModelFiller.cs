@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.V2.Model;
 using Mono.Cecil;
@@ -8,22 +7,6 @@ using FluentAspect.Weaver.Core.V2.Weaver.Engine;
 
 namespace FluentAspect.Weaver.Core.V2.Weaver.Fillers
 {
-    public class AspectApplier
-    {
-        public static bool CanApply(FieldDefinition field, NetAspectDefinition netAspect)
-        {
-            TypeReference aspectType = field.Module.Import(netAspect.Type);
-            bool compliant = field.CustomAttributes.Any(
-                                  customAttribute_L =>
-                                  customAttribute_L.AttributeType.FullName == aspectType.FullName);
-            if (compliant)
-                return true;
-            if (netAspect.FieldSelector.IsCompliant(field))
-                return true;
-            return false;
-        }
-    }
-
     public class CallGetFieldInstructionWeavingModelFiller : IWeavingModelFiller
     {
         public bool CanHandle(NetAspectDefinition aspect)

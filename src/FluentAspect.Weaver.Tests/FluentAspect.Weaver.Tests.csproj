@@ -60,7 +60,7 @@
   <ItemGroup>
     <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\AnotherAssembly\CallGetPublicFieldWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\CallGetFieldWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetStaticFieldCalledParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetStaticFieldCalledStructParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldWithReferencedParameterTypeTest.cs" />
@@ -68,7 +68,6 @@
     <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldNotBooleanTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldNotStaticTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\GetFieldWithSelectorFieldNameTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\FieldGetterCallWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithBadTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithRealTypeReferencedTypeTest.cs" />
@@ -811,6 +810,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="docs\" />
+    <Folder Include="unit\CallWeaving\Fields\Getter\AnotherAssembly\" />
     <Folder Include="unit\MethodWeaving\Events\" />
     <Folder Include="unit\MethodWeaving\Indexers\" />
     <Folder Include="unit\MethodWeaving\Operators\" />

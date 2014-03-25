@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 
@@ -179,79 +178,6 @@ namespace FluentAspect.Weaver.Core.Model
                 selectorParametersGenerator.AddPossibleParameter<string>("fieldName", field => field.Name);
                 return new Selector<FieldDefinition>(_attribute.GetMethod("SelectField"), selectorParametersGenerator);
             }
-        }
-    }
-
-    public class SelectorParametersGenerator<T>
-    {
-        class PossibleParameter
-        {
-            public Type Type;
-            public Func<T, object> Provider;
-        }
-
-        Dictionary<string, PossibleParameter> possibleParameters = new Dictionary<string, PossibleParameter>();
-
-        public void AddPossibleParameter<TParameter>(string parameterName, Func<T, object> valueProvider)
-        {
-            possibleParameters.Add(parameterName.ToLower(), new PossibleParameter()
-                {
-                    Provider                    = valueProvider,
-                    Type                    = typeof(TParameter)
-                });
-        }
-
-        public object[] Generate(MethodInfo method, T data)
-        {
-            var parameters = new List<object>();
-            foreach (var parameterInfo in method.GetParameters())
-            {
-                parameters.Add(possibleParameters[parameterInfo.Name.ToLower()].Provider(data));
-            }
-            return parameters.ToArray();
-        }
-
-        public void Check(MethodInfo method, ErrorHandler errorHandler)
-        {
-            foreach (var parameterInfo in method.GetParameters())
-            {
-                var possibleParameter = possibleParameters[parameterInfo.Name.ToLower()];
-                if (possibleParameter.Type != parameterInfo.ParameterType)
-                    errorHandler.OnError("The parameter {0} in the method {1} of the aspect {2} is expected to be {3}", parameterInfo.Name, method.Name, method.DeclaringType.FullName, possibleParameter.Type);
-            }
-        }
-    }
-
-    public class Selector<T>
-    {
-        private readonly MethodInfo _method;
-        private SelectorParametersGenerator<T> selectorParametersGenerator;
-
-        public Selector(MethodInfo method, SelectorParametersGenerator<T> selectorParametersGenerator)
-        {
-            _method = method;
-            this.selectorParametersGenerator = selectorParametersGenerator;
-        }
-
-        public void Check(ErrorHandler errorHandler)
-        {
-            if (_method == null)
-                return;
-            selectorParametersGenerator.Check(_method, errorHandler);
-            if (!_method.IsStatic)
-                errorHandler.OnError("The selector {0} in the aspect {1} must be static", _method.Name, _method.DeclaringType.FullName);
-
-            if (_method.ReturnType != typeof(bool))
-                errorHandler.OnError("The selector {0} in the aspect {1} must return boolean value", _method.Name, _method.DeclaringType.FullName);
-        }
-
-        public bool IsCompliant(T member)
-        {
-            var errorHandler = new ErrorHandler();
-            Check(errorHandler);
-            if (errorHandler.Errors.Count > 0 || errorHandler.Failures.Count > 0)
-                return false;
-            return (bool)_method.Invoke(null, selectorParametersGenerator.Generate(_method, member));
         }
     }
 }

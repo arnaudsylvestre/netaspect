@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using FluentAspect.Sample.Dep;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.AnotherAssembly
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors
 {
     public class CallGetFieldWeavingInAnotherAssemblyTest :
         NetAspectTest<CallGetFieldWeavingInAnotherAssemblyTest.MyAspect, DepClassWhichCallField>
@@ -23,9 +25,17 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.AnotherAssemb
             public static DepClassWhichCallField Caller;
             public bool NetAspectAttribute = true;
 
+
+            public static IEnumerable<Assembly> AssembliesToWeave = new List<Assembly> { typeof(DepClassWhichCallField).Assembly };
+
             public void BeforeGetField(DepClassWhichCallField caller)
             {
                 Caller = caller;
+            }
+
+            public static bool SelectField(string fieldName)
+            {
+                return fieldName == "Field";
             }
         }
     }

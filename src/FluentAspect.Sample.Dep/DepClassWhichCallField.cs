@@ -1,10 +1,5 @@
 ﻿namespace FluentAspect.Sample.Dep
 {
-    public class DepClassWithField
-    {
-        public string Field;
-    }
-
     public class DepClassWhichCallField
     {
         public string CallField(string fieldValue)
