@@ -1,10 +1,10 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.Before.CallerParameterName
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.After.CallerParameterName
 {
-    public class BeforeCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeTest :
-        NetAspectTest<BeforeCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeTest.ClassToWeave>
+    public class AfterCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeTest :
+        NetAspectTest<AfterCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
@@ -33,7 +33,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.B
             public static int ParameterName;
             public bool NetAspectAttribute = true;
 
-            public void BeforeUpdateField(int callerParam1)
+            public void AfterUpdateField(int callerParam1)
             {
                 ParameterName = callerParam1;
             }

@@ -3,8 +3,8 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.Before.CallerParameterName
 {
-    public class BeforeCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeTest :
-        NetAspectTest<BeforeCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeTest.ClassToWeave>
+    public class BeforeCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeReferencedTest :
+        NetAspectTest<BeforeCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeReferencedTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
@@ -14,6 +14,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.B
                     var classToWeave_L = new ClassToWeave();
                     int val = 12;
                     classToWeave_L.Weaved(ref val);
+                    Assert.AreEqual(25, val);
                     Assert.AreEqual(12, MyAspect.ParameterName);
                 };
         }
@@ -33,9 +34,10 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.B
             public static int ParameterName;
             public bool NetAspectAttribute = true;
 
-            public void BeforeUpdateField(int callerParam1)
+            public void BeforeUpdateField(ref int callerParam1)
             {
                 ParameterName = callerParam1;
+                callerParam1 = 25;
             }
         }
     }

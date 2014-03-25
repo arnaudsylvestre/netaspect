@@ -3,17 +3,16 @@ using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.Before.CallerParameterName
 {
-    public class BeforeCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeTest :
-        NetAspectTest<BeforeCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeTest.ClassToWeave>
+    public class BeforeCallUpdateFieldCallerParameterNameParameterWithObjectTypeTest :
+        NetAspectTest<BeforeCallUpdateFieldCallerParameterNameParameterWithObjectTypeTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
             return () =>
                 {
-                    Assert.AreEqual(0, MyAspect.ParameterName);
+                    Assert.AreEqual(null, MyAspect.ParameterName);
                     var classToWeave_L = new ClassToWeave();
-                    int val = 12;
-                    classToWeave_L.Weaved(ref val);
+                    classToWeave_L.Weaved(12);
                     Assert.AreEqual(12, MyAspect.ParameterName);
                 };
         }
@@ -22,7 +21,7 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.B
         {
             [MyAspect] public string Field;
 
-            public void Weaved(ref int param1)
+            public void Weaved(int param1)
             {
                 Field = "Dummy";
             }
@@ -30,10 +29,10 @@ namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.B
 
         public class MyAspect : Attribute
         {
-            public static int ParameterName;
+            public static object ParameterName;
             public bool NetAspectAttribute = true;
 
-            public void BeforeUpdateField(int callerParam1)
+            public void BeforeUpdateField(object callerParam1)
             {
                 ParameterName = callerParam1;
             }

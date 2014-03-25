@@ -38,13 +38,13 @@ namespace FluentAspect.Weaver.Core.Assemblies
         {
             foreach (var def in asms)
             {
-                WeaveOneAssembly(def.Key.GetAssemblyPath(), def.Value, errorHandler, newAssemblyNameProvider, assemblyChecker);
+                WeaveOneAssembly(def.Key.GetAssemblyPath(), def.Value, errorHandler, newAssemblyNameProvider);
             }
         }
 
 
-        public static void WeaveOneAssembly(string getAssemblyPath, AssemblyDefinition assemblyDefinition,
-                                            ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider, IAssemblyChecker assemblyChecker)
+        private void WeaveOneAssembly(string getAssemblyPath, AssemblyDefinition assemblyDefinition,
+                                            ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
         {
             string targetFileName = newAssemblyNameProvider(getAssemblyPath);
             assemblyDefinition.Write(targetFileName, new WriterParameters
