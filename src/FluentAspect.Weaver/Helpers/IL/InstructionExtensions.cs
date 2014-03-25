@@ -19,6 +19,11 @@ namespace FluentAspect.Weaver.Helpers.IL
                 instruction.OpCode == OpCodes.Ldflda ||
                 instruction.OpCode == OpCodes.Ldsflda;
         }
+        public static bool IsAnUpdateField(this Instruction instruction)
+        {
+            return instruction.OpCode == OpCodes.Stsfld ||
+                instruction.OpCode == OpCodes.Stfld;
+        }
         public static MethodDefinition GetCalledMethod(this Instruction instruction)
         {
             return ((MethodReference)instruction.Operand).Resolve();

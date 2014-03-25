@@ -28,6 +28,8 @@ namespace FluentAspect.Weaver.Core.Model
 
         public bool IsCompliant(T member)
         {
+            if (_method == null)
+                return false;
             var errorHandler = new ErrorHandler();
             Check(errorHandler);
             if (errorHandler.Errors.Count > 0 || errorHandler.Failures.Count > 0)

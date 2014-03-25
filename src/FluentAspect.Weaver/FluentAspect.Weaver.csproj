@@ -68,11 +68,10 @@
     <Compile Include="Core\Model\Selector.cs" />
     <Compile Include="Core\Model\SelectorParametersGenerator.cs" />
     <Compile Include="Core\Model\WeavingModel.cs" />
-    <Compile Include="Core\V2\Weaver\AroundMethodWeaver.cs" />
-    <Compile Include="Core\V2\Weaver\IIlInjector.cs" />
     <Compile Include="Core\Weaver\AroundMethodWeaver.cs" />
     <Compile Include="Core\Weaver\Call\CallWeavingFieldInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Call\CallWeavingMethodInjectorFactory.cs" />
+    <Compile Include="Core\Weaver\Call\CallWeavingUpdateFieldInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Call\IlInstructionInjectorAvailableVariables.cs" />
     <Compile Include="Core\Weaver\Call\MetchodCallInjector.cs" />
     <Compile Include="Core\Weaver\Checkers\CalledInterceptorParametersChercker.cs" />
@@ -98,6 +97,7 @@
     <Compile Include="Core\Weaver\Fillers\AspectApplier.cs" />
     <Compile Include="Core\Weaver\Fillers\CallGetFieldInstructionWeavingModelFiller.cs" />
     <Compile Include="Core\Weaver\Fillers\CallMethodInstructionWeavingModelFiller.cs" />
+    <Compile Include="Core\Weaver\Fillers\CallUpdateFieldInstructionWeavingModelFiller.cs" />
     <Compile Include="Core\Weaver\Fillers\IWeavingModelFiller.cs" />
     <Compile Include="Core\Weaver\Fillers\MethodAttributeWeavingModelFiller.cs" />
     <Compile Include="Core\Weaver\Fillers\MultiWeavingModelFiller.cs" />

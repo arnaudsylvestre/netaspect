@@ -65,14 +65,14 @@ namespace FluentAspect.Weaver.Core.Model
             get { return new Interceptor(_attribute.GetMethod("AfterCall")); }
         }
 
-        public Interceptor BeforeUpdateFieldValue
+        public Interceptor BeforeUpdateField
         {
-            get { return new Interceptor(_attribute.GetMethod("BeforeUpdateFieldValue")); }
+            get { return new Interceptor(_attribute.GetMethod("BeforeUpdateField")); }
         }
 
-        public Interceptor AfterUpdateFieldValue
+        public Interceptor AfterUpdateField
         {
-            get { return new Interceptor(_attribute.GetMethod("AfterUpdateFieldValue")); }
+            get { return new Interceptor(_attribute.GetMethod("AfterUpdateField")); }
         }
 
         public Interceptor BeforeGetField

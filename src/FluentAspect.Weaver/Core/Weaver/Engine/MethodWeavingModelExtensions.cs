@@ -43,6 +43,24 @@ namespace FluentAspect.Weaver.Core.Weaver.Engine
                                                    CallWeavingFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction));
             }
         }
+
+        public static void AddUpdateFieldCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
+                                                     Instruction beforeInstruction, NetAspectDefinition aspect,
+                                                     Interceptor beforeCallMethod, Interceptor afterCallMethod)
+        {
+            var beforCallInterceptorMethod = beforeCallMethod.Method;
+            if (beforCallInterceptorMethod != null)
+            {
+                weavingModel.AfterInstructions.Add(beforeInstruction,
+                                                   CallWeavingUpdateFieldInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction));
+            }
+            var afterCallInterceptorMethod = afterCallMethod.Method;
+            if (afterCallInterceptorMethod != null)
+            {
+                weavingModel.AfterInstructions.Add(beforeInstruction,
+                                                   CallWeavingUpdateFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction));
+            }
+        }
         
 
         public static void AddMethodWeavingModel(this WeavingModel weavingModel, MethodDefinition method,

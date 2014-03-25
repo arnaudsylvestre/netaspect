@@ -11,8 +11,47 @@ using Mono.Collections.Generic;
 
 namespace FluentAspect.Weaver.Core.Weaver
 {
+    public class AroundInstructionIl
+    {
+        public List<VariableDefinition> Variables;
+        public List<Instruction> InitBeforeInstruction;
+        public List<Instruction> BeforeInstruction;
+        public List<Instruction> AfterInstruction;
+        public List<Instruction> BeforeMethodInstructions;
+        public Instruction Instruction;
+    }
+
+    public class AroundMethodIl
+    {
+        public List<VariableDefinition> Variables;
+        public List<Instruction> InitBeforeInstruction;
+        public List<Instruction> BeforeMethod;
+        public List<Instruction> AfterMethod;
+        public List<Instruction> OnException;
+        public List<Instruction> OnFinally;
+    }
+
+    public interface IAroundInstructionWeaver
+    {
+        void Weave(AroundInstructionIl il);
+    }
+
+    public class CallGetFieldWeaver : IAroundInstructionWeaver
+    {
+        public void Weave(AroundInstructionIl il)
+        {
+            -------------------------------------------
+        }
+    }
+
     public class AroundMethodWeaver
     {
+        public void Weave2(FluentAspect.Weaver.Helpers.IL.Method method, WeavingModel weavingModel,
+                           ErrorHandler errorHandler)
+        {
+        }
+
+
         public void Weave(FluentAspect.Weaver.Helpers.IL.Method method, WeavingModel weavingModel, ErrorHandler errorHandler)
         {
             VariableDefinition result = method.MethodDefinition.ReturnType ==
@@ -63,6 +102,22 @@ namespace FluentAspect.Weaver.Core.Weaver
                             variablesForInstructionCall.VariablesCalled.Add(instruction, variableDefinition);
                             initInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
                             recallInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
+                        }
+                    }
+                    if (instruction.IsAnUpdateField())
+                    {
+                        if (instruction.OpCode == OpCodes.Stfld)
+                        {
+                            var fieldReference = (instruction.Operand as FieldReference).Resolve();
+                            var variableDefinition = new VariableDefinition(fieldReference.DeclaringType);
+                            var valueDefinition = new VariableDefinition(fieldReference.FieldType);
+                            variablesToAdd.Add(variableDefinition);
+                            variablesToAdd.Add(valueDefinition);
+                            variablesForInstructionCall.VariablesCalled.Add(instruction, variableDefinition);
+                            initInstructions.Add(Instruction.Create(OpCodes.Stloc, valueDefinition));
+                            initInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                            recallInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
+                            initInstructions.Add(Instruction.Create(OpCodes.Ldloc, valueDefinition));
                         }
                     }
                     newInstructions.AddRange(initInstructions);
