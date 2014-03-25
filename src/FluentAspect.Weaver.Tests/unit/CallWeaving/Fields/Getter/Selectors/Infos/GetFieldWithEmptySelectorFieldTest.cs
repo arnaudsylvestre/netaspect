@@ -1,7 +1,7 @@
 using System;
 using FluentAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors.Errors
+namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors.Infos
 {
     public class GetFieldWithEmptySelectorFieldTest :
         NetAspectTest<GetFieldWithEmptySelectorFieldTest.ClassToWeave>

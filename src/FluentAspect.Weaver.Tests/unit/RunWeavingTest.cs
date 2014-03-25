@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Tests.Helpers;
 

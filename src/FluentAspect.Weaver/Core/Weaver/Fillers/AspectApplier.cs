@@ -1,5 +1,6 @@
 using System.Linq;
 using FluentAspect.Weaver.Core.Model;
+using FluentAspect.Weaver.Core.V2.Model;
 using Mono.Cecil;
 
 namespace FluentAspect.Weaver.Core.V2.Weaver.Fillers

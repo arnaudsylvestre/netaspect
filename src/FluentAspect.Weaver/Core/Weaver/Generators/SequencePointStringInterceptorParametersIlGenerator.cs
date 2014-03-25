@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FluentAspect.Weaver.Core.V2.Weaver.Helpers;
 using FluentAspect.Weaver.Core.Weavers.CallWeaving.Factory.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
 {
-    public class SequencePointIntInterceptorParametersIlGenerator<T> : IInterceptorParameterIlGenerator<T>
+    public class SequencePointStringInterceptorParametersIlGenerator<T> : IInterceptorParameterIlGenerator<T>
     {
         private Instruction instruction;
-        private Func<SequencePoint, int> sequencePointInfoProvider;
+        private Func<SequencePoint, string> sequencePointInfoProvider;
 
-        public SequencePointIntInterceptorParametersIlGenerator(Instruction instruction, Func<SequencePoint, int> sequencePointInfoProvider)
+        public SequencePointStringInterceptorParametersIlGenerator(Instruction instruction, Func<SequencePoint, string> sequencePointInfoProvider)
         {
             this.instruction = instruction;
             this.sequencePointInfoProvider = sequencePointInfoProvider;

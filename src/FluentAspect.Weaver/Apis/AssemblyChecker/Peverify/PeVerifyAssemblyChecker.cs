@@ -1,6 +1,5 @@
 ﻿using System;
 using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Helpers;
 
 namespace FluentAspect.Weaver.Apis.AssemblyChecker.Peverify
 {

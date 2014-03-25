@@ -136,7 +136,7 @@
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\LineNumber\BeforeCallGetFieldLineNumberParameterWithBadTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\LineNumber\BeforeCallGetFieldLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\Before\LineNumber\BeforeCallGetFieldLineNumberParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Infos\GetFieldWithSelectorFieldNotStaticTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Infos\GetFieldWithEmptySelectorFieldTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Visibility\CallGetPrivateFieldWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Visibility\CallGetInternalFieldWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Visibility\CallGetProtectedFieldWeavingTest.cs" />

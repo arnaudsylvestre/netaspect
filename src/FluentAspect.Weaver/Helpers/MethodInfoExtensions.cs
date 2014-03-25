@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Model;
+using FluentAspect.Weaver.Core.V2.Model;
 using MonoCustomAttributeProvider = Mono.Cecil.ICustomAttributeProvider;
 
 namespace FluentAspect.Weaver.Helpers

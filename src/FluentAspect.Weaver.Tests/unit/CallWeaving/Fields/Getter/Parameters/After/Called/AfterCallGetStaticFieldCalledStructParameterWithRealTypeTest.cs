@@ -1,6 +1,5 @@
 using System;
 using FluentAspect.Weaver.Core.Errors;
-using NUnit.Framework;
 
 namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.After.Called
 {
