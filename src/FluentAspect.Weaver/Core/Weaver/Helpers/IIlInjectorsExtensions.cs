@@ -2,7 +2,7 @@
 using FluentAspect.Weaver.Core.Errors;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.V2.Weaver.Helpers
+namespace FluentAspect.Weaver.Core.Weaver.Helpers
 {
     public static class IIlInjectorsExtensions
     {

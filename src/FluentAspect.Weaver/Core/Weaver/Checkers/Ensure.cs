@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.V2.Weaver.Errors;
+using FluentAspect.Weaver.Core.Weaver.Errors;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers
+namespace FluentAspect.Weaver.Core.Weaver.Checkers
 {
     internal static class Ensure
     {

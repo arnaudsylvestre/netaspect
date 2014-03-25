@@ -1,6 +1,6 @@
 using System;
 using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.V2.Weaver.Engine;
+using FluentAspect.Weaver.Core.Weaver.Engine;
 using FluentAspect.Weaver.Factory;
 using Microsoft.Build.Utilities;
 

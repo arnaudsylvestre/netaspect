@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using FluentAspect.Weaver.Apis.AssemblyChecker;
 using FluentAspect.Weaver.Apis.AssemblyChecker.Peverify;
+using FluentAspect.Weaver.Core.Assemblies;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.V2.Assemblies;
-using FluentAspect.Weaver.Core.V2.Model;
 using Mono.Cecil;
 
-namespace FluentAspect.Weaver.Core.V2.Weaver.Engine
+namespace FluentAspect.Weaver.Core.Weaver.Engine
 {
     public class WeaverCore
     {

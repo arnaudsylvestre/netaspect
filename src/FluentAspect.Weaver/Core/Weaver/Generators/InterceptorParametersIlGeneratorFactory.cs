@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
-using FluentAspect.Weaver.Core.V2.Weaver.Call;
-using FluentAspect.Weaver.Core.V2.Weaver.Method;
+using FluentAspect.Weaver.Core.Weaver.Call;
+using FluentAspect.Weaver.Core.Weaver.Method;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
+namespace FluentAspect.Weaver.Core.Weaver.Generators
 {
     public static class InterceptorParametersIlGeneratorFactory
     {

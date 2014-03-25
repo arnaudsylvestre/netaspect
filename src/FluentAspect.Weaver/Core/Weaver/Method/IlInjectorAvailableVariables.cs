@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Weaver.Core.V2.Weaver.Call;
+using FluentAspect.Weaver.Core.Weaver.Call;
 using FluentAspect.Weaver.Helpers;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using Mono.Collections.Generic;
 
-namespace FluentAspect.Weaver.Core.V2.Weaver.Method
+namespace FluentAspect.Weaver.Core.Weaver.Method
 {
     public class IlInjectorAvailableVariables : IlInstructionInjectorAvailableVariables
     {

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Weaver.Core.V2.Weaver.Method;
+using FluentAspect.Weaver.Core.Weaver.Method;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
+namespace FluentAspect.Weaver.Core.Weaver.Generators
 {
     public class ExceptionInterceptorParametersIlGenerator :
         IInterceptorParameterIlGenerator<IlInjectorAvailableVariables>

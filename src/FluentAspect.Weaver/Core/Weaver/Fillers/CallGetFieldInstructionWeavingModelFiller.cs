@@ -1,11 +1,9 @@
-using System;
 using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.V2.Model;
+using FluentAspect.Weaver.Core.Weaver.Engine;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using FluentAspect.Weaver.Core.V2.Weaver.Engine;
 
-namespace FluentAspect.Weaver.Core.V2.Weaver.Fillers
+namespace FluentAspect.Weaver.Core.Weaver.Fillers
 {
     public class CallGetFieldInstructionWeavingModelFiller : IWeavingModelFiller
     {

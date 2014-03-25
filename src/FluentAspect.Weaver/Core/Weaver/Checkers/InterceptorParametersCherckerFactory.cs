@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using FluentAspect.Weaver.Core.V2.Weaver.Engine;
+using FluentAspect.Weaver.Core.Weaver.Engine;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.V2.Weaver.Checkers
+namespace FluentAspect.Weaver.Core.Weaver.Checkers
 {
     public static class InterceptorParametersCherckerFactory
     {

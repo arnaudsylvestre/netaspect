@@ -1,8 +1,7 @@
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Weavers.CallWeaving.Checkers;
 
-namespace FluentAspect.Weaver.Core.V2.Weaver.Checkers
+namespace FluentAspect.Weaver.Core.Weaver.Checkers
 {
     public class ParametersInterceptorParametersChercker : IInterceptorParameterChecker
     {

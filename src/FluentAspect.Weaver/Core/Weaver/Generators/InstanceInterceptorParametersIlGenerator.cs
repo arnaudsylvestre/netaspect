@@ -2,7 +2,7 @@
 using System.Reflection;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.V2.Weaver.Generators
+namespace FluentAspect.Weaver.Core.Weaver.Generators
 {
     public class InstanceInterceptorParametersIlGenerator<T> : IInterceptorParameterIlGenerator<T>
     {

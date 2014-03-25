@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.V2.Model;
-using FluentAspect.Weaver.Core.V2.Weaver.Helpers;
-using FluentAspect.Weaver.Core.V2.Weaver.Method;
+using FluentAspect.Weaver.Core.Model;
+using FluentAspect.Weaver.Core.Weaver.Helpers;
+using FluentAspect.Weaver.Core.Weaver.Method;
 using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
 
-namespace FluentAspect.Weaver.Core.V2.Weaver
+namespace FluentAspect.Weaver.Core.Weaver
 {
     public class AroundMethodWeaver
     {

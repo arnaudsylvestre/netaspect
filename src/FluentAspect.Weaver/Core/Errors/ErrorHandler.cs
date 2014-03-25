@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FluentAspect.Weaver.Core.V2.Weaver.Errors;
+using FluentAspect.Weaver.Core.Weaver.Errors;
 
 namespace FluentAspect.Weaver.Core.Errors
 {

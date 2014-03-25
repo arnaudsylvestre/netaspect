@@ -6,7 +6,7 @@ using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
 
-namespace FluentAspect.Weaver.Core.V2.Assemblies
+namespace FluentAspect.Weaver.Core.Assemblies
 {
     public class AssemblyPool
     {

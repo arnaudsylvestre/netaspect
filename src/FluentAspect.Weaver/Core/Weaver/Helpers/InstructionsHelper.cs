@@ -3,7 +3,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
 
-namespace FluentAspect.Weaver.Core.V2.Weaver.Helpers
+namespace FluentAspect.Weaver.Core.Weaver.Helpers
 {
     public static class InstructionsHelper
     {

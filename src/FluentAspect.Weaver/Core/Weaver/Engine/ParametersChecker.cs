@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.V2.Weaver.Checkers;
+using FluentAspect.Weaver.Core.Weaver.Checkers;
 
-namespace FluentAspect.Weaver.Core.V2.Weaver.Engine
+namespace FluentAspect.Weaver.Core.Weaver.Engine
 {
     public class ParametersChecker
     {
