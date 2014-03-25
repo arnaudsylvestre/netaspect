@@ -129,13 +129,10 @@
     <Compile Include="Helpers\IL\InstructionExtensions.cs" />
     <Compile Include="Helpers\IL\Method.cs" />
     <Compile Include="Helpers\AssemblyExtensions.cs" />
-    <Compile Include="Helpers\MethodInfoExtensions.cs" />
     <Compile Include="Helpers\ObjectExtensions.cs" />
-    <Compile Include="Helpers\TypeExtensions.cs" />
     <Compile Include="Helpers\AssemblyDefinitionExtensions.cs" />
     <Compile Include="Factory\WeaverCoreFactory.cs" />
     <Compile Include="Helpers\MethodDefinitionExtensions.cs" />
-    <Compile Include="Helpers\MethodReferenceExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
