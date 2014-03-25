@@ -51,21 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apis\AssemblyChecker\IAssemblyChecker.cs" />
+    <Compile Include="Apis\AssemblyChecker\Peverify\PeVerifyAssemblyChecker.cs" />
     <Compile Include="Core\Errors\ErrorKind.cs" />
     <Compile Include="Core\Errors\FailureKind.cs" />
     <Compile Include="Core\Errors\IErrorTextProvider.cs" />
     <Compile Include="Core\Errors\NetAspectError.cs" />
-    <Compile Include="Core\Errors\PeVerify.cs" />
     <Compile Include="Core\Errors\WarningKind.cs" />
-    <Compile Include="Core\Helpers\ProcessHelper.cs" />
-    <Compile Include="Core\Model\IMethod.cs" />
+    <Compile Include="Apis\AssemblyChecker\Peverify\ProcessHelper.cs" />
     <Compile Include="Core\Model\Interceptor.cs" />
-    <Compile Include="Core\Model\IParameter.cs" />
-    <Compile Include="Core\Model\IType.cs" />
-    <Compile Include="Core\Model\CallWeavingConfiguration.cs" />
-    <Compile Include="Core\Model\Helpers\InterceptorExtensions.cs" />
-    <Compile Include="Core\Model\MethodExtensions.cs" />
-    <Compile Include="Core\Model\MethodWeavingConfiguration.cs" />
     <Compile Include="Core\Model\NetAspectDefinition.cs" />
     <Compile Include="Core\Model\Selector.cs" />
     <Compile Include="Core\Model\SelectorParametersGenerator.cs" />
@@ -123,39 +117,19 @@
     <Compile Include="Core\V2\Weaver\Engine\WeavingModelComputer.cs" />
     <Compile Include="Core\V2\Weaver\Method\MethodWeavingPropertySetInjectorFactory.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Checkers\Ensure.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Engine\AroundInstructionWeaver.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Engine\ICallWeavingProvider.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Factory\Parameters\FieldParametersFactory.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Methods\CallMethodWeaver.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Engine\JoinPoint.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Engine\ParametersEngine.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Methods\MethodCallToWeave.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Factory\ParametersEngineFactory.cs" />
     <Compile Include="Core\Weavers\CallWeaving\Factory\Helpers\InstructionFactory.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Factory\Parameters\CalledParametersFactory.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Factory\Parameters\CallerParametersFactory.cs" />
-    <Compile Include="Core\Weavers\CallWeaving\Factory\Parameters\PdbParameterFactory.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Engine\Model\InterceptorsExtensions.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Factory\ParametersEngineFactory.cs" />
     <Compile Include="Core\V2\Weaver\Errors\IErrorListener.cs" />
     <Compile Include="Core\V2\Weaver\Checkers\IInterceptorParameterChecker.cs" />
     <Compile Include="Core\V2\Weaver\Checkers\InstanceInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Factory\Parameters\InstanceParametersFactory.cs" />
     <Compile Include="Core\V2\Weaver\Checkers\InterceptorParametersCherckerFactory.cs" />
     <Compile Include="Helpers\IL\InstructionsExtensions.cs" />
     <Compile Include="Helpers\IL\InstructionExtensions.cs" />
     <Compile Include="Helpers\IL\Method.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Engine\Helpers\MethodToWeaveExtensions.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Engine\Model\Variables.cs" />
-    <Compile Include="Core\Weavers\MethodWeaving\Engine\Model\MethodToWeave.cs" />
     <Compile Include="Helpers\AssemblyExtensions.cs" />
-    <Compile Include="Core\Model\Adapters\MethodDefinitionAdapter.cs" />
     <Compile Include="Helpers\MethodInfoExtensions.cs" />
-    <Compile Include="Core\Model\Adapters\ParameterDefinitionAdapter.cs" />
     <Compile Include="Helpers\ObjectExtensions.cs" />
     <Compile Include="Helpers\TypeExtensions.cs" />
     <Compile Include="Core\Errors\ErrorHandler.cs" />
-    <Compile Include="Core\Model\Adapters\TypeDefinitionAdapter.cs" />
     <Compile Include="Helpers\AssemblyDefinitionExtensions.cs" />
     <Compile Include="Core\IWeaveable.cs" />
     <Compile Include="Factory\WeaverCoreFactory.cs" />
@@ -177,13 +151,6 @@
       <Project>{63E6915C-7EA4-4D76-AB28-0D7191EEA626}</Project>
       <Name>Mono.Cecil.Pdb</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\WeaverBuilders\" />
-    <Folder Include="Core\Weavers\CallWeaving\Events\" />
-    <Folder Include="Core\Weavers\CallWeaving\Fields\" />
-    <Folder Include="Core\Weavers\Engine\" />
-    <Folder Include="Core\Weavers\MethodWeaving\Methods\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

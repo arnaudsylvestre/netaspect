@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FluentAspect.Weaver.Apis.AssemblyChecker;
+using FluentAspect.Weaver.Apis.AssemblyChecker.Peverify;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
 using FluentAspect.Weaver.Core.V2.Assemblies;
@@ -13,6 +15,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Engine
     {
         private readonly AroundMethodWeaver aroundMethodWeaver_L = new AroundMethodWeaver();
         private readonly WeavingModelComputer weavingModelComputer;
+        IAssemblyChecker assemblyChecker = new PeVerifyAssemblyChecker();
 
         public WeaverCore(WeavingModelComputer weavingModelComputer_P)
         {
@@ -21,7 +24,7 @@ namespace FluentAspect.Weaver.Core.V2.Weaver.Engine
 
         public void Weave(Type[] typesP_L, Type[] filter, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
         {
-            var assemblyPool = new AssemblyPool();
+            var assemblyPool = new AssemblyPool(assemblyChecker);
 
             foreach (var weavingModel in ComputeWeavingModels(typesP_L, filter, assemblyPool, errorHandler))
             {

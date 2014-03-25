@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using Mono.Collections.Generic;
 
 namespace FluentAspect.Weaver.Helpers.IL
 {
@@ -20,16 +17,6 @@ namespace FluentAspect.Weaver.Helpers.IL
         public MethodDefinition MethodDefinition
         {
             get { return definition; }
-        }
-
-        public List<VariableDefinition> CreateVariable(IEnumerable<Type> types)
-        {
-            return types.Select(type => definition.CreateVariable(type)).ToList();
-        }
-
-        public VariableDefinition CreateArgsArrayFromParameters()
-        {
-            return definition.CreateVariable<object[]>();
         }
 
         public void FillArgsArrayFromParameters(List<Instruction> instructions, VariableDefinition args)
@@ -49,12 +36,6 @@ namespace FluentAspect.Weaver.Helpers.IL
                     instructions.Add(Instruction.Create(OpCodes.Box, p.ParameterType));
                 instructions.Add(Instruction.Create(OpCodes.Stelem_Ref));
             }
-        }
-
-
-        public VariableDefinition CreateMethodInfo()
-        {
-            return definition.CreateVariable<MethodInfo>();
         }
 
 
@@ -81,14 +62,6 @@ namespace FluentAspect.Weaver.Helpers.IL
                     HandlerEnd = handlerEnd_L,
                     CatchType = MethodDefinition.Module.Import(typeof (Exception)),
                 });
-        }
-
-
-        public void Return(VariableDefinition weavedResult, Collection<Instruction> instructions)
-        {
-            if (MethodDefinition.ReturnType.MetadataType != MetadataType.Void)
-                instructions.Add(Instruction.Create(OpCodes.Ldloc, weavedResult));
-            instructions.Add(Instruction.Create(OpCodes.Ret));
         }
     }
 }
