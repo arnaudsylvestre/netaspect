@@ -9,4 +9,10 @@ namespace FluentAspect.Weaver.Core.Weaver
         void Check(ErrorHandler errorHandler, T availableInformations);
         void Inject(List<Instruction> instructions, T availableInformations);
     }
+
+
+    public interface IIlInjectorInitializer<T>
+    {
+        void Inject(AroundInstructionIl aroundInstructionIl, T availableInformations, Instruction instruction);
+    }
 }

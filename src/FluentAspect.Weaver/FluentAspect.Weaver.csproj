@@ -73,7 +73,6 @@
     <Compile Include="Core\Weaver\Call\CallWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Call\CallWeavingUpdateFieldInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Call\IlInstructionInjectorAvailableVariables.cs" />
-    <Compile Include="Core\Weaver\Call\MetchodCallInjector.cs" />
     <Compile Include="Core\Weaver\Checkers\CalledInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\ColumnNumberInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensure.cs" />

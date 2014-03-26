@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Model;
+using FluentAspect.Weaver.Core.Weaver.Call;
+using FluentAspect.Weaver.Core.Weaver.Engine;
+using FluentAspect.Weaver.Core.Weaver.Generators;
 using FluentAspect.Weaver.Core.Weaver.Helpers;
 using FluentAspect.Weaver.Core.Weaver.Method;
 using FluentAspect.Weaver.Helpers.IL;
@@ -13,11 +17,12 @@ namespace FluentAspect.Weaver.Core.Weaver
 {
     public class AroundInstructionIl
     {
-        public List<VariableDefinition> Variables;
-        public List<Instruction> InitBeforeInstruction;
-        public List<Instruction> BeforeInstruction;
-        public List<Instruction> AfterInstruction;
-        public List<Instruction> BeforeMethodInstructions;
+        public List<VariableDefinition> Variables = new List<VariableDefinition>();
+        public List<Instruction> InitBeforeInstruction = new List<Instruction>();
+        public List<Instruction> BeforeInstruction = new List<Instruction>();
+        public List<Instruction> JustBeforeInstruction = new List<Instruction>();
+        public List<Instruction> AfterInstruction = new List<Instruction>();
+        public List<Instruction> BeforeMethodInstructions = new List<Instruction>();
         public Instruction Instruction;
     }
 
@@ -33,23 +38,49 @@ namespace FluentAspect.Weaver.Core.Weaver
 
     public interface IAroundInstructionWeaver
     {
-        void Weave(AroundInstructionIl il);
+        void Weave(AroundInstructionIl il, IlInstructionInjectorAvailableVariables variables, Instruction instruction);
+        void Check(ErrorHandler errorHandler, IlInstructionInjectorAvailableVariables variables);
     }
 
     public class CallGetFieldWeaver : IAroundInstructionWeaver
     {
-        public void Weave(AroundInstructionIl il)
+        private IIlInjectorInitializer<IlInstructionInjectorAvailableVariables> initializer;
+        private IIlInjector<IlInstructionInjectorAvailableVariables> before;
+        private IIlInjector<IlInstructionInjectorAvailableVariables> after;
+
+        public void Check(ErrorHandler errorHandler, IlInstructionInjectorAvailableVariables variables)
         {
-            -------------------------------------------
+            before.Check(errorHandler, variables);
+            after.Check(errorHandler, variables);
+        }
+
+        public void Weave(AroundInstructionIl il, IlInstructionInjectorAvailableVariables variables, Instruction instruction)
+        {
+            initializer.Inject(il, variables, instruction);
+            before.Inject(il.BeforeInstruction, variables);
+            after.Inject(il.AfterInstruction, variables);
+        }
+    }
+
+    public class CallGetFieldInitializerWeaver : IIlInjectorInitializer<IlInstructionInjectorAvailableVariables>
+    {
+        public void Inject(AroundInstructionIl il, IlInstructionInjectorAvailableVariables variables, Instruction instruction)
+        {
+            if (instruction.OpCode == OpCodes.Ldfld || instruction.OpCode == OpCodes.Ldflda)
+            {
+                var fieldReference = (instruction.Operand as FieldReference).Resolve();
+                var called = new VariableDefinition(fieldReference.DeclaringType);
+                il.Variables.Add(called);
+                variables.VariablesCalled.Add(instruction, called);
+                il.InitBeforeInstruction.Add(Instruction.Create(OpCodes.Stloc, called));
+                il.JustBeforeInstruction.Add(Instruction.Create(OpCodes.Ldloc, called));
+            }
         }
     }
 
     public class AroundMethodWeaver
     {
-        public void Weave2(FluentAspect.Weaver.Helpers.IL.Method method, WeavingModel weavingModel,
-                           ErrorHandler errorHandler)
-        {
-        }
+        
 
 
         public void Weave(FluentAspect.Weaver.Helpers.IL.Method method, WeavingModel weavingModel, ErrorHandler errorHandler)
