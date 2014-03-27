@@ -30,6 +30,8 @@ namespace FluentAspect.Weaver.Core.Weaver.Engine
                                                      Instruction beforeInstruction, NetAspectDefinition aspect,
                                                      Interceptor beforeCallMethod, Interceptor afterCallMethod)
         {
+            weavingModel.Instructions.Add(beforeInstruction, new );
+
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
             {

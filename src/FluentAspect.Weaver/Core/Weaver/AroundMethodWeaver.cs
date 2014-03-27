@@ -42,11 +42,18 @@ namespace FluentAspect.Weaver.Core.Weaver
         void Check(ErrorHandler errorHandler, IlInstructionInjectorAvailableVariables variables);
     }
 
-    public class CallGetFieldWeaver : IAroundInstructionWeaver
+    public class AroundInstructionWeaver : IAroundInstructionWeaver
     {
         private IIlInjectorInitializer<IlInstructionInjectorAvailableVariables> initializer;
         private IIlInjector<IlInstructionInjectorAvailableVariables> before;
         private IIlInjector<IlInstructionInjectorAvailableVariables> after;
+
+        public AroundInstructionWeaver(IIlInjectorInitializer<IlInstructionInjectorAvailableVariables> initializer, IIlInjector<IlInstructionInjectorAvailableVariables> before, IIlInjector<IlInstructionInjectorAvailableVariables> after)
+        {
+            this.initializer = initializer;
+            this.before = before;
+            this.after = after;
+        }
 
         public void Check(ErrorHandler errorHandler, IlInstructionInjectorAvailableVariables variables)
         {
