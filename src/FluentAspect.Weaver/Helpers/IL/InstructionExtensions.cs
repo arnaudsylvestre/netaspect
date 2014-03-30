@@ -6,6 +6,7 @@ namespace FluentAspect.Weaver.Helpers.IL
 {
     public static class InstructionExtensions
     {
+
         public static bool IsACallInstruction(this Instruction instruction)
         {
             return instruction.OpCode == OpCodes.Call ||

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
+using FluentAspect.Weaver.Core.Errors;
 using FluentAspect.Weaver.Core.Weaver.Checkers;
 using FluentAspect.Weaver.Core.Weaver.Engine;
 using FluentAspect.Weaver.Core.Weaver.Generators;
@@ -9,6 +11,19 @@ using Mono.Cecil.Cil;
 
 namespace FluentAspect.Weaver.Core.Weaver.Call
 {
+    public class NoIIlInjector : IIlInjector<IlInstructionInjectorAvailableVariables>
+    {
+        public void Check(ErrorHandler errorHandler, IlInstructionInjectorAvailableVariables availableInformations)
+        {
+            
+        }
+
+        public void Inject(List<Instruction> instructions, IlInstructionInjectorAvailableVariables availableInformations)
+        {
+            
+        }
+    }
+
     public static class CallWeavingFieldInjectorFactory
     {
         public static IIlInjector<IlInstructionInjectorAvailableVariables> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType, Instruction instruction)

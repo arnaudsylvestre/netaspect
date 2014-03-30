@@ -30,20 +30,20 @@ namespace FluentAspect.Weaver.Core.Weaver.Engine
                                                      Instruction beforeInstruction, NetAspectDefinition aspect,
                                                      Interceptor beforeCallMethod, Interceptor afterCallMethod)
         {
-            weavingModel.Instructions.Add(beforeInstruction, new );
+            IIlInjector<IlInstructionInjectorAvailableVariables> before = new NoIIlInjector();
+            IIlInjector<IlInstructionInjectorAvailableVariables> after = new NoIIlInjector();
 
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
             {
-                weavingModel.AfterInstructions.Add(beforeInstruction,
-                                                   CallWeavingFieldInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction));
+                before = CallWeavingFieldInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction);
             }
             var afterCallInterceptorMethod = afterCallMethod.Method;
             if (afterCallInterceptorMethod != null)
             {
-                weavingModel.AfterInstructions.Add(beforeInstruction,
-                                                   CallWeavingFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction));
+                after = CallWeavingFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction);
             }
+            weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
         }
 
         public static void AddUpdateFieldCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method,

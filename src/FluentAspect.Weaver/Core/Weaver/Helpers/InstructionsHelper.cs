@@ -8,7 +8,7 @@ namespace FluentAspect.Weaver.Core.Weaver.Helpers
     public static class InstructionsHelper
     {
         public static List<Instruction> FixReturns(MethodDefinition method, VariableDefinition handleResultP_P,
-                                                   Collection<Instruction> instructions, Instruction beforeAfter)
+                                                   List<Instruction> instructions, Instruction beforeAfter)
         {
             var end = new List<Instruction>();
             if (method.ReturnType == method.Module.TypeSystem.Void)
