@@ -18,7 +18,7 @@ namespace NetAspect.Core
             }
         }
 
-        public static List<Instruction> Weave(this MethodDefinition method, NetAspectWeavingMethod weavingModel)
+        public static void Weave(this MethodDefinition method, NetAspectWeavingMethod weavingModel)
         {
             WeaveInstructions(method, weavingModel.Instructions);
             
@@ -88,8 +88,6 @@ namespace NetAspect.Core
 
 
             Finalize(method);
-
-            return allInstructions;
         }
 
 

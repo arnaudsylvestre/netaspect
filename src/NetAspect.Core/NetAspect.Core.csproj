@@ -48,6 +48,7 @@
     <Compile Include="Helpers\ListExtensions.cs" />
     <Compile Include="Helpers\MethodDefinitionExtensions.cs" />
     <Compile Include="Helpers\InstructionExtensions.cs" />
+    <Compile Include="Helpers\ProcessHelper.cs" />
     <Compile Include="MethodWeaver.cs" />
     <Compile Include="NetAspectWeavingMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
