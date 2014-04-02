@@ -235,15 +235,15 @@ namespace FluentAspect.Weaver.Core.Weaver
                 else
                 {
                     beforeAllInstructions.Add(bodyInstruction);
-                    if (IsCallInstruction(bodyInstruction))
-                    {
-                        if (bodyInstruction.Operand is MethodReference)
-                        {
-                            var methodReference = bodyInstruction.Operand as MethodReference;
-                            if (methodReference.Name == ".ctor")
-                                callBaseConstructorDone = true;
-                        }
-                    }
+                    //if (IsCallInstruction(bodyInstruction))
+                    //{
+                    //    if (bodyInstruction.Operand is MethodReference)
+                    //    {
+                    //        var methodReference = bodyInstruction.Operand as MethodReference;
+                    //        if (methodReference.Name == ".ctor")
+                    //            callBaseConstructorDone = true;
+                    //    }
+                    //}
                 }
             }
             if (methodInstructions.Count == 0)
@@ -252,7 +252,7 @@ namespace FluentAspect.Weaver.Core.Weaver
             var AfterExceptionManagementInstructions = new List<Instruction>();
 
             List<Instruction> end = InstructionsHelper.FixReturns(method.MethodDefinition, variables.Result,
-                                                                  methodInstructions, beforeAfter);
+                                                                  null, beforeAfter);
 
 
             methodWeavingModel.Befores.Inject(beforeInstructions, variables);

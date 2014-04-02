@@ -25,6 +25,8 @@ namespace NetAspect.Core
 
             var result = method.ReturnType == method.Module.TypeSystem.Void ? null : new VariableDefinition(method.ReturnType);
 
+            if (result != null)
+                method.Body.Variables.Add(result);
             var allInstructions = new List<Instruction>();
             WeaveConstructorInstructions(method, weavingModel, allInstructions);
             var methodInstructions = method.ExtractRealInstructions();

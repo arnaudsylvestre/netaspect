@@ -10,6 +10,38 @@ using NUnit.Framework;
 
 namespace NetAspect.Core.Tests
 {
+    public class AssertInstructions
+    {
+        private List<OpCode> expected = new List<OpCode>();
+
+        public void Add(OpCode opcode)
+        {
+            expected.Add(opcode);
+        }
+
+        public void Check(MethodDefinition method)
+        {
+            try
+            {
+                var instructions = method.Body.Instructions;
+                Assert.AreEqual(expected.Count, instructions.Count);
+                for (int i = 0; i < instructions.Count; i++)
+                {
+                    Assert.AreEqual(expected[i], instructions[i].OpCode);
+                }
+            }
+            catch (Exception)
+            {
+                foreach (var instruction in method.Body.Instructions)
+                {
+                    Console.WriteLine("assert.Add(OpCodes.{0});", instruction.OpCode.Code);
+                }
+                throw;
+            }
+            
+        }
+    }
+
     [TestFixture]
     public class OnFinallyMethodTests
     {
@@ -20,8 +52,11 @@ namespace NetAspect.Core.Tests
             {
                 OnFinallyInstructions = new List<Instruction> { Instruction.Create(OpCodes.Nop) }
             };
-            NetAspectCoreTestHelper.UpdateMethod(GetType(), "NopOnFinally", weavingModel, (o, info) => info.Invoke(o, new object[0]));
+            var assert = new AssertInstructions();
+            NetAspectCoreTestHelper.UpdateMethod(GetType(), "NopOnFinally", weavingModel, (o, info) => info.Invoke(o, new object[0]), assert);
         }
+
+        
 
 
         public void NopOnFinally()
@@ -37,7 +72,8 @@ namespace NetAspect.Core.Tests
                 OnFinallyInstructions = new List<Instruction> { Instruction.Create(OpCodes.Nop) },
                 OnExceptionInstructions = new List<Instruction> { Instruction.Create(OpCodes.Nop) }
             };
-            NetAspectCoreTestHelper.UpdateMethod(GetType(), "ExceptionAndFinally", weavingModel, (o, info) => info.Invoke(o, new object[0]));
+            var assert = new AssertInstructions();
+            NetAspectCoreTestHelper.UpdateMethod(GetType(), "ExceptionAndFinally", weavingModel, (o, info) => info.Invoke(o, new object[0]), assert);
         }
 
 
@@ -47,21 +83,22 @@ namespace NetAspect.Core.Tests
             
         }
 
-
-        public void ExceptionAndFinallyReal()
+        [Test]
+        public void CheckFinallyWithReturn()
         {
-            try
+            var weavingModel = new NetAspectWeavingMethod()
             {
+                OnFinallyInstructions = new List<Instruction> { Instruction.Create(OpCodes.Nop) },
+            };
+            var assert = new AssertInstructions();
+            NetAspectCoreTestHelper.UpdateMethod(GetType(), "FinallyWithReturn", weavingModel, (o, info) => info.Invoke(o, new object[0]), assert);
+        }
 
-            }
-            catch (Exception)
-            {
 
-            }
-            finally
-            {
-                
-            }
+
+        public string FinallyWithReturn()
+        {
+            return "value";
         }
     }
 }
