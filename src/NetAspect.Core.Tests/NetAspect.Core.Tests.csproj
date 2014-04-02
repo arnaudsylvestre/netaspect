@@ -49,7 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BeforeMethodTests.cs" />
+    <Compile Include="NetAspectCoreTestHelper.cs" />
+    <Compile Include="OnFinallyMethodTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

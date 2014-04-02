@@ -50,16 +50,6 @@ namespace NetAspect.Core
                 allInstructions.Add(gotoEnd);
             }
 
-            
-            Instruction beforeOnFinallyInstruction = Instruction.Create(OpCodes.Nop);
-            Instruction afterOnFinallyInstruction = Instruction.Create(OpCodes.Nop);
-            allInstructions.Add(beforeOnFinallyInstruction);
-            allInstructions.AddRange(weavingModel.OnFinallyInstructions);
-            allInstructions.Add(afterOnFinallyInstruction);
-            allInstructions.AddRange(end);
-
-            if (end.Count > 0)
-                weavingModel.OnFinallyInstructions.Add(Instruction.Create(OpCodes.Endfinally));
 
             if (weavingModel.OnExceptionInstructions.Any())
             {
@@ -83,10 +73,20 @@ namespace NetAspect.Core
             }
 
             if (weavingModel.OnFinallyInstructions.Any())
+            {
+
+                if (end.Count > 0)
+                    weavingModel.OnFinallyInstructions.Add(Instruction.Create(OpCodes.Endfinally));
+                allInstructions.AddRange(weavingModel.OnFinallyInstructions);
+                allInstructions.AddRange(end);
                 method.AddTryFinally(methodInstructions.First(), weavingModel.OnFinallyInstructions.First(),
                                      weavingModel.OnFinallyInstructions.First(), end.Count > 0 ? end.First() : null);
 
+            }
+                
 
+            method.Body.Instructions.Clear();
+            method.Body.Instructions.AddRange(allInstructions);
             Finalize(method);
         }
 
