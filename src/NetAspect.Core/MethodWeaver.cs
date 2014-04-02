@@ -26,19 +26,14 @@ namespace NetAspect.Core
             var result = method.ReturnType == method.Module.TypeSystem.Void ? null : new VariableDefinition(method.ReturnType);
 
             var allInstructions = new List<Instruction>();
-            if (method.IsConstructor)
-            {
-                allInstructions.AddRange(weavingModel.BeforeConstructorBaseCall);
-                allInstructions.AddRange(method.Body.Instructions.ExtractBeforeCallBaseConstructorInstructions());
-                allInstructions.Add(method.Body.Instructions.GetCallBaseConstructorInstructions());
-            }
+            WeaveConstructorInstructions(method, weavingModel, allInstructions);
             var methodInstructions = method.ExtractRealInstructions();
 
             if (methodInstructions.Count == 0)
                 methodInstructions.Add(Instruction.Create(OpCodes.Nop));
 
             Instruction beforeAfter = Instruction.Create(OpCodes.Nop);
-            List<Instruction> end = MethodDefinitionExtensions.FixReturns(method, result, methodInstructions, beforeAfter);
+            List<Instruction> end = method.FixReturns(result, methodInstructions, beforeAfter);
 
             allInstructions.AddRange(weavingModel.BeforeInstructions);
             allInstructions.AddRange(methodInstructions);
@@ -54,7 +49,7 @@ namespace NetAspect.Core
             if (weavingModel.OnExceptionInstructions.Any())
             {
                 Instruction beforeExceptionManagementInstruction = Instruction.Create(OpCodes.Nop);
-                Instruction afterExceptionManagementInstructions = Instruction.Create(OpCodes.Nop);
+                Instruction afterExceptionManagementInstructions = end.Count > 0 ? Instruction.Create(OpCodes.Leave, end.First()) : Instruction.Create(OpCodes.Nop);
                 allInstructions.Add(beforeExceptionManagementInstruction);
                 allInstructions.AddRange(weavingModel.OnExceptionInstructions);
                 allInstructions.Add(afterExceptionManagementInstructions);
@@ -88,6 +83,17 @@ namespace NetAspect.Core
             method.Body.Instructions.Clear();
             method.Body.Instructions.AddRange(allInstructions);
             Finalize(method);
+        }
+
+        private static void WeaveConstructorInstructions(MethodDefinition method, NetAspectWeavingMethod weavingModel,
+                                                         List<Instruction> allInstructions)
+        {
+            if (method.IsConstructor)
+            {
+                allInstructions.AddRange(weavingModel.BeforeConstructorBaseCall);
+                allInstructions.AddRange(method.Body.Instructions.ExtractBeforeCallBaseConstructorInstructions());
+                allInstructions.Add(method.Body.Instructions.GetCallBaseConstructorInstructions());
+            }
         }
 
 

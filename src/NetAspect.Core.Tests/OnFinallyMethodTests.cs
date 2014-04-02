@@ -14,20 +14,54 @@ namespace NetAspect.Core.Tests
     public class OnFinallyMethodTests
     {
         [Test]
-        public void CheckNopOnfinally()
+        public void CheckNopOnFinally()
         {
             var weavingModel = new NetAspectWeavingMethod()
             {
                 OnFinallyInstructions = new List<Instruction> { Instruction.Create(OpCodes.Nop) }
             };
-            NetAspectCoreTestHelper.UpdateMethod(GetType(), "EmptyMethod", weavingModel, (o, info) => info.Invoke(o, new object[0]));
+            NetAspectCoreTestHelper.UpdateMethod(GetType(), "NopOnFinally", weavingModel, (o, info) => info.Invoke(o, new object[0]));
         }
 
-        
 
-        public void EmptyMethod()
+        public void NopOnFinally()
+        {
+
+        }
+
+        [Test]
+        public void CheckExceptionAndFinally()
+        {
+            var weavingModel = new NetAspectWeavingMethod()
+            {
+                OnFinallyInstructions = new List<Instruction> { Instruction.Create(OpCodes.Nop) },
+                OnExceptionInstructions = new List<Instruction> { Instruction.Create(OpCodes.Nop) }
+            };
+            NetAspectCoreTestHelper.UpdateMethod(GetType(), "ExceptionAndFinally", weavingModel, (o, info) => info.Invoke(o, new object[0]));
+        }
+
+
+
+        public void ExceptionAndFinally()
         {
             
+        }
+
+
+        public void ExceptionAndFinallyReal()
+        {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                
+            }
         }
     }
 }
