@@ -53,6 +53,13 @@ namespace NetAspect.Core.Tests
                 OnFinallyInstructions = new List<Instruction> { Instruction.Create(OpCodes.Nop) }
             };
             var assert = new AssertInstructions();
+            assert.Add(OpCodes.Nop);
+            assert.Add(OpCodes.Leave);
+            assert.Add(OpCodes.Nop);
+            assert.Add(OpCodes.Leave);
+            assert.Add(OpCodes.Nop);
+            assert.Add(OpCodes.Endfinally);
+            assert.Add(OpCodes.Ret);
             NetAspectCoreTestHelper.UpdateMethod(GetType(), "NopOnFinally", weavingModel, (o, info) => info.Invoke(o, new object[0]), assert);
         }
 
@@ -73,6 +80,16 @@ namespace NetAspect.Core.Tests
                 OnExceptionInstructions = new List<Instruction> { Instruction.Create(OpCodes.Nop) }
             };
             var assert = new AssertInstructions();
+            assert.Add(OpCodes.Nop);
+            assert.Add(OpCodes.Leave);
+            assert.Add(OpCodes.Nop);
+            assert.Add(OpCodes.Leave);
+            assert.Add(OpCodes.Nop);
+            assert.Add(OpCodes.Nop);
+            assert.Add(OpCodes.Leave);
+            assert.Add(OpCodes.Nop);
+            assert.Add(OpCodes.Endfinally);
+            assert.Add(OpCodes.Ret);
             NetAspectCoreTestHelper.UpdateMethod(GetType(), "ExceptionAndFinally", weavingModel, (o, info) => info.Invoke(o, new object[0]), assert);
         }
 
@@ -91,6 +108,20 @@ namespace NetAspect.Core.Tests
                 OnFinallyInstructions = new List<Instruction> { Instruction.Create(OpCodes.Nop) },
             };
             var assert = new AssertInstructions();
+            assert.Add(OpCodes.Nop);
+            assert.Add(OpCodes.Ldstr);
+            assert.Add(OpCodes.Stloc_0);
+            assert.Add(OpCodes.Br_S);
+            assert.Add(OpCodes.Ldloc_0);
+            assert.Add(OpCodes.Stloc);
+            assert.Add(OpCodes.Leave);
+            assert.Add(OpCodes.Nop);
+            assert.Add(OpCodes.Leave);
+            assert.Add(OpCodes.Nop);
+            assert.Add(OpCodes.Endfinally);
+            assert.Add(OpCodes.Ldloc);
+            assert.Add(OpCodes.Ret);
+
             NetAspectCoreTestHelper.UpdateMethod(GetType(), "FinallyWithReturn", weavingModel, (o, info) => info.Invoke(o, new object[0]), assert);
         }
 
