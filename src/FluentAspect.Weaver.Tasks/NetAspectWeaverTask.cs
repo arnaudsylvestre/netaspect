@@ -6,7 +6,7 @@ using Microsoft.Build.Utilities;
 
 namespace NetAspect.Weaver.Tasks
 {
-    public class FluentAspectWeaverTask : Task
+    public class NetAspectWeaverTask : Task
     {
         [Required]
         public string ConfigFile { get; set; }

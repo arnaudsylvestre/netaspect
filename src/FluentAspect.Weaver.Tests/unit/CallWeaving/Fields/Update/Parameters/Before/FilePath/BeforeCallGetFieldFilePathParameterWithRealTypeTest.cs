@@ -13,7 +13,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Befor
                     Assert.AreEqual(null, MyAspect.FilePath);
                     var classToWeave_L = new ClassToWeave();
                     classToWeave_L.Weaved();
-                    Assert.AreEqual(@"D:\Developpement\fluentaspect\src\FluentAspect.Weaver.Tests\unit\CallWeaving\Fields\Updater\Parameters\Before\FilePath\BeforeCallUpdateFieldFilePathParameterWithRealTypeTest.cs", MyAspect.FilePath);
+                    Assert.True(MyAspect.FilePath.EndsWith(@"FilePath\BeforeCallUpdateFieldFilePathParameterWithRealTypeTest.cs"));
                 };
         }
 

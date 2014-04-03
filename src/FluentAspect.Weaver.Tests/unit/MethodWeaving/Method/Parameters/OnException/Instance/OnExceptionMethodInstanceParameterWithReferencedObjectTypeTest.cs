@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExceptio
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'instance' in the method OnException of the type 'FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnException.Instance.OnExceptionMethodInstanceParameterWithReferencedObjectTypeTest+MyAspect'"));
+                        "impossible to ref/out the parameter 'instance' in the method OnException of the type '{0}'", typeof(MyAspect)));
         }
 
         public class ClassToWeave

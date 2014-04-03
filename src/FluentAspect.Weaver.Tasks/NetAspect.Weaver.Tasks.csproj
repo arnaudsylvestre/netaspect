@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppDomainIsolatedDiscoveryRunner.cs" />
-    <Compile Include="FluentAspectWeaverTask.cs" />
+    <Compile Include="NetAspectWeaverTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

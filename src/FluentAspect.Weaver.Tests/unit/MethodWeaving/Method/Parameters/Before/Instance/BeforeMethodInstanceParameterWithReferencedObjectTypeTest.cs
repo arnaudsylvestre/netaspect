@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Ins
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'instance' in the method Before of the type 'FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance.BeforeMethodInstanceParameterWithReferencedObjectTypeTest+MyAspect'"));
+                        "impossible to ref/out the parameter 'instance' in the method Before of the type '{0}'", typeof(MyAspect)));
         }
 
         public class ClassToWeave
