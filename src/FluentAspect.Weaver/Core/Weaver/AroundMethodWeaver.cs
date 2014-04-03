@@ -3,6 +3,7 @@ using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
+using NetAspect.Core;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model;
 using NetAspect.Weaver.Core.Weaver.Call;
@@ -85,7 +86,28 @@ namespace NetAspect.Weaver.Core.Weaver
 
     public class AroundMethodWeaver
     {
-        
+        public void Weave2(NetAspect.Weaver.Helpers.IL.Method method, WeavingModel weavingModel,
+                          ErrorHandler errorHandler)
+        {
+            var w = new NetAspectWeavingMethod();
+
+            VariableDefinition result = method.MethodDefinition.ReturnType ==
+                                        method.MethodDefinition.Module.TypeSystem.Void
+                                            ? null
+                                            : new VariableDefinition(method.MethodDefinition.ReturnType);
+
+            var availableVariables = new IlInjectorAvailableVariables(result, method.MethodDefinition, w);
+
+            foreach (var instruction in weavingModel.Instructions)
+            {
+                var instructionIl = new NetAspectWeavingMethod.InstructionIl();
+                w.Instructions.Add(instruction.Key, instructionIl);
+                foreach (var v in instruction.Value)
+                {
+                    v.Check(errorHandler, availableVariables);
+                }
+            }
+        }
 
 
         public void Weave(NetAspect.Weaver.Helpers.IL.Method method, WeavingModel weavingModel, ErrorHandler errorHandler)
@@ -97,7 +119,7 @@ namespace NetAspect.Weaver.Core.Weaver
 
 
             var newInstructions = new Collection<Instruction>();
-            var variablesForInstructionCall = new IlInjectorAvailableVariables(result, method.MethodDefinition);
+            var variablesForInstructionCall = new IlInjectorAvailableVariables(result, method.MethodDefinition, null);
             List<VariableDefinition> variablesToAdd = new List<VariableDefinition>();
 
             AroundInstructionIl il = new AroundInstructionIl();
@@ -164,8 +186,8 @@ namespace NetAspect.Weaver.Core.Weaver
                             initInstructions.Add(Instruction.Create(OpCodes.Ldloc, valueDefinition));
                         }
                     }
-                    newInstructions.AddRange(initInstructions);
-                    newInstructions.AddRange(recallInstructions);
+                    InstructionExtensions.AddRange(newInstructions, initInstructions);
+                    InstructionExtensions.AddRange(newInstructions, recallInstructions);
                 }
 
                 if (weavingModel.BeforeInstructions.ContainsKey(instruction))
@@ -174,8 +196,8 @@ namespace NetAspect.Weaver.Core.Weaver
                     instructionIlInjector.Check(errorHandler, variablesForInstructionCall);
                     var beforeInstruction = new List<Instruction>();
                     instructionIlInjector.Inject(beforeInstruction, variablesForInstructionCall);
-                    newInstructions.AddRange(variablesForInstructionCall.Instructions);
-                    newInstructions.AddRange(beforeInstruction);
+                    //InstructionExtensions.AddRange(newInstructions, variablesForInstructionCall.Instructions);
+                    InstructionExtensions.AddRange(newInstructions, beforeInstruction);
                 }
                 newInstructions.Add(instruction);
 
@@ -185,11 +207,11 @@ namespace NetAspect.Weaver.Core.Weaver
                     instructionIlInjector.Check(errorHandler, variablesForInstructionCall);
                     var beforeInstruction = new List<Instruction>();
                     instructionIlInjector.Inject(beforeInstruction, variablesForInstructionCall);
-                    newInstructions.AddRange(variablesForInstructionCall.Instructions);
-                    newInstructions.AddRange(beforeInstruction);
+                    //InstructionExtensions.AddRange(newInstructions, variablesForInstructionCall.Instructions);
+                    InstructionExtensions.AddRange(newInstructions, beforeInstruction);
                 }
             }
-            var variables = new IlInjectorAvailableVariables(result, method.MethodDefinition);
+            var variables = new IlInjectorAvailableVariables(result, method.MethodDefinition, null);
             MethodWeavingModel methodWeavingModel = weavingModel.Method;
 
             if (result != null)
@@ -207,7 +229,7 @@ namespace NetAspect.Weaver.Core.Weaver
             }
 
             method.MethodDefinition.Body.Instructions.Clear();
-            method.MethodDefinition.Body.Instructions.AddRange(newInstructions);
+            InstructionExtensions.AddRange(method.MethodDefinition.Body.Instructions, newInstructions);
             if (!methodWeavingModel.Befores.Any() && !methodWeavingModel.Afters.Any() &&
                 !methodWeavingModel.OnExceptions.Any() && !methodWeavingModel.OnFinallys.Any())
             {
@@ -256,7 +278,7 @@ namespace NetAspect.Weaver.Core.Weaver
             methodWeavingModel.OnFinallys.Inject(onFinallyInstructions, variables);
             var allInstructions = new List<Instruction>();
             allInstructions.AddRange(beforeAllInstructions);
-            allInstructions.AddRange(variables.Instructions);
+            //allInstructions.AddRange(variables.Instructions);
             allInstructions.AddRange(beforeInstructions);
             allInstructions.AddRange(methodInstructions);
             if (end.Count != 0)
@@ -283,7 +305,7 @@ namespace NetAspect.Weaver.Core.Weaver
             allInstructions.AddRange(end);
 
             method.MethodDefinition.Body.Instructions.Clear();
-            method.MethodDefinition.Body.Instructions.AddRange(allInstructions);
+            InstructionExtensions.AddRange(method.MethodDefinition.Body.Instructions, allInstructions);
 
 
             if (onExceptionInstructions.Any())
