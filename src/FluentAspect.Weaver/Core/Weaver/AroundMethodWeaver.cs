@@ -125,7 +125,7 @@ namespace NetAspect.Weaver.Core.Weaver
             if (errorHandler.Errors.Count > 0)
                 return;
 
-
+            -- To remember --
         }
 
 
