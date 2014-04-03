@@ -30,8 +30,8 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                                                      Instruction beforeInstruction, NetAspectDefinition aspect,
                                                      Interceptor beforeCallMethod, Interceptor afterCallMethod)
         {
-            IIlInjector<IlInstructionInjectorAvailableVariables> before = new NoIIlInjector();
-            IIlInjector<IlInstructionInjectorAvailableVariables> after = new NoIIlInjector();
+            IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector();
+            IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector();
 
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)

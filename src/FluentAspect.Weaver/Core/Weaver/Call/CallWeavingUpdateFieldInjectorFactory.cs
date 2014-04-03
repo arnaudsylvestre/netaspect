@@ -11,24 +11,24 @@ namespace NetAspect.Weaver.Core.Weaver.Call
 {
     public static class CallWeavingUpdateFieldInjectorFactory
     {
-        public static IIlInjector<IlInstructionInjectorAvailableVariables> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType, Instruction instruction)
+        public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType, Instruction instruction)
         {
             var calledField = (instruction.Operand as FieldReference).Resolve();
             var checker = new ParametersChecker();
             FillCommon(method, checker, calledField, instruction);
 
 
-            var parametersIlGenerator = new ParametersIlGenerator<IlInstructionInjectorAvailableVariables>();
+            var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>();
             FillCommon(method, parametersIlGenerator, instruction);
 
-            return new MethodWeavingBeforeMethodInjector<IlInstructionInjectorAvailableVariables>(method, interceptorMethod,
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariablesForInstruction>(method, interceptorMethod,
                                                                                        aspectType, checker,
                                                                                        parametersIlGenerator);
         }
         private static void FillCommon(MethodDefinition method,
-                                       ParametersIlGenerator<IlInstructionInjectorAvailableVariables> parametersIlGenerator, Instruction instruction)
+                                       ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> parametersIlGenerator, Instruction instruction)
         {
-            parametersIlGenerator.CreateIlGeneratorForCalledParameter(instruction);
+            parametersIlGenerator.CreateIlGeneratorForCalledParameter();
             parametersIlGenerator.CreateIlGeneratorForCallerParameter();
             parametersIlGenerator.CreateIlGeneratorForCallerParameters();
             parametersIlGenerator.CreateIlGeneratorForCallerParametersName(method);
@@ -58,7 +58,7 @@ namespace NetAspect.Weaver.Core.Weaver.Call
             //checker.CreateCheckerForParametersParameter();
         }
 
-        public static IIlInjector<IlInstructionInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
+        public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
                                                                                Type aspectType, Instruction instruction)
         {
@@ -68,10 +68,10 @@ namespace NetAspect.Weaver.Core.Weaver.Call
             //checker.CreateCheckerForResultParameter(method);
 
 
-            var parametersIlGenerator = new ParametersIlGenerator<IlInstructionInjectorAvailableVariables>();
+            var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>();
             FillCommon(method, parametersIlGenerator, instruction);
             //parametersIlGenerator.CreateIlGeneratorForResultParameter();
-            return new MethodWeavingBeforeMethodInjector<IlInstructionInjectorAvailableVariables>(method, interceptorMethod,
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariablesForInstruction>(method, interceptorMethod,
                                                                                        aspectType, checker,
                                                                                        parametersIlGenerator);
         }

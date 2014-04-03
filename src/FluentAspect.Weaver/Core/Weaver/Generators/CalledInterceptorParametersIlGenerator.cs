@@ -2,26 +2,20 @@
 using System.Reflection;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Call;
+using NetAspect.Weaver.Core.Weaver.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Generators
 {
-    public class CalledInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator<IlInstructionInjectorAvailableVariables>
+    public class CalledInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator<IlInjectorAvailableVariablesForInstruction>
     {
-        private Instruction instruction;
-
-        public CalledInterceptorParametersIlGenerator(Instruction instruction)
+        public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction info)
         {
-            this.instruction = instruction;
-        }
-
-        public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInstructionInjectorAvailableVariables info)
-        {
-            if (!info.VariablesCalled.ContainsKey(instruction))
+            if (info.Called == null)
             {
                 instructions.Add(Instruction.Create(OpCodes.Ldnull));
             }
             else
-                instructions.Add(Instruction.Create(OpCodes.Ldloc, info.VariablesCalled[instruction]));
+                instructions.Add(Instruction.Create(OpCodes.Ldloc, info.Called));
         }
     }
 }

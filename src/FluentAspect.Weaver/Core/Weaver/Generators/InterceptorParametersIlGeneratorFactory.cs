@@ -38,9 +38,9 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
         {
             ilGeneratoir.Add("field", new FieldInterceptorParametersIlGenerator<T>(instruction, module));
         }
-        public static void CreateIlGeneratorForCallerParameters(this ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGeneratoir)
+        public static void CreateIlGeneratorForCallerParameters(this ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> ilGeneratoir)
         {
-            ilGeneratoir.Add("callerparameters", new ParametersInterceptorParametersIlGenerator<IlInstructionInjectorAvailableVariables>());
+            ilGeneratoir.Add("callerparameters", new ParametersInterceptorParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>());
         }
         public static void CreateIlGeneratorForCalledParametersName(this ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGeneratoir,
                                                                     MethodDefinition calledMethod)
@@ -52,18 +52,18 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
                                  new ParameterNameInterceptorParametersIlGenerator<IlInstructionInjectorAvailableVariables>(parameterDefinition));
             }
         }
-        public static void CreateIlGeneratorForCallerParametersName(this ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGeneratoir,
+        public static void CreateIlGeneratorForCallerParametersName(this ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> ilGeneratoir,
                                                                     MethodDefinition callerMethod)
         {
             foreach (ParameterDefinition parameterDefinition in callerMethod.Parameters)
             {
                 ilGeneratoir.Add("caller" + parameterDefinition.Name.ToLower(),
-                                 new ParameterNameInterceptorParametersIlGenerator<IlInstructionInjectorAvailableVariables>(parameterDefinition));
+                                 new ParameterNameInterceptorParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>(parameterDefinition));
             }
         }
-        public static void CreateIlGeneratorForCalledParameter(this ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGeneratoir, Instruction instruction)
+        public static void CreateIlGeneratorForCalledParameter(this ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> ilGeneratoir)
         {
-            ilGeneratoir.Add("called", new CalledInterceptorParametersIlGenerator(instruction));
+            ilGeneratoir.Add("called", new CalledInterceptorParametersIlGenerator());
         }
 
         public static void CreateIlGeneratorForMethodParameter(

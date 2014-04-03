@@ -2,6 +2,7 @@
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver;
 using NetAspect.Weaver.Core.Weaver.Call;
+using NetAspect.Weaver.Core.Weaver.Method;
 
 namespace NetAspect.Weaver.Core.Model
 {
@@ -19,13 +20,13 @@ namespace NetAspect.Weaver.Core.Model
         public WeavingModel()
         {
             Method = new MethodWeavingModel();
-            BeforeInstructions = new Dictionary<Instruction, IIlInjector<IlInstructionInjectorAvailableVariables>>();
-            AfterInstructions = new Dictionary<Instruction, IIlInjector<IlInstructionInjectorAvailableVariables>>();
+            BeforeInstructions = new Dictionary<Instruction, IIlInjector<IlInjectorAvailableVariablesForInstruction>>();
+            AfterInstructions = new Dictionary<Instruction, IIlInjector<IlInjectorAvailableVariablesForInstruction>>();
         }
 
         public MethodWeavingModel Method { get; set; }
-        public Dictionary<Instruction, IIlInjector<IlInstructionInjectorAvailableVariables>> BeforeInstructions { get; set; }
-        public Dictionary<Instruction, IIlInjector<IlInstructionInjectorAvailableVariables>> AfterInstructions { get; set; }
+        public Dictionary<Instruction, IIlInjector<IlInjectorAvailableVariablesForInstruction>> BeforeInstructions { get; set; }
+        public Dictionary<Instruction, IIlInjector<IlInjectorAvailableVariablesForInstruction>> AfterInstructions { get; set; }
 
         public bool IsEmpty
         {

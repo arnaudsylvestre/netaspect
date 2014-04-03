@@ -19,13 +19,14 @@ namespace NetAspect.Weaver.Core.Weaver.Method
 
     public class IlInjectorAvailableVariablesForInstruction : IlInstructionInjectorAvailableVariables
     {
-        private readonly MethodDefinition method;
         private readonly NetAspectWeavingMethod _netAspectWeavingMethod;
         
         private IlInjectorAvailableVariables methodVariables;
 
-        private List<Instruction> calledInstructions = new List<Instruction>();
-        private List<Instruction> calledParametersInstructions = new List<Instruction>();
+        public List<Instruction> calledInstructions = new List<Instruction>();
+        public List<Instruction> calledParametersInstructions = new List<Instruction>();
+        public List<Instruction> recallcalledInstructions = new List<Instruction>();
+        public List<Instruction> recallcalledParametersInstructions = new List<Instruction>();
         private List<Instruction> beforeAfter = new List<Instruction>();
 
         private List<VariableDefinition> variables = new List<VariableDefinition>();
@@ -34,9 +35,8 @@ namespace NetAspect.Weaver.Core.Weaver.Method
         private Dictionary<string, VariableDefinition> _calledParameters;
 
 
-        public IlInjectorAvailableVariablesForInstruction(VariableDefinition result, MethodDefinition method, NetAspectWeavingMethod netAspectWeavingMethod, IlInjectorAvailableVariables methodVariables, Instruction instruction)
+        public IlInjectorAvailableVariablesForInstruction(NetAspectWeavingMethod netAspectWeavingMethod, IlInjectorAvailableVariables methodVariables, Instruction instruction)
         {
-            this.method = method;
             _netAspectWeavingMethod = netAspectWeavingMethod;
             this.methodVariables = methodVariables;
             this.instruction = instruction;
@@ -79,7 +79,11 @@ namespace NetAspect.Weaver.Core.Weaver.Method
                 {
                     var variableDefinition = new VariableDefinition(parameter.ParameterType);
                     _calledParameters.Add("called" + parameter.Name, variableDefinition);
-                    initInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                    calledParametersInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                }
+                foreach (var parameter in calledMethod.Parameters)
+                {
+                    recallcalledParametersInstructions.Add(Instruction.Create(OpCodes.Ldloc, _calledParameters["called" + parameter.Name]));
                 }
             }
             return _calledParameters;
@@ -90,13 +94,17 @@ namespace NetAspect.Weaver.Core.Weaver.Method
             {
                 if (_called == null)
                 {
+
                     var calledMethod = instruction.GetCalledMethod();
+
+                    if (calledMethod.IsStatic)
+                        return null;
 
                     _called = new VariableDefinition(calledMethod.DeclaringType);
                     _netAspectWeavingMethod.Variables.Add(_called);
 
-                    initInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
-                    recallInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
+                    calledInstructions.Add(Instruction.Create(OpCodes.Stloc, _called));
+                    recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, _called));
                 }
                 return _called;
             }
