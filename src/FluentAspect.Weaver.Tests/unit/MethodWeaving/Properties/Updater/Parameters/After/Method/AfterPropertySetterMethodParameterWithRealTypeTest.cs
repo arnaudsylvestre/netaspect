@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.After.Method
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.After.Method
 {
     public class AfterPropertySetterMethodParameterWithRealTypeTest :
         NetAspectTest<AfterPropertySetterMethodParameterWithRealTypeTest.ClassToWeave>

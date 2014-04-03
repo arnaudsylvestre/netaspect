@@ -1,8 +1,8 @@
 using System.Linq;
-using FluentAspect.Weaver.Core.Model;
 using Mono.Cecil;
+using NetAspect.Weaver.Core.Model;
 
-namespace FluentAspect.Weaver.Core.Weaver.Fillers
+namespace NetAspect.Weaver.Core.Weaver.Fillers
 {
     public class AspectApplier
     {

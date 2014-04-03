@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using FluentAspect.Weaver.Core.Weaver;
-using FluentAspect.Weaver.Core.Weaver.Call;
+﻿using System.Collections.Generic;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Weaver;
+using NetAspect.Weaver.Core.Weaver.Call;
 
-namespace FluentAspect.Weaver.Core.Model
+namespace NetAspect.Weaver.Core.Model
 {
     public class WeavingModel
     {

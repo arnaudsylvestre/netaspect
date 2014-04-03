@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Helpers.IL
+namespace NetAspect.Weaver.Helpers.IL
 {
     public class Method
     {

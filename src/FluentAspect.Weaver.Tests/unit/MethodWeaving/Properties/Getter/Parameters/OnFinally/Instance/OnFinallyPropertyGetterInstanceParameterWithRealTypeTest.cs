@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters.OnFinally.Instance
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters.OnFinally.Instance
 {
     public class OnFinallyPropertyGetterInstanceParameterWithRealTypeTest :
         NetAspectTest<OnFinallyPropertyGetterInstanceParameterWithRealTypeTest.ClassToWeave>

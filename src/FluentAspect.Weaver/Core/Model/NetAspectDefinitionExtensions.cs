@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace FluentAspect.Weaver.Core.Model
+namespace NetAspect.Weaver.Core.Model
 {
     public static class NetAspectDefinitionExtensions
     {

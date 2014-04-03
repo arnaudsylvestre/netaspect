@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Methods
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods
 {
     [TestFixture]
     public class MethodCallWeavingAssemblyAttributeWeavingTest

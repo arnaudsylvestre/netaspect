@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Weaver.Checkers;
+using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Weaver.Checkers;
 
-namespace FluentAspect.Weaver.Core.Weaver.Engine
+namespace NetAspect.Weaver.Core.Weaver.Engine
 {
     public class ParametersChecker
     {

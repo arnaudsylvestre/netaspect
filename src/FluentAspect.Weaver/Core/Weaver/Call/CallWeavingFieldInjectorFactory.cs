@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Weaver.Checkers;
-using FluentAspect.Weaver.Core.Weaver.Engine;
-using FluentAspect.Weaver.Core.Weaver.Generators;
-using FluentAspect.Weaver.Core.Weaver.Method;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Weaver.Checkers;
+using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Core.Weaver.Generators;
+using NetAspect.Weaver.Core.Weaver.Method;
 
-namespace FluentAspect.Weaver.Core.Weaver.Call
+namespace NetAspect.Weaver.Core.Weaver.Call
 {
     public class NoIIlInjector : IIlInjector<IlInstructionInjectorAvailableVariables>
     {

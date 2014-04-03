@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{584095D8-E7A6-42EF-B3C1-6A34F15B4B40}</ProjectGuid>
+    <ProjectGuid>{776E1BD4-3A2A-4DE8-8534-DACA7802CBDC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FluentAspect.Sample.Dep</RootNamespace>
-    <AssemblyName>FluentAspect.Sample.Dep</AssemblyName>
+    <RootNamespace>NetAspect.Weaver.Tasks</RootNamespace>
+    <AssemblyName>NetAspect.Weaver.Tasks</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Build.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Build.Tasks" />
+    <Reference Include="Microsoft.Build.Utilities" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -45,9 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DepClassWithField.cs" />
-    <Compile Include="DepClassWhichCallField.cs" />
+    <Compile Include="AppDomainIsolatedDiscoveryRunner.cs" />
+    <Compile Include="FluentAspectWeaverTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FluentAspect.Weaver\NetAspect.Weaver.csproj">
+      <Project>{28912034-8A56-4B8E-BAA1-02C50149CA68}</Project>
+      <Name>NetAspect.Weaver</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

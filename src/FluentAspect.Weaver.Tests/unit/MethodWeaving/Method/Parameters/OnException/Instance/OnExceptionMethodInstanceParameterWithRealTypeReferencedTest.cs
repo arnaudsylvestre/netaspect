@@ -1,7 +1,7 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnException.Instance
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnException.Instance
 {
     public class OnExceptionMethodInstanceParameterWithRealTypeReferencedTest :
         NetAspectTest<OnExceptionMethodInstanceParameterWithRealTypeReferencedTest.ClassToWeave>

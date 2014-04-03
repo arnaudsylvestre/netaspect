@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using FluentAspect.Weaver.Core.Errors;
 using Mono.Cecil;
+using NetAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Core.Weaver.Checkers
+namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
     public class ParameterNameInterceptorParametersChercker : IInterceptorParameterChecker
     {

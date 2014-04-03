@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Weaver.Errors;
-using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Weaver.Errors;
+using NetAspect.Weaver.Helpers.IL;
 
-namespace FluentAspect.Weaver.Core.Weaver.Checkers
+namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
     internal static class Ensure
     {

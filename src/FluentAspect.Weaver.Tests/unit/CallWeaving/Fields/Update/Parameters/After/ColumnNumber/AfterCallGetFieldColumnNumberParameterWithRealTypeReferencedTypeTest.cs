@@ -1,7 +1,7 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.After.ColumnNumber
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.After.ColumnNumber
 {
     public class AfterCallUpdateFieldColumnNumberParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<AfterCallUpdateFieldColumnNumberParameterWithRealTypeReferencedTypeTest.ClassToWeave>

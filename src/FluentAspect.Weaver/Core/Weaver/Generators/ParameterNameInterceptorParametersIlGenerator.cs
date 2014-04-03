@@ -5,7 +5,7 @@ using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.Weaver.Generators
+namespace NetAspect.Weaver.Core.Weaver.Generators
 {
     public class ParameterNameInterceptorParametersIlGenerator<T> : IInterceptorParameterIlGenerator<T>
     {

@@ -2,8 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using FluentAspect.Weaver.Apis.AssemblyChecker.Peverify;
 using Mono.Cecil;
+using NetAspect.Core.Helpers;
 
 namespace NetAspect.Core.Tests
 {

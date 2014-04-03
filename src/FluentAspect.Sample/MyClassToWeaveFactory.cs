@@ -1,4 +1,4 @@
-﻿namespace FluentAspect.Sample
+﻿namespace NetAspect.Sample
 {
     public static class MyClassToWeaveFactory
     {

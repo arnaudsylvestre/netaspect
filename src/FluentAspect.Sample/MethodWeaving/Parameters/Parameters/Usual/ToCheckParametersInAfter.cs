@@ -1,4 +1,4 @@
-﻿namespace FluentAspect.Sample.MethodWeaving.Parameters.Parameters.Usual
+﻿namespace NetAspect.Sample.MethodWeaving.Parameters.Parameters.Usual
 {
     public class ToCheckParametersInAfter
     {

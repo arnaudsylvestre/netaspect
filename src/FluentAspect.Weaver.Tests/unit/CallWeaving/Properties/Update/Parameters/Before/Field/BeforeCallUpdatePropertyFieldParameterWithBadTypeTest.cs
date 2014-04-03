@@ -1,8 +1,8 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance;
+using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.Before.Field
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.Before.Field
 {
     public class BeforeCallUpdatePropertyFieldParameterWithBadTypeTest :
         NetAspectTest<BeforeCallUpdatePropertyFieldParameterWithBadTypeTest.ClassToWeave>

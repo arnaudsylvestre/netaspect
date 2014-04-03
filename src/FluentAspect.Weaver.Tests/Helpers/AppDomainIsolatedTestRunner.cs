@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Weaver.Engine;
-using FluentAspect.Weaver.Factory;
 using NUnit.Framework;
+using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Factory;
 
-namespace FluentAspect.Weaver.Tests.Helpers
+namespace NetAspect.Weaver.Tests.Helpers
 {
     public class AppDomainIsolatedTestRunner : MarshalByRefObject
     {

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using Mono.Collections.Generic;
 
-namespace FluentAspect.Weaver.Core.Weaver.Helpers
+namespace NetAspect.Weaver.Core.Weaver.Helpers
 {
     public static class InstructionsHelper
     {

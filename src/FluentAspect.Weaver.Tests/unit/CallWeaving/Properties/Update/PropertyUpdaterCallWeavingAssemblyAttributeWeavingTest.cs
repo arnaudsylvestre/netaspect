@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Update
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update
 {
     [TestFixture]
     public class PropertyUpdaterCallWeavingAssemblyAttributeWeavingTest

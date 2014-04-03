@@ -1,9 +1,9 @@
 using System;
 using System.Reflection;
-using FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Attributes.Visibility;
 using NUnit.Framework;
+using NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Attributes.Visibility;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Attributes.Static
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Attributes.Static
 {
     public class WeaveStaticMethodTest : NetAspectTest<WeavePublicMethodTest.ClassToWeave>
     {

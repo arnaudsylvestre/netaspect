@@ -1,7 +1,7 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Selectors.Errors
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Selectors.Errors
 {
     public class UpdateFieldWithSelectorFieldNotBooleanTest :
         NetAspectTest<UpdateFieldWithSelectorFieldNotBooleanTest.ClassToWeave>

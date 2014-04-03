@@ -1,4 +1,4 @@
-﻿namespace FluentAspect.Weaver.Core.Weaver.Checkers
+﻿namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
     public class InterceptorParametersChecker
     {

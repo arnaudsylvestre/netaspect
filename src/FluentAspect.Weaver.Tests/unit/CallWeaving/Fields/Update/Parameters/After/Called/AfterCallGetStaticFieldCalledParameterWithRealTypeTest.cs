@@ -1,8 +1,8 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
 using NUnit.Framework;
+using NetAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.After.Called
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.After.Called
 {
     public class AfterCallGetStaticFieldCalledParameterWithRealTypeTest :
         NetAspectTest<AfterCallGetStaticFieldCalledParameterWithRealTypeTest.ClassToWeave>

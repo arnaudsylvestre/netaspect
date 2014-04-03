@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using FluentAspect.Weaver.Core.Weaver;
-using FluentAspect.Weaver.Core.Weaver.Method;
+using NetAspect.Weaver.Core.Weaver;
+using NetAspect.Weaver.Core.Weaver.Method;
 
-namespace FluentAspect.Weaver.Core.Model
+namespace NetAspect.Weaver.Core.Model
 {
     public class MethodWeavingModel
     {

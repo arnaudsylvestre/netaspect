@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method
 {
     [TestFixture]
     public class MethodWeavingInAnotherAssemblyTest

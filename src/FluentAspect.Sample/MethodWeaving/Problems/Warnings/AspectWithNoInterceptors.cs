@@ -1,4 +1,4 @@
-﻿namespace FluentAspect.Sample.MethodWeaving.Problems.Warnings
+﻿namespace NetAspect.Sample.MethodWeaving.Problems.Warnings
 {
     public class AspectWithNoInterceptors
     {

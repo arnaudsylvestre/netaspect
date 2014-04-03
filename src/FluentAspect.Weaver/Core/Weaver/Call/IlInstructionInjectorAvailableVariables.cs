@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.Weaver.Call
+namespace NetAspect.Weaver.Core.Weaver.Call
 {
     public interface IlInstructionInjectorAvailableVariables
     {

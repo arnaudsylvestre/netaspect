@@ -1,10 +1,10 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Weaver.Engine;
-using FluentAspect.Weaver.Factory;
 using Microsoft.Build.Utilities;
+using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Factory;
 
-namespace FluentAspect.Weaver.Tasks
+namespace NetAspect.Weaver.Tasks
 {
     public class AppDomainIsolatedDiscoveryRunner : MarshalByRefObject
     {

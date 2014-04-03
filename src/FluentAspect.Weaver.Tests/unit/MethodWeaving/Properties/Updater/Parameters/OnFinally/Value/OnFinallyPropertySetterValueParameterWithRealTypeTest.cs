@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.OnFinally.Value
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.OnFinally.Value
 {
     public class OnFinallyPropertySetterValueParameterWithRealTypeTest :
         NetAspectTest<OnFinallyPropertySetterValueParameterWithRealTypeTest.ClassToWeave>

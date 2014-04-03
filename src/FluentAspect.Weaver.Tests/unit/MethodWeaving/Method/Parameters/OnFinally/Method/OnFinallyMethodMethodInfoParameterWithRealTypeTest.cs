@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinally.Method
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinally.Method
 {
     public class OnFinallyMethodMethodInfoParameterWithRealTypeTest :
         NetAspectTest<OnFinallyMethodMethodInfoParameterWithRealTypeTest.ClassToWeave>

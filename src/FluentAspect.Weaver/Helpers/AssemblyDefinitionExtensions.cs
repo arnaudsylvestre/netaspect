@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 
-namespace FluentAspect.Weaver.Helpers
+namespace NetAspect.Weaver.Helpers
 {
     public static class AssemblyDefinitionExtensions
     {

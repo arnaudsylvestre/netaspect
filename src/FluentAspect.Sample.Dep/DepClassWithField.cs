@@ -1,4 +1,4 @@
-﻿namespace FluentAspect.Sample.Dep
+﻿namespace NetAspect.Sample.Dep
 {
     public class DepClassWithField
     {

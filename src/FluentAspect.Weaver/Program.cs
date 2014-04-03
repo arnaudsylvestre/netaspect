@@ -1,4 +1,4 @@
-﻿namespace FluentAspect.Weaver
+﻿namespace NetAspect.Weaver
 {
     public static class Program
     {

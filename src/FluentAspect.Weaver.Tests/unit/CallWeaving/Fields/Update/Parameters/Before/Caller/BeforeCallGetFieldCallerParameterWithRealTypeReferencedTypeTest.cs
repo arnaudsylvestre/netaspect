@@ -1,8 +1,7 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance;
+using NetAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.Before.Caller
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Before.Caller
 {
     public class BeforeCallUpdateFieldCallerParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<BeforeCallUpdateFieldCallerParameterWithRealTypeReferencedTypeTest.ClassToWeave>

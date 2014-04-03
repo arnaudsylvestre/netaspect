@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
+using NetAspect.Weaver.Helpers;
 
-namespace FluentAspect.Weaver.Core.Model
+namespace NetAspect.Weaver.Core.Model
 {
     public class NetAspectDefinition
     {

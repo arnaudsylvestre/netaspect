@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentAspect.Sample.MethodWeaving.Problems.Errors
+namespace NetAspect.Sample.MethodWeaving.Problems.Errors
 {
     public class ToCheckParametersReferencedOnException
     {

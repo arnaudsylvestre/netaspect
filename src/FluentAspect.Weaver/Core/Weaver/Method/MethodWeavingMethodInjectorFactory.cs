@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Reflection;
-using FluentAspect.Weaver.Core.Weaver.Checkers;
-using FluentAspect.Weaver.Core.Weaver.Engine;
-using FluentAspect.Weaver.Core.Weaver.Generators;
 using Mono.Cecil;
+using NetAspect.Weaver.Core.Weaver.Checkers;
+using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Core.Weaver.Generators;
 
-namespace FluentAspect.Weaver.Core.Weaver.Method
+namespace NetAspect.Weaver.Core.Weaver.Method
 {
     public static class MethodWeavingMethodInjectorFactory
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace FluentAspect.Sample.docs
+namespace NetAspect.Sample.docs
 {
     public class LogAttribute : Attribute
     {

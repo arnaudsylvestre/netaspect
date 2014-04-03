@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Sample.Dep;
+using NetAspect.Sample.Dep;
 
-namespace FluentAspect.Sample.AOP
+namespace NetAspect.Sample.AOP
 {
     public class SelectorWithNoDefaultConstructorAttribute : Attribute
     {

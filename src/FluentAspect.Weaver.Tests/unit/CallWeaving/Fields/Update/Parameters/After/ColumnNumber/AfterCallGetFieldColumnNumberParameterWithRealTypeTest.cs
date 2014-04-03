@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.After.ColumnNumber
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.After.ColumnNumber
 {
     public class AfterCallUpdateFieldColumnNumberParameterWithRealTypeTest :
         NetAspectTest<AfterCallUpdateFieldColumnNumberParameterWithRealTypeTest.ClassToWeave>

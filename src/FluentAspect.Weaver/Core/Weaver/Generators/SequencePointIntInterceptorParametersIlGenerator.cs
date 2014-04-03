@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Weaver.Core.Weaver.Helpers;
-using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Weaver.Helpers;
+using NetAspect.Weaver.Helpers.IL;
 
-namespace FluentAspect.Weaver.Core.Weaver.Generators
+namespace NetAspect.Weaver.Core.Weaver.Generators
 {
     public class SequencePointIntInterceptorParametersIlGenerator<T> : IInterceptorParameterIlGenerator<T>
     {

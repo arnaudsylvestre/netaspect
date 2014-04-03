@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Weaver.Apis.AssemblyChecker;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
+using NetAspect.Weaver.Apis.AssemblyChecker;
+using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Helpers;
 
-namespace FluentAspect.Weaver.Core.Assemblies
+namespace NetAspect.Weaver.Core.Assemblies
 {
     public class AssemblyPool
     {

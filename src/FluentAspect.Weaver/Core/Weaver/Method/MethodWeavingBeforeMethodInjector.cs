@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Weaver.Engine;
-using FluentAspect.Weaver.Core.Weaver.Generators;
-using FluentAspect.Weaver.Helpers;
-using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Core.Weaver.Generators;
+using NetAspect.Weaver.Helpers;
+using NetAspect.Weaver.Helpers.IL;
 
-namespace FluentAspect.Weaver.Core.Weaver.Method
+namespace NetAspect.Weaver.Core.Weaver.Method
 {
     public class MethodWeavingBeforeMethodInjector<T> : IIlInjector<T>
     {

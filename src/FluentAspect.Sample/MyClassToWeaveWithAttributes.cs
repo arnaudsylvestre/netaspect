@@ -1,7 +1,7 @@
 ﻿using System;
-using FluentAspect.Sample.AOP;
+using NetAspect.Sample.AOP;
 
-namespace FluentAspect.Sample
+namespace NetAspect.Sample
 {
     public class MyClassToWeaveWithAttributes
     {

@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.After.Caller
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.After.Caller
 {
     public class AfterCallUpdatePropertyCallerParameterWithObjectTypeTest :
         NetAspectTest<AfterCallUpdatePropertyCallerParameterWithObjectTypeTest.ClassToWeave>

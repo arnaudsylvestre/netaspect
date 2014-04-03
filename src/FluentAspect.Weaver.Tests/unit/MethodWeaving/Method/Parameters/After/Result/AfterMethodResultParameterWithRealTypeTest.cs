@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Result
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Result
 {
     public class AfterMethodResultParameterWithRealTypeTest :
         NetAspectTest<AfterMethodResultParameterWithRealTypeTest.ClassToWeave>

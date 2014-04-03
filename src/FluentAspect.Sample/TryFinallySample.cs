@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentAspect.Sample
+namespace NetAspect.Sample
 {
     internal class TryFinallySample
     {

@@ -1,10 +1,10 @@
-﻿using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.Weaver.Call;
-using FluentAspect.Weaver.Core.Weaver.Method;
-using Mono.Cecil;
+﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Model;
+using NetAspect.Weaver.Core.Weaver.Call;
+using NetAspect.Weaver.Core.Weaver.Method;
 
-namespace FluentAspect.Weaver.Core.Weaver.Engine
+namespace NetAspect.Weaver.Core.Weaver.Engine
 {
     public static class MethodWeavingModelExtensions
     {

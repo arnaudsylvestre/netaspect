@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using FluentAspect.Weaver.Core.Errors;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Core.Weaver.Helpers
+namespace NetAspect.Weaver.Core.Weaver.Helpers
 {
     public static class IIlInjectorsExtensions
     {

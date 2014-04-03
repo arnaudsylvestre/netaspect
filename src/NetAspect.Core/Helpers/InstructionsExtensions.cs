@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NetAspect.Core.Helpers;
 
-namespace NetAspect.Core
+namespace NetAspect.Core.Helpers
 {
     public static class InstructionsExtensions
     {

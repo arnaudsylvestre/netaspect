@@ -1,7 +1,7 @@
 ﻿using System;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Core.Weaver.Helpers
+namespace NetAspect.Weaver.Core.Weaver.Helpers
 {
     public class InstructionFactory
     {

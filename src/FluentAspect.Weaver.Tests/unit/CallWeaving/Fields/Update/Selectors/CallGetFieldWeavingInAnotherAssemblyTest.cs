@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Sample.Dep;
 using NUnit.Framework;
+using NetAspect.Sample.Dep;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Selectors
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Selectors
 {
     public class CallUpdateFieldWeavingInAnotherAssemblyTest :
         NetAspectTest<CallUpdateFieldWeavingInAnotherAssemblyTest.MyAspect, DepClassWhichCallField>

@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.ParameterWeaving.Constructor
+namespace NetAspect.Weaver.Tests.unit.ParameterWeaving.Constructor
 {
     [TestFixture]
     public class ParameterConstructorWeavingAssemblyAttributeWeavingTest

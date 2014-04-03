@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Weaver.Core.Weaver.Call;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Weaver.Call;
 
-namespace FluentAspect.Weaver.Core.Weaver.Generators
+namespace NetAspect.Weaver.Core.Weaver.Generators
 {
     public class ParametersInterceptorParametersIlGenerator<T> :
         IInterceptorParameterIlGenerator<T>

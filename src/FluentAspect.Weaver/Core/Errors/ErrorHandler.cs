@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using FluentAspect.Weaver.Core.Weaver.Errors;
+using NetAspect.Weaver.Core.Weaver.Errors;
 
-namespace FluentAspect.Weaver.Core.Errors
+namespace NetAspect.Weaver.Core.Errors
 {
     public class ErrorHandler : IErrorListener
     {

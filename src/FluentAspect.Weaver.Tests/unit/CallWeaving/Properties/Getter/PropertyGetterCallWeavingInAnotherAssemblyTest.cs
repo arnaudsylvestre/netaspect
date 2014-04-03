@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter
 {
     [TestFixture]
     public class PropertyGetterCallWeavingInAnotherAssemblyTest

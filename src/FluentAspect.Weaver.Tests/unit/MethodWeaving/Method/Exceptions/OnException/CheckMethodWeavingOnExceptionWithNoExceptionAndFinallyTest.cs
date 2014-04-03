@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Exceptions.OnException
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Exceptions.OnException
 {
     public class CheckMethodWeavingOnExceptionWithNoExceptionAndFinallyTest :
         NetAspectTest<CheckMethodWeavingOnExceptionWithNoExceptionAndFinallyTest.ClassToWeave>

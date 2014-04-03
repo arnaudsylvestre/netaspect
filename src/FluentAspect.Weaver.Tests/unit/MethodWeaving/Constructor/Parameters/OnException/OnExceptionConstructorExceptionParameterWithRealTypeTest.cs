@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnException
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnException
 {
     public class OnExceptionConstructorExceptionParameterWithRealTypeTest :
         NetAspectTest<OnExceptionConstructorExceptionParameterWithRealTypeTest.ClassToWeave>

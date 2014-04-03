@@ -1,7 +1,7 @@
 ﻿using System;
-using FluentAspect.Sample.MethodWeaving.Parameters.Parameters.Usual;
+using NetAspect.Sample.MethodWeaving.Parameters.Parameters.Usual;
 
-namespace FluentAspect.Sample.MethodWeaving.Problems.Errors
+namespace NetAspect.Sample.MethodWeaving.Problems.Errors
 {
     public class ToCheckParametersReferencedInBeforeAspectAttribute : Attribute
     {

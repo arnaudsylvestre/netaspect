@@ -1,7 +1,7 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance
 {
     public class BeforeMethodInstanceParameterWithReferencedObjectTypeTest :
         NetAspectTest<BeforeMethodInstanceParameterWithReferencedObjectTypeTest.ClassToWeave>

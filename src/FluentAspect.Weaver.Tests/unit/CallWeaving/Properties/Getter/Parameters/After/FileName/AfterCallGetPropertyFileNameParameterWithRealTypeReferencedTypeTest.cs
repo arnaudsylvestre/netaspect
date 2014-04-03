@@ -1,8 +1,8 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Instance;
+using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Instance;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.After.FileName
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.After.FileName
 {
     public class AfterCallGetPropertyFileNameParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<AfterCallGetPropertyFileNameParameterWithRealTypeReferencedTypeTest.ClassToWeave>

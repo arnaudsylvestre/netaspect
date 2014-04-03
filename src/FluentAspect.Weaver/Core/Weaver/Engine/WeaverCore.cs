@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Weaver.Apis.AssemblyChecker;
-using FluentAspect.Weaver.Apis.AssemblyChecker.Peverify;
-using FluentAspect.Weaver.Core.Assemblies;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Model;
 using Mono.Cecil;
+using NetAspect.Weaver.Apis.AssemblyChecker;
+using NetAspect.Weaver.Apis.AssemblyChecker.Peverify;
+using NetAspect.Weaver.Core.Assemblies;
+using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model;
 
-namespace FluentAspect.Weaver.Core.Weaver.Engine
+namespace NetAspect.Weaver.Core.Weaver.Engine
 {
     public class WeaverCore
     {
@@ -27,7 +27,7 @@ namespace FluentAspect.Weaver.Core.Weaver.Engine
 
             foreach (var weavingModel in ComputeWeavingModels(typesP_L, filter, assemblyPool, errorHandler))
             {
-                aroundMethodWeaver_L.Weave(new FluentAspect.Weaver.Helpers.IL.Method(weavingModel.Key), weavingModel.Value, errorHandler);
+                aroundMethodWeaver_L.Weave(new NetAspect.Weaver.Helpers.IL.Method(weavingModel.Key), weavingModel.Value, errorHandler);
             }
 
             assemblyPool.Save(errorHandler, newAssemblyNameProvider);

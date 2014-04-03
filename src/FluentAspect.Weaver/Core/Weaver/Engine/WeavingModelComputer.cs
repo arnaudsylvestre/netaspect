@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Weaver.Core.Assemblies;
-using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.Weaver.Fillers;
-using FluentAspect.Weaver.Helpers;
 using Mono.Cecil;
+using NetAspect.Weaver.Core.Assemblies;
+using NetAspect.Weaver.Core.Model;
+using NetAspect.Weaver.Core.Weaver.Fillers;
+using NetAspect.Weaver.Helpers;
 
-namespace FluentAspect.Weaver.Core.Weaver.Engine
+namespace NetAspect.Weaver.Core.Weaver.Engine
 {
     public class WeavingModelComputer
     {

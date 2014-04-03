@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentAspect.Sample
+namespace NetAspect.Sample
 {
     public class GetPropertyAttribute : Attribute
     {

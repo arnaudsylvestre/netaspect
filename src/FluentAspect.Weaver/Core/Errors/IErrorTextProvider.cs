@@ -1,4 +1,4 @@
-﻿namespace FluentAspect.Weaver.Core.Errors
+﻿namespace NetAspect.Weaver.Core.Errors
 {
     public interface IErrorTextProvider
     {

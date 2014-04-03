@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FluentAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Tests.Helpers
+namespace NetAspect.Weaver.Tests.Helpers
 {
     public static class ErrorHandlerExtensions
     {

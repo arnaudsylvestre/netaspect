@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using FluentAspect.Weaver.Core.Weaver.Call;
-using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Weaver.Call;
+using NetAspect.Weaver.Helpers.IL;
 
-namespace FluentAspect.Weaver.Core.Weaver.Generators
+namespace NetAspect.Weaver.Core.Weaver.Generators
 {
     public class FieldInterceptorParametersIlGenerator<T> : IInterceptorParameterIlGenerator<T>
         where T : IlInstructionInjectorAvailableVariables

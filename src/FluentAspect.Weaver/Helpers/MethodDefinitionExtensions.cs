@@ -2,7 +2,7 @@
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace FluentAspect.Weaver.Helpers
+namespace NetAspect.Weaver.Helpers
 {
     public static class MethodDefinitionExtensions
     {

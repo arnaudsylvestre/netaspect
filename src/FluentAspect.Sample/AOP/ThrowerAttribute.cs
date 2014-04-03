@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace FluentAspect.Sample.AOP
+namespace NetAspect.Sample.AOP
 {
     public class ThrowerAttribute : Attribute
     {

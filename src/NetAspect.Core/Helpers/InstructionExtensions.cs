@@ -1,7 +1,7 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace NetAspect.Core
+namespace NetAspect.Core.Helpers
 {
     public static class InstructionExtensions
     {

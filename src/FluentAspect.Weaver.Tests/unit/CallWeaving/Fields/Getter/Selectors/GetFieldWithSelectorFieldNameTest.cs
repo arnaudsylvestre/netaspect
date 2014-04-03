@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors
 {
     public class GetFieldWithSelectorFieldNameTest :
         NetAspectTest<GetFieldWithSelectorFieldNameTest.ClassToWeave>

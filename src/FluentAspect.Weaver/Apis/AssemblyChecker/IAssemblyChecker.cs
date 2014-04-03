@@ -1,6 +1,6 @@
-﻿using FluentAspect.Weaver.Core.Errors;
+﻿using NetAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Apis.AssemblyChecker
+namespace NetAspect.Weaver.Apis.AssemblyChecker
 {
     public interface IAssemblyChecker
     {

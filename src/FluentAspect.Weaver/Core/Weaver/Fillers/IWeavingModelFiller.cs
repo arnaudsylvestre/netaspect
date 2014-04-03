@@ -1,7 +1,7 @@
-﻿using FluentAspect.Weaver.Core.Model;
-using Mono.Cecil;
+﻿using Mono.Cecil;
+using NetAspect.Weaver.Core.Model;
 
-namespace FluentAspect.Weaver.Core.Weaver.Fillers
+namespace NetAspect.Weaver.Core.Weaver.Fillers
 {
     public interface IWeavingModelFiller
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentAspect.Sample.AOP
+namespace NetAspect.Sample.AOP
 {
     internal class CheckWithGenericsInterceptorAttribute : Attribute
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentAspect.Sample.AOP
+namespace NetAspect.Sample.AOP
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class CheckMultiAttribute : Attribute

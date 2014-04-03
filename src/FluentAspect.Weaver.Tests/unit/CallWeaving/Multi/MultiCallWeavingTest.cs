@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Multi
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Multi
 {
     [TestFixture]
     public class MultiCallWeavingTest

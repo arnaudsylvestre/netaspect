@@ -1,7 +1,8 @@
 ﻿using System;
-using FluentAspect.Weaver.Core.Errors;
+using NetAspect.Core.Helpers;
+using NetAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Apis.AssemblyChecker.Peverify
+namespace NetAspect.Weaver.Apis.AssemblyChecker.Peverify
 {
     public class PeVerifyAssemblyChecker : IAssemblyChecker
     {

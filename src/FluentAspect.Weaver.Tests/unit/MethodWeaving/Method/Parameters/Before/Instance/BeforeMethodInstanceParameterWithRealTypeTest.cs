@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance
 {
     public class BeforeMethodInstanceParameterWithRealTypeTest :
         NetAspectTest<BeforeMethodInstanceParameterWithRealTypeTest.ClassToWeave>

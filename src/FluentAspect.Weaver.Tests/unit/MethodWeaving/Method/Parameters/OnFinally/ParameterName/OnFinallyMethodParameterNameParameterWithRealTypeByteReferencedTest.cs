@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinally.ParameterName
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinally.ParameterName
 {
     public class OnFinallyMethodParameterNameParameterWithRealTypeByteReferencedTest :
         NetAspectTest<OnFinallyMethodParameterNameParameterWithRealTypeByteReferencedTest.ClassToWeave>

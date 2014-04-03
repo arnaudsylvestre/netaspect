@@ -1,8 +1,8 @@
 ﻿using System;
-using FluentAspect.Weaver.Core.Errors;
 using NUnit.Framework;
+using NetAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Tests.unit
+namespace NetAspect.Weaver.Tests.unit
 {
 
     [TestFixture]

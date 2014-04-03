@@ -1,6 +1,6 @@
-﻿using FluentAspect.Weaver.Core.Weaver.Engine;
+﻿using NetAspect.Weaver.Core.Weaver.Engine;
 
-namespace FluentAspect.Weaver.Factory
+namespace NetAspect.Weaver.Factory
 {
     public static class WeaverCoreFactory
     {

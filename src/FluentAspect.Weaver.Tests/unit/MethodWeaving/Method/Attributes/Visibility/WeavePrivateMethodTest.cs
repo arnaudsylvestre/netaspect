@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace FluentAspect.Weaver.Tests.unit.MethodWeaving.Method.Attributes.Visibility
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Attributes.Visibility
 {
     public class WeavePrivateMethodTest : NetAspectTest<WeavePrivateMethodTest.ClassToWeave>
     {

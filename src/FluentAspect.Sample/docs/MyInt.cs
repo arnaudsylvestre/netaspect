@@ -1,4 +1,4 @@
-﻿namespace FluentAspect.Sample.docs
+﻿namespace NetAspect.Sample.docs
 {
     public class MyInt
     {

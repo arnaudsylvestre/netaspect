@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Management.Instrumentation;
-using System.Reflection;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Model;
-using FluentAspect.Weaver.Core.Weaver.Call;
-using FluentAspect.Weaver.Core.Weaver.Engine;
-using FluentAspect.Weaver.Core.Weaver.Generators;
-using FluentAspect.Weaver.Core.Weaver.Helpers;
-using FluentAspect.Weaver.Core.Weaver.Method;
-using FluentAspect.Weaver.Helpers.IL;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
+using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model;
+using NetAspect.Weaver.Core.Weaver.Call;
+using NetAspect.Weaver.Core.Weaver.Helpers;
+using NetAspect.Weaver.Core.Weaver.Method;
+using NetAspect.Weaver.Helpers.IL;
 
-namespace FluentAspect.Weaver.Core.Weaver
+namespace NetAspect.Weaver.Core.Weaver
 {
     public class AroundInstructionIl
     {
@@ -93,7 +88,7 @@ namespace FluentAspect.Weaver.Core.Weaver
         
 
 
-        public void Weave(FluentAspect.Weaver.Helpers.IL.Method method, WeavingModel weavingModel, ErrorHandler errorHandler)
+        public void Weave(NetAspect.Weaver.Helpers.IL.Method method, WeavingModel weavingModel, ErrorHandler errorHandler)
         {
             VariableDefinition result = method.MethodDefinition.ReturnType ==
                                         method.MethodDefinition.Module.TypeSystem.Void

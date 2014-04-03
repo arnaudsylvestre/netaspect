@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace FluentAspect.Weaver.Apis.AssemblyChecker.Peverify
+namespace NetAspect.Core.Helpers
 {
     public static class ProcessHelper
     {

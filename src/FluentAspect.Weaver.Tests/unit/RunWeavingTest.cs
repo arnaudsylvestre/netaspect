@@ -1,12 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Core.Errors;
-using FluentAspect.Weaver.Helpers;
-using FluentAspect.Weaver.Tests.Helpers;
+using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Helpers;
+using NetAspect.Weaver.Tests.Helpers;
 
-namespace FluentAspect.Weaver.Tests.unit
+namespace NetAspect.Weaver.Tests.unit
 {
     public static class RunWeavingTest
     {

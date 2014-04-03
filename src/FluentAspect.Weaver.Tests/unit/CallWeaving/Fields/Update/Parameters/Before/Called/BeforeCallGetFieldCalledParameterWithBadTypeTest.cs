@@ -1,7 +1,7 @@
 using System;
-using FluentAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Errors;
 
-namespace FluentAspect.Weaver.Tests.unit.CallWeaving.Fields.Updater.Parameters.Before.Called
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Before.Called
 {
     public class BeforeCallUpdateFieldCalledParameterWithBadTypeTest :
         NetAspectTest<BeforeCallUpdateFieldCalledParameterWithBadTypeTest.ClassToWeave>

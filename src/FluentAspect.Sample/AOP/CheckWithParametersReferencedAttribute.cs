@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentAspect.Sample.AOP
+namespace NetAspect.Sample.AOP
 {
     public class CheckWithParametersReferencedAttribute : Attribute
     {

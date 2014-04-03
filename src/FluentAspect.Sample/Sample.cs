@@ -1,4 +1,4 @@
-﻿namespace FluentAspect.Sample
+﻿namespace NetAspect.Sample
 {
     internal class Sample
     {
