@@ -92,7 +92,8 @@ namespace NetAspect.Weaver.Core.Weaver
                                             ? null
                                             : new VariableDefinition(method.MethodDefinition.ReturnType);
 
-            var availableVariables = new IlInjectorAvailableVariables(result, method.MethodDefinition, w);
+            var availableVariables = new IlInjectorAvailableVariables(result, method.MethodDefinition);
+           var allVariables = new List<VariableDefinition>();
 
             foreach (var instruction in weavingModel.Instructions)
             {
@@ -109,6 +110,7 @@ namespace NetAspect.Weaver.Core.Weaver
                 }
                 instructionIl.Before.AddRange(variablesForInstruction.calledInstructions);
                 instructionIl.Before.AddRange(variablesForInstruction.calledParametersInstructions);
+                allVariables.AddRange(variablesForInstruction.Variables);
                 foreach (var aroundInstructionIl in ils)
                 {
                     instructionIl.Before.AddRange(aroundInstructionIl.BeforeInstruction);
@@ -125,7 +127,30 @@ namespace NetAspect.Weaver.Core.Weaver
             if (errorHandler.Errors.Count > 0)
                 return;
 
-            -- To remember --
+            List<Instruction> befores = new List<Instruction>();
+            List<Instruction> afters = new List<Instruction>();
+            List<Instruction> onExceptions = new List<Instruction>();
+            List<Instruction> onFinallys = new List<Instruction>();
+           weavingModel.Method.Befores.Inject(befores, availableVariables);
+           weavingModel.Method.Afters.Inject(afters, availableVariables);
+           weavingModel.Method.OnExceptions.Inject(onExceptions, availableVariables);
+           weavingModel.Method.OnFinallys.Inject(onFinallys, availableVariables);
+
+
+           w.BeforeInstructions.AddRange(availableVariables.BeforeInstructions);
+           w.BeforeInstructions.AddRange(befores);
+           w.AfterInstructions.AddRange(afters);
+           if (onExceptions.Any())
+           {
+              w.OnExceptionInstructions.Add(Instruction.Create(OpCodes.Stloc, availableVariables.Exception));
+              w.OnExceptionInstructions.AddRange(onExceptions);
+           }
+           w.OnFinallyInstructions.AddRange(onFinallys);
+
+           method.MethodDefinition.Body.Variables.AddRange(allVariables);
+           method.MethodDefinition.Body.Variables.AddRange(availableVariables.Variables);
+
+           method.MethodDefinition.Weave(w);
         }
 
 

@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Core.Weaver.Method
         public List<Instruction> recallcalledParametersInstructions = new List<Instruction>();
         private List<Instruction> beforeAfter = new List<Instruction>();
 
-        private List<VariableDefinition> variables = new List<VariableDefinition>();
+        public List<VariableDefinition> Variables = new List<VariableDefinition>();
         private VariableDefinition _called;
         private Instruction instruction;
         private Dictionary<string, VariableDefinition> _calledParameters;
@@ -101,7 +101,7 @@ namespace NetAspect.Weaver.Core.Weaver.Method
                         return null;
 
                     _called = new VariableDefinition(calledMethod.DeclaringType);
-                    _netAspectWeavingMethod.Variables.Add(_called);
+                    Variables.Add(_called);
 
                     calledInstructions.Add(Instruction.Create(OpCodes.Stloc, _called));
                     recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, _called));
@@ -123,18 +123,19 @@ namespace NetAspect.Weaver.Core.Weaver.Method
     {
         private readonly VariableDefinition _result;
         private readonly MethodDefinition method;
-        private readonly NetAspectWeavingMethod _netAspectWeavingMethod;
         private VariableDefinition _exception;
         private VariableDefinition _parameters;
         private VariableDefinition currentMethodInfo;
         private VariableDefinition currentPropertyInfo;
         private VariableDefinition _field;
 
-        public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method, NetAspectWeavingMethod netAspectWeavingMethod)
+        public List<Instruction> BeforeInstructions = new List<Instruction>();
+        public List<VariableDefinition> Variables = new List<VariableDefinition>(); 
+
+        public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method)
         {
             _result = result;
             this.method = method;
-            _netAspectWeavingMethod = netAspectWeavingMethod;
         }
 
 
@@ -145,13 +146,13 @@ namespace NetAspect.Weaver.Core.Weaver.Method
                 if (currentMethodInfo == null)
                 {
                     currentMethodInfo = new VariableDefinition(method.Module.Import(typeof(MethodBase)));
-                    _netAspectWeavingMethod.Variables.Add(currentMethodInfo);
+                    Variables.Add(currentMethodInfo);
 
-                    _netAspectWeavingMethod.BeforeInstructions.Add(Instruction.Create(OpCodes.Call,
+                    BeforeInstructions.Add(Instruction.Create(OpCodes.Call,
                                                         method.Module.Import(
                                                             typeof (MethodBase).GetMethod("GetCurrentMethod",
                                                                                           new Type[] {}))));
-                    _netAspectWeavingMethod.BeforeInstructions.AppendSaveResultTo(currentMethodInfo);
+                    BeforeInstructions.AppendSaveResultTo(currentMethodInfo);
                 }
                 return currentMethodInfo;
             }
@@ -169,9 +170,9 @@ namespace NetAspect.Weaver.Core.Weaver.Method
                 if (_parameters == null)
                 {
                     _parameters = new VariableDefinition(method.Module.Import(typeof(MethodBase)));
-                    _netAspectWeavingMethod.Variables.Add(_parameters);
+                    Variables.Add(_parameters);
 
-                    new NetAspect.Weaver.Helpers.IL.Method(method).FillArgsArrayFromParameters(_netAspectWeavingMethod.BeforeInstructions, _parameters);
+                    new NetAspect.Weaver.Helpers.IL.Method(method).FillArgsArrayFromParameters(BeforeInstructions, _parameters);
                 }
                 return _parameters;
             }
@@ -184,7 +185,7 @@ namespace NetAspect.Weaver.Core.Weaver.Method
                 if (_exception == null)
                 {
                     _exception = new VariableDefinition(method.Module.Import(typeof(Exception)));
-                    _netAspectWeavingMethod.Variables.Add(_exception);
+                    Variables.Add(_exception);
                 }
                 return _exception;
             }
@@ -197,12 +198,12 @@ namespace NetAspect.Weaver.Core.Weaver.Method
                 if (currentPropertyInfo == null)
                 {
                     currentPropertyInfo = new VariableDefinition(method.Module.Import(typeof(PropertyInfo)));
-                    _netAspectWeavingMethod.Variables.Add(currentPropertyInfo);
+                    Variables.Add(currentPropertyInfo);
 
-                    _netAspectWeavingMethod.BeforeInstructions.AppendCallToThisGetType(method.Module);
-                    _netAspectWeavingMethod.BeforeInstructions.AppendCallToGetProperty(method.Name.Replace("get_", "").Replace("set_", ""),
+                    BeforeInstructions.AppendCallToThisGetType(method.Module);
+                    BeforeInstructions.AppendCallToGetProperty(method.Name.Replace("get_", "").Replace("set_", ""),
                                                          method.Module);
-                    _netAspectWeavingMethod.BeforeInstructions.AppendSaveResultTo(currentPropertyInfo);
+                    BeforeInstructions.AppendSaveResultTo(currentPropertyInfo);
                 }
                 return currentPropertyInfo;
             }
@@ -215,7 +216,7 @@ namespace NetAspect.Weaver.Core.Weaver.Method
             {
 
                 _field = new VariableDefinition(method.Module.Import(typeof(FieldInfo)));
-                _netAspectWeavingMethod.Variables.Add(_field);
+                Variables.Add(_field);
             }
             return _field;
         }}
