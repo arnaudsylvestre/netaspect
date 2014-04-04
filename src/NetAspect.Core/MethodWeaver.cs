@@ -75,11 +75,11 @@ namespace NetAspect.Core
                 if (end.Count > 0)
                     weavingModel.OnFinallyInstructions.Add(Instruction.Create(OpCodes.Endfinally));
                 allInstructions.AddRange(weavingModel.OnFinallyInstructions);
-                allInstructions.AddRange(end);
                 method.AddTryFinally(methodInstructions.First(), weavingModel.OnFinallyInstructions.First(),
                                      weavingModel.OnFinallyInstructions.First(), end.Count > 0 ? end.First() : null);
 
             }
+            allInstructions.AddRange(end);
                 
 
             method.Body.Instructions.Clear();

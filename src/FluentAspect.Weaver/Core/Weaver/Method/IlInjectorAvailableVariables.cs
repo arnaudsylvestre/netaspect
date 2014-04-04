@@ -94,13 +94,18 @@ namespace NetAspect.Weaver.Core.Weaver.Method
             {
                 if (_called == null)
                 {
+                    TypeReference declaringType = null;
+                    var operand = instruction.Operand as FieldReference;
+                    if (operand != null)
+                        declaringType = operand.DeclaringType;
+                    var methodReference = instruction.Operand as MethodReference;
+                    if (methodReference != null && methodReference.Resolve().IsStatic)
+                        declaringType = methodReference.DeclaringType;
 
-                    var calledMethod = instruction.GetCalledMethod();
-
-                    if (calledMethod.IsStatic)
+                    if (declaringType == null)
                         return null;
 
-                    _called = new VariableDefinition(calledMethod.DeclaringType);
+                    _called = new VariableDefinition(declaringType);
                     Variables.Add(_called);
 
                     calledInstructions.Add(Instruction.Create(OpCodes.Stloc, _called));
