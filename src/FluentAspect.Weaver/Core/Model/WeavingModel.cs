@@ -20,13 +20,9 @@ namespace NetAspect.Weaver.Core.Model
         public WeavingModel()
         {
             Method = new MethodWeavingModel();
-            BeforeInstructions = new Dictionary<Instruction, IIlInjector<IlInjectorAvailableVariablesForInstruction>>();
-            AfterInstructions = new Dictionary<Instruction, IIlInjector<IlInjectorAvailableVariablesForInstruction>>();
         }
 
         public MethodWeavingModel Method { get; set; }
-        public Dictionary<Instruction, IIlInjector<IlInjectorAvailableVariablesForInstruction>> BeforeInstructions { get; set; }
-        public Dictionary<Instruction, IIlInjector<IlInjectorAvailableVariablesForInstruction>> AfterInstructions { get; set; }
 
         public bool IsEmpty
         {
@@ -36,8 +32,7 @@ namespace NetAspect.Weaver.Core.Model
                        Method.Befores.Count == 0 &&
                        Method.OnExceptions.Count == 0 &&
                        Method.OnFinallys.Count == 0 &&
-                       BeforeInstructions.Count == 0 &&
-                       AfterInstructions.Count == 0;
+                       Instructions.Count == 0;
             }
         }
 
