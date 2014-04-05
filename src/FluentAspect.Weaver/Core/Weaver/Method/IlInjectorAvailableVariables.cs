@@ -174,7 +174,7 @@ namespace NetAspect.Weaver.Core.Weaver.Method
             {
                 if (_parameters == null)
                 {
-                    _parameters = new VariableDefinition(method.Module.Import(typeof(MethodBase)));
+                    _parameters = new VariableDefinition(method.Module.Import(typeof(object[])));
                     Variables.Add(_parameters);
 
                     new NetAspect.Weaver.Helpers.IL.Method(method).FillArgsArrayFromParameters(BeforeInstructions, _parameters);
