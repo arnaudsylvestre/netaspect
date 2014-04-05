@@ -12,7 +12,7 @@ namespace NetAspect.Core.Helpers
         }
         public static Instruction GetCallBaseConstructorInstructions(this IEnumerable<Instruction> instructions)
         {
-            return instructions.First(InstructionExtensions.IsCallBaseConstructor);
+            return instructions.FirstOrDefault(InstructionExtensions.IsCallBaseConstructor);
         }
     }
 }

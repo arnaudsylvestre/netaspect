@@ -32,9 +32,8 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.After
 
         public class ClassCalled
         {
-            [MyAspect]
-            public static string Field = "Value";
-            
+            [MyAspect] public static string Field;
+
 
         }
 

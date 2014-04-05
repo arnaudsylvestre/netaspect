@@ -19,7 +19,7 @@ namespace NetAspect.Core.Helpers
 
                 list.Add(item);
             }
-            throw new Exception();
+            return new List<T>();
         }
     }
 }

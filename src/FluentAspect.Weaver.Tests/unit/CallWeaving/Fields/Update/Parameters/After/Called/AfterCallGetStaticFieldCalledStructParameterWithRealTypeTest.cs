@@ -19,7 +19,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.After
         public struct ClassCalled
         {
             [MyAspect]
-            public static string Field = "Value";
+            public static string Field;
             
 
         }

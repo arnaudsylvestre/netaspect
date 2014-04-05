@@ -25,7 +25,8 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
         {
             var assemblyPool = new AssemblyPool(assemblyChecker);
 
-            foreach (var weavingModel in ComputeWeavingModels(typesP_L, filter, assemblyPool, errorHandler))
+            var computeWeavingModels = ComputeWeavingModels(typesP_L, filter, assemblyPool, errorHandler);
+            foreach (var weavingModel in computeWeavingModels)
             {
                 aroundMethodWeaver_L.Weave2(new NetAspect.Weaver.Helpers.IL.Method(weavingModel.Key), weavingModel.Value, errorHandler);
             }

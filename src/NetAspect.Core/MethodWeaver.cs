@@ -93,8 +93,12 @@ namespace NetAspect.Core
             if (method.IsConstructor)
             {
                 allInstructions.AddRange(weavingModel.BeforeConstructorBaseCall);
-                allInstructions.AddRange(method.Body.Instructions.ExtractBeforeCallBaseConstructorInstructions());
-                allInstructions.Add(method.Body.Instructions.GetCallBaseConstructorInstructions());
+                var callBaseConstructorInstructions = method.Body.Instructions.GetCallBaseConstructorInstructions();
+                if (callBaseConstructorInstructions != null)
+                {
+                    allInstructions.AddRange(method.Body.Instructions.ExtractBeforeCallBaseConstructorInstructions());
+                    allInstructions.Add(callBaseConstructorInstructions);
+                }
             }
         }
 
