@@ -96,10 +96,10 @@ namespace NetAspect.Weaver.Core.Weaver.Method
                 {
                     TypeReference declaringType = null;
                     var operand = instruction.Operand as FieldReference;
-                    if (operand != null)
+                    if (operand != null && !operand.Resolve().IsStatic)
                         declaringType = operand.DeclaringType;
                     var methodReference = instruction.Operand as MethodReference;
-                    if (methodReference != null && methodReference.Resolve().IsStatic)
+                    if (methodReference != null && !methodReference.Resolve().IsStatic)
                         declaringType = methodReference.DeclaringType;
 
                     if (declaringType == null)
