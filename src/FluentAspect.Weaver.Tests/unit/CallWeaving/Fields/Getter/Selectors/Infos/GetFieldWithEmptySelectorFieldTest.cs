@@ -1,4 +1,5 @@
 using System;
+using NUnit.Framework;
 using NetAspect.Weaver.Core.Errors;
 
 namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors.Infos
@@ -6,15 +7,6 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors.Infos
     public class GetFieldWithEmptySelectorFieldTest :
         NetAspectTest<GetFieldWithEmptySelectorFieldTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
-        {
-            return
-                errorHandler =>
-                errorHandler.Errors.Add(
-                    string.Format(
-                        "The selector SelectField in the aspect {0} must be static",
-                        typeof(MyAspect).FullName));
-        }
 
         public class ClassToWeave
         {

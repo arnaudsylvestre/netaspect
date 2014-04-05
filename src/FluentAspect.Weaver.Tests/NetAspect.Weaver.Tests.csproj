@@ -67,7 +67,8 @@
     <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldWithBadParameterTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldNotBooleanTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldNotStaticTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\GetFieldWithSelectorFieldNameTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Infos\GetFieldWithSelectorFieldAllParametersTest.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\Infos\GetFieldWithSelectorFieldNameTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithBadTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithRealTypeReferencedTypeTest.cs" />
@@ -772,10 +773,6 @@
     <ProjectReference Include="..\FluentAspect.Sample.Dep\NetAspect.Sample.Dep.csproj">
       <Project>{584095D8-E7A6-42EF-B3C1-6A34F15B4B40}</Project>
       <Name>NetAspect.Sample.Dep</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FluentAspect.Sample\NetAspect.Sample.csproj">
-      <Project>{6E481F61-CF92-4881-8F88-46C83B3018F7}</Project>
-      <Name>NetAspect.Sample</Name>
     </ProjectReference>
     <ProjectReference Include="..\FluentAspect.Weaver\NetAspect.Weaver.csproj">
       <Project>{28912034-8A56-4B8E-BAA1-02C50149CA68}</Project>

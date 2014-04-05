@@ -176,6 +176,7 @@ namespace NetAspect.Weaver.Core.Model
             {
                 var selectorParametersGenerator = new SelectorParametersGenerator<FieldDefinition>();
                 selectorParametersGenerator.AddPossibleParameter<string>("fieldName", field => field.Name);
+                selectorParametersGenerator.AddPossibleParameter<string>("fieldTypeName", field => field.FieldType.Name);
                 return new Selector<FieldDefinition>(_attribute.GetMethod("SelectField"), selectorParametersGenerator);
             }
         }
