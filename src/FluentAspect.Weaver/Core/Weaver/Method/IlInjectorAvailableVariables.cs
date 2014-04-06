@@ -73,18 +73,30 @@ namespace NetAspect.Weaver.Core.Weaver.Method
         {
             if (_calledParameters == null)
             {
-                _calledParameters = new Dictionary<string, VariableDefinition>();
-                var calledMethod = instruction.GetCalledMethod();
-                foreach (var parameter in calledMethod.Parameters.Reverse())
+                if (instruction.Operand is MethodReference)
                 {
-                    var variableDefinition = new VariableDefinition(parameter.ParameterType);
-                    _calledParameters.Add("called" + parameter.Name, variableDefinition);
+                    _calledParameters = new Dictionary<string, VariableDefinition>();
+                    var calledMethod = instruction.GetCalledMethod();
+                    foreach (var parameter in calledMethod.Parameters.Reverse())
+                    {
+                        var variableDefinition = new VariableDefinition(parameter.ParameterType);
+                        _calledParameters.Add("called" + parameter.Name, variableDefinition);
+                        calledParametersInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                    }
+                    foreach (var parameter in calledMethod.Parameters)
+                    {
+                        recallcalledParametersInstructions.Add(Instruction.Create(OpCodes.Ldloc, _calledParameters["called" + parameter.Name]));
+                    }
+                }
+                if (instruction.IsAnUpdateField())
+                {
+                    _calledParameters = new Dictionary<string, VariableDefinition>();
+                    var fieldType = (instruction.Operand as FieldReference).Resolve().FieldType;
+                    var variableDefinition = new VariableDefinition(fieldType);
+                    _calledParameters.Add("value", variableDefinition);
                     calledParametersInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
                 }
-                foreach (var parameter in calledMethod.Parameters)
-                {
-                    recallcalledParametersInstructions.Add(Instruction.Create(OpCodes.Ldloc, _calledParameters["called" + parameter.Name]));
-                }
+                
             }
             return _calledParameters;
         }}
@@ -94,6 +106,7 @@ namespace NetAspect.Weaver.Core.Weaver.Method
             {
                 if (_called == null)
                 {
+                    var calledParameters = CalledParameters;
                     TypeReference declaringType = null;
                     var operand = instruction.Operand as FieldReference;
                     if (operand != null && !operand.Resolve().IsStatic)
