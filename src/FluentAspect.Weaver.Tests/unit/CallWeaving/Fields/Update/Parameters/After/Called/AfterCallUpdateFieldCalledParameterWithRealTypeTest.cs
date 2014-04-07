@@ -15,6 +15,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.After
                     var classToWeave_L = new ClassToWeave(called);
                     classToWeave_L.Weaved();
                     Assert.AreEqual(called, MyAspect.Called);
+                    Assert.AreEqual("Dummy", called.Field);
                 };
         }
 

@@ -12,12 +12,7 @@ namespace NetAspect.Weaver.Helpers
         }
 
 
-        public static VariableDefinition CreateVariable<T>(this MethodDefinition method)
-        {
-            return CreateVariable(method, typeof (T));
-        }
-
-        public static VariableDefinition CreateVariable(this MethodDefinition method,
+       public static VariableDefinition CreateVariable(this MethodDefinition method,
                                                         TypeReference typeReference)
         {
             var variableDefinition = new VariableDefinition(typeReference);

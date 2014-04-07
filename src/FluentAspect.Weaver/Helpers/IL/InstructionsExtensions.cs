@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using Mono.Collections.Generic;
 
 namespace NetAspect.Weaver.Helpers.IL
 {
@@ -47,29 +46,13 @@ namespace NetAspect.Weaver.Helpers.IL
             instructions.Add(Instruction.Create(OpCodes.Stloc, variable));
         }
 
-        public static void AppendCreateNewObject(this Collection<Instruction> instructions,
+       public static void AppendCreateNewObject(this List<Instruction> instructions,
                                                  VariableDefinition interceptor,
                                                  Type interceptorType,
                                                  ModuleDefinition module)
         {
             instructions.Add(Instruction.Create(OpCodes.Newobj, module.Import(interceptorType.GetConstructors()[0])));
             instructions.Add(Instruction.Create(OpCodes.Stloc, interceptor));
-        }
-
-        public static void AppendCreateNewObject(this List<Instruction> instructions,
-                                                 VariableDefinition interceptor,
-                                                 Type interceptorType,
-                                                 ModuleDefinition module)
-        {
-            instructions.Add(Instruction.Create(OpCodes.Newobj, module.Import(interceptorType.GetConstructors()[0])));
-            instructions.Add(Instruction.Create(OpCodes.Stloc, interceptor));
-        }
-
-
-        public static void InitializeInterceptors(this Collection<Instruction> instructions, MethodDefinition method,
-                                                  Type type, VariableDefinition variable)
-        {
-            instructions.AppendCreateNewObject(variable, type, method.Module);
         }
     }
 }

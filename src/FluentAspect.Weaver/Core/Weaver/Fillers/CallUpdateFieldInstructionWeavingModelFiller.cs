@@ -1,5 +1,6 @@
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Core.Helpers;
 using NetAspect.Weaver.Core.Model;
 using NetAspect.Weaver.Core.Weaver.Engine;
 
@@ -17,7 +18,7 @@ namespace NetAspect.Weaver.Core.Weaver.Fillers
         {
             if (method.Body == null)
                 return;
-            foreach (var instruction in method.Body.Instructions)
+            foreach (var instruction in method.ExtractRealInstructions())
             {
                 if (IsFieldCall(instruction, aspect, method))
                 {

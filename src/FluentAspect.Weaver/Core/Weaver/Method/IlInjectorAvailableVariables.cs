@@ -90,11 +90,13 @@ namespace NetAspect.Weaver.Core.Weaver.Method
                 }
                 if (instruction.IsAnUpdateField())
                 {
-                    _calledParameters = new Dictionary<string, VariableDefinition>();
-                    var fieldType = (instruction.Operand as FieldReference).Resolve().FieldType;
-                    var variableDefinition = new VariableDefinition(fieldType);
-                    _calledParameters.Add("value", variableDefinition);
-                    calledParametersInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                   _calledParameters = new Dictionary<string, VariableDefinition>();
+                   var fieldType = (instruction.Operand as FieldReference).Resolve().FieldType;
+                   var variableDefinition = new VariableDefinition(fieldType);
+                   Variables.Add(variableDefinition);
+                   _calledParameters.Add("value", variableDefinition);
+                   calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                   recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
                 }
                 
             }
@@ -122,7 +124,7 @@ namespace NetAspect.Weaver.Core.Weaver.Method
                     Variables.Add(_called);
 
                     calledInstructions.Add(Instruction.Create(OpCodes.Stloc, _called));
-                    recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, _called));
+                    calledInstructions.Add(Instruction.Create(OpCodes.Ldloc, _called));
                 }
                 return _called;
             }
