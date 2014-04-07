@@ -218,7 +218,6 @@
     <Compile Include="unit\CallWeaving\Fields\Update\Selectors\Errors\UpdateFieldWithSelectorFieldWithBadParameterTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Selectors\Errors\UpdateFieldWithSelectorFieldWithReferencedParameterTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Selectors\UpdateFieldWithSelectorFieldNameTest.cs" />
-    <Compile Include="unit\CallWeaving\Fields\Update\Selectors\Infos\UpdateFieldWithEmptySelectorFieldTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Visibility\CallGetInternalFieldWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Visibility\CallGetPrivateFieldWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Update\Visibility\CallGetProtectedFieldWeavingTest.cs" />
@@ -787,6 +786,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="docs\" />
+    <Folder Include="unit\CallWeaving\Fields\Update\Selectors\Infos\" />
     <Folder Include="unit\MethodWeaving\Events\" />
     <Folder Include="unit\MethodWeaving\Indexers\" />
     <Folder Include="unit\MethodWeaving\Operators\" />
