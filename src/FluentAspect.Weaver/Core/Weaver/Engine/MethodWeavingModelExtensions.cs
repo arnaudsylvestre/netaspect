@@ -12,16 +12,20 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                                                      Instruction beforeInstruction, NetAspectDefinition aspect,
                                                      Interceptor beforeCallMethod, Interceptor afterCallMethod)
         {
+            IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector();
+            IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector();
+
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
             {
-                //weavingModel.AfterInstructions.Add(beforeInstruction, CallWeavingMethodInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type));
+                before = CallWeavingMethodInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type);
             }
             var afterCallInterceptorMethod = afterCallMethod.Method;
             if (afterCallInterceptorMethod != null)
             {
-                //weavingModel.AfterInstructions.Add(beforeInstruction, CallWeavingMethodInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type));
+                after = CallWeavingMethodInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type);
             }
+            weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
         }
 
         public static void AddGetFieldCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method,

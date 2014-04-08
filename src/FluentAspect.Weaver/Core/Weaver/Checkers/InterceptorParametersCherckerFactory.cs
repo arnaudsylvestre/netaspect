@@ -145,6 +145,14 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
                 Checker = new CalledInterceptorParametersChercker(calledType),
             });
         }
+        public static void CreateCheckerForCalledParameter(this ParametersChecker checkers, MethodDefinition calledType)
+        {
+            checkers.Add(new InterceptorParametersChecker
+            {
+                ParameterName = "called",
+                Checker = new CalledInterceptorForMethodParametersChercker(calledType),
+            });
+        }
 
         public static void CreateCheckerForParametersParameter(this ParametersChecker checkers)
         {

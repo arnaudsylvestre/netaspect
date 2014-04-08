@@ -29,6 +29,7 @@ namespace NetAspect.Weaver.Core.Weaver.Call
                                        ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> parametersIlGenerator)
         {
             parametersIlGenerator.CreateIlGeneratorForCallerParameter();
+            parametersIlGenerator.CreateIlGeneratorForCalledParameter();
             //parametersIlGenerator.CreateIlGeneratorForMethodParameter();
             //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
             //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
@@ -37,6 +38,7 @@ namespace NetAspect.Weaver.Core.Weaver.Call
         private static void FillCommon(MethodDefinition method, ParametersChecker checker)
         {
             checker.CreateCheckerForCallerParameter(method);
+            checker.CreateCheckerForCalledParameter(method);
             //checker.CreateCheckerForMethodParameter();
             //checker.CreateCheckerForParameterNameParameter(method);
             //checker.CreateCheckerForParametersParameter();

@@ -7,7 +7,7 @@ using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Weaver.Errors;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Checkers
+namespace NetAspect.Weaver.Core.Weaver.Checkers.Helpers
 {
     internal static class Ensure
     {
@@ -145,7 +145,18 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
                 else
                     handler.OnWarning("the {0} parameter in the method {1} of the type '{2}' is not available for static field : default value will be passed", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
             }
-                
+
+        }
+        public static void NotStaticButDefaultValue(ParameterInfo parameter, IErrorListener handler, MethodDefinition definition)
+        {
+            if (definition.IsStatic)
+            {
+                if (definition.DeclaringType.IsValueType)
+                    handler.OnError("the {0} parameter in the method {1} of the type '{2}' is not available for static field in struct", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+                else
+                    handler.OnWarning("the {0} parameter in the method {1} of the type '{2}' is not available for static field : default value will be passed", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+            }
+
         }
     }
 }
