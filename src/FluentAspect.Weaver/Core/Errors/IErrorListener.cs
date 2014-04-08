@@ -1,4 +1,4 @@
-﻿namespace NetAspect.Weaver.Core.Weaver.Errors
+﻿namespace NetAspect.Weaver.Core.Errors
 {
     public interface IErrorListener
     {

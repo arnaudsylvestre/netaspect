@@ -1,6 +1,6 @@
 using Mono.Cecil.Cil;
 
-namespace NetAspect.Weaver.Core.Weaver.Call
+namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
 {
     public interface IlInstructionInjectorAvailableVariables
     {

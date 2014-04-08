@@ -4,9 +4,9 @@ using Mono.Cecil;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Generators;
-using NetAspect.Weaver.Core.Weaver.Method;
+using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.Call
+namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
 {
     public static class CallWeavingMethodInjectorFactory
     {

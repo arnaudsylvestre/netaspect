@@ -1,8 +1,9 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model;
-using NetAspect.Weaver.Core.Weaver.Call;
-using NetAspect.Weaver.Core.Weaver.Method;
+using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call;
+using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors
 {

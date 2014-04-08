@@ -1,17 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Mono.Cecil;
 using Mono.Cecil.Cil;
-using Mono.Collections.Generic;
 using NetAspect.Core;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model;
-using NetAspect.Weaver.Core.Weaver.Call;
-using NetAspect.Weaver.Core.Weaver.Helpers;
-using NetAspect.Weaver.Core.Weaver.Method;
+using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver.Core.Weaver
+namespace NetAspect.Weaver.Core.Weaver.Engine
 {
     public class AroundInstructionIl
     {

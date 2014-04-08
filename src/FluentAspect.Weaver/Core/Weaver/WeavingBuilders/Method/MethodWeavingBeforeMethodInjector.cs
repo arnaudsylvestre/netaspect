@@ -9,7 +9,7 @@ using NetAspect.Weaver.Core.Weaver.Generators;
 using NetAspect.Weaver.Helpers;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Method
+namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
     public class MethodWeavingBeforeMethodInjector<T> : IIlInjector<T>
     {

@@ -2,7 +2,7 @@
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
 
-namespace NetAspect.Weaver.Core.Weaver.Helpers
+namespace NetAspect.Weaver.Helpers.IL
 {
    public static class VariablesExtensions
    {

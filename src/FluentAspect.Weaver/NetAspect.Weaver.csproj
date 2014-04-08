@@ -154,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Weaver\Checkers\CallWeaving\Caller\" />
+    <Folder Include="Core\Weaver\Detectors\Selectors\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
