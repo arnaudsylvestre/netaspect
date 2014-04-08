@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Core.Weaver.Checkers.Helpers;
 
-namespace NetAspect.Weaver.Core.Weaver.Checkers
+namespace NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Member
 {
     public class MethodInterceptorParametersChercker : IInterceptorParameterChecker
     {

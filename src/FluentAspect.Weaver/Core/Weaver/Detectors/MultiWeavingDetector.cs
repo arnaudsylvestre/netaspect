@@ -3,13 +3,13 @@ using NetAspect.Weaver.Core.Model;
 
 namespace NetAspect.Weaver.Core.Weaver.Fillers
 {
-    public class MultiWeavingModelFiller : IWeavingModelFiller
+    public class MultiWeavingDetector : IWeavingDetector
     {
-        private readonly IWeavingModelFiller[] weavingModelFillers;
+        private readonly IWeavingDetector[] _weavingDetectors;
 
-        public MultiWeavingModelFiller(params IWeavingModelFiller[] weavingModelFillers_P)
+        public MultiWeavingDetector(params IWeavingDetector[] weavingDetectorsP)
         {
-            weavingModelFillers = weavingModelFillers_P;
+            _weavingDetectors = weavingDetectorsP;
         }
 
         public bool CanHandle(NetAspectDefinition aspect)
@@ -19,7 +19,7 @@ namespace NetAspect.Weaver.Core.Weaver.Fillers
 
         public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
         {
-            foreach (IWeavingModelFiller weavingModelFiller_L in weavingModelFillers)
+            foreach (IWeavingDetector weavingModelFiller_L in _weavingDetectors)
             {
                 if (weavingModelFiller_L.CanHandle(aspect))
                     weavingModelFiller_L.FillWeavingModel(method, aspect, weavingModel);

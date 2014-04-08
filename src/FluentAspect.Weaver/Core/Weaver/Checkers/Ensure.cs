@@ -7,7 +7,7 @@ using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Weaver.Errors;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Checkers.Helpers
+namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
     internal static class Ensure
     {

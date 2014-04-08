@@ -11,11 +11,11 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
 {
     public class WeavingModelComputer
     {
-        private readonly IWeavingModelFiller weavingModelFiller =
-            new MultiWeavingModelFiller(new MethodAttributeWeavingModelFiller(),
-                                        new PropertyGetAttributeWeavingModelFiller(),
-                                        new CallMethodInstructionWeavingModelFiller(),
-            new CallGetFieldInstructionWeavingModelFiller(), new CallUpdateFieldInstructionWeavingModelFiller());
+        private readonly IWeavingDetector _weavingDetector =
+            new MultiWeavingDetector(new MethodAttributeWeavingDetector(),
+                                        new PropertyGetAttributeWeavingDetector(),
+                                        new CallMethodInstructionWeavingDetector(),
+            new CallGetFieldInstructionWeavingDetector(), new CallUpdateFieldInstructionWeavingDetector());
 
 
         public Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave, Type[] filter, AssemblyPool assemblyDefinitionProvider, IEnumerable<NetAspectDefinition> aspects)
@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                     var model = new WeavingModel();
                     foreach (var aspect_L in aspects)
                     {
-                        weavingModelFiller.FillWeavingModel(method, aspect_L, model);
+                        _weavingDetector.FillWeavingModel(method, aspect_L, model);
                     }
                     if (!model.IsEmpty)
                         weavingModels.Add(method, model);

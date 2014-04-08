@@ -5,7 +5,7 @@ using NetAspect.Weaver.Core.Weaver.Engine;
 
 namespace NetAspect.Weaver.Core.Weaver.Fillers
 {
-    public class MethodAttributeWeavingModelFiller : IWeavingModelFiller
+    public class MethodAttributeWeavingDetector : IWeavingDetector
     {
         public bool CanHandle(NetAspectDefinition aspect)
         {
