@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                     var model = new WeavingModel();
                     foreach (var aspect_L in aspects)
                     {
-                        _weavingDetector.FillWeavingModel(method, aspect_L, model);
+                        _weavingDetector.DetectWeavingModel(method, aspect_L, model);
                     }
                     if (!model.IsEmpty)
                         weavingModels.Add(method, model);

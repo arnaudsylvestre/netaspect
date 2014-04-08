@@ -20,7 +20,7 @@ namespace NetAspect.Weaver.Core.Weaver.Fillers
                    aspect.OnFinallyPropertySet.Method != null;
         }
 
-        public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
+        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
         {
             Collection<PropertyDefinition> propertyDefinitions = method.DeclaringType.Properties;
             foreach (PropertyDefinition propertyDefinition in propertyDefinitions)

@@ -15,7 +15,7 @@ namespace NetAspect.Weaver.Core.Weaver.Fillers
                 aspect.OnFinally.Method != null;
         }
 
-        public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
+        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
         {
             TypeReference aspectType = method.Module.Import(aspect.Type);
             bool isCompliant_L =

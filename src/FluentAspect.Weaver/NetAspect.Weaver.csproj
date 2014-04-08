@@ -87,7 +87,7 @@
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Parameters\ParametersInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Member\PropertyInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Result\ResultInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Engine\MethodWeavingModelExtensions.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeavingModelExtensions.cs" />
     <Compile Include="Core\Weaver\Engine\ParametersChecker.cs" />
     <Compile Include="Core\Weaver\Engine\WeaverCore.cs" />
     <Compile Include="Core\Weaver\Engine\WeavingModelComputer.cs" />

@@ -6,6 +6,6 @@ namespace NetAspect.Weaver.Core.Weaver.Fillers
     public interface IWeavingDetector
     {
         bool CanHandle(NetAspectDefinition aspect);
-        void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel);
+        void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel);
     }
 }

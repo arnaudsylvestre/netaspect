@@ -13,7 +13,7 @@ namespace NetAspect.Weaver.Core.Weaver.Fillers
                    aspect.AfterGetField.Method != null;
         }
 
-        public void FillWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
+        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
         {
             if (method.Body == null)
                 return;
