@@ -72,21 +72,21 @@
     <Compile Include="Core\Weaver\Call\CallWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Call\CallWeavingUpdateFieldInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Call\IlInstructionInjectorAvailableVariables.cs" />
-    <Compile Include="Core\Weaver\Checkers\CalledInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\ColumnNumberInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\Helpers\Ensure.cs" />
-    <Compile Include="Core\Weaver\Checkers\ExceptionInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\FieldInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\FilenameInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Checkers\CallWeaving\Source\ColumnNumberInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Checkers\Ensure.cs" />
+    <Compile Include="Core\Weaver\Checkers\MethodWeaving\Exception\ExceptionInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Checkers\MethodWeaving\Member\FieldInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Checkers\CallWeaving\Source\FilenameInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\IInterceptorParameterChecker.cs" />
-    <Compile Include="Core\Weaver\Checkers\InstanceInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Checkers\MethodWeaving\Instance\InstanceInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\InterceptorParametersChecker.cs" />
     <Compile Include="Core\Weaver\Checkers\InterceptorParametersCherckerFactory.cs" />
-    <Compile Include="Core\Weaver\Checkers\MethodInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\ParameterNameInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\ParametersInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\PropertyInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\ResultInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Checkers\MethodWeaving\Member\MethodInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Checkers\MethodWeaving\Parameters\ParameterNameInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Checkers\MethodWeaving\Parameters\ParametersInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Checkers\MethodWeaving\Member\PropertyInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Checkers\MethodWeaving\Result\ResultInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Engine\MethodWeavingModelExtensions.cs" />
     <Compile Include="Core\Weaver\Engine\ParametersChecker.cs" />
     <Compile Include="Core\Weaver\Engine\WeaverCore.cs" />
@@ -152,6 +152,9 @@
       <Project>{F5E3F3E9-13C1-4CD3-B15A-6F5F3422BDB7}</Project>
       <Name>NetAspect.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Weaver\Checkers\CallWeaving\Caller\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

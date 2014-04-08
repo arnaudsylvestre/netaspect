@@ -11,7 +11,6 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
         {
             Ensure.NotReferenced(parameter, errorListener);
             Ensure.OfType(parameter, errorListener, typeof (Exception).FullName);
-            //}, (info, instructions) => { instructions.Add(Instruction.Create(OpCodes.Ldloc, exception)); }
         }
     }
 }
