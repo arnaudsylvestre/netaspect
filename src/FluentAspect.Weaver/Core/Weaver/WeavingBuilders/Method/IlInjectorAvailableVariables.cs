@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NetAspect.Core;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call;
 using NetAspect.Weaver.Helpers.IL;
 
@@ -18,12 +17,11 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
     public class IlInjectorAvailableVariablesForInstruction : IlInstructionInjectorAvailableVariables
     {
-        private readonly NetAspectWeavingMethod _netAspectWeavingMethod;
-        
         private IlInjectorAvailableVariables methodVariables;
 
         public List<Instruction> calledInstructions = new List<Instruction>();
         public List<Instruction> calledParametersInstructions = new List<Instruction>();
+        public List<Instruction> calledParametersObjectInstructions = new List<Instruction>();
         public List<Instruction> recallcalledInstructions = new List<Instruction>();
         public List<Instruction> recallcalledParametersInstructions = new List<Instruction>();
         private List<Instruction> beforeAfter = new List<Instruction>();
@@ -32,11 +30,11 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
         private VariableDefinition _called;
         private Instruction instruction;
         private Dictionary<string, VariableDefinition> _calledParameters;
+        private VariableDefinition _calledParametersObject;
 
 
-        public IlInjectorAvailableVariablesForInstruction(NetAspectWeavingMethod netAspectWeavingMethod, IlInjectorAvailableVariables methodVariables, Instruction instruction)
+        public IlInjectorAvailableVariablesForInstruction(IlInjectorAvailableVariables methodVariables, Instruction instruction)
         {
-            _netAspectWeavingMethod = netAspectWeavingMethod;
             this.methodVariables = methodVariables;
             this.instruction = instruction;
         }
@@ -101,6 +99,29 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             }
             return _calledParameters;
         }}
+
+        public VariableDefinition CalledParametersObject
+        {
+            get
+            {
+                if (_calledParametersObject == null)
+                {
+                    if (instruction.Operand is MethodReference)
+                    {
+                        var p = CalledParameters;
+                        var calledMethod = instruction.GetCalledMethod();
+                        _calledParametersObject = new VariableDefinition(calledMethod.Module.Import(typeof(object[])));
+                        Variables.Add(_calledParametersObject);
+
+                        calledMethod.FillCalledArgsArrayFromParameters(calledParametersObjectInstructions, _calledParametersObject, p);
+                    }
+
+                    
+                }
+                return _calledParametersObject;
+            }
+        }
+
         public VariableDefinition Called
         {
             get
@@ -191,7 +212,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                     _parameters = new VariableDefinition(method.Module.Import(typeof(object[])));
                     Variables.Add(_parameters);
 
-                    new NetAspect.Weaver.Helpers.IL.Method(method).FillArgsArrayFromParameters(BeforeInstructions, _parameters);
+                    method.FillArgsArrayFromParameters(BeforeInstructions, _parameters);
                 }
                 return _parameters;
             }

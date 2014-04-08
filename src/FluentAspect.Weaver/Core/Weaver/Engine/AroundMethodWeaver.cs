@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Core;
 using NetAspect.Weaver.Core.Errors;
@@ -78,24 +79,24 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
 
     public class AroundMethodWeaver
     {
-        public void Weave2(NetAspect.Weaver.Helpers.IL.Method method, WeavingModel weavingModel,
+        public void Weave2(MethodDefinition method, WeavingModel weavingModel,
                           ErrorHandler errorHandler)
         {
             var w = new NetAspectWeavingMethod();
 
-            VariableDefinition result = method.MethodDefinition.ReturnType ==
-                                        method.MethodDefinition.Module.TypeSystem.Void
+            VariableDefinition result = method.ReturnType ==
+                                        method.Module.TypeSystem.Void
                                             ? null
-                                            : new VariableDefinition(method.MethodDefinition.ReturnType);
+                                            : new VariableDefinition(method.ReturnType);
 
-            var availableVariables = new IlInjectorAvailableVariables(result, method.MethodDefinition);
+            var availableVariables = new IlInjectorAvailableVariables(result, method);
            var allVariables = new List<VariableDefinition>();
 
             foreach (var instruction in weavingModel.Instructions)
             {
                 var instructionIl = new NetAspectWeavingMethod.InstructionIl();
                 w.Instructions.Add(instruction.Key, instructionIl);
-                var variablesForInstruction = new IlInjectorAvailableVariablesForInstruction(w, availableVariables, instruction.Key);
+                var variablesForInstruction = new IlInjectorAvailableVariablesForInstruction(availableVariables, instruction.Key);
                 var ils = new List<AroundInstructionIl>();
                 foreach (var v in instruction.Value)
                 {
@@ -106,6 +107,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                 }
                 instructionIl.Before.AddRange(variablesForInstruction.calledInstructions);
                 instructionIl.Before.AddRange(variablesForInstruction.calledParametersInstructions);
+                instructionIl.Before.AddRange(variablesForInstruction.calledParametersObjectInstructions);
                 allVariables.AddRange(variablesForInstruction.Variables);
                 foreach (var aroundInstructionIl in ils)
                 {
@@ -143,10 +145,10 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            }
            w.OnFinallyInstructions.AddRange(onFinallys);
 
-           method.MethodDefinition.Body.Variables.AddRange(allVariables);
-           method.MethodDefinition.Body.Variables.AddRange(availableVariables.Variables);
+           method.Body.Variables.AddRange(allVariables);
+           method.Body.Variables.AddRange(availableVariables.Variables);
 
-           method.MethodDefinition.Weave(w);
+           method.Weave(w);
         }
     }
 }

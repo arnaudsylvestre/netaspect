@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
         {
             parametersIlGenerator.CreateIlGeneratorForCallerParameter();
             parametersIlGenerator.CreateIlGeneratorForCalledParameter();
-            //parametersIlGenerator.CreateIlGeneratorForMethodParameter();
+            parametersIlGenerator.CreateIlGeneratorForCalledParameters();
             //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
             //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
         }
@@ -39,6 +39,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
         {
             checker.CreateCheckerForCallerParameter(method);
             checker.CreateCheckerForCalledParameter(method);
+            checker.CreateCheckerForCalledParameters(method);
             //checker.CreateCheckerForMethodParameter();
             //checker.CreateCheckerForParameterNameParameter(method);
             //checker.CreateCheckerForParametersParameter();

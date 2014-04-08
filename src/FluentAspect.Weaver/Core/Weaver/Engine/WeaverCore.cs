@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
             var computeWeavingModels = ComputeWeavingModels(typesP_L, filter, assemblyPool, errorHandler);
             foreach (var weavingModel in computeWeavingModels)
             {
-                aroundMethodWeaver_L.Weave2(new NetAspect.Weaver.Helpers.IL.Method(weavingModel.Key), weavingModel.Value, errorHandler);
+                aroundMethodWeaver_L.Weave2(weavingModel.Key, weavingModel.Value, errorHandler);
             }
 
             assemblyPool.Save(errorHandler, newAssemblyNameProvider);
