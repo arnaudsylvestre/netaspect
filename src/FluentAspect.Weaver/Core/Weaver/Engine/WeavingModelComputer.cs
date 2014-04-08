@@ -4,7 +4,11 @@ using System.Reflection;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Assemblies;
 using NetAspect.Weaver.Core.Model;
-using NetAspect.Weaver.Core.Weaver.Fillers;
+using NetAspect.Weaver.Core.Weaver.Detectors;
+using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field;
+using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Method;
+using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property;
+using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
 using NetAspect.Weaver.Helpers;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine

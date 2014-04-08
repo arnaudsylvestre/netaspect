@@ -1,9 +1,9 @@
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model;
-using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
 
-namespace NetAspect.Weaver.Core.Weaver.Fillers
+namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
 {
     public class CallGetFieldInstructionWeavingDetector : IWeavingDetector
     {

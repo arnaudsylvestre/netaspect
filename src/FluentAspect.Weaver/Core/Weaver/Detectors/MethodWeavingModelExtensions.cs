@@ -4,7 +4,7 @@ using NetAspect.Weaver.Core.Model;
 using NetAspect.Weaver.Core.Weaver.Call;
 using NetAspect.Weaver.Core.Weaver.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine
+namespace NetAspect.Weaver.Core.Weaver.Detectors
 {
     public static class MethodWeavingModelExtensions
     {

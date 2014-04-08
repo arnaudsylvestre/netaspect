@@ -1,7 +1,7 @@
 ﻿using Mono.Cecil;
 using NetAspect.Weaver.Core.Model;
 
-namespace NetAspect.Weaver.Core.Weaver.Fillers
+namespace NetAspect.Weaver.Core.Weaver.Detectors
 {
     public interface IWeavingDetector
     {
