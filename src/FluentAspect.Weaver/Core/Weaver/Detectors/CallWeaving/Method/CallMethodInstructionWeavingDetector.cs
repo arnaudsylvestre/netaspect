@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NetAspect.Weaver.Core.Model;
+using NetAspect.Weaver.Core.Model.Aspect;
+using NetAspect.Weaver.Core.Model.Weaving;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Method
 {

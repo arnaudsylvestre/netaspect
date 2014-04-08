@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Core.Model
+namespace NetAspect.Weaver.Core.Weaver.Detectors.Selectors
 {
     public class Selector<T>
     {

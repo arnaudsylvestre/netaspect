@@ -2,7 +2,7 @@
 using NetAspect.Weaver.Core.Weaver;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Model
+namespace NetAspect.Weaver.Core.Model.Weaving
 {
     public class MethodWeavingModel
     {

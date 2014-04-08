@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Mono.Cecil;
+using NetAspect.Weaver.Core.Weaver.Detectors.Selectors;
 using NetAspect.Weaver.Helpers;
 
-namespace NetAspect.Weaver.Core.Model
+namespace NetAspect.Weaver.Core.Model.Aspect
 {
     public class NetAspectDefinition
     {

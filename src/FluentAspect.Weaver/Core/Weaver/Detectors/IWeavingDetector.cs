@@ -1,5 +1,6 @@
 ﻿using Mono.Cecil;
-using NetAspect.Weaver.Core.Model;
+using NetAspect.Weaver.Core.Model.Aspect;
+using NetAspect.Weaver.Core.Model.Weaving;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors
 {

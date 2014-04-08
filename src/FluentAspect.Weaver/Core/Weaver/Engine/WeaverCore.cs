@@ -6,7 +6,8 @@ using NetAspect.Weaver.Apis.AssemblyChecker;
 using NetAspect.Weaver.Apis.AssemblyChecker.Peverify;
 using NetAspect.Weaver.Core.Assemblies;
 using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Core.Model;
+using NetAspect.Weaver.Core.Model.Aspect;
+using NetAspect.Weaver.Core.Model.Weaving;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine
 {

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace NetAspect.Weaver.Core.Model
+namespace NetAspect.Weaver.Core.Model.Aspect
 {
     public class Interceptor
     {

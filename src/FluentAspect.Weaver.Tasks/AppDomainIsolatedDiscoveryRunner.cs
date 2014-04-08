@@ -2,7 +2,6 @@ using System;
 using Microsoft.Build.Utilities;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Weaver.Engine;
-using NetAspect.Weaver.Factory;
 
 namespace NetAspect.Weaver.Tasks
 {
@@ -14,7 +13,7 @@ namespace NetAspect.Weaver.Tasks
             try
             {
                 var handler = new ErrorHandler();
-                WeaverCore weaverCore = WeaverCoreFactory.Create();
+                WeaverCore weaverCore = WeaverFactory.Create();
                 weaverCore.Weave(configFile, handler, TargetFileName);
 
                 foreach (string warning_L in handler.Warnings)

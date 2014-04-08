@@ -6,7 +6,6 @@ using System.Text;
 using NUnit.Framework;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Weaver.Engine;
-using NetAspect.Weaver.Factory;
 
 namespace NetAspect.Weaver.Tests.Helpers
 {
@@ -18,7 +17,7 @@ namespace NetAspect.Weaver.Tests.Helpers
             Assembly otherAssembly = Assembly.LoadFrom(otherDll);
             Type type = assembly.GetTypes().First(t => t.FullName == typeName);
             Type otherType = otherAssembly.GetTypes().First(t => t.FullName == otherTypeName);
-            WeaverCore weaver = WeaverCoreFactory.Create();
+            WeaverCore weaver = WeaverFactory.Create();
             var errorHandler = new ErrorHandler();
             weaver.Weave(ComputeTypes(type, otherType), ComputeTypes(type, otherType), errorHandler, (a) => a);
             var builder = new StringBuilder();

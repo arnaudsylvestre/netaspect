@@ -1,8 +1,8 @@
 ﻿using NetAspect.Weaver.Core.Weaver.Engine;
 
-namespace NetAspect.Weaver.Factory
+namespace NetAspect.Weaver
 {
-    public static class WeaverCoreFactory
+    public static class WeaverFactory
     {
         public static WeaverCore Create()
         {

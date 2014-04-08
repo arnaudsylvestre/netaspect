@@ -1,6 +1,6 @@
 using System.Linq;
 using Mono.Cecil;
-using NetAspect.Weaver.Core.Model;
+using NetAspect.Weaver.Core.Model.Aspect;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.Helpers
 {
