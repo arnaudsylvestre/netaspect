@@ -5,11 +5,10 @@ using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Core;
-using NetAspect.Weaver.Core.Weaver.Call;
-using NetAspect.Weaver.Helpers;
+using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Method
+namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
 
 

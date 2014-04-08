@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver;
-using NetAspect.Weaver.Core.Weaver.Call;
-using NetAspect.Weaver.Core.Weaver.Method;
+using NetAspect.Weaver.Core.Weaver.Engine;
 
 namespace NetAspect.Weaver.Core.Model
 {

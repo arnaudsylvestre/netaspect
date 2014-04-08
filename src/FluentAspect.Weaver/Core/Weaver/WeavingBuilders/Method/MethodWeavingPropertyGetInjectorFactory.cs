@@ -5,9 +5,9 @@ using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Generators;
 
-namespace NetAspect.Weaver.Core.Weaver.Method
+namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
-    public static class MethodWeavingMethodInjectorFactory
+    public static class MethodWeavingPropertyGetInjectorFactory
     {
         public static IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,
@@ -46,16 +46,14 @@ namespace NetAspect.Weaver.Core.Weaver.Method
         {
             parametersIlGenerator.CreateIlGeneratorForInstanceParameter(method);
             parametersIlGenerator.CreateIlGeneratorForMethodParameter();
-            parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
-            parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
+            parametersIlGenerator.CreateIlGeneratorForPropertyParameter();
         }
 
         private static void FillCommon(MethodDefinition method, ParametersChecker checker)
         {
             checker.CreateCheckerForInstanceParameter(method);
             checker.CreateCheckerForMethodParameter();
-            checker.CreateCheckerForParameterNameParameter(method);
-            checker.CreateCheckerForParametersParameter();
+            checker.CreateCheckerForPropertyParameter();
         }
 
         public static IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method,

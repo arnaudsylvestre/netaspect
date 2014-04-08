@@ -5,7 +5,7 @@ using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Generators;
 
-namespace NetAspect.Weaver.Core.Weaver.Method
+namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
     public static class MethodWeavingPropertySetInjectorFactory
     {

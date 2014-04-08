@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NetAspect.Weaver.Core.Weaver.Errors;
 
 namespace NetAspect.Weaver.Core.Errors
 {
