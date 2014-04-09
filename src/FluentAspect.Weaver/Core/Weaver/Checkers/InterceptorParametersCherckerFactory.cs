@@ -141,8 +141,8 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
         {
             checkers.AddRange(method.Parameters.Select(parameter => new InterceptorParametersChecker
             {
-                ParameterName = parameter.Name,
-                Checker = new ParameterNameInterceptorParametersChercker(parameter),
+                ParameterName = "called" + parameter.Name,
+                Checker = new CalledParameterNameInterceptorParametersChercker(parameter),
             }));
         }
         public static void CreateCheckerForCallerParametersName(this ParametersChecker checkers, MethodDefinition callerMethod)

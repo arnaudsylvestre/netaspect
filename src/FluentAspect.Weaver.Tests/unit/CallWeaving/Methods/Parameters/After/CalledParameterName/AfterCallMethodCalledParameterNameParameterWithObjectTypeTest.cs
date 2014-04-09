@@ -1,33 +1,33 @@
 using System;
 using NUnit.Framework;
+using NetAspect.Weaver.Core.Errors;
 
 namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.CalledParameterName
 {
     public class AfterCallMethodCalledParameterNameParameterWithObjectTypeTest :
         NetAspectTest<AfterCallMethodCalledParameterNameParameterWithObjectTypeTest.ClassToWeave>
     {
-        protected override Action CreateEnsure()
+        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
-            return () =>
-                {
-                    Assert.AreEqual(0, MyAspect.ParameterName);
-                    var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved(12);
-                    Assert.AreEqual(12, MyAspect.ParameterName);
-                };
+            return
+                errorHandler =>
+                errorHandler.Errors.Add(
+                    string.Format(
+                        "the calledParam1 parameter in the method AfterCallMethod of the type '{0}' is declared with the type 'System.Object' but it is expected to be System.Int32",
+                        typeof(MyAspect).FullName));
         }
 
         public class ClassToWeave
         {
             [MyAspect]
-            public string Method()
+            public string Method(int param1)
             {
                 return "Hello";
             }
 
-            public string Weaved(int param1)
+            public string Weaved()
             {
-                return Method();
+                return Method(12);
             }
         }
 

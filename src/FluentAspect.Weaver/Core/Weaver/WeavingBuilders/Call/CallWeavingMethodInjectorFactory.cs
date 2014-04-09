@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
         {
            var calledMethod = (instruction.Operand as MethodReference).Resolve();
            var checker = new ParametersChecker();
-            FillCommon(method, checker);
+           FillCommon(method, checker, calledMethod);
 
 
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>();
@@ -38,12 +38,12 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
             //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
         }
 
-        private static void FillCommon(MethodDefinition method, ParametersChecker checker)
+        private static void FillCommon(MethodDefinition method, ParametersChecker checker, MethodDefinition calledMethod)
         {
             checker.CreateCheckerForCallerParameter(method);
             checker.CreateCheckerForCalledParameter(method);
             checker.CreateCheckerForCalledParameters(method);
-            checker.CreateCheckerForCalledParametersName(method);
+            checker.CreateCheckerForCalledParametersName(calledMethod);
             //checker.CreateCheckerForMethodParameter();
             //checker.CreateCheckerForParameterNameParameter(method);
             //checker.CreateCheckerForParametersParameter();
@@ -55,7 +55,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
         {
            var calledMethod = (instruction.Operand as MethodReference).Resolve();
             var checker = new ParametersChecker();
-            FillCommon(method, checker);
+            FillCommon(method, checker, calledMethod);
             //checker.CreateCheckerForResultParameter(method);
 
 
