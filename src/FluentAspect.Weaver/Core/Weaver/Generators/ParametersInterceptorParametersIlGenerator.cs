@@ -26,20 +26,4 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
           instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CalledParametersObject));
        }
     }
-    public class CalledParameterNameInterceptorParametersIlGenerator :
-        IInterceptorParameterIlGenerator<IlInjectorAvailableVariablesForInstruction>
-    {
-       private string parameterName;
-
-       public CalledParameterNameInterceptorParametersIlGenerator(string parameterName_P)
-       {
-          parameterName = parameterName_P;
-       }
-
-       public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions,
-                               IlInjectorAvailableVariablesForInstruction info)
-        {
-           instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CalledParameters[parameterName]));
-        }
-    }
 }

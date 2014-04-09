@@ -52,7 +52,7 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
             foreach (ParameterDefinition parameterDefinition in calledMethod.Parameters)
             {
                 ilGeneratoir.Add("called" + parameterDefinition.Name.ToLower(),
-                                 new CalledParameterNameInterceptorParametersIlGenerator("called" + parameterDefinition.Name.ToLower()));
+                                 new CalledParameterNameInterceptorParametersIlGenerator(parameterDefinition));
             }
         }
         public static void CreateIlGeneratorForCallerParametersName(this ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> ilGeneratoir,
