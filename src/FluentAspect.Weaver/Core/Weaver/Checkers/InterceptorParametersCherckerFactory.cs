@@ -141,7 +141,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
         {
             checkers.AddRange(method.Parameters.Select(parameter => new InterceptorParametersChecker
             {
-                ParameterName = "called" + parameter.Name,
+                ParameterName = "called" + parameter.Name.ToLower(),
                 Checker = new CalledParameterNameInterceptorParametersChercker(parameter),
             }));
         }
@@ -149,7 +149,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
         {
             checkers.AddRange(callerMethod.Parameters.Select(parameter => new InterceptorParametersChecker
             {
-                ParameterName = "caller" + parameter.Name,
+                ParameterName = "caller" + parameter.Name.ToLower(),
                 Checker = new ParameterNameInterceptorParametersChercker(parameter),
             }));
         }

@@ -14,7 +14,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.Calle
                     var classToWeave_L = new ClassToWeave();
                     
                     classToWeave_L.Weaved();
-                    Assert.AreEqual(12, MyAspect.ParameterName);
+                    Assert.AreEqual(15, MyAspect.ParameterName);
                 };
         }
 

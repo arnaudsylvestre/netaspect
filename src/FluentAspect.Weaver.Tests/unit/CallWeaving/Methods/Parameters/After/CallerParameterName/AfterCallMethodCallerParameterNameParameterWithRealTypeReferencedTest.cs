@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.Calle
                 {
                     Assert.AreEqual(0, MyAspect.ParameterName);
                     var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved(12);
+                    Assert.AreEqual(10, classToWeave_L.Weaved(12));
                     Assert.AreEqual(12, MyAspect.ParameterName);
                 };
         }
@@ -25,9 +25,10 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.Calle
                 return "Hello";
             }
 
-            public string Weaved(int param1)
+            public int Weaved(int param1)
             {
-                return Method();
+                Method();
+                return param1;
             }
         }
 
@@ -39,6 +40,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.Calle
             public void AfterCallMethod(ref int callerParam1)
             {
                 ParameterName = callerParam1;
+                callerParam1 = 10;
             }
         }
     }

@@ -29,7 +29,9 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.Calle
 
             public string Weaved(ref int param1)
             {
-                return Method();
+                var res = Method();
+                param1 = 25;
+                return res;
             }
         }
 
