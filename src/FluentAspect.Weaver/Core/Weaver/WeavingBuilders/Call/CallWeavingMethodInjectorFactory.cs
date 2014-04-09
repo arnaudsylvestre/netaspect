@@ -35,6 +35,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
             parametersIlGenerator.CreateIlGeneratorForCalledParameters();
             parametersIlGenerator.CreateIlGeneratorForCalledParametersName(calledMethod);
             parametersIlGenerator.CreateIlGeneratorForCallerParametersName(method);
+            parametersIlGenerator.CreateIlGeneratorForCallerParameters();
             //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
             //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
         }
@@ -46,6 +47,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
             checker.CreateCheckerForCalledParameters(method);
             checker.CreateCheckerForCalledParametersName(calledMethod);
             checker.CreateCheckerForCallerParametersName(method);
+            checker.CreateCheckerForCallerParameters(method);
             //checker.CreateCheckerForMethodParameter();
             //checker.CreateCheckerForParameterNameParameter(method);
             //checker.CreateCheckerForParametersParameter();
