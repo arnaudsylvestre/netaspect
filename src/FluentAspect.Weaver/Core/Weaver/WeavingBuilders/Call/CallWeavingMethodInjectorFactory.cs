@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Generators;
@@ -12,25 +13,27 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
     {
         public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForBefore(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,
-                                                                                Type aspectType)
+                                                                                Type aspectType, Instruction instruction)
         {
-            var checker = new ParametersChecker();
+           var calledMethod = (instruction.Operand as MethodReference).Resolve();
+           var checker = new ParametersChecker();
             FillCommon(method, checker);
 
 
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>();
-            FillCommon(method, parametersIlGenerator);
+            FillCommon(method, parametersIlGenerator, calledMethod);
 
             return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariablesForInstruction>(method, interceptorMethod,
                                                                                        aspectType, checker,
                                                                                        parametersIlGenerator);
         }
         private static void FillCommon(MethodDefinition method,
-                                       ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> parametersIlGenerator)
+                                       ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> parametersIlGenerator, MethodDefinition calledMethod)
         {
             parametersIlGenerator.CreateIlGeneratorForCallerParameter();
             parametersIlGenerator.CreateIlGeneratorForCalledParameter();
             parametersIlGenerator.CreateIlGeneratorForCalledParameters();
+            parametersIlGenerator.CreateIlGeneratorForCalledParametersName(calledMethod);
             //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
             //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
         }
@@ -40,6 +43,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
             checker.CreateCheckerForCallerParameter(method);
             checker.CreateCheckerForCalledParameter(method);
             checker.CreateCheckerForCalledParameters(method);
+            checker.CreateCheckerForCalledParametersName(method);
             //checker.CreateCheckerForMethodParameter();
             //checker.CreateCheckerForParameterNameParameter(method);
             //checker.CreateCheckerForParametersParameter();
@@ -47,15 +51,16 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
 
         public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
-                                                                               Type aspectType)
+                                                                               Type aspectType, Instruction instruction)
         {
+           var calledMethod = (instruction.Operand as MethodReference).Resolve();
             var checker = new ParametersChecker();
             FillCommon(method, checker);
             //checker.CreateCheckerForResultParameter(method);
 
 
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>();
-            FillCommon(method, parametersIlGenerator);
+            FillCommon(method, parametersIlGenerator, calledMethod);
             //parametersIlGenerator.CreateIlGeneratorForResultParameter();
             return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariablesForInstruction>(method, interceptorMethod,
                                                                                        aspectType, checker,

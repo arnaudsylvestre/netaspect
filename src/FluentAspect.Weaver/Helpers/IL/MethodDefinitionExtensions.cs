@@ -4,7 +4,7 @@ using Mono.Cecil.Cil;
 
 namespace NetAspect.Weaver.Helpers.IL
 {
-    public static class Method
+    public static class MethodDefinitionExtensions
     {
         public static void FillArgsArrayFromParameters(this MethodDefinition definition, List<Instruction> instructions, VariableDefinition args)
         {
@@ -35,8 +35,9 @@ namespace NetAspect.Weaver.Helpers.IL
 
             foreach (ParameterDefinition p in calledMethod.Parameters.ToArray())
             {
+               instructions.Add(Instruction.Create(OpCodes.Ldloc, args));
+               instructions.Add(Instruction.Create(OpCodes.Ldc_I4, p.Index));
                 instructions.Add(Instruction.Create(OpCodes.Ldloc, variablesParameters["called" + p.Name.ToLower()]));
-                instructions.Add(Instruction.Create(OpCodes.Ldarg, p));
                 if (p.ParameterType.IsValueType || p.ParameterType is GenericParameter)
                     instructions.Add(Instruction.Create(OpCodes.Box, p.ParameterType));
                 instructions.Add(Instruction.Create(OpCodes.Stelem_Ref));

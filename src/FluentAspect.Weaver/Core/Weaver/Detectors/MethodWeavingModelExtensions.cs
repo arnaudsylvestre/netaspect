@@ -20,12 +20,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
             {
-                before = CallWeavingMethodInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type);
+               before = CallWeavingMethodInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction);
             }
             var afterCallInterceptorMethod = afterCallMethod.Method;
             if (afterCallInterceptorMethod != null)
             {
-                after = CallWeavingMethodInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type);
+               after = CallWeavingMethodInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction);
             }
             weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
         }

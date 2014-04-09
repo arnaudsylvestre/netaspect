@@ -78,6 +78,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                     {
                         var variableDefinition = new VariableDefinition(parameter.ParameterType);
                         _calledParameters.Add("called" + parameter.Name, variableDefinition);
+                       Variables.Add(variableDefinition);
                         calledParametersInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
                     }
                     foreach (var parameter in calledMethod.Parameters)

@@ -233,7 +233,6 @@
     <Compile Include="unit\CallWeaving\Methods\Parameters\After\CalledParameterName\AfterCallMethodCalledParameterNameReferencedParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\Parameters\After\CalledParameterName\AfterCallMethodCalledParameterNameReferencedParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\Parameters\After\CalledParameters\AfterCallMethodCalledParametersParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\CallWeaving\Methods\Parameters\After\CalledParameters\AfterCallMethodCalledParametersParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\Parameters\After\CalledParameters\AfterCallMethodCalledParametersParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\Parameters\After\CalledParameters\AfterCallMethodCalledParametersParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Methods\Parameters\After\Called\AfterCallMethodCalledParameterWithBadTypeTest.cs" />

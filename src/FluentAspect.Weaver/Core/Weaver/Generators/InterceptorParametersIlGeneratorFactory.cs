@@ -46,14 +46,13 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
         {
             ilGeneratoir.Add("calledparameters", new CalledParametersInterceptorParametersIlGenerator());
         }
-        public static void CreateIlGeneratorForCalledParametersName(this ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGeneratoir,
+        public static void CreateIlGeneratorForCalledParametersName(this ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> ilGeneratoir,
                                                                     MethodDefinition calledMethod)
         {
-            throw new NotImplementedException();
             foreach (ParameterDefinition parameterDefinition in calledMethod.Parameters)
             {
-                ilGeneratoir.Add(parameterDefinition.Name.ToLower(),
-                                 new ParameterNameInterceptorParametersIlGenerator<IlInstructionInjectorAvailableVariables>(parameterDefinition));
+                ilGeneratoir.Add("called" + parameterDefinition.Name.ToLower(),
+                                 new CalledParameterNameInterceptorParametersIlGenerator("called" + parameterDefinition.Name.ToLower()));
             }
         }
         public static void CreateIlGeneratorForCallerParametersName(this ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> ilGeneratoir,
