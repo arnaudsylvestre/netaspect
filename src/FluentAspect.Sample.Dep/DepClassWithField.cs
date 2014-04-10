@@ -4,4 +4,8 @@
     {
         public string Field;
     }
+    public class DepClassWithProperty
+    {
+        public string Property { get; set; }
+    }
 }

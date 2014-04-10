@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.Before.Call
                 {
                     Assert.AreEqual(0, MyAspect.ParameterName);
                     var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved(12);
+                    classToWeave_L.Weaved();
                     Assert.AreEqual(12, MyAspect.ParameterName);
                 };
         }
@@ -20,14 +20,14 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.Before.Call
         public class ClassToWeave
         {
             [MyAspect]
-            public string Method()
+            public string Method(int param1)
             {
                 return "Hello";
             }
 
-            public string Weaved(int param1)
+            public string Weaved()
             {
-                return Method();
+                return Method(12);
             }
         }
 

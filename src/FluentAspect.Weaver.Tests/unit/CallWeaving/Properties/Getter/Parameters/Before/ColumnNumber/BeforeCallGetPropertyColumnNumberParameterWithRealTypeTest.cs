@@ -13,14 +13,13 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.B
                     Assert.AreEqual(0, MyAspect.ColumnNumber);
                     var classToWeave_L = new ClassToWeave();
                     classToWeave_L.Weaved();
-                    Assert.AreEqual(12, MyAspect.ColumnNumber);
+                    Assert.AreEqual(17, MyAspect.ColumnNumber);
                 };
         }
 
         public class ClassToWeave
         {
-            [MyAspect]
-            public string Property { get; set; }
+            [MyAspect] public string Property {get; set; }
 
             public string Weaved()
             {

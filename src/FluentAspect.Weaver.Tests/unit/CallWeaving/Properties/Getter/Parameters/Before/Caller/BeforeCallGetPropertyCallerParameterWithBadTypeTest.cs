@@ -1,6 +1,5 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance;
 
 namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.Before.Caller
 {
@@ -13,15 +12,14 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.B
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the instance parameter in the method Before of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
-                        typeof (BeforeMethodInstanceParameterWithBadTypeTest.MyAspect).FullName,
-                        typeof (BeforeMethodInstanceParameterWithBadTypeTest.ClassToWeave).FullName));
+                        "the caller parameter in the method BeforeGetProperty of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
+                        typeof (MyAspect).FullName,
+                        typeof (ClassToWeave).FullName));
         }
 
         public class ClassToWeave
         {
-            [MyAspect]
-            public string Property { get; set; }
+            [MyAspect] public string Property {get; set; }
 
             public string Weaved()
             {

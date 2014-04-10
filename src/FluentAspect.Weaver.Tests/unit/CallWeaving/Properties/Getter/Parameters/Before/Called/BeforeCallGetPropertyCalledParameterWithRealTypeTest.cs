@@ -11,29 +11,43 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.B
             return () =>
                 {
                     Assert.IsNull(MyAspect.Called);
-                    var classToWeave_L = new ClassToWeave();
+                    ClassCalled called = new ClassCalled();
+                    var classToWeave_L = new ClassToWeave(called);
                     classToWeave_L.Weaved();
-                    Assert.AreEqual(classToWeave_L, MyAspect.Called);
+                    Assert.AreEqual(called, MyAspect.Called);
                 };
+        }
+
+        public class ClassCalled
+        {
+            [MyAspect]
+            public string Property = "Value";
+            
+
         }
 
         public class ClassToWeave
         {
-            [MyAspect]
-            public string Property { get; set; }
+            ClassCalled called;
+
+            public ClassToWeave(ClassCalled called)
+            {
+                this.called = called;
+            }
 
             public string Weaved()
             {
-                return Property;
+                
+                return called.Property;
             }
         }
 
         public class MyAspect : Attribute
         {
-            public static ClassToWeave Called;
+            public static ClassCalled Called;
             public bool NetAspectAttribute = true;
 
-            public void BeforeGetProperty(ClassToWeave called)
+            public void BeforeGetProperty(ClassCalled called)
             {
                 Called = called;
             }

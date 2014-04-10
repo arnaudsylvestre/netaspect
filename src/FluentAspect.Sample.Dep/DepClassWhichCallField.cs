@@ -11,4 +11,16 @@
             return c.Field;
         }
     }
+
+    public class DepClassWhichCallProperty
+    {
+        public string CallProperty(string fieldValue)
+        {
+            var c = new DepClassWithProperty()
+            {
+                Property = fieldValue
+            };
+            return c.Property;
+        }
+    }
 }

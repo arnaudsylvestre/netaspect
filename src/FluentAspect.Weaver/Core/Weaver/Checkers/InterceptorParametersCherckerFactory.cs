@@ -182,10 +182,18 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
         public static void CreateCheckerForMethodParameter(this ParametersChecker checkers)
         {
             checkers.Add(new InterceptorParametersChecker
-                {
-                    ParameterName = "method",
-                    Checker = new MethodInterceptorParametersChercker(),
-                });
+            {
+                ParameterName = "method",
+                Checker = new MethodInterceptorParametersChercker(),
+            });
+        }
+        public static void CreateCheckerForCallerMethodParameter(this ParametersChecker checkers)
+        {
+            checkers.Add(new InterceptorParametersChecker
+            {
+                ParameterName = "callermethod",
+                Checker = new MethodInterceptorParametersChercker(),
+            });
         }
 
         public static void CreateCheckerForPropertyParameter(this ParametersChecker checkers)

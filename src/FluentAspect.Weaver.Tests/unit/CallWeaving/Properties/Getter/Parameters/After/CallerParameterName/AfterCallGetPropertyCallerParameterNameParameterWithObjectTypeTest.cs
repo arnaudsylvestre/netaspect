@@ -10,7 +10,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.A
         {
             return () =>
                 {
-                    Assert.AreEqual(0, MyAspect.ParameterName);
+                    Assert.AreEqual(null, MyAspect.ParameterName);
                     var classToWeave_L = new ClassToWeave();
                     classToWeave_L.Weaved(12);
                     Assert.AreEqual(12, MyAspect.ParameterName);
@@ -19,8 +19,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.A
 
         public class ClassToWeave
         {
-            [MyAspect]
-            public string Property { get; set; }
+            [MyAspect] public string Property {get; set; }
 
             public string Weaved(int param1)
             {

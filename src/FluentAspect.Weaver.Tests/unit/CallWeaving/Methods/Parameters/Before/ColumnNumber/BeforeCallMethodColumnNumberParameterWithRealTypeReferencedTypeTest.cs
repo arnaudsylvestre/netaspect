@@ -12,8 +12,8 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.Before.Colu
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the instance parameter in the method Before of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
-                        typeof (string).FullName, typeof (string).FullName));
+                        "impossible to ref/out the parameter 'columnNumber' in the method BeforeCallMethod of the type '{0}'",
+                        typeof(MyAspect).FullName, typeof(string).FullName));
         }
 
         public class ClassToWeave

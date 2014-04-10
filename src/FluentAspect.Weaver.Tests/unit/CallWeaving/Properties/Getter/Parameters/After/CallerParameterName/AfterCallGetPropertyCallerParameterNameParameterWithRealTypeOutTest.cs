@@ -1,6 +1,5 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Instance;
 
 namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.After.CallerParameterName
 {
@@ -13,15 +12,13 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.A
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the instance parameter in the method After of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
-                        typeof (AfterMethodInstanceParameterWithBadTypeTest.MyAspect).FullName,
-                        typeof (AfterMethodInstanceParameterWithBadTypeTest.ClassToWeave).FullName));
+                        "impossible to out the parameter 'callerParam1' in the method AfterGetProperty of the type '{0}'",
+                        typeof (MyAspect).FullName));
         }
 
         public class ClassToWeave
         {
-            [MyAspect]
-            public string Property { get; set; }
+            [MyAspect] public string Property {get; set; }
 
             public string Weaved(int param1)
             {

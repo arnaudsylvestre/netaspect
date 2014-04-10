@@ -13,7 +13,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.Before.File
                     Assert.AreEqual(null, MyAspect.FileName);
                     var classToWeave_L = new ClassToWeave();
                     classToWeave_L.Weaved();
-                    Assert.AreEqual("", MyAspect.FileName);
+                    Assert.AreEqual("BeforeCallMethodFileNameParameterWithRealTypeTest.cs", MyAspect.FileName);
                 };
         }
 

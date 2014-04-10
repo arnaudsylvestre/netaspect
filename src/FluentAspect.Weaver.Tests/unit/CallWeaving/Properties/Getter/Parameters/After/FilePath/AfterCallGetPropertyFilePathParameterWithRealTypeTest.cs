@@ -13,14 +13,13 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.A
                     Assert.AreEqual(null, MyAspect.FilePath);
                     var classToWeave_L = new ClassToWeave();
                     classToWeave_L.Weaved();
-                    Assert.AreEqual("", MyAspect.FilePath);
+                    Assert.True(MyAspect.FilePath.EndsWith(@"FilePath\AfterCallGetPropertyFilePathParameterWithRealTypeTest.cs"));
                 };
         }
 
         public class ClassToWeave
         {
-            [MyAspect]
-            public string Property { get; set; }
+            [MyAspect] public string Property {get; set; }
 
             public string Weaved()
             {

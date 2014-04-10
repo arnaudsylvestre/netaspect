@@ -69,10 +69,16 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
             ilGeneratoir.Add("called", new CalledInterceptorParametersIlGenerator());
         }
 
-        public static void CreateIlGeneratorForMethodParameter(
-            this ParametersIlGenerator<IlInjectorAvailableVariables> ilGeneratoir)
+        public static void CreateIlGeneratorForMethodParameter<T>(
+            this ParametersIlGenerator<T> ilGeneratoir) where T : IlInstructionInjectorAvailableVariables
         {
-            ilGeneratoir.Add("method", new MethodInterceptorParametersIlGenerator());
+            ilGeneratoir.Add("method", new MethodInterceptorParametersIlGenerator<T>());
+        }
+
+        public static void CreateIlGeneratorForCallerMethodParameter<T>(
+            this ParametersIlGenerator<T> ilGeneratoir) where T : IlInstructionInjectorAvailableVariables
+        {
+            ilGeneratoir.Add("callermethod", new MethodInterceptorParametersIlGenerator<T>());
         }
 
         public static void CreateIlGeneratorForPropertyParameter(

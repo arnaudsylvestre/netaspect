@@ -12,8 +12,8 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.Before.Call
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the instance parameter in the method Before of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
-                        typeof (string).FullName, typeof (string).FullName));
+                        "the called parameter in the method BeforeCallMethod of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
+                        typeof(MyAspect).FullName, typeof(ClassToWeave).FullName));
         }
 
         public class ClassToWeave

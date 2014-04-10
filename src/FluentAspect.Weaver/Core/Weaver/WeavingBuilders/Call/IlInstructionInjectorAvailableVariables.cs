@@ -6,5 +6,6 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
     {
         VariableDefinition Parameters { get; }
         VariableDefinition Field { get; }
+        VariableDefinition CurrentMethodBase { get; }
     }
 }

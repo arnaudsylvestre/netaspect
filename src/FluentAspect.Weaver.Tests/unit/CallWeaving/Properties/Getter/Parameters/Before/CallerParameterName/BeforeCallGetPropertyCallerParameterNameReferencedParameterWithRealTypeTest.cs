@@ -14,15 +14,13 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.B
                     var classToWeave_L = new ClassToWeave();
                     int val = 12;
                     classToWeave_L.Weaved(ref val);
-                    Assert.AreEqual(25, val);
                     Assert.AreEqual(12, MyAspect.ParameterName);
                 };
         }
 
         public class ClassToWeave
         {
-            [MyAspect]
-            public string Property { get; set; }
+            [MyAspect] public string Property {get; set; }
 
             public string Weaved(ref int param1)
             {

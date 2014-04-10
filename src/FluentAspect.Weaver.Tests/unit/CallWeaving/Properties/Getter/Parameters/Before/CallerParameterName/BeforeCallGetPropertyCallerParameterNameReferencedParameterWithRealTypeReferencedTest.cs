@@ -4,8 +4,7 @@ using NUnit.Framework;
 namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.Before.CallerParameterName
 {
     public class BeforeCallGetPropertyCallerParameterNameReferencedParameterWithRealTypeReferencedTest :
-        NetAspectTest
-            <BeforeCallGetPropertyCallerParameterNameReferencedParameterWithRealTypeReferencedTest.ClassToWeave>
+        NetAspectTest<BeforeCallGetPropertyCallerParameterNameReferencedParameterWithRealTypeReferencedTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
@@ -22,8 +21,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.B
 
         public class ClassToWeave
         {
-            [MyAspect]
-            public string Property { get; set; }
+            [MyAspect] public string Property {get; set; }
 
             public string Weaved(ref int param1)
             {
