@@ -96,24 +96,24 @@ namespace NetAspect.Weaver.Core.Model.Aspect
             }
         }
 
-        public Interceptor AfterPropertyGet
+        public Interceptor AfterGetProperty
         {
-            get { return new Interceptor(_attribute.GetMethod("AfterPropertyGet")); }
+            get { return new Interceptor(_attribute.GetMethod("AfterGetProperty")); }
         }
 
-        public Interceptor BeforePropertyGet
+        public Interceptor BeforeGetProperty
         {
-            get { return new Interceptor(_attribute.GetMethod("BeforePropertyGet")); }
+            get { return new Interceptor(_attribute.GetMethod("BeforeGetProperty")); }
         }
 
-        public Interceptor AfterPropertySet
+        public Interceptor AfterSetProperty
         {
-            get { return new Interceptor(_attribute.GetMethod("AfterPropertySet")); }
+            get { return new Interceptor(_attribute.GetMethod("AfterSetProperty")); }
         }
 
-        public Interceptor BeforePropertySet
+        public Interceptor BeforeSetProperty
         {
-            get { return new Interceptor(_attribute.GetMethod("BeforePropertySet")); }
+            get { return new Interceptor(_attribute.GetMethod("BeforeSetProperty")); }
         }
 
         public Interceptor OnExceptionPropertySet

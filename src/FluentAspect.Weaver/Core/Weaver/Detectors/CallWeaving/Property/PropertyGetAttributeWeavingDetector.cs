@@ -10,12 +10,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
     {
         public bool CanHandle(NetAspectDefinition aspect)
         {
-            return aspect.BeforePropertyGet.Method != null ||
-                   aspect.AfterPropertyGet.Method != null ||
+            return aspect.BeforeGetProperty.Method != null ||
+                   aspect.AfterGetProperty.Method != null ||
                    aspect.OnExceptionPropertyGet.Method != null ||
                    aspect.OnFinallyPropertyGet.Method != null ||
-                   aspect.BeforePropertySet.Method != null ||
-                   aspect.AfterPropertySet.Method != null ||
+                   aspect.BeforeSetProperty.Method != null ||
+                   aspect.AfterSetProperty.Method != null ||
                    aspect.OnExceptionPropertySet.Method != null ||
                    aspect.OnFinallyPropertySet.Method != null;
         }
@@ -33,8 +33,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
                             customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
                     if (!isCompliant_L)
                         return;
-                    weavingModel.AddPropertyGetWeavingModel(method, aspect, aspect.BeforePropertyGet,
-                                                            aspect.AfterPropertyGet, aspect.OnExceptionPropertyGet,
+                    weavingModel.AddPropertyGetWeavingModel(method, aspect, aspect.BeforeGetProperty,
+                                                            aspect.AfterGetProperty, aspect.OnExceptionPropertyGet,
                                                             aspect.OnFinallyPropertyGet);
                 }
                 if (propertyDefinition.SetMethod == method)
@@ -45,8 +45,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
                             customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
                     if (!isCompliant_L)
                         return;
-                    weavingModel.AddPropertySetWeavingModel(method, aspect, aspect.BeforePropertySet,
-                                                            aspect.AfterPropertySet, aspect.OnExceptionPropertySet,
+                    weavingModel.AddPropertySetWeavingModel(method, aspect, aspect.BeforeSetProperty,
+                                                            aspect.AfterSetProperty, aspect.OnExceptionPropertySet,
                                                             aspect.OnFinallyPropertySet);
                 }
             }
