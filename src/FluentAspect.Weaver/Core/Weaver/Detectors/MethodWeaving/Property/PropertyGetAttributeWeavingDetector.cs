@@ -33,7 +33,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
                             customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
                     if (!isCompliant_L)
                         return;
-                    weavingModel.AddPropertyGetWeavingModel(method, aspect, aspect.BeforeGetProperty,
+                    weavingModel.AddPropertyGetMethodWeavingModel(method, aspect, aspect.BeforeGetProperty,
                                                             aspect.AfterGetProperty, aspect.OnExceptionPropertyGet,
                                                             aspect.OnFinallyPropertyGet);
                 }
@@ -45,7 +45,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
                             customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
                     if (!isCompliant_L)
                         return;
-                    weavingModel.AddPropertySetWeavingModel(method, aspect, aspect.BeforeSetProperty,
+                    weavingModel.AddPropertySetMethodWeavingModel(method, aspect, aspect.BeforeSetProperty,
                                                             aspect.AfterSetProperty, aspect.OnExceptionPropertySet,
                                                             aspect.OnFinallyPropertySet);
                 }

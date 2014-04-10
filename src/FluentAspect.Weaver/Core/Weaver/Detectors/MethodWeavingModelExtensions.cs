@@ -50,6 +50,26 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
         }
 
+        public static void AddGetPropertyCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
+                                                     Instruction beforeInstruction, NetAspectDefinition aspect,
+                                                     Interceptor beforeCallMethod, Interceptor afterCallMethod)
+        {
+            IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector();
+            IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector();
+
+            var beforCallInterceptorMethod = beforeCallMethod.Method;
+            if (beforCallInterceptorMethod != null)
+            {
+                before = CallWeavingFieldInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction);
+            }
+            var afterCallInterceptorMethod = afterCallMethod.Method;
+            if (afterCallInterceptorMethod != null)
+            {
+                after = CallWeavingFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction);
+            }
+            weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
+        }
+
         public static void AddUpdateFieldCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
                                                      Instruction beforeInstruction, NetAspectDefinition aspect,
                                                      Interceptor beforeCallMethod, Interceptor afterCallMethod)
@@ -102,7 +122,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             }
         }
 
-        public static void AddPropertyGetWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
+        public static void AddPropertyGetMethodWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
                                                       NetAspectDefinition aspect,
                                                       Interceptor before, Interceptor after, Interceptor onException,
                                                       Interceptor onFinally)
@@ -136,7 +156,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             }
         }
 
-        public static void AddPropertySetWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
+        public static void AddPropertySetMethodWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
                                                       NetAspectDefinition aspect,
                                                       Interceptor before, Interceptor after, Interceptor onException,
                                                       Interceptor onFinally)
