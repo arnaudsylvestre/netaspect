@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{28912034-8A56-4B8E-BAA1-02C50149CA68}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -64,6 +64,8 @@
     <Compile Include="Core\Model\Weaving\MethodWeavingModel.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinitionExtensions.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Property\CallGetPropertyInstructionWeavingDetector.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Property\CallUpdatePropertyInstructionWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\Selectors\Selector.cs" />
     <Compile Include="Core\Weaver\Detectors\Selectors\SelectorParametersGenerator.cs" />
     <Compile Include="Core\Model\Weaving\WeavingModel.cs" />
@@ -99,7 +101,7 @@
     <Compile Include="Core\Weaver\Detectors\IWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\MethodAttributeWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\MultiWeavingDetector.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Property\PropertyGetAttributeWeavingDetector.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Property\PropertyGetAttributeWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Generators\CalledInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Generators\ExceptionInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Generators\FieldInterceptorParametersIlGenerator.cs" />
