@@ -23,8 +23,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
             {
                 if (IsPropertyCall(instruction, aspect, method))
                 {
-                    weavingModel.AddGetFieldCallWeavingModel(method, instruction, aspect, aspect.BeforeGetField,
-                                                             aspect.AfterGetField);
+                    weavingModel.AddGetPropertyCallWeavingModel(method, instruction, aspect, aspect.BeforeGetProperty,
+                                                             aspect.AfterGetProperty);
 
                 }
             }
