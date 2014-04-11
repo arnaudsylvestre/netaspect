@@ -37,7 +37,6 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.A
 
             public string Weaved()
             {
-                
                 return called.Property;
             }
         }

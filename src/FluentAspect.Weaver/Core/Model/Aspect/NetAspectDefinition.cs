@@ -173,13 +173,24 @@ namespace NetAspect.Weaver.Core.Model.Aspect
 
         public Selector<FieldDefinition> FieldSelector
         {
-            get
-            {
-                var selectorParametersGenerator = new SelectorParametersGenerator<FieldDefinition>();
-                selectorParametersGenerator.AddPossibleParameter<string>("fieldName", field => field.Name);
-                selectorParametersGenerator.AddPossibleParameter<string>("fieldTypeName", field => field.FieldType.Name);
-                return new Selector<FieldDefinition>(_attribute.GetMethod("SelectField"), selectorParametersGenerator);
-            }
+           get
+           {
+              var selectorParametersGenerator = new SelectorParametersGenerator<FieldDefinition>();
+              selectorParametersGenerator.AddPossibleParameter<string>("fieldName", field => field.Name);
+              selectorParametersGenerator.AddPossibleParameter<string>("fieldTypeName", field => field.FieldType.Name);
+              return new Selector<FieldDefinition>(_attribute.GetMethod("SelectField"), selectorParametersGenerator);
+           }
+        }
+
+        public Selector<PropertyDefinition> PropertySelector
+        {
+           get
+           {
+              var selectorParametersGenerator = new SelectorParametersGenerator<PropertyDefinition>();
+              selectorParametersGenerator.AddPossibleParameter<string>("propertyName", field => field.Name);
+              selectorParametersGenerator.AddPossibleParameter<string>("propertyTypeName", field => field.PropertyType.Name);
+              return new Selector<PropertyDefinition>(_attribute.GetMethod("SelectProperty"), selectorParametersGenerator);
+           }
         }
     }
 }

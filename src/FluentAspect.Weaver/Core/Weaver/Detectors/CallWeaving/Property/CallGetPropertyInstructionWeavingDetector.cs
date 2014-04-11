@@ -1,5 +1,6 @@
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Core.Helpers;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
@@ -10,8 +11,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
     {
         public bool CanHandle(NetAspectDefinition aspect)
         {
-            return aspect.BeforeGetField.Method != null ||
-                   aspect.AfterGetField.Method != null;
+            return aspect.BeforeGetProperty.Method != null ||
+                   aspect.AfterGetProperty.Method != null;
         }
 
         public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
@@ -28,16 +29,21 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
                 }
             }
         }
-        !!!!!!!!!!!!!!!!!!!!!!!!!
+        
         private static bool IsPropertyCall(Instruction instruction, NetAspectDefinition aspect, MethodDefinition method)
         {
-            if (instruction.OpCode == OpCodes.Ldfld || instruction.OpCode == OpCodes.Ldflda ||
-                instruction.OpCode == OpCodes.Ldsfld ||
-                instruction.OpCode == OpCodes.Ldsflda)
+           
+            if (instruction.IsACallInstruction())
             {
-                var fieldReference = instruction.Operand as FieldReference;
-
-                return AspectApplier.CanApply(fieldReference.Resolve(), aspect);
+                var calledMethod = (instruction.Operand as MethodReference).Resolve();
+               var properties_L = calledMethod.DeclaringType.Properties;
+               foreach (var property_L in properties_L)
+               {
+                  if (property_L.GetMethod == calledMethod)
+                  {
+                     return AspectApplier.CanApply(property_L, aspect);
+                  }
+               }
             }
             return false;
         }
