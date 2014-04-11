@@ -73,6 +73,7 @@
     <Compile Include="Core\Weaver\WeavingBuilders\Call\CallWeavingFieldInjectorFactory.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Call\CallWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Call\CallWeavingUpdateFieldInjectorFactory.cs" />
+    <Compile Include="Core\Weaver\WeavingBuilders\Call\CallWeavingGetPropertyInjectorFactory.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Call\IlInstructionInjectorAvailableVariables.cs" />
     <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\CallWeaving\Source\ColumnNumberInterceptorParametersChercker.cs" />

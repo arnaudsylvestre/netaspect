@@ -38,6 +38,10 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
         {
             ilGeneratoir.Add("field", new FieldInterceptorParametersIlGenerator<T>(instruction, module));
         }
+        public static void CreateIlGeneratorForProperty<T>(this ParametersIlGenerator<T> ilGeneratoir, Instruction instruction, ModuleDefinition module) where T : IlInstructionInjectorAvailableVariables
+        {
+            ilGeneratoir.Add("property", new FieldInterceptorParametersIlGenerator<T>(instruction, module));
+        }
         public static void CreateIlGeneratorForCallerParameters(this ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> ilGeneratoir)
         {
             ilGeneratoir.Add("callerparameters", new ParametersInterceptorParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>());
