@@ -119,6 +119,14 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
                 Checker = new FieldInterceptorParametersChercker(),
             });
         }
+        public static void CreateCheckerForProperty(this ParametersChecker checkers)
+        {
+            checkers.Add(new InterceptorParametersChecker
+            {
+                ParameterName = "property",
+                Checker = new PropertyInterceptorParametersChercker(),
+            });
+        }
         public static void CreateCheckerForCallerParameters(this ParametersChecker checkers, MethodDefinition method)
         {
 
@@ -159,6 +167,14 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             {
                 ParameterName = "called",
                 Checker = new CalledInterceptorParametersChercker(calledType),
+            });
+        }
+        public static void CreateCheckerForCalledParameter(this ParametersChecker checkers, PropertyDefinition calledType)
+        {
+            checkers.Add(new InterceptorParametersChecker
+            {
+                ParameterName = "called",
+                Checker = new CalledInterceptorForPropertyParametersChercker(calledType),
             });
         }
         public static void CreateCheckerForCalledParameter(this ParametersChecker checkers, MethodDefinition calledType)

@@ -50,9 +50,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
         }
 
-        public static void AddGetPropertyCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
-                                                     Instruction beforeInstruction, NetAspectDefinition aspect,
-                                                     Interceptor beforeCallMethod, Interceptor afterCallMethod)
+        public static void AddGetPropertyCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method, Instruction beforeInstruction, NetAspectDefinition aspect, Interceptor beforeCallMethod, Interceptor afterCallMethod, PropertyDefinition property)
         {
             IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector();
             IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector();
@@ -60,12 +58,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
             {
-                before = CallWeavingFieldInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction);
+                before = CallWeavingGetPropertyInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction, property);
             }
             var afterCallInterceptorMethod = afterCallMethod.Method;
             if (afterCallInterceptorMethod != null)
             {
-                after = CallWeavingFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction);
+                after = CallWeavingGetPropertyInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction, property);
             }
             weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
         }

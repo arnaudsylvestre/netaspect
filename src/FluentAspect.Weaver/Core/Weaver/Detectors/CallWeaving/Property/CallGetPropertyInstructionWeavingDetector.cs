@@ -1,3 +1,4 @@
+using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Core.Helpers;
@@ -21,31 +22,35 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
                 return;
             foreach (var instruction in method.Body.Instructions)
             {
-                if (IsPropertyCall(instruction, aspect, method))
+                if (IsPropertyCall(instruction, aspect))
                 {
+                    var calledMethod = (instruction.Operand as MethodReference).Resolve();
                     weavingModel.AddGetPropertyCallWeavingModel(method, instruction, aspect, aspect.BeforeGetProperty,
-                                                             aspect.AfterGetProperty);
+                                                             aspect.AfterGetProperty, GetPropertyForGetter(calledMethod));
 
                 }
             }
         }
         
-        private static bool IsPropertyCall(Instruction instruction, NetAspectDefinition aspect, MethodDefinition method)
+        private static bool IsPropertyCall(Instruction instruction, NetAspectDefinition aspect)
         {
            
             if (instruction.IsACallInstruction())
             {
                 var calledMethod = (instruction.Operand as MethodReference).Resolve();
-               var properties_L = calledMethod.DeclaringType.Properties;
-               foreach (var property_L in properties_L)
-               {
-                  if (property_L.GetMethod == calledMethod)
-                  {
+                var property_L = GetPropertyForGetter(calledMethod);
+                if (property_L != null)
                      return AspectApplier.CanApply(property_L, aspect);
-                  }
-               }
+                  
+               
             }
             return false;
+        }
+
+        private static PropertyDefinition GetPropertyForGetter(MethodDefinition getMethod)
+        {
+            var properties_L = getMethod.DeclaringType.Properties;
+            return properties_L.FirstOrDefault(property_L => property_L.GetMethod == getMethod);
         }
     }
 }

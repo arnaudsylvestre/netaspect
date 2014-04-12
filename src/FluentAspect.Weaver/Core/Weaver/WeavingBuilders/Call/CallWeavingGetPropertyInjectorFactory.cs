@@ -14,22 +14,21 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
 
     public static class CallWeavingGetPropertyInjectorFactory
     {
-        public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType, Instruction instruction)
+        public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Type aspectType, Instruction instruction, PropertyDefinition property)
         {
-            var calledField = (instruction.Operand as FieldReference).Resolve();
             var checker = new ParametersChecker();
-            FillCommon(method, checker, calledField, instruction);
+            FillCommon(method, checker, property, instruction);
 
 
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>();
-            FillCommon(method, parametersIlGenerator, instruction);
+            FillCommon(method, parametersIlGenerator, instruction, property);
 
             return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariablesForInstruction>(method, interceptorMethod,
                                                                                        aspectType, checker,
                                                                                        parametersIlGenerator);
         }
         private static void FillCommon(MethodDefinition method,
-                                       ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> parametersIlGenerator, Instruction instruction)
+                                       ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> parametersIlGenerator, Instruction instruction, PropertyDefinition property)
         {
             parametersIlGenerator.CreateIlGeneratorForCalledParameter();
             parametersIlGenerator.CreateIlGeneratorForCallerParameter();
@@ -39,13 +38,13 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
             parametersIlGenerator.CreateIlGeneratorForLineNumber(instruction);
             parametersIlGenerator.CreateIlGeneratorForFilename(instruction);
             parametersIlGenerator.CreateIlGeneratorForFilePath(instruction);
-            parametersIlGenerator.CreateIlGeneratorForField(instruction, method.Module);
+            parametersIlGenerator.CreateIlGeneratorForProperty(property, method.Module);
             //parametersIlGenerator.CreateIlGeneratorForMethodParameter();
             //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
             //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
         }
 
-        private static void FillCommon(MethodDefinition method, ParametersChecker checker, FieldDefinition calledField, Instruction instruction)
+        private static void FillCommon(MethodDefinition method, ParametersChecker checker, PropertyDefinition calledField, Instruction instruction)
         {
             //checker.CreateCheckerForCallerParameter(method);
             checker.CreateCheckerForCalledParameter(calledField);
@@ -56,23 +55,23 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
             checker.CreateCheckerForLineNumberParameter(instruction);
             checker.CreateCheckerForFilenameParameter(instruction);
             checker.CreateCheckerForFilePathParameter(instruction);
-            checker.CreateCheckerForField();
+            checker.CreateCheckerForProperty();
             //checker.CreateCheckerForParameterNameParameter(method);
             //checker.CreateCheckerForParametersParameter();
         }
 
         public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
-                                                                               Type aspectType, Instruction instruction)
+                                                                               Type aspectType, Instruction instruction, PropertyDefinition property)
         {
-            var calledField = (instruction.Operand as FieldReference).Resolve();
+
             var checker = new ParametersChecker();
-            FillCommon(method, checker, calledField, instruction);
+            FillCommon(method, checker, property, instruction);
             //checker.CreateCheckerForResultParameter(method);
 
 
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>();
-            FillCommon(method, parametersIlGenerator, instruction);
+            FillCommon(method, parametersIlGenerator, instruction, property);
             //parametersIlGenerator.CreateIlGeneratorForResultParameter();
             return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariablesForInstruction>(method, interceptorMethod,
                                                                                        aspectType, checker,

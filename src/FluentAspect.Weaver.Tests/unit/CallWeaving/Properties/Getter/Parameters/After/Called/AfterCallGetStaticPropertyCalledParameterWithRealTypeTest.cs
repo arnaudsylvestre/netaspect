@@ -33,7 +33,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.A
         public class ClassCalled
         {
             [MyAspect]
-            public static string Property = "Value";
+            public static string Property { get; set; }
             
 
         }

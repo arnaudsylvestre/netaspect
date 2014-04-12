@@ -34,13 +34,13 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
         {
             ilGeneratoir.Add("filepath", new SequencePointStringInterceptorParametersIlGenerator<T>(instruction, i => i.Document.Url));
         }
-        public static void CreateIlGeneratorForField<T>(this ParametersIlGenerator<T> ilGeneratoir, Instruction instruction, ModuleDefinition module) where T : IlInstructionInjectorAvailableVariables
+        public static void CreateIlGeneratorForField(this ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> ilGeneratoir, Instruction instruction, ModuleDefinition module) 
         {
-            ilGeneratoir.Add("field", new FieldInterceptorParametersIlGenerator<T>(instruction, module));
+            ilGeneratoir.Add("field", new FieldInterceptorParametersIlGenerator(instruction, module));
         }
-        public static void CreateIlGeneratorForProperty<T>(this ParametersIlGenerator<T> ilGeneratoir, Instruction instruction, ModuleDefinition module) where T : IlInstructionInjectorAvailableVariables
+        public static void CreateIlGeneratorForProperty(this ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> ilGeneratoir, PropertyDefinition property, ModuleDefinition module) 
         {
-            ilGeneratoir.Add("property", new FieldInterceptorParametersIlGenerator<T>(instruction, module));
+            ilGeneratoir.Add("property", new PropertyPInterceptorParametersIlGenerator(property, module));
         }
         public static void CreateIlGeneratorForCallerParameters(this ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> ilGeneratoir)
         {

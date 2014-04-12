@@ -146,6 +146,18 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             }
 
         }
+
+        public static void NotStaticButDefaultValue(ParameterInfo parameter, IErrorListener handler, PropertyDefinition definition)
+        {
+            if (definition.GetMethod.IsStatic)
+            {
+                if (definition.DeclaringType.IsValueType)
+                    handler.OnError("the {0} parameter in the method {1} of the type '{2}' is not available for static property in struct", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+                else
+                    handler.OnWarning("the {0} parameter in the method {1} of the type '{2}' is not available for static property : default value will be passed", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+            }
+
+        }
         public static void NotStaticButDefaultValue(ParameterInfo parameter, IErrorListener handler, MethodDefinition definition)
         {
             if (definition.IsStatic)

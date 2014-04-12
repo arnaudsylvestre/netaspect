@@ -11,7 +11,13 @@ namespace NetAspect.Weaver.Helpers.IL
         {
             instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
             instructions.Add(Instruction.Create(OpCodes.Call,
-                                                module.Import(typeof (object).GetMethod("GetType", new Type[0]))));
+                                                module.Import(typeof(object).GetMethod("GetType", new Type[0]))));
+        }
+        public static void AppendCallToTargetGetType(this List<Instruction> instructions, ModuleDefinition module, VariableDefinition target)
+        {
+            instructions.Add(Instruction.Create(OpCodes.Ldloc, target));
+            instructions.Add(Instruction.Create(OpCodes.Call,
+                                                module.Import(typeof(object).GetMethod("GetType", new Type[0]))));
         }
 
         public static void AppendCallToGetMethod(this List<Instruction> instructions, string methodName,

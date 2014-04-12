@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
+    <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Field\AfterCallGetFieldFieldInOtherTypeParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Selectors\CallGetFieldWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetStaticFieldCalledParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetStaticFieldCalledStructParameterWithRealTypeTest.cs" />
@@ -367,9 +368,9 @@
     <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\Before\ColumnNumber\BeforeCallGetPropertyColumnNumberParameterWithBadTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\Before\ColumnNumber\BeforeCallGetPropertyColumnNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\Before\ColumnNumber\BeforeCallGetPropertyColumnNumberParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\Before\Field\BeforeCallGetPropertyPropertyParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\Before\Field\BeforeCallGetPropertyPropertyParameterWithRealTypeReferencedTypeTest.cs" />
-    <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\Before\Field\BeforeCallGetPropertyPropertyParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\Before\Property\BeforeCallGetPropertyPropertyParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\Before\Property\BeforeCallGetPropertyPropertyParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\Before\Property\BeforeCallGetPropertyPropertyParameterWithRealTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\Before\FileName\BeforeCallGetPropertyFileNameParameterWithBadTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\Before\FileName\BeforeCallGetPropertyFileNameParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Getter\Parameters\Before\FileName\BeforeCallGetPropertyFileNameParameterWithRealTypeTest.cs" />
