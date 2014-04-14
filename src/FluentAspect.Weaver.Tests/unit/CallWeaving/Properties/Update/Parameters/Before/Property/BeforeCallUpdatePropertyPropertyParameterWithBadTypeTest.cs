@@ -1,11 +1,10 @@
 using System;
-using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 
 namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.Before.Field
 {
-    public class BeforeCallUpdatePropertyPropertyParameterWithRealTypeReferencedTypeTest :
-        NetAspectTest<BeforeCallUpdatePropertyPropertyParameterWithRealTypeReferencedTypeTest.ClassToWeave>
+    public class BeforeCallUpdatePropertyPropertyParameterWithBadTypeTest :
+        NetAspectTest<BeforeCallUpdatePropertyPropertyParameterWithBadTypeTest.ClassToWeave>
     {
         protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
@@ -13,8 +12,9 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.B
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'Property' in the method BeforeUpdateProperty of the type '{0}'",
-                        typeof (MyAspect).FullName));
+                        "the property parameter in the method BeforeSetProperty of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Reflection.PropertyInfo",
+                        typeof (MyAspect).FullName,
+                        typeof (ClassToWeave).FullName));
         }
 
         public class ClassToWeave
@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.B
         {
             public bool NetAspectAttribute = true;
 
-            public void BeforeUpdateProperty(ref PropertyInfo Property)
+            public void BeforeSetProperty(string property)
             {
             }
         }

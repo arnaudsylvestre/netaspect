@@ -32,7 +32,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
             public static string FilePath;
             public bool NetAspectAttribute = true;
 
-            public void AfterUpdateProperty(string filePath)
+            public void AfterSetProperty(string filePath)
             {
                 FilePath = filePath;
             }

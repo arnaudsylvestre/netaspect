@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.B
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the callerParameters parameter in the method BeforeUpdateProperty of the type '{0}' is declared with the type 'System.Object' but it is expected to be System.Object[]",
+                        "the callerParameters parameter in the method BeforeSetProperty of the type '{0}' is declared with the type 'System.Object' but it is expected to be System.Object[]",
                         typeof (MyAspect).FullName,
                         typeof (ClassToWeave).FullName));
         }
@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.B
         {
             public bool NetAspectAttribute = true;
 
-            public void BeforeUpdateProperty(object callerParameters)
+            public void BeforeSetProperty(object callerParameters)
             {
             }
         }

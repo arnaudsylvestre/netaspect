@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the filePath parameter in the method AfterUpdateProperty of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.String",
+                        "the filePath parameter in the method AfterSetProperty of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.String",
                         typeof (MyAspect).FullName));
         }
 
@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
             public static int FilePath;
             public bool NetAspectAttribute = true;
 
-            public void AfterUpdateProperty(int filePath)
+            public void AfterSetProperty(int filePath)
             {
                 FilePath = filePath;
             }

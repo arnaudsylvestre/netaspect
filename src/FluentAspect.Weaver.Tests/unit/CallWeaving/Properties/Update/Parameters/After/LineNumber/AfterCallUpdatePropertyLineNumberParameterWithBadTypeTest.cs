@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the lineNumber parameter in the method AfterUpdateProperty of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Int32",
+                        "the lineNumber parameter in the method AfterSetProperty of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Int32",
                         typeof (MyAspect).FullName));
         }
 
@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
         {
             public bool NetAspectAttribute = true;
 
-            public void AfterUpdateProperty(string lineNumber)
+            public void AfterSetProperty(string lineNumber)
             {
             }
         }

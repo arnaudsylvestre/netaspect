@@ -70,7 +70,19 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
         {
             if (_calledParameters == null)
             {
-                if (instruction.Operand is MethodReference)
+               if (instruction.IsAnUpdatePropertyCall())
+               {
+                  var methodDefinition_L = ((MethodReference)instruction.Operand).Resolve();
+                  var property = methodDefinition_L.GetPropertyForSetter();
+                  _calledParameters = new Dictionary<string, VariableDefinition>();
+                  var propertyType_L = property.PropertyType;
+                  var variableDefinition = new VariableDefinition(propertyType_L);
+                  Variables.Add(variableDefinition);
+                  _calledParameters.Add("value", variableDefinition);
+                  calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                  recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
+               }
+                else if (instruction.Operand is MethodReference)
                 {
                     _calledParameters = new Dictionary<string, VariableDefinition>();
                     var calledMethod = instruction.GetCalledMethod();
@@ -86,7 +98,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                         recallcalledParametersInstructions.Add(Instruction.Create(OpCodes.Ldloc, _calledParameters["called" + parameter.Name]));
                     }
                 }
-                if (instruction.IsAnUpdateField())
+                else if (instruction.IsAnUpdateField())
                 {
                    _calledParameters = new Dictionary<string, VariableDefinition>();
                    var fieldType = (instruction.Operand as FieldReference).Resolve().FieldType;

@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to out the parameter 'callerParam1' in the method AfterUpdateProperty of the type '{0}'",
+                        "impossible to out the parameter 'callerParam1' in the method AfterSetProperty of the type '{0}'",
                         typeof (MyAspect).FullName));
         }
 
@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
         {
             public bool NetAspectAttribute = true;
 
-            public void AfterUpdateProperty(out int callerParam1)
+            public void AfterSetProperty(out int callerParam1)
             {
                 callerParam1 = 12;
             }

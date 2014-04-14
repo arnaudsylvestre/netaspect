@@ -35,7 +35,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
             public static object[] CallerParameters;
             public bool NetAspectAttribute = true;
 
-            public void AfterUpdateProperty(object[] callerParameters)
+            public void AfterSetProperty(object[] callerParameters)
             {
                 CallerParameters = callerParameters;
             }

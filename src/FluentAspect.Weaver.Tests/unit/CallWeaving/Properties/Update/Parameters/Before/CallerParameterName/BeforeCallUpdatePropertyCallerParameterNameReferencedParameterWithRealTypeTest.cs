@@ -33,7 +33,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.B
             public static int ParameterName;
             public bool NetAspectAttribute = true;
 
-            public void BeforeUpdateProperty(int callerParam1)
+            public void BeforeSetProperty(int callerParam1)
             {
                 ParameterName = callerParam1;
             }

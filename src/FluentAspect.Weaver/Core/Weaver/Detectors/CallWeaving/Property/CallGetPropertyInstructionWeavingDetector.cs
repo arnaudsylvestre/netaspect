@@ -5,6 +5,7 @@ using NetAspect.Core.Helpers;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
+using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
 {
@@ -13,7 +14,9 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
         public bool CanHandle(NetAspectDefinition aspect)
         {
             return aspect.BeforeGetProperty.Method != null ||
-                   aspect.AfterGetProperty.Method != null;
+                   aspect.AfterGetProperty.Method != null ||
+                   aspect.BeforeSetProperty.Method != null ||
+                   aspect.AfterSetProperty.Method != null;
         }
 
         public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
@@ -22,23 +25,30 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
                 return;
             foreach (var instruction in method.Body.Instructions)
             {
-                if (IsPropertyCall(instruction, aspect))
-                {
-                    var calledMethod = (instruction.Operand as MethodReference).Resolve();
-                    weavingModel.AddGetPropertyCallWeavingModel(method, instruction, aspect, aspect.BeforeGetProperty,
-                                                             aspect.AfterGetProperty, GetPropertyForGetter(calledMethod));
+               if (IsGetPropertyCall(instruction, aspect))
+               {
+                  var calledMethod = (instruction.Operand as MethodReference).Resolve();
+                  weavingModel.AddGetPropertyCallWeavingModel(method, instruction, aspect, aspect.BeforeGetProperty,
+                                                           aspect.AfterGetProperty, calledMethod.GetPropertyForGetter());
 
-                }
+               }
+               if (IsSetPropertyCall(instruction, aspect))
+               {
+                  var calledMethod = (instruction.Operand as MethodReference).Resolve();
+                  weavingModel.AddSetPropertyCallWeavingModel(method, instruction, aspect, aspect.BeforeSetProperty,
+                                                           aspect.AfterSetProperty, calledMethod.GetPropertyForSetter());
+
+               }
             }
         }
         
-        private static bool IsPropertyCall(Instruction instruction, NetAspectDefinition aspect)
+        private static bool IsGetPropertyCall(Instruction instruction, NetAspectDefinition aspect)
         {
            
             if (instruction.IsACallInstruction())
             {
                 var calledMethod = (instruction.Operand as MethodReference).Resolve();
-                var property_L = GetPropertyForGetter(calledMethod);
+                var property_L = calledMethod.GetPropertyForGetter();
                 if (property_L != null)
                      return AspectApplier.CanApply(property_L, aspect);
                   
@@ -47,10 +57,21 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
             return false;
         }
 
-        private static PropertyDefinition GetPropertyForGetter(MethodDefinition getMethod)
+        private static bool IsSetPropertyCall(Instruction instruction, NetAspectDefinition aspect)
         {
-            var properties_L = getMethod.DeclaringType.Properties;
-            return properties_L.FirstOrDefault(property_L => property_L.GetMethod == getMethod);
+
+           if (instruction.IsACallInstruction())
+           {
+              var calledMethod = (instruction.Operand as MethodReference).Resolve();
+              var property_L = calledMethod.GetPropertyForSetter();
+              if (property_L != null)
+                 return AspectApplier.CanApply(property_L, aspect);
+
+
+           }
+           return false;
         }
+
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -6,6 +7,18 @@ namespace NetAspect.Weaver.Helpers.IL
 {
     public static class MethodDefinitionExtensions
     {
+       public static PropertyDefinition GetPropertyForGetter(this MethodDefinition getMethod)
+       {
+          var properties_L = getMethod.DeclaringType.Properties;
+          return properties_L.FirstOrDefault(property_L => property_L.GetMethod == getMethod);
+       }
+
+       public static PropertyDefinition GetPropertyForSetter(this MethodDefinition setMethod)
+       {
+          var properties_L = setMethod.DeclaringType.Properties;
+          return properties_L.FirstOrDefault(property_L => property_L.SetMethod == setMethod);
+       }
+
         public static void FillArgsArrayFromParameters(this MethodDefinition definition, List<Instruction> instructions, VariableDefinition args)
         {
             if (args == null)

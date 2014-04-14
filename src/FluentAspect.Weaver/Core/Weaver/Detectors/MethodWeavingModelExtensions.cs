@@ -68,6 +68,26 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
         }
 
+
+
+        public static void AddSetPropertyCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method, Instruction beforeInstruction, NetAspectDefinition aspect, Interceptor beforeCallMethod, Interceptor afterCallMethod, PropertyDefinition property)
+        {
+           IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector();
+           IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector();
+
+           var beforCallInterceptorMethod = beforeCallMethod.Method;
+           if (beforCallInterceptorMethod != null)
+           {
+              before = CallWeavingSetPropertyInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction, property);
+           }
+           var afterCallInterceptorMethod = afterCallMethod.Method;
+           if (afterCallInterceptorMethod != null)
+           {
+              after = CallWeavingSetPropertyInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction, property);
+           }
+           weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
+        }
+
         public static void AddUpdateFieldCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
                                                      Instruction beforeInstruction, NetAspectDefinition aspect,
                                                      Interceptor beforeCallMethod, Interceptor afterCallMethod)

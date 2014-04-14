@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'lineNumber' in the method AfterUpdateProperty of the type '{0}'",
+                        "impossible to ref/out the parameter 'lineNumber' in the method AfterSetProperty of the type '{0}'",
                         typeof (MyAspect).FullName));
         }
 
@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
         {
             public bool NetAspectAttribute = true;
 
-            public void AfterUpdateProperty(ref int lineNumber)
+            public void AfterSetProperty(ref int lineNumber)
             {
             }
         }

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Mono.Cecil;
+﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Core.Helpers;
 
 namespace NetAspect.Weaver.Helpers.IL
 {
@@ -13,11 +13,19 @@ namespace NetAspect.Weaver.Helpers.IL
                 instruction.OpCode == OpCodes.Ldflda ||
                 instruction.OpCode == OpCodes.Ldsflda;
         }
-        public static bool IsAnUpdateField(this Instruction instruction)
-        {
-            return instruction.OpCode == OpCodes.Stsfld ||
-                instruction.OpCode == OpCodes.Stfld;
-        }
+       public static bool IsAnUpdateField(this Instruction instruction)
+       {
+          return instruction.OpCode == OpCodes.Stsfld ||
+              instruction.OpCode == OpCodes.Stfld;
+       }
+       public static bool IsAnUpdatePropertyCall(this Instruction instruction)
+       {
+          if (!instruction.IsACallInstruction())
+             return false;
+          var methodDefinition_L = ((MethodReference) instruction.Operand).Resolve();
+          var property = methodDefinition_L.GetPropertyForSetter();
+          return (property != null);
+       }
         public static MethodDefinition GetCalledMethod(this Instruction instruction)
         {
             return ((MethodReference)instruction.Operand).Resolve();
@@ -30,14 +38,6 @@ namespace NetAspect.Weaver.Helpers.IL
             if (instruction.SequencePoint != null)
                 return instruction.SequencePoint;
             return instruction.Previous.GetLastSequencePoint();
-        }
-
-        public static void AddRange(this IList<Instruction> instructions, IEnumerable<Instruction> toAdd)
-        {
-            foreach (Instruction instruction in toAdd)
-            {
-                instructions.Add(instruction);
-            }
         }
     }
 }

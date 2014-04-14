@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.B
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the columnNumber parameter in the method BeforeUpdateProperty of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Int32",
+                        "the columnNumber parameter in the method BeforeSetProperty of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Int32",
                         typeof (MyAspect).FullName));
         }
 
@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.B
         {
             public bool NetAspectAttribute = true;
 
-            public void BeforeUpdateProperty(string columnNumber)
+            public void BeforeSetProperty(string columnNumber)
             {
             }
         }

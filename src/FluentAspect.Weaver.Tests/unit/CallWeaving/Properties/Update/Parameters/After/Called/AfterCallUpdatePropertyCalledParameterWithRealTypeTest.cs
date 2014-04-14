@@ -21,10 +21,8 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
 
         public class ClassCalled
         {
-            [MyAspect]
-            public string Property = "Value";
-            
-
+           [MyAspect]
+           public string Property { get; set; }
         }
 
         public class ClassToWeave
@@ -47,7 +45,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
             public static ClassCalled Called;
             public bool NetAspectAttribute = true;
 
-            public void AfterUpdateProperty(ClassCalled called)
+            public void AfterSetProperty(ClassCalled called)
             {
                 Called = called;
             }

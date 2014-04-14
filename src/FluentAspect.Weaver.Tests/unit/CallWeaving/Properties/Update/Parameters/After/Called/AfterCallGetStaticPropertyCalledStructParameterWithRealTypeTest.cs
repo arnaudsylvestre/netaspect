@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the called parameter in the method AfterUpdateProperty of the type '{0}' is not available for static Property in struct",
+                        "the called parameter in the method AfterSetProperty of the type '{0}' is not available for static property in struct",
                         typeof(MyAspect).FullName));
         }
 
@@ -45,7 +45,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.A
             public static ClassCalled Called;
             public bool NetAspectAttribute = true;
 
-            public void AfterUpdateProperty(ClassCalled called)
+            public void AfterSetProperty(ClassCalled called)
             {
                 Called = called;
             }

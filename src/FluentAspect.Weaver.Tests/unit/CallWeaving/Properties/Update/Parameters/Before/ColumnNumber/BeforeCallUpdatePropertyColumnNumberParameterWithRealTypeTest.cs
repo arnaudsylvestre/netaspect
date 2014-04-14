@@ -32,7 +32,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.B
             public static int ColumnNumber;
             public bool NetAspectAttribute = true;
 
-            public void BeforeUpdateProperty(int columnNumber)
+            public void BeforeSetProperty(int columnNumber)
             {
                 ColumnNumber = columnNumber;
             }

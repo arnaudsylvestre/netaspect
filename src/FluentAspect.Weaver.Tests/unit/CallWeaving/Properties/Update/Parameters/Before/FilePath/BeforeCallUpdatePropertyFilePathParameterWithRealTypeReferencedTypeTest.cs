@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.B
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'filePath' in the method BeforeUpdateProperty of the type '{0}'",
+                        "impossible to ref/out the parameter 'filePath' in the method BeforeSetProperty of the type '{0}'",
                         typeof (MyAspect).FullName));
         }
 
@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.B
         {
             public bool NetAspectAttribute = true;
 
-            public void BeforeUpdateProperty(ref string filePath)
+            public void BeforeSetProperty(ref string filePath)
             {
             }
         }
