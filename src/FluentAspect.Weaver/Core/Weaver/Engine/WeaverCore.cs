@@ -49,7 +49,8 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
         {
             foreach (var aspect in aspects)
             {
-                aspect.FieldSelector.Check(errorHandler);
+               aspect.FieldSelector.Check(errorHandler);
+               aspect.PropertySelector.Check(errorHandler);
             }
         }
 

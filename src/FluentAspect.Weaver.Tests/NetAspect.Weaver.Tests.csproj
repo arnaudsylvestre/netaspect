@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2158446B-9E58-4E9D-BDC4-27A5A90365D1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -392,6 +392,86 @@
     <Compile Include="unit\CallWeaving\Properties\Getter\Visibility\CallGetPrivatePropertyWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Getter\Visibility\CallGetProtectedPropertyWeavingTest.cs" />
     <Compile Include="unit\CallWeaving\Properties\Getter\Visibility\CallGetPublicPropertyWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\Called\AfterCallGetStaticPropertyCalledParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\Called\AfterCallGetStaticPropertyCalledStructParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\Called\AfterCallUpdatePropertyCalledParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\Called\AfterCallUpdatePropertyCalledParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\Called\AfterCallUpdatePropertyCalledParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\Called\AfterCallUpdatePropertyCalledParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\CallerParameterName\AfterCallUpdatePropertyCallerParameterNameParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\CallerParameterName\AfterCallUpdatePropertyCallerParameterNameParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\CallerParameterName\AfterCallUpdatePropertyCallerParameterNameParameterWithRealTypeOutTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\CallerParameterName\AfterCallUpdatePropertyCallerParameterNameParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\CallerParameterName\AfterCallUpdatePropertyCallerParameterNameParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\CallerParameterName\AfterCallUpdatePropertyCallerParameterNameReferencedParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\CallerParameterName\AfterCallUpdatePropertyCallerParameterNameReferencedParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\CallerParameters\AfterCallUpdatePropertyCallerParametersParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\CallerParameters\AfterCallUpdatePropertyCallerParametersParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\CallerParameters\AfterCallUpdatePropertyCallerParametersParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\CallerParameters\AfterCallUpdatePropertyCallerParametersParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\Caller\AfterCallUpdatePropertyCallerParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\Caller\AfterCallUpdatePropertyCallerParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\Caller\AfterCallUpdatePropertyCallerParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\Caller\AfterCallUpdatePropertyCallerParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\ColumnNumber\AfterCallUpdatePropertyColumnNumberParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\ColumnNumber\AfterCallUpdatePropertyColumnNumberParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\ColumnNumber\AfterCallUpdatePropertyColumnNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\Field\AfterCallUpdatePropertyPropertyParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\Field\AfterCallUpdatePropertyPropertyParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\Field\AfterCallUpdatePropertyPropertyParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\FileName\AfterCallUpdatePropertyFileNameParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\FileName\AfterCallUpdatePropertyFileNameParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\FileName\AfterCallUpdatePropertyFileNameParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\FilePath\AfterCallUpdatePropertyFilePathParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\FilePath\AfterCallUpdatePropertyFilePathParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\FilePath\AfterCallUpdatePropertyFilePathParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\LineNumber\AfterCallUpdatePropertyLineNumberParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\LineNumber\AfterCallUpdatePropertyLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\After\LineNumber\AfterCallUpdatePropertyLineNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\Called\BeforeCallUpdatePropertyCalledParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\Called\BeforeCallUpdatePropertyCalledParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\Called\BeforeCallUpdatePropertyCalledParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\Called\BeforeCallUpdatePropertyCalledParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\CallerParameterName\BeforeCallUpdatePropertyCallerParameterNameParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\CallerParameterName\BeforeCallUpdatePropertyCallerParameterNameParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\CallerParameterName\BeforeCallUpdatePropertyCallerParameterNameParameterWithRealTypeOutTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\CallerParameterName\BeforeCallUpdatePropertyCallerParameterNameParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\CallerParameterName\BeforeCallUpdatePropertyCallerParameterNameParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\CallerParameterName\BeforeCallUpdatePropertyCallerParameterNameReferencedParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\CallerParameterName\BeforeCallUpdatePropertyCallerParameterNameReferencedParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\CallerParameters\BeforeCallUpdatePropertyCallerParametersParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\CallerParameters\BeforeCallUpdatePropertyCallerParametersParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\CallerParameters\BeforeCallUpdatePropertyCallerParametersParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\CallerParameters\BeforeCallUpdatePropertyCallerParametersParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\Caller\BeforeCallUpdatePropertyCallerParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\Caller\BeforeCallUpdatePropertyCallerParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\Caller\BeforeCallUpdatePropertyCallerParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\Caller\BeforeCallUpdatePropertyCallerParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\ColumnNumber\BeforeCallUpdatePropertyColumnNumberParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\ColumnNumber\BeforeCallUpdatePropertyColumnNumberParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\ColumnNumber\BeforeCallUpdatePropertyColumnNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\Field\BeforeCallUpdatePropertyPropertyParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\Field\BeforeCallUpdatePropertyPropertyParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\Field\BeforeCallUpdatePropertyPropertyParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\FileName\BeforeCallUpdatePropertyFileNameParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\FileName\BeforeCallUpdatePropertyFileNameParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\FileName\BeforeCallUpdatePropertyFileNameParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\FilePath\BeforeCallUpdatePropertyFilePathParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\FilePath\BeforeCallUpdatePropertyFilePathParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\FilePath\BeforeCallUpdatePropertyFilePathParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\LineNumber\BeforeCallUpdatePropertyLineNumberParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\LineNumber\BeforeCallUpdatePropertyLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Parameters\Before\LineNumber\BeforeCallUpdatePropertyLineNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Selectors\CallUpdatePropertyWeavingInAnotherAssemblyTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Selectors\Errors\UpdatePropertyWithSelectorPropertyNotBooleanTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Selectors\Errors\UpdatePropertyWithSelectorPropertyNotStaticTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Selectors\Errors\UpdatePropertyWithSelectorPropertyWithBadParameterTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Selectors\Errors\UpdatePropertyWithSelectorPropertyWithReferencedParameterTypeTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Selectors\UpdatePropertyWithSelectorPropertyNameTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Visibility\CallGetInternalPropertyWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Visibility\CallGetPrivatePropertyWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Visibility\CallGetProtectedPropertyWeavingTest.cs" />
+    <Compile Include="unit\CallWeaving\Properties\Update\Visibility\CallGetPublicPropertyWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\AfterConstructorMethodInfoParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\AfterConstructorInstanceParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\AfterConstructorParameterNameParameterWithRealTypeTest.cs" />
@@ -647,7 +727,7 @@
   <ItemGroup>
     <Folder Include="docs\" />
     <Folder Include="unit\CallWeaving\Fields\Update\Selectors\Infos\" />
-    <Folder Include="unit\CallWeaving\Properties\Update\" />
+    <Folder Include="unit\CallWeaving\Properties\Update\Selectors\Infos\" />
     <Folder Include="unit\MethodWeaving\Events\" />
     <Folder Include="unit\MethodWeaving\Indexers\" />
     <Folder Include="unit\MethodWeaving\Operators\" />
