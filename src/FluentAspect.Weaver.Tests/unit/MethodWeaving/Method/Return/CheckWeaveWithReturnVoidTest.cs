@@ -26,10 +26,10 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Return
 
         public class MyAspect : Attribute
         {
-            public static MethodInfo Method;
+            public static MethodBase Method;
             public bool NetAspectAttribute = true;
 
-            public void Before(MethodInfo method)
+            public void Before(MethodBase method)
             {
                 Method = method;
             }

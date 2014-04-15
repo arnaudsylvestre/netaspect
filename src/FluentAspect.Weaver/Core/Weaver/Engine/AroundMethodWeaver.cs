@@ -148,7 +148,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            method.Body.Variables.AddRange(allVariables);
            method.Body.Variables.AddRange(availableVariables.Variables);
 
-           method.Weave(w);
+           method.Weave(w, result);
         }
     }
 }

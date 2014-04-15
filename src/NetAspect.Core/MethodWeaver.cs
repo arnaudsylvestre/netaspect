@@ -18,13 +18,10 @@ namespace NetAspect.Core
             }
         }
 
-        public static void Weave(this MethodDefinition method, NetAspectWeavingMethod weavingModel)
+        public static void Weave(this MethodDefinition method, NetAspectWeavingMethod weavingModel, VariableDefinition result)
         {
             WeaveInstructions(method, weavingModel.Instructions);
             
-
-            var result = method.ReturnType == method.Module.TypeSystem.Void ? null : new VariableDefinition(method.ReturnType);
-
             if (result != null)
                 method.Body.Variables.Add(result);
             var allInstructions = new List<Instruction>();

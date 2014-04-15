@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 using NetAspect.Core.Helpers;
 
 namespace NetAspect.Core.Tests
@@ -13,7 +14,8 @@ namespace NetAspect.Core.Tests
         {
             var assembly = AssemblyDefinition.ReadAssembly("NetAspect.Core.Tests.dll");
 
-            assembly.MainModule.GetType(type.FullName).Methods.First(m => m.Name == methodName).Weave(weavingModel);
+            var methodDefinition = assembly.MainModule.GetType(type.FullName).Methods.First(m => m.Name == methodName);
+            methodDefinition.Weave(weavingModel, new VariableDefinition(methodDefinition.ReturnType));
             var newAssemblyName = "NetAspect.Core.Tests.Weaved.dll";
             assembly.Write(newAssemblyName);
             ProcessHelper.Launch("peverify.exe", "\"" + Path.GetFullPath(newAssemblyName) + "\"");
