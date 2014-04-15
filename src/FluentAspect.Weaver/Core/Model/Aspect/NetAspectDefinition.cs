@@ -192,5 +192,25 @@ namespace NetAspect.Weaver.Core.Model.Aspect
               return new Selector<PropertyDefinition>(_attribute.GetMethod("SelectProperty"), selectorParametersGenerator);
            }
         }
+
+        public Interceptor BeforePropertyGetMethod
+        {
+            get { return new Interceptor(_attribute.GetMethod("BeforePropertyGetMethod")); }
+        }
+
+        public Interceptor AfterPropertyGetMethod
+        {
+            get { return new Interceptor(_attribute.GetMethod("AfterPropertyGetMethod")); }
+        }
+
+        public Interceptor OnExceptionPropertyGetMethod
+        {
+            get { return new Interceptor(_attribute.GetMethod("OnExceptionPropertyGetMethod")); }
+        }
+
+        public Interceptor OnFinallyPropertyGetMethod
+        {
+            get { return new Interceptor(_attribute.GetMethod("OnFinallyPropertyGetMethod")); }
+        }
     }
 }

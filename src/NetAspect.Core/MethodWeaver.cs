@@ -48,10 +48,8 @@ namespace NetAspect.Core
             if (weavingModel.OnExceptionInstructions.Any())
             {
                 Instruction beforeExceptionManagementInstruction = Instruction.Create(OpCodes.Nop);
-                Instruction afterExceptionManagementInstructions = end.Count > 0 ? Instruction.Create(OpCodes.Leave, end.First()) : Instruction.Create(OpCodes.Nop);
                 allInstructions.Add(beforeExceptionManagementInstruction);
                 allInstructions.AddRange(weavingModel.OnExceptionInstructions);
-                allInstructions.Add(afterExceptionManagementInstructions);
 
                 Instruction lastCatchException = null;
                 if (weavingModel.OnFinallyInstructions.Any())

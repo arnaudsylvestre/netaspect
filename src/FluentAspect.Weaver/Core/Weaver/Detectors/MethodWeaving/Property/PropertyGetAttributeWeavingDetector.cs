@@ -10,7 +10,10 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
     {
         public bool CanHandle(NetAspectDefinition aspect)
         {
-            return false;
+            return aspect.BeforePropertyGetMethod.Method != null ||
+                aspect.AfterPropertyGetMethod.Method != null ||
+                aspect.OnExceptionPropertyGetMethod.Method != null ||
+                aspect.OnFinallyPropertyGetMethod.Method != null;
         }
 
         public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)

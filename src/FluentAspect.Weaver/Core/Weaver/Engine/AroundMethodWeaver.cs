@@ -142,6 +142,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            {
               w.OnExceptionInstructions.Add(Instruction.Create(OpCodes.Stloc, availableVariables.Exception));
               w.OnExceptionInstructions.AddRange(onExceptions);
+              w.OnExceptionInstructions.Add(Instruction.Create(OpCodes.Rethrow));
            }
            w.OnFinallyInstructions.AddRange(onFinallys);
 

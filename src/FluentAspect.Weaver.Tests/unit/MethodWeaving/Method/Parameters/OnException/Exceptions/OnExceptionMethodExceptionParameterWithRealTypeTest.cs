@@ -27,7 +27,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExceptio
         public class ClassToWeave
         {
             [MyAspect]
-            public void Weaved()
+            public string Weaved()
             {
                 throw new Exception("Hello");
             }
