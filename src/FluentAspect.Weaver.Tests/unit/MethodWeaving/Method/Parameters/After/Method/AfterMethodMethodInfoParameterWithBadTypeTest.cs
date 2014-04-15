@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Meth
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the method parameter in the method After of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.MethodInfo",
+                        "the method parameter in the method After of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.MethodBase",
                         typeof (MyAspect).FullName));
         }
 

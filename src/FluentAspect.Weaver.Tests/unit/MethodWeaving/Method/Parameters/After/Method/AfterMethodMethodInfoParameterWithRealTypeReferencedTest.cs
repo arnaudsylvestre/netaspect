@@ -26,10 +26,10 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Meth
 
         public class MyAspect : Attribute
         {
-            public static MethodInfo Method;
+           public static MethodBase Method;
             public bool NetAspectAttribute = true;
 
-            public void After(ref MethodInfo method)
+            public void After(ref MethodBase method)
             {
                 Method = method;
             }
