@@ -15,7 +15,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Exceptions
                     var classToWeave_L = new ClassToWeave();
                     try
                     {
-                        classToWeave_L.Weaved(classToWeave_L);
+                        var value = classToWeave_L.Weaved;
                         Assert.Fail();
                     }
                     catch (Exception)
@@ -28,9 +28,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Exceptions
         public class ClassToWeave
         {
             [MyAspect]
-            public ClassToWeave Weaved(ClassToWeave toWeave)
+            public ClassToWeave Weaved
             {
-                throw new Exception();
+                get { throw new Exception(); }
             }
         }
 

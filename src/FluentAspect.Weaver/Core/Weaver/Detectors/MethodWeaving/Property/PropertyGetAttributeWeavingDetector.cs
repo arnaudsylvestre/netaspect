@@ -29,22 +29,22 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
                             customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
                     if (!isCompliant_L)
                         return;
-                    weavingModel.AddPropertyGetMethodWeavingModel(method, aspect, aspect.BeforeGetProperty,
-                                                            aspect.AfterGetProperty, aspect.OnExceptionPropertyGet,
-                                                            aspect.OnFinallyPropertyGet);
+                    weavingModel.AddPropertyGetMethodWeavingModel(method, aspect, aspect.BeforePropertyGetMethod,
+                                                            aspect.AfterPropertyGetMethod, aspect.OnExceptionPropertyGetMethod,
+                                                            aspect.OnFinallyPropertyGetMethod);
                 }
-                if (propertyDefinition.SetMethod == method)
-                {
-                    TypeReference aspectType = method.Module.Import(aspect.Type);
-                    bool isCompliant_L =
-                        propertyDefinition.CustomAttributes.Any(
-                            customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
-                    if (!isCompliant_L)
-                        return;
-                    weavingModel.AddPropertySetMethodWeavingModel(method, aspect, aspect.BeforeSetProperty,
-                                                            aspect.AfterSetProperty, aspect.OnExceptionPropertySet,
-                                                            aspect.OnFinallyPropertySet);
-                }
+                //if (propertyDefinition.SetMethod == method)
+                //{
+                //    TypeReference aspectType = method.Module.Import(aspect.Type);
+                //    bool isCompliant_L =
+                //        propertyDefinition.CustomAttributes.Any(
+                //            customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
+                //    if (!isCompliant_L)
+                //        return;
+                //    weavingModel.AddPropertySetMethodWeavingModel(method, aspect, aspect.BeforeSetProperty,
+                //                                            aspect.AfterSetProperty, aspect.OnExceptionPropertySet,
+                //                                            aspect.OnFinallyPropertySet);
+                //}
             }
         }
     }

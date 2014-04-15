@@ -253,7 +253,15 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                     currentPropertyInfo = new VariableDefinition(method.Module.Import(typeof(PropertyInfo)));
                     Variables.Add(currentPropertyInfo);
 
-                    BeforeInstructions.AppendCallToThisGetType(method.Module);
+
+                    BeforeInstructions.Add(Instruction.Create(OpCodes.Call,
+                                                        method.Module.Import(
+                                                            typeof(MethodBase).GetMethod("GetCurrentMethod",
+                                                                                          new Type[] { }))));
+                    BeforeInstructions.Add(Instruction.Create(OpCodes.Callvirt,
+                                                        method.Module.Import(
+                                                            typeof(MemberInfo).GetMethod("get_DeclaringType",
+                                                                                          new Type[] { }))));
                     BeforeInstructions.AppendCallToGetProperty(method.Name.Replace("get_", "").Replace("set_", ""),
                                                          method.Module);
                     BeforeInstructions.AppendSaveResultTo(currentPropertyInfo);
