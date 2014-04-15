@@ -1,11 +1,10 @@
 using System;
 using System.Reflection;
 using NUnit.Framework;
-using NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Attributes.Visibility;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Attributes.Static
 {
-    public class WeaveStaticMethodTest : NetAspectTest<WeavePublicMethodTest.ClassToWeave>
+    public class WeaveStaticMethodTest : NetAspectTest<WeaveStaticMethodTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
@@ -27,10 +26,10 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Attributes.Static
 
         public class MyAspect : Attribute
         {
-            public static MethodInfo Method;
+            public static MethodBase Method;
             public bool NetAspectAttribute = true;
 
-            public void Before(MethodInfo method)
+            public void Before(MethodBase method)
             {
                 Method = method;
             }

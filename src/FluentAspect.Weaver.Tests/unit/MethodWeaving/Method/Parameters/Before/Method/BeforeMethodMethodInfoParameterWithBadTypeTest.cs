@@ -3,8 +3,8 @@ using NetAspect.Weaver.Core.Errors;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Method
 {
-    public class BeforeMethodMethodInfoParameterWithBadTypeTest :
-        NetAspectTest<BeforeMethodMethodInfoParameterWithBadTypeTest.ClassToWeave>
+    public class BeforeMethodMethodBaseParameterWithBadTypeTest :
+        NetAspectTest<BeforeMethodMethodBaseParameterWithBadTypeTest.ClassToWeave>
     {
         protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Met
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the method parameter in the method Before of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.MethodInfo",
+                        "the method parameter in the method Before of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.MethodBase",
                         typeof (MyAspect).FullName));
         }
 

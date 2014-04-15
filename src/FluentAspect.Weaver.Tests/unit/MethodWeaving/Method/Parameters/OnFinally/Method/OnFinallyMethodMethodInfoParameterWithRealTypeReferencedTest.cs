@@ -4,8 +4,8 @@ using NetAspect.Weaver.Core.Errors;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinally.Method
 {
-    public class OnFinallyMethodMethodInfoParameterWithRealTypeReferencedTest :
-        NetAspectTest<OnFinallyMethodMethodInfoParameterWithRealTypeReferencedTest.ClassToWeave>
+    public class OnFinallyMethodMethodBaseParameterWithRealTypeReferencedTest :
+        NetAspectTest<OnFinallyMethodMethodBaseParameterWithRealTypeReferencedTest.ClassToWeave>
     {
         protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
@@ -27,10 +27,10 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinally.
 
         public class MyAspect : Attribute
         {
-            public static MethodInfo Method;
+            public static MethodBase Method;
             public bool NetAspectAttribute = true;
 
-            public void OnFinally(ref MethodInfo method)
+            public void OnFinally(ref MethodBase method)
             {
                 Method = method;
             }

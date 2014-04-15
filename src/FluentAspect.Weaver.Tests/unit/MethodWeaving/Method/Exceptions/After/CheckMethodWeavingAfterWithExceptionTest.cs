@@ -36,10 +36,10 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Exceptions.After
 
         public class MyAspect : Attribute
         {
-            public static MethodInfo Method;
+            public static MethodBase Method;
             public bool NetAspectAttribute = true;
 
-            public void After(MethodInfo method)
+            public void After(MethodBase method)
             {
                 Method = method;
             }

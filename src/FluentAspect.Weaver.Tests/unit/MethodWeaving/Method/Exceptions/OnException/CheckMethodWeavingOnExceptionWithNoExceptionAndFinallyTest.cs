@@ -37,16 +37,16 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Exceptions.OnExceptio
 
         public class MyAspect : Attribute
         {
-            public static MethodInfo Method;
-            public static MethodInfo FinallyMethod;
+            public static MethodBase Method;
+            public static MethodBase FinallyMethod;
             public bool NetAspectAttribute = true;
 
-            public void OnException(MethodInfo method)
+            public void OnException(MethodBase method)
             {
                 Method = method;
             }
 
-            public void OnFinally(MethodInfo method)
+            public void OnFinally(MethodBase method)
             {
                 FinallyMethod = method;
             }

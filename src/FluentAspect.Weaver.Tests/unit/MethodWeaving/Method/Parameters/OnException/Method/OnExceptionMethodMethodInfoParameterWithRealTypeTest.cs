@@ -4,14 +4,14 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnException.Method
 {
-    public class OnExceptionMethodMethodInfoParameterWithRealTypeTest :
-        NetAspectTest<OnExceptionMethodMethodInfoParameterWithRealTypeTest.ClassToWeave>
+    public class OnExceptionMethodMethodBaseParameterWithRealTypeTest :
+        NetAspectTest<OnExceptionMethodMethodBaseParameterWithRealTypeTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
             return () =>
                 {
-                    Assert.IsNull(MyAspect.MethodInfo);
+                    Assert.IsNull(MyAspect.MethodBase);
                     var classToWeave_L = new ClassToWeave();
                     try
                     {
@@ -21,7 +21,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExceptio
                     catch
                     {
                     }
-                    Assert.AreEqual(classToWeave_L.GetType().GetMethod("Weaved"), MyAspect.MethodInfo);
+                    Assert.AreEqual(classToWeave_L.GetType().GetMethod("Weaved"), MyAspect.MethodBase);
                 };
         }
 
@@ -36,12 +36,12 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExceptio
 
         public class MyAspect : Attribute
         {
-            public static MethodInfo MethodInfo;
+            public static MethodBase MethodBase;
             public bool NetAspectAttribute = true;
 
-            public void OnException(MethodInfo method)
+            public void OnException(MethodBase method)
             {
-                MethodInfo = method;
+                MethodBase = method;
             }
         }
     }
