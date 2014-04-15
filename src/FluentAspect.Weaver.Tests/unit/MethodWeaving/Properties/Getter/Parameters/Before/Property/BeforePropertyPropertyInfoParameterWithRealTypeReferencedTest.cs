@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters
             public static PropertyInfo Property;
             public bool NetAspectAttribute = true;
 
-            public void Before(ref PropertyInfo property)
+            public void BeforePropertyGetMethod(ref PropertyInfo property)
             {
                 Property = property;
             }

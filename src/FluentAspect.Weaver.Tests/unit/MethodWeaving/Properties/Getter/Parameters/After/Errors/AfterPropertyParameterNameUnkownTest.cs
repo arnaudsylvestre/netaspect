@@ -23,7 +23,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters
         {
             public bool NetAspectAttribute = true;
 
-            public void After(string unknown)
+            public void AfterPropertyGetMethod(string unknown)
             {
             }
         }

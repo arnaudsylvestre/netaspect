@@ -32,7 +32,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters
             public static object Result;
             public bool NetAspectAttribute = true;
 
-            public void After(object result)
+            public void AfterPropertyGetMethod(object result)
             {
                 Result = result;
             }

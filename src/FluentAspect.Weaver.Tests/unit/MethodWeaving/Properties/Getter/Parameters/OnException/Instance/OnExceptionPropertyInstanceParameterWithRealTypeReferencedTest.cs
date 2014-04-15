@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters
             public static ClassToWeave Instance;
             public bool NetAspectAttribute = true;
 
-            public void OnException(ref ClassToWeave instance)
+            public void OnExceptionPropertyGetMethod(ref ClassToWeave instance)
             {
                 Instance = instance;
             }

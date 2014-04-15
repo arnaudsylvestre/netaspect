@@ -32,7 +32,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters
             public static PropertyInfo PropertyInfo;
             public bool NetAspectAttribute = true;
 
-            public void OnFinally(PropertyInfo property)
+            public void OnFinallyPropertyGetMethod(PropertyInfo property)
             {
                 PropertyInfo = property;
             }

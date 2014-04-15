@@ -32,7 +32,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters
             public static string Result;
             public bool NetAspectAttribute = true;
 
-            public void After(string result)
+            public void AfterPropertyGetMethod(string result)
             {
                 Result = result;
                 result = "MyNewValue";

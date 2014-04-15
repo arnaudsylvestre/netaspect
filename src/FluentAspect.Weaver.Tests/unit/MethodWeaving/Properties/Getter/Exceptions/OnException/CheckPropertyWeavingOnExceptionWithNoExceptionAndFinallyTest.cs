@@ -41,12 +41,12 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Exceptions
             public static PropertyInfo FinallyProperty;
             public bool NetAspectAttribute = true;
 
-            public void OnException(PropertyInfo property)
+            public void OnExceptionPropertyGetMethod(PropertyInfo property)
             {
                 Property = property;
             }
 
-            public void OnFinally(PropertyInfo property)
+            public void OnFinallyPropertyGetMethod(PropertyInfo property)
             {
                 FinallyProperty = property;
             }

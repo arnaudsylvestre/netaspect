@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters
             public bool NetAspectAttribute = true;
 
 
-            public void After(ref object result)
+            public void AfterPropertyGetMethod(ref object result)
             {
             }
         }
