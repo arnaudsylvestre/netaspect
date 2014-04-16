@@ -11,7 +11,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters
             return
                 errorHandler =>
                 errorHandler.Errors.Add(
-                    string.Format("impossible to out the parameter 'result' in the property After of the type '{0}'",
+                    string.Format("impossible to out the parameter 'result' in the method AfterPropertyGetMethod of the type '{0}'",
                                   typeof (MyAspect).FullName));
         }
 

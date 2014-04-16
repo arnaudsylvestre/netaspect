@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'instance' in the property Before of the type '{0}'", typeof(MyAspect)));
+                        "impossible to ref/out the parameter 'instance' in the method BeforePropertyGetMethod of the type '{0}'", typeof(MyAspect)));
         }
 
         public class ClassToWeave

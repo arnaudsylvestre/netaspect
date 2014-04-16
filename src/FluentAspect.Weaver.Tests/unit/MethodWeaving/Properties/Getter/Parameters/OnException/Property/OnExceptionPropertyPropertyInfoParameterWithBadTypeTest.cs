@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the property parameter in the property OnException of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.PropertyInfo",
+                        "the property parameter in the method OnExceptionPropertyGetMethod of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.PropertyInfo",
                         typeof (MyAspect).FullName));
         }
 

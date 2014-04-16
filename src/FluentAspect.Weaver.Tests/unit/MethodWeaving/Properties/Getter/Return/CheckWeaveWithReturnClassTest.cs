@@ -12,7 +12,8 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Return
                 {
                     Assert.IsNull(MyAspect.Property);
                     var classToWeave_L = new ClassToWeave();
-                    ClassToWeave res = classToWeave_L.Weaved(classToWeave_L);
+                   classToWeave_L.toWeave = classToWeave_L;
+                    ClassToWeave res = classToWeave_L.Weaved;
                     Assert.AreEqual("Weaved", MyAspect.Property.Name);
                     Assert.AreEqual(classToWeave_L, res);
                 };
@@ -20,10 +21,11 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Return
 
         public class ClassToWeave
         {
+           public ClassToWeave toWeave;
             [MyAspect]
-            public ClassToWeave Weaved(ClassToWeave toWeave)
+            public ClassToWeave Weaved
             {
-                return toWeave;
+               get { return toWeave; }
             }
         }
 

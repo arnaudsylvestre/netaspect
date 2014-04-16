@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the instance parameter in the property After of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
+                        "the instance parameter in the method AfterPropertyGetMethod of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
                         typeof (MyAspect).FullName, typeof (ClassToWeave).FullName));
         }
 
