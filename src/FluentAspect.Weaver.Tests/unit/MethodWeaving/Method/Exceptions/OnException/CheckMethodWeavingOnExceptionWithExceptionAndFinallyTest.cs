@@ -29,11 +29,11 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Exceptions.OnExceptio
         public class ClassToWeave
         {
             [MyAspect]
-            public ClassToWeave Weaved(ClassToWeave toWeave)
+            public void Weaved(ClassToWeave toWeave)
             {
                 if (toWeave != null)
                     throw new Exception();
-                return toWeave;
+                //return toWeave;
             }
         }
 

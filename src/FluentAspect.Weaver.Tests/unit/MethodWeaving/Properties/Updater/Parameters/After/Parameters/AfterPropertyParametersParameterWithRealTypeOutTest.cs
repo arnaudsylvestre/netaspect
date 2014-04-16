@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'parameters' in the Property After of the type '{0}'",
+                        "impossible to ref/out the parameter 'parameters' in the method AfterPropertySetMethodof the type '{0}'",
                         typeof (MyAspect).FullName));
         }
 

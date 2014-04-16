@@ -60,12 +60,17 @@ namespace NetAspect.Core.Helpers
                 for (int index = 0; index < instructions.Count; index++)
                 {
                     Instruction instruction = instructions[index];
-                    if (instruction.OpCode == OpCodes.Ret)
+                    if (instruction.OpCode == OpCodes.Ret || ReferenceReturn(instruction))
                     {
                         if (end.Count == 0)
                             end.Add(Instruction.Create(OpCodes.Ret));
 
-                        instructions[index] = Instruction.Create(OpCodes.Leave, beforeAfter);
+                        if (!ReferenceReturn(instruction))
+                            instructions[index] = Instruction.Create(OpCodes.Leave, beforeAfter);
+                        else
+                        {
+                            instructions[index].Operand = beforeAfter;
+                        }
                     }
                 }
             }
@@ -88,6 +93,11 @@ namespace NetAspect.Core.Helpers
                 }
             }
             return end;
+        }
+
+        private static bool ReferenceReturn(Instruction instruction)
+        {
+            return (instruction.Operand is Instruction && ((Instruction)instruction.Operand).OpCode == OpCodes.Ret);
         }
     }
 }

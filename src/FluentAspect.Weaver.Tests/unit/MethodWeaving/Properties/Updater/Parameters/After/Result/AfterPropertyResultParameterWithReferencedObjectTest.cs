@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the result parameter in the Property After of the type '{0}' is declared with the type 'System.Object&' but it is expected to be System.String because the return type of the Property Weaved in the type {1}",
+                        "the result parameter in the method AfterPropertySetMethodof the type '{0}' is declared with the type 'System.Object&' but it is expected to be System.String because the return type of the Property Weaved in the type {1}",
                         typeof (MyAspect).FullName, typeof (ClassToWeave).FullName));
         }
 

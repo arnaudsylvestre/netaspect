@@ -13,7 +13,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'Property' in the Property OnException of the type '{0}'",
+                        "impossible to ref/out the parameter 'Property' in the method OnExceptionPropertySetMethod of the type '{0}'",
                         typeof (MyAspect).FullName));
         }
 

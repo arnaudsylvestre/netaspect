@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "Impossible to use the result parameter in the Property After of the type '{0}' because the return type of the Property Weaved in the type {1} is void",
+                        "Impossible to use the result parameter in the method AfterPropertySetMethodof the type '{0}' because the return type of the Property Weaved in the type {1} is void",
                         typeof (MyAspect).FullName, typeof (ClassToWeave).FullName));
         }
 
