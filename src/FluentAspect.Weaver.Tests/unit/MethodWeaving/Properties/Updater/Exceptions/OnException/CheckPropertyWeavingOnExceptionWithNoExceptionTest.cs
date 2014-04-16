@@ -39,7 +39,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Exception
             public static PropertyInfo Property;
             public bool NetAspectAttribute = true;
 
-            public void OnException(PropertyInfo Property)
+            public void OnExceptionPropertySetMethod(PropertyInfo Property)
             {
                 Property = Property;
             }

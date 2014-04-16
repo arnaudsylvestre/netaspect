@@ -38,7 +38,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
             public static int I;
             public bool NetAspectAttribute = true;
 
-            public void OnException(byte i)
+            public void OnExceptionPropertySetMethod(byte i)
             {
                 I = i;
             }

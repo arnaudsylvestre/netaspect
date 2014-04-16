@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
         {
             public bool NetAspectAttribute = true;
 
-            public void Before(out PropertyInfo Property)
+            public void BeforePropertySetMethod(out PropertyInfo Property)
             {
                 Property = null;
             }

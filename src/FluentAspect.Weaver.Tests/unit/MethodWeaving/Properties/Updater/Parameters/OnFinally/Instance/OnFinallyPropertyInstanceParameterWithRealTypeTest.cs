@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
             public static ClassToWeave Instance;
             public bool NetAspectAttribute = true;
 
-            public void OnFinally(ClassToWeave instance)
+            public void OnFinallyPropertySetMethod(ClassToWeave instance)
             {
                 Instance = instance;
             }

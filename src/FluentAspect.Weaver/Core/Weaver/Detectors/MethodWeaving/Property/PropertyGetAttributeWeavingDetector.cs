@@ -3,6 +3,7 @@ using Mono.Cecil;
 using Mono.Collections.Generic;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
+using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
 {
@@ -13,7 +14,11 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
             return aspect.BeforePropertyGetMethod.Method != null ||
                 aspect.AfterPropertyGetMethod.Method != null ||
                 aspect.OnExceptionPropertyGetMethod.Method != null ||
-                aspect.OnFinallyPropertyGetMethod.Method != null;
+                aspect.OnFinallyPropertyGetMethod.Method != null ||
+                aspect.BeforePropertySetMethod.Method != null ||
+                aspect.AfterPropertySetMethod.Method != null ||
+                aspect.OnExceptionPropertySetMethod.Method != null ||
+                aspect.OnFinallyPropertySetMethod.Method != null;
         }
 
         public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
@@ -23,28 +28,22 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
             {
                 if (propertyDefinition.GetMethod == method)
                 {
-                    TypeReference aspectType = method.Module.Import(aspect.Type);
-                    bool isCompliant_L =
-                        propertyDefinition.CustomAttributes.Any(
-                            customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
+                    bool isCompliant_L = AspectApplier.CanApply(propertyDefinition, aspect);
                     if (!isCompliant_L)
                         return;
                     weavingModel.AddPropertyGetMethodWeavingModel(method, aspect, aspect.BeforePropertyGetMethod,
                                                             aspect.AfterPropertyGetMethod, aspect.OnExceptionPropertyGetMethod,
                                                             aspect.OnFinallyPropertyGetMethod);
                 }
-                //if (propertyDefinition.SetMethod == method)
-                //{
-                //    TypeReference aspectType = method.Module.Import(aspect.Type);
-                //    bool isCompliant_L =
-                //        propertyDefinition.CustomAttributes.Any(
-                //            customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
-                //    if (!isCompliant_L)
-                //        return;
-                //    weavingModel.AddPropertySetMethodWeavingModel(method, aspect, aspect.BeforeSetProperty,
-                //                                            aspect.AfterSetProperty, aspect.OnExceptionPropertySet,
-                //                                            aspect.OnFinallyPropertySet);
-                //}
+                if (propertyDefinition.SetMethod == method)
+                {
+                    bool isCompliant_L = AspectApplier.CanApply(propertyDefinition, aspect);
+                    if (!isCompliant_L)
+                        return;
+                    weavingModel.AddPropertySetMethodWeavingModel(method, aspect, aspect.BeforePropertySetMethod,
+                                                            aspect.AfterPropertySetMethod, aspect.OnExceptionPropertySetMethod,
+                                                            aspect.OnFinallyPropertySetMethod);
+                }
             }
         }
     }

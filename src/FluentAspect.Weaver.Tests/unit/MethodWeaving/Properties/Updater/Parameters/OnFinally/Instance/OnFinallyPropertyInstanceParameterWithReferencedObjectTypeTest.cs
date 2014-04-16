@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
             public static object Instance;
             public bool NetAspectAttribute = true;
 
-            public void OnFinally(ref object instance)
+            public void OnFinallyPropertySetMethod(ref object instance)
             {
                 Instance = instance;
             }

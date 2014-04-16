@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
         {
             public bool NetAspectAttribute = true;
 
-            public void OnFinally(int parameters)
+            public void OnFinallyPropertySetMethod(int parameters)
             {
             }
         }

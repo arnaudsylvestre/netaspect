@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
             public static string Result;
             public bool NetAspectAttribute = true;
 
-            public void After(string result)
+            public void AfterPropertySetMethod(string result)
             {
                 Result = result;
                 result = "MyNewValue";

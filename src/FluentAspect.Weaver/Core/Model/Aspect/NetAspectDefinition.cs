@@ -212,5 +212,25 @@ namespace NetAspect.Weaver.Core.Model.Aspect
         {
             get { return new Interceptor(_attribute.GetMethod("OnFinallyPropertyGetMethod")); }
         }
+
+        public Interceptor BeforePropertySetMethod
+        {
+            get { return new Interceptor(_attribute.GetMethod("BeforePropertySetMethod")); }
+        }
+
+        public Interceptor AfterPropertySetMethod
+        {
+            get { return new Interceptor(_attribute.GetMethod("AfterPropertySetMethod")); }
+        }
+
+        public Interceptor OnExceptionPropertySetMethod
+        {
+            get { return new Interceptor(_attribute.GetMethod("OnExceptionPropertySetMethod")); }
+        }
+
+        public Interceptor OnFinallyPropertySetMethod
+        {
+            get { return new Interceptor(_attribute.GetMethod("OnFinallyPropertySetMethod")); }
+        }
     }
 }

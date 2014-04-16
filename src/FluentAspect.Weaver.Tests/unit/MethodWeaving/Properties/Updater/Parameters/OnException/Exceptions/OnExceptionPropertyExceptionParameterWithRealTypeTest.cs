@@ -38,7 +38,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
             public static Exception Exception;
             public bool NetAspectAttribute = true;
 
-            public void OnException(Exception exception)
+            public void OnExceptionPropertySetMethod(Exception exception)
             {
                 Exception = exception;
             }

@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
             public static object[] Parameters;
             public bool NetAspectAttribute = true;
 
-            public void Before(object[] parameters)
+            public void BeforePropertySetMethod(object[] parameters)
             {
                 Parameters = parameters;
             }

@@ -35,7 +35,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
             public static int I;
             public bool NetAspectAttribute = true;
 
-            public void After(ref int i)
+            public void AfterPropertySetMethod(ref int i)
             {
                 I = i;
                 i = 5;
