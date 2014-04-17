@@ -1,10 +1,10 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.After.Instance
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.After.Method
 {
-    public class AfterPropertyInstanceParameterWithRealTypeOutTest :
-        NetAspectTest<AfterPropertyInstanceParameterWithRealTypeOutTest.ClassToWeave>
+    public class AfterPropertyPropertyInfoParameterWithBadTypeTest :
+        NetAspectTest<AfterPropertyPropertyInfoParameterWithBadTypeTest.ClassToWeave>
     {
         protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'instance' in the method AfterPropertySetMethod of the type '{0}'",
+                        "the Property parameter in the method AfterPropertySetMethod of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.PropertyInfo",
                         typeof (MyAspect).FullName));
         }
 
@@ -29,9 +29,8 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
         {
             public bool NetAspectAttribute = true;
 
-            public void AfterPropertySetMethod(out ClassToWeave instance)
+            public void AfterPropertySetMethod(int Property)
             {
-                instance = null;
             }
         }
     }

@@ -11,7 +11,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
             return
                 errorHandler =>
                 errorHandler.Errors.Add(
-                    string.Format("the instance parameter can not be used for static Property interceptors"));
+                    string.Format("the instance parameter can not be used for static method interceptors"));
         }
 
         public class ClassToWeave
