@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
                 {
                     Assert.IsNull(MyAspect.Instance);
                     var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.WeavedForTest();
+                    classToWeave_L.WeavedForTest = 12;
                     Assert.AreEqual(classToWeave_L, MyAspect.Instance);
                 };
         }
@@ -20,8 +20,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
         public class ClassToWeave
         {
             [MyAspect]
-            public void WeavedForTest()
+            public int WeavedForTest
             {
+                set { }
             }
         }
 

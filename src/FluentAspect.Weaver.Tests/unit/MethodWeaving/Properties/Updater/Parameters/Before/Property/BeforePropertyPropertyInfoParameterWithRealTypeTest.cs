@@ -14,7 +14,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
                     Assert.IsNull(MyAspect.PropertyInfo);
                     var classToWeave_L = new ClassToWeave();
                     classToWeave_L.Weaved = "12";
-                    Assert.AreEqual(classToWeave_L.GetType().GetProperty("Weaved"), MyAspect.PropertyInfo);
+                    Assert.AreEqual("Weaved", MyAspect.PropertyInfo.Name);
                 };
         }
 
@@ -32,9 +32,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
             public static PropertyInfo PropertyInfo;
             public bool NetAspectAttribute = true;
 
-            public void BeforePropertySetMethod(PropertyInfo Property)
+            public void BeforePropertySetMethod(PropertyInfo property)
             {
-                PropertyInfo = Property;
+                PropertyInfo = property;
             }
         }
     }

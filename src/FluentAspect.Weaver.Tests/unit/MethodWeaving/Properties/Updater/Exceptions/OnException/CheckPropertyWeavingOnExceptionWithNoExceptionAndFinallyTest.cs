@@ -15,7 +15,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Exception
                     var classToWeave_L = new ClassToWeave();
                     try
                     {
-                        classToWeave_L.Weaved(classToWeave_L);
+                        classToWeave_L.Weaved = classToWeave_L;
                         Assert.Fail();
                     }
                     catch (Exception)
@@ -28,10 +28,12 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Exception
 
         public class ClassToWeave
         {
+            public ClassToWeave toWeave;
+
             [MyAspect]
-            public ClassToWeave Weaved(ClassToWeave toWeave)
+            public ClassToWeave Weaved
             {
-                return toWeave;
+                set {toWeave = value;}
             }
         }
 
@@ -43,12 +45,12 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Exception
 
             public void OnExceptionPropertySetMethod(PropertyInfo property)
             {
-                Property = Property;
+                Property = property;
             }
 
             public void OnFinallyPropertySetMethod(PropertyInfo property)
             {
-                FinallyProperty = Property;
+                FinallyProperty = property;
             }
         }
     }

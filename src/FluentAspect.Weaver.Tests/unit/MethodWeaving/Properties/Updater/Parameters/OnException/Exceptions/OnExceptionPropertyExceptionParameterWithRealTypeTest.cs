@@ -14,7 +14,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
                     var classToWeave_L = new ClassToWeave();
                     try
                     {
-                        classToWeave_L.Weaved();
+                        classToWeave_L.Weaved = "";
                         Assert.Fail();
                     }
                     catch
@@ -27,9 +27,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
         public class ClassToWeave
         {
             [MyAspect]
-            public string Weaved()
+            public string Weaved
             {
-                throw new Exception("Hello");
+                set { throw new Exception("Hello"); }
             }
         }
 
