@@ -39,9 +39,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Exceptions.After
             public static MethodBase Method;
             public bool NetAspectAttribute = true;
 
-            public void AfterConstructor(MethodBase method)
+            public void AfterConstructor(MethodBase constructor)
             {
-                Method = method;
+                Method = constructor;
             }
         }
     }

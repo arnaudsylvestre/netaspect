@@ -29,7 +29,7 @@ namespace NetAspect.Core
             var methodInstructions = method.ExtractRealInstructions();
 
             if (methodInstructions.Count == 0)
-                methodInstructions.Add(Instruction.Create(OpCodes.Nop));
+                methodInstructions.Add(Instruction.Create(OpCodes.Ret));
 
             Instruction beforeAfter = Instruction.Create(OpCodes.Nop);
             List<Instruction> end = method.FixReturns(result, methodInstructions, beforeAfter);

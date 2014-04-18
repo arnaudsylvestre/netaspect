@@ -78,6 +78,11 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
         {
             ilGeneratoir.Add("method", new MethodInterceptorParametersIlGenerator<T>());
         }
+        public static void CreateIlGeneratorForConstructorParameter<T>(
+            this ParametersIlGenerator<T> ilGeneratoir) where T : IlInstructionInjectorAvailableVariables
+        {
+            ilGeneratoir.Add("constructor", new MethodInterceptorParametersIlGenerator<T>());
+        }
 
         public static void CreateIlGeneratorForCallerMethodParameter<T>(
             this ParametersIlGenerator<T> ilGeneratoir) where T : IlInstructionInjectorAvailableVariables

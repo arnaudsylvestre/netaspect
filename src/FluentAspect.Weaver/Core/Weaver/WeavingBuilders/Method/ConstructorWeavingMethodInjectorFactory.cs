@@ -45,7 +45,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                                        ParametersIlGenerator<IlInjectorAvailableVariables> parametersIlGenerator)
         {
             parametersIlGenerator.CreateIlGeneratorForInstanceParameter(method);
-            parametersIlGenerator.CreateIlGeneratorForMethodParameter();
+            parametersIlGenerator.CreateIlGeneratorForConstructorParameter();
             parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
             parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
         }
@@ -53,7 +53,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
         private static void FillCommon(MethodDefinition method, ParametersChecker checker)
         {
             checker.CreateCheckerForInstanceParameter(method);
-            checker.CreateCheckerForMethodParameter();
+            checker.CreateCheckerForConstructorParameter();
             checker.CreateCheckerForParameterNameParameter(method);
             checker.CreateCheckerForParametersParameter();
         }

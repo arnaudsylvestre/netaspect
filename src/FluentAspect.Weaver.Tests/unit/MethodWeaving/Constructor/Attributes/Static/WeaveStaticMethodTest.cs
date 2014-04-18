@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Attributes.Stati
                 {
                     Assert.IsNull(MyAspect.Constructor);
                     new ClassToWeave();
-                    Assert.AreEqual("Weaved", MyAspect.Constructor.Name);
+                    Assert.AreEqual(".cctor", MyAspect.Constructor.Name);
                 };
         }
 

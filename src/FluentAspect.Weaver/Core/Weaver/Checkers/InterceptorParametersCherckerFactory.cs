@@ -203,6 +203,14 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
                 Checker = new MethodInterceptorParametersChercker(),
             });
         }
+        public static void CreateCheckerForConstructorParameter(this ParametersChecker checkers)
+        {
+            checkers.Add(new InterceptorParametersChecker
+            {
+                ParameterName = "constructor",
+                Checker = new MethodInterceptorParametersChercker(),
+            });
+        }
         public static void CreateCheckerForCallerMethodParameter(this ParametersChecker checkers)
         {
             checkers.Add(new InterceptorParametersChecker

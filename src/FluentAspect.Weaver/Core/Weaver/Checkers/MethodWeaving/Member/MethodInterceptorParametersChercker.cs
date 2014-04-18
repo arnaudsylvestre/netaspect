@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Member
         public void Check(ParameterInfo parameter, ErrorHandler errorListener)
         {
             Ensure.NotReferenced(parameter, errorListener);
-            Ensure.OfType(parameter, errorListener, typeof (MethodBase).FullName);
+            Ensure.OfType(parameter, errorListener, typeof(MethodBase).FullName);
         }
     }
 }
