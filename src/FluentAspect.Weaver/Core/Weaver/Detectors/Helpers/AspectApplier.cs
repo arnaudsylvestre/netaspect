@@ -18,6 +18,20 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Helpers
              return true;
           return false;
        }
+
+       public static bool CanApply(MethodDefinition method, NetAspectDefinition netAspect)
+       {
+          TypeReference aspectType = method.Module.Import(netAspect.Type);
+          bool compliant = method.CustomAttributes.Any(
+              customAttribute_L =>
+              customAttribute_L.AttributeType.FullName == aspectType.FullName);
+          if (compliant)
+             return true;
+          if (netAspect.MethodSelector.IsCompliant(method))
+             return true;
+          return false;
+       }
+
        public static bool CanApply(PropertyDefinition property, NetAspectDefinition netAspect)
        {
           TypeReference aspectType = property.Module.Import(netAspect.Type);

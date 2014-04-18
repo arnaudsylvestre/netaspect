@@ -619,10 +619,6 @@
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnFinally\Parameters\OnFinallyMethodParametersParameterWithRealTypeOutTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnFinally\Parameters\OnFinallyMethodParametersParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnFinally\Parameters\OnFinallyMethodParametersParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Return\CheckWeaveWithReturnClassTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Return\CheckWeaveWithReturnGenericTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Return\CheckWeaveWithReturnIntTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Return\CheckWeaveWithReturnVoidTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Attributes\Static\WeaveStaticPropertyTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Attributes\Visibility\WeaveInternalPropertyTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Attributes\Visibility\WeavePrivatePropertyTest.cs" />

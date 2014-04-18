@@ -21,7 +21,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                                         new PropertyGetAttributeWeavingDetector(),
                                         new CallMethodInstructionWeavingDetector(),
             new CallGetFieldInstructionWeavingDetector(), new CallUpdateFieldInstructionWeavingDetector(),
-            new CallGetPropertyInstructionWeavingDetector());
+            new CallGetPropertyInstructionWeavingDetector(), new ConstructorAttributeWeavingDetector());
 
 
         public Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave, Type[] filter, AssemblyPool assemblyDefinitionProvider, IEnumerable<NetAspectDefinition> aspects)

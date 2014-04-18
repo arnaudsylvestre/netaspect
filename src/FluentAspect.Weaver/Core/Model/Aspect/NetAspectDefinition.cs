@@ -151,17 +151,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
             get { return new Interceptor(_attribute.GetMethod("BeforeRaiseEvent")); }
         }
 
-        public Interceptor OnExceptionPropertyGet
-        {
-            get { return new Interceptor(_attribute.GetMethod("OnExceptionPropertyGet")); }
-        }
-
-        public Interceptor OnFinallyPropertyGet
-        {
-            get { return new Interceptor(_attribute.GetMethod("OnFinallyPropertyGet")); }
-        }
-
-        public Interceptor BeforeCallMethod
+       public Interceptor BeforeCallMethod
         {
             get { return new Interceptor(_attribute.GetMethod("BeforeCallMethod")); }
         }
@@ -169,6 +159,26 @@ namespace NetAspect.Weaver.Core.Model.Aspect
         public Interceptor AfterCallMethod
         {
             get { return new Interceptor(_attribute.GetMethod("AfterCallMethod")); }
+        }
+
+        public Interceptor BeforeConstructor
+        {
+           get { return new Interceptor(_attribute.GetMethod("BeforeConstructor")); }
+        }
+
+        public Interceptor AfterConstructor
+        {
+           get { return new Interceptor(_attribute.GetMethod("AfterConstructor")); }
+        }
+
+        public Interceptor OnFinallyConstructor
+        {
+           get { return new Interceptor(_attribute.GetMethod("OnFinallyConstructor")); }
+        }
+
+        public Interceptor OnExceptionConstructor
+        {
+           get { return new Interceptor(_attribute.GetMethod("OnExceptionConstructor")); }
         }
 
         public Selector<FieldDefinition> FieldSelector
@@ -190,6 +200,27 @@ namespace NetAspect.Weaver.Core.Model.Aspect
               selectorParametersGenerator.AddPossibleParameter<string>("propertyName", field => field.Name);
               selectorParametersGenerator.AddPossibleParameter<string>("propertyTypeName", field => field.PropertyType.Name);
               return new Selector<PropertyDefinition>(_attribute.GetMethod("SelectProperty"), selectorParametersGenerator);
+           }
+        }
+
+        public Selector<MethodDefinition> MethodSelector
+        {
+           get
+           {
+              var selectorParametersGenerator = new SelectorParametersGenerator<MethodDefinition>();
+              selectorParametersGenerator.AddPossibleParameter<string>("methodName", field => field.Name);
+              selectorParametersGenerator.AddPossibleParameter<string>("methodTypeName", field => field.ReturnType.Name);
+              return new Selector<MethodDefinition>(_attribute.GetMethod("SelectMethod"), selectorParametersGenerator);
+           }
+        }
+
+        public Selector<MethodDefinition> ConstructorSelector
+        {
+           get
+           {
+              var selectorParametersGenerator = new SelectorParametersGenerator<MethodDefinition>();
+              selectorParametersGenerator.AddPossibleParameter<string>("constructorName", field => field.Name);
+              return new Selector<MethodDefinition>(_attribute.GetMethod("SelectConstructor"), selectorParametersGenerator);
            }
         }
 

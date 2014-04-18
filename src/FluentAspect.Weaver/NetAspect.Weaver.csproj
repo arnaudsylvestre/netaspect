@@ -65,6 +65,7 @@
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinitionExtensions.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\Property\CallGetPropertyInstructionWeavingDetector.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Constructor\MethodAttributeWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\Selectors\Selector.cs" />
     <Compile Include="Core\Weaver\Detectors\Selectors\SelectorParametersGenerator.cs" />
     <Compile Include="Core\Model\Weaving\WeavingModel.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Core\Weaver\Generators\SequencePointIntInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Generators\SequencePointStringInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\IIlInjectorsExtensions.cs" />
+    <Compile Include="Core\Weaver\WeavingBuilders\Method\ConstructorWeavingMethodInjectorFactory.cs" />
     <Compile Include="Helpers\IL\InstructionFactory.cs" />
     <Compile Include="Helpers\IL\VariablesExtensions.cs" />
     <Compile Include="Core\Weaver\IIlInjector.cs" />
