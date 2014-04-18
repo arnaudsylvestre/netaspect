@@ -37,16 +37,16 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Exceptions.OnExc
 
         public class MyAspect : Attribute
         {
-           public static ConstructorInfo Constructor;
-           public static ConstructorInfo FinallyConstructor;
+            public static MethodBase Constructor;
+            public static MethodBase FinallyConstructor;
             public bool NetAspectAttribute = true;
 
-            public void OnExceptionConstructor(ConstructorInfo constructor)
+            public void OnExceptionConstructor(MethodBase constructor)
             {
                Constructor = constructor;
             }
 
-            public void OnFinallyConstructor(ConstructorInfo constructor)
+            public void OnFinallyConstructor(MethodBase constructor)
             {
                FinallyConstructor = constructor;
             }
