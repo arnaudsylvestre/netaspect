@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'instance' in the method After of the type '{0}'",
+                        "impossible to ref/out the parameter 'instance' in the method AfterConstructor of the type '{0}'",
                         typeof (MyAspect).FullName));
         }
 
