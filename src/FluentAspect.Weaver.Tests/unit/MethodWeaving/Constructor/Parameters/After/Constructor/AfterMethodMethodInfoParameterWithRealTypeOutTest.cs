@@ -1,26 +1,26 @@
 using System;
+using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After.Result
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After.Method
 {
-    public class AfterConstructorResultParameterWithRealTypeOutTest :
-        NetAspectTest<AfterConstructorResultParameterWithRealTypeOutTest.ClassToWeave>
+    public class AfterConstructorConstructorInfoParameterWithRealTypeOutTest :
+        NetAspectTest<AfterConstructorConstructorInfoParameterWithRealTypeOutTest.ClassToWeave>
     {
         protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>
                 errorHandler.Errors.Add(
-                    string.Format("impossible to out the parameter 'result' in the method After of the type '{0}'",
+                    string.Format("impossible to ref/out the parameter 'constructor' in the method After of the type '{0}'",
                                   typeof (MyAspect).FullName));
         }
 
         public class ClassToWeave
         {
             [MyAspect]
-            public string Weaved()
+            public ClassToWeave()
             {
-                return "NeverUsedValue";
             }
         }
 
@@ -28,9 +28,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
         {
             public bool NetAspectAttribute = true;
 
-            public void AfterConstructor(out string result)
+            public void AfterConstructor(out MethodBase constructor)
             {
-                result = "MyNewValue";
+                constructor = null;
             }
         }
     }

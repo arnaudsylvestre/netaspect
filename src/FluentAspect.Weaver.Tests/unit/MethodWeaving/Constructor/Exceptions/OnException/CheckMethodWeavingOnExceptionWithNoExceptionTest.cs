@@ -39,9 +39,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Exceptions.OnExc
             public static MethodBase Method;
             public bool NetAspectAttribute = true;
 
-            public void OnExceptionConstructor(MethodBase method)
+            public void OnExceptionConstructor(MethodBase constructor)
             {
-                Method = method;
+                Method = constructor;
             }
         }
     }

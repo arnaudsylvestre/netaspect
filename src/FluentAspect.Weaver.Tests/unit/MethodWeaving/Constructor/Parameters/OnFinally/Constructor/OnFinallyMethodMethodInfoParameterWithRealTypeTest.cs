@@ -13,7 +13,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFin
                 {
                     Assert.IsNull(MyAspect.MethodBase);
                     var classToWeave_L = new ClassToWeave();
-                    Assert.AreEqual(classToWeave_L.GetType().GetMethod("Weaved"), MyAspect.MethodBase);
+                    Assert.AreEqual(".ctor", MyAspect.MethodBase.Name);
                 };
         }
 
@@ -30,9 +30,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFin
             public static MethodBase MethodBase;
             public bool NetAspectAttribute = true;
 
-            public void OnFinallyConstructor(MethodBase method)
+            public void OnFinallyConstructor(MethodBase constructor)
             {
-                MethodBase = method;
+                MethodBase = constructor;
             }
         }
     }

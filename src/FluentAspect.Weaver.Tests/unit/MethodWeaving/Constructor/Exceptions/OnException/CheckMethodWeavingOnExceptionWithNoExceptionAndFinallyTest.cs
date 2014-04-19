@@ -41,14 +41,14 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Exceptions.OnExc
             public static MethodBase FinallyMethod;
             public bool NetAspectAttribute = true;
 
-            public void OnExceptionConstructor(MethodBase method)
+            public void OnExceptionConstructor(MethodBase constructor)
             {
-                Method = method;
+                Method = constructor;
             }
 
-            public void OnFinallyConstructor(MethodBase method)
+            public void OnFinallyConstructor(MethodBase constructor)
             {
-                FinallyMethod = method;
+                FinallyMethod = constructor;
             }
         }
     }

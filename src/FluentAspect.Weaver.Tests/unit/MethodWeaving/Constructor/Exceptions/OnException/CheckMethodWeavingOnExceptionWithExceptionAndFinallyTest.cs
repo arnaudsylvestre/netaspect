@@ -19,8 +19,8 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Exceptions.OnExc
                     }
                     catch (Exception)
                     {
-                        Assert.AreEqual("Weaved", MyAspect.Constructor.Name);
-                        Assert.AreEqual("Weaved", MyAspect.FinallyConstructor.Name);
+                        Assert.AreEqual(".ctor", MyAspect.Constructor.Name);
+                        Assert.AreEqual(".ctor", MyAspect.FinallyConstructor.Name);
                     }
                 };
         }

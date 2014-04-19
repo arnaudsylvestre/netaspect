@@ -4,16 +4,16 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.Before.Method
 {
-    public class BeforeConstructorMethodBaseParameterWithRealTypeTest :
-        NetAspectTest<BeforeConstructorMethodBaseParameterWithRealTypeTest.ClassToWeave>
+    public class BeforeConstructorConstructorParameterWithRealTypeTest :
+        NetAspectTest<BeforeConstructorConstructorParameterWithRealTypeTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
             return () =>
                 {
-                    Assert.IsNull(MyAspect.MethodBase);
+                    Assert.IsNull(MyAspect.Constructor);
                     var classToWeave_L = new ClassToWeave();
-                    Assert.AreEqual(classToWeave_L.GetType().GetMethod("Weaved"), MyAspect.MethodBase);
+                    Assert.AreEqual(classToWeave_L.GetType().GetMethod("Weaved"), MyAspect.Constructor);
                 };
         }
 
@@ -27,12 +27,12 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.Befor
 
         public class MyAspect : Attribute
         {
-            public static MethodBase MethodBase;
+            public static ConstructorInfo Constructor;
             public bool NetAspectAttribute = true;
 
-            public void BeforeConstructor(MethodBase method)
+            public void BeforeConstructor(ConstructorInfo constructor)
             {
-                MethodBase = method;
+                Constructor = constructor;
             }
         }
     }

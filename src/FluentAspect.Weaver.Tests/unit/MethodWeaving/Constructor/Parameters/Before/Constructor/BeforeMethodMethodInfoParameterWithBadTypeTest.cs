@@ -1,10 +1,10 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After.Result
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.Before.Method
 {
-    public class AfterConstructorResultParameterWithVoidTest :
-        NetAspectTest<AfterConstructorResultParameterWithVoidTest.ClassToWeave>
+    public class BeforeConstructorConstructorParameterWithBadTypeTest :
+        NetAspectTest<BeforeConstructorConstructorParameterWithBadTypeTest.ClassToWeave>
     {
         protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
@@ -12,8 +12,8 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "Impossible to use the result parameter in the method After of the type '{0}' because the return type of the method Weaved in the type {1} is void",
-                        typeof (MyAspect).FullName, typeof (ClassToWeave).FullName));
+                        "the method parameter in the method Before of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.Constructor",
+                        typeof (MyAspect).FullName));
         }
 
         public class ClassToWeave
@@ -28,7 +28,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
         {
             public bool NetAspectAttribute = true;
 
-            public void AfterConstructor(int result)
+            public void BeforeConstructor(int method)
             {
             }
         }

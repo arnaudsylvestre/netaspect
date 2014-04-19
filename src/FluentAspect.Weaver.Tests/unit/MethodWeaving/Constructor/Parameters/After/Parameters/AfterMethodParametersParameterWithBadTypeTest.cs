@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the parameters parameter in the method After of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
+                        "the parameters parameter in the method AfterConstructor of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
                         typeof (MyAspect).FullName, typeof (object[])));
         }
 
