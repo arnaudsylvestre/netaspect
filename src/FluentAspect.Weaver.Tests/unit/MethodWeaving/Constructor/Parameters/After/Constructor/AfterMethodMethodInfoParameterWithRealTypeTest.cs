@@ -13,7 +13,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
                 {
                     Assert.IsNull(MyAspect.ConstructorInfo);
                     var classToWeave_L = new ClassToWeave();
-                    Assert.AreEqual(classToWeave_L.GetType().GetMethod("Weaved"), MyAspect.ConstructorInfo);
+                    Assert.AreEqual(".ctor", MyAspect.ConstructorInfo.Name);
                 };
         }
 

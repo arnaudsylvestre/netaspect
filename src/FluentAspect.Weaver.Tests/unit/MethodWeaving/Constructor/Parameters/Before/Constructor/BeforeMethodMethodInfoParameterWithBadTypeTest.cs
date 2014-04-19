@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.Befor
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the method parameter in the method Before of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.Constructor",
+                        "the constructor parameter in the method Before of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.ConstructorInfo",
                         typeof (MyAspect).FullName));
         }
 
@@ -28,7 +28,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.Befor
         {
             public bool NetAspectAttribute = true;
 
-            public void BeforeConstructor(int method)
+            public void BeforeConstructor(int constructor)
             {
             }
         }
