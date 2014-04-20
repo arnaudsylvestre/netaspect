@@ -1,11 +1,10 @@
 using System;
-using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnException.Method
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After.Constructor
 {
-    public class OnExceptionConstructorConstructorInfoParameterWithRealTypeReferencedTest :
-        NetAspectTest<OnExceptionConstructorConstructorInfoParameterWithRealTypeReferencedTest.ClassToWeave>
+    public class AfterConstructorConstructorInfoParameterWithBadTypeTest :
+        NetAspectTest<AfterConstructorConstructorInfoParameterWithBadTypeTest.ClassToWeave>
     {
         protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
@@ -13,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnExc
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'constructor' in the method OnExceptionConstructor of the type '{0}'",
+                        "the constructor parameter in the method AfterConstructor of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.MethodBase",
                         typeof (MyAspect).FullName));
         }
 
@@ -27,12 +26,10 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnExc
 
         public class MyAspect : Attribute
         {
-            public static ConstructorInfo Method;
             public bool NetAspectAttribute = true;
 
-            public void OnExceptionConstructor(ref ConstructorInfo constructor)
+            public void AfterConstructor(int constructor)
             {
-                Method = constructor;
             }
         }
     }

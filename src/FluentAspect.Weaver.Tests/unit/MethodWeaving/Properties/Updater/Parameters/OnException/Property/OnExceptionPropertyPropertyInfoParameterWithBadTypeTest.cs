@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.OnException.Method
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.OnException.Property
 {
     public class OnExceptionPropertyPropertyInfoParameterWithBadTypeTest :
         NetAspectTest<OnExceptionPropertyPropertyInfoParameterWithBadTypeTest.ClassToWeave>

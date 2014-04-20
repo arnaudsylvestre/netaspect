@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After.Method
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After.Constructor
 {
     public class AfterConstructorConstructorInfoParameterWithRealTypeTest :
         NetAspectTest<AfterConstructorConstructorInfoParameterWithRealTypeTest.ClassToWeave>

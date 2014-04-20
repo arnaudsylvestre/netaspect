@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.Before.ParameterName
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.Before.Value
 {
     public class BeforePropertyValueParameterWithRealTypeByteReferencedInInterceptorTest :
         NetAspectTest<BeforePropertyValueParameterWithRealTypeByteReferencedInInterceptorTest.ClassToWeave>

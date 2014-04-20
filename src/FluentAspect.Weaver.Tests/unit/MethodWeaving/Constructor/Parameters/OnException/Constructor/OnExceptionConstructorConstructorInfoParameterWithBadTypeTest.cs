@@ -1,10 +1,10 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFinally.Parameters
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnException.Constructor
 {
-    public class OnFinallyConstructorParametersParameterWithRealTypeReferencedTest :
-        NetAspectTest<OnFinallyConstructorParametersParameterWithRealTypeReferencedTest.ClassToWeave>
+    public class OnExceptionConstructorConstructorInfoParameterWithBadTypeTest :
+        NetAspectTest<OnExceptionConstructorConstructorInfoParameterWithBadTypeTest.ClassToWeave>
     {
         protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFin
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'parameters' in the method OnFinally of the type '{0}'",
+                        "the constructor parameter in the method OnExceptionConstructor of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.ConstructorInfo",
                         typeof (MyAspect).FullName));
         }
 
@@ -26,12 +26,10 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFin
 
         public class MyAspect : Attribute
         {
-            public static object[] Parameters;
             public bool NetAspectAttribute = true;
 
-            public void OnFinallyConstructor(ref object[] parameters)
+            public void OnExceptionConstructor(int constructor)
             {
-                Parameters = parameters;
             }
         }
     }

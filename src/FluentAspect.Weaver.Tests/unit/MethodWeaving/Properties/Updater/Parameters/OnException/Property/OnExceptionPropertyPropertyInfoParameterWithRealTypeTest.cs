@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.OnException.Method
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameters.OnException.Property
 {
     public class OnExceptionPropertyPropertyInfoParameterWithRealTypeTest :
         NetAspectTest<OnExceptionPropertyPropertyInfoParameterWithRealTypeTest.ClassToWeave>

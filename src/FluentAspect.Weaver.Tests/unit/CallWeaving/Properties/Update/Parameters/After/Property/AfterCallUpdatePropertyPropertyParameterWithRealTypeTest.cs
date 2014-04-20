@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.After.Field
+namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.After.Property
 {
     public class AfterCallUpdatePropertyPropertyParameterWithRealTypeTest :
         NetAspectTest<AfterCallUpdatePropertyPropertyParameterWithRealTypeTest.ClassToWeave>

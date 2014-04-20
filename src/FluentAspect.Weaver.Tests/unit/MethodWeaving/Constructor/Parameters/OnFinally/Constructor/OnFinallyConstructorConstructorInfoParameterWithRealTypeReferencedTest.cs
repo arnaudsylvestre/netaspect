@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFinally.Method
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFinally.Constructor
 {
     public class OnFinallyConstructorConstructorInfoParameterWithRealTypeReferencedTest :
         NetAspectTest<OnFinallyConstructorConstructorInfoParameterWithRealTypeReferencedTest.ClassToWeave>

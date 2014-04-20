@@ -1,10 +1,10 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFinally.Parameters
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnException.Exceptions
 {
-    public class OnFinallyConstructorParametersParameterWithBadTypeTest :
-        NetAspectTest<OnFinallyConstructorParametersParameterWithBadTypeTest.ClassToWeave>
+    public class OnExceptionConstructorExceptionParameterWithExceptionTypeReferencedTest :
+        NetAspectTest<OnExceptionConstructorExceptionParameterWithExceptionTypeReferencedTest.ClassToWeave>
     {
         protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
@@ -12,8 +12,8 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFin
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the parameters parameter in the method OnFinally of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
-                        typeof (MyAspect).FullName, typeof (object[])));
+                        "impossible to ref/out the parameter 'exception' in the method OnExceptionConstructor of the type '{0}'",
+                        typeof (MyAspect).FullName));
         }
 
         public class ClassToWeave
@@ -28,7 +28,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFin
         {
             public bool NetAspectAttribute = true;
 
-            public void OnFinallyConstructor(int parameters)
+            public void OnExceptionConstructor(ref Exception exception)
             {
             }
         }

@@ -1,11 +1,10 @@
 using System;
-using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnException.Method
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnException.Instance
 {
-    public class OnExceptionConstructorConstructorInfoParameterWithRealTypeOutTest :
-        NetAspectTest<OnExceptionConstructorConstructorInfoParameterWithRealTypeOutTest.ClassToWeave>
+    public class OnExceptionConstructorInstanceParameterWithRealTypeReferencedTest :
+        NetAspectTest<OnExceptionConstructorInstanceParameterWithRealTypeReferencedTest.ClassToWeave>
     {
         protected override Action<ErrorHandler> CreateErrorHandlerProvider()
         {
@@ -13,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnExc
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'constructor' in the method OnExceptionConstructor of the type '{0}'",
+                        "impossible to ref/out the parameter 'instance' in the method OnExceptionConstructor of the type '{0}'",
                         typeof (MyAspect).FullName));
         }
 
@@ -27,11 +26,12 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnExc
 
         public class MyAspect : Attribute
         {
+            public static ClassToWeave Instance;
             public bool NetAspectAttribute = true;
 
-            public void OnExceptionConstructor(out ConstructorInfo constructor)
+            public void OnExceptionConstructor(ref ClassToWeave instance)
             {
-                constructor = null;
+                Instance = instance;
             }
         }
     }
