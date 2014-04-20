@@ -27,10 +27,10 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFin
 
         public class MyAspect : Attribute
         {
-            public static ConstructorInfo Method;
+            public static MethodBase Method;
             public bool NetAspectAttribute = true;
 
-            public void OnFinallyConstructor(ref ConstructorInfo constructor)
+            public void OnFinallyConstructor(ref MethodBase constructor)
             {
                 Method = constructor;
             }

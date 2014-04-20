@@ -13,7 +13,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.Befor
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'method' in the method BeforeConstructor of the type '{0}'",
+                        "impossible to ref/out the parameter 'constructor' in the method BeforeConstructor of the type '{0}'",
                         typeof (MyAspect).FullName));
         }
 

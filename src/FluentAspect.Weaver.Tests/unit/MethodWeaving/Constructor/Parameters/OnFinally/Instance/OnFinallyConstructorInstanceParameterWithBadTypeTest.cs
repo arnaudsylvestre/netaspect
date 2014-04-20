@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFin
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the instance parameter in the method Before of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
+                        "the instance parameter in the method OnFinallyConstructor of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
                         typeof (MyAspect).FullName, typeof (ClassToWeave).FullName));
         }
 
@@ -28,7 +28,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFin
         {
             public bool NetAspectAttribute = true;
 
-            public void BeforeConstructor(int instance)
+            public void OnFinallyConstructor(int instance)
             {
             }
         }

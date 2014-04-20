@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFin
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "impossible to ref/out the parameter 'instance' in the method OnFinally of the type '{0}'",
+                        "impossible to ref/out the parameter 'instance' in the method OnFinallyConstructor of the type '{0}'",
                         typeof (MyAspect).FullName));
         }
 

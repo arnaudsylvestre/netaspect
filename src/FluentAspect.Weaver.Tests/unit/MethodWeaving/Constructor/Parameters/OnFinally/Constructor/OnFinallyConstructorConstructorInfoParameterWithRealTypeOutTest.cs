@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFin
         {
             public bool NetAspectAttribute = true;
 
-            public void OnFinallyConstructor(out ConstructorInfo constructor)
+            public void OnFinallyConstructor(out MethodBase constructor)
             {
                 constructor = null;
             }

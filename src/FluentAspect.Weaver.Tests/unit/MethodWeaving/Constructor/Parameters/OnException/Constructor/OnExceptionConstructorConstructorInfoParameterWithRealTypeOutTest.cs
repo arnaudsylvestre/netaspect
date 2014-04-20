@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnExc
         {
             public bool NetAspectAttribute = true;
 
-            public void OnExceptionConstructor(out ConstructorInfo constructor)
+            public void OnExceptionConstructor(out MethodBase constructor)
             {
                 constructor = null;
             }

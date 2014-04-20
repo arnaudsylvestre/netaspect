@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnExc
                 errorHandler =>
                 errorHandler.Errors.Add(
                     string.Format(
-                        "the parameters parameter in the method OnException of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
+                        "the parameters parameter in the method OnExceptionConstructor of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
                         typeof (MyAspect).FullName, typeof (object[])));
         }
 
