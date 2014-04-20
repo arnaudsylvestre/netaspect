@@ -38,6 +38,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
         public void Inject(List<Instruction> instructions, T availableInformations)
         {
+            !!!!
             VariableDefinition interceptor = _method.CreateVariable(_aspectType);
             instructions.AppendCreateNewObject(interceptor, _aspectType, _method.Module);
             instructions.Add(Instruction.Create(OpCodes.Ldloc, interceptor));
