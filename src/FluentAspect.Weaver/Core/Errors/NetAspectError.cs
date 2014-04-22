@@ -2,23 +2,29 @@
 
 namespace NetAspect.Weaver.Core.Errors
 {
+    public enum ErrorCode
+    {
+        
+    }
+
+    public class FileLocation
+    {
+        public string FilePath { get; set; }
+        public int Column { get; set; }
+        public int Line { get; set; }
+    }        
+
     public class NetAspectError
     {
-        private List<object> parameters;
-        private IErrorTextProvider errorTextProvider;
-
-        public NetAspectError(List<object> parameters, ErrorKind kind, IErrorTextProvider errorTextProvider)
+        public NetAspectError(ErrorCode code, List<object> parameters, FileLocation location)
         {
-            this.parameters = parameters;
-            Kind = kind;
-            this.errorTextProvider = errorTextProvider;
+            Code = code;
+            Parameters = parameters;
+            Location = location;
         }
 
-        public ErrorKind Kind { get; set; }
-
-        public override string ToString()
-        {
-            return string.Format(errorTextProvider.GetMessage(Kind), parameters.ToArray());
-        }
+        public ErrorCode Code { get; set; }
+        public List<object> Parameters { get; set; }
+        public FileLocation Location { get;  private set; }
     }
 }

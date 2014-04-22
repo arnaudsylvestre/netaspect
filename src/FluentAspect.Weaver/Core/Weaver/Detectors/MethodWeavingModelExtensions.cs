@@ -20,12 +20,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
             {
-               before = CallWeavingMethodInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction);
+               before = CallWeavingMethodInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect, beforeInstruction);
             }
             var afterCallInterceptorMethod = afterCallMethod.Method;
             if (afterCallInterceptorMethod != null)
             {
-               after = CallWeavingMethodInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction);
+               after = CallWeavingMethodInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction);
             }
             weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
         }
@@ -40,12 +40,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
             {
-                before = CallWeavingFieldInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction);
+                before = CallWeavingFieldInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect, beforeInstruction);
             }
             var afterCallInterceptorMethod = afterCallMethod.Method;
             if (afterCallInterceptorMethod != null)
             {
-                after = CallWeavingFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction);
+                after = CallWeavingFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction);
             }
             weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
         }
@@ -58,12 +58,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
             {
-                before = CallWeavingGetPropertyInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction, property);
+                before = CallWeavingGetPropertyInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect, beforeInstruction, property);
             }
             var afterCallInterceptorMethod = afterCallMethod.Method;
             if (afterCallInterceptorMethod != null)
             {
-                after = CallWeavingGetPropertyInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction, property);
+                after = CallWeavingGetPropertyInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction, property);
             }
             weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
         }
@@ -78,12 +78,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
            var beforCallInterceptorMethod = beforeCallMethod.Method;
            if (beforCallInterceptorMethod != null)
            {
-              before = CallWeavingSetPropertyInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction, property);
+              before = CallWeavingSetPropertyInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect, beforeInstruction, property);
            }
            var afterCallInterceptorMethod = afterCallMethod.Method;
            if (afterCallInterceptorMethod != null)
            {
-              after = CallWeavingSetPropertyInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction, property);
+              after = CallWeavingSetPropertyInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction, property);
            }
            weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
         }
@@ -98,12 +98,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
             {
-                before = CallWeavingUpdateFieldInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect.Type, beforeInstruction);
+                before = CallWeavingUpdateFieldInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect, beforeInstruction);
             }
             var afterCallInterceptorMethod = afterCallMethod.Method;
             if (afterCallInterceptorMethod != null)
             {
-                after = CallWeavingUpdateFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect.Type, beforeInstruction);
+                after = CallWeavingUpdateFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction);
             }
             weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
         }
@@ -148,26 +148,26 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
            if (before.Method != null)
            {
               weavingModel.Method.Befores.Add(ConstructorWeavingMethodInjectorFactory.CreateForBefore(method, before.Method,
-                                                                                                 aspect.Type));
+                                                                                                 aspect));
            }
            if (after.Method != null)
            {
               weavingModel.Method.Afters.Add(ConstructorWeavingMethodInjectorFactory.CreateForAfter(method, after.Method,
-                                                                                               aspect.Type));
+                                                                                               aspect));
            }
            if (onException.Method != null)
            {
               weavingModel.Method.OnExceptions.Add(ConstructorWeavingMethodInjectorFactory.CreateForOnException(method,
                                                                                                            onException
                                                                                                                .Method,
-                                                                                                           aspect.Type));
+                                                                                                           aspect));
            }
            if (onFinally.Method != null)
            {
               weavingModel.Method.OnFinallys.Add(ConstructorWeavingMethodInjectorFactory.CreateForOnFinally(method,
                                                                                                        onFinally
                                                                                                            .Method,
-                                                                                                       aspect.Type));
+                                                                                                       aspect));
            }
         }
 

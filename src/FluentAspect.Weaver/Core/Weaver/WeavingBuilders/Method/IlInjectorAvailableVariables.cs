@@ -32,12 +32,14 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
         private VariableDefinition _calledParametersObject;
 
         public List<VariableDefinition> Variables { get; private set; }
+        public List<FieldDefinition> Fields { get; private set; }
 
         public IlInjectorAvailableVariablesForInstruction(IlInjectorAvailableVariables methodVariables, Instruction instruction)
         {
             this.methodVariables = methodVariables;
             this.instruction = instruction;
             Variables = new List<VariableDefinition>();
+            Fields = new List<FieldDefinition>();
         }
 
 
@@ -184,12 +186,13 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
         private VariableDefinition _field;
 
         public List<Instruction> BeforeInstructions = new List<Instruction>();
-        public List<VariableDefinition> Variables = new List<VariableDefinition>(); 
 
         public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method)
         {
             _result = result;
             this.method = method;
+            Variables = new List<VariableDefinition>();
+            Fields = new List<FieldDefinition>();
         }
 
 
@@ -211,6 +214,9 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                 return currentMethodInfo;
             }
         }
+
+        public List<VariableDefinition> Variables { get; private set; }
+        public List<FieldDefinition> Fields { get; private set; }
 
         public VariableDefinition Result
         {

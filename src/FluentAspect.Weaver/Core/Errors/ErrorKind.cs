@@ -2,6 +2,10 @@
 {
     public enum ErrorKind
     {
-
+        Information,
+        Warning,
+        Error,
+        Failure,
+        
     }
 }

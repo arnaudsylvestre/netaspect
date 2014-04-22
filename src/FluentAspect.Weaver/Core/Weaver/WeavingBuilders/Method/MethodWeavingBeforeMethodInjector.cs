@@ -21,7 +21,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
    {
       public void CreateInterceptor(AspectBuilder aspect, VariableDefinition interceptor)
       {
-         aspect.Instructions.AppendCreateNewObject(interceptor, aspect.Aspect.Type, aspect.Method.Module);
+         //aspect.Instructions.AppendCreateNewObject(interceptor, aspect.Aspect.Type, aspect.Method.Module);
       }
    }
 
