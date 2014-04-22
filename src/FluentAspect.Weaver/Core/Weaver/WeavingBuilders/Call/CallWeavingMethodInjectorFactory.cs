@@ -2,6 +2,7 @@
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Generators;
@@ -13,7 +14,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
     {
         public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForBefore(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,
-                                                                                Type aspectType, Instruction instruction)
+                                                                                NetAspectDefinition aspect, Instruction instruction)
         {
            var calledMethod = (instruction.Operand as MethodReference).Resolve();
            var checker = new ParametersChecker();
@@ -24,7 +25,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
             FillCommon(method, parametersIlGenerator, calledMethod, instruction);
 
             return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariablesForInstruction>(method, interceptorMethod, checker,
-                                                                                       parametersIlGenerator);
+                                                                                       parametersIlGenerator, aspect);
         }
         private static void FillCommon(MethodDefinition method,
                                        ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> parametersIlGenerator, MethodDefinition calledMethod, Instruction instruction)
@@ -64,7 +65,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
 
         public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
-                                                                               Type aspectType, Instruction instruction)
+                                                                               NetAspectDefinition aspect, Instruction instruction)
         {
            var calledMethod = (instruction.Operand as MethodReference).Resolve();
             var checker = new ParametersChecker();
@@ -76,7 +77,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
             FillCommon(method, parametersIlGenerator, calledMethod, instruction);
             //parametersIlGenerator.CreateIlGeneratorForResultParameter();
             return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariablesForInstruction>(method, interceptorMethod, checker,
-                                                                                       parametersIlGenerator);
+                                                                                       parametersIlGenerator, aspect);
         }
     }
 }

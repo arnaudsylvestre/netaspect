@@ -16,16 +16,6 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
         public readonly List<Instruction> AfterInstruction = new List<Instruction>();
     }
 
-    public class AroundMethodIl
-    {
-        public List<VariableDefinition> Variables;
-        public List<Instruction> InitBeforeInstruction;
-        public List<Instruction> BeforeMethod;
-        public List<Instruction> AfterMethod;
-        public List<Instruction> OnException;
-        public List<Instruction> OnFinally;
-    }
-
     public interface IAroundInstructionWeaver
     {
         void Weave(AroundInstructionIl il, IlInjectorAvailableVariablesForInstruction variables, Instruction instruction);

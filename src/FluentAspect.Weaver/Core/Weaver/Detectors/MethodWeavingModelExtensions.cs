@@ -117,26 +117,26 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             if (before.Method != null)
             {
                 weavingModel.Method.Befores.Add(MethodWeavingMethodInjectorFactory.CreateForBefore(method, before.Method,
-                                                                                                   aspect.Type));
+                                                                                                   aspect));
             }
             if (after.Method != null)
             {
                 weavingModel.Method.Afters.Add(MethodWeavingMethodInjectorFactory.CreateForAfter(method, after.Method,
-                                                                                                 aspect.Type));
+                                                                                                 aspect));
             }
             if (onException.Method != null)
             {
                 weavingModel.Method.OnExceptions.Add(MethodWeavingMethodInjectorFactory.CreateForOnException(method,
                                                                                                              onException
                                                                                                                  .Method,
-                                                                                                             aspect.Type));
+                                                                                                             aspect));
             }
             if (onFinally.Method != null)
             {
                 weavingModel.Method.OnFinallys.Add(MethodWeavingMethodInjectorFactory.CreateForOnFinally(method,
                                                                                                          onFinally
                                                                                                              .Method,
-                                                                                                         aspect.Type));
+                                                                                                         aspect));
             }
         }
 
@@ -180,20 +180,20 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             {
                 weavingModel.Method.Befores.Add(MethodWeavingPropertyGetInjectorFactory.CreateForBefore(method,
                                                                                                         before.Method,
-                                                                                                        aspect.Type));
+                                                                                                        aspect));
             }
             if (after.Method != null)
             {
                 weavingModel.Method.Afters.Add(MethodWeavingPropertyGetInjectorFactory.CreateForAfter(method,
                                                                                                       after.Method,
-                                                                                                      aspect.Type));
+                                                                                                      aspect));
             }
             if (onException.Method != null)
             {
                 weavingModel.Method.OnExceptions.Add(MethodWeavingPropertyGetInjectorFactory.CreateForOnException(
                     method,
                     onException.Method,
-                    aspect.Type));
+                    aspect));
             }
             if (onFinally.Method != null)
             {
@@ -201,7 +201,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
                                                                                                               onFinally
                                                                                                                   .Method,
                                                                                                               aspect
-                                                                                                                  .Type));
+                                                                                                                  ));
             }
         }
 
@@ -214,20 +214,20 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             {
                 weavingModel.Method.Befores.Add(MethodWeavingPropertySetInjectorFactory.CreateForBefore(method,
                                                                                                         before.Method,
-                                                                                                        aspect.Type));
+                                                                                                        aspect));
             }
             if (after.Method != null)
             {
                 weavingModel.Method.Afters.Add(MethodWeavingPropertySetInjectorFactory.CreateForAfter(method,
                                                                                                       after.Method,
-                                                                                                      aspect.Type));
+                                                                                                      aspect));
             }
             if (onException.Method != null)
             {
                 weavingModel.Method.OnExceptions.Add(MethodWeavingPropertySetInjectorFactory.CreateForOnException(
                     method,
                     onException.Method,
-                    aspect.Type));
+                    aspect));
             }
             if (onFinally.Method != null)
             {
@@ -235,7 +235,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
                                                                                                               onFinally
                                                                                                                   .Method,
                                                                                                               aspect
-                                                                                                                  .Type));
+                                                                                                                  ));
             }
         }
     }

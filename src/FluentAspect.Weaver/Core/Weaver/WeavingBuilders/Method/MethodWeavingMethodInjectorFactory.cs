@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Mono.Cecil;
+using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Generators;
@@ -11,7 +12,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
     {
         public static IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,
-                                                                                Type aspectType)
+                                                                                NetAspectDefinition aspect)
         {
             var checker = new ParametersChecker();
             FillCommon(method, checker);
@@ -21,12 +22,12 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             FillCommon(method, parametersIlGenerator);
 
             return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
-                                                                                       parametersIlGenerator);
+                                                                                       parametersIlGenerator, aspect);
         }
 
         public static IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method,
                                                                                    MethodInfo interceptorMethod,
-                                                                                   Type aspectType)
+                                                                                   NetAspectDefinition aspect)
         {
             var checker = new ParametersChecker();
             FillCommon(method, checker);
@@ -36,7 +37,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             FillCommon(method, parametersIlGenerator);
 
             return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
-                                                                                       parametersIlGenerator);
+                                                                                       parametersIlGenerator, aspect);
         }
 
         private static void FillCommon(MethodDefinition method,
@@ -58,7 +59,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
         public static IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
-                                                                               Type aspectType)
+                                                                               NetAspectDefinition aspect)
         {
             var checker = new ParametersChecker();
             FillCommon(method, checker);
@@ -69,12 +70,12 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             FillCommon(method, parametersIlGenerator);
             parametersIlGenerator.CreateIlGeneratorForResultParameter();
             return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
-                                                                                       parametersIlGenerator);
+                                                                                       parametersIlGenerator, aspect);
         }
 
         public static IIlInjector<IlInjectorAvailableVariables> CreateForOnException(MethodDefinition method,
                                                                                      MethodInfo methodInfo,
-                                                                                     Type aspectType)
+                                                                                     NetAspectDefinition aspect)
         {
             var checker = new ParametersChecker();
             FillCommon(method, checker);
@@ -85,7 +86,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             FillCommon(method, parametersIlGenerator);
             parametersIlGenerator.CreateIlGeneratorForExceptionParameter();
             return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, methodInfo,
-                                                                                       checker, parametersIlGenerator);
+                                                                                       checker, parametersIlGenerator, aspect);
         }
     }
 }

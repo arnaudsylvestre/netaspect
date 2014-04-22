@@ -26,17 +26,18 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
         public List<Instruction> recallcalledParametersInstructions = new List<Instruction>();
         private List<Instruction> beforeAfter = new List<Instruction>();
 
-        public List<VariableDefinition> Variables = new List<VariableDefinition>();
         private VariableDefinition _called;
         private Instruction instruction;
         private Dictionary<string, VariableDefinition> _calledParameters;
         private VariableDefinition _calledParametersObject;
 
+        public List<VariableDefinition> Variables { get; private set; }
 
         public IlInjectorAvailableVariablesForInstruction(IlInjectorAvailableVariables methodVariables, Instruction instruction)
         {
             this.methodVariables = methodVariables;
             this.instruction = instruction;
+            Variables = new List<VariableDefinition>();
         }
 
 
