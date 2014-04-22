@@ -20,8 +20,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>();
             FillCommon(method, parametersIlGenerator, instruction, property);
 
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariablesForInstruction>(method, interceptorMethod,
-                                                                                       aspectType, checker,
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariablesForInstruction>(method, interceptorMethod, checker,
                                                                                        parametersIlGenerator);
         }
         private static void FillCommon(MethodDefinition method,
@@ -69,8 +68,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>();
             FillCommon(method, parametersIlGenerator, instruction, property);
             //parametersIlGenerator.CreateIlGeneratorForResultParameter();
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariablesForInstruction>(method, interceptorMethod,
-                                                                                       aspectType, checker,
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariablesForInstruction>(method, interceptorMethod, checker,
                                                                                        parametersIlGenerator);
         }
     }

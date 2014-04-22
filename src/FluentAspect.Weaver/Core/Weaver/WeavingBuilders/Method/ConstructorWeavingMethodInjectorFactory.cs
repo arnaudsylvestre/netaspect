@@ -20,8 +20,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
 
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod,
-                                                                                       aspectType, checker,
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
                                                                                        parametersIlGenerator);
         }
 
@@ -36,8 +35,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
 
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod,
-                                                                                       aspectType, checker,
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
                                                                                        parametersIlGenerator);
         }
 
@@ -68,8 +66,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod,
-                                                                                       aspectType, checker,
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
                                                                                        parametersIlGenerator);
         }
 
@@ -85,7 +82,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
             parametersIlGenerator.CreateIlGeneratorForExceptionParameter();
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, methodInfo, aspectType,
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, methodInfo,
                                                                                        checker, parametersIlGenerator);
         }
     }
