@@ -263,5 +263,24 @@ namespace NetAspect.Weaver.Core.Model.Aspect
         {
             get { return new Interceptor(_attribute.GetMethod("OnFinallyPropertySetMethod")); }
         }
+
+       public LifeCycle LifeCycle
+       {
+          get { return LifeCycleHelper.Convert(_attribute.GetValueForField("LifeCycle", () => "Transient")); }
+       }
     }
+
+   public static class LifeCycleHelper
+   {
+      public static LifeCycle Convert(string lifeCycleValue)
+      {
+         return (LifeCycle) Enum.Parse(typeof (LifeCycle), lifeCycleValue, true);
+      }
+   }
+
+   public enum LifeCycle
+   {
+      Transient,
+
+   }
 }
