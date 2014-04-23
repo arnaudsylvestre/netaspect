@@ -9,9 +9,9 @@ namespace NetAspect.Weaver.Core.Weaver
    public class WeaverEngine
    {
       private readonly IAssemblyPoolFactory assemblyPoolFactory;
-      private readonly WeavingModelComputer2 weavingModelComputer;
+      private readonly WeavingModelComputer weavingModelComputer;
 
-      public WeaverEngine(WeavingModelComputer2 weavingModelComputer, IAssemblyPoolFactory assemblyPoolFactory)
+      public WeaverEngine(WeavingModelComputer weavingModelComputer, IAssemblyPoolFactory assemblyPoolFactory)
       {
          this.weavingModelComputer = weavingModelComputer;
          this.assemblyPoolFactory = assemblyPoolFactory;

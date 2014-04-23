@@ -8,6 +8,7 @@ using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Constructor;
 using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Property;
 using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Core.Weaver.Engine.AspectCheckers;
 using NetAspect.Weaver.Core.Weaver.Engine.AspectFinders;
 using NetAspect.Weaver.Core.Weaver.Engine.AssemblyPoolFactories;
 
@@ -18,8 +19,7 @@ namespace NetAspect.Weaver
       public static WeaverEngine Create()
       {
          return new WeaverEngine(
-            new WeavingModelComputer2(
-               new WeavingModelComputer(
+            new WeavingModelComputer(
                   new MultiWeavingDetector(
                      new MethodAttributeWeavingDetector(),
                      new PropertyGetAttributeWeavingDetector(),
@@ -27,8 +27,9 @@ namespace NetAspect.Weaver
                      new CallGetFieldInstructionWeavingDetector(),
                      new CallUpdateFieldInstructionWeavingDetector(),
                      new CallGetPropertyInstructionWeavingDetector(),
-                     new ConstructorAttributeWeavingDetector())),
-                     new DefaultAspectFinder()),
+                     new ConstructorAttributeWeavingDetector()),
+                     new DefaultAspectFinder(),
+                     new DefaultAspectChecker()),
             new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker()));
       }
    }

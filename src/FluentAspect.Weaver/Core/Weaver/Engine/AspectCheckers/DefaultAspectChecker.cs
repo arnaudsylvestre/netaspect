@@ -3,7 +3,7 @@ using NetAspect.Weaver.Core.Model.Aspect;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine.AspectCheckers
 {
-   public class DefaultAspectChecker : WeavingModelComputer2.IAspectChecker
+   public class DefaultAspectChecker : WeavingModelComputer.IAspectChecker
    {
       public void Check(NetAspectDefinition aspect_P, ErrorHandler errorHandler_P)
       {
