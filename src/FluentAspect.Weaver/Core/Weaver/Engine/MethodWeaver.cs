@@ -1,6 +1,4 @@
-﻿#region
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -11,8 +9,6 @@ using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 using NetAspect.Weaver.Helpers.IL;
-
-#endregion
 
 namespace NetAspect.Weaver.Core.Weaver.Engine
 {

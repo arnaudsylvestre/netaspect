@@ -20,7 +20,7 @@ namespace NetAspect.Weaver.Core.Model.Weaving
             Method = new MethodWeavingModel();
         }
 
-        public MethodWeavingModel Method { get; set; }
+        public MethodWeavingModel Method { get; private set; }
 
         public bool IsEmpty
         {
@@ -32,13 +32,6 @@ namespace NetAspect.Weaver.Core.Model.Weaving
                        Method.OnFinallys.Count == 0 &&
                        Instructions.Count == 0;
             }
-        }
-
-        public IEnumerable<IAroundInstructionWeaver> GetAroundInstructionWeavers(Instruction instruction)
-        {
-            if (!Instructions.ContainsKey(instruction))
-                return new List<IAroundInstructionWeaver>();
-            return Instructions[instruction];
         }
     }
 }
