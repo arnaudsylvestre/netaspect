@@ -1,9 +1,9 @@
 ﻿using NetAspect.Weaver.Apis.AssemblyChecker;
 using NetAspect.Weaver.Core.Assemblies;
 
-namespace NetAspect.Weaver.Core.Weaver
+namespace NetAspect.Weaver.Core.Weaver.Engine.AssemblyPoolFactories
 {
-   public class DefaultAssemblyPoolFactory : IAssemblyPoolFactory
+   public class DefaultAssemblyPoolFactory : WeaverEngine.IAssemblyPoolFactory
    {
       private readonly IAssemblyChecker assemblyChecker;
 

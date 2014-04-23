@@ -8,6 +8,7 @@ using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Constructor;
 using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Property;
 using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Core.Weaver.Engine.AssemblyPoolFactories;
 
 namespace NetAspect.Weaver
 {

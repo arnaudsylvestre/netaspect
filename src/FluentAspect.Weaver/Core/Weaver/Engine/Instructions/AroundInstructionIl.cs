@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mono.Cecil.Cil;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine
+namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
 {
    public class AroundInstructionIl
    {

@@ -6,9 +6,8 @@ using NetAspect.Weaver.Core.Assemblies;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.Engine;
 
-namespace NetAspect.Weaver.Core.Weaver
+namespace NetAspect.Weaver.Core.Weaver.Engine
 {
    public class WeavingModelComputer2
    {

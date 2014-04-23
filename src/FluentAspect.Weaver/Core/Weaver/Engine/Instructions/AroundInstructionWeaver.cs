@@ -2,7 +2,7 @@
 using NetAspect.Weaver.Core.Weaver.Generators;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine
+namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
 {
    public class AroundInstructionWeaver : IAroundInstructionWeaver
    {

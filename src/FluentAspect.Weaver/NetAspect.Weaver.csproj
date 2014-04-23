@@ -74,14 +74,13 @@
     <Compile Include="Core\Weaver\Detectors\Selectors\Selector.cs" />
     <Compile Include="Core\Weaver\Detectors\Selectors\SelectorParametersGenerator.cs" />
     <Compile Include="Core\Model\Weaving\WeavingModel.cs" />
-    <Compile Include="Core\Weaver\Engine\AroundInstructionIl.cs" />
-    <Compile Include="Core\Weaver\Engine\AroundInstructionWeaver.cs" />
+    <Compile Include="Core\Weaver\Engine\Instructions\AroundInstructionIl.cs" />
+    <Compile Include="Core\Weaver\Engine\Instructions\AroundInstructionWeaver.cs" />
     <Compile Include="Core\Weaver\Engine\MethodWeaver.cs" />
     <Compile Include="Core\Weaver\Engine\IAroundInstructionWeaver.cs" />
     <Compile Include="Core\Weaver\Generators\CalledParameterNameInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Generators\CalledParametersInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Generators\PropertyPInterceptorParametersIlGenerator.cs" />
-    <Compile Include="Core\Weaver\IAssemblyPoolFactory.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Call\CallWeavingFieldInjectorFactory.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Call\CallWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Call\CallWeavingUpdateFieldInjectorFactory.cs" />
