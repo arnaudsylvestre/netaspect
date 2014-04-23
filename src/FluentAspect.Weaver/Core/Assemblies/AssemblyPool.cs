@@ -19,14 +19,18 @@ namespace NetAspect.Weaver.Core.Assemblies
             this.assemblyChecker = assemblyChecker;
         }
 
-        public void Add(Assembly assembly)
+        public void Add(IEnumerable<Assembly> assemblies)
         {
-            asms.Add(assembly,
-                     AssemblyDefinition.ReadAssembly(assembly.GetAssemblyPath(),
-                                                     new ReaderParameters(ReadingMode.Immediate)
+            foreach (var assembly1 in assemblies)
+            {
+                asms.Add(assembly1,
+                         AssemblyDefinition.ReadAssembly(assembly1.GetAssemblyPath(),
+                                                         new ReaderParameters(ReadingMode.Immediate)
                                                          {
                                                              ReadSymbols = true
                                                          }));
+                
+            }
         }
 
         public AssemblyDefinition GetAssemblyDefinition(Assembly assembly)

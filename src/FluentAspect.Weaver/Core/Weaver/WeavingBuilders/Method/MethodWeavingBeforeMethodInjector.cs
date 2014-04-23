@@ -13,11 +13,10 @@ using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
-   public class MethodWeavingBeforeMethodInjector<T> : IIlInjector<T>
-        where T : IlInstructionInjectorAvailableVariables
+   public class MethodWeavingBeforeMethodInjector : IIlInjector
     {
        private readonly MethodDefinition _method;
-        private readonly ParametersIlGenerator<T> ilGenerator;
+       private readonly ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGenerator;
         private readonly MethodInfo interceptorMethod;
         private readonly ParametersChecker parametersChecker;
        private AspectBuilder aspectBuilder;
@@ -25,7 +24,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
 
         public MethodWeavingBeforeMethodInjector(MethodDefinition method_P, MethodInfo interceptorMethod_P, ParametersChecker parametersChecker,
-                                                 ParametersIlGenerator<T> ilGenerator, NetAspectDefinition aspect)
+                                                 ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGenerator, NetAspectDefinition aspect)
         {
             _method = method_P;
             interceptorMethod = interceptorMethod_P;
@@ -34,12 +33,12 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             this.aspect = aspect;
         }
 
-        public void Check(ErrorHandler errorHandler, T availableInformations)
+        public void Check(ErrorHandler errorHandler)
         {
             parametersChecker.Check(interceptorMethod.GetParameters(), errorHandler);
         }
 
-        public void Inject(List<Instruction> instructions, T availableInformations)
+        public void Inject(List<Instruction> instructions, IlInstructionInjectorAvailableVariables availableInformations)
         {
              
             ilGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations);

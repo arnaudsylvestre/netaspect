@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using Mono.Cecil;
@@ -45,17 +46,15 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
       public Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave, Type[] filter, AssemblyPool assemblyDefinitionProvider, IEnumerable<NetAspectDefinition> aspects)
       {
          var weavingModels = new Dictionary<MethodDefinition, WeavingModel>();
-         foreach (Assembly assembly_L in assembliesToWeave)
+         assemblyDefinitionProvider.Add(assembliesToWeave);
+         foreach (var assembly_L in assembliesToWeave)
          {
-            assemblyDefinitionProvider.Add(assembly_L);
             foreach (var method in assemblyDefinitionProvider.GetAssemblyDefinition(assembly_L).GetAllMethods(filter))
             {
                var model = new WeavingModel();
-               foreach (var aspect_L in aspects)
-               {
-                  _weavingDetector.DetectWeavingModel(method, aspect_L, model);
-               }
-               if (!model.IsEmpty)
+                foreach (var aspect_L in aspects)
+                    _weavingDetector.DetectWeavingModel(method, aspect_L, model);
+                if (!model.IsEmpty)
                   weavingModels.Add(method, model);
             }
          }

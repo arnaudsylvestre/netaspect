@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
 {
     public static class CallWeavingMethodInjectorFactory
     {
-        public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForBefore(MethodDefinition method,
+        public static IIlInjector CreateForBefore(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,
                                                                                 NetAspectDefinition aspect, Instruction instruction)
         {
@@ -63,7 +63,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
             //checker.CreateCheckerForParametersParameter();
         }
 
-        public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForAfter(MethodDefinition method,
+        public static IIlInjector CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
                                                                                NetAspectDefinition aspect, Instruction instruction)
         {

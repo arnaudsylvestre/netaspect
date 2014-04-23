@@ -10,7 +10,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
     public static class MethodWeavingPropertyGetInjectorFactory
     {
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
+        public static IIlInjector CreateForBefore(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,
                                                                                 NetAspectDefinition aspect)
         {
@@ -21,11 +21,11 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
 
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
+            return new MethodWeavingBeforeMethodInjector(method, interceptorMethod, checker,
                                                                                        parametersIlGenerator, aspect);
         }
 
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method,
+        public static IIlInjector CreateForOnFinally(MethodDefinition method,
                                                                                    MethodInfo interceptorMethod,
                                                                                    NetAspectDefinition aspect)
         {
@@ -36,7 +36,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
 
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
+            return new MethodWeavingBeforeMethodInjector(method, interceptorMethod, checker,
                                                                                        parametersIlGenerator, aspect);
         }
 
@@ -55,7 +55,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             checker.CreateCheckerForPropertyParameter();
         }
 
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
+        public static IIlInjector CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
                                                                                NetAspectDefinition aspect)
         {
@@ -67,11 +67,11 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
             parametersIlGenerator.CreateIlGeneratorForResultParameter();
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
+            return new MethodWeavingBeforeMethodInjector(method, interceptorMethod, checker,
                                                                                        parametersIlGenerator, aspect);
         }
 
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnException(MethodDefinition method,
+        public static IIlInjector CreateForOnException(MethodDefinition method,
                                                                                      MethodInfo methodInfo,
                                                                                      NetAspectDefinition aspect)
         {
@@ -83,7 +83,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
             parametersIlGenerator.CreateIlGeneratorForExceptionParameter();
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, methodInfo,
+            return new MethodWeavingBeforeMethodInjector(method, methodInfo,
                                                                                        checker, parametersIlGenerator, aspect);
         }
     }

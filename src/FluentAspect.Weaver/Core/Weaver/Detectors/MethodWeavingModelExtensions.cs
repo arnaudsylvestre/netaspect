@@ -16,8 +16,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
                                                      Instruction beforeInstruction, NetAspectDefinition aspect,
                                                      Interceptor beforeCallMethod, Interceptor afterCallMethod)
         {
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector();
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector();
+            IIlInjector before = new NoIIlInjector();
+            IIlInjector after = new NoIIlInjector();
 
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
@@ -36,8 +36,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
                                                      Instruction beforeInstruction, NetAspectDefinition aspect,
                                                      Interceptor beforeCallMethod, Interceptor afterCallMethod)
         {
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector();
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector();
+            IIlInjector before = new NoIIlInjector();
+            IIlInjector after = new NoIIlInjector();
 
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
@@ -54,8 +54,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
 
         public static void AddGetPropertyCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method, Instruction beforeInstruction, NetAspectDefinition aspect, Interceptor beforeCallMethod, Interceptor afterCallMethod, PropertyDefinition property)
         {
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector();
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector();
+            IIlInjector before = new NoIIlInjector();
+            IIlInjector after = new NoIIlInjector();
 
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)
@@ -74,8 +74,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
 
         public static void AddSetPropertyCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method, Instruction beforeInstruction, NetAspectDefinition aspect, Interceptor beforeCallMethod, Interceptor afterCallMethod, PropertyDefinition property)
         {
-           IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector();
-           IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector();
+           IIlInjector before = new NoIIlInjector();
+           IIlInjector after = new NoIIlInjector();
 
            var beforCallInterceptorMethod = beforeCallMethod.Method;
            if (beforCallInterceptorMethod != null)
@@ -94,8 +94,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
                                                      Instruction beforeInstruction, NetAspectDefinition aspect,
                                                      Interceptor beforeCallMethod, Interceptor afterCallMethod)
         {
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector();
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector();
+            IIlInjector before = new NoIIlInjector();
+            IIlInjector after = new NoIIlInjector();
 
             var beforCallInterceptorMethod = beforeCallMethod.Method;
             if (beforCallInterceptorMethod != null)

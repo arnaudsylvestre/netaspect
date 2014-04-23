@@ -6,14 +6,14 @@ using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
 {
-   public class NoIIlInjector : IIlInjector<IlInjectorAvailableVariablesForInstruction>
+   public class NoIIlInjector : IIlInjector
    {
-      public void Check(ErrorHandler errorHandler, IlInjectorAvailableVariablesForInstruction availableInformations)
+      public void Check(ErrorHandler errorHandler)
       {
             
       }
 
-      public void Inject(List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction availableInformations)
+      public void Inject(List<Instruction> instructions, IlInstructionInjectorAvailableVariables availableInformations)
       {
             
       }
