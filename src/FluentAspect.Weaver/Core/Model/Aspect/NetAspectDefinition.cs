@@ -86,15 +86,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
             get { return new Interceptor(_attribute.GetMethod("AfterGetField")); }
         }
 
-        public bool IsValid
-        {
-            get
-            {
-                return Type.GetField("NetAspectAttribute",
-                                     BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
-                                     BindingFlags.Instance) != null;
-            }
-        }
+        
 
         public Interceptor AfterGetProperty
         {

@@ -68,6 +68,8 @@
     <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorForMethodParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorForPropertyParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Parameters\CalledParameterNameInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Engine\AspectCheckers\DefaultAspectChecker.cs" />
+    <Compile Include="Core\Weaver\Engine\AspectFinders\DefaultAspectFinder.cs" />
     <Compile Include="Core\Weaver\Engine\AssemblyPoolFactories\DefaultAssemblyPoolFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\Property\CallGetPropertyInstructionWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Constructor\ConstructorAttributeWeavingDetector.cs" />

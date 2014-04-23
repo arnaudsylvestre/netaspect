@@ -7,13 +7,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
 {
     public static class NetAspectDefinitionExtensions
     {
-        public static List<NetAspectDefinition> FindAspects(IEnumerable<Type> types_P)
-        {
-            return types_P.
-                Select(t => new NetAspectDefinition(t)).
-                Where(t => t.IsValid)
-                          .ToList();
-        }
+        
 
         public static IEnumerable<Assembly> GetAssembliesToWeave(this IEnumerable<NetAspectDefinition> aspects_P,
                                                                  Assembly defaultAssembly)
