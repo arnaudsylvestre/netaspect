@@ -43,7 +43,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
          return ComputeWeavingModels(assembliesToWeave, filter, assemblyPool, aspects);
       }
 
-      public Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave, Type[] filter, AssemblyPool assemblyDefinitionProvider, IEnumerable<NetAspectDefinition> aspects)
+       private Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave, Type[] filter, AssemblyPool assemblyDefinitionProvider, IEnumerable<NetAspectDefinition> aspects)
       {
          var weavingModels = new Dictionary<MethodDefinition, WeavingModel>();
          assemblyDefinitionProvider.Add(assembliesToWeave);
