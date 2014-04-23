@@ -1,10 +1,9 @@
-﻿using System.Linq;
-using Mono.Cecil;
+﻿using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
+namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Constructor
 {
     public class ConstructorAttributeWeavingDetector : IWeavingDetector
     {

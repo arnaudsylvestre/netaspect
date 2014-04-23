@@ -1,7 +1,7 @@
 ﻿using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Engine;
 
-namespace NetAspect.Weaver.Core.Weaver
+namespace NetAspect.Weaver.Core.Weaver.Generators
 {
    public interface IIlInjectorInitializer<T>
    {

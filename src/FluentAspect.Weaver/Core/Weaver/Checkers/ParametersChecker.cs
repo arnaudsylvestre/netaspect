@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Core.Weaver.Checkers;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine
+namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
     public class ParametersChecker
     {

@@ -2,7 +2,7 @@
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Core.Weaver
+namespace NetAspect.Weaver.Core.Weaver.Generators
 {
     public interface IIlInjector<T>
     {

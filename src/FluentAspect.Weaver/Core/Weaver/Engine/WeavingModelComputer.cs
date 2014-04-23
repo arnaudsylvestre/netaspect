@@ -8,7 +8,6 @@ using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors;
 using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field;
 using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Method;
-using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property;
 using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
 using NetAspect.Weaver.Helpers;
 

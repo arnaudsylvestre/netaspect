@@ -8,16 +8,17 @@ using NetAspect.Weaver.Core.Assemblies;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
+using NetAspect.Weaver.Core.Weaver.Engine;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine
+namespace NetAspect.Weaver.Core.Weaver
 {
-    public class WeaverCore
+    public class WeaverEngine
     {
         private readonly AroundMethodWeaver aroundMethodWeaver_L = new AroundMethodWeaver();
         private readonly WeavingModelComputer weavingModelComputer;
         IAssemblyChecker assemblyChecker = new PeVerifyAssemblyChecker();
 
-        public WeaverCore(WeavingModelComputer weavingModelComputer_P)
+        public WeaverEngine(WeavingModelComputer weavingModelComputer_P)
         {
             weavingModelComputer = weavingModelComputer_P;
         }
