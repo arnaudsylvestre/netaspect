@@ -25,6 +25,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
       }
 
       private readonly IWeavingDetector _weavingDetector;
+       private IMethodWeavingDetector methodWeavingDetector;
       private readonly IAspectFinder _aspectFinder;
       private readonly IAspectChecker _aspectChecker;
 
@@ -51,6 +52,9 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
          {
             foreach (var method in assemblyDefinitionProvider.GetAssemblyDefinition(assembly_L).GetAllMethods(filter))
             {
+                foreach (var aspect_L in aspects)
+                    methodWeavingDetector.DetectWeavingModel()
+
                var model = new MethodWeavingModel();
                 foreach (var aspect_L in aspects)
                     _weavingDetector.DetectWeavingModel(method, aspect_L, model);
