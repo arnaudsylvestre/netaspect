@@ -6,13 +6,6 @@ namespace NetAspect.Weaver.Helpers.IL
 {
     public static class InstructionExtensions
     {
-       public static bool IsAnAccessField(this Instruction instruction)
-        {
-            return instruction.OpCode == OpCodes.Ldsfld ||
-                instruction.OpCode == OpCodes.Ldfld ||
-                instruction.OpCode == OpCodes.Ldflda ||
-                instruction.OpCode == OpCodes.Ldsflda;
-        }
        public static bool IsAnUpdateField(this Instruction instruction)
        {
           return instruction.OpCode == OpCodes.Stsfld ||

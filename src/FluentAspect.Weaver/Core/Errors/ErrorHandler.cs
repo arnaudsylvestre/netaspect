@@ -4,6 +4,8 @@ namespace NetAspect.Weaver.Core.Errors
 {
     public class ErrorHandler : IErrorListener
     {
+       List<NetAspectError> errors = new List<NetAspectError>(); 
+
         public ErrorHandler()
         {
             Warnings = new List<string>();
@@ -25,7 +27,12 @@ namespace NetAspect.Weaver.Core.Errors
             Warnings.Add(string.Format(message, args));
         }
 
-        public void OnFailure(string message, params object[] args)
+       public void OnError(ErrorCode code, FileLocation location, List<object> parameters)
+       {
+          errors.Add(new NetAspectError(code, parameters, location));
+       }
+
+       public void OnFailure(string message, params object[] args)
         {
             Failures.Add(string.Format(message, args));
         }

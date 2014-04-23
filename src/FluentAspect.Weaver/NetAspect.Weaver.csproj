@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{28912034-8A56-4B8E-BAA1-02C50149CA68}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -54,20 +54,34 @@
     <Compile Include="Apis\AssemblyChecker\IAssemblyChecker.cs" />
     <Compile Include="Apis\AssemblyChecker\Peverify\PeVerifyAssemblyChecker.cs" />
     <Compile Include="Core\Assemblies\AssemblyPool.cs" />
+    <Compile Include="Core\Errors\ErrorCode.cs" />
     <Compile Include="Core\Errors\ErrorHandler.cs" />
     <Compile Include="Core\Errors\ErrorKind.cs" />
+    <Compile Include="Core\Errors\FileLocation.cs" />
     <Compile Include="Core\Errors\NetAspectError.cs" />
-    <Compile Include="Core\Errors\WarningKind.cs" />
     <Compile Include="Core\Model\Aspect\Interceptor.cs" />
+    <Compile Include="Core\Model\Aspect\LifeCycle.cs" />
+    <Compile Include="Core\Model\Aspect\LifeCycleHelper.cs" />
     <Compile Include="Core\Model\Weaving\MethodWeavingModel.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinitionExtensions.cs" />
+    <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorForMethodParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorForPropertyParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Checkers\MethodWeaving\Parameters\CalledParameterNameInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\Property\CallGetPropertyInstructionWeavingDetector.cs" />
-    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Constructor\MethodAttributeWeavingDetector.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Constructor\ConstructorAttributeWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\Selectors\Selector.cs" />
     <Compile Include="Core\Weaver\Detectors\Selectors\SelectorParametersGenerator.cs" />
     <Compile Include="Core\Model\Weaving\WeavingModel.cs" />
+    <Compile Include="Core\Weaver\Engine\AroundInstructionIl.cs" />
+    <Compile Include="Core\Weaver\Engine\AroundInstructionWeaver.cs" />
     <Compile Include="Core\Weaver\Engine\AroundMethodWeaver.cs" />
+    <Compile Include="Core\Weaver\Engine\CallGetFieldInitializerWeaver.cs" />
+    <Compile Include="Core\Weaver\Engine\IAroundInstructionWeaver.cs" />
+    <Compile Include="Core\Weaver\Generators\CalledParameterNameInterceptorParametersIlGenerator.cs" />
+    <Compile Include="Core\Weaver\Generators\CalledParametersInterceptorParametersIlGenerator.cs" />
+    <Compile Include="Core\Weaver\Generators\PropertyPInterceptorParametersIlGenerator.cs" />
+    <Compile Include="Core\Weaver\IIlInjectorInitializer.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Call\CallWeavingFieldInjectorFactory.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Call\CallWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Call\CallWeavingUpdateFieldInjectorFactory.cs" />
@@ -90,7 +104,7 @@
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Member\PropertyInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Result\ResultInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeavingModelExtensions.cs" />
-    <Compile Include="Core\Weaver\Engine\ParametersChecker.cs" />
+    <Compile Include="Core\Weaver\Checkers\ParametersChecker.cs" />
     <Compile Include="Core\Weaver\Engine\WeaverCore.cs" />
     <Compile Include="Core\Weaver\Engine\WeavingModelComputer.cs" />
     <Compile Include="Core\Errors\IErrorListener.cs" />
@@ -116,10 +130,15 @@
     <Compile Include="Core\Weaver\Generators\ResultInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Generators\SequencePointIntInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Generators\SequencePointStringInterceptorParametersIlGenerator.cs" />
-    <Compile Include="Core\Weaver\IIlInjectorsExtensions.cs" />
+    <Compile Include="Core\Weaver\Checkers\IIlInjectorsExtensions.cs" />
+    <Compile Include="Core\Weaver\WeavingBuilders\Call\NoIIlInjector.cs" />
+    <Compile Include="Core\Weaver\WeavingBuilders\Method\AspectBuilder.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\ConstructorWeavingMethodInjectorFactory.cs" />
+    <Compile Include="Core\Weaver\WeavingBuilders\Method\ILifeCycleHandler.cs" />
+    <Compile Include="Core\Weaver\WeavingBuilders\Method\IlInjectorAvailableVariablesForInstruction.cs" />
+    <Compile Include="Core\Weaver\WeavingBuilders\Method\TransientLifeCycleHandler.cs" />
     <Compile Include="Helpers\IL\InstructionFactory.cs" />
-    <Compile Include="Helpers\IL\VariablesExtensions.cs" />
+    <Compile Include="Helpers\IL\CollectionExtensions.cs" />
     <Compile Include="Core\Weaver\IIlInjector.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\IlInjectorAvailableVariables.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\MethodWeavingBeforeMethodInjector.cs" />
@@ -133,7 +152,6 @@
     <Compile Include="Helpers\ObjectExtensions.cs" />
     <Compile Include="Helpers\AssemblyDefinitionExtensions.cs" />
     <Compile Include="WeaverFactory.cs" />
-    <Compile Include="Helpers\MethodDefinitionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

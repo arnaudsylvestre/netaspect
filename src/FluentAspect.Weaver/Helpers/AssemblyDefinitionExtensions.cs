@@ -20,21 +20,5 @@ namespace NetAspect.Weaver.Helpers
         {
             return t.FullName == typeDefinition.FullName.Replace('/', '+');
         }
-
-        public static List<PropertyDefinition> GetAllProperties(this AssemblyDefinition assemblyDefinition)
-        {
-            return (from moduleDefinition in assemblyDefinition.Modules
-                    from typeDefinition in moduleDefinition.GetTypes()
-                    from methodDefinition in typeDefinition.Properties
-                    select methodDefinition).ToList();
-        }
-
-        public static List<FieldDefinition> GetAllFields(this AssemblyDefinition assemblyDefinition)
-        {
-            return (from moduleDefinition in assemblyDefinition.Modules
-                    from typeDefinition in moduleDefinition.GetTypes()
-                    from fieldDefinition_L in typeDefinition.Fields
-                    select fieldDefinition_L).ToList();
-        }
     }
 }

@@ -16,15 +16,15 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
 {
     public class WeavingModelComputer
     {
-        private readonly IWeavingDetector _weavingDetector =
-            new MultiWeavingDetector(new MethodAttributeWeavingDetector(),
-                                        new PropertyGetAttributeWeavingDetector(),
-                                        new CallMethodInstructionWeavingDetector(),
-            new CallGetFieldInstructionWeavingDetector(), new CallUpdateFieldInstructionWeavingDetector(),
-            new CallGetPropertyInstructionWeavingDetector(), new ConstructorAttributeWeavingDetector());
+       private readonly IWeavingDetector _weavingDetector;
+
+       public WeavingModelComputer(IWeavingDetector weavingDetector_P)
+       {
+          _weavingDetector = weavingDetector_P;
+       }
 
 
-        public Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave, Type[] filter, AssemblyPool assemblyDefinitionProvider, IEnumerable<NetAspectDefinition> aspects)
+       public Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave, Type[] filter, AssemblyPool assemblyDefinitionProvider, IEnumerable<NetAspectDefinition> aspects)
         {
             var weavingModels = new Dictionary<MethodDefinition, WeavingModel>();
             foreach (Assembly assembly_L in assembliesToWeave)

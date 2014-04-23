@@ -10,64 +10,7 @@ using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine
 {
-    public class AroundInstructionIl
-    {
-        public readonly List<Instruction> BeforeInstruction = new List<Instruction>();
-        public readonly List<Instruction> AfterInstruction = new List<Instruction>();
-    }
-
-    public interface IAroundInstructionWeaver
-    {
-        void Weave(AroundInstructionIl il, IlInjectorAvailableVariablesForInstruction variables, Instruction instruction);
-        void Check(ErrorHandler errorHandler, IlInjectorAvailableVariablesForInstruction variables);
-    }
-
-    public class AroundInstructionWeaver : IAroundInstructionWeaver
-    {
-        private IIlInjectorInitializer<IlInjectorAvailableVariablesForInstruction> initializer;
-        private IIlInjector<IlInjectorAvailableVariablesForInstruction> before;
-        private IIlInjector<IlInjectorAvailableVariablesForInstruction> after;
-
-        public AroundInstructionWeaver(IIlInjectorInitializer<IlInjectorAvailableVariablesForInstruction> initializer, IIlInjector<IlInjectorAvailableVariablesForInstruction> before, IIlInjector<IlInjectorAvailableVariablesForInstruction> after)
-        {
-            this.initializer = initializer;
-            this.before = before;
-            this.after = after;
-        }
-
-        public void Check(ErrorHandler errorHandler, IlInjectorAvailableVariablesForInstruction variables)
-        {
-            before.Check(errorHandler, variables);
-            after.Check(errorHandler, variables);
-        }
-
-        public void Weave(AroundInstructionIl il, IlInjectorAvailableVariablesForInstruction variables, Instruction instruction)
-        {
-            initializer.Inject(il, variables, instruction);
-            before.Inject(il.BeforeInstruction, variables);
-            after.Inject(il.AfterInstruction, variables);
-        }
-    }
-
-    public class CallGetFieldInitializerWeaver : IIlInjectorInitializer<IlInjectorAvailableVariablesForInstruction>
-    {
-        public void Inject(AroundInstructionIl il, IlInjectorAvailableVariablesForInstruction variables, Instruction instruction)
-        {
-            //if (instruction.OpCode == OpCodes.Ldfld || instruction.OpCode == OpCodes.Ldflda)
-            //{
-            //    var fieldReference = (instruction.Operand as FieldReference).Resolve();
-            //    var called = new VariableDefinition(fieldReference.DeclaringType);
-            //    il.Variables.Add(called);
-            //    variables.VariablesCalled.Add(instruction, called);
-            //    il.InitBeforeInstruction.Add(Instruction.Create(OpCodes.Stloc, called));
-            //    il.JustBeforeInstruction.Add(Instruction.Create(OpCodes.Ldloc, called));
-            //}
-        }
-    }
-
-    
-
-    public class AroundMethodWeaver
+   public class AroundMethodWeaver
     {
         public void Weave2(MethodDefinition method, WeavingModel weavingModel,
                           ErrorHandler errorHandler)

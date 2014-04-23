@@ -7,29 +7,14 @@ namespace NetAspect.Weaver.Helpers.IL
 {
     public static class InstructionsExtensions
     {
-        public static void AppendCallToThisGetType(this List<Instruction> instructions, ModuleDefinition module)
-        {
-            instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
-            instructions.Add(Instruction.Create(OpCodes.Call,
-                                                module.Import(typeof(object).GetMethod("GetType", new Type[0]))));
-        }
-        public static void AppendCallToTargetGetType(this List<Instruction> instructions, ModuleDefinition module, VariableDefinition target)
+       public static void AppendCallToTargetGetType(this List<Instruction> instructions, ModuleDefinition module, VariableDefinition target)
         {
             instructions.Add(Instruction.Create(OpCodes.Ldloc, target));
             instructions.Add(Instruction.Create(OpCodes.Call,
                                                 module.Import(typeof(object).GetMethod("GetType", new Type[0]))));
         }
 
-        public static void AppendCallToGetMethod(this List<Instruction> instructions, string methodName,
-                                                 ModuleDefinition module)
-        {
-            instructions.Add(Instruction.Create(OpCodes.Ldstr, methodName));
-            instructions.Add(Instruction.Create(OpCodes.Callvirt,
-                                                module.Import(typeof(Type).GetMethod("GetMethod",
-                                                                                      new[] { typeof(string) }))));
-        }
-
-        public static void AppendCallToGetField(this List<Instruction> instructions, string fieldName,
+       public static void AppendCallToGetField(this List<Instruction> instructions, string fieldName,
                                                  ModuleDefinition module)
         {
             instructions.Add(Instruction.Create(OpCodes.Ldstr, fieldName));

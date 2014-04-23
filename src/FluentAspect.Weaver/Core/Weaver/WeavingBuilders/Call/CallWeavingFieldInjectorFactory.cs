@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Engine;
@@ -12,20 +10,7 @@ using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
 {
-    public class NoIIlInjector : IIlInjector<IlInjectorAvailableVariablesForInstruction>
-    {
-        public void Check(ErrorHandler errorHandler, IlInjectorAvailableVariablesForInstruction availableInformations)
-        {
-            
-        }
-
-        public void Inject(List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction availableInformations)
-        {
-            
-        }
-    }
-
-    public static class CallWeavingFieldInjectorFactory
+   public static class CallWeavingFieldInjectorFactory
     {
         public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, NetAspectDefinition aspect, Instruction instruction)
         {

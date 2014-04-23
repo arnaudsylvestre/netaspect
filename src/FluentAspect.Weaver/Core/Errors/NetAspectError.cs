@@ -2,19 +2,7 @@
 
 namespace NetAspect.Weaver.Core.Errors
 {
-    public enum ErrorCode
-    {
-        
-    }
-
-    public class FileLocation
-    {
-        public string FilePath { get; set; }
-        public int Column { get; set; }
-        public int Line { get; set; }
-    }        
-
-    public class NetAspectError
+   public class NetAspectError
     {
         public NetAspectError(ErrorCode code, List<object> parameters, FileLocation location)
         {

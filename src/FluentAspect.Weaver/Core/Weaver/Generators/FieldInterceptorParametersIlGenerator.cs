@@ -27,23 +27,4 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
             //instructions.Add(Instruction.Create(OpCodes.Ldnull));
         }
     }
-
-    public class PropertyPInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator<IlInjectorAvailableVariablesForInstruction>
-    {
-        private PropertyDefinition property;
-        private ModuleDefinition module;
-
-        public PropertyPInterceptorParametersIlGenerator(PropertyDefinition property, ModuleDefinition module)
-        {
-            this.property = property;
-            this.module = module;
-        }
-
-        public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction info)
-        {
-            instructions.AppendCallToTargetGetType(module, info.Called);
-            instructions.AppendCallToGetProperty(property.Name, module);
-            //instructions.Add(Instruction.Create(OpCodes.Ldnull));
-        }
-    }
 }
