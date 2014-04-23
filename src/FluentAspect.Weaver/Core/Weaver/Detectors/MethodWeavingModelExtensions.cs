@@ -28,7 +28,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             {
                after = CallWeavingMethodInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction);
             }
-            weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
+            weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(before, after));
         }
 
         public static void AddGetFieldCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
@@ -48,7 +48,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             {
                 after = CallWeavingFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction);
             }
-            weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
+            weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(before, after));
         }
 
         public static void AddGetPropertyCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method, Instruction beforeInstruction, NetAspectDefinition aspect, Interceptor beforeCallMethod, Interceptor afterCallMethod, PropertyDefinition property)
@@ -66,7 +66,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             {
                 after = CallWeavingGetPropertyInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction, property);
             }
-            weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
+            weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(before, after));
         }
 
 
@@ -86,7 +86,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
            {
               after = CallWeavingSetPropertyInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction, property);
            }
-           weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
+           weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(before, after));
         }
 
         public static void AddUpdateFieldCallWeavingModel(this WeavingModel weavingModel, MethodDefinition method,
@@ -106,7 +106,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             {
                 after = CallWeavingUpdateFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction);
             }
-            weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(new CallGetFieldInitializerWeaver(), before, after));
+            weavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(before, after));
         }
         
 

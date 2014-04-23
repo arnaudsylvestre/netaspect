@@ -1,66 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
+using System;
 using System.Reflection;
-using Mono.Cecil;
-using NetAspect.Weaver.Apis.AssemblyChecker;
-using NetAspect.Weaver.Apis.AssemblyChecker.Peverify;
-using NetAspect.Weaver.Core.Assemblies;
 using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Core.Model.Aspect;
-using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Engine;
+
+#endregion
 
 namespace NetAspect.Weaver.Core.Weaver
 {
-    public class WeaverEngine
-    {
-        private readonly AroundMethodWeaver aroundMethodWeaver_L = new AroundMethodWeaver();
-        private readonly WeavingModelComputer weavingModelComputer;
-        IAssemblyChecker assemblyChecker = new PeVerifyAssemblyChecker();
+   public class WeaverEngine
+   {
+      private readonly IAssemblyPoolFactory _assemblyPoolFactory;
+      private readonly WeavingModelComputer2 _weavingModelComputer;
 
-        public WeaverEngine(WeavingModelComputer weavingModelComputer_P)
-        {
-            weavingModelComputer = weavingModelComputer_P;
-        }
+      public WeaverEngine(WeavingModelComputer2 weavingModelComputer_P, IAssemblyPoolFactory assemblyPoolFactory_P)
+      {
+         _weavingModelComputer = weavingModelComputer_P;
+         _assemblyPoolFactory = assemblyPoolFactory_P;
+      }
 
-        public void Weave(Type[] typesP_L, Type[] filter, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
-        {
-            var assemblyPool = new AssemblyPool(assemblyChecker);
+      public void Weave(string assemblyFilePath,
+                        ErrorHandler errorHandler,
+                        Func<string, string> newAssemblyNameProvider)
+      {
+         Weave(Assembly.LoadFrom(assemblyFilePath).GetTypes(), null, errorHandler, newAssemblyNameProvider);
+      }
 
-            var computeWeavingModels = ComputeWeavingModels(typesP_L, filter, assemblyPool, errorHandler);
-            foreach (var weavingModel in computeWeavingModels)
-            {
-                aroundMethodWeaver_L.Weave2(weavingModel.Key, weavingModel.Value, errorHandler);
-            }
+      public void Weave(Type[] typesP_L, Type[] filter, ErrorHandler errorHandler, Func<string, string> newAssemblyNameProvider)
+      {
+         var assemblyPool = _assemblyPoolFactory.Create();
 
-            assemblyPool.Save(errorHandler, newAssemblyNameProvider);
-        }
+         var weavingModels_L = _weavingModelComputer.ComputeWeavingModels(typesP_L, filter, assemblyPool, errorHandler);
+         foreach (var weavingModel in weavingModels_L)
+         {
+            weavingModel.Key.Weave(weavingModel.Value, errorHandler);
+         }
 
-        private Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(Type[] typesP_L, Type[] filter, AssemblyPool assemblyPool, ErrorHandler errorHandler)
-        {
-            List<NetAspectDefinition> aspects = NetAspectDefinitionExtensions.FindAspects(typesP_L);
-            CheckAspects(aspects, errorHandler);
-            IEnumerable<Assembly> assembliesToWeave = aspects.GetAssembliesToWeave(typesP_L[0].Assembly);
-            Dictionary<MethodDefinition, WeavingModel> weavingModels =
-                weavingModelComputer.ComputeWeavingModels(assembliesToWeave, filter, assemblyPool, aspects);
-            return weavingModels;
-        }
-
-        private void CheckAspects(IEnumerable<NetAspectDefinition> aspects, ErrorHandler errorHandler)
-        {
-            foreach (var aspect in aspects)
-            {
-               aspect.FieldSelector.Check(errorHandler);
-               aspect.PropertySelector.Check(errorHandler);
-            }
-        }
-
-        public void Weave(string assemblyFilePath, ErrorHandler errorHandler,
-                          Func<string, string> newAssemblyNameProvider)
-        {
-            Assembly mainAssembly = Assembly.LoadFrom(assemblyFilePath);
-            Type[] types = mainAssembly.GetTypes();
-            Weave(types, null, errorHandler, newAssemblyNameProvider);
-        }
-    }
+         assemblyPool.Save(errorHandler, newAssemblyNameProvider);
+      }
+   }
 }
