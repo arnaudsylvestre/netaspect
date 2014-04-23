@@ -15,11 +15,11 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Constructor
                 aspect.OnFinallyConstructor.Method != null;
         }
 
-        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
+        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, MethodWeavingModel methodWeavingModel)
         {
            if (!AspectApplier.CanApply(method, aspect))
                 return;
-            weavingModel.AddConstructorWeavingModel(method, aspect, aspect.BeforeConstructor, aspect.AfterConstructor, aspect.OnExceptionConstructor,
+            methodWeavingModel.AddConstructorWeavingModel(method, aspect, aspect.BeforeConstructor, aspect.AfterConstructor, aspect.OnExceptionConstructor,
                                                aspect.OnFinallyConstructor);
         }
     }

@@ -13,10 +13,11 @@ using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
-   public class MethodWeavingBeforeMethodInjector : IIlInjector
+   public class MethodWeavingBeforeMethodInjector<T> : IIlInjector<T>
+       where T : IlInstructionInjectorAvailableVariables
     {
        private readonly MethodDefinition _method;
-       private readonly ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGenerator;
+       private readonly ParametersIlGenerator<T> ilGenerator;
         private readonly MethodInfo interceptorMethod;
         private readonly ParametersChecker parametersChecker;
        private AspectBuilder aspectBuilder;
@@ -24,7 +25,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
 
         public MethodWeavingBeforeMethodInjector(MethodDefinition method_P, MethodInfo interceptorMethod_P, ParametersChecker parametersChecker,
-                                                 ParametersIlGenerator<IlInstructionInjectorAvailableVariables> ilGenerator, NetAspectDefinition aspect)
+                                                 ParametersIlGenerator<T> ilGenerator, NetAspectDefinition aspect)
         {
             _method = method_P;
             interceptorMethod = interceptorMethod_P;
@@ -38,7 +39,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             parametersChecker.Check(interceptorMethod.GetParameters(), errorHandler);
         }
 
-        public void Inject(List<Instruction> instructions, IlInstructionInjectorAvailableVariables availableInformations)
+        public void Inject(List<Instruction> instructions, T availableInformations)
         {
              
             ilGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations);

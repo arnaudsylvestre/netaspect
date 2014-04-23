@@ -35,7 +35,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
          _aspectChecker = aspectChecker_P;
       }
 
-      public Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(Type[] typesP_L, Type[] filter, AssemblyPool assemblyPool, ErrorHandler errorHandler)
+      public MethodsWeavingModel ComputeWeavingModels(Type[] typesP_L, Type[] filter, AssemblyPool assemblyPool, ErrorHandler errorHandler)
       {
          var aspects = _aspectFinder.Find(typesP_L);
          aspects.ForEach(aspect => _aspectChecker.Check(aspect, errorHandler));
@@ -43,15 +43,15 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
          return ComputeWeavingModels(assembliesToWeave, filter, assemblyPool, aspects);
       }
 
-       private Dictionary<MethodDefinition, WeavingModel> ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave, Type[] filter, AssemblyPool assemblyDefinitionProvider, IEnumerable<NetAspectDefinition> aspects)
+      private MethodsWeavingModel ComputeWeavingModels(IEnumerable<Assembly> assembliesToWeave, Type[] filter, AssemblyPool assemblyDefinitionProvider, IEnumerable<NetAspectDefinition> aspects)
       {
-         var weavingModels = new Dictionary<MethodDefinition, WeavingModel>();
+          var weavingModels = new MethodsWeavingModel();
          assemblyDefinitionProvider.Add(assembliesToWeave);
          foreach (var assembly_L in assembliesToWeave)
          {
             foreach (var method in assemblyDefinitionProvider.GetAssemblyDefinition(assembly_L).GetAllMethods(filter))
             {
-               var model = new WeavingModel();
+               var model = new MethodWeavingModel();
                 foreach (var aspect_L in aspects)
                     _weavingDetector.DetectWeavingModel(method, aspect_L, model);
                 if (!model.IsEmpty)

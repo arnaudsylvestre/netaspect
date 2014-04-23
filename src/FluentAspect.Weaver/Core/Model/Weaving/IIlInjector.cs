@@ -5,9 +5,9 @@ using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call;
 
 namespace NetAspect.Weaver.Core.Weaver.Generators
 {
-    public interface IIlInjector
+    public interface IIlInjector<T>
     {
         void Check(ErrorHandler errorHandler);
-        void Inject(List<Instruction> instructions, IlInstructionInjectorAvailableVariables availableInformations);
+        void Inject(List<Instruction> instructions, T availableInformations);
     }
 }

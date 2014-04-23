@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
                    aspect.AfterSetProperty.Method != null;
         }
 
-        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
+        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, MethodWeavingModel methodWeavingModel)
         {
             if (method.Body == null)
                 return;
@@ -27,14 +27,14 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
                if (IsGetPropertyCall(instruction, aspect))
                {
                   var calledMethod = (instruction.Operand as MethodReference).Resolve();
-                  weavingModel.AddGetPropertyCallWeavingModel(method, instruction, aspect, aspect.BeforeGetProperty,
+                  methodWeavingModel.AddGetPropertyCallWeavingModel(method, instruction, aspect, aspect.BeforeGetProperty,
                                                            aspect.AfterGetProperty, calledMethod.GetPropertyForGetter());
 
                }
                if (IsSetPropertyCall(instruction, aspect))
                {
                   var calledMethod = (instruction.Operand as MethodReference).Resolve();
-                  weavingModel.AddSetPropertyCallWeavingModel(method, instruction, aspect, aspect.BeforeSetProperty,
+                  methodWeavingModel.AddSetPropertyCallWeavingModel(method, instruction, aspect, aspect.BeforeSetProperty,
                                                            aspect.AfterSetProperty, calledMethod.GetPropertyForSetter());
 
                }

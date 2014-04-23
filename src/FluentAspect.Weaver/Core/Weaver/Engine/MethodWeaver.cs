@@ -15,7 +15,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
    public static class MethodWeaver
    {
       public static void Weave(this MethodDefinition method,
-                               WeavingModel weavingModel,
+                               MethodWeavingModel methodWeavingModel,
                                ErrorHandler errorHandler)
       {
          var w = new NetAspectWeavingMethod();
@@ -28,7 +28,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
          var availableVariables = new IlInjectorAvailableVariables(result, method);
          var allVariables = new List<VariableDefinition>();
 
-         foreach (var instruction in weavingModel.Instructions)
+         foreach (var instruction in methodWeavingModel.Instructions)
          {
             var instructionIl = new NetAspectWeavingMethod.InstructionIl();
             w.Instructions.Add(instruction.Key, instructionIl);
@@ -54,10 +54,10 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
             instructionIl.Before.AddRange(variablesForInstruction.recallcalledParametersInstructions);
          }
 
-         weavingModel.Method.Befores.Check(errorHandler, availableVariables);
-         weavingModel.Method.Afters.Check(errorHandler, availableVariables);
-         weavingModel.Method.OnExceptions.Check(errorHandler, availableVariables);
-         weavingModel.Method.OnFinallys.Check(errorHandler, availableVariables);
+         methodWeavingModel.Method.Befores.Check(errorHandler, availableVariables);
+         methodWeavingModel.Method.Afters.Check(errorHandler, availableVariables);
+         methodWeavingModel.Method.OnExceptions.Check(errorHandler, availableVariables);
+         methodWeavingModel.Method.OnFinallys.Check(errorHandler, availableVariables);
          if (errorHandler.Errors.Count > 0)
             return;
 
@@ -65,10 +65,10 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
          var afters = new List<Instruction>();
          var onExceptions = new List<Instruction>();
          var onFinallys = new List<Instruction>();
-         weavingModel.Method.Befores.Inject(befores, availableVariables);
-         weavingModel.Method.Afters.Inject(afters, availableVariables);
-         weavingModel.Method.OnExceptions.Inject(onExceptions, availableVariables);
-         weavingModel.Method.OnFinallys.Inject(onFinallys, availableVariables);
+         methodWeavingModel.Method.Befores.Inject(befores, availableVariables);
+         methodWeavingModel.Method.Afters.Inject(afters, availableVariables);
+         methodWeavingModel.Method.OnExceptions.Inject(onExceptions, availableVariables);
+         methodWeavingModel.Method.OnFinallys.Inject(onFinallys, availableVariables);
 
 
          w.BeforeInstructions.AddRange(availableVariables.BeforeInstructions);

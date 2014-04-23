@@ -1,10 +1,32 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
+using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
 {
+
+    public class FilteredMethodWeavingDetector : WeavingDetector.IMethodWeavingDetector
+    {
+        private Func<NetAspectDefinition, bool> canHandle;
+        private WeavingDetector.IMethodWeavingDetector methodWeavingDetector;
+
+        public FilteredMethodWeavingDetector(WeavingDetector.IMethodWeavingDetector methodWeavingDetector, Func<NetAspectDefinition, bool> canHandle)
+        {
+            this.methodWeavingDetector = methodWeavingDetector;
+            this.canHandle = canHandle;
+        }
+
+        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, AroundMethodWeavingModel methodWeavingModel)
+        {
+            if (!canHandle(aspect))
+                return;
+            methodWeavingDetector.DetectWeavingModel(method, aspect, methodWeavingModel);
+        }
+    }
+
     public class MethodAttributeWeavingDetector : IWeavingDetector
     {
         public bool CanHandle(NetAspectDefinition aspect)
@@ -15,7 +37,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
                 aspect.OnFinally.Method != null;
         }
 
-        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
+        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, MethodWeavingModel methodWeavingModel)
         {
             TypeReference aspectType = method.Module.Import(aspect.Type);
             bool isCompliant_L =
@@ -23,8 +45,14 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
                     customAttribute_L => customAttribute_L.AttributeType.FullName == aspectType.FullName);
             if (!isCompliant_L)
                 return;
-            weavingModel.AddMethodWeavingModel(method, aspect, aspect.Before, aspect.After, aspect.OnException,
+            methodWeavingModel.AddMethodWeavingModel(method, aspect, aspect.Before, aspect.After, aspect.OnException,
                                                aspect.OnFinally);
+        }
+
+        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, AroundMethodWeavingModel methodWeavingModel)
+        {
+            if (!AspectApplier.CanApply(method, aspect))
+                return;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
     public static class ConstructorWeavingMethodInjectorFactory
     {
-        public static IIlInjector CreateForBefore(MethodDefinition method,
+        public static IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,
                                                                                 NetAspectDefinition aspect)
         {
@@ -25,7 +25,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                                                                                        parametersIlGenerator, aspect);
         }
 
-        public static IIlInjector CreateForOnFinally(MethodDefinition method,
+        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method,
                                                                                    MethodInfo interceptorMethod,
                                                                                    NetAspectDefinition aspect)
         {
@@ -57,7 +57,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             checker.CreateCheckerForParametersParameter();
         }
 
-        public static IIlInjector CreateForAfter(MethodDefinition method,
+        public static IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
                                                                                NetAspectDefinition aspect)
         {
@@ -71,7 +71,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                                                                                        parametersIlGenerator, aspect);
         }
 
-        public static IIlInjector CreateForOnException(MethodDefinition method,
+        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnException(MethodDefinition method,
                                                                                      MethodInfo methodInfo,
                                                                                      NetAspectDefinition aspect)
         {

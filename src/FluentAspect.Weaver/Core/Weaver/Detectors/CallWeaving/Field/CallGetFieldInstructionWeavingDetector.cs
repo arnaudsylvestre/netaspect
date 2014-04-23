@@ -14,7 +14,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
                    aspect.AfterGetField.Method != null;
         }
 
-        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
+        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, MethodWeavingModel methodWeavingModel)
         {
             if (method.Body == null)
                 return;
@@ -22,7 +22,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
             {
                 if (IsFieldCall(instruction, aspect, method))
                 {
-                    weavingModel.AddGetFieldCallWeavingModel(method, instruction, aspect, aspect.BeforeGetField,
+                    methodWeavingModel.AddGetFieldCallWeavingModel(method, instruction, aspect, aspect.BeforeGetField,
                                                              aspect.AfterGetField);
 
                 }

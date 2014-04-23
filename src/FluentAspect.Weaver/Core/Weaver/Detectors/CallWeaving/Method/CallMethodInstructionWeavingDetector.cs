@@ -11,12 +11,10 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Method
         public bool CanHandle(NetAspectDefinition aspect)
         {
             return aspect.BeforeCallMethod.Method != null ||
-                aspect.AfterCallMethod.Method != null ||
-                aspect.AfterRaiseEvent.Method != null ||
-                aspect.BeforeRaiseEvent.Method != null;
+                aspect.AfterCallMethod.Method != null;
         }
 
-        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
+        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, MethodWeavingModel methodWeavingModel)
         {
             if (method.Body == null)
                 return;
@@ -24,7 +22,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Method
             {
                 if (IsMethodCall(instruction, aspect, method))
                 {
-                    weavingModel.AddMethodCallWeavingModel(method, instruction, aspect, aspect.BeforeCallMethod,
+                    methodWeavingModel.AddMethodCallWeavingModel(method, instruction, aspect, aspect.BeforeCallMethod,
                                                            aspect.AfterCallMethod);
                 }
             }

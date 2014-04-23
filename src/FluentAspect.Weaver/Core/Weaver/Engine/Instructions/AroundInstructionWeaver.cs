@@ -6,10 +6,10 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
 {
    public class AroundInstructionWeaver : IAroundInstructionWeaver
    {
-      private IIlInjector before;
-      private IIlInjector after;
+       private IIlInjector<IlInjectorAvailableVariablesForInstruction> before;
+       private IIlInjector<IlInjectorAvailableVariablesForInstruction> after;
 
-      public AroundInstructionWeaver(IIlInjector before, IIlInjector after)
+       public AroundInstructionWeaver(IIlInjector<IlInjectorAvailableVariablesForInstruction> before, IIlInjector<IlInjectorAvailableVariablesForInstruction> after)
       {
          this.before = before;
          this.after = after;

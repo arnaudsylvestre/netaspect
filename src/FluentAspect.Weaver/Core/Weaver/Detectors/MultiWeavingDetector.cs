@@ -18,12 +18,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
             return true;
         }
 
-        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, WeavingModel weavingModel)
+        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, MethodWeavingModel methodWeavingModel)
         {
             foreach (IWeavingDetector weavingModelFiller_L in _weavingDetectors)
             {
                 if (weavingModelFiller_L.CanHandle(aspect))
-                    weavingModelFiller_L.DetectWeavingModel(method, aspect, weavingModel);
+                    weavingModelFiller_L.DetectWeavingModel(method, aspect, methodWeavingModel);
             }
         }
     }

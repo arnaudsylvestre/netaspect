@@ -62,12 +62,13 @@
     <Compile Include="Core\Model\Aspect\Interceptor.cs" />
     <Compile Include="Core\Model\Aspect\LifeCycle.cs" />
     <Compile Include="Core\Model\Aspect\LifeCycleHelper.cs" />
-    <Compile Include="Core\Model\Weaving\MethodWeavingModel.cs" />
+    <Compile Include="Core\Model\Weaving\AroundMethodWeavingModel.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinitionExtensions.cs" />
     <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorForMethodParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorForPropertyParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Parameters\CalledParameterNameInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Detectors\WeavingDetector.cs" />
     <Compile Include="Core\Weaver\Engine\AspectCheckers\DefaultAspectChecker.cs" />
     <Compile Include="Core\Weaver\Engine\AspectFinders\DefaultAspectFinder.cs" />
     <Compile Include="Core\Weaver\Engine\AssemblyPoolFactories\DefaultAssemblyPoolFactory.cs" />
@@ -75,7 +76,7 @@
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Constructor\ConstructorAttributeWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\Selectors\Selector.cs" />
     <Compile Include="Core\Weaver\Detectors\Selectors\SelectorParametersGenerator.cs" />
-    <Compile Include="Core\Model\Weaving\WeavingModel.cs" />
+    <Compile Include="Core\Model\Weaving\MethodWeavingModel.cs" />
     <Compile Include="Core\Weaver\Engine\Instructions\AroundInstructionIl.cs" />
     <Compile Include="Core\Weaver\Engine\Instructions\AroundInstructionWeaver.cs" />
     <Compile Include="Core\Weaver\Engine\MethodWeaver.cs" />

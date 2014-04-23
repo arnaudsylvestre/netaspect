@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
 {
     public static class CallWeavingSetPropertyInjectorFactory
     {
-        public static IIlInjector CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, NetAspectDefinition aspect, Instruction instruction, PropertyDefinition property)
+        public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, NetAspectDefinition aspect, Instruction instruction, PropertyDefinition property)
         {
             var checker = new ParametersChecker();
             FillCommon(method, checker, property, instruction);
@@ -57,7 +57,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call
             //checker.CreateCheckerForParametersParameter();
         }
 
-        public static IIlInjector CreateForAfter(MethodDefinition method,
+        public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
                                                                                NetAspectDefinition aspect, Instruction instruction, PropertyDefinition property)
         {

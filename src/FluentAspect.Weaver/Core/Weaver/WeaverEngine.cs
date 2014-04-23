@@ -29,12 +29,10 @@ namespace NetAspect.Weaver.Core.Weaver
          var assemblyPool = assemblyPoolFactory.Create();
 
          var weavingModels_L = weavingModelComputer.ComputeWeavingModels(typesP_L, filter, assemblyPool, errorHandler);
-         foreach (var weavingModel in weavingModels_L)
-         {
-            weavingModel.Key.Weave(weavingModel.Value, errorHandler);
-         }
+         foreach (var weavingModel in weavingModels_L.weavingModels)
+              weavingModel.Key.Weave(weavingModel.Value, errorHandler);
 
-         assemblyPool.Save(errorHandler, newAssemblyNameProvider);
+          assemblyPool.Save(errorHandler, newAssemblyNameProvider);
       }
 
       public interface IAssemblyPoolFactory
