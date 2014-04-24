@@ -1,12 +1,7 @@
-﻿using NetAspect.Weaver.Apis.AssemblyChecker.Peverify;
+﻿using System.Collections.Generic;
+using NetAspect.Weaver.Apis.AssemblyChecker.Peverify;
 using NetAspect.Weaver.Core.Weaver;
 using NetAspect.Weaver.Core.Weaver.Detectors;
-using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field;
-using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Method;
-using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Constructor;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Property;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Engine.AspectCheckers;
 using NetAspect.Weaver.Core.Weaver.Engine.AspectFinders;
@@ -19,17 +14,16 @@ namespace NetAspect.Weaver
       public static WeaverEngine Create()
       {
          return new WeaverEngine(
-            new WeavingModelComputer(
-                  new MultiWeavingDetector(
-                     new MethodAttributeWeavingDetector(),
-                     new PropertyGetAttributeWeavingDetector(),
-                     new CallMethodInstructionWeavingDetector(),
-                     new CallGetFieldInstructionWeavingDetector(),
-                     new CallUpdateFieldInstructionWeavingDetector(),
-                     new CallGetPropertyInstructionWeavingDetector(),
-                     new ConstructorAttributeWeavingDetector()),
-                     new DefaultAspectFinder(),
-                     new DefaultAspectChecker()),
+            new WeavingModelComputer(new DefaultAspectFinder(),
+                     new DefaultAspectChecker(),
+                     new List<ICallWeavingDetector>()
+                         {
+                             
+                         },
+                     new List<IMethodWeavingDetector>()
+                         {
+                             
+                         }),
             new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker()));
       }
    }

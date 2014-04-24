@@ -65,6 +65,7 @@
     <Compile Include="Core\Model\Weaving\AroundMethodWeavingModel.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinitionExtensions.cs" />
+    <Compile Include="Core\Model\Weaving\MethodsWeavingModel.cs" />
     <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorForMethodParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorForPropertyParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Parameters\CalledParameterNameInterceptorParametersChercker.cs" />
