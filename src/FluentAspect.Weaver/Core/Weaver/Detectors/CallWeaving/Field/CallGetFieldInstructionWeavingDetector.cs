@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Checkers.CallWeaving.Called;
+using NetAspect.Weaver.Core.Weaver.Checkers.CallWeaving.Source;
 using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Instance;
 using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Parameters;
 using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
@@ -37,6 +41,88 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
         {
             return (interceptor.Instruction.Operand as FieldReference).Resolve();
         }
+
+        public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AddPossibleParameter(this InterceptorInfo interceptor,
+                                                                            string parameterName)
+        {
+            var myGenerator = new MyGenerator<IlInjectorAvailableVariablesForInstruction>();
+            var checker = new MyInterceptorParameterChecker();
+            interceptor.Generator.Add(parameterName, myGenerator, checker);
+            return new InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction>(myGenerator, checker, interceptor);
+        }
+
+        public class MyInterceptorParameterChecker : IInterceptorParameterChecker
+        {
+            public List<Action<ParameterInfo, ErrorHandler>> Checkers = new List<Action<ParameterInfo, ErrorHandler>>();
+
+            public void Check(ParameterInfo parameter, ErrorHandler errorListener)
+            {
+                foreach (var checker in Checkers)
+                {
+                    checker(parameter, errorListener);
+                }
+            }
+        }
+
+
+        public class MyGenerator<T> : IInterceptorParameterIlGenerator<T>
+        {
+            public List<Action<ParameterInfo, List<Instruction>, T>> Generators = new List<Action<ParameterInfo, List<Instruction>, T>>();
+
+            public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, T info)
+            {
+                foreach (var generator in Generators)
+                {
+                    generator(parameterInfo, instructions, info);
+                }
+            }
+        }
+    }
+
+
+    public class InterceptorParameterConfigurator<T>
+    {
+        private readonly InterceptorInfoExtensions.MyGenerator<T> _myGenerator;
+        private readonly InterceptorInfoExtensions.MyInterceptorParameterChecker _checker;
+        private readonly InterceptorInfo _interceptor;
+
+        private List<string> allowedTypes; 
+
+        public InterceptorParameterConfigurator(InterceptorInfoExtensions.MyGenerator<T> myGenerator, InterceptorInfoExtensions.MyInterceptorParameterChecker checker, InterceptorInfo interceptor)
+        {
+            _myGenerator = myGenerator;
+            _checker = checker;
+            _interceptor = interceptor;
+        }
+
+        public InterceptorParameterConfigurator<T> WhichCanNotBeReferenced()
+        {
+            _checker.Checkers.Add((parameter, errorListener) => Ensure.NotReferenced(parameter, errorListener));
+            return this;
+        }
+
+        public InterceptorParameterConfigurator<T> WhereFieldCanNotBeStatic()
+        {
+            _checker.Checkers.Add((parameter, errorListener) => Ensure.NotStaticButDefaultValue(parameter, errorListener, _interceptor.GetOperandAsField()));
+            return this;
+        }
+
+        public InterceptorParameterConfigurator<T> WhichMustBeOfType<T1>()
+        {
+            allowedTypes.Add(typeof(T1).FullName);
+            return this;
+        }
+
+        public InterceptorParameterConfigurator<T> OrOfType(TypeReference type)
+        {
+            allowedTypes.Add(type.FullName);
+            return this;
+        }
+
+        public InterceptorParameterConfigurator<T> OrOfFieldDeclaringType()
+        {
+            return OrOfType(_interceptor.GetOperandAsField().DeclaringType);
+        }
     }
 
     public class CallGetFieldInterceptorAroundInstructionFactory : IInterceptorAroundInstructionFactory
@@ -45,6 +131,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
 
         public void FillCommon(InterceptorInfo info)
         {
+            info.AddPossibleParameter("called")
+                .WhichCanNotBeReferenced()
+                .WhereFieldCanNotBeStatic()
+                .WhichMustBeOfType<object>().OrOfFieldDeclaringType()
+                .;
+
             info.Generator.Add("called", 
                 new CalledInterceptorParametersIlGenerator(),
                 new CalledInterceptorParametersChercker(info.GetOperandAsField()));
@@ -54,11 +146,29 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
             info.Generator.Add("callerparameters", 
                 new ParametersInterceptorParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>(),
                 new ParametersInterceptorParametersChercker());
+            foreach (ParameterDefinition parameter in info.Method.Parameters)
+            {
+                info.Generator.Add("caller" + parameter.Name.ToLower(),
+                                 new ParameterNameInterceptorParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>(parameter),
+                                 new ParameterNameInterceptorParametersChercker(parameter));
+            }
+            info.Generator.Add("columnnumber",
+                new SequencePointIntInterceptorParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>(info.Instruction, point => point.StartColumn),
+                new ColumnNumberInterceptorParametersChercker(info.Instruction));
+
+            info.Generator.Add("linenumber",
+                new SequencePointIntInterceptorParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>(info.Instruction, point => point.StartLine),
+                new ColumnNumberInterceptorParametersChercker(info.Instruction));
+
+            info.Generator.Add("filename", new SequencePointStringInterceptorParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>(info.Instruction, i => Path.GetFileName(i.Document.Url)),
+                new FilenameInterceptorParametersChercker(info.Instruction));
+
+            info.Generator.Add("filepath", new SequencePointStringInterceptorParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>(info.Instruction, i => i.Document.Url),
+                new FilenameInterceptorParametersChercker(info.Instruction));
         }
 
         public void FillBeforeSpecific(InterceptorInfo info)
         {
-            throw new NotImplementedException();
         }
 
         public void FillAfterSpecific(InterceptorInfo info)
@@ -91,32 +201,26 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
         {
             //parametersIlGenerator.CreateIlGeneratorForCalledParameter();
             //parametersIlGenerator.CreateIlGeneratorForCallerParameter();
-            parametersIlGenerator.CreateIlGeneratorForCallerParameters();
-            parametersIlGenerator.CreateIlGeneratorForCallerParametersName(method);
-            parametersIlGenerator.CreateIlGeneratorForColumnNumber(instruction);
-            parametersIlGenerator.CreateIlGeneratorForLineNumber(instruction);
-            parametersIlGenerator.CreateIlGeneratorForFilename(instruction);
-            parametersIlGenerator.CreateIlGeneratorForFilePath(instruction);
+            //parametersIlGenerator.CreateIlGeneratorForCallerParameters();
+            //parametersIlGenerator.CreateIlGeneratorForCallerParametersName(method);
+            //parametersIlGenerator.CreateIlGeneratorForColumnNumber(instruction);
+            //parametersIlGenerator.CreateIlGeneratorForLineNumber(instruction);
+            //parametersIlGenerator.CreateIlGeneratorForFilename(instruction);
+            //parametersIlGenerator.CreateIlGeneratorForFilePath(instruction);
             parametersIlGenerator.CreateIlGeneratorForField(instruction, method.Module);
-            //parametersIlGenerator.CreateIlGeneratorForMethodParameter();
-            //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
-            //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
         }
 
         private static void FillCommon(MethodDefinition method, ParametersChecker checker, TOperandType calledField, Instruction instruction)
         {
-            //checker.CreateCheckerForCallerParameter(method);
             //checker.CreateCheckerForCalledParameter(calledField);
             //checker.CreateCheckerForCallerParameter(method);
-            checker.CreateCheckerForCallerParameters(method);
-            checker.CreateCheckerForCallerParametersName(method);
+            //checker.CreateCheckerForCallerParameters(method);
+            //checker.CreateCheckerForCallerParametersName(method);
             checker.CreateCheckerForColumnNumberParameter(instruction);
             checker.CreateCheckerForLineNumberParameter(instruction);
             checker.CreateCheckerForFilenameParameter(instruction);
             checker.CreateCheckerForFilePathParameter(instruction);
             checker.CreateCheckerForField();
-            //checker.CreateCheckerForParameterNameParameter(method);
-            //checker.CreateCheckerForParametersParameter();
         }
 
         public static IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForAfter(MethodDefinition method,
