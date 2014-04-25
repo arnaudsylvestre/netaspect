@@ -13,7 +13,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
         private readonly InterceptorInfoExtensions.MyInterceptorParameterChecker _checker;
         private readonly InterceptorInfo _interceptor;
 
-        private List<string> allowedTypes;
+        private List<string> allowedTypes = new List<string>();
 
         public InterceptorInfoExtensions.MyGenerator<T> Generator
         {
@@ -30,6 +30,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
             _myGenerator = myGenerator;
             _checker = checker;
             _interceptor = interceptor;
+            _checker.Checkers.Add((info, handler) => Ensure.OfType(info, handler, allowedTypes.ToArray()));
         }
 
         public InterceptorParameterConfigurator<T> WhichCanNotBeReferenced()
@@ -65,6 +66,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
         public InterceptorParameterConfigurator<T> WhichMustBeOfType<T1>()
         {
             allowedTypes.Add(typeof(T1).FullName);
+            return this;
+        }
+
+        public InterceptorParameterConfigurator<T> WhichMustBeOfTypeOfParameter(ParameterDefinition parameterDefinition)
+        {
+            _checker.Checkers.Add((info, handler) => Ensure.OfType(info, handler, parameterDefinition));
             return this;
         }
 
@@ -106,6 +113,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
                 });
             return this;
         }
+
         
     }
 }

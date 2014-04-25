@@ -46,19 +46,7 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
         {
             //ilGeneratoir.Add("callerparameters", new ParametersInterceptorParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>());
         }
-        public static void CreateIlGeneratorForCalledParameters(this ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> ilGeneratoir)
-        {
-            //ilGeneratoir.Add("calledparameters", new CalledParametersInterceptorParametersIlGenerator());
-        }
-        public static void CreateIlGeneratorForCalledParametersName(this ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> ilGeneratoir,
-                                                                    MethodDefinition calledMethod)
-        {
-            //foreach (ParameterDefinition parameterDefinition in calledMethod.Parameters)
-            //{
-            //    ilGeneratoir.Add("called" + parameterDefinition.Name.ToLower(),
-            //                     new CalledParameterNameInterceptorParametersIlGenerator(parameterDefinition));
-            //}
-        }
+        
         public static void CreateIlGeneratorForCallerParametersName(this ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> ilGeneratoir,
                                                                     MethodDefinition callerMethod)
         {
@@ -83,12 +71,6 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
             this ParametersIlGenerator<T> ilGeneratoir) where T : IlInstructionInjectorAvailableVariables
         {
             //ilGeneratoir.Add("constructor", new MethodInterceptorParametersIlGenerator<T>());
-        }
-
-        public static void CreateIlGeneratorForCallerMethodParameter<T>(
-            this ParametersIlGenerator<T> ilGeneratoir) where T : IlInstructionInjectorAvailableVariables
-        {
-            //ilGeneratoir.Add("callermethod", new MethodInterceptorParametersIlGenerator<T>());
         }
 
         public static void CreateIlGeneratorForPropertyParameter(

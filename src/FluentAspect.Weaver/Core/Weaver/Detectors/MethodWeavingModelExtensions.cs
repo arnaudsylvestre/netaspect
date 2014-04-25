@@ -1,116 +1,13 @@
 ﻿using Mono.Cecil;
-using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Engine;
-using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
-using NetAspect.Weaver.Core.Weaver.Generators;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors
 {
     public static class MethodWeavingModelExtensions
     {
-        public static void AddMethodCallWeavingModel(this MethodWeavingModel methodWeavingModel, MethodDefinition method,
-                                                     Instruction beforeInstruction, NetAspectDefinition aspect,
-                                                     Interceptor beforeCallMethod, Interceptor afterCallMethod)
-        {
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector<IlInjectorAvailableVariablesForInstruction>();
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector<IlInjectorAvailableVariablesForInstruction>();
-
-            var beforCallInterceptorMethod = beforeCallMethod.Method;
-            if (beforCallInterceptorMethod != null)
-            {
-               before = CallWeavingMethodInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect, beforeInstruction);
-            }
-            var afterCallInterceptorMethod = afterCallMethod.Method;
-            if (afterCallInterceptorMethod != null)
-            {
-               after = CallWeavingMethodInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction);
-            }
-            methodWeavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(before, after));
-        }
-
-        public static void AddGetFieldCallWeavingModel(this MethodWeavingModel methodWeavingModel, MethodDefinition method,
-                                                     Instruction beforeInstruction, NetAspectDefinition aspect,
-                                                     Interceptor beforeCallMethod, Interceptor afterCallMethod)
-        {
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector<IlInjectorAvailableVariablesForInstruction>();
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector<IlInjectorAvailableVariablesForInstruction>();
-
-            var beforCallInterceptorMethod = beforeCallMethod.Method;
-            if (beforCallInterceptorMethod != null)
-            {
-                before = CallWeavingFieldInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect, beforeInstruction);
-            }
-            var afterCallInterceptorMethod = afterCallMethod.Method;
-            if (afterCallInterceptorMethod != null)
-            {
-                after = CallWeavingFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction);
-            }
-            methodWeavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(before, after));
-        }
-
-        public static void AddGetPropertyCallWeavingModel(this MethodWeavingModel methodWeavingModel, MethodDefinition method, Instruction beforeInstruction, NetAspectDefinition aspect, Interceptor beforeCallMethod, Interceptor afterCallMethod, PropertyDefinition property)
-        {
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector<IlInjectorAvailableVariablesForInstruction>();
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector<IlInjectorAvailableVariablesForInstruction>();
-
-            var beforCallInterceptorMethod = beforeCallMethod.Method;
-            if (beforCallInterceptorMethod != null)
-            {
-                before = CallWeavingGetPropertyInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect, beforeInstruction, property);
-            }
-            var afterCallInterceptorMethod = afterCallMethod.Method;
-            if (afterCallInterceptorMethod != null)
-            {
-                after = CallWeavingGetPropertyInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction, property);
-            }
-            methodWeavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(before, after));
-        }
-
-
-
-        public static void AddSetPropertyCallWeavingModel(this MethodWeavingModel methodWeavingModel, MethodDefinition method, Instruction beforeInstruction, NetAspectDefinition aspect, Interceptor beforeCallMethod, Interceptor afterCallMethod, PropertyDefinition property)
-        {
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector<IlInjectorAvailableVariablesForInstruction>();
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector<IlInjectorAvailableVariablesForInstruction>();
-
-           var beforCallInterceptorMethod = beforeCallMethod.Method;
-           if (beforCallInterceptorMethod != null)
-           {
-              before = CallWeavingSetPropertyInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect, beforeInstruction, property);
-           }
-           var afterCallInterceptorMethod = afterCallMethod.Method;
-           if (afterCallInterceptorMethod != null)
-           {
-              after = CallWeavingSetPropertyInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction, property);
-           }
-           methodWeavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(before, after));
-        }
-
-        public static void AddUpdateFieldCallWeavingModel(this MethodWeavingModel methodWeavingModel, MethodDefinition method,
-                                                     Instruction beforeInstruction, NetAspectDefinition aspect,
-                                                     Interceptor beforeCallMethod, Interceptor afterCallMethod)
-        {
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> before = new NoIIlInjector<IlInjectorAvailableVariablesForInstruction>();
-            IIlInjector<IlInjectorAvailableVariablesForInstruction> after = new NoIIlInjector<IlInjectorAvailableVariablesForInstruction>();
-
-            var beforCallInterceptorMethod = beforeCallMethod.Method;
-            if (beforCallInterceptorMethod != null)
-            {
-                before = CallWeavingUpdateFieldInjectorFactory.CreateForBefore(method, beforCallInterceptorMethod, aspect, beforeInstruction);
-            }
-            var afterCallInterceptorMethod = afterCallMethod.Method;
-            if (afterCallInterceptorMethod != null)
-            {
-                after = CallWeavingUpdateFieldInjectorFactory.CreateForAfter(method, afterCallInterceptorMethod, aspect, beforeInstruction);
-            }
-            methodWeavingModel.AddAroundInstructionWeaver(beforeInstruction, new AroundInstructionWeaver(before, after));
-        }
-        
-
         public static void AddMethodWeavingModel(this MethodWeavingModel methodWeavingModel, MethodDefinition method,
                                                  NetAspectDefinition aspect,
                                                  Interceptor before, Interceptor after, Interceptor onException,

@@ -5,7 +5,7 @@ using NetAspect.Weaver.Core.Model.Weaving;
 namespace NetAspect.Weaver.Core.Weaver.Detectors
 {
 
-    public class WeavingDetector : IWeavingDetector
+    public class WeavingDetector
     {
         public interface IMethodWeavingDetector
         {

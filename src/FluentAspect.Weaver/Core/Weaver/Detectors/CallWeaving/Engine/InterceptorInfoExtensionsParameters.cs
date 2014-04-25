@@ -1,6 +1,7 @@
 using System.IO;
 using System.Reflection;
 using Mono.Cecil;
+using NetAspect.Weaver.Core.Weaver.Generators;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
 {
@@ -24,6 +25,14 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
                 .AndInjectTheCurrentInstance();
             return info;
         }
+        public static InterceptorInfo AddCallerMethod(this InterceptorInfo info)
+        {
+            info.AddPossibleParameter("callermethod")
+                .WhichCanNotBeReferenced()
+                .WhichMustBeOfType<MethodBase>()
+                .AndInjectTheCurrentMethod();
+            return info;
+        }
         public static InterceptorInfo AddCallerParameters(this InterceptorInfo info)
         {
             info.AddPossibleParameter("callerparameters")
@@ -32,6 +41,27 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
                 .AndInjectTheVariable(variables => variables.Parameters);
             return info;
         }
+        public static InterceptorInfo AddCalledParameters(this InterceptorInfo info)
+        {
+            info.AddPossibleParameter("calledparameters")
+                .WhichCanNotBeReferenced()
+                .WhichMustBeOfType<object[]>()
+                .AndInjectTheVariable(variables => variables.CalledParametersObject);
+            return info;
+
+        }
+        public static InterceptorInfo AddCalledParameterNames(this InterceptorInfo info)
+        {
+            foreach (ParameterDefinition parameterDefinition in info.GetOperandAsMethod().Parameters)
+            {
+                info.AddPossibleParameter("calledparameters")
+                    .WhichCanNotBeReferenced()
+                    .WhichMustBeOfTypeOfParameter(parameterDefinition)
+                    .AndInjectTheCalledParameter(parameterDefinition);
+            }
+            return info;
+
+        }
         public static InterceptorInfo AddCallerParameterNames(this InterceptorInfo info)
         {
             foreach (ParameterDefinition parameter in info.Method.Parameters)
@@ -39,7 +69,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
 
                 info.AddPossibleParameter("caller" + parameter.Name.ToLower())
                     .WhichCanNotBeOut()
-                    .WhichMustBeOfTypeOf(parameter.ParameterType)
+                    .WhichMustBeOfTypeOfParameter(parameter)
                     .AndInjectTheParameter(parameter);
             }
             return info;
@@ -86,6 +116,14 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
                 .WhichCanNotBeReferenced()
                 .WhichMustBeOfType<FieldInfo>()
                 .AndInjectTheCalledFieldInfo();
+            return info;
+        }
+        public static InterceptorInfo AddCalledPropertyInfo(this InterceptorInfo info)
+        {
+            info.AddPossibleParameter("property")
+                .WhichCanNotBeReferenced()
+                .WhichMustBeOfType<PropertyInfo>()
+                .AndInjectTheCalledPropertyInfo();
             return info;
         }
     }

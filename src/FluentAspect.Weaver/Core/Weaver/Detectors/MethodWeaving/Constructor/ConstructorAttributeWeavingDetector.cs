@@ -5,8 +5,8 @@ using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Constructor
 {
-    public class ConstructorAttributeWeavingDetector : IWeavingDetector
-    {
+    public class ConstructorAttributeWeavingDetector
+   {
         public bool CanHandle(NetAspectDefinition aspect)
         {
             return aspect.BeforeConstructor.Method != null || 

@@ -16,6 +16,10 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
         {
             return (interceptor.Instruction.Operand as FieldReference).Resolve();
         }
+        public static MethodDefinition GetOperandAsMethod(this InterceptorInfo interceptor)
+        {
+            return (interceptor.Instruction.Operand as MethodReference).Resolve();
+        }
 
         public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AddPossibleParameter(this InterceptorInfo interceptor,
                                                                                                                         string parameterName)

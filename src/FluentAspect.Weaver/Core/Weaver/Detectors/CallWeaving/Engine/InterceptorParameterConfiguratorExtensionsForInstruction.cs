@@ -12,13 +12,24 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
 
         public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AndInjectTheCalledFieldInfo(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator)
         {
-            
+
             interceptorParameterConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
-                {
-                    var interceptor = interceptorParameterConfigurator.Interceptor;
-                    instructions.AppendCallToTargetGetType(interceptor.Method.Module, info.Called);
-                    instructions.AppendCallToGetField(interceptor.GetOperandAsField().Name, interceptor.Method.Module);
-                });
+            {
+                var interceptor = interceptorParameterConfigurator.Interceptor;
+                instructions.AppendCallToTargetGetType(interceptor.Method.Module, info.Called);
+                instructions.AppendCallToGetField(interceptor.GetOperandAsField().Name, interceptor.Method.Module);
+            });
+            return interceptorParameterConfigurator;
+        }
+        public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AndInjectTheCalledPropertyInfo(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator)
+        {
+
+            interceptorParameterConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
+            {
+                var interceptor = interceptorParameterConfigurator.Interceptor;
+                instructions.AppendCallToTargetGetType(interceptor.Method.Module, info.Called);
+                instructions.AppendCallToGetProperty(interceptor.GetOperandAsMethod().GetProperty().Name, interceptor.Method.Module);
+            });
             return interceptorParameterConfigurator;
         }
 
@@ -41,6 +52,14 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
                 });
             return interceptorParameterConfigurator;
         }
+        public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AndInjectTheCurrentMethod(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator)
+        {
+            interceptorParameterConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
+                {
+                    instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentMethodBase));
+                });
+            return interceptorParameterConfigurator;
+        }
         public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AndInjectTheVariable(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator, Func<IlInjectorAvailableVariablesForInstruction, VariableDefinition> variableProvider)
         {
             interceptorParameterConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
@@ -49,6 +68,41 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
                 });
             return interceptorParameterConfigurator;
         }
+
+        public static void AndInjectTheCalledParameter(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator, ParameterDefinition parameter)
+        {
+            interceptorParameterConfigurator.Generator.Generators.Add((parameterInfo, instructions, info) =>
+                {
+                    ModuleDefinition moduleDefinition = ((MethodDefinition) parameter.Method).Module;
+                    if (!parameterInfo.ParameterType.IsByRef && parameter.ParameterType.IsByReference)
+                    {
+                        instructions.Add(Instruction.Create(OpCodes.Ldloc,
+                                                            info.CalledParameters["called" + parameter.Name]));
+                        instructions.Add(Instruction.Create(OpCodes.Ldobj,
+                                                            moduleDefinition.Import(parameterInfo.ParameterType)));
+                    }
+                    else
+                    {
+                        instructions.Add(Instruction.Create(OpCodes.Ldloc,
+                                                            info.CalledParameters["called" + parameter.Name]));
+                    }
+                    if (parameter.ParameterType != moduleDefinition.TypeSystem.Object &&
+                        parameterInfo.ParameterType == typeof (Object))
+                    {
+                        TypeReference reference = parameter.ParameterType;
+                        if (reference.IsByReference)
+                        {
+                            reference =
+                                ((MethodDefinition) parameter.Method).GenericParameters.First(
+                                    t => t.Name == reference.Name.TrimEnd('&'));
+                            instructions.Add(Instruction.Create(OpCodes.Ldobj, reference));
+                        }
+                        instructions.Add(Instruction.Create(OpCodes.Box, reference));
+                    }
+                });
+        }
+
+
         public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AndInjectTheParameter(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator, ParameterDefinition parameter)
         {
             interceptorParameterConfigurator.Generator.Generators.Add((parameterInfo, instructions, info) =>

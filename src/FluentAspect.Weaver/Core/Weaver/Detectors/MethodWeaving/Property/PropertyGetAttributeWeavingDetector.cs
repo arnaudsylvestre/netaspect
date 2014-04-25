@@ -6,7 +6,7 @@ using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Property
 {
-    public class PropertyGetAttributeWeavingDetector : IWeavingDetector
+    public class PropertyGetAttributeWeavingDetector
     {
         public bool CanHandle(NetAspectDefinition aspect)
         {
