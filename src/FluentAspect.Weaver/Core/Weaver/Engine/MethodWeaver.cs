@@ -54,10 +54,10 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
             instructionIl.Before.AddRange(variablesForInstruction.recallcalledParametersInstructions);
          }
 
-         methodWeavingModel.Method.Befores.Check(errorHandler, availableVariables);
-         methodWeavingModel.Method.Afters.Check(errorHandler, availableVariables);
-         methodWeavingModel.Method.OnExceptions.Check(errorHandler, availableVariables);
-         methodWeavingModel.Method.OnFinallys.Check(errorHandler, availableVariables);
+         methodWeavingModel.Method.Befores.Check(errorHandler);
+         methodWeavingModel.Method.Afters.Check(errorHandler);
+         methodWeavingModel.Method.OnExceptions.Check(errorHandler);
+         methodWeavingModel.Method.OnFinallys.Check(errorHandler);
          if (errorHandler.Errors.Count > 0)
             return;
 

@@ -18,78 +18,9 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
                 Checker = new InstanceInterceptorParametersChercker(method),
             });
         }
-        public static void CreateCheckerForCallerParameter(this ParametersChecker checkers, MethodDefinition method)
-        {
-            checkers.Add(new InterceptorParametersChecker
-            {
-                ParameterName = "caller",
-                Checker = new InstanceInterceptorParametersChercker(method),
-            });
-        }
 
 
 
-        //private static void AddLineNumber(this ParametersEngine engine, JoinPoint point)
-        //{
-        //    engine.AddPossibleParameter("linenumber", (info, handler) =>
-        //    {
-        //        Ensure.SequencePoint(point.InstructionStart, handler, info);
-        //        Ensure.ParameterType<int>(info, handler);
-        //    },
-        //                                (info, instructions) =>
-        //                                instructions.Add(
-        //                                    InstructionFactory.Create(point.InstructionStart.GetLastSequencePoint(),
-        //                                                              i => i.StartLine)));
-        //}
-
-
-
-        //private static void AddFilename(this ParametersEngine engine, JoinPoint point)
-        //{
-        //    engine.AddPossibleParameter("filename", (info, handler) =>
-        //    {
-        //        Ensure.SequencePoint(point.InstructionStart, handler, info);
-        //        Ensure.ParameterType<string>(info, handler);
-        //    },
-        //                                (info, instructions) =>
-        //                                instructions.Add(
-        //                                    InstructionFactory.Create(point.InstructionStart.GetLastSequencePoint(),
-        //                                                              i => Path.GetFileName(i.Document.Url))));
-        //}
-
-
-        //private static void AddFilepath(this ParametersEngine engine, JoinPoint joinPoint)
-        //{
-        //    engine.AddPossibleParameter("filepath", (info, handler) =>
-        //    {
-        //        Ensure.SequencePoint(joinPoint.InstructionStart, handler, info);
-        //        Ensure.ParameterType<string>(info, handler);
-        //    },
-        //                                (info, instructions) =>
-        //                                instructions.Add(
-        //                                    InstructionFactory.Create(
-        //                                        joinPoint.InstructionStart.GetLastSequencePoint(), i => i.Document.Url)));
-        //}
-
-
-        public static void CreateCheckerForCallerParameters(this ParametersChecker checkers, MethodDefinition method)
-        {
-
-            checkers.Add(new InterceptorParametersChecker
-            {
-                ParameterName = "callerparameters",
-                Checker = new ParametersInterceptorParametersChercker(),
-            });
-        }
-        public static void CreateCheckerForCalledParameters(this ParametersChecker checkers, MethodDefinition method)
-        {
-
-            checkers.Add(new InterceptorParametersChecker
-            {
-                ParameterName = "calledparameters",
-                Checker = new ParametersInterceptorParametersChercker(),
-            });
-        }
 
         public static void CreateCheckerForParametersParameter(this ParametersChecker checkers)
         {

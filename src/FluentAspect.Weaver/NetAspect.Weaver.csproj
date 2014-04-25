@@ -66,9 +66,6 @@
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinitionExtensions.cs" />
     <Compile Include="Core\Model\Weaving\MethodsWeavingModel.cs" />
-    <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorForMethodParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorForPropertyParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\MethodWeaving\Parameters\CalledParameterNameInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\CallUpdateFieldInterceptorAroundInstructionFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\Property\CallGetPropertyInterceptorAroundInstructionFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\Method\CallMethodInterceptorAroundInstructionFactory.cs" />
@@ -99,10 +96,8 @@
     <Compile Include="Core\Model\Weaving\IAroundInstructionWeaver.cs" />
     <Compile Include="Core\Weaver\Generators\PropertyPInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Call\IlInstructionInjectorAvailableVariables.cs" />
-    <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensure.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Exception\ExceptionInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\MethodWeaving\Member\FieldInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\IInterceptorParameterChecker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Instance\InstanceInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\InterceptorParametersChecker.cs" />
@@ -174,10 +169,6 @@
       <Project>{F5E3F3E9-13C1-4CD3-B15A-6F5F3422BDB7}</Project>
       <Name>NetAspect.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Weaver\Checkers\CallWeaving\Caller\" />
-    <Folder Include="Core\Weaver\Checkers\CallWeaving\Source\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
