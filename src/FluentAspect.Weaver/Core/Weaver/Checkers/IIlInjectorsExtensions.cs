@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
     public static class IIlInjectorsExtensions
     {
-        public static void Check<T>(this IEnumerable<IIlInjector<T>> injectors, ErrorHandler errorHandler, T info)
+        public static void Check<T>(this IEnumerable<IIlInjector<T>> injectors, ErrorHandler errorHandler)
         {
             foreach (var ilInjector in injectors)
             {

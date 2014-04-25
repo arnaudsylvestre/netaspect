@@ -1,19 +1,10 @@
 using System;
-using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
-using NetAspect.Weaver.Core.Weaver.Checkers.CallWeaving.Called;
-using NetAspect.Weaver.Core.Weaver.Checkers.CallWeaving.Source;
-using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Instance;
-using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Member;
-using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Parameters;
 using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
-using NetAspect.Weaver.Core.Weaver.Generators;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 using ICustomAttributeProvider = Mono.Cecil.ICustomAttributeProvider;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field

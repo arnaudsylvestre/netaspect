@@ -1,14 +1,10 @@
 ﻿using System.Linq;
 using Mono.Cecil;
-using Mono.Cecil.Cil;
-using NetAspect.Weaver.Core.Weaver.Checkers.CallWeaving.Called;
-using NetAspect.Weaver.Core.Weaver.Checkers.CallWeaving.Source;
 using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Exception;
 using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Instance;
 using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Member;
 using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Parameters;
 using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Result;
-using NetAspect.Weaver.Core.Weaver.Engine;
 
 namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
@@ -76,57 +72,6 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
         //}
 
 
-
-        public static void CreateCheckerForColumnNumberParameter(this ParametersChecker checkers, Instruction instruction)
-        {
-            checkers.Add(new InterceptorParametersChecker
-            {
-                ParameterName = "columnnumber",
-                Checker = new ColumnNumberInterceptorParametersChercker(instruction),
-            });
-        }
-
-        public static void CreateCheckerForLineNumberParameter(this ParametersChecker checkers, Instruction instruction)
-        {
-            checkers.Add(new InterceptorParametersChecker
-            {
-                ParameterName = "linenumber",
-                Checker = new ColumnNumberInterceptorParametersChercker(instruction),
-            });
-        }
-        public static void CreateCheckerForFilenameParameter(this ParametersChecker checkers, Instruction instruction)
-        {
-            checkers.Add(new InterceptorParametersChecker
-            {
-                ParameterName = "filename",
-                Checker = new FilenameInterceptorParametersChercker(instruction),
-            });
-        }
-        public static void CreateCheckerForFilePathParameter(this ParametersChecker checkers, Instruction instruction)
-        {
-            checkers.Add(new InterceptorParametersChecker
-            {
-                ParameterName = "filepath",
-                Checker = new FilenameInterceptorParametersChercker(instruction),
-            });
-        }
-
-        public static void CreateCheckerForField(this ParametersChecker checkers)
-        {
-            checkers.Add(new InterceptorParametersChecker
-            {
-                ParameterName = "field",
-                Checker = new FieldInterceptorParametersChercker(),
-            });
-        }
-        public static void CreateCheckerForProperty(this ParametersChecker checkers)
-        {
-            checkers.Add(new InterceptorParametersChecker
-            {
-                ParameterName = "property",
-                Checker = new PropertyInterceptorParametersChercker(),
-            });
-        }
         public static void CreateCheckerForCallerParameters(this ParametersChecker checkers, MethodDefinition method)
         {
 
@@ -143,46 +88,6 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             {
                 ParameterName = "calledparameters",
                 Checker = new ParametersInterceptorParametersChercker(),
-            });
-        }
-        public static void CreateCheckerForCalledParametersName(this ParametersChecker checkers, MethodDefinition method)
-        {
-            checkers.AddRange(method.Parameters.Select(parameter => new InterceptorParametersChecker
-            {
-                ParameterName = "called" + parameter.Name.ToLower(),
-                Checker = new CalledParameterNameInterceptorParametersChercker(parameter),
-            }));
-        }
-        public static void CreateCheckerForCallerParametersName(this ParametersChecker checkers, MethodDefinition callerMethod)
-        {
-            checkers.AddRange(callerMethod.Parameters.Select(parameter => new InterceptorParametersChecker
-            {
-                ParameterName = "caller" + parameter.Name.ToLower(),
-                Checker = new ParameterNameInterceptorParametersChercker(parameter),
-            }));
-        }
-        public static void CreateCheckerForCalledParameter(this ParametersChecker checkers, FieldDefinition calledType)
-        {
-            checkers.Add(new InterceptorParametersChecker
-            {
-                ParameterName = "called",
-                Checker = new CalledInterceptorParametersChercker(calledType),
-            });
-        }
-        public static void CreateCheckerForCalledParameter(this ParametersChecker checkers, PropertyDefinition calledType)
-        {
-            checkers.Add(new InterceptorParametersChecker
-            {
-                ParameterName = "called",
-                Checker = new CalledInterceptorForPropertyParametersChercker(calledType),
-            });
-        }
-        public static void CreateCheckerForCalledParameter(this ParametersChecker checkers, MethodDefinition calledType)
-        {
-            checkers.Add(new InterceptorParametersChecker
-            {
-                ParameterName = "called",
-                Checker = new CalledInterceptorForMethodParametersChercker(calledType),
             });
         }
 
@@ -211,22 +116,14 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
                 Checker = new MethodInterceptorParametersChercker(),
             });
         }
-        public static void CreateCheckerForCallerMethodParameter(this ParametersChecker checkers)
-        {
-            checkers.Add(new InterceptorParametersChecker
-            {
-                ParameterName = "callermethod",
-                Checker = new MethodInterceptorParametersChercker(),
-            });
-        }
 
         public static void CreateCheckerForPropertyParameter(this ParametersChecker checkers)
         {
-            checkers.Add(new InterceptorParametersChecker
-                {
-                    ParameterName = "property",
-                    Checker = new PropertyInterceptorParametersChercker(),
-                });
+            //checkers.Add(new InterceptorParametersChecker
+            //    {
+            //        ParameterName = "property",
+            //        Checker = new PropertyInterceptorParametersChercker(),
+            //    });
         }
 
         public static void CreateCheckerForResultParameter(this ParametersChecker checkers, MethodDefinition method)

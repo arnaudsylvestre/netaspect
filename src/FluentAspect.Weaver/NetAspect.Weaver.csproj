@@ -100,11 +100,9 @@
     <Compile Include="Core\Weaver\Generators\PropertyPInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Call\IlInstructionInjectorAvailableVariables.cs" />
     <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\CallWeaving\Source\ColumnNumberInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensure.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Exception\ExceptionInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Member\FieldInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\CallWeaving\Source\FilenameInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\IInterceptorParameterChecker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Instance\InstanceInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\InterceptorParametersChecker.cs" />
@@ -112,7 +110,6 @@
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Member\MethodInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Parameters\ParameterNameInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Parameters\ParametersInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\MethodWeaving\Member\PropertyInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Result\ResultInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeavingModelExtensions.cs" />
     <Compile Include="Core\Weaver\Checkers\ParametersChecker.cs" />
@@ -180,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Weaver\Checkers\CallWeaving\Caller\" />
+    <Folder Include="Core\Weaver\Checkers\CallWeaving\Source\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
