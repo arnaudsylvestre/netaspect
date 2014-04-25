@@ -49,7 +49,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
                 var calledMethod = (instruction.Operand as MethodReference).Resolve();
                 var property_L = calledMethod.GetPropertyForGetter();
                 if (property_L != null)
-                     return AspectApplier.CanApply(property_L, aspect);
+                     return true;
                   
                
             }
@@ -64,7 +64,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
               var calledMethod = (instruction.Operand as MethodReference).Resolve();
               var property_L = calledMethod.GetPropertyForSetter();
               if (property_L != null)
-                 return AspectApplier.CanApply(property_L, aspect);
+                 return true;
 
 
            }

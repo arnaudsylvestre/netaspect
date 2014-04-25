@@ -27,7 +27,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Property
             {
                 if (propertyDefinition.GetMethod == method)
                 {
-                    bool isCompliant_L = AspectApplier.CanApply(propertyDefinition, aspect);
+                    bool isCompliant_L = AspectApplier.CanApply(propertyDefinition, aspect, definition => definition.PropertySelector);
                     if (!isCompliant_L)
                         return;
                     methodWeavingModel.AddPropertyGetMethodWeavingModel(method, aspect, aspect.BeforePropertyGetMethod,
@@ -36,7 +36,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Property
                 }
                 if (propertyDefinition.SetMethod == method)
                 {
-                    bool isCompliant_L = AspectApplier.CanApply(propertyDefinition, aspect);
+                    bool isCompliant_L = AspectApplier.CanApply(propertyDefinition, aspect, definition => definition.PropertySelector);
                     if (!isCompliant_L)
                         return;
                     methodWeavingModel.AddPropertySetMethodWeavingModel(method, aspect, aspect.BeforePropertySetMethod,

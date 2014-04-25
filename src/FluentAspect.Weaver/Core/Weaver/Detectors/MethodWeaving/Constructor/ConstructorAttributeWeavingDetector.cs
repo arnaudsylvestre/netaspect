@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Constructor
 
         public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, MethodWeavingModel methodWeavingModel)
         {
-           if (!AspectApplier.CanApply(method, aspect))
+           if (!AspectApplier.CanApply(method, aspect, definition => definition.MethodSelector))
                 return;
             methodWeavingModel.AddConstructorWeavingModel(method, aspect, aspect.BeforeConstructor, aspect.AfterConstructor, aspect.OnExceptionConstructor,
                                                aspect.OnFinallyConstructor);

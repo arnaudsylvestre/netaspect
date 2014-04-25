@@ -69,6 +69,19 @@
     <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorForMethodParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\CallWeaving\Called\CalledInterceptorForPropertyParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Parameters\CalledParameterNameInterceptorParametersChercker.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\AroundInstructionWeaverFactory.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\CallGetFieldInterceptorAroundInstructionFactory.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\IInterceptorAroundInstructionFactory.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\InterceptorInfo.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\InterceptorInfoExtensions.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\InterceptorInfoExtensionsParameters.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\InterceptorParameterConfigurator.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\InterceptorParameterConfiguratorExtensionsForInstruction.cs" />
+    <Compile Include="Core\Weaver\Detectors\Helpers\SelectorProvider.cs" />
+    <Compile Include="Core\Weaver\Detectors\ICallWeavingDetector.cs" />
+    <Compile Include="Core\Weaver\Detectors\ICallWeavingModelFactory.cs" />
+    <Compile Include="Core\Weaver\Detectors\IMethodWeavingDetector.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeaving\FilteredMethodWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\WeavingDetector.cs" />
     <Compile Include="Core\Weaver\Engine\AspectCheckers\DefaultAspectChecker.cs" />
     <Compile Include="Core\Weaver\Engine\AspectFinders\DefaultAspectFinder.cs" />
@@ -84,6 +97,7 @@
     <Compile Include="Core\Model\Weaving\IAroundInstructionWeaver.cs" />
     <Compile Include="Core\Weaver\Generators\CalledParameterNameInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Generators\CalledParametersInterceptorParametersIlGenerator.cs" />
+    <Compile Include="Core\Weaver\Generators\IlGenerator.cs" />
     <Compile Include="Core\Weaver\Generators\PropertyPInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Call\CallWeavingFieldInjectorFactory.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Call\CallWeavingMethodInjectorFactory.cs" />
@@ -111,7 +125,7 @@
     <Compile Include="Core\Weaver\WeaverEngine.cs" />
     <Compile Include="Core\Errors\IErrorListener.cs" />
     <Compile Include="Core\Weaver\Detectors\Helpers\AspectApplier.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\CallGetFieldInstructionWeavingDetector.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\CallWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\Method\CallMethodInstructionWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\CallUpdateFieldInstructionWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\IWeavingDetector.cs" />
@@ -154,6 +168,7 @@
     <Compile Include="Helpers\AssemblyExtensions.cs" />
     <Compile Include="Helpers\ObjectExtensions.cs" />
     <Compile Include="Helpers\AssemblyDefinitionExtensions.cs" />
+    <Compile Include="InstructionCompliance.cs" />
     <Compile Include="WeaverFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

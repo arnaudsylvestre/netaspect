@@ -177,7 +177,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
         {
            get
            {
-              var selectorParametersGenerator = new SelectorParametersGenerator<FieldDefinition>();
+               var selectorParametersGenerator = new SelectorParametersGenerator<FieldDefinition>();
               selectorParametersGenerator.AddPossibleParameter<string>("fieldName", field => field.Name);
               selectorParametersGenerator.AddPossibleParameter<string>("fieldTypeName", field => field.FieldType.Name);
               return new Selector<FieldDefinition>(_attribute.GetMethod("SelectField"), selectorParametersGenerator);
@@ -188,7 +188,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
         {
            get
            {
-              var selectorParametersGenerator = new SelectorParametersGenerator<PropertyDefinition>();
+               var selectorParametersGenerator = new SelectorParametersGenerator<PropertyDefinition>();
               selectorParametersGenerator.AddPossibleParameter<string>("propertyName", field => field.Name);
               selectorParametersGenerator.AddPossibleParameter<string>("propertyTypeName", field => field.PropertyType.Name);
               return new Selector<PropertyDefinition>(_attribute.GetMethod("SelectProperty"), selectorParametersGenerator);
@@ -199,7 +199,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
         {
            get
            {
-              var selectorParametersGenerator = new SelectorParametersGenerator<MethodDefinition>();
+               var selectorParametersGenerator = new SelectorParametersGenerator<MethodDefinition>();
               selectorParametersGenerator.AddPossibleParameter<string>("methodName", field => field.Name);
               selectorParametersGenerator.AddPossibleParameter<string>("methodTypeName", field => field.ReturnType.Name);
               return new Selector<MethodDefinition>(_attribute.GetMethod("SelectMethod"), selectorParametersGenerator);

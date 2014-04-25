@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
 
         public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, AroundMethodWeavingModel methodWeavingModel)
         {
-            if (!AspectApplier.CanApply(method, aspect))
+            if (!AspectApplier.CanApply(method, aspect, definition => definition.MethodSelector))
                 return;
         }
     }

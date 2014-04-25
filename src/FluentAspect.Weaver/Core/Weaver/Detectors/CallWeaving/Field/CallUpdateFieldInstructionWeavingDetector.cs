@@ -32,13 +32,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
 
         private static bool IsFieldCall(Instruction instruction, NetAspectDefinition aspect, MethodDefinition method)
         {
-            if (instruction.OpCode == OpCodes.Stsfld || instruction.OpCode == OpCodes.Stfld)
-            {
-                var fieldReference = instruction.Operand as FieldReference;
-
-                return AspectApplier.CanApply(fieldReference.Resolve(), aspect);
-            }
-            return false;
+            return instruction.OpCode == OpCodes.Stsfld || instruction.OpCode == OpCodes.Stfld;
         }
     }
 }
