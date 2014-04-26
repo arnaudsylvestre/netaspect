@@ -4,9 +4,9 @@ using Mono.Cecil;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
 {
-    public static class InterceptorInfoExtensionsParameters
+    public static class AroundInstructionInfoExtensionsParameters
     {
-        public static InterceptorInfo AddCalled(this InterceptorInfo info)
+        public static AroundInstructionInfo AddCalled(this AroundInstructionInfo info)
         {
             info.AddPossibleParameter("called")
                 .WhichCanNotBeReferenced()
@@ -15,7 +15,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
                 .AndInjectTheCalledInstance();
             return info;
         }
-        public static InterceptorInfo AddCaller(this InterceptorInfo info)
+        public static AroundInstructionInfo AddCaller(this AroundInstructionInfo info)
         {
             info.AddPossibleParameter("caller")
                 .WhichCanNotBeReferenced()
@@ -24,7 +24,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
                 .AndInjectTheCurrentInstance();
             return info;
         }
-        public static InterceptorInfo AddCallerMethod(this InterceptorInfo info)
+        public static AroundInstructionInfo AddCallerMethod(this AroundInstructionInfo info)
         {
             info.AddPossibleParameter("callermethod")
                 .WhichCanNotBeReferenced()
@@ -32,7 +32,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
                 .AndInjectTheCurrentMethod();
             return info;
         }
-        public static InterceptorInfo AddCallerParameters(this InterceptorInfo info)
+        public static AroundInstructionInfo AddCallerParameters(this AroundInstructionInfo info)
         {
             info.AddPossibleParameter("callerparameters")
                 .WhichCanNotBeReferenced()
@@ -40,7 +40,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
                 .AndInjectTheVariable(variables => variables.Parameters);
             return info;
         }
-        public static InterceptorInfo AddCalledParameters(this InterceptorInfo info)
+        public static AroundInstructionInfo AddCalledParameters(this AroundInstructionInfo info)
         {
             info.AddPossibleParameter("calledparameters")
                 .WhichCanNotBeReferenced()
@@ -49,7 +49,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
             return info;
 
         }
-        public static InterceptorInfo AddCalledParameterNames(this InterceptorInfo info)
+        public static AroundInstructionInfo AddCalledParameterNames(this AroundInstructionInfo info)
         {
             foreach (ParameterDefinition parameterDefinition in info.GetOperandAsMethod().Parameters)
             {
@@ -61,7 +61,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
             return info;
 
         }
-        public static InterceptorInfo AddCallerParameterNames(this InterceptorInfo info)
+        public static AroundInstructionInfo AddCallerParameterNames(this AroundInstructionInfo info)
         {
             foreach (ParameterDefinition parameter in info.Method.Parameters)
             {
@@ -73,7 +73,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
             }
             return info;
         }
-        public static InterceptorInfo AddColumnNumber(this InterceptorInfo info)
+        public static AroundInstructionInfo AddColumnNumber(this AroundInstructionInfo info)
         {
             info.AddPossibleParameter("columnnumber")
                 .WhichCanNotBeReferenced()
@@ -82,7 +82,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
                 .AndInjectThePdbInfo(s => s.StartColumn);
             return info;
         }
-        public static InterceptorInfo AddLineNumber(this InterceptorInfo info)
+        public static AroundInstructionInfo AddLineNumber(this AroundInstructionInfo info)
         {
             info.AddPossibleParameter("linenumber")
                 .WhichCanNotBeReferenced()
@@ -91,7 +91,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
                 .AndInjectThePdbInfo(s => s.StartLine);
             return info;
         }
-        public static InterceptorInfo AddFilePath(this InterceptorInfo info)
+        public static AroundInstructionInfo AddFilePath(this AroundInstructionInfo info)
         {
             info.AddPossibleParameter("filepath")
                 .WhichCanNotBeReferenced()
@@ -100,7 +100,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
                 .AndInjectThePdbInfo(s => s.Document.Url);
             return info;
         }
-        public static InterceptorInfo AddFileName(this InterceptorInfo info)
+        public static AroundInstructionInfo AddFileName(this AroundInstructionInfo info)
         {
             info.AddPossibleParameter("filename")
                 .WhichCanNotBeReferenced()
@@ -109,7 +109,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
                 .AndInjectThePdbInfo(s => Path.GetFileName(s.Document.Url));
             return info;
         }
-        public static InterceptorInfo AddCalledFieldInfo(this InterceptorInfo info)
+        public static AroundInstructionInfo AddCalledFieldInfo(this AroundInstructionInfo info)
         {
             info.AddPossibleParameter("field")
                 .WhichCanNotBeReferenced()
@@ -117,7 +117,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
                 .AndInjectTheCalledFieldInfo();
             return info;
         }
-        public static InterceptorInfo AddCalledPropertyInfo(this InterceptorInfo info)
+        public static AroundInstructionInfo AddCalledPropertyInfo(this AroundInstructionInfo info)
         {
             info.AddPossibleParameter("property")
                 .WhichCanNotBeReferenced()

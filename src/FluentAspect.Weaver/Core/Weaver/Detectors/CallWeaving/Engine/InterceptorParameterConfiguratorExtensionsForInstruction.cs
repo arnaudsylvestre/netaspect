@@ -10,68 +10,68 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
     public static class InterceptorParameterConfiguratorExtensionsForInstruction
     {
 
-        public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AndInjectTheCalledFieldInfo(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator)
+        public static AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> AndInjectTheCalledFieldInfo(this AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> aroundInstructionParametersConfigurator)
         {
 
-            interceptorParameterConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
+            aroundInstructionParametersConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
             {
-                var interceptor = interceptorParameterConfigurator.Interceptor;
+                var interceptor = aroundInstructionParametersConfigurator.AroundInstruction;
                 instructions.AppendCallToTargetGetType(interceptor.Method.Module, info.Called);
                 instructions.AppendCallToGetField(interceptor.GetOperandAsField().Name, interceptor.Method.Module);
             });
-            return interceptorParameterConfigurator;
+            return aroundInstructionParametersConfigurator;
         }
-        public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AndInjectTheCalledPropertyInfo(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator)
+        public static AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> AndInjectTheCalledPropertyInfo(this AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> aroundInstructionParametersConfigurator)
         {
 
-            interceptorParameterConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
+            aroundInstructionParametersConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
             {
-                var interceptor = interceptorParameterConfigurator.Interceptor;
+                var interceptor = aroundInstructionParametersConfigurator.AroundInstruction;
                 instructions.AppendCallToTargetGetType(interceptor.Method.Module, info.Called);
                 instructions.AppendCallToGetProperty(interceptor.GetOperandAsMethod().GetProperty().Name, interceptor.Method.Module);
             });
-            return interceptorParameterConfigurator;
+            return aroundInstructionParametersConfigurator;
         }
 
-        public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AndInjectTheCalledInstance(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator)
+        public static AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> AndInjectTheCalledInstance(this AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> aroundInstructionParametersConfigurator)
         {
-            interceptorParameterConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
+            aroundInstructionParametersConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
                 {
                     var called = info.Called;
                     instructions.Add(called == null
                                          ? Instruction.Create(OpCodes.Ldnull)
                                          : Instruction.Create(OpCodes.Ldloc, called));
                 });
-            return interceptorParameterConfigurator;
+            return aroundInstructionParametersConfigurator;
         }
-        public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AndInjectTheCurrentInstance(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator)
+        public static AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> AndInjectTheCurrentInstance(this AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> aroundInstructionParametersConfigurator)
         {
-            interceptorParameterConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
+            aroundInstructionParametersConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
                 {
                     instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
                 });
-            return interceptorParameterConfigurator;
+            return aroundInstructionParametersConfigurator;
         }
-        public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AndInjectTheCurrentMethod(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator)
+        public static AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> AndInjectTheCurrentMethod(this AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> aroundInstructionParametersConfigurator)
         {
-            interceptorParameterConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
+            aroundInstructionParametersConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
                 {
                     instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentMethodBase));
                 });
-            return interceptorParameterConfigurator;
+            return aroundInstructionParametersConfigurator;
         }
-        public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AndInjectTheVariable(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator, Func<IlInjectorAvailableVariablesForInstruction, VariableDefinition> variableProvider)
+        public static AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> AndInjectTheVariable(this AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> aroundInstructionParametersConfigurator, Func<IlInjectorAvailableVariablesForInstruction, VariableDefinition> variableProvider)
         {
-            interceptorParameterConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
+            aroundInstructionParametersConfigurator.Generator.Generators.Add((parameter, instructions, info) =>
                 {
                     instructions.Add(Instruction.Create(OpCodes.Ldloc, variableProvider(info)));
                 });
-            return interceptorParameterConfigurator;
+            return aroundInstructionParametersConfigurator;
         }
 
-        public static void AndInjectTheCalledParameter(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator, ParameterDefinition parameter)
+        public static void AndInjectTheCalledParameter(this AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> aroundInstructionParametersConfigurator, ParameterDefinition parameter)
         {
-            interceptorParameterConfigurator.Generator.Generators.Add((parameterInfo, instructions, info) =>
+            aroundInstructionParametersConfigurator.Generator.Generators.Add((parameterInfo, instructions, info) =>
                 {
                     ModuleDefinition moduleDefinition = ((MethodDefinition) parameter.Method).Module;
                     if (!parameterInfo.ParameterType.IsByRef && parameter.ParameterType.IsByReference)
@@ -103,9 +103,9 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
         }
 
 
-        public static InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> AndInjectTheParameter(this InterceptorParameterConfigurator<IlInjectorAvailableVariablesForInstruction> interceptorParameterConfigurator, ParameterDefinition parameter)
+        public static AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> AndInjectTheParameter(this AroundInstructionParametersConfigurator<IlInjectorAvailableVariablesForInstruction, AroundInstructionInfo> aroundInstructionParametersConfigurator, ParameterDefinition parameter)
         {
-            interceptorParameterConfigurator.Generator.Generators.Add((parameterInfo, instructions, info) =>
+            aroundInstructionParametersConfigurator.Generator.Generators.Add((parameterInfo, instructions, info) =>
                 {
                     ModuleDefinition moduleDefinition = ((MethodDefinition)parameter.Method).Module;
                     if (parameterInfo.ParameterType.IsByRef && !parameter.ParameterType.IsByReference)
@@ -135,7 +135,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
                         instructions.Add(Instruction.Create(OpCodes.Box, reference));
                     }
                 });
-            return interceptorParameterConfigurator;
+            return aroundInstructionParametersConfigurator;
         }
     }
 }

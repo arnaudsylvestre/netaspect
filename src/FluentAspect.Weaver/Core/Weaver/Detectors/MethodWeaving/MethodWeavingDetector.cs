@@ -28,13 +28,16 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
         private readonly Func<NetAspectDefinition, Interceptor> onExceptionInterceptorProvider;
         private readonly Func<NetAspectDefinition, Interceptor> onFinallyInterceptorProvider;
 
-        public MethodWeavingDetector(IsMethodCompliant isMethodCompliant, Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider, Func<NetAspectDefinition, Interceptor> afterInterceptorProvider, Func<NetAspectDefinition, Interceptor> onExceptionInterceptorProvider, Func<NetAspectDefinition, Interceptor> onFinallyInterceptorProvider)
+        public MethodWeavingDetector(Func<NetAspectDefinition, Interceptor> afterInterceptorProvider, IAroundMethodWeaverFactory aroundMethodWeaverFactory, Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider, IsMethodCompliant isMethodCompliant, Func<MethodDefinition, TMember> memberProvider, Func<NetAspectDefinition, Interceptor> onExceptionInterceptorProvider, Func<NetAspectDefinition, Interceptor> onFinallyInterceptorProvider, SelectorProvider<TMember> selectorProvider)
         {
-            this.isMethodCompliant = isMethodCompliant;
-            this.beforeInterceptorProvider = beforeInterceptorProvider;
             this.afterInterceptorProvider = afterInterceptorProvider;
+            this.aroundMethodWeaverFactory = aroundMethodWeaverFactory;
+            this.beforeInterceptorProvider = beforeInterceptorProvider;
+            this.isMethodCompliant = isMethodCompliant;
+            this.memberProvider = memberProvider;
             this.onExceptionInterceptorProvider = onExceptionInterceptorProvider;
             this.onFinallyInterceptorProvider = onFinallyInterceptorProvider;
+            this.selectorProvider = selectorProvider;
         }
 
         public AroundMethodWeavingModel DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect)
@@ -56,7 +59,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
         }
     }
 
-    internal interface IAroundMethodWeaverFactory
+    public interface IAroundMethodWeaverFactory
     {
         IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,

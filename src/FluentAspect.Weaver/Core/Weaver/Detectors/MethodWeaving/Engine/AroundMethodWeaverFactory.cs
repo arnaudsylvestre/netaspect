@@ -4,42 +4,64 @@ using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Checkers;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
-using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine;
 using NetAspect.Weaver.Core.Weaver.Generators;
+using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
+namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
 {
-    public class MethodWeavingMethodInjectorFactory : IAroundMethodWeaverFactory
+    public interface IInterceptorAroundMethodBuilder
     {
+        void FillCommon(AroundMethodInfo info);
+        void FillBeforeSpecific(AroundMethodInfo info);
+        void FillAfterSpecific(AroundMethodInfo info);
+        void FillOnExceptionSpecific(AroundMethodInfo info);
+        void FillOnFinallySpecific(AroundMethodInfo info);
+    }
+
+    public class AroundMethodWeaverFactory : IAroundMethodWeaverFactory
+    {
+        private IInterceptorAroundMethodBuilder builder;
+
+        public AroundMethodWeaverFactory(IInterceptorAroundMethodBuilder builder)
+        {
+            this.builder = builder;
+        }
+
+        public IIlInjector<IlInjectorAvailableVariables> Create(MethodDefinition method,
+                                                                                MethodInfo interceptorMethod,
+                                                                                NetAspectDefinition aspect,
+            Action<AroundMethodInfo> fillSpecific)
+        {
+            var checker = new ParametersChecker();
+            var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
+
+
+            AroundMethodInfo info = new AroundMethodInfo()
+                {
+                    Generator = parametersIlGenerator,
+                    Interceptor                    = interceptorMethod,
+                    Method                    = method,
+                };
+            builder.FillCommon(info);
+            fillSpecific(info);
+
+            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
+                                                                                       parametersIlGenerator, aspect);
+        }
+
         public IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,
                                                                                 NetAspectDefinition aspect)
         {
-            var checker = new ParametersChecker();
-            FillCommon(method, checker);
-
-
-            var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
-            FillCommon(method, parametersIlGenerator);
-
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
-                                                                                       parametersIlGenerator, aspect);
+            return Create(method, interceptorMethod, aspect, info => builder.FillBeforeSpecific(info));
         }
 
         public IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method,
                                                                                    MethodInfo interceptorMethod,
                                                                                    NetAspectDefinition aspect)
         {
-            var checker = new ParametersChecker();
-            FillCommon(method, checker);
-
-
-            var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
-            FillCommon(method, parametersIlGenerator);
-
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
-                                                                                       parametersIlGenerator, aspect);
+            return Create(method, interceptorMethod, aspect, info => builder.FillOnFinallySpecific(info));
         }
 
         private static void FillCommon(MethodDefinition method,
@@ -53,10 +75,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
         private static void FillCommon(MethodDefinition method, ParametersChecker checker)
         {
-            checker.CreateCheckerForInstanceParameter(method);
-            checker.CreateCheckerForMethodParameter();
-            checker.CreateCheckerForParameterNameParameter(method);
-            checker.CreateCheckerForParametersParameter();
+            
         }
 
         public IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
@@ -70,13 +89,11 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
-            parametersIlGenerator.CreateIlGeneratorForResultParameter();
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
-                                                                                       parametersIlGenerator, aspect);
+            return Create(method, interceptorMethod, aspect, info => builder.FillAfterSpecific(info));
         }
 
         public IIlInjector<IlInjectorAvailableVariables> CreateForExceptions(MethodDefinition method,
-                                                                                     MethodInfo methodInfo,
+                                                                                     MethodInfo interceptorMethod,
                                                                                      NetAspectDefinition aspect)
         {
             var checker = new ParametersChecker();
@@ -86,9 +103,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
             FillCommon(method, parametersIlGenerator);
-            parametersIlGenerator.CreateIlGeneratorForExceptionParameter();
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, methodInfo,
-                                                                                       checker, parametersIlGenerator, aspect);
+            return Create(method, interceptorMethod, aspect, info => builder.FillOnExceptionSpecific(info));
         }
     }
 }

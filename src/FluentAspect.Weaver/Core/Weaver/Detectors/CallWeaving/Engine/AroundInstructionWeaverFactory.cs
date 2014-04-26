@@ -27,11 +27,11 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
             }
         }
 
-        private readonly IInterceptorAroundInstructionFactory _interceptorAroundInstructionFactory;
+        private readonly IInterceptorAroundInstructionBuilder _interceptorAroundInstructionBuilder;
 
-        public AroundInstructionWeaverFactory(IInterceptorAroundInstructionFactory interceptorAroundInstructionFactory)
+        public AroundInstructionWeaverFactory(IInterceptorAroundInstructionBuilder interceptorAroundInstructionBuilder)
         {
-            _interceptorAroundInstructionFactory = interceptorAroundInstructionFactory;
+            _interceptorAroundInstructionBuilder = interceptorAroundInstructionBuilder;
         }
 
         public IIlInjector<IlInjectorAvailableVariablesForInstruction> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, NetAspectDefinition aspect, Instruction instruction)
@@ -40,22 +40,22 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
         }
 
         private IIlInjector<IlInjectorAvailableVariablesForInstruction> Create(MethodDefinition method, MethodInfo interceptorMethod, NetAspectDefinition aspect,
-                                   Instruction instruction, Action<IInterceptorAroundInstructionFactory, InterceptorInfo> specificFiller)
+                                   Instruction instruction, Action<IInterceptorAroundInstructionBuilder, AroundInstructionInfo> specificFiller)
         {
             if (interceptorMethod == null)
                 return new NoIIlInjector<IlInjectorAvailableVariablesForInstruction>();
 
             var checker = new ParametersChecker();
             var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction>();
-            var info = new InterceptorInfo()
+            var info = new AroundInstructionInfo()
                 {
                     Generator = parametersIlGenerator,
                     Instruction = instruction,
                     Interceptor = interceptorMethod,
                     Method = method,
                 };
-            _interceptorAroundInstructionFactory.FillCommon(info);
-            specificFiller(_interceptorAroundInstructionFactory, info);
+            _interceptorAroundInstructionBuilder.FillCommon(info);
+            specificFiller(_interceptorAroundInstructionBuilder, info);
 
             return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariablesForInstruction>(method, interceptorMethod,
                                                                                                      checker,

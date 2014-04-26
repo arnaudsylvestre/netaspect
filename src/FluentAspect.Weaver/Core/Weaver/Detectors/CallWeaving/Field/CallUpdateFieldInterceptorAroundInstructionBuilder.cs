@@ -2,9 +2,9 @@ using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
 {
-    public class CallGetFieldInterceptorAroundInstructionFactory : IInterceptorAroundInstructionFactory
+    public class CallUpdateFieldInterceptorAroundInstructionBuilder : IInterceptorAroundInstructionBuilder
     {
-        public void FillCommon(InterceptorInfo info)
+        public void FillCommon(AroundInstructionInfo info)
         {
             info.AddCalled();
             info.AddCalledFieldInfo();
@@ -19,11 +19,11 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
             info.AddFileName();
         }
 
-        public void FillBeforeSpecific(InterceptorInfo info)
+        public void FillBeforeSpecific(AroundInstructionInfo info)
         {
         }
 
-        public void FillAfterSpecific(InterceptorInfo info)
+        public void FillAfterSpecific(AroundInstructionInfo info)
         {
         }
     }

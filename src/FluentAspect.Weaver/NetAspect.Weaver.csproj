@@ -66,19 +66,23 @@
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinitionExtensions.cs" />
     <Compile Include="Core\Model\Weaving\MethodsWeavingModel.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\CallUpdateFieldInterceptorAroundInstructionFactory.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Property\CallGetPropertyInterceptorAroundInstructionFactory.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Method\CallMethodInterceptorAroundInstructionFactory.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Property\CallSetPropertyInterceptorAroundInstructionFactory.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\CallUpdateFieldInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Property\CallGetPropertyInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Method\CallMethodInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Property\CallSetPropertyInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\AroundInstructionWeaverFactory.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\CallGetFieldInterceptorAroundInstructionFactory.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\IInterceptorAroundInstructionFactory.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\InterceptorInfo.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\InterceptorInfoExtensions.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\InterceptorInfoExtensionsParameters.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\InterceptorParameterConfigurator.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Field\CallGetFieldInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\IInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\AroundInstructionInfo.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\AroundInstructionInfoExtensions.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\AroundInstructionInfoExtensionsParameters.cs" />
+    <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\AroundInstructionParametersConfigurator.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\InterceptorParameterConfiguratorExtensionsForInstruction.cs" />
-    <Compile Include="Core\Weaver\Detectors\Helpers\SelectorProvider.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\AroundMethodInfo.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\AroundMethodWeaverFactory.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\AroundMethodParametersConfigurator.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\AroundMethodInfoExtensionsParameters.cs" />
+    <Compile Include="Core\Weaver\Detectors\SelectorProvider.cs" />
     <Compile Include="Core\Weaver\Detectors\ICallWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\IMethodWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\FilteredMethodWeavingDetector.cs" />
@@ -87,8 +91,8 @@
     <Compile Include="Core\Weaver\Engine\AspectFinders\DefaultAspectFinder.cs" />
     <Compile Include="Core\Weaver\Engine\AssemblyPoolFactories\DefaultAssemblyPoolFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Constructor\ConstructorAttributeWeavingDetector.cs" />
-    <Compile Include="Core\Weaver\Detectors\Selectors\Selector.cs" />
-    <Compile Include="Core\Weaver\Detectors\Selectors\SelectorParametersGenerator.cs" />
+    <Compile Include="Core\Weaver\Detectors\Engine\Selectors\Selector.cs" />
+    <Compile Include="Core\Weaver\Detectors\Engine\Selectors\SelectorParametersGenerator.cs" />
     <Compile Include="Core\Model\Weaving\MethodWeavingModel.cs" />
     <Compile Include="Core\Weaver\Engine\Instructions\AroundInstructionIl.cs" />
     <Compile Include="Core\Weaver\Engine\Instructions\AroundInstructionWeaver.cs" />
@@ -110,7 +114,7 @@
     <Compile Include="Core\Weaver\Checkers\ParametersChecker.cs" />
     <Compile Include="Core\Weaver\WeaverEngine.cs" />
     <Compile Include="Core\Errors\IErrorListener.cs" />
-    <Compile Include="Core\Weaver\Detectors\Helpers\AspectApplier.cs" />
+    <Compile Include="Core\Weaver\Detectors\Engine\AspectApplier.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\CallWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Property\PropertyGetAttributeWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Generators\ExceptionInterceptorParametersIlGenerator.cs" />
@@ -137,7 +141,7 @@
     <Compile Include="Core\Model\Weaving\IIlInjector.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\IlInjectorAvailableVariables.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\MethodWeavingBeforeMethodInjector.cs" />
-    <Compile Include="Core\Weaver\WeavingBuilders\Method\MethodWeavingMethodInjectorFactory.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Method\MethodWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\MethodWeavingPropertyGetInjectorFactory.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\MethodWeavingPropertySetInjectorFactory.cs" />
     <Compile Include="Helpers\IL\InstructionsExtensions.cs" />
@@ -167,6 +171,9 @@
       <Project>{F5E3F3E9-13C1-4CD3-B15A-6F5F3422BDB7}</Project>
       <Name>NetAspect.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Weaver\Detectors\Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
