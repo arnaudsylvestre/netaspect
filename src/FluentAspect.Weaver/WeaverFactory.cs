@@ -44,7 +44,9 @@ namespace NetAspect.Weaver
               InstructionCompliance.IsGetFieldInstruction,
               aspect => aspect.FieldSelector,
               new AroundInstructionWeaverFactory(new CallGetFieldInterceptorAroundInstructionFactory()),
-              instruction => (instruction.Operand as FieldReference).Resolve());
+              instruction => (instruction.Operand as FieldReference).Resolve(),
+              aspect => aspect.BeforeGetField,
+              aspect => aspect.AfterGetField);
       }
 
       private static CallWeavingDetector<FieldDefinition> BuildCallUpdateFieldDetector()
@@ -53,7 +55,9 @@ namespace NetAspect.Weaver
               InstructionCompliance.IsUpdateFieldInstruction,
               aspect => aspect.FieldSelector,
               new AroundInstructionWeaverFactory(new CallUpdateFieldInterceptorAroundInstructionFactory()),
-              instruction => (instruction.Operand as FieldReference).Resolve());
+              instruction => (instruction.Operand as FieldReference).Resolve(),
+              aspect => aspect.BeforeUpdateField,
+              aspect => aspect.AfterUpdateField);
       }
       private static CallWeavingDetector<PropertyDefinition> BuildCallUpdatePropertyDetector()
       {
@@ -61,7 +65,9 @@ namespace NetAspect.Weaver
               InstructionCompliance.IsSetPropertyCall,
               aspect => aspect.PropertySelector,
               new AroundInstructionWeaverFactory(new CallSetPropertyInterceptorAroundInstructionFactory()),
-              instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForGetter());
+              instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForGetter(),
+              aspect => aspect.BeforeSetProperty,
+              aspect => aspect.AfterSetProperty);
       }
       private static CallWeavingDetector<PropertyDefinition> BuildCallGetPropertyDetector()
       {
@@ -69,7 +75,9 @@ namespace NetAspect.Weaver
               InstructionCompliance.IsGetPropertyCall,
               aspect => aspect.PropertySelector,
               new AroundInstructionWeaverFactory(new CallGetPropertyInterceptorAroundInstructionFactory()),
-              instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForGetter());
+              instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForGetter(),
+              aspect => aspect.BeforeGetProperty,
+              aspect => aspect.AfterGetProperty);
       }
 
       private static CallWeavingDetector<MethodDefinition> BuildCallMethodDetector()
@@ -78,7 +86,9 @@ namespace NetAspect.Weaver
               InstructionCompliance.IsCallMethodInstruction,
               aspect => aspect.MethodSelector,
               new AroundInstructionWeaverFactory(new CallMethodInterceptorAroundInstructionFactory()),
-              instruction => (instruction.Operand as MethodReference).Resolve());
+              instruction => (instruction.Operand as MethodReference).Resolve(),
+              aspect => aspect.BeforeCallMethod,
+              aspect => aspect.AfterCallMethod);
       }
 
 

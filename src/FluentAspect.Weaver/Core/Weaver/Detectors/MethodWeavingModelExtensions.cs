@@ -8,36 +8,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors
 {
     public static class MethodWeavingModelExtensions
     {
-        public static void AddMethodWeavingModel(this MethodWeavingModel methodWeavingModel, MethodDefinition method,
-                                                 NetAspectDefinition aspect,
-                                                 Interceptor before, Interceptor after, Interceptor onException,
-                                                 Interceptor onFinally)
-        {
-            if (before.Method != null)
-            {
-                methodWeavingModel.Method.Befores.Add(MethodWeavingMethodInjectorFactory.CreateForBefore(method, before.Method,
-                                                                                                   aspect));
-            }
-            if (after.Method != null)
-            {
-                methodWeavingModel.Method.Afters.Add(MethodWeavingMethodInjectorFactory.CreateForAfter(method, after.Method,
-                                                                                                 aspect));
-            }
-            if (onException.Method != null)
-            {
-                methodWeavingModel.Method.OnExceptions.Add(MethodWeavingMethodInjectorFactory.CreateForOnException(method,
-                                                                                                             onException
-                                                                                                                 .Method,
-                                                                                                             aspect));
-            }
-            if (onFinally.Method != null)
-            {
-                methodWeavingModel.Method.OnFinallys.Add(MethodWeavingMethodInjectorFactory.CreateForOnFinally(method,
-                                                                                                         onFinally
-                                                                                                             .Method,
-                                                                                                         aspect));
-            }
-        }
+        
 
         public static void AddConstructorWeavingModel(this MethodWeavingModel methodWeavingModel, MethodDefinition method,
                                                   NetAspectDefinition aspect,

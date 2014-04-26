@@ -19,8 +19,11 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
 
         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, T info)
         {
-            instructions.Add(InstructionFactory.Create(instruction.GetLastSequencePoint(),
-                                                       sequencePointInfoProvider));
+            SequencePoint instructionPP = instruction.GetLastSequencePoint();
+            instructions.Add(Instruction.Create(OpCodes.Ldstr,
+                                                instructionPP == null
+                                                    ? null
+                                                    : sequencePointInfoProvider(instructionPP)));
         }
     }
 }

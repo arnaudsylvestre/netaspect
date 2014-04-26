@@ -112,7 +112,6 @@
     <Compile Include="Core\Errors\IErrorListener.cs" />
     <Compile Include="Core\Weaver\Detectors\Helpers\AspectApplier.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\CallWeavingDetector.cs" />
-    <Compile Include="Core\Weaver\Detectors\MethodWeaving\MethodAttributeWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Property\PropertyGetAttributeWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Generators\ExceptionInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Generators\FieldInterceptorParametersIlGenerator.cs" />
@@ -134,7 +133,6 @@
     <Compile Include="Core\Weaver\WeavingBuilders\Method\IlInjectorAvailableVariablesForInstruction.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\TransientLifeCycleHandler.cs" />
     <Compile Include="Core\Weaver\Engine\WeavingModelComputer.cs" />
-    <Compile Include="Helpers\IL\InstructionFactory.cs" />
     <Compile Include="Helpers\IL\CollectionExtensions.cs" />
     <Compile Include="Core\Model\Weaving\IIlInjector.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\IlInjectorAvailableVariables.cs" />

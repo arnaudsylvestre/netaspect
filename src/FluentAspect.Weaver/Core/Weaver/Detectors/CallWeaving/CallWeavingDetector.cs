@@ -21,12 +21,17 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving
         private readonly AroundInstructionWeaverFactory aroundInstructionWeaverFactory;
         private readonly Func<Instruction, TMember> memberProvider;
 
-        public CallWeavingDetector(IsInstructionCompliant isInstructionCompliant, SelectorProvider<TMember> selectorProvider, AroundInstructionWeaverFactory aroundInstructionWeaverFactory, Func<Instruction, TMember> memberProvider)
+        private readonly Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider;
+        private readonly Func<NetAspectDefinition, Interceptor> afterInterceptorProvider;
+
+        public CallWeavingDetector(IsInstructionCompliant isInstructionCompliant, SelectorProvider<TMember> selectorProvider, AroundInstructionWeaverFactory aroundInstructionWeaverFactory, Func<Instruction, TMember> memberProvider, Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider, Func<NetAspectDefinition, Interceptor> afterInterceptorProvider)
         {
             this.isInstructionCompliant = isInstructionCompliant;
             this.selectorProvider = selectorProvider;
             this.aroundInstructionWeaverFactory = aroundInstructionWeaverFactory;
             this.memberProvider = memberProvider;
+            this.beforeInterceptorProvider = beforeInterceptorProvider;
+            this.afterInterceptorProvider = afterInterceptorProvider;
         }
 
 
@@ -40,8 +45,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving
                 return null;
 
             return new AroundInstructionWeaver(
-                aroundInstructionWeaverFactory.CreateForBefore(method, aspect.BeforeGetField.Method, aspect, instruction),
-                aroundInstructionWeaverFactory.CreateForAfter(method, aspect.AfterGetField.Method, aspect, instruction)
+                aroundInstructionWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, aspect, instruction),
+                aroundInstructionWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, aspect, instruction)
                 );
         }
     }

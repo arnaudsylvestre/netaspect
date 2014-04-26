@@ -19,7 +19,11 @@ namespace NetAspect.Weaver.Core.Model.Weaving
         {
             if (detectWeavingModel == null)
                 return;
-            GetMethodWeavingModel(method).Method = detectWeavingModel;
+            var methodWeavingModel = GetMethodWeavingModel(method);
+            methodWeavingModel.Method.Befores.AddRange(detectWeavingModel.Befores);
+            methodWeavingModel.Method.Afters.AddRange(detectWeavingModel.Afters);
+            methodWeavingModel.Method.OnExceptions.AddRange(detectWeavingModel.OnExceptions);
+            methodWeavingModel.Method.OnFinallys.AddRange(detectWeavingModel.OnFinallys);
         }
 
         private MethodWeavingModel GetMethodWeavingModel(MethodDefinition method)

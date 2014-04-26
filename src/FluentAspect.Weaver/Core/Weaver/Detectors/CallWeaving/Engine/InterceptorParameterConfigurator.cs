@@ -101,7 +101,11 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
         {
             _myGenerator.Generators.Add((parameter, instructions, info) =>
                 {
-                    instructions.Add(InstructionFactory.Create(_interceptor.Instruction.GetLastSequencePoint(), pdbInfoProvider));
+                    SequencePoint instructionPP = _interceptor.Instruction.GetLastSequencePoint();
+                    instructions.Add(Instruction.Create(OpCodes.Ldc_I4,
+                                                        instructionPP == null
+                                                            ? 0
+                                                            : pdbInfoProvider(instructionPP)));
                 });
             return this;
         }
@@ -109,7 +113,11 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
         {
             _myGenerator.Generators.Add((parameter, instructions, info) =>
                 {
-                    instructions.Add(InstructionFactory.Create(_interceptor.Instruction.GetLastSequencePoint(), pdbInfoProvider));
+                    SequencePoint instructionPP = _interceptor.Instruction.GetLastSequencePoint();
+                    instructions.Add(Instruction.Create(OpCodes.Ldstr,
+                                                        instructionPP == null
+                                                            ? null
+                                                            : pdbInfoProvider(instructionPP)));
                 });
             return this;
         }

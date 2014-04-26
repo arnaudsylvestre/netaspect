@@ -4,14 +4,15 @@ using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Checkers;
+using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Generators;
 
 namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
-    public static class MethodWeavingMethodInjectorFactory
+    public class MethodWeavingMethodInjectorFactory : IAroundMethodWeaverFactory
     {
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
+        public IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,
                                                                                 NetAspectDefinition aspect)
         {
@@ -26,7 +27,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                                                                                        parametersIlGenerator, aspect);
         }
 
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method,
+        public IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method,
                                                                                    MethodInfo interceptorMethod,
                                                                                    NetAspectDefinition aspect)
         {
@@ -58,7 +59,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             checker.CreateCheckerForParametersParameter();
         }
 
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
+        public IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
                                                                                NetAspectDefinition aspect)
         {
@@ -74,7 +75,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                                                                                        parametersIlGenerator, aspect);
         }
 
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnException(MethodDefinition method,
+        public IIlInjector<IlInjectorAvailableVariables> CreateForExceptions(MethodDefinition method,
                                                                                      MethodInfo methodInfo,
                                                                                      NetAspectDefinition aspect)
         {

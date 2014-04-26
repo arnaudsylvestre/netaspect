@@ -15,7 +15,7 @@ namespace NetAspect.Weaver.Core.Model.Weaving
             Instructions[instruction].Add(weaver);
         }
 
-        public AroundMethodWeavingModel Method { get; set; }
+        public AroundMethodWeavingModel Method = new AroundMethodWeavingModel();
 
     }
 }
