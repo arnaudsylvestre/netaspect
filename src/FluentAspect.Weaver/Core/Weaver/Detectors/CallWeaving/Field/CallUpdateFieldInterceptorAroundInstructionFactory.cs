@@ -1,3 +1,5 @@
+using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine;
+
 namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
 {
     public class CallUpdateFieldInterceptorAroundInstructionFactory : IInterceptorAroundInstructionFactory

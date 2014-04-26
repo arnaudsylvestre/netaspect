@@ -5,7 +5,7 @@ using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
+namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
 {
     public class InterceptorParameterConfigurator<T>
     {

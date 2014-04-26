@@ -16,10 +16,10 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
         public delegate bool IsInstructionCompliant(
             Instruction instruction, NetAspectDefinition aspect, MethodDefinition method);
 
-        private IsInstructionCompliant isInstructionCompliant;
-        private SelectorProvider<TMember> selectorProvider;
-        private AroundInstructionWeaverFactory aroundInstructionWeaverFactory;
-        private Func<Instruction, TMember> memberProvider;
+        private readonly IsInstructionCompliant isInstructionCompliant;
+        private readonly SelectorProvider<TMember> selectorProvider;
+        private readonly AroundInstructionWeaverFactory aroundInstructionWeaverFactory;
+        private readonly Func<Instruction, TMember> memberProvider;
 
         public CallWeavingDetector(IsInstructionCompliant isInstructionCompliant, SelectorProvider<TMember> selectorProvider, AroundInstructionWeaverFactory aroundInstructionWeaverFactory, Func<Instruction, TMember> memberProvider)
         {

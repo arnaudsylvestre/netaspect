@@ -1,4 +1,4 @@
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
+namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
 {
     public interface IInterceptorAroundInstructionFactory
     {

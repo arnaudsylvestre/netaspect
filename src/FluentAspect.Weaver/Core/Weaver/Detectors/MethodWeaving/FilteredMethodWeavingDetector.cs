@@ -5,22 +5,20 @@ using NetAspect.Weaver.Core.Model.Weaving;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
 {
-    public class FilteredMethodWeavingDetector : WeavingDetector.IMethodWeavingDetector
+    public class FilteredMethodWeavingDetector : IMethodWeavingDetector
     {
-        private Func<NetAspectDefinition, bool> canHandle;
-        private WeavingDetector.IMethodWeavingDetector methodWeavingDetector;
+        private readonly Func<NetAspectDefinition, bool> _canHandle;
+        private readonly IMethodWeavingDetector _methodWeavingDetector;
 
-        public FilteredMethodWeavingDetector(WeavingDetector.IMethodWeavingDetector methodWeavingDetector, Func<NetAspectDefinition, bool> canHandle)
+        public FilteredMethodWeavingDetector(IMethodWeavingDetector methodWeavingDetector, Func<NetAspectDefinition, bool> canHandle)
         {
-            this.methodWeavingDetector = methodWeavingDetector;
-            this.canHandle = canHandle;
+            _methodWeavingDetector = methodWeavingDetector;
+            _canHandle = canHandle;
         }
 
-        public void DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect, AroundMethodWeavingModel methodWeavingModel)
+        public AroundMethodWeavingModel DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect)
         {
-            if (!canHandle(aspect))
-                return;
-            methodWeavingDetector.DetectWeavingModel(method, aspect, methodWeavingModel);
+            return !_canHandle(aspect) ? null : _methodWeavingDetector.DetectWeavingModel(method, aspect);
         }
     }
 }
