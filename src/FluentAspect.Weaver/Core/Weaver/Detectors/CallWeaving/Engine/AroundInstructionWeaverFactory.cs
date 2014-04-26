@@ -5,12 +5,12 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
+using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Generators;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
+namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
 {
     public class AroundInstructionWeaverFactory
     {

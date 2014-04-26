@@ -1,4 +1,6 @@
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
+using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine;
+
+namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
 {
     public class CallSetPropertyInterceptorAroundInstructionFactory : IInterceptorAroundInstructionFactory
     {

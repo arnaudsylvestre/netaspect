@@ -82,7 +82,7 @@
     <Compile Include="Core\Weaver\Detectors\ICallWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\IMethodWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\FilteredMethodWeavingDetector.cs" />
-    <Compile Include="Core\Weaver\Detectors\WeavingDetector.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeaving\MethodWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Engine\AspectCheckers\DefaultAspectChecker.cs" />
     <Compile Include="Core\Weaver\Engine\AspectFinders\DefaultAspectFinder.cs" />
     <Compile Include="Core\Weaver\Engine\AssemblyPoolFactories\DefaultAssemblyPoolFactory.cs" />

@@ -2,6 +2,7 @@
 using System.Reflection;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
+using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Generators;

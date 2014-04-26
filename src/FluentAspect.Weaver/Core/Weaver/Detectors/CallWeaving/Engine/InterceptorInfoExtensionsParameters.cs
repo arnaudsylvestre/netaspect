@@ -1,9 +1,8 @@
 using System.IO;
 using System.Reflection;
 using Mono.Cecil;
-using NetAspect.Weaver.Core.Weaver.Generators;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
+namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
 {
     public static class InterceptorInfoExtensionsParameters
     {
