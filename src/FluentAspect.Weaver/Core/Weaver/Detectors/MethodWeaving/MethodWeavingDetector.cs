@@ -36,7 +36,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
                 Befores = aroundMethodWeaverFactory.CreateForBefore(),
                 Afters = aroundMethodWeaverFactory.CreateForAfter(),
                 OnExceptions = aroundMethodWeaverFactory.CreateForExceptions(),
-                Befores = aroundMethodWeaverFactory.CreateForBefore(),
+                OnFinallys = aroundMethodWeaverFactory.CreateForOnFinally(),
                 };
         }
     }
