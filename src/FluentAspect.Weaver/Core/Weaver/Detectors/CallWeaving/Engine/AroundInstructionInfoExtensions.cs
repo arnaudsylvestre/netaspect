@@ -39,31 +39,6 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
             return new AroundInstructionParametersConfigurator<IlInjectorAvailableVariables, AroundMethodInfo>(myGenerator, checker, aroundInstruction);
         }
 
-        public class MyInterceptorParameterChecker : IInterceptorParameterChecker
-        {
-            public List<Action<ParameterInfo, ErrorHandler>> Checkers = new List<Action<ParameterInfo, ErrorHandler>>();
-
-            public void Check(ParameterInfo parameter, ErrorHandler errorListener)
-            {
-                foreach (var checker in Checkers)
-                {
-                    checker(parameter, errorListener);
-                }
-            }
-        }
-
-
-        public class MyGenerator<T> : IInterceptorParameterIlGenerator<T>
-        {
-            public List<Action<ParameterInfo, List<Instruction>, T>> Generators = new List<Action<ParameterInfo, List<Instruction>, T>>();
-
-            public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, T info)
-            {
-                foreach (var generator in Generators)
-                {
-                    generator(parameterInfo, instructions, info);
-                }
-            }
-        }
+        
     }
 }

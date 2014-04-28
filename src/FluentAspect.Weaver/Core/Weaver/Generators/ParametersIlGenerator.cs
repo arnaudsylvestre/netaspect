@@ -12,6 +12,33 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
     {
         private readonly List<Item> possibleParameters = new List<Item>();
 
+        public class MyInterceptorParameterChecker : IInterceptorParameterChecker
+        {
+            public List<Action<ParameterInfo, ErrorHandler>> Checkers = new List<Action<ParameterInfo, ErrorHandler>>();
+
+            public void Check(ParameterInfo parameter, ErrorHandler errorListener)
+            {
+                foreach (var checker in Checkers)
+                {
+                    checker(parameter, errorListener);
+                }
+            }
+        }
+
+
+        public class MyGenerator : IInterceptorParameterIlGenerator<T>
+        {
+            public List<Action<ParameterInfo, List<Instruction>, T>> Generators = new List<Action<ParameterInfo, List<Instruction>, T>>();
+
+            public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, T info)
+            {
+                foreach (var generator in Generators)
+                {
+                    generator(parameterInfo, instructions, info);
+                }
+            }
+        }
+
         public void Add(string name, IInterceptorParameterIlGenerator<T> generator, IInterceptorParameterChecker checker)
         {
             possibleParameters.Add(new Item
@@ -56,8 +83,8 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
 
         private class Item
         {
-            public IInterceptorParameterIlGenerator<T> Generator;
-            public IInterceptorParameterChecker Checker;
+            public MyGenerator Generator;
+            public MyInterceptorParameterChecker Checker;
             public string Name;
         }
     }

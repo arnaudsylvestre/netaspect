@@ -6,7 +6,14 @@ using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
 {
-    public class AroundInstructionInfo
+    public interface IAroundInfo
+    {
+        MethodDefinition Method { get; }
+        MethodInfo Interceptor { get; }
+        
+    }
+
+    public class AroundInstructionInfo : IAroundInfo
     {
         public ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> Generator { get; set; }
         public Instruction Instruction { get; set; }

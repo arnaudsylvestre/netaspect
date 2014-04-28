@@ -8,6 +8,7 @@ using NetAspect.Weaver.Helpers.IL;
 namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
 {
     public class AroundInstructionParametersConfigurator<T, TAroundInfo>
+        where TAroundInfo : IAroundInfo
     {
         private readonly AroundInstructionInfoExtensions.MyGenerator<T> _myGenerator;
         private readonly AroundInstructionInfoExtensions.MyInterceptorParameterChecker _checker;
