@@ -3,36 +3,14 @@ using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Checkers;
+using NetAspect.Weaver.Core.Weaver.Generators;
 using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
 {
-    public class AroundInstructionParametersConfigurator<T, TAroundInfo>
-        where TAroundInfo : IAroundInfo
+    public static class AroundInstructionParametersConfiguratorExtensions
     {
-        private readonly AroundInstructionInfoExtensions.MyGenerator<T> _myGenerator;
-        private readonly AroundInstructionInfoExtensions.MyInterceptorParameterChecker _checker;
-        private readonly TAroundInfo _aroundInstruction;
-
         private List<string> allowedTypes = new List<string>();
-
-        public AroundInstructionInfoExtensions.MyGenerator<T> Generator
-        {
-            get { return _myGenerator; }
-        }
-
-        public TAroundInfo AroundInstruction
-        {
-            get { return _aroundInstruction; }
-        }
-
-        public AroundInstructionParametersConfigurator(AroundInstructionInfoExtensions.MyGenerator<T> myGenerator, AroundInstructionInfoExtensions.MyInterceptorParameterChecker checker, TAroundInfo aroundInstruction)
-        {
-            _myGenerator = myGenerator;
-            _checker = checker;
-            _aroundInstruction = aroundInstruction;
-            _checker.Checkers.Add((info, handler) => Ensure.OfType(info, handler, allowedTypes.ToArray()));
-        }
 
         public AroundInstructionParametersConfigurator<T, TAroundInfo> WhichCanNotBeReferenced()
         {
