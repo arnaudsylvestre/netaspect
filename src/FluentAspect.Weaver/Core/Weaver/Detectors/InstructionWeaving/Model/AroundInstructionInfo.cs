@@ -10,7 +10,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Model
     {
         public ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> Generator { get; set; }
         public Instruction Instruction { get; set; }
-        public MethodDefinition Method { get; set; }
+        public MethodDefinition MethodOfInstruction { get; set; }
         public MethodInfo Interceptor { get; set; }
     }
 }

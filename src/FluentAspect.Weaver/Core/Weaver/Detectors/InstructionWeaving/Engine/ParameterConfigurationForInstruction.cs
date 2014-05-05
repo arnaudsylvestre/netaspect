@@ -50,7 +50,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 
         public ParameterConfigurationForInstruction WhereCurrentMethodCanNotBeStatic()
         {
-            configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.NotStatic(parameter, errorListener, aroundInstructionInfo.Method));
+            configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.NotStatic(parameter, errorListener, aroundInstructionInfo.MethodOfInstruction));
             return this;
         }
 
@@ -84,7 +84,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 
         public ParameterConfigurationForInstruction OrOfCurrentMethodDeclaringType()
         {
-            return OrOfType(aroundInstructionInfo.Method.DeclaringType);
+            return OrOfType(aroundInstructionInfo.MethodOfInstruction.DeclaringType);
         }
 
 
@@ -119,8 +119,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
             configuration.Generator.Generators.Add((parameter, instructions, info) =>
                 {
                     var interceptor = aroundInstructionInfo;
-                    instructions.AppendCallToTargetGetType(interceptor.Method.Module, info.Called);
-                    instructions.AppendCallToGetField(interceptor.GetOperandAsField().Name, interceptor.Method.Module);
+                    instructions.AppendCallToTargetGetType(interceptor.MethodOfInstruction.Module, info.Called);
+                    instructions.AppendCallToGetField(interceptor.GetOperandAsField().Name, interceptor.MethodOfInstruction.Module);
                 });
             return this;
         }
@@ -130,8 +130,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
             configuration.Generator.Generators.Add((parameter, instructions, info) =>
                 {
                     var interceptor = aroundInstructionInfo;
-                    instructions.AppendCallToTargetGetType(interceptor.Method.Module, info.Called);
-                    instructions.AppendCallToGetProperty(interceptor.GetOperandAsMethod().GetProperty().Name, interceptor.Method.Module);
+                    instructions.AppendCallToTargetGetType(interceptor.MethodOfInstruction.Module, info.Called);
+                    instructions.AppendCallToGetProperty(interceptor.GetOperandAsMethod().GetProperty().Name, interceptor.MethodOfInstruction.Module);
                 });
             return this;
         }

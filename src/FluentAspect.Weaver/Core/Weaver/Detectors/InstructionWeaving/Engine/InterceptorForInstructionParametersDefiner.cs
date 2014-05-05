@@ -6,7 +6,7 @@ using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Model;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 {
-    public static class AroundInstructionInfoExtensionsParameters
+    public static class InterceptorParametersDefinerForInstruction
     {
         public static AroundInstructionInfo AddCalled(this AroundInstructionInfo info)
         {
@@ -65,7 +65,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
         }
         public static AroundInstructionInfo AddCallerParameterNames(this AroundInstructionInfo info)
         {
-            foreach (ParameterDefinition parameter in info.Method.Parameters)
+            foreach (ParameterDefinition parameter in info.MethodOfInstruction.Parameters)
             {
 
                 info.AddPossibleParameter("caller" + parameter.Name.ToLower())

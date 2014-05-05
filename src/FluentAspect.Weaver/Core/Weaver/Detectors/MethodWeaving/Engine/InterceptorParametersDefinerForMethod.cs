@@ -1,8 +1,9 @@
 using System.Reflection;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Helpers;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine
 {
-    public static class AroundMethodInfoExtensionsParameters
+    public static class InterceptorParametersDefinerForMethod
     {
         public static AroundMethodInfo AddInstance(this AroundMethodInfo info)
         {

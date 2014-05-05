@@ -7,17 +7,17 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Field
     {
         public void FillCommon(AroundInstructionInfo info)
         {
-            info.AddCalled();
-            info.AddCalledFieldInfo();
-
-            info.AddCaller();
-            info.AddCallerParameters();
-            info.AddCallerParameterNames();
-
-            info.AddColumnNumber();
-            info.AddLineNumber();
-            info.AddFilePath();
-            info.AddFileName();
+            info.AddCalled()
+                .AddCalledFieldInfo()
+                
+                .AddCaller()
+                .AddCallerParameters()
+                .AddCallerParameterNames()
+                
+                .AddColumnNumber()
+                .AddLineNumber()
+                .AddFilePath()
+                .AddFileName();
         }
 
         public void FillBeforeSpecific(AroundInstructionInfo info)

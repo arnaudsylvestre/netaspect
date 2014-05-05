@@ -53,7 +53,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
                     Generator = parametersIlGenerator,
                     Instruction = instruction,
                     Interceptor = interceptorMethod,
-                    Method = method,
+                    MethodOfInstruction = method,
                 };
             _interceptorAroundInstructionBuilder.FillCommon(info);
             specificFiller(_interceptorAroundInstructionBuilder, info);

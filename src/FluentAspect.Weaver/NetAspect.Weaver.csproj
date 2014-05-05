@@ -77,10 +77,10 @@
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Engine\IInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Model\AroundInstructionInfo.cs" />
     <Compile Include="Core\Weaver\Detectors\Helpers\AroundInstructionInfoExtensions.cs" />
-    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Engine\AroundInstructionInfoExtensionsParameters.cs" />
+    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Engine\InterceptorForInstructionParametersDefiner.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Model\AroundMethodInfo.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\AroundMethodWeaverFactory.cs" />
-    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\AroundMethodInfoExtensionsParameters.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\InterceptorParametersDefinerForMethod.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\IInterceptorAroundMethodBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\IAroundMethodWeaverFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\SelectorProvider.cs" />
