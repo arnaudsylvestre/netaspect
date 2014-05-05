@@ -67,6 +67,11 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
                     checker(parameter, errorListener);
                 }
             }
+
+            public void Add(Action<ParameterInfo, ErrorHandler> action)
+            {
+                Checkers.Add(action);
+            }
         }
 
 

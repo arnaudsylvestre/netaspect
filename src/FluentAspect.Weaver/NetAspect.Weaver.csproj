@@ -76,11 +76,8 @@
     <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\AroundInstructionInfo.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\AroundInstructionInfoExtensions.cs" />
     <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\AroundInstructionInfoExtensionsParameters.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\AroundInstructionParametersConfigurator.cs" />
-    <Compile Include="Core\Weaver\Detectors\CallWeaving\Engine\InterceptorParameterConfiguratorExtensionsForInstruction.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\AroundMethodInfo.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\AroundMethodWeaverFactory.cs" />
-    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\AroundMethodParametersConfigurator.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\AroundMethodInfoExtensionsParameters.cs" />
     <Compile Include="Core\Weaver\Detectors\SelectorProvider.cs" />
     <Compile Include="Core\Weaver\Detectors\ICallWeavingDetector.cs" />

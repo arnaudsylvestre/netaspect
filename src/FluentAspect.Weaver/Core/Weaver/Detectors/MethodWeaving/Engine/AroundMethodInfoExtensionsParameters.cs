@@ -16,14 +16,22 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
                 .AndInjectTheCurrentInstance();
             return info;
         }
-        //public static AroundInstructionInfo AddCallerMethod(this AroundInstructionInfo info)
-        //{
-        //    info.AddPossibleParameter("callermethod")
-        //        .WhichCanNotBeReferenced()
-        //        .WhichMustBeOfType<MethodBase>()
-        //        .AndInjectTheCurrentMethod();
-        //    return info;
-        //}
+        public static AroundMethodInfo AddCurrentMethod(this AroundMethodInfo info)
+        {
+            info.AddPossibleParameter("method")
+                .WhichCanNotBeReferenced()
+                .WhichMustBeOfType<MethodBase>()
+                .AndInjectTheCurrentMethod();
+            return info;
+        }
+        public static AroundMethodInfo AddCallerParameters(this AroundMethodInfo info)
+        {
+            info.AddPossibleParameter("callerparameters")
+                .WhichCanNotBeReferenced()
+                .WhichMustBeOfType<object[]>()
+                .AndInjectTheVariable(variables => variables.Parameters);
+            return info;
+        }
         //public static AroundInstructionInfo AddCallerParameters(this AroundInstructionInfo info)
         //{
         //    info.AddPossibleParameter("callerparameters")
