@@ -11,7 +11,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
 {
 
 
-    public class CallWeavingDetector<TMember> : ICallWeavingDetector where TMember : MemberReference, ICustomAttributeProvider
+    public class InstructionWeavingDetector<TMember> : ICallWeavingDetector where TMember : MemberReference, ICustomAttributeProvider
     {
         public delegate bool IsInstructionCompliant(
             Instruction instruction, NetAspectDefinition aspect, MethodDefinition method);
@@ -24,7 +24,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
         private readonly Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider;
         private readonly Func<NetAspectDefinition, Interceptor> afterInterceptorProvider;
 
-        public CallWeavingDetector(IsInstructionCompliant isInstructionCompliant, SelectorProvider<TMember> selectorProvider, AroundInstructionWeaverFactory aroundInstructionWeaverFactory, Func<Instruction, TMember> memberProvider, Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider, Func<NetAspectDefinition, Interceptor> afterInterceptorProvider)
+        public InstructionWeavingDetector(IsInstructionCompliant isInstructionCompliant, SelectorProvider<TMember> selectorProvider, AroundInstructionWeaverFactory aroundInstructionWeaverFactory, Func<Instruction, TMember> memberProvider, Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider, Func<NetAspectDefinition, Interceptor> afterInterceptorProvider)
         {
             this.isInstructionCompliant = isInstructionCompliant;
             this.selectorProvider = selectorProvider;
