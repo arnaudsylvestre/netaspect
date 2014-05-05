@@ -1,7 +1,9 @@
 using Mono.Cecil;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Model;
+using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
+namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Helpers
 {
     public static class AroundInstructionInfoExtensions
     {

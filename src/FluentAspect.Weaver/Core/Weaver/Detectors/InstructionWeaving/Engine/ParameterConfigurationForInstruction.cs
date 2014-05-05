@@ -4,11 +4,13 @@ using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Checkers;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Helpers;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Model;
 using NetAspect.Weaver.Core.Weaver.Generators;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
+namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 {
     public class ParameterConfigurationForInstruction
     {
@@ -239,4 +241,6 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
             return this;
         }
     }
+
+    public static class 
 }

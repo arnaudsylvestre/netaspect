@@ -1,15 +1,6 @@
-﻿using System;
-using System.Reflection;
-using Mono.Cecil;
-using NetAspect.Weaver.Core.Model.Aspect;
-using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.Checkers;
-using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
-using NetAspect.Weaver.Core.Weaver.Engine;
-using NetAspect.Weaver.Core.Weaver.Generators;
+﻿using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine;
 
-namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
+namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Method
 {
     public class MethodWeavingMethodInjectorFactory : IInterceptorAroundMethodBuilder
     {

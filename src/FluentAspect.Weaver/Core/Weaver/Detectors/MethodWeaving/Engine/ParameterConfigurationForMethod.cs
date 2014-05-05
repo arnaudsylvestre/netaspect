@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Checkers;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
+using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine;
 using NetAspect.Weaver.Core.Weaver.Generators;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
+namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 {
     public class ParameterConfigurationForMethod
     {
@@ -69,7 +69,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
             return OrOfType(aroundMethodInfo.Method.DeclaringType);
         }
 
-        public ParameterConfigurationForInstruction AndInjectTheCurrentMethod()
+        public ParameterConfigurationForMethod AndInjectTheCurrentMethod()
         {
             configuration.Generator.Generators.Add((parameter, instructions, info) =>
                 {

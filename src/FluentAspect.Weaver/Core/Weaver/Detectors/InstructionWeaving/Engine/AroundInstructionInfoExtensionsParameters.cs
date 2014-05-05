@@ -1,8 +1,10 @@
 using System.IO;
 using System.Reflection;
 using Mono.Cecil;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Helpers;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Model;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
+namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 {
     public static class AroundInstructionInfoExtensionsParameters
     {

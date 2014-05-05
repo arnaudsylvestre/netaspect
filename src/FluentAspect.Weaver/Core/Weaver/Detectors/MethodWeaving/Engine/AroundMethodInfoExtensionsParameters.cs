@@ -1,9 +1,6 @@
-using System.IO;
 using System.Reflection;
-using Mono.Cecil;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
+namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine
 {
     public static class AroundMethodInfoExtensionsParameters
     {

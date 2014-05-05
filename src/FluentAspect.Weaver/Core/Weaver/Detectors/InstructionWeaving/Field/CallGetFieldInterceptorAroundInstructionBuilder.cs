@@ -1,6 +1,7 @@
-using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Model;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Field
+namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Field
 {
     public class CallGetFieldInterceptorAroundInstructionBuilder : IInterceptorAroundInstructionBuilder
     {

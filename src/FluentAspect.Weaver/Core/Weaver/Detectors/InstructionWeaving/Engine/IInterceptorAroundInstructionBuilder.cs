@@ -1,4 +1,6 @@
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Model;
+
+namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 {
     public interface IInterceptorAroundInstructionBuilder
     {
