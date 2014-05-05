@@ -4,21 +4,11 @@ using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Checkers;
-using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine;
 using NetAspect.Weaver.Core.Weaver.Generators;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
+namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine
 {
-    public interface IInterceptorAroundMethodBuilder
-    {
-        void FillCommon(AroundMethodInfo info);
-        void FillBeforeSpecific(AroundMethodInfo info);
-        void FillAfterSpecific(AroundMethodInfo info);
-        void FillOnExceptionSpecific(AroundMethodInfo info);
-        void FillOnFinallySpecific(AroundMethodInfo info);
-    }
-
     public class AroundMethodWeaverFactory : IAroundMethodWeaverFactory
     {
         private IInterceptorAroundMethodBuilder builder;

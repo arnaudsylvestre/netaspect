@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine;
-using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
+using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 using ICustomAttributeProvider = Mono.Cecil.ICustomAttributeProvider;
 
@@ -57,21 +55,5 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
                 OnFinallys = new List<IIlInjector<IlInjectorAvailableVariables>> { aroundMethodWeaverFactory.CreateForOnFinally(method, onFinallyInterceptorProvider(aspect).Method, aspect) }
                 };
         }
-    }
-
-    public interface IAroundMethodWeaverFactory
-    {
-        IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
-                                                                                MethodInfo interceptorMethod,
-                                                                                NetAspectDefinition aspect);
-        IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
-                                                                                MethodInfo interceptorMethod,
-                                                                                NetAspectDefinition aspect);
-        IIlInjector<IlInjectorAvailableVariables> CreateForExceptions(MethodDefinition method,
-                                                                                MethodInfo interceptorMethod,
-                                                                                NetAspectDefinition aspect);
-        IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method,
-                                                                                MethodInfo interceptorMethod,
-                                                                                NetAspectDefinition aspect);
     }
 }

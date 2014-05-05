@@ -3,11 +3,11 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine;
-using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
+using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine;
 using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving
+namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
 {
 
 

@@ -1,9 +1,8 @@
-using System;
 using System.Linq;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.Helpers
+namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 {
     public class AspectApplier
     {

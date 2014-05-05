@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.Selectors
+namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine.Selectors
 {
     public class SelectorParametersGenerator<T>
     {

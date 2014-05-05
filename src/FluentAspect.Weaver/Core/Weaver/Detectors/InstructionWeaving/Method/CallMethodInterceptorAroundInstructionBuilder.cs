@@ -1,17 +1,20 @@
-using NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Engine;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Model;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.CallWeaving.Property
+namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Method
 {
-    public class CallSetPropertyInterceptorAroundInstructionBuilder : IInterceptorAroundInstructionBuilder
+    public class CallMethodInterceptorAroundInstructionBuilder : IInterceptorAroundInstructionBuilder
     {
         public void FillCommon(AroundInstructionInfo info)
         {
             info.AddCalled();
-            info.AddCalledFieldInfo();
+            info.AddCalledParameters();
+            info.AddCalledParameterNames();
 
             info.AddCaller();
             info.AddCallerParameters();
             info.AddCallerParameterNames();
+            info.AddCallerMethod();
 
             info.AddColumnNumber();
             info.AddLineNumber();
