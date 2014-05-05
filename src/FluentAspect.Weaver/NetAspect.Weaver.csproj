@@ -68,15 +68,15 @@
     <Compile Include="Core\Model\Weaving\MethodsWeavingModel.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Engine\ParameterConfigurationForInstruction.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\ParameterConfigurationForMethod.cs" />
-    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Field\CallUpdateFieldInterceptorAroundInstructionBuilder.cs" />
-    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Property\CallGetPropertyInterceptorAroundInstructionBuilder.cs" />
-    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Method\CallMethodInterceptorAroundInstructionBuilder.cs" />
-    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Property\CallSetPropertyInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Kinds\CallUpdateFieldInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Kinds\CallGetPropertyInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Kinds\CallMethodInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Kinds\CallSetPropertyInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Engine\AroundInstructionWeaverFactory.cs" />
-    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Field\CallGetFieldInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Kinds\CallGetFieldInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Engine\IInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Model\AroundInstructionInfo.cs" />
-    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Helpers\AroundInstructionInfoExtensions.cs" />
+    <Compile Include="Core\Weaver\Detectors\Helpers\AroundInstructionInfoExtensions.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Engine\AroundInstructionInfoExtensionsParameters.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Model\AroundMethodInfo.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Engine\AroundMethodWeaverFactory.cs" />
@@ -100,7 +100,7 @@
     <Compile Include="Core\Weaver\Engine\MethodWeaver.cs" />
     <Compile Include="Core\Model\Weaving\IAroundInstructionWeaver.cs" />
     <Compile Include="Core\Weaver\Generators\PropertyPInterceptorParametersIlGenerator.cs" />
-    <Compile Include="Core\Weaver\WeavingBuilders\Call\IlInstructionInjectorAvailableVariables.cs" />
+    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Model\IlInstructionInjectorAvailableVariables.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensure.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Exception\ExceptionInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\IInterceptorParameterChecker.cs" />
@@ -174,7 +174,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\Weaver\Detectors\Helpers\" />
+    <Folder Include="Core\Weaver\WeavingBuilders\Call\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
