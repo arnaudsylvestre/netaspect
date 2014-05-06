@@ -5,6 +5,7 @@ using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
+using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 using ICustomAttributeProvider = Mono.Cecil.ICustomAttributeProvider;
 
@@ -17,7 +18,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
         private readonly IsMethodCompliant isMethodCompliant;
         private readonly Func<MethodDefinition, TMember> memberProvider;
         private readonly SelectorProvider<TMember> selectorProvider;
-        private readonly IAroundMethodWeaverFactory aroundMethodWeaverFactory;
+        private readonly AroundMethodWeaverFactory aroundMethodWeaverFactory;
 
 
         private readonly Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider;
@@ -26,7 +27,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
         private readonly Func<NetAspectDefinition, Interceptor> onExceptionInterceptorProvider;
         private readonly Func<NetAspectDefinition, Interceptor> onFinallyInterceptorProvider;
 
-        public MethodWeavingDetector(Func<NetAspectDefinition, Interceptor> afterInterceptorProvider, IAroundMethodWeaverFactory aroundMethodWeaverFactory, Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider, IsMethodCompliant isMethodCompliant, Func<MethodDefinition, TMember> memberProvider, Func<NetAspectDefinition, Interceptor> onExceptionInterceptorProvider, Func<NetAspectDefinition, Interceptor> onFinallyInterceptorProvider, SelectorProvider<TMember> selectorProvider)
+        public MethodWeavingDetector(Func<NetAspectDefinition, Interceptor> afterInterceptorProvider, AroundMethodWeaverFactory aroundMethodWeaverFactory, Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider, IsMethodCompliant isMethodCompliant, Func<MethodDefinition, TMember> memberProvider, Func<NetAspectDefinition, Interceptor> onExceptionInterceptorProvider, Func<NetAspectDefinition, Interceptor> onFinallyInterceptorProvider, SelectorProvider<TMember> selectorProvider)
         {
             this.afterInterceptorProvider = afterInterceptorProvider;
             this.aroundMethodWeaverFactory = aroundMethodWeaverFactory;

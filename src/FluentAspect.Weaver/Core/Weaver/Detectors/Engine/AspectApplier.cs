@@ -4,7 +4,7 @@ using NetAspect.Weaver.Core.Model.Aspect;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 {
-    public class AspectApplier
+    public static class AspectApplier
     {
 
         public static bool CanApply<T>(T member, NetAspectDefinition netAspect, SelectorProvider<T> selectorProvider)

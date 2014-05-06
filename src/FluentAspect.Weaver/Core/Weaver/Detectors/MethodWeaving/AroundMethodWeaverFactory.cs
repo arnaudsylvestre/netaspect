@@ -10,7 +10,7 @@ using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine
 {
-    public class AroundMethodWeaverFactory : IAroundMethodWeaverFactory
+    public class AroundMethodWeaverFactory
     {
         private IInterceptorAroundMethodBuilder builder;
 
