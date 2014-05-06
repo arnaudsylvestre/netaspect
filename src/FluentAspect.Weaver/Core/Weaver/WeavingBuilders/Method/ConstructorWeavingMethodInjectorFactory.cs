@@ -15,77 +15,48 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                                                                                 MethodInfo interceptorMethod,
                                                                                 NetAspectDefinition aspect)
         {
-            var checker = new ParametersChecker();
-            FillCommon(method, checker);
+            FillCommon(method);
 
-
-            var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
-            FillCommon(method, parametersIlGenerator);
-
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
-                                                                                       parametersIlGenerator, aspect);
+            return new Injector<IlInjectorAvailableVariables>(method, interceptorMethod, aspect, null);
         }
 
         public static IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method,
                                                                                    MethodInfo interceptorMethod,
                                                                                    NetAspectDefinition aspect)
         {
-            var checker = new ParametersChecker();
-            FillCommon(method, checker);
+            FillCommon(method);
 
-
-            var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
-            FillCommon(method, parametersIlGenerator);
-
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
-                                                                                       parametersIlGenerator, aspect);
+            return new Injector<IlInjectorAvailableVariables>(method, interceptorMethod, aspect, null);
         }
 
-        private static void FillCommon(MethodDefinition method,
-                                       ParametersIlGenerator<IlInjectorAvailableVariables> parametersIlGenerator)
+        private static void FillCommon(MethodDefinition method)
         {
-            parametersIlGenerator.CreateIlGeneratorForInstanceParameter(method);
-            parametersIlGenerator.CreateIlGeneratorForConstructorParameter();
-            parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
-            parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
-        }
-
-        private static void FillCommon(MethodDefinition method, ParametersChecker checker)
-        {
-            checker.CreateCheckerForInstanceParameter(method);
-            checker.CreateCheckerForConstructorParameter();
-            checker.CreateCheckerForParameterNameParameter(method);
-            checker.CreateCheckerForParametersParameter();
+            //parametersIlGenerator.CreateIlGeneratorForInstanceParameter(method);
+            //parametersIlGenerator.CreateIlGeneratorForConstructorParameter();
+            //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
+            //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
+            //checker.CreateCheckerForInstanceParameter(method);
+            //checker.CreateCheckerForConstructorParameter();
+            //checker.CreateCheckerForParameterNameParameter(method);
+            //checker.CreateCheckerForParametersParameter();
         }
 
         public static IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
                                                                                NetAspectDefinition aspect)
         {
-            var checker = new ParametersChecker();
-            FillCommon(method, checker);
-
-
-            var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
-            FillCommon(method, parametersIlGenerator);
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, interceptorMethod, checker,
-                                                                                       parametersIlGenerator, aspect);
+            FillCommon(method);
+            return new Injector<IlInjectorAvailableVariables>(method, interceptorMethod, aspect, null);
         }
 
         public static IIlInjector<IlInjectorAvailableVariables> CreateForOnException(MethodDefinition method,
                                                                                      MethodInfo methodInfo,
                                                                                      NetAspectDefinition aspect)
         {
-            var checker = new ParametersChecker();
-            FillCommon(method, checker);
-            checker.CreateCheckerForExceptionParameter();
+            FillCommon(method);
+            //checker.CreateCheckerForExceptionParameter();
 
-
-            var parametersIlGenerator = new ParametersIlGenerator<IlInjectorAvailableVariables>();
-            FillCommon(method, parametersIlGenerator);
-            parametersIlGenerator.CreateIlGeneratorForExceptionParameter();
-            return new MethodWeavingBeforeMethodInjector<IlInjectorAvailableVariables>(method, methodInfo,
-                                                                                       checker, parametersIlGenerator, aspect);
+            return new Injector<IlInjectorAvailableVariables>(method, methodInfo, aspect, null);
         }
     }
 }

@@ -10,13 +10,13 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 {
     public class ParameterConfigurationForMethod
     {
-        private AroundMethodInfo aroundMethodInfo;
-        private ParameterConfiguration<IlInjectorAvailableVariables> configuration;
+        private MethodWeavingInfo _methodWeavingInfo;
+        private InterceptorParameterConfiguration<IlInjectorAvailableVariables> configuration;
         private List<string> allowedTypes = new List<string>();
 
-        public ParameterConfigurationForMethod(AroundMethodInfo aroundMethodInfo, ParameterConfiguration<IlInjectorAvailableVariables> configuration)
+        public ParameterConfigurationForMethod(MethodWeavingInfo _methodWeavingInfo, InterceptorParameterConfiguration<IlInjectorAvailableVariables> configuration)
         {
-            this.aroundMethodInfo = aroundMethodInfo;
+            this._methodWeavingInfo = _methodWeavingInfo;
             this.configuration = configuration;
         }
 
@@ -39,7 +39,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 
         public ParameterConfigurationForMethod WhereCurrentMethodCanNotBeStatic()
         {
-            configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.NotStatic(parameter, errorListener, aroundMethodInfo.Method));
+            configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.NotStatic(parameter, errorListener, _methodWeavingInfo.Method));
             return this;
         }
 
@@ -66,7 +66,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 
         public ParameterConfigurationForMethod OrOfCurrentMethodDeclaringType()
         {
-            return OrOfType(aroundMethodInfo.Method.DeclaringType);
+            return OrOfType(_methodWeavingInfo.Method.DeclaringType);
         }
 
         public ParameterConfigurationForMethod AndInjectTheCurrentMethod()

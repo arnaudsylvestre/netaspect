@@ -3,47 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Weaver.Detectors.Model;
+using NetAspect.Weaver.Core.Weaver.Generators;
 
 namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
-    public class ParametersChecker
+    public static class ParametersChecker
     {
-        private readonly List<InterceptorParametersChecker> possibleParameters =
-            new List<InterceptorParametersChecker>();
-
-        public void Add(InterceptorParametersChecker checker)
+        public static void Check<T>(IEnumerable<ParameterInfo> parameters, ErrorHandler errorHandler, InterceptorParameterConfigurations<T> interceptorParameterConfigurations_P)
         {
-            possibleParameters.Add(checker);
+           CheckDuplicates(errorHandler, interceptorParameterConfigurations_P);
+           foreach (ParameterInfo parameterInfo in parameters)
+           {
+              CheckParameter(errorHandler, interceptorParameterConfigurations_P, parameterInfo);
+           }
         }
 
-        public void Check(IEnumerable<ParameterInfo> parameters, ErrorHandler errorHandler)
-        {
-            IEnumerable<InterceptorParametersChecker> duplicates =
-                possibleParameters.GroupBy(s => s.ParameterName).SelectMany(grp => grp.Skip(1));
-            foreach (InterceptorParametersChecker duplicate in duplicates)
-            {
-                errorHandler.Errors.Add(string.Format("The parameter {0} is already declared", duplicate.ParameterName));
-            }
-            foreach (ParameterInfo parameterInfo in parameters)
-            {
-                string key_L = parameterInfo.Name.ToLower();
-                try
-                {
-                    possibleParameters.Find(p => p.ParameterName == key_L).Checker.Check(parameterInfo, errorHandler);
-                }
-                catch (Exception)
-                {
-                    errorHandler.Errors.Add(string.Format("The parameter '{0}' is unknown", parameterInfo.Name));
-                }
-            }
-        }
+       private static void CheckParameter<T>(ErrorHandler errorHandler, InterceptorParameterConfigurations<T> interceptorParameterConfigurations_P, ParameterInfo parameterInfo)
+       {
+          string key_L = parameterInfo.Name.ToLower();
+          try
+          {
+             interceptorParameterConfigurations_P.PossibleParameters.First(p => p.Name == key_L).Checker.Check(parameterInfo, errorHandler);
+          }
+          catch (Exception)
+          {
+             errorHandler.Errors.Add(string.Format("The parameter '{0}' is unknown", parameterInfo.Name));
+          }
+       }
 
-        public void AddRange(IEnumerable<InterceptorParametersChecker> s)
-        {
-            foreach (InterceptorParametersChecker interceptorParametersChecker in s)
-            {
-                Add(interceptorParametersChecker);
-            }
-        }
+       private static void CheckDuplicates<T>(ErrorHandler errorHandler, InterceptorParameterConfigurations<T> interceptorParameterConfigurations_P)
+       {
+          var duplicates =
+             interceptorParameterConfigurations_P.PossibleParameters.GroupBy(s => s.Name).SelectMany(grp => grp.Skip(1));
+          foreach (var duplicate in duplicates)
+          {
+             errorHandler.Errors.Add(string.Format("The parameter {0} is already declared", duplicate.Name));
+          }
+       }
     }
 }

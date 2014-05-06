@@ -14,13 +14,13 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 {
     public class ParameterConfigurationForInstruction
     {
-        private AroundInstructionInfo aroundInstructionInfo;
-        private ParameterConfiguration<IlInjectorAvailableVariablesForInstruction> configuration;
+        private InstructionWeavingInfo _instructionWeavingInfo;
+        private InterceptorParameterConfiguration<IlInjectorAvailableVariablesForInstruction> configuration;
         private List<string> allowedTypes = new List<string>();
 
-        public ParameterConfigurationForInstruction(AroundInstructionInfo aroundInstructionInfo, ParameterConfiguration<IlInjectorAvailableVariablesForInstruction> configuration)
+        public ParameterConfigurationForInstruction(InstructionWeavingInfo _instructionWeavingInfo, InterceptorParameterConfiguration<IlInjectorAvailableVariablesForInstruction> configuration)
         {
-            this.aroundInstructionInfo = aroundInstructionInfo;
+            this._instructionWeavingInfo = _instructionWeavingInfo;
             this.configuration = configuration;
         }
 
@@ -32,7 +32,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 
         public ParameterConfigurationForInstruction WhichPdbPresent()
         {
-            configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.SequencePoint(aroundInstructionInfo.Instruction, errorListener, parameter));
+            configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.SequencePoint(_instructionWeavingInfo.Instruction, errorListener, parameter));
             return this;
         }
 
@@ -44,13 +44,13 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 
         public ParameterConfigurationForInstruction WhereFieldCanNotBeStatic()
         {
-            configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.NotStaticButDefaultValue(parameter, errorListener, aroundInstructionInfo.GetOperandAsField()));
+            configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.NotStaticButDefaultValue(parameter, errorListener, _instructionWeavingInfo.GetOperandAsField()));
             return this;
         }
 
         public ParameterConfigurationForInstruction WhereCurrentMethodCanNotBeStatic()
         {
-            configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.NotStatic(parameter, errorListener, aroundInstructionInfo.MethodOfInstruction));
+            configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.NotStatic(parameter, errorListener, _instructionWeavingInfo.MethodOfInstruction));
             return this;
         }
 
@@ -79,12 +79,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 
         public ParameterConfigurationForInstruction OrOfFieldDeclaringType()
         {
-            return OrOfType(aroundInstructionInfo.GetOperandAsField().DeclaringType);
+            return OrOfType(_instructionWeavingInfo.GetOperandAsField().DeclaringType);
         }
 
         public ParameterConfigurationForInstruction OrOfCurrentMethodDeclaringType()
         {
-            return OrOfType(aroundInstructionInfo.MethodOfInstruction.DeclaringType);
+            return OrOfType(_instructionWeavingInfo.MethodOfInstruction.DeclaringType);
         }
 
 
@@ -92,7 +92,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
         {
             configuration.Generator.Generators.Add((parameter, instructions, info) =>
                 {
-                    SequencePoint instructionPP = aroundInstructionInfo.Instruction.GetLastSequencePoint();
+                    SequencePoint instructionPP = _instructionWeavingInfo.Instruction.GetLastSequencePoint();
                     instructions.Add(Instruction.Create(OpCodes.Ldc_I4,
                                                         instructionPP == null
                                                             ? 0
@@ -104,7 +104,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
         {
             configuration.Generator.Generators.Add((parameter, instructions, info) =>
                 {
-                    SequencePoint instructionPP = aroundInstructionInfo.Instruction.GetLastSequencePoint();
+                    SequencePoint instructionPP = _instructionWeavingInfo.Instruction.GetLastSequencePoint();
                     instructions.Add(Instruction.Create(OpCodes.Ldstr,
                                                         instructionPP == null
                                                             ? null
@@ -118,7 +118,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 
             configuration.Generator.Generators.Add((parameter, instructions, info) =>
                 {
-                    var interceptor = aroundInstructionInfo;
+                    var interceptor = _instructionWeavingInfo;
                     instructions.AppendCallToTargetGetType(interceptor.MethodOfInstruction.Module, info.Called);
                     instructions.AppendCallToGetField(interceptor.GetOperandAsField().Name, interceptor.MethodOfInstruction.Module);
                 });
@@ -129,7 +129,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
 
             configuration.Generator.Generators.Add((parameter, instructions, info) =>
                 {
-                    var interceptor = aroundInstructionInfo;
+                    var interceptor = _instructionWeavingInfo;
                     instructions.AppendCallToTargetGetType(interceptor.MethodOfInstruction.Module, info.Called);
                     instructions.AppendCallToGetProperty(interceptor.GetOperandAsMethod().GetProperty().Name, interceptor.MethodOfInstruction.Module);
                 });
@@ -242,5 +242,4 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
         }
     }
 
-    public static class 
 }

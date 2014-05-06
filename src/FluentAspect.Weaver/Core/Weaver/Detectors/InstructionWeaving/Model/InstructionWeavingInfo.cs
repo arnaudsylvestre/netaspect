@@ -6,9 +6,8 @@ using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Model
 {
-    public class AroundInstructionInfo
+    public class InstructionWeavingInfo
     {
-        public ParametersIlGenerator<IlInjectorAvailableVariablesForInstruction> Generator { get; set; }
         public Instruction Instruction { get; set; }
         public MethodDefinition MethodOfInstruction { get; set; }
         public MethodInfo Interceptor { get; set; }
