@@ -10,7 +10,7 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
 {
    public class InterceptorParameterConfiguration
    {
-      public class MyInterceptorParameterChecker : IInterceptorParameterChecker
+      public class MyInterceptorParameterChecker
       {
          public List<Action<ParameterInfo, ErrorHandler>> Checkers = new List<Action<ParameterInfo, ErrorHandler>>();
 
@@ -31,9 +31,9 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
 
       public class MyGenerator : IInterceptorParameterIlGenerator
       {
-         public List<Action<ParameterInfo, List<Instruction>, IlInjectorAvailableVariablesForInstruction>> Generators = new List<Action<ParameterInfo, List<Instruction>, IlInjectorAvailableVariablesForInstruction>>();
+         public List<Action<ParameterInfo, List<Instruction>, IlInjectorAvailableVariables>> Generators = new List<Action<ParameterInfo, List<Instruction>, IlInjectorAvailableVariables>>();
 
-         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction info)
+         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariables info)
          {
             foreach (var generator in Generators)
             {

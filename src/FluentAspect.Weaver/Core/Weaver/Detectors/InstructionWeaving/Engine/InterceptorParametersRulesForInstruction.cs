@@ -23,7 +23,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
       }
 
 
-      public static InterceptorParameterConfiguration AndInjectTheVariable(this InterceptorParameterConfiguration configuration, Func<IlInjectorAvailableVariablesForInstruction, VariableDefinition> variableProvider)
+      public static InterceptorParameterConfiguration AndInjectTheVariable(this InterceptorParameterConfiguration configuration, Func<IlInjectorAvailableVariables, VariableDefinition> variableProvider)
       {
          configuration.Generator.Generators.Add((parameter, instructions, info) => 
                instructions.Add(Instruction.Create(OpCodes.Ldloc, variableProvider(info))

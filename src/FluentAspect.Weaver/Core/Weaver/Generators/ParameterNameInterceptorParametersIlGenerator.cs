@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
             this.parameter = parameter;
         }
 
-        public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction info)
+        public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariables info)
         {
             ModuleDefinition moduleDefinition = ((MethodDefinition) parameter.Method).Module;
             if (parameterInfo.ParameterType.IsByRef && !parameter.ParameterType.IsByReference)

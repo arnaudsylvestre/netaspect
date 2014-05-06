@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Core.Model.Weaving
 {
    public interface IAroundInstructionWeaver
    {
-      void Weave(AroundInstructionIl il, IlInjectorAvailableVariablesForInstruction variables);
-      void Check(ErrorHandler errorHandler, IlInjectorAvailableVariablesForInstruction variables);
+      void Weave(AroundInstructionIl il, IlInjectorAvailableVariables variables);
+      void Check(ErrorHandler errorHandler, IlInjectorAvailableVariables variables);
    }
 }

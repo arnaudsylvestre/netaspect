@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
          this.module = module;
       }
 
-      public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction info)
+      public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariables info)
       {
          instructions.AppendCallToTargetGetType(module, info.Called);
          instructions.AppendCallToGetProperty(property.Name, module);

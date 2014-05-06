@@ -3,7 +3,7 @@ using NetAspect.Weaver.Core.Errors;
 
 namespace NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Member
 {
-    public class MethodInterceptorParametersChercker : IInterceptorParameterChecker
+    public class MethodInterceptorParametersChercker 
     {
         public void Check(ParameterInfo parameter, ErrorHandler errorListener)
         {

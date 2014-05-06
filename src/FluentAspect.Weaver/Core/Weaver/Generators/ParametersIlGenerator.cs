@@ -11,7 +11,7 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
 {
     public static class ParametersIlGenerator
     {
-       public static void Generate(IEnumerable<ParameterInfo> parameters, List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction info, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+       public static void Generate(IEnumerable<ParameterInfo> parameters, List<Instruction> instructions, IlInjectorAvailableVariables info, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
             foreach (ParameterInfo parameterInfo in parameters)
             {

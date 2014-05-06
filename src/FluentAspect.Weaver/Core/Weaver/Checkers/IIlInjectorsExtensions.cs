@@ -16,7 +16,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             }
         }
 
-        public static void Inject(this IEnumerable<IIlInjector> injectors, List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction info)
+        public static void Inject(this IEnumerable<IIlInjector> injectors, List<Instruction> instructions, IlInjectorAvailableVariables info)
         {
             foreach (var ilInjector in injectors)
             {

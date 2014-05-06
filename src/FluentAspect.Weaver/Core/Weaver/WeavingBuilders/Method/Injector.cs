@@ -34,7 +34,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             ParametersChecker.Check(interceptorMethod.GetParameters(), errorHandler, interceptorParameterConfigurations);
         }
 
-        public void Inject(List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction availableInformations)
+        public void Inject(List<Instruction> instructions, IlInjectorAvailableVariables availableInformations)
         {
 
            ParametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations, interceptorParameterConfigurations);

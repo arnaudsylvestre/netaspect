@@ -16,13 +16,13 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
          this.after = after;
       }
 
-      public void Check(ErrorHandler errorHandler, IlInjectorAvailableVariablesForInstruction variables)
+      public void Check(ErrorHandler errorHandler, IlInjectorAvailableVariables variables)
       {
          before.Check(errorHandler);
          after.Check(errorHandler);
       }
 
-      public void Weave(AroundInstructionIl il, IlInjectorAvailableVariablesForInstruction variables)
+      public void Weave(AroundInstructionIl il, IlInjectorAvailableVariables variables)
       {
          before.Inject(il.BeforeInstruction, variables);
          after.Inject(il.AfterInstruction, variables);

@@ -4,7 +4,7 @@ using NetAspect.Weaver.Core.Errors;
 
 namespace NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Parameters
 {
-    public class ParameterNameInterceptorParametersChercker : IInterceptorParameterChecker
+    public class ParameterNameInterceptorParametersChercker
     {
         private readonly ParameterDefinition _parameterName;
 

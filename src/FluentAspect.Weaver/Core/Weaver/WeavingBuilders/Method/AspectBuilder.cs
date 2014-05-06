@@ -20,7 +20,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          lifeCycles = lifeCycles_P;
       }
 
-      public void CreateInterceptor(NetAspectDefinition aspect_P, MethodDefinition method_P, IlInjectorAvailableVariablesForInstruction availableInformations)
+      public void CreateInterceptor(NetAspectDefinition aspect_P, MethodDefinition method_P, IlInjectorAvailableVariables availableInformations)
       {
          var interceptor = new VariableDefinition(method_P.Module.Import(aspect_P.Type));
          Variables.Add(interceptor);

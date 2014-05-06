@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
             this.module = module;
         }
 
-        public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction info)
+        public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariables info)
         {
             var fieldReference = instruction.Operand as FieldReference;
             instructions.AppendCallToTargetGetType(module, info.Called);

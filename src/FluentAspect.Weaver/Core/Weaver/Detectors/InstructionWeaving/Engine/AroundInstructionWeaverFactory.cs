@@ -63,7 +63,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
          {
          }
 
-         public void Inject(List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction availableInformations)
+         public void Inject(List<Instruction> instructions, IlInjectorAvailableVariables availableInformations)
          {
          }
       }

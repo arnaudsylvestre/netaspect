@@ -8,7 +8,7 @@ using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
-   public class IlInjectorAvailableVariablesForInstruction
+   public class IlInjectorAvailableVariables
    {
       private readonly VariableDefinition _result;
       private readonly MethodDefinition method;
@@ -36,7 +36,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
       public List<VariableDefinition> Variables { get; private set; }
       public List<FieldDefinition> Fields { get; private set; }
 
-      public IlInjectorAvailableVariablesForInstruction(VariableDefinition result, MethodDefinition method, Instruction instruction)
+      public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method, Instruction instruction)
       {
          this.instruction = instruction;
          Variables = new List<VariableDefinition>();

@@ -104,9 +104,7 @@
     <Compile Include="Core\Weaver\Generators\PropertyPInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensure.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Exception\ExceptionInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\IInterceptorParameterChecker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Instance\InstanceInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\InterceptorParametersChecker.cs" />
     <Compile Include="Core\Weaver\Checkers\InterceptorParametersCherckerFactory.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Member\MethodInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Checkers\MethodWeaving\Parameters\ParameterNameInterceptorParametersChercker.cs" />
@@ -134,7 +132,7 @@
     <Compile Include="Core\Weaver\WeavingBuilders\Method\AspectBuilder.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\ConstructorWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\ILifeCycleHandler.cs" />
-    <Compile Include="Core\Weaver\WeavingBuilders\Method\IlInjectorAvailableVariablesForInstruction.cs" />
+    <Compile Include="Core\Weaver\WeavingBuilders\Method\IlInjectorAvailableVariables.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\TransientLifeCycleHandler.cs" />
     <Compile Include="Core\Weaver\Engine\WeavingModelComputer.cs" />
     <Compile Include="Helpers\IL\CollectionExtensions.cs" />

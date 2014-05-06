@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
     public class MethodInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator
     {
         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions,
-                               IlInjectorAvailableVariablesForInstruction info)
+                               IlInjectorAvailableVariables info)
         {
             instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentMethodBase));
         }
