@@ -89,7 +89,6 @@
     <Compile Include="Core\Weaver\Engine\AspectCheckers\DefaultAspectChecker.cs" />
     <Compile Include="Core\Weaver\Engine\AspectFinders\DefaultAspectFinder.cs" />
     <Compile Include="Core\Weaver\Engine\AssemblyPoolFactories\DefaultAssemblyPoolFactory.cs" />
-    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Kinds\ConstructorAttributeWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\Selectors\Selector.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\Selectors\SelectorParametersGenerator.cs" />
     <Compile Include="Core\Model\Weaving\MethodWeavingModel.cs" />
@@ -98,7 +97,6 @@
     <Compile Include="Core\Weaver\Engine\MethodWeaver.cs" />
     <Compile Include="Core\Weaver\Detectors\Model\InterceptorParameterConfiguration.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensure.cs" />
-    <Compile Include="Core\Weaver\Detectors\MethodWeavingModelExtensions.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\ParametersChecker.cs" />
     <Compile Include="Core\Weaver\WeaverEngine.cs" />
     <Compile Include="Core\Errors\IErrorListener.cs" />
