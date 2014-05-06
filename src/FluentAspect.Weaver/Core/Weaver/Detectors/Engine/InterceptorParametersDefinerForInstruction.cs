@@ -1,13 +1,10 @@
-using System.Collections.Generic;
+using System;
 using System.IO;
 using System.Reflection;
 using Mono.Cecil;
-using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
-using NetAspect.Weaver.Core.Weaver.Generators;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
+namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 {
     public static class InterceptorParametersDefinerForInstruction
     {
@@ -128,6 +125,21 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
                 .WhichCanNotBeReferenced()
                 .WhichMustBeOfType<PropertyInfo>()
                 .AndInjectTheCalledPropertyInfo(weavingInfo_P);
+            return weavingInfo_P;
+        }
+        public static InstructionWeavingInfo AddException(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+           interceptorParameterConfigurations_P.AddPossibleParameter("exception")
+                .WhichCanNotBeReferenced()
+                .WhichMustBeOfType<Exception>()
+                .AndInjectTheVariable(variables => variables.Exception);
+            return weavingInfo_P;
+        }
+        public static InstructionWeavingInfo AddResult(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+           interceptorParameterConfigurations_P.AddPossibleParameter("exception")
+                .WhereParameterTypeIsSameAsMethodResult(weavingInfo_P)
+                .AndInjectTheVariable(variables => variables.Result);
             return weavingInfo_P;
         }
     }

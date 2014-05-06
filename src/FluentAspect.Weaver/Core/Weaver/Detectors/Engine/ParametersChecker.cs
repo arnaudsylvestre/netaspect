@@ -4,9 +4,8 @@ using System.Linq;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
-using NetAspect.Weaver.Core.Weaver.Generators;
 
-namespace NetAspect.Weaver.Core.Weaver.Checkers
+namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 {
     public static class ParametersChecker
     {

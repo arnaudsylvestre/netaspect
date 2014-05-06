@@ -1,17 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Checkers;
-using NetAspect.Weaver.Core.Weaver.Detectors.Helpers;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 using NetAspect.Weaver.Core.Weaver.Generators;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
+namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 {
 
    public static class InterceptorParametersRulesExtensions
@@ -22,11 +19,16 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
          return configuration;
       }
 
+      public static InterceptorParameterConfiguration WhereParameterTypeIsSameAsMethodResult(this InterceptorParameterConfiguration configuration, MethodWeavingInfo info)
+      {
+         configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.ResultOfType(parameter, errorListener, info.Method));
+         return configuration;
+      }
 
       public static InterceptorParameterConfiguration AndInjectTheVariable(this InterceptorParameterConfiguration configuration, Func<IlInjectorAvailableVariables, VariableDefinition> variableProvider)
       {
-         configuration.Generator.Generators.Add((parameter, instructions, info) => 
-               instructions.Add(Instruction.Create(OpCodes.Ldloc, variableProvider(info))
+         configuration.Generator.Generators.Add((parameterInfo, instructions, info) => 
+            instructions.Add(Instruction.Create(parameterInfo.ParameterType.IsByRef ? OpCodes.Ldloca : OpCodes.Ldloc, variableProvider(info))
          ));
          return configuration;
       }

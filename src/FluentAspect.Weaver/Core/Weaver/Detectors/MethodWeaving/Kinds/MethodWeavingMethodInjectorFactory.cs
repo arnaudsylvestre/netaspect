@@ -1,5 +1,4 @@
-﻿using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine;
-using NetAspect.Weaver.Core.Weaver.Detectors.Model;
+﻿using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Kinds
 {

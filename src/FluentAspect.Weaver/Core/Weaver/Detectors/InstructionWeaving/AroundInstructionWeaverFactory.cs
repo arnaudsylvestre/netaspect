@@ -9,7 +9,7 @@ using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
+namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
 {
    public class AroundInstructionWeaverFactory
    {

@@ -15,7 +15,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving
 
         public void Check(ParameterInfo parameter, ErrorHandler errorListener)
         {
-            Ensure.ResultOfType(parameter, errorListener, methodDefinition);
+            
             //instructions.Add(Instruction.Create(info.ParameterType.IsByRef ? OpCodes.Ldloca : OpCodes.Ldloc, result))
         }
     }

@@ -5,7 +5,6 @@ using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 using ICustomAttributeProvider = Mono.Cecil.ICustomAttributeProvider;
 

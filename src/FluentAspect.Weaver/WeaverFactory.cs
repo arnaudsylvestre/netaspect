@@ -4,7 +4,6 @@ using NetAspect.Weaver.Apis.AssemblyChecker.Peverify;
 using NetAspect.Weaver.Core.Weaver;
 using NetAspect.Weaver.Core.Weaver.Detectors;
 using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving;
-using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine;
 using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Engine.AspectCheckers;

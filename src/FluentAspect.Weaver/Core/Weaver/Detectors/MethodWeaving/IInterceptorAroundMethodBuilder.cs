@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using NetAspect.Weaver.Core.Weaver.Detectors.Model;
-using NetAspect.Weaver.Core.Weaver.Generators;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
+﻿using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine
+namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
 {
     public interface IInterceptorAroundMethodBuilder
     {
