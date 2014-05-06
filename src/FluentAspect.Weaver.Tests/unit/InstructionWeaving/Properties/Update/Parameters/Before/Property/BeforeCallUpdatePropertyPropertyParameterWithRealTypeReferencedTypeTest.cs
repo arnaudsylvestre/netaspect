@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.Before.Property
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Parameters.Before.Property
 {
     public class BeforeCallUpdatePropertyPropertyParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<BeforeCallUpdatePropertyPropertyParameterWithRealTypeReferencedTypeTest.ClassToWeave>

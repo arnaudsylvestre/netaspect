@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.After.FilePath
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Parameters.After.FilePath
 {
     public class AfterCallGetPropertyFilePathParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<AfterCallGetPropertyFilePathParameterWithRealTypeReferencedTypeTest.ClassToWeave>

@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.Before.CallerMethod
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.Before.CallerMethod
 {
     public class BeforeCallMethodCallerMethodParameterWithBadTypeTest :
         NetAspectTest<BeforeCallMethodCallerMethodParameterWithBadTypeTest.ClassToWeave>

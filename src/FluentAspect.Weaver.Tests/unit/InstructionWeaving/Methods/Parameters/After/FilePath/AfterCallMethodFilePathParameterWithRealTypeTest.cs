@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.FilePath
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.FilePath
 {
     public class AfterCallMethodFilePathParameterWithRealTypeTest :
         NetAspectTest<AfterCallMethodFilePathParameterWithRealTypeTest.ClassToWeave>

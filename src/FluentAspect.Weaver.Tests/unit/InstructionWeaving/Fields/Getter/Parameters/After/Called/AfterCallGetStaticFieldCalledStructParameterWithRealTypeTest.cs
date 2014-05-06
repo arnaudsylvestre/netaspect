@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.After.Called
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameters.After.Called
 {
     public class AfterCallGetStaticFieldCalledStructParameterWithRealTypeTest :
         NetAspectTest<AfterCallGetStaticFieldCalledStructParameterWithRealTypeTest.ClassToWeave>

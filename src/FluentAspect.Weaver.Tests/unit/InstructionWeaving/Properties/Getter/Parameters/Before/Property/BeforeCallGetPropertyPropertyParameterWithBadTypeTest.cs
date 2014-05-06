@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.Before.Property
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Parameters.Before.Property
 {
     public class BeforeCallGetPropertyPropertyParameterWithBadTypeTest :
         NetAspectTest<BeforeCallGetPropertyPropertyParameterWithBadTypeTest.ClassToWeave>

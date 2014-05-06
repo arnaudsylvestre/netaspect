@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before.FileName
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameters.Before.FileName
 {
     public class BeforeCallGetFieldFileNameParameterWithRealTypeTest :
         NetAspectTest<BeforeCallGetFieldFileNameParameterWithRealTypeTest.ClassToWeave>

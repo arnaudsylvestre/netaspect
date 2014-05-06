@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.After.CallerParameterName
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Parameters.After.CallerParameterName
 {
     public class AfterCallGetPropertyCallerParameterNameParameterWithRealTypeOutTest :
         NetAspectTest<AfterCallGetPropertyCallerParameterNameParameterWithRealTypeOutTest.ClassToWeave>

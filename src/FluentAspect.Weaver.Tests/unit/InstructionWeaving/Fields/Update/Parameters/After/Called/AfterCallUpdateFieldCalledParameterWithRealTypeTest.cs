@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.After.Called
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Update.Parameters.After.Called
 {
     public class AfterCallUpdateFieldCalledParameterWithRealTypeTest :
         NetAspectTest<AfterCallUpdateFieldCalledParameterWithRealTypeTest.ClassToWeave>

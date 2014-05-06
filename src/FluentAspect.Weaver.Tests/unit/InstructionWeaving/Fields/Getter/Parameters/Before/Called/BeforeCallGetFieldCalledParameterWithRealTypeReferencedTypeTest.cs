@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before.Called
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameters.Before.Called
 {
     public class BeforeCallGetFieldCalledParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<BeforeCallGetFieldCalledParameterWithRealTypeReferencedTypeTest.ClassToWeave>

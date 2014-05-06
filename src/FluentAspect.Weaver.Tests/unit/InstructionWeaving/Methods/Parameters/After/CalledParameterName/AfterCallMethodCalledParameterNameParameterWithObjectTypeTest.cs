@@ -1,8 +1,7 @@
 using System;
 using NUnit.Framework;
-using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.CalledParameterName
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.CalledParameterName
 {
     public class AfterCallMethodCalledParameterNameParameterWithObjectTypeTest :
         NetAspectTest<AfterCallMethodCalledParameterNameParameterWithObjectTypeTest.ClassToWeave>

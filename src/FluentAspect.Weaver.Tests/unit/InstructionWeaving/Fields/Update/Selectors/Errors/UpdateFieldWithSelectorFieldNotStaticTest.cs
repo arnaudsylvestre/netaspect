@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Selectors.Errors
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Update.Selectors.Errors
 {
     public class UpdateFieldWithSelectorFieldNotStaticTest :
         NetAspectTest<UpdateFieldWithSelectorFieldNotStaticTest.ClassToWeave>

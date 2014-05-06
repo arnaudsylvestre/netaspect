@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Parameters.After.Field
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Parameters.After.Field
 {
     public class AfterCallGetPropertyPropertyParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<AfterCallGetPropertyPropertyParameterWithRealTypeReferencedTypeTest.ClassToWeave>

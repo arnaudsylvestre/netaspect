@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Selectors.Errors
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Selectors.Errors
 {
     public class UpdatePropertyWithSelectorPropertyWithBadParameterTypeTest :
         NetAspectTest<UpdatePropertyWithSelectorPropertyWithBadParameterTypeTest.ClassToWeave>

@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.LineNumber
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.LineNumber
 {
     public class AfterCallMethodLineNumberParameterWithRealTypeTest :
         NetAspectTest<AfterCallMethodLineNumberParameterWithRealTypeTest.ClassToWeave>

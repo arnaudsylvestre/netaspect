@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using NUnit.Framework;
 using NetAspect.Sample.Dep;
+using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Selectors
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Selectors
 {
     public class CallGetPropertyWeavingInAnotherAssemblyTest :
         NetAspectTest<CallGetPropertyWeavingInAnotherAssemblyTest.MyAspect, DepClassWhichCallProperty>

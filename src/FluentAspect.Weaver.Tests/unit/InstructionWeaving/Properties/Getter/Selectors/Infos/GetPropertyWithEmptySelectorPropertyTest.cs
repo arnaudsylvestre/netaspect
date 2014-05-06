@@ -1,8 +1,6 @@
 using System;
-using NUnit.Framework;
-using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Getter.Selectors.Infos
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Selectors.Infos
 {
     public class GetPropertyWithEmptySelectorPropertyTest :
         NetAspectTest<GetPropertyWithEmptySelectorPropertyTest.ClassToWeave>

@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.ColumnNumber
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.ColumnNumber
 {
     public class AfterCallMethodColumnNumberParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<AfterCallMethodColumnNumberParameterWithRealTypeReferencedTypeTest.ClassToWeave>

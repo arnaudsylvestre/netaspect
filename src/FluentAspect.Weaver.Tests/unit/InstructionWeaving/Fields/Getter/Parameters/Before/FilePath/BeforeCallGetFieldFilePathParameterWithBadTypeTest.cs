@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before.FilePath
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameters.Before.FilePath
 {
     public class BeforeCallGetFieldFilePathParameterWithBadTypeTest :
         NetAspectTest<BeforeCallGetFieldFilePathParameterWithBadTypeTest.ClassToWeave>

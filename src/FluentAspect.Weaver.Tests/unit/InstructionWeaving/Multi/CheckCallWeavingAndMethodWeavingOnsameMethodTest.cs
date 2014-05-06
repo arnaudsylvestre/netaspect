@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Multi
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Multi
 {
     public class CheckCallWeavingAndMethodWeavingOnsameMethodTest :
         NetAspectTest<CheckCallWeavingAndMethodWeavingOnsameMethodTest.ClassToWeave>

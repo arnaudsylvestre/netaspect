@@ -1,8 +1,6 @@
 using System;
-using NUnit.Framework;
-using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Selectors.Infos
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Selectors.Infos
 {
     public class GetFieldWithEmptySelectorFieldTest :
         NetAspectTest<GetFieldWithEmptySelectorFieldTest.ClassToWeave>

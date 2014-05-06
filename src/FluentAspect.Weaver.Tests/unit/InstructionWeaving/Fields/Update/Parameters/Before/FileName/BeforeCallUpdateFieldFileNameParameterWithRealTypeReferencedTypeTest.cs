@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Parameters.Before.FileName
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Update.Parameters.Before.FileName
 {
     public class BeforeCallUpdateFieldFileNameParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<BeforeCallUpdateFieldFileNameParameterWithRealTypeReferencedTypeTest.ClassToWeave>

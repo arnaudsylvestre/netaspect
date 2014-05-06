@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.FileName
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.FileName
 {
     public class AfterCallMethodFileNameParameterWithBadTypeTest :
         NetAspectTest<AfterCallMethodFileNameParameterWithBadTypeTest.ClassToWeave>

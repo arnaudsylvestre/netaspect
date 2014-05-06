@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before.Called
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameters.Before.Called
 {
     public class BeforeCallGetFieldCalledParameterWithObjectTypeTest :
         NetAspectTest<BeforeCallGetFieldCalledParameterWithObjectTypeTest.ClassToWeave>

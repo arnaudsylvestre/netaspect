@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Selectors
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Selectors
 {
     public class UpdatePropertyWithSelectorPropertyNameTest :
         NetAspectTest<UpdatePropertyWithSelectorPropertyNameTest.ClassToWeave>

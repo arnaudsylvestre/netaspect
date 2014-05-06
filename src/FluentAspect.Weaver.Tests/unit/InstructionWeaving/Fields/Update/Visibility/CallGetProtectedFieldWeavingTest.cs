@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Update.Visibility
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Update.Visibility
 {
     public class CallGetProtectedFieldWeavingTest :
         NetAspectTest<CallGetProtectedFieldWeavingTest.ClassToWeave>

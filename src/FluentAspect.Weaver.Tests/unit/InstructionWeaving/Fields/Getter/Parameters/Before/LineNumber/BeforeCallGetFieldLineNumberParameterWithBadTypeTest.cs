@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Fields.Getter.Parameters.Before.LineNumber
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameters.Before.LineNumber
 {
     public class BeforeCallGetFieldLineNumberParameterWithBadTypeTest :
         NetAspectTest<BeforeCallGetFieldLineNumberParameterWithBadTypeTest.ClassToWeave>

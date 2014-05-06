@@ -1,7 +1,7 @@
 using System;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Methods.Parameters.After.Caller
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.Caller
 {
     public class AfterCallMethodCallerParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<AfterCallMethodCallerParameterWithRealTypeReferencedTypeTest.ClassToWeave>

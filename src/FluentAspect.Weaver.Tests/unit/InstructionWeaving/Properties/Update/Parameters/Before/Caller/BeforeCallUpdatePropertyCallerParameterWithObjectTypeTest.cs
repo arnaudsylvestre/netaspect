@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.CallWeaving.Properties.Update.Parameters.Before.Caller
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Parameters.Before.Caller
 {
     public class BeforeCallUpdatePropertyCallerParameterWithObjectTypeTest :
         NetAspectTest<BeforeCallUpdatePropertyCallerParameterWithObjectTypeTest.ClassToWeave>
