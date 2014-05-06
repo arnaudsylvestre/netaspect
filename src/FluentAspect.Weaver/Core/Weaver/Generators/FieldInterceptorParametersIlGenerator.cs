@@ -7,7 +7,7 @@ using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.Generators
 {
-    public class FieldInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator
+    public class FieldInterceptorParametersIlGenerator 
     {
         private Instruction instruction;
         private ModuleDefinition module;

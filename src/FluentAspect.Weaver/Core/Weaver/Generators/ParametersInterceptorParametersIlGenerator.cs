@@ -5,8 +5,8 @@ using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Generators
 {
-    public class ParametersInterceptorParametersIlGenerator :
-        IInterceptorParameterIlGenerator
+    public class ParametersInterceptorParametersIlGenerator 
+        
     {
         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions,
                                IlInjectorAvailableVariables info)

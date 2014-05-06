@@ -8,7 +8,7 @@ using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Generators
 {
-    public class ParameterNameInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator
+    public class ParameterNameInterceptorParametersIlGenerator
     {
         private readonly ParameterDefinition parameter;
 

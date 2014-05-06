@@ -108,11 +108,7 @@
     <Compile Include="Core\Errors\IErrorListener.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\AspectApplier.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\InstructionWeavingDetector.cs" />
-    <Compile Include="Core\Weaver\Generators\ExceptionInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Generators\FieldInterceptorParametersIlGenerator.cs" />
-    <Compile Include="Core\Weaver\Generators\IInterceptorParameterIlGenerator.cs" />
-    <Compile Include="Core\Weaver\Generators\InstanceInterceptorParametersIlGenerator.cs" />
-    <Compile Include="Core\Weaver\Generators\InterceptorParametersIlGeneratorFactory.cs" />
     <Compile Include="Core\Weaver\Generators\MethodInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Generators\ParameterNameInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\ParametersIlGenerator.cs" />

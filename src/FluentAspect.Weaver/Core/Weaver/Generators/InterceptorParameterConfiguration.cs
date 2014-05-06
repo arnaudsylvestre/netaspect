@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
       }
 
 
-      public class MyGenerator : IInterceptorParameterIlGenerator
+      public class MyGenerator
       {
          public List<Action<ParameterInfo, List<Instruction>, IlInjectorAvailableVariables>> Generators = new List<Action<ParameterInfo, List<Instruction>, IlInjectorAvailableVariables>>();
 
