@@ -96,24 +96,16 @@
     <Compile Include="Core\Weaver\Engine\Instructions\AroundInstructionIl.cs" />
     <Compile Include="Core\Weaver\Engine\Instructions\AroundInstructionWeaver.cs" />
     <Compile Include="Core\Weaver\Engine\MethodWeaver.cs" />
-    <Compile Include="Core\Weaver\Generators\InterceptorParameterConfiguration.cs" />
-    <Compile Include="Core\Weaver\Generators\PropertyPInterceptorParametersIlGenerator.cs" />
+    <Compile Include="Core\Weaver\Detectors\Model\InterceptorParameterConfiguration.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensure.cs" />
-    <Compile Include="Core\Weaver\Checkers\MethodWeaving\ParameterNameInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\MethodWeaving\ParametersInterceptorParametersChercker.cs" />
-    <Compile Include="Core\Weaver\Checkers\MethodWeaving\ResultInterceptorParametersChercker.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeavingModelExtensions.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\ParametersChecker.cs" />
     <Compile Include="Core\Weaver\WeaverEngine.cs" />
     <Compile Include="Core\Errors\IErrorListener.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\AspectApplier.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\InstructionWeavingDetector.cs" />
-    <Compile Include="Core\Weaver\Generators\FieldInterceptorParametersIlGenerator.cs" />
-    <Compile Include="Core\Weaver\Generators\MethodInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Generators\ParameterNameInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\ParametersIlGenerator.cs" />
-    <Compile Include="Core\Weaver\Generators\ParametersInterceptorParametersIlGenerator.cs" />
-    <Compile Include="Core\Weaver\Generators\PropertyInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Model\Weaving\IIlInjectorsExtensions.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\AspectBuilder.cs" />
     <Compile Include="Core\Weaver\WeavingBuilders\Method\ConstructorWeavingMethodInjectorFactory.cs" />
@@ -157,7 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Weaver\Engine\LifeCycle\" />
-    <Folder Include="Core\Weaver\WeavingBuilders\Call\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -32,7 +32,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
         public void Check(ErrorHandler errorHandler)
         {
-            ParametersChecker.Check(interceptorMethod.GetParameters(), errorHandler, interceptorParameterConfigurations);
+           interceptorParameterConfigurations.Check(interceptorMethod.GetParameters(), errorHandler);
         }
 
         public void Inject(List<Instruction> instructions, IlInjectorAvailableVariables availableInformations)

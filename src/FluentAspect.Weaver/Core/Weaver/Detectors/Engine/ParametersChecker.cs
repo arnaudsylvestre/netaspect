@@ -9,7 +9,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 {
     public static class ParametersChecker
     {
-        public static void Check(IEnumerable<ParameterInfo> parameters, ErrorHandler errorHandler, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        public static void Check(this InterceptorParameterConfigurations interceptorParameterConfigurations_P, IEnumerable<ParameterInfo> parameters, ErrorHandler errorHandler)
         {
            CheckDuplicates(errorHandler, interceptorParameterConfigurations_P);
            foreach (ParameterInfo parameterInfo in parameters)

@@ -118,17 +118,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration AndInjectTheCalledFieldInfo(this InterceptorParameterConfiguration configuration, InstructionWeavingInfo weavingInfo)
-      {
-
-         configuration.Generator.Generators.Add((parameter, instructions, info) =>
-         {
-            var interceptor = weavingInfo;
-            instructions.AppendCallToTargetGetType(interceptor.Method.Module, info.Called);
-            instructions.AppendCallToGetField(interceptor.GetOperandAsField().Name, interceptor.Method.Module);
-         });
-         return configuration;
-      }
+      
       public static InterceptorParameterConfiguration AndInjectTheCalledPropertyInfo(this InterceptorParameterConfiguration configuration, InstructionWeavingInfo weavingInfo)
       {
 
@@ -169,6 +159,18 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return configuration;
       }
 
+      public static InterceptorParameterConfiguration AndInjectTheCalledFieldInfo(this InterceptorParameterConfiguration configuration, InstructionWeavingInfo weavingInfo_P)
+      {
+         configuration.Generator.Generators.Add((parameter, instructions, info) =>
+         {
+            var fieldReference = weavingInfo_P.GetOperandAsField();
+            var module = weavingInfo_P.Method.Module;
+            instructions.AppendCallToTargetGetType(module, info.Called);
+            instructions.AppendCallToGetField(fieldReference.Name, module);
+         });
+         return configuration;
+      }
+      
       public static void AndInjectTheCalledParameter(this InterceptorParameterConfiguration configuration, ParameterDefinition parameter)
       {
          configuration.Generator.Generators.Add((parameterInfo, instructions, info) =>
