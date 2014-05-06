@@ -11,13 +11,15 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
     public class AroundMethodWeaverFactory
     {
         private IInterceptorAroundMethodBuilder builder;
+       private AspectBuilder aspectBuilder;
 
-        public AroundMethodWeaverFactory(IInterceptorAroundMethodBuilder builder)
-        {
-            this.builder = builder;
-        }
+       public AroundMethodWeaverFactory(IInterceptorAroundMethodBuilder builder, AspectBuilder aspectBuilder_P)
+       {
+          this.builder = builder;
+          aspectBuilder = aspectBuilder_P;
+       }
 
-        public IIlInjector Create(MethodDefinition method,
+       public IIlInjector Create(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,
                                                                                 NetAspectDefinition aspect,
             Action<MethodWeavingInfo, InterceptorParameterConfigurations> fillSpecific)
@@ -31,8 +33,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
             builder.FillCommon(weavingInfo_P, interceptorParameterConfigurations);
             fillSpecific(weavingInfo_P, interceptorParameterConfigurations);
 
-            return new Injector(method, interceptorMethod, 
-                                                                                        aspect, null);
+            return new Injector(method, interceptorMethod,
+                                                                                        aspect, interceptorParameterConfigurations, aspectBuilder);
         }
 
         public IIlInjector CreateForBefore(MethodDefinition method,

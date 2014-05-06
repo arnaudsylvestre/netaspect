@@ -14,10 +14,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
    public class AroundInstructionWeaverFactory
    {
       private readonly IInterceptorAroundInstructionBuilder _interceptorAroundInstructionBuilder;
+      private AspectBuilder aspectBuilder;
 
-      public AroundInstructionWeaverFactory(IInterceptorAroundInstructionBuilder interceptorAroundInstructionBuilder)
+      public AroundInstructionWeaverFactory(IInterceptorAroundInstructionBuilder interceptorAroundInstructionBuilder, AspectBuilder aspectBuilder_P)
       {
          _interceptorAroundInstructionBuilder = interceptorAroundInstructionBuilder;
+         aspectBuilder = aspectBuilder_P;
       }
 
       public IIlInjector CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, NetAspectDefinition aspect, Instruction instruction)
@@ -44,7 +46,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
          _interceptorAroundInstructionBuilder.FillCommon(info, parametersIlGenerator);
          specificFiller(_interceptorAroundInstructionBuilder, info, parametersIlGenerator);
 
-         return new Injector(method, interceptorMethod, aspect, parametersIlGenerator);
+         return new Injector(method, interceptorMethod, aspect, parametersIlGenerator, aspectBuilder);
       }
 
 

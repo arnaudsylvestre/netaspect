@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             FillCommon(method);
 
             return new Injector(method, interceptorMethod
-                                                                                       , aspect, null);
+                                                                                       , aspect, null, null);
         }
 
        public static IIlInjector CreateForOnFinally(MethodDefinition method,
@@ -27,7 +27,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
         {
             FillCommon(method);
 
-            return new Injector(method, interceptorMethod, aspect, null);
+            return new Injector(method, interceptorMethod, aspect, null, null);
         }
 
         private static void FillCommon(MethodDefinition method)
@@ -48,7 +48,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
         {
             FillCommon(method);
 
-            return new Injector(method, interceptorMethod, aspect, null);
+            return new Injector(method, interceptorMethod, aspect, null, null);
         }
 
         public static IIlInjector CreateForOnException(MethodDefinition method,
@@ -57,7 +57,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
         {
            FillCommon(method);
             //parametersIlGenerator.CreateIlGeneratorForExceptionParameter();
-            return new Injector(method, methodInfo, aspect, null);
+           return new Injector(method, methodInfo, aspect, null, null);
         }
     }
 }
