@@ -38,12 +38,11 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
       public void Inject(List<Instruction> instructions, IlInjectorAvailableVariables availableInformations)
       {
-         ParametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations, interceptorParameterConfigurations);
-
          var interceptor = new VariableDefinition(_method.Module.Import(aspect.Type));
          availableInformations.Variables.Add(interceptor);
          aspectBuilder.CreateInterceptor(aspect, _method, interceptor, instructions);
          instructions.Add(Instruction.Create(OpCodes.Ldloc, interceptor));
+         ParametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations, interceptorParameterConfigurations);
          instructions.Add(Instruction.Create(OpCodes.Call, _method.Module.Import(interceptorMethod)));
       }
    }
