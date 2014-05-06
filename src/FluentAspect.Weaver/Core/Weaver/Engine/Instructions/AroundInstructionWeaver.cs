@@ -5,7 +5,7 @@ using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
 {
-   public class AroundInstructionWeaver : IAroundInstructionWeaver
+   public class AroundInstructionWeaver
    {
        private IIlInjector before;
        private IIlInjector after;

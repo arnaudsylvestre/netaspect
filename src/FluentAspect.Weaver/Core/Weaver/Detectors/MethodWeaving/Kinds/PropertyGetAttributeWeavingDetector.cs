@@ -4,7 +4,7 @@ using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Property
+namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Kinds
 {
     public class PropertyGetAttributeWeavingDetector
     {

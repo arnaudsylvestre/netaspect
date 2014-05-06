@@ -1,10 +1,7 @@
 using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine;
-using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Model;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
-using NetAspect.Weaver.Core.Weaver.Generators;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Property
+namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds
 {
     public class CallGetPropertyInterceptorAroundInstructionBuilder : IInterceptorAroundInstructionBuilder
     {

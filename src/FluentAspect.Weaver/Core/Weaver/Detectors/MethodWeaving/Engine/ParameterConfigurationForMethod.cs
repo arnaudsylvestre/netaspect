@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Checkers;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine;
+using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 using NetAspect.Weaver.Core.Weaver.Generators;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
+namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine
 {
     public class ParameterConfigurationForMethod
     {

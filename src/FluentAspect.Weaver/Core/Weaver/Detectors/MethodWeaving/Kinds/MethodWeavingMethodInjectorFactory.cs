@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine;
+﻿using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
-using NetAspect.Weaver.Core.Weaver.Generators;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Method
+namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Kinds
 {
     public class MethodWeavingMethodInjectorFactory : IInterceptorAroundMethodBuilder
     {

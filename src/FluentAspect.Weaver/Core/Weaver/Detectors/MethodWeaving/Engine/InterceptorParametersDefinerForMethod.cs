@@ -1,6 +1,5 @@
 using System.Reflection;
 using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine;
-using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Helpers;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 

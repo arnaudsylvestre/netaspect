@@ -1,4 +1,3 @@
-using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Model;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 using NetAspect.Weaver.Core.Weaver.Generators;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;

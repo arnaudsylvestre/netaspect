@@ -1,13 +1,7 @@
-using System.Collections.Generic;
 using Mono.Cecil;
-using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine;
-using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Model;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
-using NetAspect.Weaver.Core.Weaver.Generators;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Helpers
+namespace NetAspect.Weaver.Core.Weaver.Detectors.Helpers
 {
     public static class AroundInstructionInfoExtensions
     {

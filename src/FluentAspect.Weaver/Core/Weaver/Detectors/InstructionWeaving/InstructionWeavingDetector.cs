@@ -35,7 +35,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
         }
 
 
-        public IAroundInstructionWeaver DetectWeavingModel(MethodDefinition method, Instruction instruction, NetAspectDefinition aspect)
+        public AroundInstructionWeaver DetectWeavingModel(MethodDefinition method, Instruction instruction, NetAspectDefinition aspect)
         {
             if (!isInstructionCompliant(instruction, aspect, method))
                 return null;

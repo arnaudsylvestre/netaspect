@@ -2,7 +2,7 @@
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Parameters
+namespace NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving
 {
     public class ParameterNameInterceptorParametersChercker
     {

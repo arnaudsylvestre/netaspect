@@ -2,6 +2,7 @@
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
 
 namespace NetAspect.Weaver.Core.Model.Weaving
 {
@@ -34,7 +35,7 @@ namespace NetAspect.Weaver.Core.Model.Weaving
             return methodWeavingModel;
         }
 
-        public void Add(MethodDefinition method, Instruction instruction, IAroundInstructionWeaver aroundInstructionWeaver)
+        public void Add(MethodDefinition method, Instruction instruction, AroundInstructionWeaver aroundInstructionWeaver)
         {
             if (aroundInstructionWeaver == null)
                 return;

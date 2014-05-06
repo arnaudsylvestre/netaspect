@@ -1,10 +1,5 @@
 ﻿using System.Linq;
 using Mono.Cecil;
-using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Exception;
-using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Instance;
-using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Member;
-using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Parameters;
-using NetAspect.Weaver.Core.Weaver.Checkers.MethodWeaving.Result;
 
 namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
