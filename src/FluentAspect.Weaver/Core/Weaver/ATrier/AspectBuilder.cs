@@ -10,8 +10,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
    {
       private Dictionary<LifeCycle, ILifeCycleHandler> lifeCycles;
 
-      public List<VariableDefinition> Variables = new List<VariableDefinition>();
-      public List<Instruction> Instructions = new List<Instruction>();
+      
 
       
 
@@ -20,13 +19,9 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          lifeCycles = lifeCycles_P;
       }
 
-      public void CreateInterceptor(NetAspectDefinition aspect_P, MethodDefinition method_P, IlInjectorAvailableVariables availableInformations)
+      public void CreateInterceptor(NetAspectDefinition aspect_P, MethodDefinition method_P, VariableDefinition interceptorVariable, List<Instruction> instructions)
       {
-         var interceptor = new VariableDefinition(method_P.Module.Import(aspect_P.Type));
-         Variables.Add(interceptor);
-         lifeCycles[aspect_P.LifeCycle].CreateInterceptor(this, interceptor);
-         Instructions.AppendCreateNewObject(interceptor, aspect_P.Type, method_P.Module);
-         Instructions.Add(Instruction.Create(OpCodes.Ldloc, interceptor));
+         instructions.AppendCreateNewObject(interceptorVariable, aspect_P.Type, method_P.Module);
       }
 
    }
