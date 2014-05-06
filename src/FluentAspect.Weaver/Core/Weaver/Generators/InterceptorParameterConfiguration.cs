@@ -4,10 +4,11 @@ using System.Reflection;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Weaver.Checkers;
+using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Generators
 {
-   public class InterceptorParameterConfiguration<T>
+   public class InterceptorParameterConfiguration
    {
       public class MyInterceptorParameterChecker : IInterceptorParameterChecker
       {
@@ -28,11 +29,11 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
       }
 
 
-      public class MyGenerator : IInterceptorParameterIlGenerator<T>
+      public class MyGenerator : IInterceptorParameterIlGenerator
       {
-         public List<Action<ParameterInfo, List<Instruction>, T>> Generators = new List<Action<ParameterInfo, List<Instruction>, T>>();
+         public List<Action<ParameterInfo, List<Instruction>, IlInjectorAvailableVariablesForInstruction>> Generators = new List<Action<ParameterInfo, List<Instruction>, IlInjectorAvailableVariablesForInstruction>>();
 
-         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, T info)
+         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction info)
          {
             foreach (var generator in Generators)
             {

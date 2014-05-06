@@ -3,18 +3,25 @@ using NetAspect.Weaver.Core.Weaver.Generators;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.Model
 {
-   public class InterceptorParameterConfigurations<T>
+   public class InterceptorParameterConfigurations
    {
-      readonly List<InterceptorParameterConfiguration<T>> possibleParameters = new List<InterceptorParameterConfiguration<T>>();
+      readonly List<InterceptorParameterConfiguration> possibleParameters = new List<InterceptorParameterConfiguration>();
 
-      public IEnumerable<InterceptorParameterConfiguration<T>> PossibleParameters
+      public IEnumerable<InterceptorParameterConfiguration> PossibleParameters
       {
          get { return possibleParameters; }
       }
 
-      public InterceptorParameterConfiguration<T> Create(string parameterName)
+
+
+      public InterceptorParameterConfiguration AddPossibleParameter(string parameterName)
       {
-         InterceptorParameterConfiguration<T> item = new InterceptorParameterConfiguration<T>(parameterName);
+         return Create(parameterName);
+      }
+
+      public InterceptorParameterConfiguration Create(string parameterName)
+      {
+         InterceptorParameterConfiguration item = new InterceptorParameterConfiguration(parameterName);
          possibleParameters.Add(item);
          return item;
       }

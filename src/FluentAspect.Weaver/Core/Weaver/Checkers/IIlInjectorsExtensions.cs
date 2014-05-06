@@ -2,14 +2,13 @@
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.Generators;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call;
+using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
     public static class IIlInjectorsExtensions
     {
-        public static void Check<T>(this IEnumerable<IIlInjector<T>> injectors, ErrorHandler errorHandler)
+        public static void Check(this IEnumerable<IIlInjector> injectors, ErrorHandler errorHandler)
         {
             foreach (var ilInjector in injectors)
             {
@@ -17,7 +16,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             }
         }
 
-        public static void Inject<T>(this IEnumerable<IIlInjector<T>> injectors, List<Instruction> instructions, T info)
+        public static void Inject(this IEnumerable<IIlInjector> injectors, List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction info)
         {
             foreach (var ilInjector in injectors)
             {

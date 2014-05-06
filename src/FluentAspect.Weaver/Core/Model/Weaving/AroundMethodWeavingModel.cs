@@ -7,16 +7,16 @@ namespace NetAspect.Weaver.Core.Model.Weaving
 {
     public class AroundMethodWeavingModel
     {
-        public List<IIlInjector<IlInjectorAvailableVariables>> Afters =
-            new List<IIlInjector<IlInjectorAvailableVariables>>();
+        public List<IIlInjector> Afters =
+            new List<IIlInjector>();
 
-        public List<IIlInjector<IlInjectorAvailableVariables>> Befores =
-            new List<IIlInjector<IlInjectorAvailableVariables>>();
+        public List<IIlInjector> Befores =
+            new List<IIlInjector>();
 
-        public List<IIlInjector<IlInjectorAvailableVariables>> OnExceptions =
-            new List<IIlInjector<IlInjectorAvailableVariables>>();
+        public List<IIlInjector> OnExceptions =
+            new List<IIlInjector>();
 
-        public List<IIlInjector<IlInjectorAvailableVariables>> OnFinallys =
-            new List<IIlInjector<IlInjectorAvailableVariables>>();
+        public List<IIlInjector> OnFinallys =
+            new List<IIlInjector>();
     }
 }

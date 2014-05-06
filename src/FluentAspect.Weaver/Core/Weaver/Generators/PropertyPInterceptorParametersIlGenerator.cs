@@ -7,7 +7,7 @@ using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.Generators
 {
-   public class PropertyPInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator<IlInjectorAvailableVariablesForInstruction>
+   public class PropertyPInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator
    {
       private PropertyDefinition property;
       private ModuleDefinition module;

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Generators
 {
-    public class ParameterNameInterceptorParametersIlGenerator<T> : IInterceptorParameterIlGenerator<T>
+    public class ParameterNameInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator
     {
         private readonly ParameterDefinition parameter;
 
@@ -16,7 +17,7 @@ namespace NetAspect.Weaver.Core.Weaver.Generators
             this.parameter = parameter;
         }
 
-        public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, T info)
+        public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction info)
         {
             ModuleDefinition moduleDefinition = ((MethodDefinition) parameter.Method).Module;
             if (parameterInfo.ParameterType.IsByRef && !parameter.ParameterType.IsByReference)

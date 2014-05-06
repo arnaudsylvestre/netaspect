@@ -10,7 +10,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
     public static class ParametersChecker
     {
-        public static void Check<T>(IEnumerable<ParameterInfo> parameters, ErrorHandler errorHandler, InterceptorParameterConfigurations<T> interceptorParameterConfigurations_P)
+        public static void Check(IEnumerable<ParameterInfo> parameters, ErrorHandler errorHandler, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
            CheckDuplicates(errorHandler, interceptorParameterConfigurations_P);
            foreach (ParameterInfo parameterInfo in parameters)
@@ -19,7 +19,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
            }
         }
 
-       private static void CheckParameter<T>(ErrorHandler errorHandler, InterceptorParameterConfigurations<T> interceptorParameterConfigurations_P, ParameterInfo parameterInfo)
+       private static void CheckParameter(ErrorHandler errorHandler, InterceptorParameterConfigurations interceptorParameterConfigurations_P, ParameterInfo parameterInfo)
        {
           string key_L = parameterInfo.Name.ToLower();
           try
@@ -32,7 +32,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
           }
        }
 
-       private static void CheckDuplicates<T>(ErrorHandler errorHandler, InterceptorParameterConfigurations<T> interceptorParameterConfigurations_P)
+       private static void CheckDuplicates(ErrorHandler errorHandler, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
        {
           var duplicates =
              interceptorParameterConfigurations_P.PossibleParameters.GroupBy(s => s.Name).SelectMany(grp => grp.Skip(1));

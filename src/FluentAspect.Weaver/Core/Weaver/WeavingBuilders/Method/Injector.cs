@@ -7,26 +7,21 @@ using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
-using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Generators;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call;
-using NetAspect.Weaver.Helpers;
-using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
-   public class Injector<T> : IIlInjector<T>
-       where T : IlInstructionInjectorAvailableVariables
+   public class Injector : IIlInjector
     {
        private readonly MethodDefinition _method;
         private readonly MethodInfo interceptorMethod;
        private AspectBuilder aspectBuilder;
         private NetAspectDefinition aspect;
-      private readonly InterceptorParameterConfigurations<T> interceptorParameterConfigurations;
+      private readonly InterceptorParameterConfigurations interceptorParameterConfigurations;
 
 
       public Injector(MethodDefinition method_P, MethodInfo interceptorMethod_P,
-                                                 NetAspectDefinition aspect, InterceptorParameterConfigurations<T> interceptorParameterConfigurations_P)
+                                                 NetAspectDefinition aspect, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
             _method = method_P;
             interceptorMethod = interceptorMethod_P;
@@ -39,7 +34,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             ParametersChecker.Check(interceptorMethod.GetParameters(), errorHandler, interceptorParameterConfigurations);
         }
 
-        public void Inject(List<Instruction> instructions, T availableInformations)
+        public void Inject(List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction availableInformations)
         {
 
            ParametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations, interceptorParameterConfigurations);

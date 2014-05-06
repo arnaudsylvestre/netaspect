@@ -25,14 +25,14 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                                         ? null
                                         : new VariableDefinition(method.ReturnType);
 
-         var availableVariables = new IlInjectorAvailableVariables(result, method);
+         var availableVariables = new IlInjectorAvailableVariablesForInstruction(result, method, null);
          var allVariables = new List<VariableDefinition>();
 
          foreach (var instruction in methodWeavingModel.Instructions)
          {
             var instructionIl = new NetAspectWeavingMethod.InstructionIl();
             w.Instructions.Add(instruction.Key, instructionIl);
-            var variablesForInstruction = new IlInjectorAvailableVariablesForInstruction(availableVariables, instruction.Key);
+            var variablesForInstruction = new IlInjectorAvailableVariablesForInstruction(result, method, instruction.Key);
             var ils = new List<AroundInstructionIl>();
             foreach (var v in instruction.Value)
             {

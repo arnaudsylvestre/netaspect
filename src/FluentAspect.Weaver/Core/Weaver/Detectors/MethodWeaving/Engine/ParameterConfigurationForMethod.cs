@@ -11,10 +11,10 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine
     public class ParameterConfigurationForMethod
     {
         private MethodWeavingInfo _methodWeavingInfo;
-        private InterceptorParameterConfiguration<IlInjectorAvailableVariables> configuration;
+        private InterceptorParameterConfiguration configuration;
         private List<string> allowedTypes = new List<string>();
 
-        public ParameterConfigurationForMethod(MethodWeavingInfo _methodWeavingInfo, InterceptorParameterConfiguration<IlInjectorAvailableVariables> configuration)
+        public ParameterConfigurationForMethod(MethodWeavingInfo _methodWeavingInfo, InterceptorParameterConfiguration configuration)
         {
             this._methodWeavingInfo = _methodWeavingInfo;
             this.configuration = configuration;

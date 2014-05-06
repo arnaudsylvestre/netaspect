@@ -1,4 +1,5 @@
 using System.Reflection;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Engine;
 using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Helpers;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
@@ -7,26 +8,26 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine
 {
     public static class InterceptorParametersDefinerForMethod
     {
-        public static MethodWeavingInfo AddInstance(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<IlInjectorAvailableVariables> interceptorParameterConfigurations_P)
+        public static MethodWeavingInfo AddInstance(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-            weavingInfo_P.AddPossibleParameter("instance", interceptorParameterConfigurations_P)
+           interceptorParameterConfigurations_P.AddPossibleParameter("instance")
                 .WhichCanNotBeReferenced()
-                .WhereCurrentMethodCanNotBeStatic()
-                .WhichMustBeOfType<object>().OrOfCurrentMethodDeclaringType()
+                .WhereCurrentMethodCanNotBeStatic(weavingInfo_P)
+                .WhichMustBeOfType<object>().OrOfCurrentMethodDeclaringType(weavingInfo_P)
                 .AndInjectTheCurrentInstance();
             return weavingInfo_P;
         }
-        public static MethodWeavingInfo AddCurrentMethod(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<IlInjectorAvailableVariables> interceptorParameterConfigurations_P)
+        public static MethodWeavingInfo AddCurrentMethod(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-           weavingInfo_P.AddPossibleParameter("method", interceptorParameterConfigurations_P)
+           interceptorParameterConfigurations_P.AddPossibleParameter("method")
                 .WhichCanNotBeReferenced()
                 .WhichMustBeOfType<MethodBase>()
                 .AndInjectTheCurrentMethod();
             return weavingInfo_P;
         }
-        public static MethodWeavingInfo AddCallerParameters(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<IlInjectorAvailableVariables> interceptorParameterConfigurations_P)
+        public static MethodWeavingInfo AddCallerParameters(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-           weavingInfo_P.AddPossibleParameter("callerparameters", interceptorParameterConfigurations_P)
+           interceptorParameterConfigurations_P.AddPossibleParameter("callerparameters")
                 .WhichCanNotBeReferenced()
                 .WhichMustBeOfType<object[]>()
                 .AndInjectTheVariable(variables => variables.Parameters);

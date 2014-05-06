@@ -8,16 +8,16 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
 {
     public interface IAroundMethodWeaverFactory
     {
-        IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
+        IIlInjector CreateForBefore(MethodDefinition method,
                                                                   MethodInfo interceptorMethod,
                                                                   NetAspectDefinition aspect);
-        IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
+        IIlInjector CreateForAfter(MethodDefinition method,
                                                                  MethodInfo interceptorMethod,
                                                                  NetAspectDefinition aspect);
-        IIlInjector<IlInjectorAvailableVariables> CreateForExceptions(MethodDefinition method,
+        IIlInjector CreateForExceptions(MethodDefinition method,
                                                                       MethodInfo interceptorMethod,
                                                                       NetAspectDefinition aspect);
-        IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method,
+        IIlInjector CreateForOnFinally(MethodDefinition method,
                                                                      MethodInfo interceptorMethod,
                                                                      NetAspectDefinition aspect);
     }

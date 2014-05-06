@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Field
 {
     public class CallGetFieldInterceptorAroundInstructionBuilder : IInterceptorAroundInstructionBuilder
     {
-       public void FillCommon(InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<IlInjectorAvailableVariablesForInstruction> parametersIlGenerator_P)
+       public void FillCommon(InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations parametersIlGenerator_P)
         {
            weavingInfo_P.AddCalled(parametersIlGenerator_P)
                 .AddCalledFieldInfo(parametersIlGenerator_P)
@@ -27,7 +27,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Field
         {
         }
 
-        public void FillAfterSpecific(InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<IlInjectorAvailableVariablesForInstruction> generator_P)
+        public void FillAfterSpecific(InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations generator_P)
         {
         }
     }

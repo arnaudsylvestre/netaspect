@@ -5,10 +5,10 @@ using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Generators
 {
-    public class ResultInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator<IlInjectorAvailableVariables>
+    public class ResultInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator
     {
         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions,
-                               IlInjectorAvailableVariables info)
+                               IlInjectorAvailableVariablesForInstruction info)
         {
             instructions.Add(Instruction.Create(parameterInfo.ParameterType.IsByRef ? OpCodes.Ldloca : OpCodes.Ldloc,
                                                 info.Result));

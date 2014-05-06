@@ -11,23 +11,23 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
     public static class MethodWeavingPropertySetInjectorFactory
     {
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
+       public static IIlInjector CreateForBefore(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,
                                                                                 NetAspectDefinition aspect)
         {
             FillCommon(method);
 
-            return new Injector<IlInjectorAvailableVariables>(method, interceptorMethod
+            return new Injector(method, interceptorMethod
                                                                                        , aspect, null);
         }
 
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method,
+       public static IIlInjector CreateForOnFinally(MethodDefinition method,
                                                                                    MethodInfo interceptorMethod,
                                                                                    NetAspectDefinition aspect)
         {
             FillCommon(method);
 
-            return new Injector<IlInjectorAvailableVariables>(method, interceptorMethod, aspect, null);
+            return new Injector(method, interceptorMethod, aspect, null);
         }
 
         private static void FillCommon(MethodDefinition method)
@@ -42,22 +42,22 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             //checker.CreateCheckerForPropertySetValueParameter(method);
         }
 
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
+        public static IIlInjector CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
                                                                                NetAspectDefinition aspect)
         {
             FillCommon(method);
 
-            return new Injector<IlInjectorAvailableVariables>(method, interceptorMethod, aspect, null);
+            return new Injector(method, interceptorMethod, aspect, null);
         }
 
-        public static IIlInjector<IlInjectorAvailableVariables> CreateForOnException(MethodDefinition method,
+        public static IIlInjector CreateForOnException(MethodDefinition method,
                                                                                      MethodInfo methodInfo,
                                                                                      NetAspectDefinition aspect)
         {
            FillCommon(method);
             //parametersIlGenerator.CreateIlGeneratorForExceptionParameter();
-            return new Injector<IlInjectorAvailableVariables>(method, methodInfo, aspect, null);
+            return new Injector(method, methodInfo, aspect, null);
         }
     }
 }

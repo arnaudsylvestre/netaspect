@@ -1,11 +1,4 @@
-﻿using System;
-using System.IO;
-using Mono.Cecil;
-using Mono.Cecil.Cil;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
-
-namespace NetAspect.Weaver.Core.Weaver.Generators
+﻿namespace NetAspect.Weaver.Core.Weaver.Generators
 {
     public static class InterceptorParametersIlGeneratorFactory
     {

@@ -19,32 +19,32 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine
             this.builder = builder;
         }
 
-        public IIlInjector<IlInjectorAvailableVariables> Create(MethodDefinition method,
+        public IIlInjector Create(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,
                                                                                 NetAspectDefinition aspect,
-            Action<MethodWeavingInfo, InterceptorParameterConfigurations<IlInjectorAvailableVariables>> fillSpecific)
+            Action<MethodWeavingInfo, InterceptorParameterConfigurations> fillSpecific)
         {
             MethodWeavingInfo weavingInfo_P = new MethodWeavingInfo()
                 {
                     Interceptor                    = interceptorMethod,
                     Method                    = method,
                 };
-            var interceptorParameterConfigurations = new InterceptorParameterConfigurations<IlInjectorAvailableVariables>();
+            var interceptorParameterConfigurations = new InterceptorParameterConfigurations();
             builder.FillCommon(weavingInfo_P, interceptorParameterConfigurations);
             fillSpecific(weavingInfo_P, interceptorParameterConfigurations);
 
-            return new Injector<IlInjectorAvailableVariables>(method, interceptorMethod, 
+            return new Injector(method, interceptorMethod, 
                                                                                         aspect, null);
         }
 
-        public IIlInjector<IlInjectorAvailableVariables> CreateForBefore(MethodDefinition method,
+        public IIlInjector CreateForBefore(MethodDefinition method,
                                                                                 MethodInfo interceptorMethod,
                                                                                 NetAspectDefinition aspect)
         {
             return Create(method, interceptorMethod, aspect, (info, interceptorParameterConfigurations) => builder.FillBeforeSpecific(info, interceptorParameterConfigurations));
         }
 
-        public IIlInjector<IlInjectorAvailableVariables> CreateForOnFinally(MethodDefinition method,
+        public IIlInjector CreateForOnFinally(MethodDefinition method,
                                                                                    MethodInfo interceptorMethod,
                                                                                    NetAspectDefinition aspect)
         {
@@ -60,7 +60,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine
             //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
         }
 
-        public IIlInjector<IlInjectorAvailableVariables> CreateForAfter(MethodDefinition method,
+        public IIlInjector CreateForAfter(MethodDefinition method,
                                                                                MethodInfo interceptorMethod,
                                                                                NetAspectDefinition aspect)
         {
@@ -69,7 +69,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Engine
             return Create(method, interceptorMethod, aspect, (info, interceptorParameterConfigurations) => builder.FillAfterSpecific(info, interceptorParameterConfigurations));
         }
 
-        public IIlInjector<IlInjectorAvailableVariables> CreateForExceptions(MethodDefinition method,
+        public IIlInjector CreateForExceptions(MethodDefinition method,
                                                                                      MethodInfo interceptorMethod,
                                                                                      NetAspectDefinition aspect)
         {

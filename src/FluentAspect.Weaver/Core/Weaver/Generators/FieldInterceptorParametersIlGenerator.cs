@@ -2,13 +2,12 @@
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.Generators
 {
-    public class FieldInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator<IlInjectorAvailableVariablesForInstruction>
+    public class FieldInterceptorParametersIlGenerator : IInterceptorParameterIlGenerator
     {
         private Instruction instruction;
         private ModuleDefinition module;

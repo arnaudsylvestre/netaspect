@@ -2,7 +2,6 @@
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Call;
 using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
@@ -21,7 +20,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          lifeCycles = lifeCycles_P;
       }
 
-      public void CreateInterceptor(NetAspectDefinition aspect_P, MethodDefinition method_P, IlInstructionInjectorAvailableVariables availableInformations)
+      public void CreateInterceptor(NetAspectDefinition aspect_P, MethodDefinition method_P, IlInjectorAvailableVariablesForInstruction availableInformations)
       {
          var interceptor = new VariableDefinition(method_P.Module.Import(aspect_P.Type));
          Variables.Add(interceptor);

@@ -5,12 +5,13 @@ using System.Reflection;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
+using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Generators
 {
     public static class ParametersIlGenerator
     {
-        public static void Generate<T>(IEnumerable<ParameterInfo> parameters, List<Instruction> instructions, T info, InterceptorParameterConfigurations<T> interceptorParameterConfigurations_P)
+       public static void Generate(IEnumerable<ParameterInfo> parameters, List<Instruction> instructions, IlInjectorAvailableVariablesForInstruction info, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
             foreach (ParameterInfo parameterInfo in parameters)
             {

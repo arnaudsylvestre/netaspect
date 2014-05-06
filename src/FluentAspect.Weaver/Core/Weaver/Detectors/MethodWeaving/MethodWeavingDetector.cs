@@ -49,10 +49,10 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
 
             return new AroundMethodWeavingModel()
             {
-                Befores = new List<IIlInjector<IlInjectorAvailableVariables>>{aroundMethodWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, aspect)},
-                Afters = new List<IIlInjector<IlInjectorAvailableVariables>> { aroundMethodWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, aspect) },
-                OnExceptions = new List<IIlInjector<IlInjectorAvailableVariables>> { aroundMethodWeaverFactory.CreateForExceptions(method, onExceptionInterceptorProvider(aspect).Method, aspect) },
-                OnFinallys = new List<IIlInjector<IlInjectorAvailableVariables>> { aroundMethodWeaverFactory.CreateForOnFinally(method, onFinallyInterceptorProvider(aspect).Method, aspect) }
+                Befores = new List<IIlInjector>{aroundMethodWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, aspect)},
+                Afters = new List<IIlInjector> { aroundMethodWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, aspect) },
+                OnExceptions = new List<IIlInjector> { aroundMethodWeaverFactory.CreateForExceptions(method, onExceptionInterceptorProvider(aspect).Method, aspect) },
+                OnFinallys = new List<IIlInjector> { aroundMethodWeaverFactory.CreateForOnFinally(method, onFinallyInterceptorProvider(aspect).Method, aspect) }
                 };
         }
     }
