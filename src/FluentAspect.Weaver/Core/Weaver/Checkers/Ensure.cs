@@ -10,33 +10,6 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
     internal static class Ensure
     {
-        public static void SequencePoint(Instruction instruction, ErrorHandler errorHandler, ParameterInfo info)
-        {
-            if (instruction.GetLastSequencePoint() == null)
-                errorHandler.Warnings.Add(
-                    string.Format(
-                        "The parameter {0} in method {1} of type {2} will have the default value because there is no debugging information",
-                        info.Name, (info.Member).Name, (info.Member.DeclaringType).FullName));
-        }
-
-        public static void ParameterType<T>(ParameterInfo info, ErrorHandler handler)
-        {
-            if (info.ParameterType != typeof (T))
-                handler.Errors.Add(string.Format("Wrong parameter type for {0} in method {1} of type {2}", info.Name,
-                                                 info.Member.Name, info.Member.DeclaringType.FullName));
-        }
-
-        public static void ParameterType(ParameterInfo info, ErrorHandler errorHandler, TypeReference declaringType,
-                                         Type type)
-        {
-            bool secondTypeOk = true;
-            if (type != null)
-                secondTypeOk = info.ParameterType == type;
-            if (info.ParameterType.FullName != declaringType.FullName && !secondTypeOk)
-                errorHandler.Errors.Add(string.Format("Wrong parameter type for {0} in method {1} of type {2}",
-                                                      info.Name, info.Member.Name, info.Member.DeclaringType.FullName));
-        }
-
         public static void NotReferenced(ParameterInfo parameterInfo, IErrorListener errorHandler)
         {
             if (parameterInfo.ParameterType.IsByRef)
@@ -47,11 +20,40 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             }
         }
 
-
-        public static void OfType<T>(ParameterInfo info, ErrorHandler handler)
+        public static void SequencePoint(Instruction instruction, ErrorHandler errorHandler, ParameterInfo info)
         {
-            OfType(info, handler, typeof (T).FullName);
+            if (instruction.GetLastSequencePoint() == null)
+                errorHandler.Warnings.Add(
+                    string.Format(
+                        "The parameter {0} in method {1} of type {2} will have the default value because there is no debugging information",
+                        info.Name, (info.Member).Name, (info.Member.DeclaringType).FullName));
         }
+
+        //public static void ParameterType<T>(ParameterInfo info, ErrorHandler handler)
+        //{
+        //    if (info.ParameterType != typeof (T))
+        //        handler.Errors.Add(string.Format("Wrong parameter type for {0} in method {1} of type {2}", info.Name,
+        //                                         info.Member.Name, info.Member.DeclaringType.FullName));
+        //}
+
+        //public static void ParameterType(ParameterInfo info, ErrorHandler errorHandler, TypeReference declaringType,
+        //                                 Type type)
+        //{
+        //    bool secondTypeOk = true;
+        //    if (type != null)
+        //        secondTypeOk = info.ParameterType == type;
+        //    if (info.ParameterType.FullName != declaringType.FullName && !secondTypeOk)
+        //        errorHandler.Errors.Add(string.Format("Wrong parameter type for {0} in method {1} of type {2}",
+        //                                              info.Name, info.Member.Name, info.Member.DeclaringType.FullName));
+        //}
+
+        
+
+
+        //public static void OfType<T>(ParameterInfo info, ErrorHandler handler)
+        //{
+        //    OfType(info, handler, typeof (T).FullName);
+        //}
 
 
         public static void NotOut(ParameterInfo parameterInfo, ErrorHandler errorHandler)
@@ -66,14 +68,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
 
         public static void ResultOfType(ParameterInfo info, ErrorHandler handler, MethodDefinition method)
         {
-            if (method.ReturnType == method.Module.TypeSystem.Void)
-            {
-                handler.OnError(
-                    "Impossible to use the {0} parameter in the method {1} of the type '{2}' because the return type of the method {3} in the type {4} is void",
-                    info.Name, info.Member.Name, info.Member.DeclaringType.FullName.Replace("/", "+"), method.Name,
-                    method.DeclaringType.FullName.Replace("/", "+"));
-                return;
-            }
+            if (MethodMustNotBeVoid(info, handler, method)) return;
             NotOut(info, handler);
             if (info.ParameterType == typeof (object))
                 return;
@@ -87,18 +82,31 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             }
         }
 
-        public static void OfType(ParameterInfo info, IErrorListener handler, params string[] types)
+        private static bool MethodMustNotBeVoid(ParameterInfo info, ErrorHandler handler, MethodDefinition method)
         {
-            if (
-                !(from t in types where info.ParameterType.FullName.Replace("&", "") == t.Replace("/", "+") select t)
-                     .Any())
+            if (method.ReturnType == method.Module.TypeSystem.Void)
             {
                 handler.OnError(
-                    "the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4}",
-                    info.Name, info.Member.Name, info.Member.DeclaringType.FullName, info.ParameterType.FullName,
-                    string.Join(" or ", types.Select(type => type.Replace("/", "+")).ToArray()));
+                    "Impossible to use the {0} parameter in the method {1} of the type '{2}' because the return type of the method {3} in the type {4} is void",
+                    info.Name, info.Member.Name, info.Member.DeclaringType.FullName.Replace("/", "+"), method.Name,
+                    method.DeclaringType.FullName.Replace("/", "+"));
+                return true;
             }
+            return false;
         }
+
+        //public static void OfType(ParameterInfo info, IErrorListener handler, params string[] types)
+        //{
+        //    if (
+        //        !(from t in types where info.ParameterType.FullName.Replace("&", "") == t.Replace("/", "+") select t)
+        //             .Any())
+        //    {
+        //        handler.OnError(
+        //            "the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4}",
+        //            info.Name, info.Member.Name, info.Member.DeclaringType.FullName, info.ParameterType.FullName,
+        //            string.Join(" or ", types.Select(type => type.Replace("/", "+")).ToArray()));
+        //    }
+        //}
 
         public static void OfType(ParameterInfo info, ErrorHandler handler, ParameterDefinition parameter)
         {

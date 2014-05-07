@@ -7,6 +7,6 @@ namespace NetAspect.Weaver.Core.Errors
     {
         void OnError(string message, params object[] args);
         void OnWarning(string message, params object[] args);
-        void OnError(ErrorCode code, FileLocation location, List<object> parameters);
+        void OnError(ErrorCode code, FileLocation location, params object[] parameters);
     }
 }

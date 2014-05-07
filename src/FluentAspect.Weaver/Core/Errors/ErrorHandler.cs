@@ -28,9 +28,9 @@ namespace NetAspect.Weaver.Core.Errors
             Warnings.Add(string.Format(message, args));
         }
 
-       public void OnError(ErrorCode code, FileLocation location, List<object> parameters)
+       public void OnError(ErrorCode code, FileLocation location, params object[] parameters)
        {
-          errors.Add(new NetAspectError(code, parameters, location));
+          errors.Add(new NetAspectError(code, new List<object>(parameters), location));
        }
 
        public void OnFailure(string message, params object[] args)

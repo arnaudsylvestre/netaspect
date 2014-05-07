@@ -2,6 +2,8 @@
 {
    public enum ErrorCode
    {
-        
+        ImpossibleToReferenceTheParameter,
+        ImpossibleToOutTheParameter,
+       ParameterWithBadType,
    }
 }
