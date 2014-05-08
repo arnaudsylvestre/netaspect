@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Para
     public class AfterMethodParameterNameParameterWithBadTypeTest :
         NetAspectTest<AfterMethodParameterNameParameterWithBadTypeTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

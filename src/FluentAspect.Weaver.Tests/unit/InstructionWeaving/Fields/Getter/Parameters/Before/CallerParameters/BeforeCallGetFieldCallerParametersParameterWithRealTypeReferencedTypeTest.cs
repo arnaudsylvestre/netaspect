@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameter
     public class BeforeCallGetFieldCallerParametersParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<BeforeCallGetFieldCallerParametersParameterWithRealTypeReferencedTypeTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

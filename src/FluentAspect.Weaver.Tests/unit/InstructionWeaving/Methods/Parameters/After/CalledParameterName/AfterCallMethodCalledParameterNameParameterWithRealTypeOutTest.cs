@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.Afte
     public class AfterCallMethodCalledParameterNameParameterWithRealTypeOutTest :
         NetAspectTest<AfterCallMethodCalledParameterNameParameterWithRealTypeOutTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

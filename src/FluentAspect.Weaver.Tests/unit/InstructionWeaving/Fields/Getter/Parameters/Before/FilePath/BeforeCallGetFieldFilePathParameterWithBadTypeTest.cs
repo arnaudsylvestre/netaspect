@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameter
     public class BeforeCallGetFieldFilePathParameterWithBadTypeTest :
         NetAspectTest<BeforeCallGetFieldFilePathParameterWithBadTypeTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

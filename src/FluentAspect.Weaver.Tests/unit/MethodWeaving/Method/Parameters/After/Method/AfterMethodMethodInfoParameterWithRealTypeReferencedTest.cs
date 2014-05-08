@@ -7,7 +7,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Meth
     public class AfterMethodMethodInfoParameterWithRealTypeReferencedTest :
         NetAspectTest<AfterMethodMethodInfoParameterWithRealTypeReferencedTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinally.
     public class OnFinallyMethodParametersParameterWithRealTypeReferencedTest :
         NetAspectTest<OnFinallyMethodParametersParameterWithRealTypeReferencedTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

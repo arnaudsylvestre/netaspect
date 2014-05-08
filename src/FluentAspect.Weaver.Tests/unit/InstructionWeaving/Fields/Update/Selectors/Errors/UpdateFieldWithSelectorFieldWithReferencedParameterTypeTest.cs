@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Update.Selectors
     public class UpdateFieldWithSelectorFieldWithReferencedParameterTypeTest :
         NetAspectTest<UpdateFieldWithSelectorFieldWithReferencedParameterTypeTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Selec
     public class UpdatePropertyWithSelectorPropertyNotBooleanTest :
         NetAspectTest<UpdatePropertyWithSelectorPropertyNotBooleanTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

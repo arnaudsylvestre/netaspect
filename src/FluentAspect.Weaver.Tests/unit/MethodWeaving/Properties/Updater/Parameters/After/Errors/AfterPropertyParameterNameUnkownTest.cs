@@ -5,7 +5,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
 {
     public class AfterPropertyParameterNameUnkownTest : NetAspectTest<AfterPropertyParameterNameUnkownTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return errorHandler => errorHandler.Errors.Add(string.Format("The parameter 'unknown' is unknown"));
         }

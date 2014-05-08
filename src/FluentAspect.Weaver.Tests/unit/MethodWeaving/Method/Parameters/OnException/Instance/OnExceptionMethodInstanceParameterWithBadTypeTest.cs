@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExceptio
     public class OnExceptionMethodInstanceParameterWithBadTypeTest :
         NetAspectTest<OnExceptionMethodInstanceParameterWithBadTypeTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

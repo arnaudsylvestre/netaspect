@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameter
     public class AfterCallGetFieldFileNameParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<AfterCallGetFieldFileNameParameterWithRealTypeReferencedTypeTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

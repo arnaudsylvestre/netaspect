@@ -7,7 +7,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Update.Parameter
     public class BeforeCallUpdateFieldFieldParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<BeforeCallUpdateFieldFieldParameterWithRealTypeReferencedTypeTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

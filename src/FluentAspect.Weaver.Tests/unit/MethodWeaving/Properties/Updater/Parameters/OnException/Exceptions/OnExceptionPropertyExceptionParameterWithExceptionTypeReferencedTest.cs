@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
     public class OnExceptionPropertyExceptionParameterWithExceptionTypeReferencedTest :
         NetAspectTest<OnExceptionPropertyExceptionParameterWithExceptionTypeReferencedTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

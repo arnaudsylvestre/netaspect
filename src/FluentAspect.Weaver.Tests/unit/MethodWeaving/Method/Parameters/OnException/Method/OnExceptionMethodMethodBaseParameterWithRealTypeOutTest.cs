@@ -7,7 +7,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExceptio
     public class OnExceptionMethodMethodBaseParameterWithRealTypeOutTest :
         NetAspectTest<OnExceptionMethodMethodBaseParameterWithRealTypeOutTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

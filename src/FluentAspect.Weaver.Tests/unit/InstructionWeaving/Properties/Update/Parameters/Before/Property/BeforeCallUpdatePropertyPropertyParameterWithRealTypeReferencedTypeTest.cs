@@ -7,7 +7,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Param
     public class BeforeCallUpdatePropertyPropertyParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<BeforeCallUpdatePropertyPropertyParameterWithRealTypeReferencedTypeTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

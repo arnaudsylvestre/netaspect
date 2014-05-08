@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters
     public class OnExceptionPropertyInstanceParameterWithRealTypeOutTest :
         NetAspectTest<OnExceptionPropertyInstanceParameterWithRealTypeOutTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
     public class AfterConstructorParameterNameParameterWithGenericMethodTypeReferencedInInterceptorTest :
         NetAspectTest<AfterConstructorParameterNameParameterWithGenericMethodTypeReferencedInInterceptorTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return errorHandler => errorHandler.Errors.Add(string.Format("Impossible to ref a generic parameter"));
         }

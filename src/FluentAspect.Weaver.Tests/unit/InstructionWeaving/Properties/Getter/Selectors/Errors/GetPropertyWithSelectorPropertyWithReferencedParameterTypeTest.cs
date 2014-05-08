@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Selec
     public class GetPropertyWithSelectorPropertyWithReferencedParameterTypeTest :
         NetAspectTest<GetPropertyWithSelectorPropertyWithReferencedParameterTypeTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

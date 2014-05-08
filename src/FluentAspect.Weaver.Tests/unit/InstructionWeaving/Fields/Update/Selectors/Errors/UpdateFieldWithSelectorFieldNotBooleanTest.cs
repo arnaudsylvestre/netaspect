@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Update.Selectors
     public class UpdateFieldWithSelectorFieldNotBooleanTest :
         NetAspectTest<UpdateFieldWithSelectorFieldNotBooleanTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>

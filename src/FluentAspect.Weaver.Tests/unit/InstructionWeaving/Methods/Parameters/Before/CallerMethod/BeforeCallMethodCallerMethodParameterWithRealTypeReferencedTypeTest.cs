@@ -7,7 +7,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.Befo
     public class BeforeCallMethodCallerMethodParameterWithRealTypeReferencedTypeTest :
         NetAspectTest<BeforeCallMethodCallerMethodParameterWithRealTypeReferencedTypeTest.ClassToWeave>
     {
-        protected override Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return
                 errorHandler =>
