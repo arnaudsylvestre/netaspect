@@ -6,13 +6,8 @@ using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
 namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
-    public class ParameterTypeChecker : IChecker
+    public class ParameterReferencedChecker : IChecker
     {
-        public ParameterTypeChecker(ReferenceModel referenced, string expectedType)
-        {
-            Referenced = referenced;
-            ExpectedType = expectedType;
-        }
 
         public enum ReferenceModel
         {
@@ -21,33 +16,11 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             Out,
         }
 
-        ReferenceModel Referenced { get; set; }
-        string ExpectedType { get; set; }
+        private ReferenceModel Referenced { get; set; }
 
-        public void Check(ParameterInfo parameter, ErrorHandler errorHandler)
+        public ParameterReferencedChecker(ReferenceModel referenced)
         {
-            
-        }
-
-        public void CheckType(ParameterInfo parameterInfo, IErrorListener errorHandler)
-        {
-            var parameterType = parameterInfo.ParameterType;
-            if (parameterType == typeof (object))
-                return;
-            if (parameterType.FullName.Replace("&", "") != ExpectedType.Replace("/", "+").Replace("&", ""))
-            {
-                errorHandler.OnError(ErrorCode.ParameterWithBadType, FileLocation.None);
-                
-            }
-
-        }
-
-        public void CheckGenericType(ParameterInfo info, IErrorListener errorHandler, ParameterDefinition parameter)
-        {
-            if (parameter.ParameterType.IsGenericParameter && info.ParameterType.IsByRef)
-            {
-                errorHandler.OnError("Impossible to ref a generic parameter");
-            }
+            Referenced = referenced;
         }
 
         public void CheckReferenced(ParameterInfo parameterInfo, IErrorListener errorHandler)
@@ -72,6 +45,53 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
                 errorHandler.OnError("impossible to out the parameter '{0}' in the method {1} of the type '{2}'",
                                      parameterInfo.Name, parameterInfo.Member.Name,
                                      parameterInfo.Member.DeclaringType.FullName);
+            }
+        }
+
+        public void Check(ParameterInfo parameterInfo, ErrorHandler errorHandler)
+        {
+            CheckReferenced(parameterInfo, errorHandler);
+            CheckOut(parameterInfo, errorHandler);
+        }
+    }
+
+    public class ParameterTypeChecker : IChecker
+    {
+        public ParameterTypeChecker(string expectedType, ParameterDefinition parameterDefinition)
+        {
+            ExpectedType = expectedType;
+            this.parameterDefinition = parameterDefinition;
+        }
+
+        private string ExpectedType { get; set; }
+        private readonly ParameterDefinition parameterDefinition;
+
+        public void Check(ParameterInfo parameter, ErrorHandler errorHandler)
+        {
+            CheckGenericType(parameter, errorHandler);
+            CheckType(parameter, errorHandler);
+        }
+
+        public void CheckType(ParameterInfo parameterInfo, IErrorListener errorHandler)
+        {
+            var parameterType = parameterInfo.ParameterType;
+            if (parameterType == typeof (object))
+                return;
+            if (parameterType.FullName.Replace("&", "") != ExpectedType.Replace("/", "+").Replace("&", ""))
+            {
+                errorHandler.OnError(ErrorCode.ParameterWithBadType, FileLocation.None);
+                
+            }
+
+        }
+
+        public void CheckGenericType(ParameterInfo info, IErrorListener errorHandler)
+        {
+            if (parameterDefinition == null)
+                return;
+            if (parameterDefinition.ParameterType.IsGenericParameter && info.ParameterType.IsByRef)
+            {
+                errorHandler.OnError("Impossible to ref a generic parameter");
             }
         }
     }

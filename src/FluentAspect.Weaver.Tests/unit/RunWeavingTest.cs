@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Helpers;
 using NetAspect.Weaver.Tests.Helpers;
 
@@ -23,18 +25,17 @@ namespace NetAspect.Weaver.Tests.unit
                    as AppDomainIsolatedTestRunner;
         }
 
-        public static void For<T, U>(Action<ErrorHandler> errorHandlerProvider, Action ensureAssembly)
+        public static void For<T, U>(Action<List<ErrorReport.Error>> resultProvider, Action ensureAssembly)
         {
             Assembly assembly = typeof(T).Assembly;
             Assembly otherAssembly = typeof(U).Assembly;
             AppDomainIsolatedTestRunner runner = CreateAppRunner(assembly);
 
-            var errorHandler = new ErrorHandler();
-            errorHandlerProvider(errorHandler);
+            var errorHandler = new List<ErrorReport.Error>();
+            resultProvider(errorHandler);
             string dll = assembly.GetAssemblyPath();
             var otherDll = otherAssembly.GetAssemblyPath();
-            Console.Write(runner.RunFromType(dll, typeof(T).FullName, errorHandler.Errors, errorHandler.Failures,
-                                             errorHandler.Warnings, otherDll, typeof(U).FullName));
+            Console.Write(runner.RunFromType(dll, typeof(T).FullName, errorHandler, otherDll, typeof(U).FullName));
 
             runner = CreateAppRunner(assembly);
             runner.Ensure(ensureAssembly);

@@ -13,15 +13,14 @@ namespace NetAspect.Weaver.Tasks
             weavedFiles = null;
             try
             {
-                var handler = new ErrorHandler();
                 WeaverEngine weaverEngine_L = WeaverFactory.Create();
-                weaverEngine_L.Weave(configFile, handler, TargetFileName);
+                var handler = weaverEngine_L.Weave(configFile, TargetFileName);
 
                 foreach (string warning_L in handler.Warnings)
                 {
                     logger.LogWarning(warning_L);
                 }
-                foreach (string error in handler.Errors)
+                foreach (string error in handler.ErrorsAndFailures)
                 {
                     logger.LogError(error);
                 }

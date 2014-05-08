@@ -54,9 +54,11 @@
     <Compile Include="Apis\AssemblyChecker\IAssemblyChecker.cs" />
     <Compile Include="Apis\AssemblyChecker\Peverify\PeVerifyAssemblyChecker.cs" />
     <Compile Include="Core\Assemblies\AssemblyPool.cs" />
+    <Compile Include="Core\Errors\ErrorComputer.cs" />
     <Compile Include="Core\Model\Errors\ErrorCode.cs" />
     <Compile Include="Core\Errors\ErrorHandler.cs" />
     <Compile Include="Core\Model\Errors\ErrorKind.cs" />
+    <Compile Include="Core\Model\Errors\ErrorReport.cs" />
     <Compile Include="Core\Model\Errors\FileLocation.cs" />
     <Compile Include="Core\Model\Errors\NetAspectError.cs" />
     <Compile Include="Core\Model\Aspect\Interceptor.cs" />

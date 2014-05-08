@@ -16,7 +16,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Model
    {
       public class MyInterceptorParameterChecker
       {
-         public List<Action<ParameterInfo, ErrorHandler>> Checkers = new List<Action<ParameterInfo, ErrorHandler>>();
+         private List<Action<ParameterInfo, ErrorHandler>> Checkers = new List<Action<ParameterInfo, ErrorHandler>>();
 
          public void Check(ParameterInfo parameter, ErrorHandler errorListener)
          {
@@ -28,7 +28,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Model
 
          public void Add(Action<ParameterInfo, ErrorHandler> action)
          {
-            Checkers.Add(action);
+             Checkers.Add(action);
+         }
+
+         public void Add(IChecker checker)
+         {
+             Checkers.Add(checker.Check);
          }
       }
 

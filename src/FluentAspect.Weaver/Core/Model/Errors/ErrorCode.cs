@@ -5,5 +5,7 @@
         ImpossibleToReferenceTheParameter,
         ImpossibleToOutTheParameter,
        ParameterWithBadType,
+       AssemblyGeneratedIsNotCompliant,
+       NoDebuggingInformationAvailable
    }
 }

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Mono.Cecil;
 using NetAspect.Weaver.Apis.AssemblyChecker.Peverify;
+using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
+using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Weaver;
 using NetAspect.Weaver.Core.Weaver.Detectors;
 using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving;
@@ -38,7 +40,14 @@ namespace NetAspect.Weaver
                      {
                              
                      }),
-            new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker()));
+            new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker()),
+            new ErrorInfoComputer(new Dictionary<ErrorCode, ErrorInfo>()
+                {
+                    {ErrorCode.ImpossibleToOutTheParameter, new ErrorInfo(ErrorLevel.Error, "")},
+                    {ErrorCode.ImpossibleToReferenceTheParameter, new ErrorInfo(ErrorLevel.Error, "impossible to ref/out the parameter '{0}' in the method {1} of the type '{2}'")},
+                    {ErrorCode.ParameterWithBadType, new ErrorInfo(ErrorLevel.Error, "")},
+                    {ErrorCode.NoDebuggingInformationAvailable, new ErrorInfo(ErrorLevel.Warning, "The parameter {0} in method {1} of type {2} will have the default value because there is no debugging information")}
+                }));
       }
 
        private static InstructionWeavingDetector<FieldDefinition> BuildCallGetFieldDetector(AspectBuilder aspectBuilder)

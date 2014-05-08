@@ -1,6 +1,7 @@
 ﻿using System;
 using NetAspect.Core.Helpers;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model.Errors;
 
 namespace NetAspect.Weaver.Apis.AssemblyChecker.Peverify
 {
@@ -14,7 +15,7 @@ namespace NetAspect.Weaver.Apis.AssemblyChecker.Peverify
             }
             catch (Exception e)
             {
-                errorHandler.Errors.Add("An internal error has occured : " + e.Message);
+                errorHandler.OnError(ErrorCode.AssemblyGeneratedIsNotCompliant, e.Message);
             }
 
         }

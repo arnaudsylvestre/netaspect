@@ -13,7 +13,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
            interceptorParameterConfigurations_P.AddPossibleParameter("called")
                 .WhichCanNotBeReferenced()
                 .WhereFieldCanNotBeStatic(weavingInfo_P)
-                .WhichMustBeOfType<object>().OrOfFieldDeclaringType(weavingInfo_P)
+                .WhichMustBeOfTypeOf(weavingInfo_P.GetOperandAsField().DeclaringType)
                 .AndInjectTheCalledInstance();
             return weavingInfo_P;
         }

@@ -4,6 +4,7 @@ using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.Checkers
@@ -14,8 +15,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
         {
             if (parameterInfo.ParameterType.IsByRef)
             {
-                errorHandler.OnError("impossible to ref/out the parameter '{0}' in the method {1} of the type '{2}'",
-                                     parameterInfo.Name, parameterInfo.Member.Name,
+                errorHandler.OnError(ErrorCode.ImpossibleToReferenceTheParameter, FileLocation.None, parameterInfo.Name, parameterInfo.Member.Name,
                                      parameterInfo.Member.DeclaringType.FullName);
             }
         }
@@ -23,9 +23,9 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
         public static void SequencePoint(Instruction instruction, ErrorHandler errorHandler, ParameterInfo info)
         {
             if (instruction.GetLastSequencePoint() == null)
-                errorHandler.Warnings.Add(
+                errorHandler.OnError(ErrorCode.NoDebuggingInformationAvailable);.Add(
                     string.Format(
-                        "The parameter {0} in method {1} of type {2} will have the default value because there is no debugging information",
+                        ,
                         info.Name, (info.Member).Name, (info.Member.DeclaringType).FullName));
         }
 

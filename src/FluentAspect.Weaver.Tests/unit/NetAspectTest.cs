@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
-using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model.Errors;
 
 namespace NetAspect.Weaver.Tests.unit
 {
@@ -13,7 +14,7 @@ namespace NetAspect.Weaver.Tests.unit
             return () => { };
         }
 
-        protected virtual Action<ErrorHandler> CreateErrorHandlerProvider()
+        protected virtual Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
         {
             return e => { };
         }

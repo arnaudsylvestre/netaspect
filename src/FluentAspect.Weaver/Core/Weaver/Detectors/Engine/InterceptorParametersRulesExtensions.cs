@@ -15,13 +15,13 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
    {
       public static InterceptorParameterConfiguration WhichCanNotBeReferenced(this InterceptorParameterConfiguration configuration)
       {
-         configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.NotReferenced(parameter, errorListener));
+         configuration.Checker.Add((parameter, errorListener) => Ensure.NotReferenced(parameter, errorListener));
          return configuration;
       }
 
       public static InterceptorParameterConfiguration WhereParameterTypeIsSameAsMethodResult(this InterceptorParameterConfiguration configuration, MethodWeavingInfo info)
       {
-         configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.ResultOfType(parameter, errorListener, info.Method));
+         configuration.Checker.Add((parameter, errorListener) => Ensure.ResultOfType(parameter, errorListener, info.Method));
          return configuration;
       }
 
@@ -37,25 +37,25 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 
       public static InterceptorParameterConfiguration WhichPdbPresent(this InterceptorParameterConfiguration configuration, InstructionWeavingInfo info)
       {
-         configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.SequencePoint(info.Instruction, errorListener, parameter));
+         configuration.Checker.Add((parameter, errorListener) => Ensure.SequencePoint(info.Instruction, errorListener, parameter));
          return configuration;
       }
 
       public static InterceptorParameterConfiguration WhichCanNotBeOut(this InterceptorParameterConfiguration configuration)
       {
-         configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.NotOut(parameter, errorListener));
+         configuration.Checker.Add(new ParameterReferencedChecker(ParameterReferencedChecker.ReferenceModel.Referenced));
          return configuration;
       }
 
       public static InterceptorParameterConfiguration WhereFieldCanNotBeStatic(this InterceptorParameterConfiguration configuration, InstructionWeavingInfo weavingInfo)
       {
-         configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.NotStaticButDefaultValue(parameter, errorListener, weavingInfo.GetOperandAsField()));
+         configuration.Checker.Add((parameter, errorListener) => Ensure.NotStaticButDefaultValue(parameter, errorListener, weavingInfo.GetOperandAsField()));
          return configuration;
       }
 
       public static InterceptorParameterConfiguration WhereCurrentMethodCanNotBeStatic(this InterceptorParameterConfiguration configuration, MethodWeavingInfo weavingInfo)
       {
-         configuration.Checker.Checkers.Add((parameter, errorListener) => Ensure.NotStatic(parameter, errorListener, weavingInfo.Method));
+         configuration.Checker.Add((parameter, errorListener) => Ensure.NotStatic(parameter, errorListener, weavingInfo.Method));
          return configuration;
       }
 
@@ -67,7 +67,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 
       public static InterceptorParameterConfiguration WhichMustBeOfTypeOfParameter(this InterceptorParameterConfiguration configuration, ParameterDefinition parameterDefinition)
       {
-         configuration.Checker.Checkers.Add((info, handler) => Ensure.OfType(info, handler, parameterDefinition));
+         configuration.Checker.Add((info, handler) => Ensure.OfType(info, handler, parameterDefinition));
          return configuration;
       }
 
@@ -78,13 +78,14 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 
       public static InterceptorParameterConfiguration WhichMustBeOfTypeOf(this InterceptorParameterConfiguration configuration, TypeReference type)
       {
-         //allowedTypes.Add(type.FullName);
-         return configuration;
+          WhichMustBeOfTypeOf(configuration, type.FullName);
+          return configuration;
       }
 
-      public static InterceptorParameterConfiguration OrOfFieldDeclaringType(this InterceptorParameterConfiguration configuration, InstructionWeavingInfo weavingInfo)
+      public static InterceptorParameterConfiguration WhichMustBeOfTypeOf(this InterceptorParameterConfiguration configuration, string fullName)
       {
-         return OrOfType(configuration, weavingInfo.GetOperandAsField().DeclaringType);
+          configuration.Checker.Add(new ParameterTypeChecker(fullName, null));
+          return configuration;
       }
 
       public static InterceptorParameterConfiguration OrOfCurrentMethodDeclaringType(this InterceptorParameterConfiguration configuration, MethodWeavingInfo weavingInfo)
