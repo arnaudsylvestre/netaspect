@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model.Errors;
 
 namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameters.After.Called
 {
@@ -10,11 +12,16 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameter
         {
             return
                 errorHandler =>
-                errorHandler.Errors.Add(
-                    string.Format(
-                        "the called parameter in the method AfterGetField of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
-                        typeof (MyAspect).FullName,
-                        typeof (ClassToWeave).FullName));
+                errorHandler.Add(new ErrorReport.Error()
+                    {
+                        Level = ErrorLevel.Error,
+                        Message =
+                            string.Format(
+                                "the called parameter in the method AfterGetField of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
+                                typeof (MyAspect).FullName,
+                                typeof (ClassToWeave).FullName)
+                    });
+
         }
 
         public class ClassToWeave
