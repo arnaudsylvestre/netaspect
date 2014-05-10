@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnExc
         {
             return
                 errorHandler =>
-                errorHandler.Errors.Add(Add(new ErrorReport.Error()
+                errorHandler.Add(new ErrorReport.Error()
                 {
                     Level = ErrorLevel.Error,
                     Message =

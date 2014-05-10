@@ -12,10 +12,14 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.Befo
         {
             return
                 errorHandler =>
-                errorHandler.Errors.Add(
+                errorHandler.Add(new ErrorReport.Error()
+                {
+                    Level = ErrorLevel.Error,
+                    Message =
                     string.Format(
                         "the callerParameters parameter in the method BeforeCallMethod of the type '{0}' is declared with the type 'System.Object' but it is expected to be System.Object[]",
-                        typeof(MyAspect).FullName));
+                        typeof(MyAspect).FullName)
+                });
         }
 
         public class ClassToWeave

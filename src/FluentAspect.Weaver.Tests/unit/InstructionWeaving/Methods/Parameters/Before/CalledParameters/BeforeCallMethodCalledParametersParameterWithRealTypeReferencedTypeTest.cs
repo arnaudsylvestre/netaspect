@@ -12,10 +12,14 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.Befo
         {
             return
                 errorHandler =>
-                errorHandler.Errors.Add(
+                errorHandler.Add(new ErrorReport.Error()
+                {
+                    Level = ErrorLevel.Error,
+                    Message =
                     string.Format(
                         "impossible to ref/out the parameter 'calledParameters' in the method BeforeCallMethod of the type '{0}'",
-                        typeof(MyAspect).FullName));
+                        typeof(MyAspect).FullName)
+                });
         }
 
         public class ClassToWeave

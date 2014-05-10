@@ -12,10 +12,14 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.Befo
         {
             return
                 errorHandler =>
-                errorHandler.Errors.Add(
+                errorHandler.Add(new ErrorReport.Error()
+                {
+                    Level = ErrorLevel.Error,
+                    Message =
                     string.Format(
                         "the callerParam1 parameter in the method BeforeCallMethod of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Int32 because of the type of this parameter in the method Weaved of the type {1}",
-                        typeof(MyAspect).FullName, typeof(ClassToWeave).FullName));
+                        typeof(MyAspect).FullName, typeof(ClassToWeave).FullName)
+                });
         }
 
         public class ClassToWeave

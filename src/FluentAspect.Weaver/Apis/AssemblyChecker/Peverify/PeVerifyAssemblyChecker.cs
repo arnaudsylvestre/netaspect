@@ -15,7 +15,7 @@ namespace NetAspect.Weaver.Apis.AssemblyChecker.Peverify
             }
             catch (Exception e)
             {
-                errorHandler.OnError(ErrorCode.AssemblyGeneratedIsNotCompliant, e.Message);
+                errorHandler.OnError(ErrorCode.AssemblyGeneratedIsNotCompliant, FileLocation.None, e.Message);
             }
 
         }
