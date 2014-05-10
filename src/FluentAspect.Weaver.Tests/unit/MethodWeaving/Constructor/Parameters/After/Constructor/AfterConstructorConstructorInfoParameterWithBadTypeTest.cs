@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model.Errors;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After.Constructor
 {
@@ -10,10 +12,14 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
         {
             return
                 errorHandler =>
-                errorHandler.Errors.Add(
+                errorHandler.Add(new ErrorReport.Error()
+                {
+                    Level = ErrorLevel.Error,
+                    Message =
                     string.Format(
                         "the constructor parameter in the method AfterConstructor of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.MethodBase",
-                        typeof (MyAspect).FullName));
+                        typeof(MyAspect).FullName)
+                });
         }
 
         public class ClassToWeave

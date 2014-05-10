@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model.Errors;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.ParameterName
 {
@@ -10,10 +12,14 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Para
         {
             return
                 errorHandler =>
-                errorHandler.Errors.Add(
+                errorHandler.Add(new ErrorReport.Error()
+                {
+                    Level = ErrorLevel.Error,
+                    Message =
                     string.Format(
                         "the i parameter in the method After of the type '{0}' is declared with the type 'System.String' but it is expected to be {1} because of the type of this parameter in the method Weaved of the type {2}",
-                        typeof (MyAspect).FullName, typeof (int), typeof (ClassToWeave)));
+                        typeof(MyAspect).FullName, typeof(int), typeof(ClassToWeave))
+                });
         }
 
         public class ClassToWeave

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model.Errors;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.Before.Parameters
 {
@@ -10,10 +12,14 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.Befor
         {
             return
                 errorHandler =>
-                errorHandler.Errors.Add(
+                errorHandler.Add(new ErrorReport.Error()
+                {
+                    Level = ErrorLevel.Error,
+                    Message =
                     string.Format(
                         "the parameters parameter in the method BeforeConstructor of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
-                        typeof (MyAspect).FullName, typeof (object[])));
+                        typeof(MyAspect).FullName, typeof(object[]))
+                });
         }
 
         public class ClassToWeave
