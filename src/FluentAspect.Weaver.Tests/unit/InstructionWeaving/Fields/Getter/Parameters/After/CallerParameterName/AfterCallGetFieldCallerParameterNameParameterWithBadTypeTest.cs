@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameter
                     Level = ErrorLevel.Error,
                     Message =
                     string.Format(
-                        "the callerParam1 parameter in the method AfterGetField of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Object or System.Int32",
+                        "the callerParam1 parameter in the method AfterGetField of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Int32",
                         typeof(MyAspect).FullName,
                         typeof(ClassToWeave).FullName)
                 });

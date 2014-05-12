@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2158446B-9E58-4E9D-BDC4-27A5A90365D1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -116,7 +116,6 @@
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\Before\CallerParameterName\BeforeCallGetFieldCallerParameterNameReferencedParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\Before\CallerParameterName\BeforeCallGetFieldCallerParameterNameReferencedParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\Before\CallerParameters\BeforeCallGetFieldCallerParametersParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\Before\CallerParameters\BeforeCallGetFieldCallerParametersParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\Before\CallerParameters\BeforeCallGetFieldCallerParametersParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\Before\CallerParameters\BeforeCallGetFieldCallerParametersParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\Before\Caller\BeforeCallGetFieldCallerParameterWithBadTypeTest.cs" />

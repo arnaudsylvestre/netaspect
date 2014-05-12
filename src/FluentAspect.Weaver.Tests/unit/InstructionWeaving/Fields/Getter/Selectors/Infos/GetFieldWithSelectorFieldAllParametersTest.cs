@@ -39,8 +39,10 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Selectors
 
             public static bool SelectField(string fieldName, string fieldTypeName)
             {
-                Assert.AreEqual("String", fieldTypeName);
-                return fieldName == "Field";
+                var selectField = fieldName == "Field";
+                if (selectField)
+                    Assert.AreEqual("String", fieldTypeName);
+                return selectField;
             }
         }
     }
