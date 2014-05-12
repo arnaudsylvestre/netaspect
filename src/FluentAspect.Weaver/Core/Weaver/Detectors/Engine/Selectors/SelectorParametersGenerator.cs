@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model.Errors;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine.Selectors
 {
@@ -40,7 +41,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine.Selectors
             {
                 var possibleParameter = possibleParameters[parameterInfo.Name.ToLower()];
                 if (possibleParameter.Type != parameterInfo.ParameterType)
-                    errorHandler.OnError("The parameter {0} in the method {1} of the aspect {2} is expected to be {3}", parameterInfo.Name, method.Name, method.DeclaringType.FullName, possibleParameter.Type);
+                    errorHandler.OnError(ErrorCode.SelectorBadParameterType, FileLocation.None, parameterInfo.Name, method.Name, method.DeclaringType.FullName, possibleParameter.Type);
             }
         }
     }

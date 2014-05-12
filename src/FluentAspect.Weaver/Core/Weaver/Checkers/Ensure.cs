@@ -23,10 +23,8 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
         public static void SequencePoint(Instruction instruction, ErrorHandler errorHandler, ParameterInfo info)
         {
             if (instruction.GetLastSequencePoint() == null)
-                errorHandler.OnError(ErrorCode.NoDebuggingInformationAvailable);.Add(
-                    string.Format(
-                        ,
-                        info.Name, (info.Member).Name, (info.Member.DeclaringType).FullName));
+                errorHandler.OnError(ErrorCode.NoDebuggingInformationAvailable, FileLocation.None,
+                        info.Name, (info.Member).Name, (info.Member.DeclaringType).FullName);
         }
 
         //public static void ParameterType<T>(ParameterInfo info, ErrorHandler handler)
@@ -60,7 +58,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
         {
             if (parameterInfo.IsOut)
             {
-                errorHandler.OnError("impossible to out the parameter '{0}' in the method {1} of the type '{2}'",
+                errorHandler.OnError(ErrorCode.ImpossibleToOutTheParameter, FileLocation.None,
                                      parameterInfo.Name, parameterInfo.Member.Name,
                                      parameterInfo.Member.DeclaringType.FullName);
             }
@@ -75,7 +73,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             if (info.ParameterType.FullName.Replace("&", "") != method.ReturnType.FullName.Replace("/", "+"))
             {
                 handler.OnError(
-                    "the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because the return type of the method {5} in the type {6}",
+                    ErrorCode.ParameterWithBadTypeBecauseReturnMethod, FileLocation.None,
                     info.Name, info.Member.Name, info.Member.DeclaringType.FullName.Replace("/", "+"),
                     info.ParameterType.FullName,
                     method.ReturnType.FullName, method.Name, method.DeclaringType.FullName.Replace("/", "+"));
@@ -87,7 +85,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             if (method.ReturnType == method.Module.TypeSystem.Void)
             {
                 handler.OnError(
-                    "Impossible to use the {0} parameter in the method {1} of the type '{2}' because the return type of the method {3} in the type {4} is void",
+                    ErrorCode.MustNotBeVoid, FileLocation.None,
                     info.Name, info.Member.Name, info.Member.DeclaringType.FullName.Replace("/", "+"), method.Name,
                     method.DeclaringType.FullName.Replace("/", "+"));
                 return true;
@@ -112,7 +110,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
         {
             if (parameter.ParameterType.IsGenericParameter && info.ParameterType.IsByRef)
             {
-                handler.OnError("Impossible to ref a generic parameter");
+                handler.OnError(ErrorCode.ImpossibleToRefGenericParameter, FileLocation.None);
                 return;
             }
 
@@ -123,7 +121,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
                 parameter.ParameterType.FullName.Replace("&", "").Replace("/", "+"))
             {
                 handler.OnError(
-                    "the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because of the type of this parameter in the method {5} of the type {6}",
+                    ErrorCode.ParameterWithBadType, FileLocation.None,
                     info.Name, info.Member.Name, info.Member.DeclaringType.FullName.Replace("/", "+"),
                     info.ParameterType.FullName,
                     parameter.ParameterType.FullName.Replace("/", "+"), ((IMemberDefinition) parameter.Method).Name,
@@ -134,13 +132,13 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
         public static void NotStatic(ParameterInfo parameter, IErrorListener handler, MethodDefinition definition)
         {
             if (definition.IsStatic)
-                handler.OnError("the {0} parameter can not be used for static method interceptors", parameter.Name);
+                handler.OnError(ErrorCode.ParameterCanNotBeUsedInStaticMethod, FileLocation.None, parameter.Name);
         }
 
         public static void NotStatic(ParameterInfo parameter, IErrorListener handler, FieldDefinition definition)
         {
             if (definition.IsStatic)
-                handler.OnError("the {0} parameter can not be used for static method interceptors", parameter.Name);
+               handler.OnError(ErrorCode.ParameterCanNotBeUsedInStaticMethod, FileLocation.None, parameter.Name);
         }
 
         public static void NotStaticButDefaultValue(ParameterInfo parameter, IErrorListener handler, FieldDefinition definition)
@@ -148,9 +146,9 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             if (definition.IsStatic)
             {
                 if (definition.DeclaringType.IsValueType)
-                    handler.OnError("the {0} parameter in the method {1} of the type '{2}' is not available for static field in struct", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+                    handler.OnError(ErrorCode.NotAvailableInStaticStruct, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
                 else
-                    handler.OnWarning("the {0} parameter in the method {1} of the type '{2}' is not available for static field : default value will be passed", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+                    handler.OnError(ErrorCode.NotAvailableInStatic, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
             }
 
         }
@@ -160,9 +158,9 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             if (definition.GetMethod.IsStatic)
             {
                 if (definition.DeclaringType.IsValueType)
-                    handler.OnError("the {0} parameter in the method {1} of the type '{2}' is not available for static property in struct", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+                    handler.OnError(ErrorCode.NotAvailableInStaticStruct, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
                 else
-                    handler.OnWarning("the {0} parameter in the method {1} of the type '{2}' is not available for static property : default value will be passed", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+                    handler.OnError(ErrorCode.NotAvailableInStatic, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
             }
 
         }
@@ -171,9 +169,9 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             if (definition.IsStatic)
             {
                 if (definition.DeclaringType.IsValueType)
-                    handler.OnError("the {0} parameter in the method {1} of the type '{2}' is not available for static field in struct", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+                    handler.OnError(ErrorCode.NotAvailableInStaticStruct, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
                 else
-                    handler.OnWarning("the {0} parameter in the method {1} of the type '{2}' is not available for static field : default value will be passed", parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+                   handler.OnError(ErrorCode.NotAvailableInStatic, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
             }
 
         }

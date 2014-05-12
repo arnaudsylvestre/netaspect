@@ -42,7 +42,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
                 return;
             if (parameterInfo.IsOut)
             {
-                errorHandler.OnError("impossible to out the parameter '{0}' in the method {1} of the type '{2}'",
+                errorHandler.OnError(ErrorCode.ImpossibleToOutTheParameter, FileLocation.None,
                                      parameterInfo.Name, parameterInfo.Member.Name,
                                      parameterInfo.Member.DeclaringType.FullName);
             }
@@ -91,7 +91,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
                 return;
             if (parameterDefinition.ParameterType.IsGenericParameter && info.ParameterType.IsByRef)
             {
-                errorHandler.OnError("Impossible to ref a generic parameter");
+                errorHandler.OnError(ErrorCode.ImpossibleToRefGenericParameter, FileLocation.None);
             }
         }
     }

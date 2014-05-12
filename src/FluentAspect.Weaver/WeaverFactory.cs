@@ -43,10 +43,21 @@ namespace NetAspect.Weaver
             new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker()),
             new ErrorInfoComputer(new Dictionary<ErrorCode, ErrorInfo>()
                 {
-                    {ErrorCode.ImpossibleToOutTheParameter, new ErrorInfo(ErrorLevel.Error, "")},
-                    {ErrorCode.ImpossibleToReferenceTheParameter, new ErrorInfo(ErrorLevel.Error, "impossible to ref/out the parameter '{0}' in the method {1} of the type '{2}'")},
-                    {ErrorCode.ParameterWithBadType, new ErrorInfo(ErrorLevel.Error, "")},
-                    {ErrorCode.NoDebuggingInformationAvailable, new ErrorInfo(ErrorLevel.Warning, "The parameter {0} in method {1} of type {2} will have the default value because there is no debugging information")}
+                    {ErrorCode.ImpossibleToOutTheParameter, new ErrorInfo("impossible to out the parameter '{0}' in the method {1} of the type '{2}'")},
+                    {ErrorCode.ImpossibleToReferenceTheParameter, new ErrorInfo("impossible to ref/out the parameter '{0}' in the method {1} of the type '{2}'")},
+                    {ErrorCode.ParameterWithBadType, new ErrorInfo("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because of the type of this parameter in the method {5} of the type {6}")},
+                    {ErrorCode.SelectorMustBeStatic, new ErrorInfo("The selector {0} in the aspect {1} must be static")},
+                    {ErrorCode.NoDebuggingInformationAvailable, new ErrorInfo("The parameter {0} in method {1} of type {2} will have the default value because there is no debugging information")},
+                    {ErrorCode.ParameterWithBadTypeBecauseReturnMethod, new ErrorInfo("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because the return type of the method {5} in the type {6}")},
+                    {ErrorCode.MustNotBeVoid, new ErrorInfo("Impossible to use the {0} parameter in the method {1} of the type '{2}' because the return type of the method {3} in the type {4} is void")},
+                    {ErrorCode.ImpossibleToRefGenericParameter, new ErrorInfo("Impossible to ref a generic parameter")},
+                    {ErrorCode.ParameterCanNotBeUsedInStaticMethod, new ErrorInfo("the {0} parameter can not be used for static method interceptors")},
+                    {ErrorCode.UnknownParameter, new ErrorInfo("The parameter '{0}' is unknown")},
+                    {ErrorCode.NotAvailableInStaticStruct, new ErrorInfo("the {0} parameter in the method {1} of the type '{2}' is not available for static field in struct")},
+                    {ErrorCode.NotAvailableInStatic, new ErrorInfo(ErrorLevel.Warning, "the {0} parameter in the method {1} of the type '{2}' is not available for static field : default value will be passed")},
+                    {ErrorCode.ParameterAlreadyDeclared, new ErrorInfo("The parameter {0} is already declared")},
+                    {ErrorCode.SelectorMustReturnBooleanValue, new ErrorInfo("The selector {0} in the aspect {1} must return boolean value")},
+                    {ErrorCode.SelectorBadParameterType, new ErrorInfo("The parameter {0} in the method {1} of the aspect {2} is expected to be {3}")},
                 }));
       }
 

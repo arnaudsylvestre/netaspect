@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
@@ -27,7 +28,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
           }
           catch (Exception)
           {
-             errorHandler.Errors.Add(string.Format("The parameter '{0}' is unknown", parameterInfo.Name));
+             errorHandler.OnError(ErrorCode.UnknownParameter, FileLocation.None, parameterInfo.Name);
           }
        }
 
@@ -37,7 +38,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
              interceptorParameterConfigurations_P.PossibleParameters.GroupBy(s => s.Name).SelectMany(grp => grp.Skip(1));
           foreach (var duplicate in duplicates)
           {
-             errorHandler.Errors.Add(string.Format("The parameter {0} is already declared", duplicate.Name));
+             errorHandler.OnError(ErrorCode.ParameterAlreadyDeclared, FileLocation.None, duplicate.Name);
           }
        }
     }

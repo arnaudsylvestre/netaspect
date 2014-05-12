@@ -58,7 +58,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
          methodWeavingModel.Method.Afters.Check(errorHandler);
          methodWeavingModel.Method.OnExceptions.Check(errorHandler);
          methodWeavingModel.Method.OnFinallys.Check(errorHandler);
-         if (errorHandler.Errors.Count > 0)
+         if (errorHandler.errors.Count > 0)
             return;
 
          var befores = new List<Instruction>();

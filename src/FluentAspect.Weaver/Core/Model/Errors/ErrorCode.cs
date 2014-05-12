@@ -6,6 +6,17 @@
         ImpossibleToOutTheParameter,
        ParameterWithBadType,
        AssemblyGeneratedIsNotCompliant,
-       NoDebuggingInformationAvailable
+       NoDebuggingInformationAvailable,
+      SelectorMustBeStatic,
+      ParameterWithBadTypeBecauseReturnMethod,
+      MustNotBeVoid,
+      ImpossibleToRefGenericParameter,
+      ParameterCanNotBeUsedInStaticMethod,
+      UnknownParameter,
+      NotAvailableInStaticStruct,
+      NotAvailableInStatic,
+      ParameterAlreadyDeclared,
+      SelectorMustReturnBooleanValue,
+      SelectorBadParameterType
    }
 }
