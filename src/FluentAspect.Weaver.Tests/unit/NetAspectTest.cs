@@ -22,8 +22,13 @@ namespace NetAspect.Weaver.Tests.unit
         [Test]
         public void DoTest()
         {
-            RunWeavingTest.For<T, U>(CreateErrorHandlerProvider(), CreateEnsure());
+            RunWeavingTest.For<T, U>(GetType(), CreateErrorHandlerProvider(), CreateEnsure());
         }
+
+       public void Check()
+       {
+          CreateEnsure()();
+       }
     }
 
     [TestFixture]

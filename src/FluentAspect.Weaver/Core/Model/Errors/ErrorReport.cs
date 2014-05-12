@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NetAspect.Weaver.Core.Errors;
 
@@ -6,6 +7,7 @@ namespace NetAspect.Weaver.Core.Model.Errors
 {
     public class ErrorReport
     {
+       [Serializable]
         public class Error
         {
             public ErrorLevel Level { get; set; }

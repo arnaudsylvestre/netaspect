@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Mono.Cecil;
 using NetAspect.Weaver.Apis.AssemblyChecker.Peverify;
 using NetAspect.Weaver.Core.Errors;
@@ -19,9 +20,14 @@ namespace NetAspect.Weaver
 {
     public static class WeaverFactory
    {
-      public static WeaverEngine Create()
-      {
-         AspectBuilder aspectBuilder = new AspectBuilder(new Dictionary<LifeCycle, ILifeCycleHandler>()
+       public static WeaverEngine Create()
+       {
+          return Create(null);
+       }
+       public static WeaverEngine Create(Func<TypeDefinition, bool> typesToSave_P)
+       {
+
+       AspectBuilder aspectBuilder = new AspectBuilder(new Dictionary<LifeCycle, ILifeCycleHandler>()
          {
             {LifeCycle.Transient, new TransientLifeCycleHandler()}
          });
@@ -40,7 +46,7 @@ namespace NetAspect.Weaver
                      {
                              
                      }),
-            new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker()),
+            new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker(), typesToSave_P),
             new ErrorInfoComputer(new Dictionary<ErrorCode, ErrorInfo>()
                 {
                     {ErrorCode.ImpossibleToOutTheParameter, new ErrorInfo("impossible to out the parameter '{0}' in the method {1} of the type '{2}'")},

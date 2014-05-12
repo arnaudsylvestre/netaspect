@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Mono.Cecil;
+using NetAspect.Weaver.Tests.unit;
 using NUnit.Framework;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
@@ -19,15 +21,39 @@ namespace NetAspect.Weaver.Tests.Helpers
             Assembly otherAssembly = Assembly.LoadFrom(otherDll);
             Type type = assembly.GetTypes().First(t => t.FullName == typeName);
             Type otherType = otherAssembly.GetTypes().First(t => t.FullName == otherTypeName);
-            WeaverEngine weaver = WeaverFactory.Create();
-            var errorHandler = weaver.Weave(ComputeTypes(type, otherType), ComputeTypes(type, otherType), (a) => a);
+            WeaverEngine weaver = WeaverFactory.Create(t => TypeMustBeSaved(t, typeName));
+            var errorHandler = weaver.Weave(ComputeTypes(type, otherType), ComputeTypes(type, otherType), (a) => a + ".Test");
             var builder = new StringBuilder();
             errorHandler.Dump(builder);
-            Assert.AreEqual(checkErrors, errorHandler.Errors);
+            Assert.AreEqual(checkErrors.Select(e => e.Message), errorHandler.Errors.Select(e => e.Message));
             return builder.ToString();
         }
 
-        private static Type[] ComputeTypes(Type type, Type otherType)
+       private bool TypeMustBeSaved(TypeDefinition typeDefinition_P, string typeName_P)
+       {
+          //return true;
+          typeName_P = typeName_P.Replace("+", "/");
+          List<string> whiteList = new List<string>()
+          {
+             typeof(NetAspectTest<>).FullName,
+             typeof(NetAspectTest<,>).FullName,
+             typeof(RunWeavingTest).FullName, 
+             typeof(AppDomainIsolatedTestRunner).FullName,  
+             typeof(ErrorHandlerExtensions).FullName,             
+             "<Module>",
+             typeName_P,
+          };
+          if (whiteList.Contains(typeDefinition_P.FullName))
+             return true;
+          foreach (var typeDefinition_L in typeDefinition_P.NestedTypes)
+          {
+             if (typeDefinition_L.FullName == typeName_P)
+                return true;
+          }
+          return false;
+       }
+
+       private static Type[] ComputeTypes(Type type, Type otherType)
         {
             var computeTypes = type.DeclaringType.GetNestedTypes().ToList();
             computeTypes.Add(otherType);

@@ -11,21 +11,22 @@ namespace NetAspect.Weaver.Tests.unit
 {
     public static class RunWeavingTest
     {
-        private static AppDomainIsolatedTestRunner CreateAppRunner(Assembly assembly)
-        {
-            return AppDomain.CreateDomain("For test", null,
-                                          new AppDomainSetup
-                                              {
-                                                  ApplicationBase = Path.GetDirectoryName(assembly.GetAssemblyPath()),
-                                                  ShadowCopyFiles = "true"
-                                              })
-                            .CreateInstanceFromAndUnwrap(
-                                new Uri(typeof (AppDomainIsolatedTestRunner).Assembly.CodeBase).LocalPath,
-                                typeof (AppDomainIsolatedTestRunner).FullName)
-                   as AppDomainIsolatedTestRunner;
-        }
+       private static AppDomainIsolatedTestRunner CreateAppRunner(Assembly assembly)
+       {
+          return AppDomain.CreateDomain("For test", null,
+                                        new AppDomainSetup
+                                        {
+                                           ApplicationBase = Path.GetDirectoryName(assembly.GetAssemblyPath()),
+                                           ShadowCopyFiles = "true"
+                                        })
+                          .CreateInstanceFromAndUnwrap(
+                              new Uri(typeof(AppDomainIsolatedTestRunner).Assembly.CodeBase).LocalPath,
+                              typeof(AppDomainIsolatedTestRunner).FullName)
+                 as AppDomainIsolatedTestRunner;
+       }
 
-        public static void For<T, U>(Action<List<ErrorReport.Error>> resultProvider, Action ensureAssembly)
+
+        public static void For<T, U>(Type t, Action<List<ErrorReport.Error>> resultProvider, Action ensureAssembly)
         {
             Assembly assembly = typeof(T).Assembly;
             Assembly otherAssembly = typeof(U).Assembly;
@@ -37,8 +38,10 @@ namespace NetAspect.Weaver.Tests.unit
             var otherDll = otherAssembly.GetAssemblyPath();
             Console.Write(runner.RunFromType(dll, typeof(T).FullName, errorHandler, otherDll, typeof(U).FullName));
 
-            runner = CreateAppRunner(assembly);
-            runner.Ensure(ensureAssembly);
+           var assemblyToTest = Assembly.LoadFrom(assembly.GetAssemblyPath() + ".Test");
+
+           var type_L = assemblyToTest.GetType(t.FullName);
+           type_L.GetMethod("Check").Invoke(Activator.CreateInstance(type_L), new object[0]);
         }
     }
 }
