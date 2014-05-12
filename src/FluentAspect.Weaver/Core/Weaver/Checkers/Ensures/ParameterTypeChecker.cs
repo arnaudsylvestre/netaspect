@@ -82,8 +82,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
                 errorHandler.OnError(ErrorCode.ParameterWithBadType, FileLocation.None,
                    parameterInfo.Name, parameterInfo.Member.Name, parameterInfo.Member.DeclaringType.FullName.Replace("/", "+"),
                     parameterInfo.ParameterType.FullName,
-                    parameterDefinition.ParameterType.FullName.Replace("/", "+"), ((IMemberDefinition)parameterDefinition.Method).Name,
-                    ((IMemberDefinition)parameterDefinition.Method).DeclaringType.FullName.Replace("/", "+"));
+                    ExpectedType.Replace("/", "+"));
                 
             }
 

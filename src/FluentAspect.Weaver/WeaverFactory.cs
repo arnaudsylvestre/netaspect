@@ -51,7 +51,7 @@ namespace NetAspect.Weaver
                 {
                     {ErrorCode.ImpossibleToOutTheParameter, new ErrorInfo("impossible to out the parameter '{0}' in the method {1} of the type '{2}'")},
                     {ErrorCode.ImpossibleToReferenceTheParameter, new ErrorInfo("impossible to ref/out the parameter '{0}' in the method {1} of the type '{2}'")},
-                    {ErrorCode.ParameterWithBadType, new ErrorInfo("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because of the type of this parameter in the method {5} of the type {6}")},
+                    {ErrorCode.ParameterWithBadType, new ErrorInfo("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4}")},
                     {ErrorCode.SelectorMustBeStatic, new ErrorInfo("The selector {0} in the aspect {1} must be static")},
                     {ErrorCode.NoDebuggingInformationAvailable, new ErrorInfo("The parameter {0} in method {1} of type {2} will have the default value because there is no debugging information")},
                     {ErrorCode.ParameterWithBadTypeBecauseReturnMethod, new ErrorInfo("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because the return type of the method {5} in the type {6}")},
@@ -64,6 +64,7 @@ namespace NetAspect.Weaver
                     {ErrorCode.ParameterAlreadyDeclared, new ErrorInfo("The parameter {0} is already declared")},
                     {ErrorCode.SelectorMustReturnBooleanValue, new ErrorInfo("The selector {0} in the aspect {1} must return boolean value")},
                     {ErrorCode.SelectorBadParameterType, new ErrorInfo("The parameter {0} in the method {1} of the aspect {2} is expected to be {3}")},
+                    {ErrorCode.AssemblyGeneratedIsNotCompliant, new ErrorInfo(ErrorLevel.Failure, "An internal error : {0}")}
                 }));
       }
 

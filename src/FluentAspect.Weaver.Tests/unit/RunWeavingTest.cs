@@ -29,6 +29,9 @@ namespace NetAspect.Weaver.Tests.unit
         public static void For<T, U>(Type t, Action<List<ErrorReport.Error>> resultProvider, Action ensureAssembly)
         {
             Assembly assembly = typeof(T).Assembly;
+            var assemblyFile = assembly.GetAssemblyPath() + ".Test";
+            if (File.Exists(assemblyFile))
+                File.Delete(assemblyFile);
             Assembly otherAssembly = typeof(U).Assembly;
             AppDomainIsolatedTestRunner runner = CreateAppRunner(assembly);
 
@@ -38,10 +41,10 @@ namespace NetAspect.Weaver.Tests.unit
             var otherDll = otherAssembly.GetAssemblyPath();
             Console.Write(runner.RunFromType(dll, typeof(T).FullName, errorHandler, otherDll, typeof(U).FullName));
 
-           var assemblyToTest = Assembly.LoadFrom(assembly.GetAssemblyPath() + ".Test");
+            runner = CreateAppRunner(assembly);
 
-           var type_L = assemblyToTest.GetType(t.FullName);
-           type_L.GetMethod("Check").Invoke(Activator.CreateInstance(type_L), new object[0]);
+            runner.Ensure(assemblyFile, t.FullName);
+           
         }
     }
 }

@@ -61,8 +61,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 
       public static InterceptorParameterConfiguration WhichMustBeOfType<T1>(this InterceptorParameterConfiguration configuration)
       {
-         //allowedTypes.Add(typeof(T1).FullName);
-         return configuration;
+
+          return configuration.WhichMustBeOfTypeOf(typeof(T1).FullName);
       }
 
       public static InterceptorParameterConfiguration WhichMustBeOfTypeOfParameter(this InterceptorParameterConfiguration configuration, ParameterDefinition parameterDefinition)

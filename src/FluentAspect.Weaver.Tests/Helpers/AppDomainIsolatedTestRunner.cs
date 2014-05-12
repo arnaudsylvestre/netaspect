@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -25,6 +26,7 @@ namespace NetAspect.Weaver.Tests.Helpers
             var errorHandler = weaver.Weave(ComputeTypes(type, otherType), ComputeTypes(type, otherType), (a) => a + ".Test");
             var builder = new StringBuilder();
             errorHandler.Dump(builder);
+            File.WriteAllText(@"C:\temp.txt", builder.ToString());
             Assert.AreEqual(checkErrors.Select(e => e.Message), errorHandler.Errors.Select(e => e.Message));
             return builder.ToString();
         }
@@ -60,9 +62,12 @@ namespace NetAspect.Weaver.Tests.Helpers
             return computeTypes.ToArray();
         }
 
-        public void Ensure(Action ensure)
+        public void Ensure(string assemblyFile, string typeName)
         {
-            ensure();
+            var assemblyToTest = Assembly.LoadFrom(assemblyFile);
+
+            var type_L = assemblyToTest.GetType(typeName);
+            type_L.GetMethod("Check").Invoke(Activator.CreateInstance(type_L), new object[0]);
         }
     }
 }

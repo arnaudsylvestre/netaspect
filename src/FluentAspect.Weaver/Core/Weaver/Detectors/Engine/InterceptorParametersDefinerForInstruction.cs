@@ -22,7 +22,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
            interceptorParameterConfigurations_P.AddPossibleParameter("caller")
                 .WhichCanNotBeReferenced()
                 .WhereCurrentMethodCanNotBeStatic(weavingInfo_P)
-                .WhichMustBeOfType<object>().OrOfCurrentMethodDeclaringType(weavingInfo_P)
+                .OrOfCurrentMethodDeclaringType(weavingInfo_P)
                 .AndInjectTheCurrentInstance();
             return weavingInfo_P;
         }
