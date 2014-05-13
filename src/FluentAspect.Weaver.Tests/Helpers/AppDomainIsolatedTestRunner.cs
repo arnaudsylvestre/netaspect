@@ -22,7 +22,7 @@ namespace NetAspect.Weaver.Tests.Helpers
             Assembly otherAssembly = Assembly.LoadFrom(otherDll);
             Type type = assembly.GetTypes().First(t => t.FullName == typeName);
             Type otherType = otherAssembly.GetTypes().First(t => t.FullName == otherTypeName);
-            WeaverEngine weaver = WeaverFactory.Create(t => TypeMustBeSaved(t, typeName));
+            WeaverEngine weaver = WeaverFactory.Create(t => TypeMustBeSaved(t, typeName, otherTypeName));
             var errorHandler = weaver.Weave(ComputeTypes(type, otherType), ComputeTypes(type, otherType), (a) => a + ".Test");
             var builder = new StringBuilder();
             errorHandler.Dump(builder);
@@ -31,10 +31,13 @@ namespace NetAspect.Weaver.Tests.Helpers
             return builder.ToString();
         }
 
-       private bool TypeMustBeSaved(TypeDefinition typeDefinition_P, string typeName_P)
+       private bool TypeMustBeSaved(TypeDefinition typeDefinition_P, string typeName_P, string otherTypeName_P)
        {
+          if (typeDefinition_P.Module.Assembly.FullName.Contains("NetAspect.Sample.Dep"))
+             return true;
           //return true;
           typeName_P = typeName_P.Replace("+", "/");
+          otherTypeName_P = otherTypeName_P.Replace("+", "/");
           List<string> whiteList = new List<string>()
           {
              typeof(NetAspectTest<>).FullName,
@@ -44,12 +47,13 @@ namespace NetAspect.Weaver.Tests.Helpers
              typeof(ErrorHandlerExtensions).FullName,             
              "<Module>",
              typeName_P,
+             otherTypeName_P
           };
           if (whiteList.Contains(typeDefinition_P.FullName))
              return true;
           foreach (var typeDefinition_L in typeDefinition_P.NestedTypes)
           {
-             if (typeDefinition_L.FullName == typeName_P)
+             if (typeDefinition_L.FullName == typeName_P || typeDefinition_L.FullName == otherTypeName_P)
                 return true;
           }
           return false;
