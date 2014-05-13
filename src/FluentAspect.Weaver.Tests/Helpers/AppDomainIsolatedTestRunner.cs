@@ -23,7 +23,7 @@ namespace NetAspect.Weaver.Tests.Helpers
             Type type = assembly.GetTypes().First(t => t.FullName == typeName);
             Type otherType = otherAssembly.GetTypes().First(t => t.FullName == otherTypeName);
             WeaverEngine weaver = WeaverFactory.Create(t => TypeMustBeSaved(t, typeName, otherTypeName));
-            var errorHandler = weaver.Weave(ComputeTypes(type, otherType), ComputeTypes(type, otherType), (a) => a + ".Test");
+            var errorHandler = weaver.Weave(ComputeTypes(type, otherType), ComputeTypes(type, otherType), (a) => a == dll_L.Replace(".dll.Test", ".dll") ? a + ".Test" : a);
             var builder = new StringBuilder();
             errorHandler.Dump(builder);
             File.WriteAllText(@"C:\temp.txt", builder.ToString());
