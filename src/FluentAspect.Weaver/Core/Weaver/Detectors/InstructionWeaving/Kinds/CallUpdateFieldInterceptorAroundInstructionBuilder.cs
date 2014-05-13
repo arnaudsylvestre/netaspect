@@ -7,12 +7,11 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds
     {
        public void FillCommon(InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations parametersIlGenerator_P)
         {
-            weavingInfo_P.AddCalled(parametersIlGenerator_P);
-            weavingInfo_P.AddCalledFieldInfo(parametersIlGenerator_P);
-
-            weavingInfo_P.AddCaller(parametersIlGenerator_P);
-            weavingInfo_P.AddCallerParameters(parametersIlGenerator_P);
-            weavingInfo_P.AddCallerParameterNames(parametersIlGenerator_P);
+            weavingInfo_P.AddCalled(parametersIlGenerator_P, weavingInfo_P.GetOperandAsField())
+                .AddCalledFieldInfo(parametersIlGenerator_P)
+                .AddCaller(parametersIlGenerator_P)
+                .AddCallerParameters(parametersIlGenerator_P)
+                .AddCallerParameterNames(parametersIlGenerator_P);
 
             weavingInfo_P.AddColumnNumber(parametersIlGenerator_P);
             weavingInfo_P.AddLineNumber(parametersIlGenerator_P);

@@ -106,7 +106,7 @@ namespace NetAspect.Core
         private static void WeaveInstructions(MethodDefinition method, Dictionary<Instruction, NetAspectWeavingMethod.InstructionIl> instructions)
         {
             var allInstructions = new List<Instruction>();
-            foreach (var instruction in method.Body.Instructions)
+            foreach (var instruction in method.ExtractRealInstructions())
             {
                 
                 if (!instructions.ContainsKey(instruction))
@@ -119,7 +119,9 @@ namespace NetAspect.Core
                 allInstructions.Add(instruction);
                 allInstructions.AddRange(instructionIl.After);
             }
+            var constructorInstructions = method.ExtractConstructorInstructions();
             method.Body.Instructions.Clear();
+            method.Body.Instructions.AddRange(constructorInstructions);
             method.Body.Instructions.AddRange(allInstructions);
         }
     }

@@ -47,9 +47,9 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration WhereFieldCanNotBeStatic(this InterceptorParameterConfiguration configuration, InstructionWeavingInfo weavingInfo)
+      public static InterceptorParameterConfiguration WhereFieldCanNotBeStatic(this InterceptorParameterConfiguration configuration, IMemberDefinition member)
       {
-         configuration.Checker.Add((parameter, errorListener) => Ensure.NotStaticButDefaultValue(parameter, errorListener, weavingInfo.GetOperandAsField()));
+          configuration.Checker.Add((parameter, errorListener) => Ensure.NotStaticButDefaultValue(parameter, errorListener, member));
          return configuration;
       }
 

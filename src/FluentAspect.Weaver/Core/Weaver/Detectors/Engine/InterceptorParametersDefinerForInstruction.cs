@@ -8,12 +8,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 {
     public static class InterceptorParametersDefinerForInstruction
     {
-        public static InstructionWeavingInfo AddCalled(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        public static InstructionWeavingInfo AddCalled(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P, IMemberDefinition member)
         {
            interceptorParameterConfigurations_P.AddPossibleParameter("called")
                 .WhichCanNotBeReferenced()
-                .WhereFieldCanNotBeStatic(weavingInfo_P)
-                .WhichMustBeOfTypeOf(weavingInfo_P.GetOperandAsField().DeclaringType)
+                .WhereFieldCanNotBeStatic(member)
+                .WhichMustBeOfTypeOf(member.DeclaringType)
                 .AndInjectTheCalledInstance();
             return weavingInfo_P;
         }
@@ -55,7 +55,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
         {
             foreach (ParameterDefinition parameterDefinition in weavingInfo_P.GetOperandAsMethod().Parameters)
             {
-               interceptorParameterConfigurations_P.AddPossibleParameter("calledparameters")
+                interceptorParameterConfigurations_P.AddPossibleParameter("called" + parameterDefinition.Name.ToLower())
                     .WhichCanNotBeReferenced()
                     .WhichMustBeOfTypeOfParameter(parameterDefinition)
                     .AndInjectTheCalledParameter(parameterDefinition);

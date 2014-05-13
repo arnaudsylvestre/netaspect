@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Update.Parameter
                     Level = ErrorLevel.Error,
                     Message =
                     string.Format(
-                        "the caller parameter in the method BeforeUpdateField of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
+                        "the caller parameter in the method BeforeUpdateField of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
                         typeof(MyAspect).FullName,
                         typeof(ClassToWeave).FullName)
                 });

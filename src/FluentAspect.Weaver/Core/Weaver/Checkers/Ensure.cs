@@ -153,6 +153,18 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
 
         }
 
+        public static void NotStaticButDefaultValue(ParameterInfo parameter, IErrorListener handler, IMemberDefinition member)
+        {
+            if ((bool) member.GetType().GetProperty("IsStatic").GetValue(member, new object[0]))
+            {
+                if (member.DeclaringType.IsValueType)
+                    handler.OnError(ErrorCode.NotAvailableInStaticStruct, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+                else
+                    handler.OnError(ErrorCode.NotAvailableInStatic, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
+            }
+
+        }
+
         public static void NotStaticButDefaultValue(ParameterInfo parameter, IErrorListener handler, PropertyDefinition definition)
         {
             if (definition.GetMethod.IsStatic)

@@ -156,7 +156,6 @@
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\CallerParameterName\AfterCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\CallerParameterName\AfterCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\CallerParameters\AfterCallUpdateFieldCallerParametersParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\CallerParameters\AfterCallUpdateFieldCallerParametersParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\CallerParameters\AfterCallUpdateFieldCallerParametersParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\CallerParameters\AfterCallUpdateFieldCallerParametersParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\Caller\AfterCallUpdateFieldCallerParameterWithBadTypeTest.cs" />
@@ -190,7 +189,6 @@
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\Before\CallerParameterName\BeforeCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\Before\CallerParameterName\BeforeCallUpdateFieldCallerParameterNameReferencedParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\Before\CallerParameters\BeforeCallUpdateFieldCallerParametersParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\Before\CallerParameters\BeforeCallUpdateFieldCallerParametersParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\Before\CallerParameters\BeforeCallUpdateFieldCallerParametersParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\Before\CallerParameters\BeforeCallUpdateFieldCallerParametersParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\Before\Caller\BeforeCallUpdateFieldCallerParameterWithBadTypeTest.cs" />
@@ -243,7 +241,6 @@
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\CallerParameterName\AfterCallMethodCallerParameterNameReferencedParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\CallerParameterName\AfterCallMethodCallerParameterNameReferencedParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\CallerParameters\AfterCallMethodCallerParametersParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\CallerParameters\AfterCallMethodCallerParametersParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\CallerParameters\AfterCallMethodCallerParametersParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\CallerParameters\AfterCallMethodCallerParametersParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\Caller\AfterCallMethodCallerParameterWithBadTypeTest.cs" />

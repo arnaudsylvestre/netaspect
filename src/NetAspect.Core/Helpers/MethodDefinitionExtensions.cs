@@ -7,6 +7,21 @@ namespace NetAspect.Core.Helpers
 {
     public static class MethodDefinitionExtensions
     {
+        public static List<Instruction> ExtractConstructorInstructions(this MethodDefinition method)
+        {
+            if (!method.IsConstructor)
+                return new List<Instruction>();
+            var constructorInstructions = new List<Instruction>();
+            for (int i = 0; i < method.Body.Instructions.Count; i++)
+            {
+                var instruction = method.Body.Instructions[i];
+                constructorInstructions.Add(instruction);
+                if (instruction.IsCallBaseConstructor())
+                    break;
+            }
+            return constructorInstructions;
+        }
+
         public static List<Instruction> ExtractRealInstructions(this MethodDefinition method)
         {
             if (!method.IsConstructor)
