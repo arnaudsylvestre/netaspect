@@ -95,7 +95,7 @@ namespace NetAspect.Weaver
               InstructionCompliance.IsSetPropertyCall,
               aspect => aspect.PropertySelector,
               new AroundInstructionWeaverFactory(new CallSetPropertyInterceptorAroundInstructionBuilder(), aspectBuilder),
-              instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForGetter(),
+              instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForSetter(),
               aspect => aspect.BeforeSetProperty,
               aspect => aspect.AfterSetProperty);
       }

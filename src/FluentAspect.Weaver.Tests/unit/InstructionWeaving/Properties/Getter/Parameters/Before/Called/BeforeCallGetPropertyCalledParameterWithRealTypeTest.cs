@@ -21,7 +21,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Param
         public class ClassCalled
         {
             [MyAspect]
-            public string Property = "Value";
+            public string Property { get; set; }
             
 
         }
