@@ -353,7 +353,6 @@
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\Before\CallerParameterName\BeforeCallGetPropertyCallerParameterNameReferencedParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\Before\CallerParameterName\BeforeCallGetPropertyCallerParameterNameReferencedParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\Before\CallerParameters\BeforeCallGetPropertyCallerParametersParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\Before\CallerParameters\BeforeCallGetPropertyCallerParametersParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\Before\CallerParameters\BeforeCallGetPropertyCallerParametersParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\Before\CallerParameters\BeforeCallGetPropertyCallerParametersParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\Before\Caller\BeforeCallGetPropertyCallerParameterWithBadTypeTest.cs" />

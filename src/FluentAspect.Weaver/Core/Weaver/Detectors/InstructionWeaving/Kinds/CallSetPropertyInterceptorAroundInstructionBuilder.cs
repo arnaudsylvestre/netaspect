@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds
        public void FillCommon(InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations parametersIlGenerator_P)
         {
             weavingInfo_P.AddCalled(parametersIlGenerator_P, weavingInfo_P.GetOperandAsMethod());
-            weavingInfo_P.AddCalledFieldInfo(parametersIlGenerator_P);
+            weavingInfo_P.AddCalledPropertyInfo(parametersIlGenerator_P);
 
             weavingInfo_P.AddCaller(parametersIlGenerator_P);
             weavingInfo_P.AddCallerParameters(parametersIlGenerator_P);
