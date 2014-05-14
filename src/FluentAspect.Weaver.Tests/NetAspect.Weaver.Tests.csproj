@@ -433,7 +433,6 @@
     <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\Before\CallerParameterName\BeforeCallUpdatePropertyCallerParameterNameReferencedParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\Before\CallerParameterName\BeforeCallUpdatePropertyCallerParameterNameReferencedParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\Before\CallerParameters\BeforeCallUpdatePropertyCallerParametersParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\Before\CallerParameters\BeforeCallUpdatePropertyCallerParametersParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\Before\CallerParameters\BeforeCallUpdatePropertyCallerParametersParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\Before\CallerParameters\BeforeCallUpdatePropertyCallerParametersParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\Before\Caller\BeforeCallUpdatePropertyCallerParameterWithBadTypeTest.cs" />

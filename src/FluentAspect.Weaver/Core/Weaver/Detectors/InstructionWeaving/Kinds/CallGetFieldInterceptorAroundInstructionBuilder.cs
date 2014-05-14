@@ -10,14 +10,16 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds
             weavingInfo_P.AddCalled(parametersIlGenerator_P, weavingInfo_P.GetOperandAsField())
                 .AddCalledFieldInfo(parametersIlGenerator_P)
                 
-                .AddCaller(parametersIlGenerator_P)
+                
                 .AddCallerParameters(parametersIlGenerator_P)
                 .AddCallerParameterNames(parametersIlGenerator_P)
                 
                 .AddColumnNumber(parametersIlGenerator_P)
                 .AddLineNumber(parametersIlGenerator_P)
                 .AddFilePath(parametersIlGenerator_P)
-                .AddFileName(parametersIlGenerator_P);
+                .AddFileName(parametersIlGenerator_P)
+
+                .AddCaller(parametersIlGenerator_P);
         }
 
         public void FillBeforeSpecific(InstructionWeavingInfo weavingInfo_P)

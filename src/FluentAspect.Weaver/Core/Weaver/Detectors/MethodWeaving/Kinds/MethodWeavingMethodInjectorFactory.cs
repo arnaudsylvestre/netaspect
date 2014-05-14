@@ -1,4 +1,5 @@
 ﻿using NetAspect.Weaver.Core.Weaver.Detectors.Model;
+using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Kinds
 {
@@ -6,7 +7,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Kinds
     {
         public void FillCommon(MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-            //weavingInfo_P.AddInstance()
+            weavingInfo_P.AddInstance(interceptorParameterConfigurations_P);
             //    .AddCurrentMethod()
 
 

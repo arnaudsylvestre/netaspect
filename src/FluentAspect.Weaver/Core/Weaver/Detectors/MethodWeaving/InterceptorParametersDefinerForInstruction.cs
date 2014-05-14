@@ -2,11 +2,12 @@ using System;
 using System.IO;
 using System.Reflection;
 using Mono.Cecil;
+using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
+namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
 {
-    public static class InterceptorParametersDefinerForInstruction
+    public static class InterceptorParametersDefinerForMethod
     {
         public static InstructionWeavingInfo AddCalled(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P, IMemberDefinition member)
         {
@@ -17,27 +18,15 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                 .AndInjectTheCalledInstance();
             return weavingInfo_P;
         }
-        public static MethodWeavingInfo AddCaller(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        public static InstructionWeavingInfo AddCaller(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-            return AddCaller(weavingInfo_P, interceptorParameterConfigurations_P, "caller");
-        }
-        public static MethodWeavingInfo AddInstance(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
-        {
-            return AddCaller(weavingInfo_P, interceptorParameterConfigurations_P, "instance");
-        }
-
-        private static MethodWeavingInfo AddCaller(MethodWeavingInfo weavingInfo_P,
-                                                   InterceptorParameterConfigurations interceptorParameterConfigurations_P,
-                                                   string parameterName)
-        {
-            interceptorParameterConfigurations_P.AddPossibleParameter(parameterName)
-                                                .WhichCanNotBeReferenced()
-                                                .WhereCurrentMethodCanNotBeStatic(weavingInfo_P)
-                                                .OrOfCurrentMethodDeclaringType(weavingInfo_P)
-                                                .AndInjectTheCurrentInstance();
+           interceptorParameterConfigurations_P.AddPossibleParameter("caller")
+                .WhichCanNotBeReferenced()
+                .WhereCurrentMethodCanNotBeStatic(weavingInfo_P)
+                .OrOfCurrentMethodDeclaringType(weavingInfo_P)
+                .AndInjectTheCurrentInstance();
             return weavingInfo_P;
         }
-
         public static InstructionWeavingInfo AddCallerMethod(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
            interceptorParameterConfigurations_P.AddPossibleParameter("callermethod")
