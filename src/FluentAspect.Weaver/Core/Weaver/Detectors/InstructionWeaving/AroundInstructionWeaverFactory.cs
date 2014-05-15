@@ -22,16 +22,16 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
          aspectBuilder = aspectBuilder_P;
       }
 
-      public IIlInjector CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, NetAspectDefinition aspect, Instruction instruction)
+      public IIlInjector CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, NetAspectDefinition aspect, Instruction instruction, string interceptorVariableName)
       {
-         return Create(method, interceptorMethod, aspect, instruction, (factory, interceptorInfo, generator) => factory.FillBeforeSpecific(interceptorInfo));
+         return Create(method, interceptorMethod, aspect, instruction, (factory, interceptorInfo, generator) => factory.FillBeforeSpecific(interceptorInfo),interceptorVariableName);
       }
 
       private IIlInjector Create(MethodDefinition method,
          MethodInfo interceptorMethod,
          NetAspectDefinition aspect,
          Instruction instruction,
-         Action<IInterceptorAroundInstructionBuilder, InstructionWeavingInfo, InterceptorParameterConfigurations> specificFiller)
+         Action<IInterceptorAroundInstructionBuilder, InstructionWeavingInfo, InterceptorParameterConfigurations> specificFiller, string interceptorVariableName)
       {
          if (interceptorMethod == null)
             return new NoIIlInjector();
@@ -46,16 +46,16 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
          _interceptorAroundInstructionBuilder.FillCommon(info, parametersIlGenerator);
          specificFiller(_interceptorAroundInstructionBuilder, info, parametersIlGenerator);
 
-         return new Injector(method, interceptorMethod, aspect, parametersIlGenerator, aspectBuilder);
+         return new Injector(method, interceptorMethod, aspect, parametersIlGenerator, aspectBuilder, interceptorVariableName);
       }
 
 
       public IIlInjector CreateForAfter(MethodDefinition method,
          MethodInfo interceptorMethod,
          NetAspectDefinition aspect,
-         Instruction instruction)
+         Instruction instruction, string interceptorVariableName)
       {
-         return Create(method, interceptorMethod, aspect, instruction, (factory, interceptorInfo, generator) => factory.FillAfterSpecific(interceptorInfo, generator));
+          return Create(method, interceptorMethod, aspect, instruction, (factory, interceptorInfo, generator) => factory.FillAfterSpecific(interceptorInfo, generator), interceptorVariableName);
       }
 
       private class NoIIlInjector : IIlInjector

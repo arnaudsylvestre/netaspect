@@ -33,6 +33,7 @@ namespace NetAspect.Weaver
          {
             {LifeCycle.Transient, new TransientLifeCycleHandler()},
             {LifeCycle.PerInstance, new PerInstanceLifeCycleHandler()},
+            {LifeCycle.PerType, new PerInstanceLifeCycleHandler() {Static = true}},
          });
          return new WeaverEngine(
             new WeavingModelComputer(new DefaultAspectFinder(),

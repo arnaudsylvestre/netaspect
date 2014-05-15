@@ -2,7 +2,8 @@
 {
    public enum LifeCycle
    {
-      Transient,
-   PerInstance,
+       Transient,
+       PerInstance,
+       PerType,
    }
 }

@@ -42,9 +42,10 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
             if (!AspectApplier.CanApply(memberReference, aspect, selectorProvider))
                 return null;
 
+            string interceptorVariableName = Guid.NewGuid().ToString();
             return new AroundInstructionWeaver(
-                aroundInstructionWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, aspect, instruction),
-                aroundInstructionWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, aspect, instruction)
+                aroundInstructionWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, aspect, instruction, interceptorVariableName),
+                aroundInstructionWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, aspect, instruction, interceptorVariableName)
                 );
         }
     }
