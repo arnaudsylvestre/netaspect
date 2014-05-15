@@ -8,6 +8,7 @@ using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors;
+using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 using NetAspect.Weaver.Helpers;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine
@@ -18,14 +19,16 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
         private readonly IAspectFinder _aspectFinder;
         private List<ICallWeavingDetector> callWeavingDetector;
         private List<IMethodWeavingDetector> methodWeavingDetector;
+        private AspectBuilder aspectBuilder;
 
         public WeavingModelComputer(IAspectFinder aspectFinder_P,
-                                    IAspectChecker aspectChecker_P, List<ICallWeavingDetector> callWeavingDetector, List<IMethodWeavingDetector> methodWeavingDetector)
+                                    IAspectChecker aspectChecker_P, List<ICallWeavingDetector> callWeavingDetector, List<IMethodWeavingDetector> methodWeavingDetector, AspectBuilder aspectBuilder)
         {
             _aspectFinder = aspectFinder_P;
             _aspectChecker = aspectChecker_P;
             this.callWeavingDetector = callWeavingDetector;
             this.methodWeavingDetector = methodWeavingDetector;
+            this.aspectBuilder = aspectBuilder;
         }
 
         public MethodsWeavingModel ComputeWeavingModels(Type[] typesP_L, Type[] filter, AssemblyPool assemblyPool,
@@ -52,11 +55,11 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                 {
                     foreach (var aspect_L in aspects)
                     {
-                        methodWeavingDetector.ForEach(model => weavingModels.Add(method, model.DetectWeavingModel(method, aspect_L)));
+                        methodWeavingDetector.ForEach(model => weavingModels.Add(method, model.DetectWeavingModel(method, aspect_L), aspect_L, aspectBuilder));
                         foreach (Instruction instruction in method.Body.Instructions)
                         {
                             callWeavingDetector.ForEach(model => weavingModels.Add(method, instruction,
-                                              model.DetectWeavingModel(method, instruction, aspect_L)));
+                                              model.DetectWeavingModel(method, instruction, aspect_L), aspect_L, aspectBuilder));
                         }
                     }
                 }

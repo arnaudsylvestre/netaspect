@@ -53,7 +53,7 @@ namespace NetAspect.Weaver
                          BuildPropertyUpdaterDetector(aspectBuilder),
                          BuildConstructorDetector(aspectBuilder),
                              
-                     }),
+                     }, aspectBuilder),
             new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker(), typesToSave_P),
             new ErrorInfoComputer(new Dictionary<ErrorCode, ErrorInfo>()
                 {

@@ -72,6 +72,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
          var onFinallys = new List<Instruction>();
 
          availableVariables.InterceptorVariable = methodWeavingModel.Method.CreateAspect(befores);
+         allVariables.Add(availableVariables.InterceptorVariable);
           methodWeavingModel.Method.Inject(befores, afters, onExceptions, onFinallys, availableVariables);
 
 

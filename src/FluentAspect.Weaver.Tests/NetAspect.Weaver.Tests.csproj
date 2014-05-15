@@ -220,7 +220,7 @@
     <Compile Include="unit\InstructionWeaving\Fields\Update\Visibility\CallGetPrivateFieldWeavingTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Visibility\CallGetProtectedFieldWeavingTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Visibility\CallGetPublicFieldWeavingTest.cs" />
-    <Compile Include="unit\InstructionWeaving\LifeCycle\ChekSameInstanceTest.cs" />
+    <Compile Include="unit\InstructionWeaving\LifeCycle\InstructionWeavingChekSameInstanceTest.cs" />
     <Compile Include="unit\InstructionWeaving\LifeCycle\InstructionWeavingWithPerTypeLifeCycleTest.cs" />
     <Compile Include="unit\InstructionWeaving\LifeCycle\InstructionWeavingWithPerInstanceLifeCycleTest.cs" />
     <Compile Include="unit\InstructionWeaving\LifeCycle\InstructionWeavingWithTransientLifeCycleTest.cs" />
@@ -605,6 +605,11 @@
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnFinally\Parameters\OnFinallyConstructorParametersParameterWithRealTypeOutTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnFinally\Parameters\OnFinallyConstructorParametersParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnFinally\Parameters\OnFinallyConstructorParametersParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingChekSameInstanceTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingWithNoLifeCycleTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingWithPerInstanceLifeCycleTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingWithPerTypeLifeCycleTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingWithTransientLifeCycleTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Attributes\Static\WeaveStaticPropertyTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Attributes\Visibility\WeaveInternalPropertyTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Attributes\Visibility\WeavePrivatePropertyTest.cs" />
