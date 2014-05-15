@@ -12,16 +12,15 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Exceptions.OnExc
             return () =>
                 {
                     Assert.IsNull(MyAspect.Method);
-                    var classToWeave_L = new ClassToWeave();
                     try
                     {
-                        classToWeave_L.Weaved(classToWeave_L);
+                        var classToWeave_L = new ClassToWeave(null);
                         Assert.Fail();
                     }
                     catch (Exception)
                     {
                         Assert.IsNull(MyAspect.Method);
-                        Assert.AreEqual("Weaved", MyAspect.FinallyMethod.Name);
+                        Assert.AreEqual(".ctor", MyAspect.FinallyMethod.Name);
                     }
                 };
         }
@@ -29,9 +28,8 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Exceptions.OnExc
         public class ClassToWeave
         {
             [MyAspect]
-            public ClassToWeave Weaved(ClassToWeave toWeave)
+            public ClassToWeave(ClassToWeave toWeave)
             {
-                return toWeave;
             }
         }
 

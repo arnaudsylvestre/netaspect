@@ -12,9 +12,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
             return () =>
                 {
                     Assert.AreEqual(0, MyAspect.I);
-                    var classToWeave_L = new ClassToWeave();
                     int value = 12;
-                    Assert.AreEqual(8, classToWeave_L.Weaved(ref value));
+                    var classToWeave_L = new ClassToWeave(ref value);
+                    Assert.AreEqual(8, classToWeave_L.I);
                     Assert.AreEqual(8, MyAspect.I);
                     Assert.AreEqual(5, value);
                 };
@@ -22,11 +22,13 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
 
         public class ClassToWeave
         {
+            public int I;
+
             [MyAspect]
-            public int Weaved(ref int i)
+            public ClassToWeave(ref int i)
             {
                 i = 8;
-                return i;
+                I = i;
             }
         }
 

@@ -466,8 +466,6 @@
     <Compile Include="unit\InstructionWeaving\Properties\Update\Visibility\CallGetPublicPropertyWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Attributes\Static\WeaveStaticMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Attributes\Visibility\WeaveInternalMethodTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Attributes\Visibility\WeavePrivateMethodTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Attributes\Visibility\WeaveProtectedMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Attributes\Visibility\WeavePublicMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Exceptions\After\CheckMethodWeavingAfterWithExceptionTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Exceptions\OnException\CheckMethodWeavingOnExceptionWithExceptionAndFinallyTest.cs" />
@@ -487,8 +485,6 @@
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\Constructor\AfterConstructorConstructorInfoParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\Constructor\AfterConstructorConstructorInfoParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\ParameterName\AfterConstructorParameterNameParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\ParameterName\AfterConstructorParameterNameParameterWithGenericMethodTypeReferencedInInterceptorTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\ParameterName\AfterConstructorParameterNameParameterWithGenericMethodTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\ParameterName\AfterConstructorParameterNameParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\ParameterName\AfterConstructorParameterNameParameterWithRealTypeBooleanReferencedInBothTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\ParameterName\AfterConstructorParameterNameParameterWithRealTypeBooleanReferencedInInterceptorTest.cs" />

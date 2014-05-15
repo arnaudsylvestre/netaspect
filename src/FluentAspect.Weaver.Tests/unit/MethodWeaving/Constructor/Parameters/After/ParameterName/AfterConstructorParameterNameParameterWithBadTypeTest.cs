@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
                     Level = ErrorLevel.Error,
                     Message =
                     string.Format(
-                        "the i parameter in the method AfterConstructor of the type '{0}' is declared with the type 'System.String' but it is expected to be {1} because of the type of this parameter in the method .ctor of the type {2}",
+                        "the i parameter in the method AfterConstructor of the type '{0}' is declared with the type 'System.String' but it is expected to be {1}",
                         typeof(MyAspect).FullName, typeof(int), typeof(ClassToWeave))
                 });
         }

@@ -21,7 +21,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
                     Level = ErrorLevel.Error,
                     Message =
                         string.Format(
-                            "the instance parameter in the method AfterConstructor of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}", typeof(MyAspect), typeof(ClassToWeave))
+                            "the instance parameter in the method AfterConstructor of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}", typeof(MyAspect), typeof(ClassToWeave))
                 });
                 };
         }

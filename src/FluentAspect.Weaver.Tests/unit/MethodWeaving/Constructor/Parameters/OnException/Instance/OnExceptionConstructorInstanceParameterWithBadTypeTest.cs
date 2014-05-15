@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnExc
                     Level = ErrorLevel.Error,
                     Message =
                     string.Format(
-                        "the instance parameter in the method OnExceptionConstructor of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object or {1}",
+                        "the instance parameter in the method OnExceptionConstructor of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
                         typeof(MyAspect).FullName, typeof(ClassToWeave).FullName)
                 });
         }

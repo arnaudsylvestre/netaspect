@@ -79,6 +79,7 @@
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Kinds\CallGetFieldInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\IInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\InterceptorParametersDefinerForInstruction.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeaving\Kinds\ConstructorWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Kinds\PropertySetterWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Kinds\PropertyGetterWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\Model\InstructionWeavingInfo.cs" />
@@ -113,7 +114,6 @@
     <Compile Include="Core\Weaver\Detectors\Engine\ParametersIlGenerator.cs" />
     <Compile Include="Core\Model\Weaving\IIlInjectorsExtensions.cs" />
     <Compile Include="Core\Weaver\ATrier\AspectBuilder.cs" />
-    <Compile Include="Core\Weaver\ATrier\ConstructorWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\ATrier\ILifeCycleHandler.cs" />
     <Compile Include="Core\Weaver\ATrier\IlInjectorAvailableVariables.cs" />
     <Compile Include="Core\Weaver\ATrier\TransientLifeCycleHandler.cs" />

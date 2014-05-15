@@ -11,10 +11,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnExc
             return () =>
                 {
                     Assert.IsNull(MyAspect.Exception);
-                    var classToWeave_L = new ClassToWeave();
                     try
                     {
-                        classToWeave_L.Weaved();
+                        var classToWeave_L = new ClassToWeave();
                         Assert.Fail();
                     }
                     catch
@@ -27,7 +26,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnExc
         public class ClassToWeave
         {
             [MyAspect]
-            public string Weaved()
+            public ClassToWeave()
             {
                 throw new Exception("Hello");
             }

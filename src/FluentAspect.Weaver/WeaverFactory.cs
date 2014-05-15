@@ -49,6 +49,7 @@ namespace NetAspect.Weaver
                          BuildMethodDetector(aspectBuilder),
                          BuildPropertyGetterDetector(aspectBuilder),
                          BuildPropertyUpdaterDetector(aspectBuilder),
+                         BuildConstructorDetector(aspectBuilder),
                              
                      }),
             new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker(), typesToSave_P),
@@ -71,7 +72,7 @@ namespace NetAspect.Weaver
                     {ErrorCode.SelectorBadParameterType, new ErrorInfo("The parameter {0} in the method {1} of the aspect {2} is expected to be {3}")},
                     {ErrorCode.AssemblyGeneratedIsNotCompliant, new ErrorInfo(ErrorLevel.Failure, "An internal error : {0}")}
                 }));
-      }
+       }
 
        private static IMethodWeavingDetector BuildMethodDetector(AspectBuilder aspectBuilder)
        {
@@ -84,6 +85,20 @@ namespace NetAspect.Weaver
                aspect => aspect.OnException,
                aspect => aspect.OnFinally,
                aspect => aspect.MethodSelector
+               );
+       }
+
+       private static IMethodWeavingDetector BuildConstructorDetector(AspectBuilder aspectBuilder)
+       {
+           return new MethodWeavingDetector<MethodDefinition>(
+               aspect => aspect.AfterConstructor,
+               new AroundMethodWeaverFactory(new ConstructorWeavingMethodInjectorFactory(), aspectBuilder),
+               aspect => aspect.BeforeConstructor,
+               MethodCompliance.IsConstructor,
+               m => m,
+               aspect => aspect.OnExceptionConstructor,
+               aspect => aspect.OnFinallyConstructor,
+               aspect => aspect.ConstructorSelector
                );
        }
        private static IMethodWeavingDetector BuildPropertyGetterDetector(AspectBuilder aspectBuilder)
@@ -182,6 +197,11 @@ namespace NetAspect.Weaver
         public static bool IsPropertyGetterMethod(NetAspectDefinition aspect, MethodDefinition method)
         {
             return method.GetPropertyForGetter() != null;
+        }
+
+        public static bool IsConstructor(NetAspectDefinition aspect, MethodDefinition method)
+        {
+            return method.IsConstructor;
         }
     }
 }

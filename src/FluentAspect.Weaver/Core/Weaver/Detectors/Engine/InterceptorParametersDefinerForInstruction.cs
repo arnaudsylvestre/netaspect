@@ -68,6 +68,11 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
         {
             return AddMethod(weavingInfo_P, interceptorParameterConfigurations_P, "method");
         }
+        public static MethodWeavingInfo AddConstructor(this MethodWeavingInfo weavingInfo_P,
+                                                        InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+            return AddMethod(weavingInfo_P, interceptorParameterConfigurations_P, "constructor");
+        }
         public static MethodWeavingInfo AddCallerParameters(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
             return AddCurrentParameters(weavingInfo_P, interceptorParameterConfigurations_P, "callerparameters");
