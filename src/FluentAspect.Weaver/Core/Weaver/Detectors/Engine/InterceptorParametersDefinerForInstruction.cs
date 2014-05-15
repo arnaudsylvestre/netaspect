@@ -179,7 +179,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                 .AndInjectTheCalledPropertyInfo(weavingInfo_P);
             return weavingInfo_P;
         }
-        public static InstructionWeavingInfo AddException(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        public static MethodWeavingInfo AddException(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
            interceptorParameterConfigurations_P.AddPossibleParameter("exception")
                 .WhichCanNotBeReferenced()
@@ -187,9 +187,9 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                 .AndInjectTheVariable(variables => variables.Exception);
             return weavingInfo_P;
         }
-        public static InstructionWeavingInfo AddResult(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        public static MethodWeavingInfo AddResult(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-           interceptorParameterConfigurations_P.AddPossibleParameter("exception")
+           interceptorParameterConfigurations_P.AddPossibleParameter("result")
                 .WhereParameterTypeIsSameAsMethodResult(weavingInfo_P)
                 .AndInjectTheVariable(variables => variables.Result);
             return weavingInfo_P;

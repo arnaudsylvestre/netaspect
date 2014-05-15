@@ -29,11 +29,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Kinds
 
         public void FillAfterSpecific(MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-
+            weavingInfo_P.AddResult(interceptorParameterConfigurations_P);
         }
 
         public void FillOnExceptionSpecific(MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
+            weavingInfo_P.AddException(interceptorParameterConfigurations_P);
 
         }
 
