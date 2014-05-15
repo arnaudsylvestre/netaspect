@@ -220,6 +220,9 @@
     <Compile Include="unit\InstructionWeaving\Fields\Update\Visibility\CallGetPrivateFieldWeavingTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Visibility\CallGetProtectedFieldWeavingTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Visibility\CallGetPublicFieldWeavingTest.cs" />
+    <Compile Include="unit\InstructionWeaving\LifeCycle\InstructionWeavingWithPerInstanceLifeCycleTest.cs" />
+    <Compile Include="unit\InstructionWeaving\LifeCycle\InstructionWeavingWithTransientLifeCycleTest.cs" />
+    <Compile Include="unit\InstructionWeaving\LifeCycle\InstructionWeavingWithNoLifeCycleTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\CalledParameterName\AfterCallMethodCalledParameterNameParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\CalledParameterName\AfterCallMethodCalledParameterNameParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\CalledParameterName\AfterCallMethodCalledParameterNameParameterWithRealTypeOutTest.cs" />

@@ -102,6 +102,7 @@
     <Compile Include="Core\Model\Weaving\MethodWeavingModel.cs" />
     <Compile Include="Core\Weaver\Engine\Instructions\AroundInstructionIl.cs" />
     <Compile Include="Core\Weaver\Engine\Instructions\AroundInstructionWeaver.cs" />
+    <Compile Include="Core\Weaver\Engine\LifeCycle\PerInstanceLifeCycleHandler.cs" />
     <Compile Include="Core\Weaver\Engine\MethodWeaver.cs" />
     <Compile Include="Core\Weaver\Detectors\Model\InterceptorParameterConfiguration.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensure.cs" />

@@ -3,6 +3,6 @@
    public enum LifeCycle
    {
       Transient,
-
+   PerInstance,
    }
 }

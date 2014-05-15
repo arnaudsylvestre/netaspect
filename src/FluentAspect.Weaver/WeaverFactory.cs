@@ -31,7 +31,8 @@ namespace NetAspect.Weaver
 
        AspectBuilder aspectBuilder = new AspectBuilder(new Dictionary<LifeCycle, ILifeCycleHandler>()
          {
-            {LifeCycle.Transient, new TransientLifeCycleHandler()}
+            {LifeCycle.Transient, new TransientLifeCycleHandler()},
+            {LifeCycle.PerInstance, new PerInstanceLifeCycleHandler()},
          });
          return new WeaverEngine(
             new WeavingModelComputer(new DefaultAspectFinder(),
