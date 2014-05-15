@@ -19,6 +19,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.LifeCycle
                 Assert.AreEqual(2, MyAspect.aspects[0].nbAfter);
                 Assert.AreEqual(2, MyAspect.aspects[0].nbBefore);
                 classToWeave = new ClassToWeave();
+                classToWeave.Weaved();
                 Assert.AreEqual(2, MyAspect.aspects.Count);
             };
         }

@@ -75,9 +75,9 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
         public void CheckType(ParameterInfo parameterInfo, IErrorListener errorHandler)
         {
             var parameterType = parameterInfo.ParameterType;
-            if (parameterType == typeof (object))
+            if (parameterType.FullName.Replace("&", "") == typeof(object).FullName)
                 return;
-            if (parameterType.FullName.Replace("&", "") != ExpectedType.Replace("/", "+").Replace("&", ""))
+            if (parameterType.FullName.Replace("&", "") != Clean(ExpectedType))
             {
                 errorHandler.OnError(ErrorCode.ParameterWithBadType, FileLocation.None,
                    parameterInfo.Name, parameterInfo.Member.Name, parameterInfo.Member.DeclaringType.FullName.Replace("/", "+"),
@@ -86,6 +86,11 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
                 
             }
 
+        }
+
+        private static string Clean(string expectedType)
+        {
+            return expectedType.Replace("/", "+").Replace("&", "");
         }
 
         public void CheckGenericType(ParameterInfo info, IErrorListener errorHandler)

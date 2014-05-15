@@ -3,15 +3,6 @@
     public class DepClassWithField
     {
         public string Field;
-
-        
-        public void TestMethod()
-        {
-            if (Field == null)
-            {
-                Field = "";
-            }
-        }
     }
     public class DepClassWithProperty
     {
