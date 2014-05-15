@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NetAspect.Weaver.Core.Weaver.Generators;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.Model
 {

@@ -10,10 +10,6 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
    {
       private Dictionary<LifeCycle, ILifeCycleHandler> lifeCycles;
 
-      
-
-      
-
       public AspectBuilder(Dictionary<LifeCycle, ILifeCycleHandler> lifeCycles_P)
       {
          lifeCycles = lifeCycles_P;
@@ -21,7 +17,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
       public void CreateInterceptor(NetAspectDefinition aspect_P, MethodDefinition method_P, VariableDefinition interceptorVariable, List<Instruction> instructions)
       {
-         instructions.AppendCreateNewObject(interceptorVariable, aspect_P.Type, method_P.Module);
+         lifeCycles[aspect_P.LifeCycle].CreateInterceptor(aspect_P, method_P, interceptorVariable, instructions);
       }
 
    }

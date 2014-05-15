@@ -110,20 +110,17 @@
     <Compile Include="Core\Errors\IErrorListener.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\AspectApplier.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\InstructionWeavingDetector.cs" />
-    <Compile Include="Core\Weaver\ATrier\ParameterNameInterceptorParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\ParametersIlGenerator.cs" />
     <Compile Include="Core\Model\Weaving\IIlInjectorsExtensions.cs" />
-    <Compile Include="Core\Weaver\ATrier\AspectBuilder.cs" />
-    <Compile Include="Core\Weaver\ATrier\ILifeCycleHandler.cs" />
+    <Compile Include="Core\Weaver\Engine\LifeCycle\AspectBuilder.cs" />
+    <Compile Include="Core\Weaver\Engine\LifeCycle\ILifeCycleHandler.cs" />
     <Compile Include="Core\Weaver\ATrier\IlInjectorAvailableVariables.cs" />
-    <Compile Include="Core\Weaver\ATrier\TransientLifeCycleHandler.cs" />
+    <Compile Include="Core\Weaver\Engine\LifeCycle\TransientLifeCycleHandler.cs" />
     <Compile Include="Core\Weaver\Engine\WeavingModelComputer.cs" />
     <Compile Include="Helpers\IL\CollectionExtensions.cs" />
     <Compile Include="Core\Model\Weaving\IIlInjector.cs" />
     <Compile Include="Core\Weaver\ATrier\Injector.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Kinds\MethodWeavingMethodInjectorFactory.cs" />
-    <Compile Include="Core\Weaver\ATrier\MethodWeavingPropertyGetInjectorFactory.cs" />
-    <Compile Include="Core\Weaver\ATrier\MethodWeavingPropertySetInjectorFactory.cs" />
     <Compile Include="Helpers\IL\InstructionsExtensions.cs" />
     <Compile Include="Helpers\IL\InstructionExtensions.cs" />
     <Compile Include="Helpers\IL\MethodDefinitionExtensions.cs" />
@@ -151,9 +148,6 @@
       <Project>{F5E3F3E9-13C1-4CD3-B15A-6F5F3422BDB7}</Project>
       <Name>NetAspect.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Weaver\Engine\LifeCycle\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
