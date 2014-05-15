@@ -38,22 +38,48 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
             return weavingInfo_P;
         }
 
-        public static InstructionWeavingInfo AddCallerMethod(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        public static MethodWeavingInfo AddCallerMethod(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-           interceptorParameterConfigurations_P.AddPossibleParameter("callermethod")
-                .WhichCanNotBeReferenced()
-                .WhichMustBeOfType<MethodBase>()
-                .AndInjectTheCurrentMethod();
+            return AddMethod(weavingInfo_P, interceptorParameterConfigurations_P, "callermethod");
+        }
+
+        private static MethodWeavingInfo AddMethod(MethodWeavingInfo weavingInfo_P,
+                                                        InterceptorParameterConfigurations interceptorParameterConfigurations_P,
+                                                        string parameterName)
+        {
+            interceptorParameterConfigurations_P.AddPossibleParameter(parameterName)
+                                                .WhichCanNotBeReferenced()
+                                                .WhichMustBeOfType<MethodBase>()
+                                                .AndInjectTheCurrentMethod();
             return weavingInfo_P;
         }
-        public static InstructionWeavingInfo AddCallerParameters(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+
+        public static MethodWeavingInfo AddMethod(this MethodWeavingInfo weavingInfo_P,
+                                                        InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-           interceptorParameterConfigurations_P.AddPossibleParameter("callerparameters")
-                .WhichCanNotBeReferenced()
-                .WhichMustBeOfType<object[]>()
-                .AndInjectTheVariable(variables => variables.Parameters);
+            return AddMethod(weavingInfo_P, interceptorParameterConfigurations_P, "method");
+        }
+        public static MethodWeavingInfo AddCallerParameters(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+            return AddCurrentParameters(weavingInfo_P, interceptorParameterConfigurations_P, "callerparameters");
+        }
+        public static MethodWeavingInfo AddParameters(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+            return AddCurrentParameters(weavingInfo_P, interceptorParameterConfigurations_P, "parameters");
+        }
+
+        private static MethodWeavingInfo AddCurrentParameters(MethodWeavingInfo weavingInfo_P,
+                                                                   InterceptorParameterConfigurations
+                                                                       interceptorParameterConfigurations_P,
+                                                                   string parameterName)
+        {
+            interceptorParameterConfigurations_P.AddPossibleParameter(parameterName)
+                                                .WhichCanNotBeReferenced()
+                                                .WhichMustBeOfType<object[]>()
+                                                .AndInjectTheVariable(variables => variables.Parameters);
             return weavingInfo_P;
         }
+
         public static InstructionWeavingInfo AddCalledParameters(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
            interceptorParameterConfigurations_P.AddPossibleParameter("calledparameters")
@@ -75,18 +101,32 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
             return weavingInfo_P;
 
         }
-        public static InstructionWeavingInfo AddCallerParameterNames(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        
+        public static MethodWeavingInfo AddCallerParameterNames(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+            return AddParameterNames(weavingInfo_P, interceptorParameterConfigurations_P, () => "caller{0}");
+        }
+        public static MethodWeavingInfo AddParameterNames(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+            return AddParameterNames(weavingInfo_P, interceptorParameterConfigurations_P, () => "{0}");
+        }
+
+        private static MethodWeavingInfo AddParameterNames(MethodWeavingInfo weavingInfo_P,
+                                                           InterceptorParameterConfigurations
+                                                               interceptorParameterConfigurations_P,
+                                                           Func<string> parameterNameFormatProvider)
         {
             foreach (ParameterDefinition parameter in weavingInfo_P.Method.Parameters)
             {
-
-               interceptorParameterConfigurations_P.AddPossibleParameter("caller" + parameter.Name.ToLower())
-                    .WhichCanNotBeOut()
-                    .WhichMustBeOfTypeOfParameter(parameter)
-                    .AndInjectTheParameter(parameter);
+                interceptorParameterConfigurations_P.AddPossibleParameter(string.Format(parameterNameFormatProvider(),
+                                                                                        parameter.Name.ToLower()))
+                                                    .WhichCanNotBeOut()
+                                                    .WhichMustBeOfTypeOfParameter(parameter)
+                                                    .AndInjectTheParameter(parameter);
             }
             return weavingInfo_P;
         }
+
         public static InstructionWeavingInfo AddColumnNumber(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
            interceptorParameterConfigurations_P.AddPossibleParameter("columnnumber")

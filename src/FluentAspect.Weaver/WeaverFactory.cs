@@ -9,6 +9,8 @@ using NetAspect.Weaver.Core.Weaver;
 using NetAspect.Weaver.Core.Weaver.Detectors;
 using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds;
+using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
+using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Kinds;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Engine.AspectCheckers;
 using NetAspect.Weaver.Core.Weaver.Engine.AspectFinders;
@@ -44,6 +46,7 @@ namespace NetAspect.Weaver
                      },
                      new List<IMethodWeavingDetector>
                      {
+                         BuildMethodDetector(aspectBuilder),
                              
                      }),
             new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker(), typesToSave_P),
@@ -68,7 +71,21 @@ namespace NetAspect.Weaver
                 }));
       }
 
-       private static InstructionWeavingDetector<FieldDefinition> BuildCallGetFieldDetector(AspectBuilder aspectBuilder)
+        private static IMethodWeavingDetector BuildMethodDetector(AspectBuilder aspectBuilder)
+        {
+            return new MethodWeavingDetector<MethodDefinition>(
+                aspect => aspect.After,
+                new AroundMethodWeaverFactory(new MethodWeavingMethodInjectorFactory(), aspectBuilder),
+                aspect => aspect.Before,
+                MethodCompliance.IsMethod,
+                m => m,
+                aspect => aspect.OnException,
+                aspect => aspect.OnFinally,
+                aspect => aspect.MethodSelector
+                );
+        }
+
+        private static InstructionWeavingDetector<FieldDefinition> BuildCallGetFieldDetector(AspectBuilder aspectBuilder)
       {
           return new InstructionWeavingDetector<FieldDefinition>(
               InstructionCompliance.IsGetFieldInstruction,
@@ -123,4 +140,12 @@ namespace NetAspect.Weaver
 
 
    }
+
+    internal class MethodCompliance
+    {
+        public static bool IsMethod(NetAspectDefinition aspect, MethodDefinition method)
+        {
+            return !method.IsConstructor;
+        }
+    }
 }

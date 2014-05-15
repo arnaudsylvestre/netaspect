@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Mono.Cecil;
+using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
@@ -23,7 +26,10 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
                                                                                 MethodInfo interceptorMethod,
                                                                                 NetAspectDefinition aspect,
             Action<MethodWeavingInfo, InterceptorParameterConfigurations> fillSpecific)
-        {
+       {
+           if (interceptorMethod == null)
+               return new NoIIlInjector();
+
             MethodWeavingInfo weavingInfo_P = new MethodWeavingInfo()
                 {
                     Interceptor                    = interceptorMethod,
@@ -77,5 +83,19 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
             //checker.CreateCheckerForExceptionParameter();
             return Create(method, interceptorMethod, aspect, (info, interceptorParameterConfigurations) => builder.FillOnExceptionSpecific(info, interceptorParameterConfigurations));
         }
+
+
+
+        private class NoIIlInjector : IIlInjector
+        {
+            public void Check(ErrorHandler errorHandler)
+            {
+            }
+
+            public void Inject(List<Instruction> instructions, IlInjectorAvailableVariables availableInformations)
+            {
+            }
+        }
+
     }
 }

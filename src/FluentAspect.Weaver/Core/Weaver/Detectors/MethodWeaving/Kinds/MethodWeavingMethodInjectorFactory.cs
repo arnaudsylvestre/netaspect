@@ -7,13 +7,13 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Kinds
     {
         public void FillCommon(MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-            weavingInfo_P.AddInstance(interceptorParameterConfigurations_P);
-            //    .AddCurrentMethod()
-
-
-            //checker.CreateCheckerForMethodParameter();
+            weavingInfo_P.AddInstance(interceptorParameterConfigurations_P)
+                         .AddMethod(interceptorParameterConfigurations_P)
+                         .AddParameters(interceptorParameterConfigurations_P)
+                         .AddParameterNames(interceptorParameterConfigurations_P)
+                         ;
+            
             //checker.CreateCheckerForParameterNameParameter(method);
-            //checker.CreateCheckerForParametersParameter();
 
 
 
