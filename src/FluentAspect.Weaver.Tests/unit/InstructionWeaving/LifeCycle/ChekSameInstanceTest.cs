@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameters.After.Called
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.LifeCycle
 {
     public class ChekSameInstanceTest :
         NetAspectTest<ChekSameInstanceTest.ClassToWeave>

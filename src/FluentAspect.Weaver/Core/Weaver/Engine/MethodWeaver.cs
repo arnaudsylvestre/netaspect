@@ -36,8 +36,14 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
             var ils = new List<AroundInstructionIl>();
             foreach (var v in instruction.Value)
             {
+                var aroundInstructionIl = new AroundInstructionIl();
+                if (variablesForInstruction.InterceptorVariable == null)
+                {
+
+                    variablesForInstruction.InterceptorVariable = v.CreateAspect(aroundInstructionIl);
+                }
+                
                v.Check(errorHandler, variablesForInstruction);
-               var aroundInstructionIl = new AroundInstructionIl();
                v.Weave(aroundInstructionIl, variablesForInstruction);
                ils.Add(aroundInstructionIl);
             }
@@ -46,6 +52,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
             instructionIl.Before.AddRange(variablesForInstruction.calledParametersObjectInstructions);
             availableVariables.BeforeInstructions.AddRange(variablesForInstruction.BeforeInstructions);
             allVariables.AddRange(variablesForInstruction.Variables);
+            allVariables.Add(variablesForInstruction.InterceptorVariable);
             foreach (var aroundInstructionIl in ils)
             {
                instructionIl.Before.AddRange(aroundInstructionIl.BeforeInstruction);
@@ -55,10 +62,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
             instructionIl.Before.AddRange(variablesForInstruction.recallcalledParametersInstructions);
          }
 
-         methodWeavingModel.Method.Befores.Check(errorHandler);
-         methodWeavingModel.Method.Afters.Check(errorHandler);
-         methodWeavingModel.Method.OnExceptions.Check(errorHandler);
-         methodWeavingModel.Method.OnFinallys.Check(errorHandler);
+          methodWeavingModel.Method.Check(errorHandler);
          if (errorHandler.errors.Count > 0)
             return;
 
@@ -66,10 +70,9 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
          var afters = new List<Instruction>();
          var onExceptions = new List<Instruction>();
          var onFinallys = new List<Instruction>();
-         methodWeavingModel.Method.Befores.Inject(befores, availableVariables);
-         methodWeavingModel.Method.Afters.Inject(afters, availableVariables);
-         methodWeavingModel.Method.OnExceptions.Inject(onExceptions, availableVariables);
-         methodWeavingModel.Method.OnFinallys.Inject(onFinallys, availableVariables);
+
+         availableVariables.InterceptorVariable = methodWeavingModel.Method.CreateAspect(befores);
+          methodWeavingModel.Method.Inject(befores, afters, onExceptions, onFinallys, availableVariables);
 
 
          w.BeforeInstructions.AddRange(availableVariables.BeforeInstructions);

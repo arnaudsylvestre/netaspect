@@ -220,7 +220,7 @@
     <Compile Include="unit\InstructionWeaving\Fields\Update\Visibility\CallGetPrivateFieldWeavingTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Visibility\CallGetProtectedFieldWeavingTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Visibility\CallGetPublicFieldWeavingTest.cs" />
-    <Compile Include="unit\InstructionWeaving\LifeCycle\Copie de InstructionWeavingWithNoLifeCycleTest.cs" />
+    <Compile Include="unit\InstructionWeaving\LifeCycle\ChekSameInstanceTest.cs" />
     <Compile Include="unit\InstructionWeaving\LifeCycle\InstructionWeavingWithPerTypeLifeCycleTest.cs" />
     <Compile Include="unit\InstructionWeaving\LifeCycle\InstructionWeavingWithPerInstanceLifeCycleTest.cs" />
     <Compile Include="unit\InstructionWeaving\LifeCycle\InstructionWeavingWithTransientLifeCycleTest.cs" />

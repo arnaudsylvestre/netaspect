@@ -80,7 +80,7 @@ namespace NetAspect.Weaver
        {
            return new MethodWeavingDetector<MethodDefinition>(
                aspect => aspect.After,
-               new AroundMethodWeaverFactory(new MethodWeavingMethodInjectorFactory(), aspectBuilder),
+               new AroundMethodWeaverFactory(new MethodWeavingMethodInjectorFactory()),
                aspect => aspect.Before,
                MethodCompliance.IsMethod,
                m => m,
@@ -94,7 +94,7 @@ namespace NetAspect.Weaver
        {
            return new MethodWeavingDetector<MethodDefinition>(
                aspect => aspect.AfterConstructor,
-               new AroundMethodWeaverFactory(new ConstructorWeavingMethodInjectorFactory(), aspectBuilder),
+               new AroundMethodWeaverFactory(new ConstructorWeavingMethodInjectorFactory()),
                aspect => aspect.BeforeConstructor,
                MethodCompliance.IsConstructor,
                m => m,
@@ -107,7 +107,7 @@ namespace NetAspect.Weaver
        {
            return new MethodWeavingDetector<PropertyDefinition>(
                aspect => aspect.AfterPropertyGetMethod,
-               new AroundMethodWeaverFactory(new PropertyGetterWeavingMethodInjectorFactory(), aspectBuilder),
+               new AroundMethodWeaverFactory(new PropertyGetterWeavingMethodInjectorFactory()),
                aspect => aspect.BeforePropertyGetMethod,
                MethodCompliance.IsPropertyGetterMethod,
                m => m.GetPropertyForGetter(),
@@ -120,7 +120,7 @@ namespace NetAspect.Weaver
        {
            return new MethodWeavingDetector<PropertyDefinition>(
                aspect => aspect.AfterPropertySetMethod,
-               new AroundMethodWeaverFactory(new PropertySetterWeavingMethodInjectorFactory(), aspectBuilder),
+               new AroundMethodWeaverFactory(new PropertySetterWeavingMethodInjectorFactory()),
                aspect => aspect.BeforePropertySetMethod,
                MethodCompliance.IsPropertySetterMethod,
                m => m.GetPropertyForSetter(),
@@ -135,10 +135,11 @@ namespace NetAspect.Weaver
           return new InstructionWeavingDetector<FieldDefinition>(
               InstructionCompliance.IsGetFieldInstruction,
               aspect => aspect.FieldSelector,
-              new AroundInstructionWeaverFactory(new CallGetFieldInterceptorAroundInstructionBuilder(), aspectBuilder),
+              new AroundInstructionWeaverFactory(new CallGetFieldInterceptorAroundInstructionBuilder()),
               instruction => (instruction.Operand as FieldReference).Resolve(),
               aspect => aspect.BeforeGetField,
-              aspect => aspect.AfterGetField);
+              aspect => aspect.AfterGetField,
+              aspectBuilder);
       }
 
       private static InstructionWeavingDetector<FieldDefinition> BuildCallUpdateFieldDetector(AspectBuilder aspectBuilder)
@@ -146,30 +147,33 @@ namespace NetAspect.Weaver
           return new InstructionWeavingDetector<FieldDefinition>(
               InstructionCompliance.IsUpdateFieldInstruction,
               aspect => aspect.FieldSelector,
-              new AroundInstructionWeaverFactory(new CallUpdateFieldInterceptorAroundInstructionBuilder(), aspectBuilder),
+              new AroundInstructionWeaverFactory(new CallUpdateFieldInterceptorAroundInstructionBuilder()),
               instruction => (instruction.Operand as FieldReference).Resolve(),
               aspect => aspect.BeforeUpdateField,
-              aspect => aspect.AfterUpdateField);
+              aspect => aspect.AfterUpdateField,
+              aspectBuilder);
       }
       private static InstructionWeavingDetector<PropertyDefinition> BuildCallUpdatePropertyDetector(AspectBuilder aspectBuilder)
       {
           return new InstructionWeavingDetector<PropertyDefinition>(
               InstructionCompliance.IsSetPropertyCall,
               aspect => aspect.PropertySelector,
-              new AroundInstructionWeaverFactory(new CallSetPropertyInterceptorAroundInstructionBuilder(), aspectBuilder),
+              new AroundInstructionWeaverFactory(new CallSetPropertyInterceptorAroundInstructionBuilder()),
               instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForSetter(),
               aspect => aspect.BeforeSetProperty,
-              aspect => aspect.AfterSetProperty);
+              aspect => aspect.AfterSetProperty,
+              aspectBuilder);
       }
       private static InstructionWeavingDetector<PropertyDefinition> BuildCallGetPropertyDetector(AspectBuilder aspectBuilder)
       {
           return new InstructionWeavingDetector<PropertyDefinition>(
               InstructionCompliance.IsGetPropertyCall,
               aspect => aspect.PropertySelector,
-              new AroundInstructionWeaverFactory(new CallGetPropertyInterceptorAroundInstructionBuilder(), aspectBuilder),
+              new AroundInstructionWeaverFactory(new CallGetPropertyInterceptorAroundInstructionBuilder()),
               instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForGetter(),
               aspect => aspect.BeforeGetProperty,
-              aspect => aspect.AfterGetProperty);
+              aspect => aspect.AfterGetProperty,
+              aspectBuilder);
       }
 
       private static InstructionWeavingDetector<MethodDefinition> BuildCallMethodDetector(AspectBuilder aspectBuilder)
@@ -177,10 +181,11 @@ namespace NetAspect.Weaver
           return new InstructionWeavingDetector<MethodDefinition>(
               InstructionCompliance.IsCallMethodInstruction,
               aspect => aspect.MethodSelector,
-              new AroundInstructionWeaverFactory(new CallMethodInterceptorAroundInstructionBuilder(), aspectBuilder),
+              new AroundInstructionWeaverFactory(new CallMethodInterceptorAroundInstructionBuilder()),
               instruction => (instruction.Operand as MethodReference).Resolve(),
               aspect => aspect.BeforeCallMethod,
-              aspect => aspect.AfterCallMethod);
+              aspect => aspect.AfterCallMethod,
+              aspectBuilder);
       }
 
 

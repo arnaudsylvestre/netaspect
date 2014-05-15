@@ -2,6 +2,7 @@
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
+using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Model.Weaving
 {
@@ -16,7 +17,8 @@ namespace NetAspect.Weaver.Core.Model.Weaving
             Instructions[instruction].Add(weaver);
         }
 
-        public AroundMethodWeavingModel Method = new AroundMethodWeavingModel();
+        public AroundMethodWeaver Method;
 
+        
     }
 }

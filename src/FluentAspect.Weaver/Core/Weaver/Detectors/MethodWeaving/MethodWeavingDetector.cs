@@ -47,14 +47,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
             if (!AspectApplier.CanApply(memberReference, aspect, selectorProvider))
                 return null;
 
-            string interceprotVariableName = Guid.NewGuid().ToString();
-
             return new AroundMethodWeavingModel()
             {
-                Befores = new List<IIlInjector> { aroundMethodWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, aspect, interceprotVariableName) },
-                Afters = new List<IIlInjector> { aroundMethodWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, aspect, interceprotVariableName) },
-                OnExceptions = new List<IIlInjector> { aroundMethodWeaverFactory.CreateForExceptions(method, onExceptionInterceptorProvider(aspect).Method, aspect, interceprotVariableName) },
-                OnFinallys = new List<IIlInjector> { aroundMethodWeaverFactory.CreateForOnFinally(method, onFinallyInterceptorProvider(aspect).Method, aspect, interceprotVariableName) }
+                Befores = new List<IIlInjector> { aroundMethodWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method) },
+                Afters = new List<IIlInjector> { aroundMethodWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method) },
+                OnExceptions = new List<IIlInjector> { aroundMethodWeaverFactory.CreateForExceptions(method, onExceptionInterceptorProvider(aspect).Method) },
+                OnFinallys = new List<IIlInjector> { aroundMethodWeaverFactory.CreateForOnFinally(method, onFinallyInterceptorProvider(aspect).Method) }
                 };
         }
     }

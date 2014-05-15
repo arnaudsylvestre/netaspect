@@ -4,6 +4,7 @@ using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
+using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
 {
@@ -21,8 +22,9 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
 
         private readonly Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider;
         private readonly Func<NetAspectDefinition, Interceptor> afterInterceptorProvider;
+        private AspectBuilder aspectBuilder;
 
-        public InstructionWeavingDetector(IsInstructionCompliant isInstructionCompliant, SelectorProvider<TMember> selectorProvider, AroundInstructionWeaverFactory aroundInstructionWeaverFactory, Func<Instruction, TMember> memberProvider, Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider, Func<NetAspectDefinition, Interceptor> afterInterceptorProvider)
+        public InstructionWeavingDetector(IsInstructionCompliant isInstructionCompliant, SelectorProvider<TMember> selectorProvider, AroundInstructionWeaverFactory aroundInstructionWeaverFactory, Func<Instruction, TMember> memberProvider, Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider, Func<NetAspectDefinition, Interceptor> afterInterceptorProvider, AspectBuilder aspectBuilder)
         {
             this.isInstructionCompliant = isInstructionCompliant;
             this.selectorProvider = selectorProvider;
@@ -30,6 +32,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
             this.memberProvider = memberProvider;
             this.beforeInterceptorProvider = beforeInterceptorProvider;
             this.afterInterceptorProvider = afterInterceptorProvider;
+            this.aspectBuilder = aspectBuilder;
         }
 
 
@@ -42,10 +45,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
             if (!AspectApplier.CanApply(memberReference, aspect, selectorProvider))
                 return null;
 
-            string interceptorVariableName = Guid.NewGuid().ToString();
             return new AroundInstructionWeaver(
-                aroundInstructionWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, aspect, instruction, interceptorVariableName),
-                aroundInstructionWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, aspect, instruction, interceptorVariableName)
+                aroundInstructionWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, instruction),
+                aroundInstructionWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, instruction),
+                aspectBuilder,
+                aspect,
+                method
                 );
         }
     }

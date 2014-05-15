@@ -21,10 +21,10 @@ namespace NetAspect.Weaver.Core.Model.Weaving
             if (detectWeavingModel == null)
                 return;
             var methodWeavingModel = GetMethodWeavingModel(method);
-            methodWeavingModel.Method.Befores.AddRange(detectWeavingModel.Befores);
-            methodWeavingModel.Method.Afters.AddRange(detectWeavingModel.Afters);
-            methodWeavingModel.Method.OnExceptions.AddRange(detectWeavingModel.OnExceptions);
-            methodWeavingModel.Method.OnFinallys.AddRange(detectWeavingModel.OnFinallys);
+            methodWeavingModel.Method.Model.Befores.AddRange(detectWeavingModel.Befores);
+            methodWeavingModel.Method.Model.Afters.AddRange(detectWeavingModel.Afters);
+            methodWeavingModel.Method.Model.OnExceptions.AddRange(detectWeavingModel.OnExceptions);
+            methodWeavingModel.Method.Model.OnFinallys.AddRange(detectWeavingModel.OnFinallys);
         }
 
         private MethodWeavingModel GetMethodWeavingModel(MethodDefinition method)

@@ -90,6 +90,7 @@
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\IInterceptorAroundMethodBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\Model\InterceptorParameterConfigurations.cs" />
     <Compile Include="Core\Weaver\Detectors\SelectorProvider.cs" />
+    <Compile Include="Core\Weaver\Engine\AroundMethodWeaver.cs" />
     <Compile Include="Core\Weaver\Engine\ICallWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Engine\IMethodWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\FilteredMethodWeavingDetector.cs" />

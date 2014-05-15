@@ -36,6 +36,8 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
       public List<VariableDefinition> Variables { get; private set; }
       public List<FieldDefinition> Fields { get; private set; }
 
+      public VariableDefinition InterceptorVariable { get; set; }
+
       public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method, Instruction instruction)
       {
          this.instruction = instruction;
