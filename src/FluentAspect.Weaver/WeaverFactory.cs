@@ -47,6 +47,8 @@ namespace NetAspect.Weaver
                      new List<IMethodWeavingDetector>
                      {
                          BuildMethodDetector(aspectBuilder),
+                         BuildPropertyGetterDetector(aspectBuilder),
+                         BuildPropertyUpdaterDetector(aspectBuilder),
                              
                      }),
             new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker(), typesToSave_P),
@@ -71,19 +73,45 @@ namespace NetAspect.Weaver
                 }));
       }
 
-        private static IMethodWeavingDetector BuildMethodDetector(AspectBuilder aspectBuilder)
-        {
-            return new MethodWeavingDetector<MethodDefinition>(
-                aspect => aspect.After,
-                new AroundMethodWeaverFactory(new MethodWeavingMethodInjectorFactory(), aspectBuilder),
-                aspect => aspect.Before,
-                MethodCompliance.IsMethod,
-                m => m,
-                aspect => aspect.OnException,
-                aspect => aspect.OnFinally,
-                aspect => aspect.MethodSelector
-                );
-        }
+       private static IMethodWeavingDetector BuildMethodDetector(AspectBuilder aspectBuilder)
+       {
+           return new MethodWeavingDetector<MethodDefinition>(
+               aspect => aspect.After,
+               new AroundMethodWeaverFactory(new MethodWeavingMethodInjectorFactory(), aspectBuilder),
+               aspect => aspect.Before,
+               MethodCompliance.IsMethod,
+               m => m,
+               aspect => aspect.OnException,
+               aspect => aspect.OnFinally,
+               aspect => aspect.MethodSelector
+               );
+       }
+       private static IMethodWeavingDetector BuildPropertyGetterDetector(AspectBuilder aspectBuilder)
+       {
+           return new MethodWeavingDetector<PropertyDefinition>(
+               aspect => aspect.AfterPropertyGetMethod,
+               new AroundMethodWeaverFactory(new PropertyGetterWeavingMethodInjectorFactory(), aspectBuilder),
+               aspect => aspect.BeforePropertyGetMethod,
+               MethodCompliance.IsPropertyGetterMethod,
+               m => m.GetPropertyForGetter(),
+               aspect => aspect.OnExceptionPropertyGetMethod,
+               aspect => aspect.OnFinallyPropertyGetMethod,
+               aspect => aspect.PropertySelector
+               );
+       }
+       private static IMethodWeavingDetector BuildPropertyUpdaterDetector(AspectBuilder aspectBuilder)
+       {
+           return new MethodWeavingDetector<PropertyDefinition>(
+               aspect => aspect.AfterPropertySetMethod,
+               new AroundMethodWeaverFactory(new PropertySetterWeavingMethodInjectorFactory(), aspectBuilder),
+               aspect => aspect.BeforePropertySetMethod,
+               MethodCompliance.IsPropertySetterMethod,
+               m => m.GetPropertyForSetter(),
+               aspect => aspect.OnExceptionPropertySetMethod,
+               aspect => aspect.OnFinallyPropertySetMethod,
+               aspect => aspect.PropertySelector
+               );
+       }
 
         private static InstructionWeavingDetector<FieldDefinition> BuildCallGetFieldDetector(AspectBuilder aspectBuilder)
       {
@@ -145,7 +173,15 @@ namespace NetAspect.Weaver
     {
         public static bool IsMethod(NetAspectDefinition aspect, MethodDefinition method)
         {
-            return !method.IsConstructor;
+            return !method.IsConstructor && !IsPropertySetterMethod(aspect, method) && !IsPropertyGetterMethod(aspect, method);
+        }
+        public static bool IsPropertySetterMethod(NetAspectDefinition aspect, MethodDefinition method)
+        {
+            return method.GetPropertyForSetter() != null;
+        }
+        public static bool IsPropertyGetterMethod(NetAspectDefinition aspect, MethodDefinition method)
+        {
+            return method.GetPropertyForGetter() != null;
         }
     }
 }

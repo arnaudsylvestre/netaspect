@@ -153,11 +153,19 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
       }
       public static InterceptorParameterConfiguration AndInjectTheCurrentMethod(this InterceptorParameterConfiguration configuration)
       {
-         configuration.Generator.Generators.Add((parameter, instructions, info) =>
-         {
-            instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentMethodBase));
-         });
-         return configuration;
+          configuration.Generator.Generators.Add((parameter, instructions, info) =>
+          {
+              instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentMethodBase));
+          });
+          return configuration;
+      }
+      public static InterceptorParameterConfiguration AndInjectTheCurrentProperty(this InterceptorParameterConfiguration configuration)
+      {
+          configuration.Generator.Generators.Add((parameter, instructions, info) =>
+          {
+              instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentPropertyInfo));
+          });
+          return configuration;
       }
 
       public static InterceptorParameterConfiguration AndInjectTheCalledFieldInfo(this InterceptorParameterConfiguration configuration, InstructionWeavingInfo weavingInfo_P)

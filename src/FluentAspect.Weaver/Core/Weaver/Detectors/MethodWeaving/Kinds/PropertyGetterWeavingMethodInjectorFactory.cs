@@ -3,14 +3,12 @@ using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Kinds
 {
-    public class MethodWeavingMethodInjectorFactory : IInterceptorAroundMethodBuilder
+    public class PropertyGetterWeavingMethodInjectorFactory : IInterceptorAroundMethodBuilder
     {
         public void FillCommon(MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
             weavingInfo_P.AddInstance(interceptorParameterConfigurations_P)
-                         .AddMethod(interceptorParameterConfigurations_P)
-                         .AddParameters(interceptorParameterConfigurations_P)
-                         .AddParameterNames(interceptorParameterConfigurations_P)
+                         .AddProperty(interceptorParameterConfigurations_P)
                          ;
         }
 

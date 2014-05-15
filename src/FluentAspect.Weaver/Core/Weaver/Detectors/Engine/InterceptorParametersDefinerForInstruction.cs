@@ -53,6 +53,15 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                                                 .AndInjectTheCurrentMethod();
             return weavingInfo_P;
         }
+        public static MethodWeavingInfo AddProperty(this MethodWeavingInfo weavingInfo_P,
+                                                        InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+            interceptorParameterConfigurations_P.AddPossibleParameter("property")
+                                                .WhichCanNotBeReferenced()
+                                                .WhichMustBeOfType<PropertyInfo>()
+                                                .AndInjectTheCurrentProperty();
+            return weavingInfo_P;
+        }
 
         public static MethodWeavingInfo AddMethod(this MethodWeavingInfo weavingInfo_P,
                                                         InterceptorParameterConfigurations interceptorParameterConfigurations_P)
@@ -124,6 +133,19 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                                                     .WhichMustBeOfTypeOfParameter(parameter)
                                                     .AndInjectTheParameter(parameter);
             }
+            return weavingInfo_P;
+        }
+
+
+        public static MethodWeavingInfo AddValue(this MethodWeavingInfo weavingInfo_P,
+                                                           InterceptorParameterConfigurations
+                                                               interceptorParameterConfigurations_P)
+        {
+            var parameter = weavingInfo_P.Method.Parameters[0];
+            interceptorParameterConfigurations_P.AddPossibleParameter("value")
+                                                .WhichCanNotBeOut()
+                                                .WhichMustBeOfTypeOfParameter(parameter)
+                                                .AndInjectTheParameter(parameter);
             return weavingInfo_P;
         }
 
