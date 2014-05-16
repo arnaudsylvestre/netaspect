@@ -5,7 +5,7 @@ namespace NetAspect.Weaver.Core.Errors
 {
     public class ErrorInfoComputer
     {
-        private Dictionary<ErrorCode, ErrorInfo> information;
+        private readonly Dictionary<ErrorCode, ErrorInfo> information;
 
         public ErrorInfoComputer(Dictionary<ErrorCode, ErrorInfo> information)
         {

@@ -5,6 +5,7 @@ using NetAspect.Weaver.Core.Assemblies;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Core.Weaver.Helpers;
 
 namespace NetAspect.Weaver.Core.Weaver
 {
@@ -43,12 +44,7 @@ namespace NetAspect.Weaver.Core.Weaver
 
        private ErrorReport ConvertErrorReport(ErrorHandler errorHandler, ErrorInfoComputer computer)
        {
-           return new ErrorReport((from e in errorHandler.Errors
-                                   select new ErrorReport.Error()
-               {
-                   Level = computer.ComputeLevel(e.Code),
-                   Message                   = computer.ComputeMessage(e.Code, e.Parameters)
-               }).ToList());
+           return errorHandler.ConvertToErrorReport(computer);
        }
 
        public interface IAssemblyPoolFactory

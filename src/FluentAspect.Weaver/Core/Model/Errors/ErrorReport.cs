@@ -14,9 +14,9 @@ namespace NetAspect.Weaver.Core.Model.Errors
             public string Message { get; set; }
         }
 
-        public ErrorReport(List<Error> errors)
+        public ErrorReport(IEnumerable<Error> errors)
         {
-            Errors = errors;
+            Errors = new List<Error>(errors);
         }
 
         public List<Error> Errors { get; private set; }
