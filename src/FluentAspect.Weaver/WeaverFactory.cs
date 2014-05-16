@@ -49,9 +49,11 @@ namespace NetAspect.Weaver
                      new List<IMethodWeavingDetector>
                      {
                          BuildMethodDetector(aspectBuilder),
-                         BuildPropertyGetterDetector(aspectBuilder),
-                         BuildPropertyUpdaterDetector(aspectBuilder),
-                         BuildConstructorDetector(aspectBuilder),
+                         BuildPropertyGetterDetector(),
+                         BuildPropertyUpdaterDetector(),
+                         BuildConstructorDetector(),
+
+                         BuildMethodParameterDetector(),
                              
                      }, aspectBuilder),
             new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker(), typesToSave_P),
@@ -78,19 +80,32 @@ namespace NetAspect.Weaver
 
        private static IMethodWeavingDetector BuildMethodDetector(AspectBuilder aspectBuilder)
        {
-           return new MethodWeavingDetector<MethodDefinition>(
-               aspect => aspect.After,
-               new AroundMethodWeaverFactory(new MethodWeavingMethodInjectorFactory()),
-               aspect => aspect.Before,
-               MethodCompliance.IsMethod,
-               m => m,
-               aspect => aspect.OnException,
-               aspect => aspect.OnFinally,
-               aspect => aspect.MethodSelector
-               );
+          return new MethodWeavingDetector<MethodDefinition>(
+              aspect => aspect.After,
+              new AroundMethodWeaverFactory(new MethodWeavingMethodInjectorFactory()),
+              aspect => aspect.Before,
+              MethodCompliance.IsMethod,
+              m => m,
+              aspect => aspect.OnException,
+              aspect => aspect.OnFinally,
+              aspect => aspect.MethodSelector
+              );
        }
 
-       private static IMethodWeavingDetector BuildConstructorDetector(AspectBuilder aspectBuilder)
+       private static IMethodWeavingDetector BuildMethodParameterDetector()
+       {
+          return new ParameterWeavingDetector(
+              aspect => aspect.AfterMethodForParameter,
+              new AroundMethodForParameterWeaverFactory(new MethodWeavingParameterInjectorFactory()),
+              aspect => aspect.BeforeMethodForParameter,
+              MethodCompliance.IsMethodParameter,
+              aspect => aspect.OnExceptionMethodForParameter,
+              aspect => aspect.OnFinallyMethodForParameter,
+              aspect => aspect.ParameterSelector
+              );
+       }
+
+       private static IMethodWeavingDetector BuildConstructorDetector()
        {
            return new MethodWeavingDetector<MethodDefinition>(
                aspect => aspect.AfterConstructor,
@@ -103,7 +118,7 @@ namespace NetAspect.Weaver
                aspect => aspect.ConstructorSelector
                );
        }
-       private static IMethodWeavingDetector BuildPropertyGetterDetector(AspectBuilder aspectBuilder)
+       private static IMethodWeavingDetector BuildPropertyGetterDetector()
        {
            return new MethodWeavingDetector<PropertyDefinition>(
                aspect => aspect.AfterPropertyGetMethod,
@@ -116,7 +131,7 @@ namespace NetAspect.Weaver
                aspect => aspect.PropertySelector
                );
        }
-       private static IMethodWeavingDetector BuildPropertyUpdaterDetector(AspectBuilder aspectBuilder)
+       private static IMethodWeavingDetector BuildPropertyUpdaterDetector()
        {
            return new MethodWeavingDetector<PropertyDefinition>(
                aspect => aspect.AfterPropertySetMethod,
@@ -196,6 +211,10 @@ namespace NetAspect.Weaver
         public static bool IsMethod(NetAspectDefinition aspect, MethodDefinition method)
         {
             return !method.IsConstructor && !IsPropertySetterMethod(aspect, method) && !IsPropertyGetterMethod(aspect, method);
+        }
+        public static bool IsMethodParameter(NetAspectDefinition aspect, ParameterDefinition parameter, MethodDefinition method)
+        {
+           return !method.IsConstructor && !IsPropertySetterMethod(aspect, method) && !IsPropertyGetterMethod(aspect, method);
         }
         public static bool IsPropertySetterMethod(NetAspectDefinition aspect, MethodDefinition method)
         {

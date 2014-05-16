@@ -1,8 +1,15 @@
-﻿namespace NetAspect.Sample.Dep
+﻿using System.Reflection;
+
+namespace NetAspect.Sample.Dep
 {
     public class DepClassWithField
     {
         public string Field;
+
+       public void Test()
+       {
+          var toto = MethodBase.GetCurrentMethod().GetParameters()[3];
+       }
     }
     public class DepClassWithProperty
     {

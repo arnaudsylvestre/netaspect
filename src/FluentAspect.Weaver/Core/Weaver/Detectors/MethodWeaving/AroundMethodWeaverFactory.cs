@@ -47,28 +47,13 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
             return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => builder.FillOnFinallySpecific(info, interceptorParameterConfigurations));
         }
 
-        private static void FillCommon(MethodDefinition method
-                                       )
+        public IIlInjector CreateForAfter(MethodDefinition method, MethodInfo interceptorMethod)
         {
-            //parametersIlGenerator.CreateIlGeneratorForInstanceParameter(method);
-            //parametersIlGenerator.CreateIlGeneratorForMethodParameter();
-            //parametersIlGenerator.CreateIlGeneratorForParametersParameter(method);
-            //parametersIlGenerator.CreateIlGeneratorForParameterNameParameter(method);
-        }
-
-        public IIlInjector CreateForAfter(MethodDefinition method,
-                                                                               MethodInfo interceptorMethod)
-        {
-            FillCommon(method);
-           // checker.CreateCheckerForResultParameter(method);
             return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => builder.FillAfterSpecific(info, interceptorParameterConfigurations));
         }
 
-        public IIlInjector CreateForExceptions(MethodDefinition method,
-                                                                                     MethodInfo interceptorMethod)
+        public IIlInjector CreateForExceptions(MethodDefinition method, MethodInfo interceptorMethod)
         {
-            FillCommon(method);
-            //checker.CreateCheckerForExceptionParameter();
             return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => builder.FillOnExceptionSpecific(info, interceptorParameterConfigurations));
         }
 

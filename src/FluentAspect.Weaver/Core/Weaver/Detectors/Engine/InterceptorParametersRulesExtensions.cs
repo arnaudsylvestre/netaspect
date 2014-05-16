@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Checkers;
@@ -150,6 +151,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          });
          return configuration;
       }
+      
       public static InterceptorParameterConfiguration AndInjectTheCurrentMethod(this InterceptorParameterConfiguration configuration)
       {
           configuration.Generator.Generators.Add((parameter, instructions, info) =>
@@ -160,11 +162,30 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
       }
       public static InterceptorParameterConfiguration AndInjectTheCurrentProperty(this InterceptorParameterConfiguration configuration)
       {
-          configuration.Generator.Generators.Add((parameter, instructions, info) =>
-          {
-              instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentPropertyInfo));
-          });
-          return configuration;
+         configuration.Generator.Generators.Add((parameter, instructions, info) =>
+         {
+            instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentPropertyInfo));
+         });
+         return configuration;
+      }
+      public static InterceptorParameterConfiguration AndInjectTheValue(this InterceptorParameterConfiguration configuration, string value)
+      {
+         configuration.Generator.Generators.Add((parameter, instructions, info) =>
+         {
+            instructions.Add(Instruction.Create(OpCodes.Ldstr, value));
+         });
+         return configuration;
+      }
+      public static InterceptorParameterConfiguration AndInjectTheParameterInfo(this InterceptorParameterConfiguration configuration, ParameterDefinition parameterDefinition, MethodDefinition method)
+      {
+         configuration.Generator.Generators.Add((parameter, instructions, info) =>
+         {
+            instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentMethodBase));
+            instructions.Add(Instruction.Create(OpCodes.Callvirt, method.Module.Import(typeof(MethodBase).GetMethod("GetParameters"))));
+            instructions.Add(Instruction.Create(OpCodes.Ldc_I4, method.Parameters.IndexOf(parameterDefinition)));
+            instructions.Add(Instruction.Create(OpCodes.Ldelem_Ref));
+         });
+         return configuration;
       }
 
       public static InterceptorParameterConfiguration AndInjectTheCalledFieldInfo(this InterceptorParameterConfiguration configuration, InstructionWeavingInfo weavingInfo_P)

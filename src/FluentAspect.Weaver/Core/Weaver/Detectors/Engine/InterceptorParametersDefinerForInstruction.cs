@@ -23,7 +23,31 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
         }
         public static MethodWeavingInfo AddInstance(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-            return AddCaller(weavingInfo_P, interceptorParameterConfigurations_P, "instance");
+           return AddCaller(weavingInfo_P, interceptorParameterConfigurations_P, "instance");
+        }
+        public static ParameterWeavingInfo AddParameterValue(this ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+           interceptorParameterConfigurations_P.AddPossibleParameter("parametervalue")
+                                                .WhichCanNotBeOut()
+                                                .WhichMustBeOfTypeOfParameter(weavingInfo_P.Parameter)
+                                                .AndInjectTheParameter(weavingInfo_P.Parameter);
+           return weavingInfo_P;
+        }
+        public static ParameterWeavingInfo AddParameterName(this ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+           interceptorParameterConfigurations_P.AddPossibleParameter("parametername")
+                                                .WhichCanNotBeReferenced()
+                                                .WhichMustBeOfType<string>()
+                                                .AndInjectTheValue(weavingInfo_P.Parameter.Name);
+           return weavingInfo_P;
+        }
+        public static ParameterWeavingInfo AddParameterInfo(this ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+           interceptorParameterConfigurations_P.AddPossibleParameter("parameter")
+                                                .WhichCanNotBeReferenced()
+                                                .WhichMustBeOfType<ParameterInfo>()
+                                                .AndInjectTheParameterInfo(weavingInfo_P.Parameter, weavingInfo_P.Method);
+           return weavingInfo_P;
         }
 
         private static MethodWeavingInfo AddCaller(MethodWeavingInfo weavingInfo_P,

@@ -71,10 +71,15 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
          var onExceptions = new List<Instruction>();
          var onFinallys = new List<Instruction>();
 
-         availableVariables.InterceptorVariable = methodWeavingModel.Method.CreateAspect(befores);
+         var interceptorFactoryInstructions = new List<Instruction>();
+         availableVariables.InterceptorVariable = methodWeavingModel.Method.CreateAspect(interceptorFactoryInstructions);
          allVariables.Add(availableVariables.InterceptorVariable);
           methodWeavingModel.Method.Inject(befores, afters, onExceptions, onFinallys, availableVariables);
 
+          if (befores.Any() || afters.Any() || onExceptions.Any() || onFinallys.Any())
+          {
+             befores.InsertRange(0, interceptorFactoryInstructions);
+          }
 
          w.BeforeInstructions.AddRange(availableVariables.BeforeInstructions);
          w.BeforeInstructions.AddRange(befores);
@@ -89,6 +94,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
 
          method.Body.Variables.AddRange(allVariables);
          method.Body.Variables.AddRange(availableVariables.Variables);
+
 
          method.Weave(w, result);
       }

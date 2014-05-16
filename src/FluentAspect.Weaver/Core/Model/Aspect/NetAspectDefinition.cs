@@ -215,6 +215,15 @@ namespace NetAspect.Weaver.Core.Model.Aspect
               return new Selector<MethodDefinition>(_attribute.GetMethod("SelectConstructor"), selectorParametersGenerator);
            }
         }
+        public Selector<ParameterDefinition> ParameterSelector
+        {
+           get
+           {
+              var selectorParametersGenerator = new SelectorParametersGenerator<ParameterDefinition>();
+              selectorParametersGenerator.AddPossibleParameter<string>("parameterName", parameter => parameter.Name);
+              return new Selector<ParameterDefinition>(_attribute.GetMethod("SelectParameter"), selectorParametersGenerator);
+           }
+        }
 
         public Interceptor BeforePropertyGetMethod
         {
@@ -260,5 +269,26 @@ namespace NetAspect.Weaver.Core.Model.Aspect
        {
           get { return LifeCycleHelper.Convert(_attribute.GetValueForField("LifeCycle", () => "Transient")); }
        }
+
+       public Interceptor AfterMethodForParameter
+       {
+          get { return new Interceptor(_attribute.GetMethod("AfterMethodForParameter")); }
+       }
+
+       public Interceptor BeforeMethodForParameter
+       {
+          get { return new Interceptor(_attribute.GetMethod("BeforeMethodForParameter")); }
+       }
+
+       public Interceptor OnExceptionMethodForParameter
+       {
+          get { return new Interceptor(_attribute.GetMethod("OnExceptionMethodForParameter")); }
+       }
+
+       public Interceptor OnFinallyMethodForParameter
+       {
+          get { return new Interceptor(_attribute.GetMethod("OnFinallyMethodForParameter")); }
+       }
+
     }
 }
