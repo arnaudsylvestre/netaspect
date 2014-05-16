@@ -5,4 +5,4 @@ install:
  
 script:
   - xbuild ./src/xbuild.xml
-  - nunit-console ./src/FluentAspect.Weaver.Tests/bin/Debug/NetAspect.Weaver.Tests.dll -exclude Integration,NotWorkingOnMono
+ # - nunit-console ./src/FluentAspect.Weaver.Tests/bin/Debug/NetAspect.Weaver.Tests.dll -exclude Integration,NotWorkingOnMono
