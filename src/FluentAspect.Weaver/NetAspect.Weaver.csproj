@@ -54,9 +54,9 @@
     <Compile Include="Apis\AssemblyChecker\IAssemblyChecker.cs" />
     <Compile Include="Apis\AssemblyChecker\Peverify\PeVerifyAssemblyChecker.cs" />
     <Compile Include="Core\Assemblies\AssemblyPool.cs" />
-    <Compile Include="Core\Errors\ErrorInfo.cs" />
+    <Compile Include="Core\Model\Errors\ErrorInfo.cs" />
     <Compile Include="Core\Errors\ErrorInfoComputer.cs" />
-    <Compile Include="Core\Errors\ErrorLevel.cs" />
+    <Compile Include="Core\Model\Errors\ErrorLevel.cs" />
     <Compile Include="Core\Model\Errors\ErrorCode.cs" />
     <Compile Include="Core\Errors\ErrorHandler.cs" />
     <Compile Include="Core\Model\Errors\ErrorKind.cs" />
