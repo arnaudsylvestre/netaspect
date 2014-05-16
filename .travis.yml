@@ -1,0 +1,8 @@
+language: c
+ 
+install:
+  - sudo apt-get install mono-devel mono-gmcs nunit-console
+ 
+script:
+  - xbuild ./src/xbuild.xml
+  - nunit-console ./src/FluentAspect.Weaver.Tests/bin/Debug/NetAspect.Weaver.Tests.dll -exclude Integration,NotWorkingOnMono
