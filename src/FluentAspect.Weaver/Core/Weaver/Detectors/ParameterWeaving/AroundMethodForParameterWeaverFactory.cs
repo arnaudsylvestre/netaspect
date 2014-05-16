@@ -59,16 +59,6 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
 
 
 
-        private class NoIIlInjector : IIlInjector
-        {
-            public void Check(ErrorHandler errorHandler)
-            {
-            }
-
-            public void Inject(List<Instruction> instructions, IlInjectorAvailableVariables availableInformations)
-            {
-            }
-        }
 
     }
 }

@@ -57,18 +57,5 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
             return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => builder.FillOnExceptionSpecific(info, interceptorParameterConfigurations));
         }
 
-
-
-        private class NoIIlInjector : IIlInjector
-        {
-            public void Check(ErrorHandler errorHandler)
-            {
-            }
-
-            public void Inject(List<Instruction> instructions, IlInjectorAvailableVariables availableInformations)
-            {
-            }
-        }
-
     }
 }
