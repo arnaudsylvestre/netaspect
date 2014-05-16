@@ -20,9 +20,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
         public class ClassToWeave
         {
             
-            public void Weaved([MyAspect] string parameter)
+            public void Weaved([MyAspect] string p)
             {
-               parameter = "OtherValue";
+               p = "OtherValue";
             }
         }
 

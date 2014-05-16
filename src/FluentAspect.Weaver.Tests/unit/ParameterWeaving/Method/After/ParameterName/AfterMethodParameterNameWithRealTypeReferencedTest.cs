@@ -20,17 +20,17 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
                 Message =
                 string.Format(
                     "impossible to ref/out the parameter 'parameterName' in the method AfterMethodForParameter of the type '{0}'",
-                    typeof(MyAspect).FullName, typeof(string).FullName)
+                    typeof(MyAspect).FullName)
              });
       }
 
         public class ClassToWeave
         {
             
-            public string Weaved([MyAspect] string parameter)
+            public string Weaved([MyAspect] string p)
             {
-               parameter = "OtherValue";
-               return parameter;
+               p = "OtherValue";
+               return p;
             }
         }
 

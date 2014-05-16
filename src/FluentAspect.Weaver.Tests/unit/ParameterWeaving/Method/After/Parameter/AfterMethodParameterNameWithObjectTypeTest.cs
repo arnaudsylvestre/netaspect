@@ -14,14 +14,14 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
                    Assert.IsNull(MyAspect.Parameter);
                     var classToWeave_L = new ClassToWeave();
                     classToWeave_L.Weaved("value");
-                    Assert.AreEqual("parameter", MyAspect.Parameter.Name);
+                    Assert.AreEqual("p", MyAspect.Parameter.Name);
                 };
         }
 
         public class ClassToWeave
         {
             
-            public void Weaved([MyAspect] string parameter)
+            public void Weaved([MyAspect] string p)
             {
             }
         }
