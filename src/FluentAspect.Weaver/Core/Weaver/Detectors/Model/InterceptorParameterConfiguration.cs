@@ -7,12 +7,7 @@ using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.Model
 {
-    public interface IChecker
-    {
-        void Check(ParameterInfo parameterInfo, ErrorHandler errorHandler);
-    }
-
-   public class InterceptorParameterConfiguration
+    public class InterceptorParameterConfiguration
    {
       public class MyInterceptorParameterChecker
       {

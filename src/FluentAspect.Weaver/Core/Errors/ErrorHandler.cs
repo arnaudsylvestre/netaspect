@@ -5,13 +5,14 @@ namespace NetAspect.Weaver.Core.Errors
 {
     public class ErrorHandler : IErrorListener
     {
-       public List<NetAspectError> errors = new List<NetAspectError>(); 
+       private readonly List<NetAspectError> errors = new List<NetAspectError>();
 
-        public ErrorHandler()
+        public List<NetAspectError> Errors
         {
+            get { return errors; }
         }
 
-       public void OnError(ErrorCode code, FileLocation location, params object[] parameters)
+        public void OnError(ErrorCode code, FileLocation location, params object[] parameters)
        {
           errors.Add(new NetAspectError(code, parameters, location));
        }

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{28912034-8A56-4B8E-BAA1-02C50149CA68}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -54,7 +54,9 @@
     <Compile Include="Apis\AssemblyChecker\IAssemblyChecker.cs" />
     <Compile Include="Apis\AssemblyChecker\Peverify\PeVerifyAssemblyChecker.cs" />
     <Compile Include="Core\Assemblies\AssemblyPool.cs" />
-    <Compile Include="Core\Errors\ErrorComputer.cs" />
+    <Compile Include="Core\Errors\ErrorInfo.cs" />
+    <Compile Include="Core\Errors\ErrorInfoComputer.cs" />
+    <Compile Include="Core\Errors\ErrorLevel.cs" />
     <Compile Include="Core\Model\Errors\ErrorCode.cs" />
     <Compile Include="Core\Errors\ErrorHandler.cs" />
     <Compile Include="Core\Model\Errors\ErrorKind.cs" />
@@ -68,7 +70,8 @@
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinitionExtensions.cs" />
     <Compile Include="Core\Model\Weaving\MethodsWeavingModel.cs" />
-    <Compile Include="Core\Weaver\Checkers\Ensures\EnsureMethod.cs" />
+    <Compile Include="Core\Weaver\Checkers\Ensures\MethodChecker.cs" />
+    <Compile Include="Core\Weaver\Checkers\Ensures\ParameterReferencedChecker.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensures\ParameterTypeChecker.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\InterceptorParametersRulesExtensions.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Kinds\CallUpdateFieldInterceptorAroundInstructionBuilder.cs" />
@@ -78,10 +81,11 @@
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\AroundInstructionWeaverFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Kinds\CallGetFieldInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\IInterceptorAroundInstructionBuilder.cs" />
-    <Compile Include="Core\Weaver\Detectors\MethodWeaving\InterceptorParametersDefinerForInstruction.cs" />
+    <Compile Include="Core\Weaver\Detectors\MethodWeaving\InterceptorParametersDefinerForMethod.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Kinds\ConstructorWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Kinds\PropertySetterWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Kinds\PropertyGetterWeavingMethodInjectorFactory.cs" />
+    <Compile Include="Core\Weaver\Detectors\Model\IChecker.cs" />
     <Compile Include="Core\Weaver\Detectors\Model\InstructionWeavingInfo.cs" />
     <Compile Include="Core\Weaver\Detectors\Model\AroundInstructionInfoExtensions.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\InterceptorParametersDefinerForInstruction.cs" />
@@ -90,7 +94,7 @@
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\IInterceptorAroundMethodBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\Model\InterceptorParameterConfigurations.cs" />
     <Compile Include="Core\Weaver\Detectors\Model\ParameterWeavingInfo.cs" />
-    <Compile Include="Core\Weaver\Detectors\ParameterWeaving\AroundMethodWeaverFactory.cs" />
+    <Compile Include="Core\Weaver\Detectors\ParameterWeaving\AroundMethodForParameterWeaverFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\ParameterWeaving\IInterceptorAroundMethodForParameterBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\ParameterWeaving\Kinds\MethodWeavingParameterInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\ParameterWeaving\ParameterWeavingDetector.cs" />
@@ -135,6 +139,7 @@
     <Compile Include="Helpers\ObjectExtensions.cs" />
     <Compile Include="Helpers\AssemblyDefinitionExtensions.cs" />
     <Compile Include="InstructionCompliance.cs" />
+    <Compile Include="MethodCompliance.cs" />
     <Compile Include="WeaverFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

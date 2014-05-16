@@ -43,7 +43,8 @@ namespace NetAspect.Weaver.Core.Weaver
 
        private ErrorReport ConvertErrorReport(ErrorHandler errorHandler, ErrorInfoComputer computer)
        {
-           return new ErrorReport((from e in errorHandler.errors select new ErrorReport.Error()
+           return new ErrorReport((from e in errorHandler.Errors
+                                   select new ErrorReport.Error()
                {
                    Level = computer.ComputeLevel(e.Code),
                    Message                   = computer.ComputeMessage(e.Code, e.Parameters)

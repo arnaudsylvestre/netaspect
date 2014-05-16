@@ -3,29 +3,6 @@ using NetAspect.Weaver.Core.Model.Errors;
 
 namespace NetAspect.Weaver.Core.Errors
 {
-    public class ErrorInfo
-    {
-       public ErrorInfo(ErrorLevel level, string message)
-       {
-          Level = level;
-          Message = message;
-       }
-       public ErrorInfo(string message)
-          : this(ErrorLevel.Error, message)
-       {
-       }
-
-        public ErrorLevel Level { get; set; }
-        public string Message { get; set; }
-    }
-
-    public enum ErrorLevel
-    {
-        Warning,
-        Error,
-        Failure,
-    }
-
     public class ErrorInfoComputer
     {
         private Dictionary<ErrorCode, ErrorInfo> information;

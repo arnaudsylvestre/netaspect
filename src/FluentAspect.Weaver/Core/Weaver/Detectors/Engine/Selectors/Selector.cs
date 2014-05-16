@@ -34,7 +34,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine.Selectors
                 return false;
             var errorHandler = new ErrorHandler();
             Check(errorHandler);
-            if (errorHandler.errors.Count > 0)
+            if (errorHandler.Errors.Count > 0)
                 return false;
             return (bool)_method.Invoke(null, selectorParametersGenerator.Generate(_method, member));
         }
