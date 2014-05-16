@@ -6,7 +6,9 @@ namespace NetAspect.Core.Helpers
 
     public static class ListExtensions
     {
-        public static List<T> Until<T>(this IEnumerable<T> source, Func<T, bool> startChunk)
+        public delegate bool ChunckStarter<T>(T element);
+
+        public static List<T> Until<T>(this IEnumerable<T> source, ChunckStarter<T> startChunk)
         {
             var list = new List<T>();
 
