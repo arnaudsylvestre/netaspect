@@ -12,7 +12,7 @@ namespace NetAspect.Weaver
         }
         public static bool IsMethodParameter(NetAspectDefinition aspect, ParameterDefinition parameter, MethodDefinition method)
         {
-            return !method.IsConstructor && !IsPropertySetterMethod(aspect, method) && !IsPropertyGetterMethod(aspect, method);
+            return !method.IsConstructor;
         }
         public static bool IsPropertySetterMethod(NetAspectDefinition aspect, MethodDefinition method)
         {
@@ -26,6 +26,11 @@ namespace NetAspect.Weaver
         public static bool IsConstructor(NetAspectDefinition aspect, MethodDefinition method)
         {
             return method.IsConstructor;
+        }
+
+        public static bool IsConstructorForParameter(NetAspectDefinition aspect, ParameterDefinition parameter, MethodDefinition method)
+        {
+            return IsConstructor(aspect, method);
         }
     }
 }

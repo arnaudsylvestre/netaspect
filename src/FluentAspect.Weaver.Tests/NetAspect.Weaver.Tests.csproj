@@ -754,6 +754,30 @@
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\OnFinally\Value\OnFinallyPropertyValueParameterWithRealTypeByteReferencedInInterceptorTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\OnFinally\Value\OnFinallyPropertyValueParameterWithRealTypeByteTest.cs" />
     <Compile Include="unit\NetAspectTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\ParameterName\AfterMethodParameterNameWithBadTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\ParameterName\AfterMethodParameterNameWithObjectTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\ParameterName\AfterMethodParameterNameWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\ParameterName\AfterMethodParameterNameWithRealTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\ParameterValue\AfterMethodParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\ParameterValue\AfterMethodParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\ParameterValue\AfterMethodParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\ParameterValue\AfterMethodParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\Parameter\AfterMethodParameterNameWithBadTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\Parameter\AfterMethodParameterNameWithObjectTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\Parameter\AfterMethodParameterNameWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\After\Parameter\AfterMethodParameterNameWithRealTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\ParameterName\BeforeMethodParameterNameWithBadTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\ParameterName\BeforeMethodParameterNameWithObjectTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\ParameterName\BeforeMethodParameterNameWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\ParameterName\BeforeMethodParameterNameWithRealTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\ParameterValue\BeforeMethodParameterValueWithBadTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\ParameterValue\BeforeMethodParameterValueWithObjectTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\ParameterValue\BeforeMethodParameterValueWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\ParameterValue\BeforeMethodParameterValueWithRealTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\Parameter\BeforeMethodParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\Parameter\BeforeMethodParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\Parameter\BeforeMethodParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Constructor\Before\Parameter\BeforeMethodParameterWithRealTypeTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\After\Parameter\AfterMethodParameterNameWithBadTypeTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\After\Parameter\AfterMethodParameterNameWithObjectTypeTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\After\Parameter\AfterMethodParameterNameWithRealTypeReferencedTest.cs" />
@@ -766,6 +790,18 @@
     <Compile Include="unit\ParameterWeaving\Method\After\ParameterValue\AfterMethodParameterWithBadTypeTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\After\ParameterValue\AfterMethodParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\After\ParameterValue\AfterMethodParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\ParameterName\BeforeMethodParameterNameWithBadTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\ParameterName\BeforeMethodParameterNameWithObjectTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\ParameterName\BeforeMethodParameterNameWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\ParameterName\BeforeMethodParameterNameWithRealTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\ParameterValue\BeforeMethodParameterValueWithBadTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\ParameterValue\BeforeMethodParameterValueWithObjectTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\ParameterValue\BeforeMethodParameterValueWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\ParameterValue\BeforeMethodParameterValueWithRealTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\Parameter\BeforeMethodParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\Parameter\BeforeMethodParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\Parameter\BeforeMethodParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Before\Parameter\BeforeMethodParameterWithRealTypeTest.cs" />
     <Compile Include="unit\RunWeavingTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Attributes\Static\WeaveStaticMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Attributes\Visibility\WeaveInternalMethodTest.cs" />
@@ -919,15 +955,6 @@
     <Compile Include="unit\MethodWeaving\Method\Return\CheckWeaveWithReturnClassTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Return\CheckWeaveWithReturnVoidTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Return\CheckWeaveWithReturnGenericTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\After\AfterConstructorParameterTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\After\AfterConstructorParameterValueTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\Before\BeforeConstructorParameterTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\Before\BeforeConstructorParameterValueTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\OnException\OnExceptionConstructorParameterTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\OnException\OnExceptionConstructorParameterValueTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\OnFinally\OnFinallyConstructorParameterTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\OnFinally\OnFinallyConstructorParameterValueTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\ParameterConstructorWeavingAssemblyAttributeWeavingTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FluentAspect.Sample.Dep\NetAspect.Sample.Dep.csproj">
@@ -952,9 +979,6 @@
     <Folder Include="unit\MethodWeaving\Events\" />
     <Folder Include="unit\MethodWeaving\Indexers\" />
     <Folder Include="unit\MethodWeaving\Operators\" />
-    <Folder Include="unit\ParameterWeaving\Method\Before\" />
-    <Folder Include="unit\ParameterWeaving\Method\OnException\" />
-    <Folder Include="unit\ParameterWeaving\Method\OnFinally\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

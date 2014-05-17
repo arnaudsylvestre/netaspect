@@ -54,6 +54,7 @@ namespace NetAspect.Weaver
                          BuildConstructorDetector(),
 
                          BuildMethodParameterDetector(),
+                         BuildConstructorParameterDetector(),
                              
                      }, aspectBuilder),
             new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker(), typesToSave_P),
@@ -94,15 +95,28 @@ namespace NetAspect.Weaver
 
        private static IMethodWeavingDetector BuildMethodParameterDetector()
        {
-          return new ParameterWeavingDetector(
-              aspect => aspect.AfterMethodForParameter,
-              new AroundMethodForParameterWeaverFactory(new MethodWeavingParameterInjectorFactory()),
-              aspect => aspect.BeforeMethodForParameter,
-              MethodCompliance.IsMethodParameter,
-              aspect => aspect.OnExceptionMethodForParameter,
-              aspect => aspect.OnFinallyMethodForParameter,
-              aspect => aspect.ParameterSelector
-              );
+           return new ParameterWeavingDetector(
+               aspect => aspect.AfterMethodForParameter,
+               new AroundMethodForParameterWeaverFactory(new MethodWeavingParameterInjectorFactory()),
+               aspect => aspect.BeforeMethodForParameter,
+               MethodCompliance.IsMethodParameter,
+               aspect => aspect.OnExceptionMethodForParameter,
+               aspect => aspect.OnFinallyMethodForParameter,
+               aspect => aspect.ParameterSelector
+               );
+       }
+
+       private static IMethodWeavingDetector BuildConstructorParameterDetector()
+       {
+           return new ParameterWeavingDetector(
+               aspect => aspect.AfterMethodForParameter,
+               new AroundMethodForParameterWeaverFactory(new MethodWeavingParameterInjectorFactory()),
+               aspect => aspect.BeforeMethodForParameter,
+               MethodCompliance.IsConstructorForParameter,
+               aspect => aspect.OnExceptionMethodForParameter,
+               aspect => aspect.OnFinallyMethodForParameter,
+               aspect => aspect.ParameterSelector
+               );
        }
 
        private static IMethodWeavingDetector BuildConstructorDetector()
