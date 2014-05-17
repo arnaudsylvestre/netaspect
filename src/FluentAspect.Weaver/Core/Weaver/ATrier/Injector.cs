@@ -19,6 +19,20 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
     {
         public void Inject(List<Instruction> precondition, IlInjectorAvailableVariables availableInformations)
         {
+        //    IL_0000: nop
+        //IL_0001: ldstr "NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.Called.OverrideTest+A"
+        //IL_0006: ldarg.0
+        //IL_0007: callvirt instance class [mscorlib]System.Type [mscorlib]System.Object::GetType()
+        //IL_000c: ldstr "Method"
+        //IL_0011: callvirt instance class [mscorlib]System.Reflection.MethodInfo [mscorlib]System.Type::GetMethod(string)
+        //IL_0016: callvirt instance class [mscorlib]System.Type [mscorlib]System.Reflection.MemberInfo::get_DeclaringType()
+        //IL_001b: callvirt instance string [mscorlib]System.Type::get_FullName()
+        //IL_0020: call bool [mscorlib]System.String::op_Equality(string, string)
+        //IL_0025: stloc.0
+        //IL_0026: br.s IL_0028
+
+        //IL_0028: ldloc.0
+        //IL_0029: ret
             77777throw new System.NotImplementedException();
         }
     }
