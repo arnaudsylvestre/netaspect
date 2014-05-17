@@ -19,7 +19,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Ins
                 Level = ErrorLevel.Error,
                 Message =
                 string.Format(
-                    "impossible to ref/out the parameter 'parameter' in the method BeforeMethodForParameter of the type '{0}'",
+                    "impossible to ref/out the parameter 'parameter' in the method BeforeConstructorForParameter of the type '{0}'",
                     typeof(MyAspect).FullName)
              });
       }
@@ -37,7 +37,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Ins
         {
             public bool NetAspectAttribute = true;
 
-            public void BeforeMethodForParameter(ref ParameterInfo parameter)
+            public void BeforeConstructorForParameter(ref ParameterInfo parameter)
             {
             }
         }

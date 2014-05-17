@@ -272,22 +272,42 @@ namespace NetAspect.Weaver.Core.Model.Aspect
 
        public Interceptor AfterMethodForParameter
        {
-          get { return new Interceptor(_attribute.GetMethod("AfterMethodForParameter")); }
+           get { return new Interceptor(_attribute.GetMethod("AfterMethodForParameter")); }
        }
 
        public Interceptor BeforeMethodForParameter
        {
-          get { return new Interceptor(_attribute.GetMethod("BeforeMethodForParameter")); }
+           get { return new Interceptor(_attribute.GetMethod("BeforeMethodForParameter")); }
        }
 
        public Interceptor OnExceptionMethodForParameter
        {
-          get { return new Interceptor(_attribute.GetMethod("OnExceptionMethodForParameter")); }
+           get { return new Interceptor(_attribute.GetMethod("OnExceptionMethodForParameter")); }
        }
 
        public Interceptor OnFinallyMethodForParameter
        {
-          get { return new Interceptor(_attribute.GetMethod("OnFinallyMethodForParameter")); }
+           get { return new Interceptor(_attribute.GetMethod("OnFinallyMethodForParameter")); }
+       }
+
+       public Interceptor AfterConstructorForParameter
+       {
+           get { return new Interceptor(_attribute.GetMethod("AfterConstructorForParameter")); }
+       }
+
+       public Interceptor BeforeConstructorForParameter
+       {
+           get { return new Interceptor(_attribute.GetMethod("BeforeConstructorForParameter")); }
+       }
+
+       public Interceptor OnExceptionConstructorForParameter
+       {
+           get { return new Interceptor(_attribute.GetMethod("OnExceptionConstructorForParameter")); }
+       }
+
+       public Interceptor OnFinallyConstructorForParameter
+       {
+           get { return new Interceptor(_attribute.GetMethod("OnFinallyConstructorForParameter")); }
        }
 
     }

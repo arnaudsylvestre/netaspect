@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Ins
            public static object ParameterValue;
             public bool NetAspectAttribute = true;
 
-            public void BeforeMethodForParameter(object parameterValue)
+            public void BeforeConstructorForParameter(object parameterValue)
             {
                ParameterValue = parameterValue;
             }

@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
            public static object ParameterName;
             public bool NetAspectAttribute = true;
 
-            public void AfterMethodForParameter(object parameterName)
+            public void AfterConstructorForParameter(object parameterName)
             {
                ParameterName = parameterName;
             }

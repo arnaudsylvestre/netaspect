@@ -7,8 +7,8 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Instance
 {
-   public class AfterConstructorParameterWithRealTypeReferencedTest :
-        NetAspectTest<AfterConstructorParameterWithRealTypeReferencedTest.ClassToWeave>
+   public class AfterConstructorParameterNameWithRealTypeReferencedTest :
+        NetAspectTest<AfterConstructorParameterNameWithRealTypeReferencedTest.ClassToWeave>
     {
       protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
       {
@@ -19,7 +19,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
                 Level = ErrorLevel.Error,
                 Message =
                 string.Format(
-                    "impossible to ref/out the parameter 'parameter' in the method AfterMethodForParameter of the type '{0}'",
+                    "impossible to ref/out the parameter 'parameterName' in the method AfterConstructorForParameter of the type '{0}'",
                     typeof(MyAspect).FullName)
              });
       }
@@ -37,7 +37,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
         {
             public bool NetAspectAttribute = true;
 
-            public void AfterMethodForParameter(ref ParameterInfo parameter)
+            public void AfterConstructorForParameter(ref string parameterName)
             {
             }
         }

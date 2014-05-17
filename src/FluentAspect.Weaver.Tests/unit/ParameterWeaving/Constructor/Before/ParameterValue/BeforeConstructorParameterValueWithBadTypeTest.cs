@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Ins
                  Level = ErrorLevel.Error,
                  Message =
                  string.Format(
-                     "the parameterValue parameter in the method BeforeMethodForParameter of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
+                     "the parameterValue parameter in the method BeforeConstructorForParameter of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
                      typeof(MyAspect).FullName, typeof(string).FullName)
               });
        }
@@ -36,7 +36,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Ins
         {
             public bool NetAspectAttribute = true;
 
-            public void BeforeMethodForParameter(int parameterValue)
+            public void BeforeConstructorForParameter(int parameterValue)
             {
             }
         }

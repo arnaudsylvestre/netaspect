@@ -1,10 +1,11 @@
 using System;
+using System.Reflection;
 using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Instance
 {
-   public class AfterConstructorParameterValueWithRealTypeTest :
-        NetAspectTest<AfterConstructorParameterValueWithRealTypeTest.ClassToWeave>
+   public class AfterConstructorParameterValueWithRealTypeReferencedTest :
+        NetAspectTest<AfterConstructorParameterValueWithRealTypeReferencedTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
@@ -23,6 +24,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
             public ClassToWeave([MyAspect] string p)
             {
                p = "OtherValue";
+               
             }
         }
 
@@ -31,9 +33,10 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
             public static string ParameterValue;
             public bool NetAspectAttribute = true;
 
-            public void AfterMethodForParameter(string parameterValue)
+            public void AfterConstructorForParameter(ref string parameterValue)
             {
                ParameterValue = parameterValue;
+               parameterValue = "ModifiedByAspect";
             }
         }
     }

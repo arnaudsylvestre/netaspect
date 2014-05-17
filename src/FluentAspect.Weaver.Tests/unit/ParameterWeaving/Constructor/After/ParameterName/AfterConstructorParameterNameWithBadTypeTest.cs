@@ -6,8 +6,8 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Instance
 {
-    public class AfterConstructorParameterValueWithBadTypeTest :
-        NetAspectTest<AfterConstructorParameterValueWithBadTypeTest.ClassToWeave>
+    public class AfterConstructorParameterNameWithBadTypeTest :
+        NetAspectTest<AfterConstructorParameterNameWithBadTypeTest.ClassToWeave>
     {
        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
        {
@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
                  Level = ErrorLevel.Error,
                  Message =
                  string.Format(
-                     "the parameterValue parameter in the method AfterMethodForParameter of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
+                     "the parameterName parameter in the method AfterConstructorForParameter of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
                      typeof(MyAspect).FullName, typeof(string).FullName)
               });
        }
@@ -36,7 +36,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
         {
             public bool NetAspectAttribute = true;
 
-            public void AfterMethodForParameter(int parameterValue)
+            public void AfterConstructorForParameter(int parameterName)
             {
             }
         }

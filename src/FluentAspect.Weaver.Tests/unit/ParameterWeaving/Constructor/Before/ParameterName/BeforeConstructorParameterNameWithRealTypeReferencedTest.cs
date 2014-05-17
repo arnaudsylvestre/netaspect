@@ -5,10 +5,10 @@ using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Instance
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance
 {
-   public class AfterConstructorParameterNameWithRealTypeReferencedTest :
-        NetAspectTest<AfterConstructorParameterNameWithRealTypeReferencedTest.ClassToWeave>
+   public class BeforeConstructorParameterNameWithRealTypeReferencedTest :
+        NetAspectTest<BeforeConstructorParameterNameWithRealTypeReferencedTest.ClassToWeave>
     {
       protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
       {
@@ -19,7 +19,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
                 Level = ErrorLevel.Error,
                 Message =
                 string.Format(
-                    "impossible to ref/out the parameter 'parameterName' in the method AfterMethodForParameter of the type '{0}'",
+                    "impossible to ref/out the parameter 'parameterName' in the method BeforeConstructorForParameter of the type '{0}'",
                     typeof(MyAspect).FullName)
              });
       }
@@ -37,7 +37,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
         {
             public bool NetAspectAttribute = true;
 
-            public void AfterMethodForParameter(ref string parameterName)
+            public void BeforeConstructorForParameter(ref string parameterName)
             {
             }
         }

@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Instance
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance
 {
-    public class AfterConstructorParameterWithBadTypeTest :
-        NetAspectTest<AfterConstructorParameterWithBadTypeTest.ClassToWeave>
+    public class BeforeConstructorParameterNameWithBadTypeTest :
+        NetAspectTest<BeforeConstructorParameterNameWithBadTypeTest.ClassToWeave>
     {
        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
        {
@@ -19,8 +18,8 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
                  Level = ErrorLevel.Error,
                  Message =
                  string.Format(
-                     "the parameter parameter in the method AfterMethodForParameter of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
-                     typeof(MyAspect).FullName, typeof(ParameterInfo).FullName)
+                     "the parameterName parameter in the method BeforeConstructorForParameter of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
+                     typeof(MyAspect).FullName, typeof(string).FullName)
               });
        }
 
@@ -37,7 +36,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
         {
             public bool NetAspectAttribute = true;
 
-            public void AfterMethodForParameter(int parameter)
+            public void BeforeConstructorForParameter(int parameterName)
             {
             }
         }

@@ -3,8 +3,8 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Instance
 {
-   public class AfterConstructorParameterValueWithObjectTypeTest :
-        NetAspectTest<AfterConstructorParameterValueWithObjectTypeTest.ClassToWeave>
+   public class AfterConstructorParameterValueWithRealTypeTest :
+        NetAspectTest<AfterConstructorParameterValueWithRealTypeTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
@@ -28,10 +28,10 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
 
         public class MyAspect : Attribute
         {
-           public static object ParameterValue;
+            public static string ParameterValue;
             public bool NetAspectAttribute = true;
 
-            public void AfterMethodForParameter(object parameterValue)
+            public void AfterConstructorForParameter(string parameterValue)
             {
                ParameterValue = parameterValue;
             }

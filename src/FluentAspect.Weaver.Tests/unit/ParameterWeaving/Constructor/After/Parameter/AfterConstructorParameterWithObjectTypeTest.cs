@@ -4,16 +4,15 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Instance
 {
-   public class AfterConstructorParameterWithRealTypeTest :
-        NetAspectTest<AfterConstructorParameterWithRealTypeTest.ClassToWeave>
+    public class AfterConstructorParameterWithObjectTypeTest :
+        NetAspectTest<AfterConstructorParameterWithObjectTypeTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
             return () =>
                 {
                    Assert.IsNull(MyAspect.Parameter);
-                    var classToWeave_L = new ClassToWeave(0, "value");
-                    
+                    var classToWeave_L = new ClassToWeave("value");
                     Assert.AreEqual("p", MyAspect.Parameter.Name);
                 };
         }
@@ -21,9 +20,8 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
         public class ClassToWeave
         {
             
-            public ClassToWeave(int anotherParameter, [MyAspect] string p)
+            public ClassToWeave([MyAspect] string p)
             {
-               p = "";
             }
         }
 
@@ -32,9 +30,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Inst
            public static ParameterInfo Parameter;
             public bool NetAspectAttribute = true;
 
-            public void AfterMethodForParameter(ParameterInfo parameter)
+            public void AfterConstructorForParameter(object parameter)
             {
-               Parameter = parameter;
+               Parameter = (ParameterInfo) parameter;
             }
         }
     }

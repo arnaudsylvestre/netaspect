@@ -4,16 +4,17 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance
 {
-   public class BeforeConstructorParameterValueWithRealTypeReferencedTest :
-        NetAspectTest<BeforeConstructorParameterValueWithRealTypeReferencedTest.ClassToWeave>
+    public class BeforeConstructorParameterWithObjectTypeTest :
+        NetAspectTest<BeforeConstructorParameterWithObjectTypeTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
             return () =>
                 {
-                   Assert.IsNull(MyAspect.ParameterValue);
+                   Assert.IsNull(MyAspect.Parameter);
                    var classToWeave_L = new ClassToWeave("value");
-                    Assert.AreEqual("value", MyAspect.ParameterValue);
+                    
+                    Assert.AreEqual("p", MyAspect.Parameter.Name);
                 };
         }
 
@@ -22,19 +23,17 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Ins
             
             public ClassToWeave([MyAspect] string p)
             {
-               
             }
         }
 
         public class MyAspect : Attribute
         {
-            public static string ParameterValue;
+           public static ParameterInfo Parameter;
             public bool NetAspectAttribute = true;
 
-            public void BeforeMethodForParameter(ref string parameterValue)
+            public void BeforeConstructorForParameter(object parameter)
             {
-               ParameterValue = parameterValue;
-               parameterValue = "ModifiedByAspect";
+               Parameter = (ParameterInfo) parameter;
             }
         }
     }

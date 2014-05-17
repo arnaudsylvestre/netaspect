@@ -109,12 +109,12 @@ namespace NetAspect.Weaver
        private static IMethodWeavingDetector BuildConstructorParameterDetector()
        {
            return new ParameterWeavingDetector(
-               aspect => aspect.AfterMethodForParameter,
+               aspect => aspect.AfterConstructorForParameter,
                new AroundMethodForParameterWeaverFactory(new MethodWeavingParameterInjectorFactory()),
-               aspect => aspect.BeforeMethodForParameter,
+               aspect => aspect.BeforeConstructorForParameter,
                MethodCompliance.IsConstructorForParameter,
-               aspect => aspect.OnExceptionMethodForParameter,
-               aspect => aspect.OnFinallyMethodForParameter,
+               aspect => aspect.OnExceptionConstructorForParameter,
+               aspect => aspect.OnFinallyConstructorForParameter,
                aspect => aspect.ParameterSelector
                );
        }
