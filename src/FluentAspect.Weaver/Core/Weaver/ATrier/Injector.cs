@@ -20,7 +20,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
         public void Inject(List<Instruction> precondition, IlInjectorAvailableVariables availableInformations)
         {
 
-            precondition.Add(Instruction.Create(OpCodes.Ldstr, ));
+            //precondition.Add(Instruction.Create(OpCodes.Ldstr, ));
         //    IL_0000: nop
         //IL_0001: ldstr "NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.Called.OverrideTest+A"
         //IL_0006: ldarg.0
