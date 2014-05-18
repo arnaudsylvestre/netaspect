@@ -13,13 +13,15 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
     public class AroundMethodForParameterWeaverFactory
     {
        private IInterceptorAroundMethodForParameterBuilder builder;
+        private IWevingPreconditionInjector weavingPreconditionInjector;
 
-        public AroundMethodForParameterWeaverFactory(IInterceptorAroundMethodForParameterBuilder builder)
-       {
-          this.builder = builder;
-       }
+        public AroundMethodForParameterWeaverFactory(IInterceptorAroundMethodForParameterBuilder builder, IWevingPreconditionInjector weavingPreconditionInjector)
+        {
+            this.builder = builder;
+            this.weavingPreconditionInjector = weavingPreconditionInjector;
+        }
 
-       public IIlInjector Create(MethodDefinition method, MethodInfo interceptorMethod, Action<ParameterWeavingInfo, InterceptorParameterConfigurations> fillSpecific, ParameterDefinition parameter)
+        public IIlInjector Create(MethodDefinition method, MethodInfo interceptorMethod, Action<ParameterWeavingInfo, InterceptorParameterConfigurations> fillSpecific, ParameterDefinition parameter)
        {
            if (interceptorMethod == null)
                return new NoIIlInjector();
@@ -34,7 +36,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
             builder.FillCommon(weavingInfo_P, interceptorParameterConfigurations);
             fillSpecific(weavingInfo_P, interceptorParameterConfigurations);
 
-            return new Injector(method, interceptorMethod, interceptorParameterConfigurations);
+            return new Injector(method, interceptorMethod, interceptorParameterConfigurations, weavingPreconditionInjector);
         }
 
         public IIlInjector CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, ParameterDefinition parameter)

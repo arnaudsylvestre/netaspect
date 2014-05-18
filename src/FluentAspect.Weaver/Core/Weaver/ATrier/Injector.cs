@@ -33,7 +33,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
         //IL_0028: ldloc.0
         //IL_0029: ret
-            77777throw new System.NotImplementedException();
+            throw new System.NotImplementedException();
         }
     }
 

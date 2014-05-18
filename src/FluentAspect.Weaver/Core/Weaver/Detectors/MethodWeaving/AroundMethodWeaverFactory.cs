@@ -13,13 +13,15 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
     public class AroundMethodWeaverFactory
     {
         private IInterceptorAroundMethodBuilder builder;
+        private IWevingPreconditionInjector weavingPreconditionInjector;
 
-        public AroundMethodWeaverFactory(IInterceptorAroundMethodBuilder builder)
-       {
-          this.builder = builder;
-       }
+        public AroundMethodWeaverFactory(IInterceptorAroundMethodBuilder builder, IWevingPreconditionInjector weavingPreconditionInjector)
+        {
+            this.builder = builder;
+            this.weavingPreconditionInjector = weavingPreconditionInjector;
+        }
 
-       public IIlInjector Create(MethodDefinition method, MethodInfo interceptorMethod, Action<MethodWeavingInfo, InterceptorParameterConfigurations> fillSpecific)
+        public IIlInjector Create(MethodDefinition method, MethodInfo interceptorMethod, Action<MethodWeavingInfo, InterceptorParameterConfigurations> fillSpecific)
        {
            if (interceptorMethod == null)
                return new NoIIlInjector();
@@ -33,7 +35,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
             builder.FillCommon(weavingInfo_P, interceptorParameterConfigurations);
             fillSpecific(weavingInfo_P, interceptorParameterConfigurations);
 
-            return new Injector(method, interceptorMethod, interceptorParameterConfigurations);
+            return new Injector(method, interceptorMethod, interceptorParameterConfigurations, weavingPreconditionInjector);
         }
 
         public IIlInjector CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod)

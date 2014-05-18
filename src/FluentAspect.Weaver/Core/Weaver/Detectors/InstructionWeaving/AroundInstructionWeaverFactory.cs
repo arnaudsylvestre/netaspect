@@ -13,13 +13,15 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
    public class AroundInstructionWeaverFactory
    {
       private readonly IInterceptorAroundInstructionBuilder _interceptorAroundInstructionBuilder;
+       private IWevingPreconditionInjector weavingPreconditionInjector;
 
-       public AroundInstructionWeaverFactory(IInterceptorAroundInstructionBuilder interceptorAroundInstructionBuilder)
-      {
-         _interceptorAroundInstructionBuilder = interceptorAroundInstructionBuilder;
-      }
+       public AroundInstructionWeaverFactory(IInterceptorAroundInstructionBuilder interceptorAroundInstructionBuilder, IWevingPreconditionInjector weavingPreconditionInjector)
+       {
+           _interceptorAroundInstructionBuilder = interceptorAroundInstructionBuilder;
+           this.weavingPreconditionInjector = weavingPreconditionInjector;
+       }
 
-      public IIlInjector CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Instruction instruction)
+       public IIlInjector CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Instruction instruction)
       {
          return Create(method, interceptorMethod, instruction, (factory, interceptorInfo, generator) => factory.FillBeforeSpecific(interceptorInfo));
       }
@@ -42,7 +44,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
          _interceptorAroundInstructionBuilder.FillCommon(info, parametersIlGenerator);
          specificFiller(_interceptorAroundInstructionBuilder, info, parametersIlGenerator);
 
-         return new Injector(method, interceptorMethod, parametersIlGenerator);
+         return new Injector(method, interceptorMethod, parametersIlGenerator, weavingPreconditionInjector);
       }
 
 
