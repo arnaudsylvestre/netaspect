@@ -395,7 +395,6 @@
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\Before\LineNumber\BeforeCallGetPropertyLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Selectors\CallGetPropertyWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Selectors\Infos\GetPropertyWithSelectorPropertyAllParametersTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Getter\Selectors\Infos\GetPropertyWithSelectorPropertyNameTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Visibility\CallGetInternalPropertyWeavingTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Visibility\CallGetPrivatePropertyWeavingTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Visibility\CallGetProtectedPropertyWeavingTest.cs" />

@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Selectors.Infos
@@ -37,10 +38,10 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Selec
                 Caller = caller;
             }
 
-            public static bool SelectProperty(string propertyName, string propertyTypeName)
+            public static bool SelectProperty(PropertyInfo property)
             {
-                Assert.AreEqual("String", propertyTypeName);
-                return propertyName == "Property";
+                Assert.AreEqual("Property", property.Name);
+                return true;
             }
         }
     }
