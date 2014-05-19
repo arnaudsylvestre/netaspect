@@ -40,8 +40,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Selec
 
             public static bool SelectProperty(PropertyInfo property)
             {
-                Assert.AreEqual("Property", property.Name);
-                return true;
+                return property.Name == "Property";
             }
         }
     }
