@@ -28,7 +28,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
           }
           catch (Exception)
           {
-             errorHandler.OnError(ErrorCode.UnknownParameter, FileLocation.None, parameterInfo.Name);
+             var expectedParameterNames = String.Join(", ", (from p in interceptorParameterConfigurations_P.PossibleParameters select p.Name).ToArray());
+             errorHandler.OnError(ErrorCode.UnknownParameter, FileLocation.None, parameterInfo.Name, expectedParameterNames);
           }
        }
 

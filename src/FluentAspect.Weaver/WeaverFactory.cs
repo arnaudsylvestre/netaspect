@@ -69,7 +69,7 @@ namespace NetAspect.Weaver
                     {ErrorCode.MustNotBeVoid, new ErrorInfo("Impossible to use the {0} parameter in the method {1} of the type '{2}' because the return type of the method {3} in the type {4} is void")},
                     {ErrorCode.ImpossibleToRefGenericParameter, new ErrorInfo("Impossible to ref a generic parameter")},
                     {ErrorCode.ParameterCanNotBeUsedInStaticMethod, new ErrorInfo("the {0} parameter can not be used for static method interceptors")},
-                    {ErrorCode.UnknownParameter, new ErrorInfo("The parameter '{0}' is unknown")},
+                    {ErrorCode.UnknownParameter, new ErrorInfo("The parameter '{0}' is unknown. Expected one of : {1}")},
                     {ErrorCode.NotAvailableInStaticStruct, new ErrorInfo("the {0} parameter in the method {1} of the type '{2}' is not available for static member in struct")},
                     {ErrorCode.NotAvailableInStatic, new ErrorInfo(ErrorLevel.Warning, "the {0} parameter in the method {1} of the type '{2}' is not available for static member : default value will be passed")},
                     {ErrorCode.ParameterAlreadyDeclared, new ErrorInfo("The parameter {0} is already declared")},

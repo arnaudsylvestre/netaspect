@@ -322,8 +322,9 @@
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\Before\LineNumber\BeforeCallMethodLineNumberParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\Before\LineNumber\BeforeCallMethodLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\Before\LineNumber\BeforeCallMethodLineNumberParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Multi\CheckCallWeavingAndMethodWeavingOnsameMethodTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Multi\CheckCallFrom2DifferentInterceptors.cs" />
+    <Compile Include="unit\MultiWeaving\AspectDefinedOnDeclaringTypeTest.cs" />
+    <Compile Include="unit\MultiWeaving\CheckCallWeavingAndMethodWeavingOnsameMethodTest.cs" />
+    <Compile Include="unit\MultiWeaving\CheckCallFrom2DifferentInterceptors.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\After\Called\AfterCallGetPropertyCalledParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\After\Called\AfterCallGetPropertyCalledParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\After\Called\AfterCallGetPropertyCalledParameterWithRealTypeReferencedTypeTest.cs" />
