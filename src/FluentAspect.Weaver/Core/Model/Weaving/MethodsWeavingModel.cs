@@ -23,6 +23,7 @@ namespace NetAspect.Weaver.Core.Model.Weaving
             if (detectWeavingModel == null)
                 return;
             var methodWeavingModel = GetMethodWeavingModel(method, aspect, aspectBuilder);
+            methodWeavingModel.Method.Model.BeforeConstructorBaseCalls.AddRange(detectWeavingModel.BeforeConstructorBaseCalls);
             methodWeavingModel.Method.Model.Befores.AddRange(detectWeavingModel.Befores);
             methodWeavingModel.Method.Model.Afters.AddRange(detectWeavingModel.Afters);
             methodWeavingModel.Method.Model.OnExceptions.AddRange(detectWeavingModel.OnExceptions);

@@ -210,7 +210,7 @@ namespace NetAspect.Weaver
           return new InstructionWeavingDetector<MethodDefinition>(
               InstructionCompliance.IsCallMethodInstruction,
               aspect => aspect.MethodSelector,
-              new AroundInstructionWeaverFactory(new CallMethodInterceptorAroundInstructionBuilder(), new NoWevingPreconditionInjector()),
+              new AroundInstructionWeaverFactory(new CallMethodInterceptorAroundInstructionBuilder(), new OverrideWevingPreconditionInjector()),
               instruction => (instruction.Operand as MethodReference).Resolve(),
               aspect => aspect.BeforeCallMethod,
               aspect => aspect.AfterCallMethod,

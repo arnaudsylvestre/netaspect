@@ -38,7 +38,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
 
         public AroundMethodWeavingModel DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect)
         {
-           var befores = new List<IIlInjector>();
+           var beforeConstructorBaseCalls = new List<IIlInjector>();
            var afters = new List<IIlInjector>();
            var onExceptions = new List<IIlInjector>();
            var onFinallys = new List<IIlInjector>();
@@ -50,7 +50,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
               if (!AspectApplier.CanApply(parameter_L, aspect, selectorProvider, method.Module))
                  continue;
 
-              befores.Add(aroundMethodWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, parameter_L));
+              beforeConstructorBaseCalls.Add(aroundMethodWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, parameter_L));
               afters.Add(aroundMethodWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, parameter_L));
               onExceptions.Add(aroundMethodWeaverFactory.CreateForExceptions(method, onExceptionInterceptorProvider(aspect).Method, parameter_L));
               onFinallys.Add(aroundMethodWeaverFactory.CreateForOnFinally(method, onFinallyInterceptorProvider(aspect).Method, parameter_L));
@@ -60,10 +60,11 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
 
             return new AroundMethodWeavingModel()
             {
-                Befores = befores,
                 Afters = afters,
                 OnExceptions = onExceptions,
-                OnFinallys = onFinallys
+                OnFinallys = onFinallys,
+                BeforeConstructorBaseCalls = beforeConstructorBaseCalls
+              
                 };
         }
     }

@@ -6,17 +6,17 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.Afte
     public class OverrideTest :
         NetAspectTest<OverrideTest.ClassToWeave>
     {
-        [Test]
-        public void Check()
-        {
-            A b = new B();
-            A a2 = new A2();
-            A a = new A();
+        //[Test]
+        //public void Check()
+        //{
+        //    A b = new B();
+        //    A a2 = new A2();
+        //    A a = new A();
 
-            Assert.False(IsSameMethodAsA(b));
-            Assert.True(IsSameMethodAsA(a));
-            Assert.True(IsSameMethodAsA(a2));
-        }
+        //    Assert.False(IsSameMethodAsA(b));
+        //    Assert.True(IsSameMethodAsA(a));
+        //    Assert.True(IsSameMethodAsA(a2));
+        //}
 
         private static bool IsSameMethodAsA(A a)
         {

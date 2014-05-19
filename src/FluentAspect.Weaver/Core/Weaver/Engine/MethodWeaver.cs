@@ -66,7 +66,8 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
           if (errorHandler.Errors.Count > 0)
             return;
 
-         var befores = new List<Instruction>();
+          var befores = new List<Instruction>();
+          var beforeConstructorBaseCall = new List<Instruction>();
          var afters = new List<Instruction>();
          var onExceptions = new List<Instruction>();
          var onFinallys = new List<Instruction>();
@@ -74,13 +75,16 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
          var interceptorFactoryInstructions = new List<Instruction>();
          availableVariables.InterceptorVariable = methodWeavingModel.Method.CreateAspect(interceptorFactoryInstructions);
          allVariables.Add(availableVariables.InterceptorVariable);
-          methodWeavingModel.Method.Inject(befores, afters, onExceptions, onFinallys, availableVariables);
+         methodWeavingModel.Method.Inject(befores, afters, onExceptions, onFinallys, availableVariables, beforeConstructorBaseCall);
 
-          if (befores.Any() || afters.Any() || onExceptions.Any() || onFinallys.Any())
+         if ( beforeConstructorBaseCall.Any())
+         {
+            beforeConstructorBaseCall.InsertRange(0, interceptorFactoryInstructions);
+         } else if (befores.Any() || afters.Any() || onExceptions.Any() || onFinallys.Any())
           {
              befores.InsertRange(0, interceptorFactoryInstructions);
           }
-
+         w.BeforeConstructorBaseCall.AddRange(beforeConstructorBaseCall);
          w.BeforeInstructions.AddRange(availableVariables.BeforeInstructions);
          w.BeforeInstructions.AddRange(befores);
          w.AfterInstructions.AddRange(afters);

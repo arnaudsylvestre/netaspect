@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
       private List<Instruction> beforeAfter = new List<Instruction>();
 
       private VariableDefinition _called;
-      private Instruction instruction;
+      public Instruction Instruction { get; private set; }
       private Dictionary<string, VariableDefinition> _calledParameters;
       private VariableDefinition _calledParametersObject;
 
@@ -40,7 +40,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
       public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method, Instruction instruction)
       {
-         this.instruction = instruction;
+         this.Instruction = instruction;
          Variables = new List<VariableDefinition>();
          Fields = new List<FieldDefinition>();
          _result = result;
@@ -145,9 +145,9 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
       {
          if (_calledParameters == null)
          {
-            if (instruction.IsAnUpdatePropertyCall())
+            if (Instruction.IsAnUpdatePropertyCall())
             {
-               var methodDefinition_L = ((MethodReference)instruction.Operand).Resolve();
+               var methodDefinition_L = ((MethodReference)Instruction.Operand).Resolve();
                var property = methodDefinition_L.GetPropertyForSetter();
                _calledParameters = new Dictionary<string, VariableDefinition>();
                var propertyType_L = property.PropertyType;
@@ -157,10 +157,10 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
                recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
             }
-            else if (instruction.Operand is MethodReference)
+            else if (Instruction.Operand is MethodReference)
             {
                _calledParameters = new Dictionary<string, VariableDefinition>();
-               var calledMethod = instruction.GetCalledMethod();
+               var calledMethod = Instruction.GetCalledMethod();
                foreach (var parameter in calledMethod.Parameters.Reverse())
                {
                   var variableDefinition = new VariableDefinition(parameter.ParameterType);
@@ -173,10 +173,10 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                   recallcalledParametersInstructions.Add(Instruction.Create(OpCodes.Ldloc, _calledParameters["called" + parameter.Name]));
                }
             }
-            else if (instruction.IsAnUpdateField())
+            else if (Instruction.IsAnUpdateField())
             {
                _calledParameters = new Dictionary<string, VariableDefinition>();
-               var fieldType = (instruction.Operand as FieldReference).Resolve().FieldType;
+               var fieldType = (Instruction.Operand as FieldReference).Resolve().FieldType;
                var variableDefinition = new VariableDefinition(fieldType);
                Variables.Add(variableDefinition);
                _calledParameters.Add("value", variableDefinition);
@@ -194,10 +194,10 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          {
             if (_calledParametersObject == null)
             {
-               if (instruction.Operand is MethodReference)
+               if (Instruction.Operand is MethodReference)
                {
                   var p = CalledParameters;
-                  var calledMethod = instruction.GetCalledMethod();
+                  var calledMethod = Instruction.GetCalledMethod();
                   _calledParametersObject = new VariableDefinition(calledMethod.Module.Import(typeof(object[])));
                   Variables.Add(_calledParametersObject);
 
@@ -218,10 +218,10 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             {
                var calledParameters = CalledParameters;
                TypeReference declaringType = null;
-               var operand = instruction.Operand as FieldReference;
+               var operand = Instruction.Operand as FieldReference;
                if (operand != null && !operand.Resolve().IsStatic)
                   declaringType = operand.DeclaringType;
-               var methodReference = instruction.Operand as MethodReference;
+               var methodReference = Instruction.Operand as MethodReference;
                if (methodReference != null && !methodReference.Resolve().IsStatic)
                   declaringType = methodReference.DeclaringType;
 

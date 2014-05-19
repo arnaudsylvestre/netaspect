@@ -16,12 +16,21 @@ namespace NetAspect.Weaver.Helpers.IL
 
        public static void AppendCallToGetField(this List<Instruction> instructions, string fieldName,
                                                  ModuleDefinition module)
-        {
-            instructions.Add(Instruction.Create(OpCodes.Ldstr, fieldName));
-            instructions.Add(Instruction.Create(OpCodes.Callvirt,
-                                                module.Import(typeof(Type).GetMethod("GetField",
-                                                                                      new[] { typeof(string) }))));
-        }
+       {
+          instructions.Add(Instruction.Create(OpCodes.Ldstr, fieldName));
+          instructions.Add(Instruction.Create(OpCodes.Callvirt,
+                                              module.Import(typeof(Type).GetMethod("GetField",
+                                                                                    new[] { typeof(string) }))));
+       }
+
+       public static void AppendCallToGetMethod(this List<Instruction> instructions, string methodName,
+                                                 ModuleDefinition module)
+       {
+          instructions.Add(Instruction.Create(OpCodes.Ldstr, methodName));
+          instructions.Add(Instruction.Create(OpCodes.Callvirt,
+                                              module.Import(typeof(Type).GetMethod("GetMethod",
+                                                                                    new[] { typeof(string) }))));
+       }
 
         public static void AppendCallToGetProperty(this List<Instruction> instructions, string propertyName,
                                                    ModuleDefinition module)

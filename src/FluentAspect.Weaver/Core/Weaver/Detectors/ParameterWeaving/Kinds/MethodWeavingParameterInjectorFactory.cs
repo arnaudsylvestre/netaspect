@@ -10,7 +10,6 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Kinds
            weavingInfo_P.AddParameterValue(interceptorParameterConfigurations_P)
                          .AddParameterName(interceptorParameterConfigurations_P)
                          .AddParameterInfo(interceptorParameterConfigurations_P)
-                         .AddInstance(interceptorParameterConfigurations_P)
                          .AddConstructor(interceptorParameterConfigurations_P)
                          .AddParameters(interceptorParameterConfigurations_P)
                          .AddParameterNames(interceptorParameterConfigurations_P)

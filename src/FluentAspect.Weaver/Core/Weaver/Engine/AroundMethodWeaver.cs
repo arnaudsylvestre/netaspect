@@ -24,14 +24,16 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
 
         public void Check(ErrorHandler errorHandler)
         {
-            Model.Befores.Check(errorHandler);
+           Model.Befores.Check(errorHandler);
+           Model.BeforeConstructorBaseCalls.Check(errorHandler);
             Model.Afters.Check(errorHandler);
             Model.OnExceptions.Check(errorHandler);
             Model.OnFinallys.Check(errorHandler);
         }
 
-        public void Inject(List<Instruction> befores, List<Instruction> afters, List<Instruction> onExceptions, List<Instruction> onFinallys, IlInjectorAvailableVariables availableVariables)
+        public void Inject(List<Instruction> befores, List<Instruction> afters, List<Instruction> onExceptions, List<Instruction> onFinallys, IlInjectorAvailableVariables availableVariables, List<Instruction> beforeConstructorBaseCall_P)
         {
+            Model.BeforeConstructorBaseCalls.Inject(beforeConstructorBaseCall_P, availableVariables);
             Model.Befores.Inject(befores, availableVariables);
             Model.Afters.Inject(afters, availableVariables);
             Model.OnExceptions.Inject(onExceptions, availableVariables);
