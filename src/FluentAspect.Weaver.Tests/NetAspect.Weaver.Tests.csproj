@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2158446B-9E58-4E9D-BDC4-27A5A90365D1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -394,11 +394,6 @@
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\Before\LineNumber\BeforeCallGetPropertyLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\Before\LineNumber\BeforeCallGetPropertyLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Selectors\CallGetPropertyWeavingInAnotherAssemblyTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Getter\Selectors\Errors\GetPropertyWithSelectorPropertyNotBooleanTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Getter\Selectors\Errors\GetPropertyWithSelectorPropertyNotStaticTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Getter\Selectors\Errors\GetPropertyWithSelectorPropertyWithBadParameterTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Getter\Selectors\Errors\GetPropertyWithSelectorPropertyWithReferencedParameterTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Getter\Selectors\Infos\GetPropertyWithEmptySelectorPropertyTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Selectors\Infos\GetPropertyWithSelectorPropertyAllParametersTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Selectors\Infos\GetPropertyWithSelectorPropertyNameTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Visibility\CallGetInternalPropertyWeavingTest.cs" />
