@@ -10,15 +10,10 @@ namespace NetAspect.Weaver.Core.Model.Weaving
 {
     public class MethodsWeavingModel
     {
-        public Dictionary<MethodDefinition, MethodWeavingModel> weavingModels = new Dictionary<MethodDefinition, MethodWeavingModel>();
-
-        public void Add(MethodDefinition method, MethodWeavingModel model)
-        {
-            weavingModels.Add(method, model);
-        }
+        public readonly Dictionary<MethodDefinition, MethodWeavingModel> weavingModels = new Dictionary<MethodDefinition, MethodWeavingModel>();
 
 
-        public void Add(MethodDefinition method, AroundMethodWeavingModel detectWeavingModel, NetAspectDefinition aspect, AspectBuilder aspectBuilder)
+       public void Add(MethodDefinition method, AroundMethodWeavingModel detectWeavingModel, NetAspectDefinition aspect, AspectBuilder aspectBuilder)
         {
             if (detectWeavingModel == null)
                 return;
@@ -34,8 +29,7 @@ namespace NetAspect.Weaver.Core.Model.Weaving
         {
             if (!weavingModels.ContainsKey(method))
                 weavingModels.Add(method, new MethodWeavingModel(method, aspect, aspectBuilder));
-            var methodWeavingModel = weavingModels[method];
-            return methodWeavingModel;
+           return weavingModels[method];
         }
 
         public void Add(MethodDefinition method, Instruction instruction, AroundInstructionWeaver aroundInstructionWeaver, NetAspectDefinition aspect, AspectBuilder aspectBuilder)

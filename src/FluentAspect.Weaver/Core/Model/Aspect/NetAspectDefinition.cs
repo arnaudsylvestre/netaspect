@@ -189,8 +189,6 @@ namespace NetAspect.Weaver.Core.Model.Aspect
            get
            {
                var selectorParametersGenerator = new SelectorParametersGenerator<PropertyDefinition>();
-               selectorParametersGenerator.AddPossibleParameter<string>("propertyName", field => field.Name);
-               selectorParametersGenerator.AddPossibleParameter<string>("propertyTypeName", field => field.PropertyType.Name);
                selectorParametersGenerator.AddPossibleParameter<PropertyInfo>("property", GetProperty);
               return new Selector<PropertyDefinition>(_attribute.GetMethod("SelectProperty"), selectorParametersGenerator);
            }

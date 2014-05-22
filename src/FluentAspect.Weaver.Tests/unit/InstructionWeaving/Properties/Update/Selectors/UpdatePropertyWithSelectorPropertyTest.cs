@@ -1,10 +1,11 @@
 using System;
+using System.Reflection;
 using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Selectors
 {
-    public class UpdatePropertyWithSelectorPropertyNameTest :
-        NetAspectTest<UpdatePropertyWithSelectorPropertyNameTest.ClassToWeave>
+    public class UpdatePropertyWithSelectorPropertyTest :
+        NetAspectTest<UpdatePropertyWithSelectorPropertyTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
@@ -37,9 +38,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Selec
                 Caller = caller;
             }
 
-            public static bool SelectProperty(string PropertyName)
+            public static bool SelectProperty(PropertyInfo property)
             {
-                return PropertyName == "Property";
+               return property.Name == "Property";
             }
         }
     }
