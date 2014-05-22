@@ -77,8 +77,10 @@
   ================================================== -->
   <div class="bs-docs-section">
     <div class="page-header">
-      <h1 id="attributes">The sample class</h1>
+      <h1 id="attributes">Basics</h1>
     </div>
+	
+    <h3 id="dropdowns-example">The sample class</h3>
     <p>Imagine that we want to log the different access on the following class : </p>
     <pre class="prettyprint">
 public class MyInt
@@ -101,24 +103,13 @@ public class MyInt
    }
 }
 </pre>
-  </div>
 
-
-  <!-- Dropdowns
-  ================================================== -->
-  <div class="bs-docs-section">
-    <div class="page-header">
-      <h1 id="dropdowns">Method weaving</h1>
-    </div>
-    
-	
-    <h2 id="dropdowns-example">Setup</h2>
-    <h3 id="dropdowns-example">Define the aspect</h3>
-    <p>NetAspect use .Net attributes to define the weaving model. To define a NetAspect attribute you must declare your attribute with a property named <b>IsNetAspectAttribute</b> like this :</p>
+<h3 id="dropdowns-example">Define the aspect</h3>
+    <p>NetAspect use .Net attributes to define the weaving model. To define a NetAspect attribute you must declare your attribute with a field named <b>NetAspectAttribute</b> like this :</p>
 	<pre class="prettyprint">
 public class LogAttribute : Attribute
 {
-    public bool IsNetAspectAttribute { get { return true; } }
+    public bool NetAspectAttribute = true;
 }
 </pre>
 <h3 id="dropdowns-example">Link the method with the aspect</h3>
@@ -145,20 +136,28 @@ public class MyInt
   }
 }
 </pre>
-    <h2 id="dropdowns-example">Do something before the method is called</h2>
-    <p>Imagine that we want to print "Start Division" in the console when someone calls the DivideBy method.</p>
-	<h3 id="dropdowns-example">Modify the aspect</h3>
-    <p>We must modify our aspect like this</p>
+  </div>
+
+
+  <!-- Dropdowns
+  ================================================== -->
+  <div class="bs-docs-section">
+    <div class="page-header">
+      <h1 id="dropdowns">Weaving possibilities</h1>
+    </div>
+        
+<h2 id="dropdowns">Method Weaving</h2>
+    <h3 id="dropdowns-example">Do something before the method is executed</h3>
+    <p>Imagine that we want to print <b>"Start Division"</b> in the console before executing the <b>DivideBy</b> method. We must modify our aspect like this</p>
 	<pre class="prettyprint">
 public class LogAttribute : Attribute
 {
-    public bool IsNetAspectAttribute { get { return true; } }
+    public bool IsNetAspectAttribute = true;
 	
     public void Before() { Console.WriteLine("Start Division"); }
 }
 </pre>
-	
-    <h3 id="dropdowns-example-after">Parameters</h3>
+		
 	<p>You can add some parameters to your Before method to get some information about the weaved method</p>	
 	<ul>
 		<li><b>instance</b> : the <i>this</i> of the weaved method (in our case the this of Divide). The type of instance can be <b>object</b> or <b>Computer</b> in our case</li>
@@ -180,10 +179,8 @@ public class LogAttribute : Attribute
 }
 </pre>
 
-<h2 id="dropdowns-example">Do something after the method is called</h2>
-    <p>Imagine that we want to print "End of division" in the console when the division is done.</p>
-	<h3 id="dropdowns-example">Modify the aspect</h3>
-    <p>We must modify our aspect like this</p>
+<h3 id="dropdowns-example">Do something after the method is executed</h3>
+    <p>Imagine that we want to print "End of division" in the console when the division is done. We must modify our aspect like this</p>
 	<pre class="prettyprint">
 public class LogAttribute : Attribute
 {
@@ -193,8 +190,7 @@ public class LogAttribute : Attribute
 }
 </pre>
 	
-    <h3 id="dropdowns-example-after">Parameters</h3>
-	<p>You can add some parameters to your After method to get some information about the weaved method</p>	
+	<p>The following parameters are available for the <b>After</b> method to get more information</p>	
 	<ul>
 		<li><b>instance</b> : same as the Before method</li>
 		<li><b>method</b> : same as the Before method</li>
@@ -202,24 +198,9 @@ public class LogAttribute : Attribute
 		<li><b>parameter name</b> : same as the Before method</li>
 		<li><b>result</b> : the value returned by the weaved method. You can referenced the result in the aspect method to update the result value in the weaved method. The type of result must be the same type as the weaved method</li>
 	</ul>
-	<p>Here is a sample with parameters</p>
-	
-	<pre class="prettyprint">
-public class LogAttribute : Attribute
-{
-    public bool IsNetAspectAttribute { get { return true; } }
-	
-    public void After(MyInt instance, int v, int result) 
-    {
-        Console.WriteLine(string.Format("End of Division {0} / {1}. Result : {2}", instance.Value, v, result));
-    }
-}
-</pre>
 
-<h2 id="dropdowns-example">Do something when an exception is raised in the method</h2>
-    <p>Imagine that we want to print "Exception" in the console when the division raises an exception.</p>
-	<h3 id="dropdowns-example">Modify the aspect</h3>
-    <p>We must modify our aspect like this</p>
+<h3 id="dropdowns-example">Do something when an exception is raised in the method</h3>
+    <p>Imagine that we want to print "Exception" in the console when the division raises an exception. We must modify our aspect like this</p>
 	<pre class="prettyprint">
 public class LogAttribute : Attribute
 {
@@ -229,28 +210,53 @@ public class LogAttribute : Attribute
 }
 </pre>
 	
-    <h3 id="dropdowns-example-after">Parameters</h3>
 	<p>You can add some parameters to your OnException method to get some information about the weaved method</p>	
 	<ul>
 		<li><b>instance</b> : same as the Before method</li>
 		<li><b>method</b> : same as the Before method</li>
 		<li><b>parameters</b> : same as the Before method</li>
 		<li><b>parameter name</b> : same as the Before method</li>
-		<li><b>exception</b> : the exception raised in the weaved.</li>
+		<li><b>exception</b> : the exception raised in the weaved method. The type of this parameter must be <b>System.Exception</b></li>
 	</ul>
-	<p>Here is a sample with parameters</p>
-	
+
+<h3 id="dropdowns-example">Do something after the method is executed (like onFinally)</h3>
+    <p>Imagine that we want to print "End of division" in the console after the division is done or when the division raises an exception. We must modify our aspect like this</p>
 	<pre class="prettyprint">
 public class LogAttribute : Attribute
 {
     public bool IsNetAspectAttribute { get { return true; } }
 	
-    public void OnException(Exception exception) 
-    {
-         Console.WriteLine("Exception : {0}", exception.Message);
-    }
+    public void OnFinally() { Console.WriteLine("End of division"); }
 }
 </pre>
+	
+	<p>You can add some parameters to your OnFinally method to get some information about the weaved method</p>	
+	<ul>
+		<li><b>instance</b> : same as the Before method</li>
+		<li><b>method</b> : same as the Before method</li>
+		<li><b>parameters</b> : same as the Before method</li>
+		<li><b>parameter name</b> : same as the Before method</li>
+	</ul>
+</pre>
+
+<h2 id="dropdowns">Getter/Setter Weaving</h2>
+<p>You can add aspects by the same way to properties to weave getter et setter</p>
+<h3 id="dropdowns-example">Weave the getter</h3>
+	<pre class="prettyprint">
+public class LogAttribute : Attribute
+{
+    public bool IsNetAspectAttribute { get { return true; } }
+	
+    public void BeforePropertyGetMethod() { Console.WriteLine("End of division"); }
+}
+</pre>
+<p>The available parameters are :</p>	
+	<ul>
+		<li><b>instance</b> : same as the Before method</li>
+		<li><b>property</b> : the weaved property. Must be of type PropertyInfo</li>
+	</ul>
+
+<h3 id="dropdowns-example">Weave the setter</h3>
 
 
 	 <!-- Dropdowns
