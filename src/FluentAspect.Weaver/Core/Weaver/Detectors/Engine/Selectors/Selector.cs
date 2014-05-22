@@ -36,7 +36,10 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine.Selectors
             Check(errorHandler);
             if (errorHandler.Errors.Count > 0)
                 return false;
-            return (bool)_method.Invoke(null, selectorParametersGenerator.Generate(_method, member));
+           var target = selectorParametersGenerator.Generate(_method, member);
+           if (target[0] == null)
+              return false;
+           return (bool)_method.Invoke(null, target);
         }
     }
 }

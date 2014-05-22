@@ -80,7 +80,6 @@
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldWithBadParameterTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldNotBooleanTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Selectors\Errors\GetFieldWithSelectorFieldNotStaticTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Fields\Getter\Selectors\Infos\GetFieldWithSelectorFieldAllParametersTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Selectors\Infos\GetFieldWithSelectorFieldNameTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetFieldCalledParameterWithObjectTypeTest.cs" />
@@ -223,10 +222,6 @@
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\Before\LineNumber\BeforeCallUpdateFieldLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\Before\LineNumber\BeforeCallUpdateFieldLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Selectors\CallUpdateFieldWeavingInAnotherAssemblyTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Fields\Update\Selectors\Errors\UpdateFieldWithSelectorFieldNotBooleanTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Fields\Update\Selectors\Errors\UpdateFieldWithSelectorFieldNotStaticTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Fields\Update\Selectors\Errors\UpdateFieldWithSelectorFieldWithBadParameterTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Fields\Update\Selectors\Errors\UpdateFieldWithSelectorFieldWithReferencedParameterTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Selectors\UpdateFieldWithSelectorFieldNameTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Visibility\CallGetInternalFieldWeavingTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Visibility\CallGetPrivateFieldWeavingTest.cs" />
@@ -322,6 +317,8 @@
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\Before\LineNumber\BeforeCallMethodLineNumberParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\Before\LineNumber\BeforeCallMethodLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\Before\LineNumber\BeforeCallMethodLineNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Methods\Selectors\AfterCallMethodCalledParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Selectors\WeavePublicMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Selectors\WeavePublicPropertyTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\Selectors\WeavePublicPropertyTest.cs" />
     <Compile Include="unit\MultiWeaving\AspectDefinedOnDeclaringTypeTest.cs" />

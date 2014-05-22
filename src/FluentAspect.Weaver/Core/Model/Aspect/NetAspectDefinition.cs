@@ -178,8 +178,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
            get
            {
                var selectorParametersGenerator = new SelectorParametersGenerator<FieldDefinition>();
-              selectorParametersGenerator.AddPossibleParameter<string>("fieldName", field => field.Name);
-              selectorParametersGenerator.AddPossibleParameter<string>("fieldTypeName", field => field.FieldType.Name);
+              selectorParametersGenerator.AddPossibleParameter<FieldInfo>("field", GetField);
               return new Selector<FieldDefinition>(_attribute.GetMethod("SelectField"), selectorParametersGenerator);
            }
         }
@@ -196,8 +195,18 @@ namespace NetAspect.Weaver.Core.Model.Aspect
 
         private PropertyInfo GetProperty(PropertyDefinition arg)
         {
-            var assembly = Assembly.LoadFrom(arg.Module.FullyQualifiedName);
-            return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetProperty(arg.Name);
+           var assembly = Assembly.LoadFrom(arg.Module.FullyQualifiedName);
+           return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetProperty(arg.Name);
+        }
+        private MethodInfo GetMethod(MethodDefinition arg)
+        {
+           var assembly = Assembly.LoadFrom(arg.Module.FullyQualifiedName);
+           return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetMethod(arg.Name);
+        }
+        private FieldInfo GetField(FieldDefinition arg)
+        {
+           var assembly = Assembly.LoadFrom(arg.Module.FullyQualifiedName);
+           return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetField(arg.Name);
         }
 
         public Selector<MethodDefinition> MethodSelector
@@ -205,8 +214,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
            get
            {
                var selectorParametersGenerator = new SelectorParametersGenerator<MethodDefinition>();
-              selectorParametersGenerator.AddPossibleParameter<string>("methodName", field => field.Name);
-              selectorParametersGenerator.AddPossibleParameter<string>("methodTypeName", field => field.ReturnType.Name);
+               selectorParametersGenerator.AddPossibleParameter<MethodInfo>("method", GetMethod);
               return new Selector<MethodDefinition>(_attribute.GetMethod("SelectMethod"), selectorParametersGenerator);
            }
         }
