@@ -318,6 +318,7 @@
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\Before\LineNumber\BeforeCallMethodLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\Before\LineNumber\BeforeCallMethodLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Selectors\AfterCallMethodCalledParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Constructor\Selectors\WeavePublicMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Selectors\WeavePublicMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Selectors\WeavePublicPropertyTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\Selectors\WeavePublicPropertyTest.cs" />
