@@ -37,7 +37,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Attributes.Visib
 
             public static bool SelectConstructor(ConstructorInfo constructor)
             {
-               return constructor.DeclaringType.Name == "MyAspect";
+               return constructor.DeclaringType.Name == "ClassToWeave";
             }
         }
     }
