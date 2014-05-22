@@ -26,5 +26,15 @@ namespace NetAspect.ProjectUpdater.Tests
       {
          
       }
+
+      public void AddNetAspectSupport()
+      {
+         throw new NotImplementedException();
+      }
+
+      public void Save(string sampleupdatedCsproj_P)
+      {
+         throw new NotImplementedException();
+      }
    }
 }

@@ -15,7 +15,6 @@ namespace NetAspect.ProjectUpdater
       {
          List<string> projectFilesToWeave = new List<string>();
          projectFilesToWeave.AddRange(projectFilesToWeave);
-         if (args.Length < 1)
          OpenFileDialog openFileDialog = new OpenFileDialog();
          if (openFileDialog.ShowDialog() == DialogResult.OK)
          {
