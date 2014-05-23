@@ -329,7 +329,30 @@ public class LogAttribute : Attribute
 		<li><b>filePath</b> : the file path of the instruction which call our member</li>
 		<li><b>fileName</b> : the file name of the instruction which call our member</li>
 	</ul>
-	
+    <h3 id="dropdowns-example">Sample</h3>
+    <p>Here is a sample to get the line number of the code which call our DivideBy method</p>
+		<pre class="prettyprint">
+public class LogAttribute : Attribute
+{
+    public bool NetAspectAttribute = true;
+
+    public static int LineNumber;
+
+    public void BeforeCallMethod(int lineNumber)
+    {
+        LineNumber = lineNumber;
+    }
+}
+
+public class Computer
+{
+    public static int Divide(int a, int b)
+    {
+        MyInt myInt = new MyInt(a);
+        return myInt.DivideBy(b);
+    }
+}
+</pre>
 	
 	
 	
