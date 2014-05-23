@@ -169,6 +169,7 @@ public class MyInt
 		<li><b>parameter name</b> : if a parameter name in the aspect method is in the weaved method so the value will be the same. You can referenced the parameter in the aspect method to update the value in the weaved method</li>
 		<li><b>result</b> : the value returned by the weaved method. You can referenced the result in the aspect method to update the result value in the weaved method. The type of result must be the same type as the weaved method</li>
 		<li><b>exception</b> : the exception raised in the weaved method. The type of this parameter must be <b>System.Exception</b></li>
+		<li><b>value</b> : the new value of the property in a property setter</li>
 	</ul>
 	<p>Here is a sample with parameters</p>
 	
@@ -314,15 +315,19 @@ public class LogAttribute : Attribute
 		<li><b>Before</b> the member is called</li>
 		<li><b>After</b> the member is called</li>
 	</ul>
-    <p>For each of these behaviors, we can get some information about the weaved method by adding some parameters to the aspect method :</p>
+    <p>For each of these behaviors, we can get some information about the caller and the member called by adding some parameters to the aspect method :</p>
 	<ul>
-		<li><b>instance</b> : the <i>this</i> of the weaved method. The type of instance can be <b>object</b> or the real type (<b>MyInt</b> in our case)</li>
-		<li><b>method</b> : the MethodInfo of the weaved method (in our case Divide)</li>
-		<li><b>property</b> : the PropertyInfo of the property if the aspect is put on a property</li>
-		<li><b>parameters</b> : the parameters of the weaved method (in our case the parameters of the Divide method). The type of parameters must be <b>object[]</b></li>
-		<li><b>parameter name</b> : if a parameter name in the aspect method is in the weaved method so the value will be the same. You can referenced the parameter in the aspect method to update the value in the weaved method</li>
-		<li><b>result</b> : the value returned by the weaved method. You can referenced the result in the aspect method to update the result value in the weaved method. The type of result must be the same type as the weaved method</li>
-		<li><b>exception</b> : the exception raised in the weaved method. The type of this parameter must be <b>System.Exception</b></li>
+		<li><b>caller</b> : the <i>this</i> of the method which call our member. The type of caller can be <b>object</b> or the real type</li>
+		<li><b>callerMethod</b> : the MethodInfo of the method which call our member</li>
+		<li><b>callerParameters</b> : the parameters of the method which call our member. The type of callerParameters must be <b>object[]</b></li>
+		<li><b>caller + parameter name</b> : the parameter of the method which call our member</li>
+		<li><b>called</b> : the <i>this</i> of our member. The type of called can be <b>object</b> or the real type</li>
+		<li><b>calledParameters</b> : the parameters of our member if our member is a method. The type of calledParameters must be <b>object[]</b></li>
+		<li><b>called + parameter name</b> : the parameter of our member if our member is a method</li>
+		<li><b>lineNumber</b> : the line number of the instruction which call our member</li>
+		<li><b>columnNumber</b> : the column number of the instruction which call our member</li>
+		<li><b>filePath</b> : the file path of the instruction which call our member</li>
+		<li><b>fileName</b> : the file name of the instruction which call our member</li>
 	</ul>
 	<p>Here is a sample with parameters</p>
 	
