@@ -190,7 +190,7 @@ public class LogAttribute : Attribute
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingBefore">Before Method Weaving possibilities</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#GroupMethodWeavingBefore">Before Method Weaving possibilities</a>
                 </h4>
             </div>
             <div id="MethodWeavingBefore" class="panel-collapse collapse">

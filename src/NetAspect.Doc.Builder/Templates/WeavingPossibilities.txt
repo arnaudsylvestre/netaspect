@@ -1,0 +1,53 @@
+﻿<input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#MethodWeavingPossibilities" value="Show possibilities">
+    <!-- Collapsible Element HTML -->
+    <div id="MethodWeavingPossibilities" class="collapse">
+
+
+
+#foreach ($possibility in $documentation.Possibilities)
+
+<!-- 
+================================================	  
+	  $possibility.Kind possibilities
+================================================
+	  -->
+
+	<h4 id="dropdowns-example">$possibility.Title</h4>
+            <p>These aspects are called when the aspect is put on a <b>$possibility.Member</b></p>
+			
+<div class="panel-group" id="Group$possibility.Kind">
+#foreach ($event in $possibility.Events)
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#$event.Kind">$event.Description</a>
+                </h4>
+            </div>
+            <div id="$event.Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>$event.MethodName</b> method is called ${event.Called}. The available parameters are :</p>
+            <ul>
+#foreach ($parameter in $event.Parameters)
+               <li><b>$parameter.Name</b> : $parameter.Description</li>
+#end
+            </ul>
+			<p>Sample on how to use</p>
+#foreach ($sample in $event.Samples)
+<pre class="prettyprint">
+// The aspect
+$sample.AspectCode
+
+// The code which will call our aspect
+$sample.CallCode
+</pre>
+#end
+                </div>
+            </div>
+        </div>
+#end
+        
+    </div>
+
+
+#end
+    </div>

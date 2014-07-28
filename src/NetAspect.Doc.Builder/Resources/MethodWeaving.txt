@@ -1,0 +1,31 @@
+﻿<h2 id="dropdowns">Method Weaving</h2>
+            <p>The "method weaving" will modify the code of the method to add behavior. It is possible to add behavior :</p>
+            <ul>
+               <li><b>Before</b> the method is executed</li>
+               <li><b>After</b> the method is executed when no exception is raised</li>
+               <li><b>When exception occurs</b> in the method</li>
+               <li><b>On finally</b> : at the end of the method when an exception is raised or not</li>
+            </ul>
+            <p>For each of these behaviors, we can get some information about the weaved method by adding some parameters to the aspect method :</p>
+            <ul>
+               <li><b>instance</b> : the <i>this</i> of the weaved method.</li>
+               <li><b>method</b> : the MethodInfo of the weaved method (in our case Divide)</li>
+               <li><b>property</b> : the PropertyInfo of the property if the aspect is put on a property</li>
+               <li><b>parameters</b> : the parameters of the weaved method.</li>
+               <li><b>parameter name</b> : if a parameter name in the aspect method is in the weaved method so the value will be the same.</li>
+               <li><b>result</b> : the value returned by the weaved method. The type of result must be the same type as the weaved method</li>
+               <li><b>exception</b> : the exception raised in the weaved method.</b></li>
+               <li><b>value</b> : the new value of the property in a property setter</li>
+            </ul>
+            <p>Here is a sample with parameters</p>
+            <pre class="prettyprint">
+public class LogAttribute : Attribute
+{
+    public bool IsNetAspectAttribute { get { return true; } }
+	
+    public void Before(MyInt instance, int v) 
+    {
+        Console.WriteLine(string.Format("Start Division {0} / {1}", instance.Value, v));
+    }
+}
+</pre>

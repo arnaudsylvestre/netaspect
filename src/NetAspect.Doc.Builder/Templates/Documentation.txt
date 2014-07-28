@@ -1,0 +1,20 @@
+﻿$documentation.Header
+
+<div class="container bs-docs-container">
+      <div class="row">
+      <div class="col-md-12" role="main">
+
+$documentation.Basics
+
+      <!-- 
+================================================	  
+	  Weaving
+================================================
+	  -->
+         <div class="bs-docs-section">
+            <div class="page-header">
+               <h1 id="dropdowns">Weaving</h1>
+            </div>
+$documentation.MethodWeaving
+$documentation.MethodWeavingPossibilities
+

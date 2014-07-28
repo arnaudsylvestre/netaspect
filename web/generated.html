@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+      <title>NetAspect</title>
+      <link href="bootstrap-3.0.2/dist/css/bootstrap.css" rel="stylesheet">
+      <link href="jumbotron.css" rel="stylesheet">
+   </head>
+   <body>
+      <!-- 
+================================================	  
+	  Navigation
+================================================
+	  -->
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+         <div class="container">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="index.html">Home</a>
+            </div>
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="index.html">Net Aspect</a>
+            </div>
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="GettingStarted.html">Getting started</a>
+            </div>
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="Documentation.html">Documentation</a>
+            </div>
+         </div>
+      </div>
+
+<div class="container bs-docs-container">
+      <div class="row">
+      <div class="col-md-12" role="main">
+
+<div class="bs-docs-section">
+		 
+      <!-- 
+================================================	  
+	  Basics
+================================================
+	  -->
+		 
+            <div class="page-header">
+               <h1 id="attributes">Basics</h1>
+            </div>
+            <h3 id="dropdowns-example">The sample class</h3>
+            <p>Imagine that we want to log the different access on the following class : </p>
+            <pre class="prettyprint">
+public class MyInt
+{
+   int value;
+   
+   public MyInt(int value)
+   {
+      this.value = value;
+   }
+   
+   public int Value
+   {
+      get { return value; }
+   }
+   
+   public int DivideBy(int v)
+   {
+      return value / v;
+   }
+}
+</pre>
+            <h3 id="dropdowns-example">Define the aspect</h3>
+            <p>Imagine that we want to print <b>"Start Division"</b> in the console before executing the <b>DivideBy</b> method. We must create a class like this :</p>
+            <pre class="prettyprint">
+// NetAspect uses .Net attributes to define the weaving model
+public class LogAttribute : Attribute
+{
+    // You must add this field to declare a NetAspectAttribute
+    public bool NetAspectAttribute = true;
+	
+    // This method will be call before executing the DivideBy method thanks to the 'Before' method name
+    public void Before() { Console.WriteLine("Start Division"); }
+}
+</pre>
+            <h3 id="dropdowns-example">Link the method with the aspect</h3>
+            <p>Now, just add the attribute to the DivideBy method</p>
+            <pre class="prettyprint">
+public class MyInt
+{
+  private readonly int value;
+
+  public MyInt(int value)
+  {
+	 this.value = value;
+  }
+
+  public int Value
+  {
+	 get { return value; }
+  }
+
+  [Log]
+  public int DivideBy(int v)
+  {
+	 return value / v;
+  }
+}
+</pre>
+         </div>
+
+      <!-- 
+================================================	  
+	  Weaving
+================================================
+	  -->
+         <div class="bs-docs-section">
+            <div class="page-header">
+               <h1 id="dropdowns">Weaving</h1>
+            </div>
+<h2 id="dropdowns">Method Weaving</h2>
+            <p>The "method weaving" will modify the code of the method to add behavior. It is possible to add behavior :</p>
+            <ul>
+               <li><b>Before</b> the method is executed</li>
+               <li><b>After</b> the method is executed when no exception is raised</li>
+               <li><b>When exception occurs</b> in the method</li>
+               <li><b>On finally</b> : at the end of the method when an exception is raised or not</li>
+            </ul>
+            <p>For each of these behaviors, we can get some information about the weaved method by adding some parameters to the aspect method :</p>
+            <ul>
+               <li><b>instance</b> : the <i>this</i> of the weaved method.</li>
+               <li><b>method</b> : the MethodInfo of the weaved method (in our case Divide)</li>
+               <li><b>property</b> : the PropertyInfo of the property if the aspect is put on a property</li>
+               <li><b>parameters</b> : the parameters of the weaved method.</li>
+               <li><b>parameter name</b> : if a parameter name in the aspect method is in the weaved method so the value will be the same.</li>
+               <li><b>result</b> : the value returned by the weaved method. The type of result must be the same type as the weaved method</li>
+               <li><b>exception</b> : the exception raised in the weaved method.</b></li>
+               <li><b>value</b> : the new value of the property in a property setter</li>
+            </ul>
+            <p>Here is a sample with parameters</p>
+            <pre class="prettyprint">
+public class LogAttribute : Attribute
+{
+    public bool IsNetAspectAttribute { get { return true; } }
+	
+    public void Before(MyInt instance, int v) 
+    {
+        Console.WriteLine(string.Format("Start Division {0} / {1}", instance.Value, v));
+    }
+}
+</pre>
+<input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#MethodWeavingPossibilities" value="Show possibilities">
+    <!-- Collapsible Element HTML -->
+    <div id="MethodWeavingPossibilities" class="collapse">
+
+
+
+
+<!-- 
+================================================	  
+	  MethodWeavingBefore possibilities
+================================================
+	  -->
+
+	<h4 id="dropdowns-example">On methods</h4>
+            <p>These aspects are called when the aspect is put on a <b>method</b></p>
+			
+<div class="panel-group" id="GroupMethodWeavingBefore">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingBefore">Before Method Weaving possibilities</a>
+                </h4>
+            </div>
+            <div id="MethodWeavingBefore" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>BeforeMethod</b> method is called before the method is executed. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+               <li><b>method</b> : The method</li>
+               <li><b>parameters</b> : The parameters</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>AfterMethod</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnExceptionMethod</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnFinallyMethod</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+<!-- 
+================================================	  
+	  ConstructorWeaving possibilities
+================================================
+	  -->
+
+	<h4 id="dropdowns-example">On constructor</h4>
+            <p>These aspects are called when the aspect is put on a <b>constructor</b></p>
+			
+<div class="panel-group" id="GroupConstructorWeaving">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>BeforeConstructor</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>AfterConstructor</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnExceptionConstructor</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnFinallyConstructor</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+<!-- 
+================================================	  
+	  PropertyGetWeaving possibilities
+================================================
+	  -->
+
+	<h4 id="dropdowns-example">On property get</h4>
+            <p>These aspects are called when the aspect is put on a <b>property</b></p>
+			
+<div class="panel-group" id="GroupPropertyGetWeaving">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>BeforeGetProperty</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>AfterGetProperty</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnExceptionGetProperty</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnFinallyGetProperty</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+<!-- 
+================================================	  
+	  PropertySetWeaving possibilities
+================================================
+	  -->
+
+	<h4 id="dropdowns-example">On property set</h4>
+            <p>These aspects are called when the aspect is put on a <b>property</b></p>
+			
+<div class="panel-group" id="GroupPropertySetWeaving">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>BeforePropertySet</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>AfterPropertySet</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnExceptionPropertySet</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#Kind">Description</a>
+                </h4>
+            </div>
+            <div id="Kind" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnFinallyPropertySet</b> method is called Called. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void Before (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+    </div>
+

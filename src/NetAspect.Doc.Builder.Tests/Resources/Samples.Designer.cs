@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NetAspect.ProjectUpdater.Properties {
+namespace NetAspect.Doc.Builder.Tests.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace NetAspect.ProjectUpdater.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class Samples {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal Samples() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace NetAspect.ProjectUpdater.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NetAspect.ProjectUpdater.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NetAspect.Doc.Builder.Tests.Resources.Samples", typeof(Samples).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,13 @@ namespace NetAspect.ProjectUpdater.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        internal static byte[] Sample1 {
+            get {
+                object obj = ResourceManager.GetObject("Sample1", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }
