@@ -6,10 +6,10 @@ using NetAspect.Weaver.Tests.unit;
 
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
 {
-   public class Sample4OnFinallyMethodPossibilityTest : NetAspectTest<Sample4OnFinallyMethodPossibilityTest.MyInt>
+   public class Part1Sample3OnExceptionMethodPossibilityTest : NetAspectTest<Part1Sample3OnExceptionMethodPossibilityTest.MyInt>
     {
-      public Sample4OnFinallyMethodPossibilityTest()
-         : base("On finally method weaving possibilities", "MethodWeavingOnFinally", "MethodWeaving")
+      public Part1Sample3OnExceptionMethodPossibilityTest()
+         : base("On exception method weaving possibilities", "MethodWeavingOnException", "MethodWeaving")
       {
       }
 
@@ -37,8 +37,16 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
         {
             return () =>
                 {
+                   try
+                   {
+
                       var myInt = new MyInt(24);
-                      myInt.DivideBy(12);
+                      myInt.DivideBy(0);
+                      Assert.Fail("Must raise an exception");
+                   }
+                   catch (Exception)
+                   {
+                   }
                 };
         }
         
@@ -47,12 +55,13 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
         {
             public bool NetAspectAttribute = true;
 
-            public void OnFinally(object instance, MethodBase method, object[] parameters, int v)
+            public void OnException(object instance, MethodBase method, object[] parameters, int v, Exception exception)
             {
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
                 Assert.AreEqual("DivideBy", method.Name);
                 Assert.AreEqual(1, parameters.Length);
-                Assert.AreEqual(12, v);
+                Assert.AreEqual(0, v);
+                Assert.AreEqual("DivideByZeroException", exception.GetType().Name);
             }
         }
     }

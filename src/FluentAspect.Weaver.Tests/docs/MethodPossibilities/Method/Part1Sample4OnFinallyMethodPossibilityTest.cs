@@ -6,10 +6,10 @@ using NetAspect.Weaver.Tests.unit;
 
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
 {
-   public class Sample2AfterMethodPossibilityTest : NetAspectTest<Sample2AfterMethodPossibilityTest.MyInt>
+   public class Part1Sample4OnFinallyMethodPossibilityTest : NetAspectTest<Part1Sample4OnFinallyMethodPossibilityTest.MyInt>
     {
-      public Sample2AfterMethodPossibilityTest()
-         : base("After Method Weaving possibilities", "MethodWeavingAfter", "MethodWeaving")
+      public Part1Sample4OnFinallyMethodPossibilityTest()
+         : base("On finally method weaving possibilities", "MethodWeavingOnFinally", "MethodWeaving")
       {
       }
 
@@ -37,8 +37,8 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
         {
             return () =>
                 {
-                    var myInt = new MyInt(24);
-                    Assert.AreEqual(2, myInt.DivideBy(12));
+                      var myInt = new MyInt(24);
+                      myInt.DivideBy(12);
                 };
         }
         
@@ -47,13 +47,12 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
         {
             public bool NetAspectAttribute = true;
 
-            public void After(object instance, MethodBase method, object[] parameters, int v, int result)
+            public void OnFinally(object instance, MethodBase method, object[] parameters, int v)
             {
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
                 Assert.AreEqual("DivideBy", method.Name);
                 Assert.AreEqual(1, parameters.Length);
                 Assert.AreEqual(12, v);
-                Assert.AreEqual(2, result);
             }
         }
     }

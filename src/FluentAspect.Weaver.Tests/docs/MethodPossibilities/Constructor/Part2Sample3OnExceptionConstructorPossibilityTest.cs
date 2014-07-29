@@ -1,18 +1,16 @@
 using System;
 using System.Reflection;
 using NetAspect.Weaver.Tests.unit;
-using NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.Called;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
+namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
 {
-   public class Sample1BeforeMethodPossibilityTest : NetAspectTest<Sample1BeforeMethodPossibilityTest.MyInt>
+   public class Part2Sample3OnExceptionConstructorPossibilityTest : NetAspectTest<Part2Sample3OnExceptionConstructorPossibilityTest.MyInt>
     {
-      public Sample1BeforeMethodPossibilityTest()
-         : base("Before Method Weaving possibilities", "MethodWeavingBefore", "MethodWeaving")
+      public Part2Sample3OnExceptionConstructorPossibilityTest()
+         : base("On exception method weaving possibilities", "MethodWeavingOnException", "MethodWeaving")
       {
       }
-
 
       public class MyInt
         {
@@ -38,8 +36,16 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
         {
             return () =>
                 {
-                    var myInt = new MyInt(24);
-                    Assert.AreEqual(2, myInt.DivideBy(12));
+                   try
+                   {
+
+                      var myInt = new MyInt(24);
+                      myInt.DivideBy(0);
+                      Assert.Fail("Must raise an exception");
+                   }
+                   catch (Exception)
+                   {
+                   }
                 };
         }
         
@@ -48,12 +54,13 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
         {
             public bool NetAspectAttribute = true;
 
-            public void Before(object instance, MethodBase method, object[] parameters, int v)
+            public void OnException(object instance, MethodBase method, object[] parameters, int v, Exception exception)
             {
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
                 Assert.AreEqual("DivideBy", method.Name);
                 Assert.AreEqual(1, parameters.Length);
-                Assert.AreEqual(12, v);
+                Assert.AreEqual(0, v);
+                Assert.AreEqual("DivideByZeroException", exception.GetType().Name);
             }
         }
     }

@@ -1,14 +1,13 @@
 using System;
 using System.Reflection;
-using NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.Called;
-using NUnit.Framework;
 using NetAspect.Weaver.Tests.unit;
+using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
+namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
 {
-   public class Sample2AfterMethodPossibilityTest : NetAspectTest<Sample2AfterMethodPossibilityTest.MyInt>
+   public class Part2Sample2AfterConstructorPossibilityTest : NetAspectTest<Part2Sample2AfterConstructorPossibilityTest.MyInt>
     {
-      public Sample2AfterMethodPossibilityTest()
+      public Part2Sample2AfterConstructorPossibilityTest()
          : base("After Method Weaving possibilities", "MethodWeavingAfter", "MethodWeaving")
       {
       }

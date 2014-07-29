@@ -1,8 +1,0 @@
-﻿<p>Here is a sample with parameters</p>
-<pre class="prettyprint">
-// The aspect
-$sample.AspectCode
-
-// The code which will call our aspect
-$sample.CallCode
-</pre>

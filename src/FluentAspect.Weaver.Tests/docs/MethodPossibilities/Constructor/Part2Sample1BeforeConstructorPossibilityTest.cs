@@ -1,22 +1,23 @@
 using System;
 using System.Reflection;
-using NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.Called;
-using NUnit.Framework;
 using NetAspect.Weaver.Tests.unit;
+using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
+namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
 {
-   public class Sample4OnFinallyMethodPossibilityTest : NetAspectTest<Sample4OnFinallyMethodPossibilityTest.MyInt>
+   public class Part2Sample1BeforeConstructorPossibilityTest : NetAspectTest<Part2Sample1BeforeConstructorPossibilityTest.MyInt>
     {
-      public Sample4OnFinallyMethodPossibilityTest()
-         : base("On finally method weaving possibilities", "MethodWeavingOnFinally", "MethodWeaving")
+      public Part2Sample1BeforeConstructorPossibilityTest()
+         : base("Before Method Weaving possibilities", "MethodWeavingBefore", "MethodWeaving")
       {
       }
+
 
       public class MyInt
         {
             int value;
-
+         
+            [Log]
             public MyInt(int value)
             {
                 this.value = value;
@@ -26,7 +27,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
             {
                 get { return value; }
             }
-            [Log]
+            
             public int DivideBy(int v)
             {
                 return value / v;
@@ -37,8 +38,8 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
         {
             return () =>
                 {
-                      var myInt = new MyInt(24);
-                      myInt.DivideBy(12);
+                    var myInt = new MyInt(24);
+                    Assert.AreEqual(2, myInt.DivideBy(12));
                 };
         }
         
@@ -47,12 +48,12 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
         {
             public bool NetAspectAttribute = true;
 
-            public void OnFinally(object instance, MethodBase method, object[] parameters, int v)
+            public void BeforeConstructor(object instance, MethodBase constructor, object[] parameters, int value)
             {
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
-                Assert.AreEqual("DivideBy", method.Name);
+                Assert.AreEqual(".ctor", constructor.Name);
                 Assert.AreEqual(1, parameters.Length);
-                Assert.AreEqual(12, v);
+                Assert.AreEqual(24, value);
             }
         }
     }

@@ -18,7 +18,7 @@ namespace NetAspect.Doc.Builder
       {
          DocumentationFromTest doc = new DocumentationFromTest();
          var parser = new CSharpParser();
-         var files_L = Directory.GetFiles(directoryPath_P, "*.cs", SearchOption.AllDirectories);
+         var files_L = Directory.GetFiles(directoryPath_P, "*.cs", SearchOption.AllDirectories).OrderBy(f => Path.GetFileName(f));
          foreach (var file_L in files_L)
          {
             using (var stream = File.OpenRead(file_L))

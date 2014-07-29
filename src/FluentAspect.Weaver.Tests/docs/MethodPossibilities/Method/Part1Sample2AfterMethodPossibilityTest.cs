@@ -1,17 +1,17 @@
 using System;
 using System.Reflection;
-using NetAspect.Weaver.Tests.unit;
+using NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.Called;
 using NUnit.Framework;
+using NetAspect.Weaver.Tests.unit;
 
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
+namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
 {
-   public class Sample1BeforeConstructorPossibilityTest : NetAspectTest<Sample1BeforeConstructorPossibilityTest.MyInt>
+   public class Part1Sample2AfterMethodPossibilityTest : NetAspectTest<Part1Sample2AfterMethodPossibilityTest.MyInt>
     {
-      public Sample1BeforeConstructorPossibilityTest()
-         : base("Before Method Weaving possibilities", "MethodWeavingBefore", "MethodWeaving")
+      public Part1Sample2AfterMethodPossibilityTest()
+         : base("After Method Weaving possibilities", "MethodWeavingAfter", "MethodWeaving")
       {
       }
-
 
       public class MyInt
         {
@@ -47,12 +47,13 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
         {
             public bool NetAspectAttribute = true;
 
-            public void Before(object instance, MethodBase method, object[] parameters, int v)
+            public void After(object instance, MethodBase method, object[] parameters, int v, int result)
             {
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
                 Assert.AreEqual("DivideBy", method.Name);
                 Assert.AreEqual(1, parameters.Length);
                 Assert.AreEqual(12, v);
+                Assert.AreEqual(2, result);
             }
         }
     }

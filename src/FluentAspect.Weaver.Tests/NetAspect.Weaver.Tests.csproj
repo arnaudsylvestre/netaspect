@@ -71,12 +71,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="docs\InstructionWeavingForDocTest.cs" />
-    <Compile Include="docs\MethodPossibilities\Before\Sample4OnFinallyMethodPossibilityTest.cs" />
-    <Compile Include="docs\MethodPossibilities\Before\Sample3OnExceptionMethodPossibilityTest.cs" />
-    <Compile Include="docs\MethodPossibilities\Before\Sample1BeforeMethodPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\Constructor\Part2Sample1BeforeConstructorPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\Constructor\Part2Sample2AfterConstructorPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\Constructor\Part2Sample3OnExceptionConstructorPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\Constructor\Part2Sample4OnFinallyConstructorPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\Method\Part1Sample4OnFinallyMethodPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\Method\Part1Sample3OnExceptionMethodPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\Method\Part1Sample1BeforeMethodPossibilityTest.cs" />
     <Compile Include="docs\EventAttribute.cs" />
     <Compile Include="docs\InterceptorDescriptionAttribute.cs" />
-    <Compile Include="docs\MethodPossibilities\Before\Sample2AfterMethodPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\Method\Part1Sample2AfterMethodPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\DocConfiguration.cs" />
     <Compile Include="docs\ParameterDescriptionAttribute.cs" />
     <Compile Include="docs\PossibilityDocumentationAttribute.cs" />
