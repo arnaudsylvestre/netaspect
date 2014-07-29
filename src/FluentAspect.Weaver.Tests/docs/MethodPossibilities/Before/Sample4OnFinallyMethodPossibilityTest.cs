@@ -9,7 +9,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
    public class Sample4OnFinallyMethodPossibilityTest : NetAspectTest<Sample4OnFinallyMethodPossibilityTest.MyInt>
     {
       public Sample4OnFinallyMethodPossibilityTest()
-         : base("On finally method weaving possibilities", "MethodWeavingOnException", "MethodWeaving")
+         : base("On finally method weaving possibilities", "MethodWeavingOnFinally", "MethodWeaving")
       {
       }
 

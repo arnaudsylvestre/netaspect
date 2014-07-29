@@ -195,47 +195,6 @@ public class LogAttribute : Attribute
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnException">On finally method weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingOnException" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>The <b>OnFinally</b> method is called when an exception occured in the method. The available parameters are :</p>
-            <ul>
-               <li><b>instance</b> : The instance</li>
-               <li><b>method</b> : The method</li>
-               <li><b>parameters</b> : The parameters</li>
-               <li><b>parameter name</b> : The parameter's name</li>
-            </ul>
-			<p>Sample on how to use</p>
-<pre class="prettyprint">
-// The aspect
-public class LogAttribute : Attribute
-{
-	public bool NetAspectAttribute = true;
-
-	public void OnFinally (object instance, MethodBase method, object[] parameters, int v)
-	{
-		Assert.AreEqual (typeof(MyInt), instance.GetType ());
-		Assert.AreEqual ("DivideBy", method.Name);
-		Assert.AreEqual (1, parameters.Length);
-		Assert.AreEqual (12, v);
-	}
-}
-
-
-// The code which will call our aspect
-{
-	var myInt = new MyInt (24);
-	myInt.DivideBy (12);
-}
-</pre>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingBefore">Before Method Weaving possibilities</a>
                 </h4>
             </div>
@@ -360,6 +319,47 @@ public class LogAttribute : Attribute
 	}
 	catch (Exception) {
 	}
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnFinally">On finally method weaving possibilities</a>
+                </h4>
+            </div>
+            <div id="MethodWeavingOnFinally" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnFinally</b> method is called after the method is executed when an exception occured or not. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+               <li><b>method</b> : The method</li>
+               <li><b>parameters</b> : The parameters</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void OnFinally (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	myInt.DivideBy (12);
 }
 </pre>
                 </div>
