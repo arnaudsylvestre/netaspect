@@ -82,6 +82,10 @@
     <Compile Include="docs\InterceptorDescriptionAttribute.cs" />
     <Compile Include="docs\MethodPossibilities\Method\Part1Sample2AfterMethodPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\DocConfiguration.cs" />
+    <Compile Include="docs\MethodPossibilities\PropertyGet\Part3Sample1BeforePropertyGetPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\PropertyGet\Part3Sample2AfterProeprtyGetPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\PropertyGet\Part3Sample3OnExceptionPropertyGetPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\PropertyGet\Part3Sample4OnFinallyPropertyGetPossibilityTest.cs" />
     <Compile Include="docs\ParameterDescriptionAttribute.cs" />
     <Compile Include="docs\PossibilityDocumentationAttribute.cs" />
     <Compile Include="docs\MethodWeavingForDocWithStartDivisionAndParametersTest.cs" />

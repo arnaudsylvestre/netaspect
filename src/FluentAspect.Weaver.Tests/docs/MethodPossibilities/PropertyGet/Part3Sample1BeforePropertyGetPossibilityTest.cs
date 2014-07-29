@@ -1,14 +1,15 @@
 using System;
 using System.Reflection;
 using NetAspect.Weaver.Tests.unit;
+using NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.Called;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
+namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
 {
-   public class Part2Sample1BeforeConstructorPossibilityTest : NetAspectTest<Part2Sample1BeforeConstructorPossibilityTest.MyInt>
+   public class Part3Sample1BeforePropertyGetPossibilityTest : NetAspectTest<Part3Sample1BeforePropertyGetPossibilityTest.MyInt>
     {
-      public Part2Sample1BeforeConstructorPossibilityTest()
-         : base("Before Constructor Weaving possibilities", "ConstructorWeavingBefore", "ConstructorWeaving")
+       public Part3Sample1BeforePropertyGetPossibilityTest()
+         : base("Before Property Getter possibilities", "PropertyGetWeavingBefore", "PropertyGetWeaving")
       {
       }
 
@@ -16,18 +17,18 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
       public class MyInt
         {
             int value;
-         
-            [Log]
+
             public MyInt(int value)
             {
                 this.value = value;
             }
 
+            [Log]
             public int Value
             {
                 get { return value; }
             }
-            
+
             public int DivideBy(int v)
             {
                 return value / v;
@@ -39,6 +40,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
             return () =>
                 {
                     var myInt = new MyInt(24);
+                    Assert.AreEqual(24, myInt.Value);
                     Assert.True(LogAttribute.Called);
                 };
         }
@@ -49,13 +51,11 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
             public bool NetAspectAttribute = true;
            public static bool Called;
 
-           public void BeforeConstructor(object instance, MethodBase constructor, object[] parameters, int value)
+           public void BeforePropertyGetMethod(object instance, PropertyInfo property)
            {
                 Called = true;
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
-                Assert.AreEqual(".ctor", constructor.Name);
-                Assert.AreEqual(1, parameters.Length);
-                Assert.AreEqual(24, value);
+                Assert.AreEqual("Value", property.Name);
             }
         }
     }

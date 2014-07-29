@@ -116,6 +116,9 @@ namespace NetAspect.Doc.Builder
                _test.Possibility = GetValue(arguments[2]);
                _test.Description = GetValue(arguments[0]);
          }
+
+         if (IsWeaved(constructorDeclaration.Attributes))
+             _test.Member = "constructor";
          base.VisitConstructorDeclaration(constructorDeclaration);
       }
 

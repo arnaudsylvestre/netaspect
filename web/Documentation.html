@@ -180,7 +180,7 @@ public class LogAttribute : Attribute
 	
       <!-- 
 ================================================	  
-	  MethodWeavingBefore possibilities
+	  MethodWeaving possibilities
 ================================================
 	  -->
             <h4 id="dropdowns-example">On methods</h4>
@@ -280,7 +280,7 @@ public class LogAttribute : Attribute
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnException">On Exception Method Weaving possibilities</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnException">On exception method weaving possibilities</a>
                 </h4>
             </div>
             <div id="MethodWeavingOnException" class="panel-collapse collapse">
@@ -332,7 +332,7 @@ public class LogAttribute : Attribute
 		<div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnFinally">On Finally Method Weaving possibilities</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnFinally">On finally method weaving possibilities</a>
                 </h4>
             </div>
             <div id="MethodWeavingOnFinally" class="panel-collapse collapse">
@@ -374,93 +374,204 @@ public class LogAttribute : Attribute
                 </div>
             </div>
         </div>
-    </div>
-			
             
+    </div>
             
           
 	
       <!-- 
 ================================================	  
-	  Constructor weaving possibilities
+	  ConstructorWeaving possibilities
 ================================================
 	  -->  
             
             <h4 id="dropdowns-example">On constructors</h4>
             <p>These aspects are called when the aspect is put on a <b>constructor</b></p>
 			
-			<div class="panel-group" id="ConstructorPossibilities">
+			<div class="panel-group" id="GroupConstructorWeaving">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingBeforeConstructor">Before Method Weaving possibilities</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#ConstructorWeavingBefore">Before Constructor Weaving possibilities</a>
                 </h4>
             </div>
-            <div id="MethodWeavingBeforeConstructor" class="panel-collapse collapse">
+            <div id="ConstructorWeavingBefore" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <p>The <b>BeforeMethod</b> method is called before the method is executed. The available parameters are :</p>
+                    <p>The <b>BeforeConstructor</b> method is called before the constructor is executed. The available parameters are :</p>
             <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>constructor</b> : The constructor</li>
+               <li><b>parameters</b> : The parameters</li>
+               <li><b>parameter name</b> : The parameter's name</li>
             </ul>
+<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void BeforeConstructor (object instance, MethodBase constructor, object[] parameters, int value)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual (".ctor", constructor.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (24, value);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+	Assert.True (LogAttribute.Called);
+}
+</pre>
                 </div>
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingAfterConstructor">After Method Weaving possibilities</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#ConstructordWeavingAfter">After Constructor Weaving possibilities</a>
                 </h4>
             </div>
-            <div id="MethodWeavingAfterConstructor" class="panel-collapse collapse">
+            <div id="ConstructordWeavingAfter" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <p>The <b>AfterMethod</b> method is called after the method is executed. The available parameters are :</p>
+                    <p>The <b>AfterConstructor</b> method is called after the constructor is executed. The available parameters are :</p>
             <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
-               <li>result</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>constructor</b> : The constructor</li>
+               <li><b>parameters</b> : The parameters</li>
+               <li><b>parameter name</b> : The parameter's name</li>
             </ul>
+<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void AfterConstructor (object instance, MethodBase constructor, object[] parameters, int value)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual (".ctor", constructor.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (24, value);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+	Assert.True (LogAttribute.Called);
+}
+</pre>
                 </div>
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnExceptionConstructor">On Exception Method Weaving possibilities</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#ConstructorWeavingOnException">On exception constructor weaving possibilities</a>
                 </h4>
             </div>
-            <div id="MethodWeavingOnExceptionConstructor" class="panel-collapse collapse">
+            <div id="ConstructorWeavingOnException" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <p>The <b>OnExceptionMethod</b> method is called when an exception occured in the method. The available parameters are :</p>
+                    <p>The <b>OnExceptionConstructor</b> method is called when an exception occured in the constructor. The available parameters are :</p>
             <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
-               <li>exception</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>constructor</b> : The constructor</li>
+               <li><b>parameters</b> : The parameters</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>exception</b> : The exception raised</li>
             </ul>
+<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void OnExceptionConstructor (object instance, MethodBase constructor, object[] parameters, int value, Exception exception)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual (".ctor", constructor.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (0, value);
+		Assert.AreEqual ("DivideByZeroException", exception.GetType ().Name);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	try {
+		new MyInt (0);
+		Assert.Fail ("Must raise an exception");
+	}
+	catch (Exception) {
+	}
+	Assert.True (LogAttribute.Called);
+}
+</pre>
                 </div>
             </div>
         </div>
 		<div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnFinallyConstructor">On Finally Method Weaving possibilities</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#ConstructorWeavingOnFinally">On finally constructor weaving possibilities</a>
                 </h4>
             </div>
-            <div id="MethodWeavingOnFinallyConstructor" class="panel-collapse collapse">
+            <div id="ConstructorWeavingOnFinally" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <p>The <b>OnFinallyMethod</b> method is called after the method is executed when an exception occured or not. The available parameters are :</p>
+                    <p>The <b>OnFinallyConstructor</b> method is called after the method is executed when an constructor occured or not. The available parameters are :</p>
             <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>constructor</b> : The constructor</li>
+               <li><b>parameters</b> : The parameters</li>
+               <li><b>parameter name</b> : The parameter's name</li>
             </ul>
+<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void OnFinallyConstructor (object instance, MethodBase constructor, object[] parameters, int value)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual (".ctor", constructor.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (24, value);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	myInt.DivideBy (12);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
                 </div>
             </div>
         </div>
