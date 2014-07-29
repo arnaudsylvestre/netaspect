@@ -1,10 +1,13 @@
 using System;
 using System.Reflection;
+using NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.Called;
 using NUnit.Framework;
 using NetAspect.Weaver.Tests.unit;
 
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
 {
+   [PossibilityDocumentationAttribute("PossibilityKind", "PossibilityDescription", "Description de possibilité")]
+   [DocumentationAttribute("Before Method Weaving possibilities", "On methods", "Method Weaving")]
     public class BeforeMethodPossibilityTest : NetAspectTest<BeforeMethodPossibilityTest.MyInt>
     {
 

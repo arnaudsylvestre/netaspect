@@ -8,6 +8,35 @@ using NetAspect.Doc.Builder.Resources;
 
 namespace NetAspect.Doc.Builder
 {
+   public class PossibilityDescription
+   {
+      public string Kind { get; set; }
+      public string Description { get; set; }
+      public List<PossibilityEvent> Events { get; set; }
+
+      public string Title { get; set; }
+
+      public string Member { get; set; }
+   }
+
+   public class TestDescription
+   {
+      public TestDescription()
+      {
+         AspectParameters = new List<string>();
+      }
+
+      public string CallCode { get; set; }
+      public string AspectCode { get; set; }
+      public string ClassToWeaveCode { get; set; }
+      public string Possibility { get; set; }
+      public string Called { get; set; }
+      public string Description { get; set; }
+      public string MethodName { get; set; }
+      public List<string> AspectParameters { get; set; }
+      public string Kind { get; set; }
+   }
+
     public class DocBuilder
     {
         public class Documentation
@@ -90,7 +119,6 @@ namespace NetAspect.Doc.Builder
         public PossibilityEvent()
         {
             Parameters = new List<Parameter>();
-            Samples = new List<Sample>();
         }
 
         public string Kind { get; set; }
@@ -100,7 +128,7 @@ namespace NetAspect.Doc.Builder
 
         public List<Parameter> Parameters { get; set; }
 
-        public List<Sample> Samples { get; set; } 
+        public Sample Sample { get; set; } 
     }
 
     public class Parameter

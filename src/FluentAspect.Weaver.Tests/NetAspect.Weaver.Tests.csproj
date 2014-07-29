@@ -72,6 +72,8 @@
   <ItemGroup>
     <Compile Include="docs\InstructionWeavingForDocTest.cs" />
     <Compile Include="docs\MethodPossibilities\Before\BeforeMethodPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\Before\DocumentationAttribute.cs" />
+    <Compile Include="docs\MethodPossibilities\Before\PossibilityDocumentationAttribute.cs" />
     <Compile Include="docs\MethodWeavingForDocWithStartDivisionAndParametersTest.cs" />
     <Compile Include="docs\MethodWeavingForDocTest.cs" />
     <Compile Include="docs\MethodWeavingForDocWithStartDivisionTest.cs" />

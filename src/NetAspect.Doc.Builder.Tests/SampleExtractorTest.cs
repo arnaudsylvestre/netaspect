@@ -14,9 +14,6 @@ namespace NetAspect.Doc.Builder.Tests
         [Test]
         public void CheckSimpleExtractor()
         {
-            var sampleExtractor = new SampleExtractor();
-            sampleExtractor.ExtractSample(new MemoryStream(Samples.Sample1));
-
 
         }
     }
