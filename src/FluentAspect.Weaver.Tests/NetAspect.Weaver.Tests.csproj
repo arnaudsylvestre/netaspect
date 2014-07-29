@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="docs\InstructionWeavingForDocTest.cs" />
+    <Compile Include="docs\MethodPossibilities\Before\Copie de Sample3OnExceptionMethodPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\Before\Sample3OnExceptionMethodPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\Before\Sample1BeforeMethodPossibilityTest.cs" />
     <Compile Include="docs\EventAttribute.cs" />
