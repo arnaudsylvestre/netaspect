@@ -35,6 +35,7 @@ namespace NetAspect.Doc.Builder
       public string MethodName { get; set; }
       public List<string> AspectParameters { get; set; }
       public string Kind { get; set; }
+      public string Member { get; set; }
    }
 
     public class DocBuilder

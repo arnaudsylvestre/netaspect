@@ -32,15 +32,13 @@
 #end
             </ul>
 			<p>Sample on how to use</p>
-#foreach ($sample in $event.Samples)
 <pre class="prettyprint">
 // The aspect
-$sample.AspectCode
+$event.Sample.AspectCode
 
 // The code which will call our aspect
-$sample.CallCode
+$event.Sample.CallCode
 </pre>
-#end
                 </div>
             </div>
         </div>

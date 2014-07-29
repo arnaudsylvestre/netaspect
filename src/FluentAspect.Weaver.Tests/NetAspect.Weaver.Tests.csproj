@@ -71,9 +71,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="docs\InstructionWeavingForDocTest.cs" />
-    <Compile Include="docs\MethodPossibilities\Before\BeforeMethodPossibilityTest.cs" />
-    <Compile Include="docs\MethodPossibilities\Before\DocumentationAttribute.cs" />
-    <Compile Include="docs\MethodPossibilities\Before\PossibilityDocumentationAttribute.cs" />
+    <Compile Include="docs\MethodPossibilities\Before\Sample3OnExceptionMethodPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\Before\Sample1BeforeMethodPossibilityTest.cs" />
+    <Compile Include="docs\EventAttribute.cs" />
+    <Compile Include="docs\InterceptorDescriptionAttribute.cs" />
+    <Compile Include="docs\MethodPossibilities\Before\Sample2AfterMethodPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\DocConfiguration.cs" />
+    <Compile Include="docs\ParameterDescriptionAttribute.cs" />
+    <Compile Include="docs\PossibilityDocumentationAttribute.cs" />
     <Compile Include="docs\MethodWeavingForDocWithStartDivisionAndParametersTest.cs" />
     <Compile Include="docs\MethodWeavingForDocTest.cs" />
     <Compile Include="docs\MethodWeavingForDocWithStartDivisionTest.cs" />

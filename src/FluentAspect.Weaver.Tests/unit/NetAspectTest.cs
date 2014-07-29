@@ -34,6 +34,13 @@ namespace NetAspect.Weaver.Tests.unit
     [TestFixture]
     public abstract class NetAspectTest<T> : NetAspectTest<T, T>
     {
-        
+       protected NetAspectTest()
+       {
+       }
+
+       protected NetAspectTest(string beforeMethodWeavingPossibilities_P, string methodweavingbefore_P, string methodweaving_P)
+      {
+         
+      }
     }
 }

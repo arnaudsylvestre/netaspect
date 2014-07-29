@@ -26,7 +26,7 @@ namespace NetAspect.Doc.Builder
                var syntaxTree = parser.Parse(stream);
                var test = new TestDescription();
                doc.Tests.Add(test);
-               syntaxTree.AcceptVisitor(new FindInvocationsVisitor(doc.Possibilities, doc.Parameters, test));
+               syntaxTree.AcceptVisitor(new FindInvocationsVisitor(doc.Possibilities, doc.Parameters, test, doc.Interceptors));
                
             }
          }
@@ -43,7 +43,8 @@ namespace NetAspect.Doc.Builder
    {
       public List<ParameterDescription> Parameters = new List<ParameterDescription>(); 
       public List<PossibilityDescription> Possibilities = new List<PossibilityDescription>();
-      public List<TestDescription> Tests = new List<TestDescription>(); 
+      public List<TestDescription> Tests = new List<TestDescription>();
+      public List<InterceptorDescription> Interceptors = new List<InterceptorDescription>();
    }
 
    public class ParameterDescription
@@ -54,36 +55,68 @@ namespace NetAspect.Doc.Builder
 
 
    class FindInvocationsVisitor : DepthFirstAstVisitor
-    {
-       private readonly List<PossibilityDescription> _possibilities;
+   {
+      private readonly List<PossibilityDescription> _possibilities;
+      private readonly List<InterceptorDescription> _interceptors;
       private readonly List<ParameterDescription> _parameters;
       private readonly TestDescription _test;
 
-       public FindInvocationsVisitor(List<PossibilityDescription> possibilities_P, List<ParameterDescription> parameters, TestDescription test_P)
+       public FindInvocationsVisitor(List<PossibilityDescription> possibilities_P, List<ParameterDescription> parameters, TestDescription test_P, List<InterceptorDescription> interceptors_P)
        {
           _possibilities = possibilities_P;
           _parameters = parameters;
           _test = test_P;
+          _interceptors = interceptors_P;
        }
 
       public override void VisitAttribute(Attribute attribute)
-      {
-         if (attribute.Type.ToString().Contains("PossibilityDocumentationAttribute"))
-         {
-            var arguments = attribute.Arguments.Cast<PrimitiveExpression>().ToList();
-            _possibilities.Add(new PossibilityDescription()
-            {
-               Description = GetValue(arguments[1]),
-               Kind = GetValue(arguments[0]),
-               Title = GetValue(arguments[2]),
-            });
-         }
+       {
+          if (attribute.Type.ToString().Contains("PossibilityDocumentation"))
+          {
+             var arguments = attribute.Arguments.Cast<PrimitiveExpression>().ToList();
+             _possibilities.Add(new PossibilityDescription()
+             {
+                Description = GetValue(arguments[1]),
+                Kind = GetValue(arguments[0]),
+                Title = GetValue(arguments[2]),
+             });
+          }
+          if (attribute.Type.ToString().Contains("ParameterDescription"))
+          {
+             var arguments = attribute.Arguments.Cast<PrimitiveExpression>().ToList();
+             _parameters.Add(new ParameterDescription()
+             {
+                Name = GetValue(arguments[0]),
+                Description = GetValue(arguments[1]),
+             });
+          }
+          if (attribute.Type.ToString().Contains("InterceptorDescription"))
+          {
+             var arguments = attribute.Arguments.Cast<PrimitiveExpression>().ToList();
+             _interceptors.Add(new InterceptorDescription()
+             {
+                Name = GetValue(arguments[0]),
+                Called = GetValue(arguments[1]),
+             });
+          }
          base.VisitAttribute(attribute);
       }
 
       private static string GetValue(PrimitiveExpression expression)
       {
-         return expression.LiteralValue;
+         return expression.LiteralValue.Replace("\"", "");
+      }
+
+      public override void VisitConstructorDeclaration(ConstructorDeclaration constructorDeclaration)
+      {
+         if (constructorDeclaration.Initializer.Arguments.Count == 3)
+         {
+            var arguments = constructorDeclaration.Initializer.Arguments.Cast<PrimitiveExpression>().ToList();
+               _test.Kind = GetValue(arguments[1]);
+               _test.Possibility = GetValue(arguments[2]);
+               _test.Description = GetValue(arguments[0]);
+         }
+         base.VisitConstructorDeclaration(constructorDeclaration);
       }
 
       public override void VisitLambdaExpression(LambdaExpression lambdaExpression)
@@ -104,5 +137,33 @@ namespace NetAspect.Doc.Builder
             }
             base.VisitTypeDeclaration(typeDeclaration);
         }
+
+      public override void VisitMethodDeclaration(MethodDeclaration methodDeclaration)
+      {
+         if (((TypeDeclaration)methodDeclaration.Parent).Name.EndsWith("Attribute"))
+         {
+            _test.MethodName = methodDeclaration.Name;
+            foreach (var parameter_L in methodDeclaration.Parameters)
+            {
+               _test.AspectParameters.Add(parameter_L.Name);
+               
+            }
+         }
+         if (IsWeaved(methodDeclaration.Attributes))
+            _test.Member = "method";
+         base.VisitMethodDeclaration(methodDeclaration);
+      }
+
+      private bool IsWeaved(AstNodeCollection<AttributeSection> attributes_P)
+      {
+         return attributes_P.SelectMany(attributeSection_L => attributeSection_L.Attributes).Any(attribute_L => ((SimpleType) attribute_L.Type).Identifier == "Log");
+      }
     }
+
+   public class InterceptorDescription
+   {
+      public string Name { get; set; }
+      public string Called { get; set; }
+
+   }
 }

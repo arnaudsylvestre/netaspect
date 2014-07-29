@@ -186,7 +186,7 @@ public class LogAttribute : Attribute
             <h4 id="dropdowns-example">On methods</h4>
             <p>These aspects are called when the aspect is put on a <b>method</b></p>
 			
-<div class="panel-group" id="GroupMethodWeavingBefore">
+<div class="panel-group" id="GroupMethodWeaving">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -195,7 +195,7 @@ public class LogAttribute : Attribute
             </div>
             <div id="MethodWeavingBefore" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <p>The <b>BeforeMethod</b> method is called before the method is executed. The available parameters are :</p>
+                    <p>The <b>Before</b> method is called before the method is executed. The available parameters are :</p>
             <ul>
                <li><b>instance</b> : The instance</li>
                <li><b>method</b> : The method</li>
@@ -236,14 +236,38 @@ public class LogAttribute : Attribute
             </div>
             <div id="MethodWeavingAfter" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <p>The <b>AfterMethod</b> method is called after the method is executed. The available parameters are :</p>
+                    <p>The <b>After</b> method is called after the method is executed. The available parameters are :</p>
             <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
-               <li>result</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>method</b> : The method</li>
+               <li><b>parameters</b> : The parameters</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>result</b> : The result</li>
             </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void After (object instance, MethodBase method, object[] parameters, int v, int result)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+		Assert.AreEqual (2, result);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+}
+</pre>
                 </div>
             </div>
         </div>
@@ -255,14 +279,43 @@ public class LogAttribute : Attribute
             </div>
             <div id="MethodWeavingOnException" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <p>The <b>OnExceptionMethod</b> method is called when an exception occured in the method. The available parameters are :</p>
+                    <p>The <b>OnException</b> method is called when an exception occured in the method. The available parameters are :</p>
             <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
-               <li>exception</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>method</b> : The method</li>
+               <li><b>parameters</b> : The parameters</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>exception</b> : The exception raised</li>
             </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public void OnException (object instance, MethodBase method, object[] parameters, int v, Exception exception)
+	{
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (0, v);
+		Assert.AreEqual ("DivideByZeroException", exception.GetType ().Name);
+	}
+}
+
+
+// The code which will call our aspect
+{
+	try {
+		var myInt = new MyInt (24);
+		myInt.DivideBy (0);
+		Assert.Fail ("Must raise an exception");
+	}
+	catch (Exception) {
+	}
+}
+</pre>
                 </div>
             </div>
         </div>

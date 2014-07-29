@@ -39,15 +39,22 @@ namespace NetAspect.Doc.Builder.Tests
                 Description = possibilityDescription_L.Description,
                 Kind = possibilityDescription_L.Kind,
                 Title = possibilityDescription_L.Title,
+                
              });
           }
 
+          
+
           foreach (var test_L in documentationFromTest_P.Tests)
           {
+             if (test_L.Possibility == null)
+                continue;
              var possibility_L = possibilities_P.Find(p => p.Kind == test_L.Possibility);
+             possibility_L.Member = test_L.Member;
+             var interceptorDescription_L = documentationFromTest_P.Interceptors.Find(p => p.Name == test_L.MethodName);
              var possibilityEvent_L = new PossibilityEvent()
              {
-                Called = test_L.Called,
+                Called = interceptorDescription_L.Called,
                 Description = test_L.Description,
                 MethodName = test_L.MethodName,
                 Sample = new Sample()
@@ -57,11 +64,16 @@ namespace NetAspect.Doc.Builder.Tests
                    ClassToWeaveCode = test_L.ClassToWeaveCode,
                 },
                 Kind = test_L.Kind,
+                
              };
 
              foreach (var aspectParameter_L in test_L.AspectParameters)
              {
                 var parameterDescription_L = documentationFromTest_P.Parameters.Find(p => p.Name == aspectParameter_L);
+                if (parameterDescription_L == null)
+                {
+                   parameterDescription_L = documentationFromTest_P.Parameters.Find(p => p.Name == "parameter name");
+                }
                 possibilityEvent_L.Parameters.Add(new Parameter()
                 {
                    Name = parameterDescription_L.Name,
