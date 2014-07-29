@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
    public class Part2Sample1BeforeConstructorPossibilityTest : NetAspectTest<Part2Sample1BeforeConstructorPossibilityTest.MyInt>
     {
       public Part2Sample1BeforeConstructorPossibilityTest()
-         : base("Before Method Weaving possibilities", "MethodWeavingBefore", "MethodWeaving")
+         : base("Before Constructor Weaving possibilities", "ConstructorWeavingBefore", "ConstructorWeaving")
       {
       }
 
@@ -40,6 +40,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
                 {
                     var myInt = new MyInt(24);
                     Assert.AreEqual(2, myInt.DivideBy(12));
+                    Assert.True(LogAttribute.Called);
                 };
         }
         
@@ -47,9 +48,11 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
         public class LogAttribute : Attribute
         {
             public bool NetAspectAttribute = true;
+           public static bool Called;
 
-            public void BeforeConstructor(object instance, MethodBase constructor, object[] parameters, int value)
-            {
+           public void BeforeConstructor(object instance, MethodBase constructor, object[] parameters, int value)
+           {
+                Called = true;
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
                 Assert.AreEqual(".ctor", constructor.Name);
                 Assert.AreEqual(1, parameters.Length);

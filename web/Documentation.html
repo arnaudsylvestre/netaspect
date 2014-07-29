@@ -209,8 +209,10 @@ public class LogAttribute : Attribute
 {
 	public bool NetAspectAttribute = true;
 
+	public static bool Called;
 	public void Before (object instance, MethodBase method, object[] parameters, int v)
 	{
+		Called = true;
 		Assert.AreEqual (typeof(MyInt), instance.GetType ());
 		Assert.AreEqual ("DivideBy", method.Name);
 		Assert.AreEqual (1, parameters.Length);
@@ -223,6 +225,7 @@ public class LogAttribute : Attribute
 {
 	var myInt = new MyInt (24);
 	Assert.AreEqual (2, myInt.DivideBy (12));
+	Assert.True (LogAttribute.Called);
 }
 </pre>
                 </div>
@@ -251,8 +254,10 @@ public class LogAttribute : Attribute
 {
 	public bool NetAspectAttribute = true;
 
+	public static bool Called;
 	public void After (object instance, MethodBase method, object[] parameters, int v, int result)
 	{
+		Called = true;
 		Assert.AreEqual (typeof(MyInt), instance.GetType ());
 		Assert.AreEqual ("DivideBy", method.Name);
 		Assert.AreEqual (1, parameters.Length);
@@ -266,6 +271,7 @@ public class LogAttribute : Attribute
 {
 	var myInt = new MyInt (24);
 	Assert.AreEqual (2, myInt.DivideBy (12));
+	Assert.True (LogAttribute.Called);
 }
 </pre>
                 </div>
@@ -294,8 +300,11 @@ public class LogAttribute : Attribute
 {
 	public bool NetAspectAttribute = true;
 
+	public static bool Called;
+
 	public void OnException (object instance, MethodBase method, object[] parameters, int v, Exception exception)
 	{
+		Called = true;
 		Assert.AreEqual (typeof(MyInt), instance.GetType ());
 		Assert.AreEqual ("DivideBy", method.Name);
 		Assert.AreEqual (1, parameters.Length);
@@ -311,6 +320,7 @@ public class LogAttribute : Attribute
 		var myInt = new MyInt (24);
 		myInt.DivideBy (0);
 		Assert.Fail ("Must raise an exception");
+		Assert.True (LogAttribute.Called);
 	}
 	catch (Exception) {
 	}
@@ -341,8 +351,11 @@ public class LogAttribute : Attribute
 {
 	public bool NetAspectAttribute = true;
 
+	public static bool Called;
+
 	public void OnFinally (object instance, MethodBase method, object[] parameters, int v)
 	{
+		Called = true;
 		Assert.AreEqual (typeof(MyInt), instance.GetType ());
 		Assert.AreEqual ("DivideBy", method.Name);
 		Assert.AreEqual (1, parameters.Length);
@@ -355,6 +368,7 @@ public class LogAttribute : Attribute
 {
 	var myInt = new MyInt (24);
 	myInt.DivideBy (12);
+	Assert.True (LogAttribute.Called);
 }
 </pre>
                 </div>

@@ -15,6 +15,9 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
    [InterceptorDescription("OnFinally", "after the method is executed when an exception occured or not")]
 
    [InterceptorDescription("BeforeConstructor", "before the constructor is executed")]
+   [InterceptorDescription("AfterConstructor", "after the constructor is executed")]
+   [InterceptorDescription("OnExceptionConstructor", "when an exception occured in the constructor")]
+   [InterceptorDescription("OnFinallyConstructor", "after the method is executed when an constructor occured or not")]
 
 
    [PossibilityDocumentation("MethodWeaving", "PossibilityDescription", "On methods")]

@@ -43,6 +43,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
                       var myInt = new MyInt(24);
                       myInt.DivideBy(0);
                       Assert.Fail("Must raise an exception");
+                      Assert.True(LogAttribute.Called);
                    }
                    catch (Exception)
                    {
@@ -54,9 +55,11 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
         public class LogAttribute : Attribute
         {
             public bool NetAspectAttribute = true;
+           public static bool Called;
 
-            public void OnException(object instance, MethodBase method, object[] parameters, int v, Exception exception)
-            {
+           public void OnException(object instance, MethodBase method, object[] parameters, int v, Exception exception)
+           {
+              Called = true;
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
                 Assert.AreEqual("DivideBy", method.Name);
                 Assert.AreEqual(1, parameters.Length);

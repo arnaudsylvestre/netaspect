@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
    public class Part2Sample3OnExceptionConstructorPossibilityTest : NetAspectTest<Part2Sample3OnExceptionConstructorPossibilityTest.MyInt>
     {
       public Part2Sample3OnExceptionConstructorPossibilityTest()
-         : base("On exception method weaving possibilities", "MethodWeavingOnException", "MethodWeaving")
+         : base("On exception constructor weaving possibilities", "ConstructorWeavingOnException", "ConstructorWeaving")
       {
       }
 
@@ -16,8 +16,11 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
         {
             int value;
 
+            [Log]
             public MyInt(int value)
             {
+               if (value == 0)
+                  throw new Exception();
                 this.value = value;
             }
 
@@ -25,7 +28,6 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
             {
                 get { return value; }
             }
-            [Log]
             public int DivideBy(int v)
             {
                 return value / v;
@@ -39,13 +41,13 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
                    try
                    {
 
-                      var myInt = new MyInt(24);
-                      myInt.DivideBy(0);
+                      new MyInt(0);
                       Assert.Fail("Must raise an exception");
                    }
                    catch (Exception)
                    {
                    }
+                   Assert.True(LogAttribute.Called);
                 };
         }
         
@@ -53,13 +55,15 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
         public class LogAttribute : Attribute
         {
             public bool NetAspectAttribute = true;
+           public static bool Called;
 
-            public void OnException(object instance, MethodBase method, object[] parameters, int v, Exception exception)
-            {
+           public void OnExceptionConstructor(object instance, MethodBase constructor, object[] parameters, int value, Exception exception)
+           {
+                Called = true;
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
-                Assert.AreEqual("DivideBy", method.Name);
+                Assert.AreEqual(".ctor", constructor.Name);
                 Assert.AreEqual(1, parameters.Length);
-                Assert.AreEqual(0, v);
+                Assert.AreEqual(0, value);
                 Assert.AreEqual("DivideByZeroException", exception.GetType().Name);
             }
         }

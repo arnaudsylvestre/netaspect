@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
    public class Part2Sample2AfterConstructorPossibilityTest : NetAspectTest<Part2Sample2AfterConstructorPossibilityTest.MyInt>
     {
       public Part2Sample2AfterConstructorPossibilityTest()
-         : base("After Method Weaving possibilities", "MethodWeavingAfter", "MethodWeaving")
+         : base("After Constructor Weaving possibilities", "ConstructordWeavingAfter", "ConstructorWeaving")
       {
       }
 
@@ -16,6 +16,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
         {
             int value;
 
+            [Log]
             public MyInt(int value)
             {
                 this.value = value;
@@ -25,7 +26,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
             {
                 get { return value; }
             }
-            [Log]
+
             public int DivideBy(int v)
             {
                 return value / v;
@@ -38,6 +39,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
                 {
                     var myInt = new MyInt(24);
                     Assert.AreEqual(2, myInt.DivideBy(12));
+                    Assert.True(LogAttribute.Called);
                 };
         }
         
@@ -46,13 +48,15 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
         {
             public bool NetAspectAttribute = true;
 
-            public void After(object instance, MethodBase method, object[] parameters, int v, int result)
+           public static bool Called;
+
+            public void AfterConstructor(object instance, MethodBase constructor, object[] parameters, int value)
             {
+                Called = true;
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
-                Assert.AreEqual("DivideBy", method.Name);
+                Assert.AreEqual(".ctor", constructor.Name);
                 Assert.AreEqual(1, parameters.Length);
-                Assert.AreEqual(12, v);
-                Assert.AreEqual(2, result);
+                Assert.AreEqual(24, value);
             }
         }
     }

@@ -94,7 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Templates\Documentation.txt" />
-    <Content Include="Templates\SampleTemplate.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Content.resx">

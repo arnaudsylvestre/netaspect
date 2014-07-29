@@ -39,6 +39,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
                 {
                       var myInt = new MyInt(24);
                       myInt.DivideBy(12);
+                      Assert.True(LogAttribute.Called);
                 };
         }
         
@@ -46,9 +47,11 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
         public class LogAttribute : Attribute
         {
             public bool NetAspectAttribute = true;
+           public static bool Called;
 
-            public void OnFinally(object instance, MethodBase method, object[] parameters, int v)
-            {
+           public void OnFinally(object instance, MethodBase method, object[] parameters, int v)
+           {
+              Called = true;
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
                 Assert.AreEqual("DivideBy", method.Name);
                 Assert.AreEqual(1, parameters.Length);
