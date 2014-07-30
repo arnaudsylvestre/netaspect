@@ -14,8 +14,8 @@ namespace NetAspect.Doc.Builder.Tests
          [Test]
          public void CheckBuild()
        {
-          string baseDirectory = @"D:\Sources\3rdParty\fluentaspect-git\fluentaspect\";
-          //string baseDirectory = @"D:\Developpement\fluentaspect\";
+          //string baseDirectory = @"D:\Sources\3rdParty\fluentaspect-git\fluentaspect\";
+          string baseDirectory = @"D:\Developpement\fluentaspect\";
 
             DocumentationFromTestExtractor extractor = new DocumentationFromTestExtractor();
 
@@ -42,6 +42,7 @@ namespace NetAspect.Doc.Builder.Tests
                 Description = possibilityDescription_L.Description,
                 Kind = possibilityDescription_L.Kind,
                 Title = possibilityDescription_L.Title,
+                Group = possibilityDescription_L.Group,
                 
              });
           }
@@ -75,6 +76,9 @@ namespace NetAspect.Doc.Builder.Tests
                 var parameterDescription_L = documentationFromTest_P.Parameters.Find(p => p.Name == aspectParameter_L);
                 if (parameterDescription_L == null)
                 {
+                    if (aspectParameter_L.StartsWith("caller"))
+                        parameterDescription_L = documentationFromTest_P.Parameters.Find(p => p.Name == "caller + parameter name");
+                    else
                    parameterDescription_L = documentationFromTest_P.Parameters.Find(p => p.Name == "parameter name");
                 }
                 possibilityEvent_L.Parameters.Add(new Parameter()

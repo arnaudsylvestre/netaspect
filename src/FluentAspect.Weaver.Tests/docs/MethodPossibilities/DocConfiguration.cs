@@ -32,10 +32,10 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
     [InterceptorDescription("OnFinallyPropertySetMethod", "after the set method of the property is executed when an exception occured or not")]
 
 
-   [PossibilityDocumentation("MethodWeaving", "PossibilityDescription", "On methods")]
-   [PossibilityDocumentation("ConstructorWeaving", "PossibilityDescription", "On constructors")]
-   [PossibilityDocumentation("PropertyGetWeaving", "PossibilityDescription", "On properties (For getter)")]
-   [PossibilityDocumentation("PropertySetWeaving", "PossibilityDescription", "On properties (For setter)")]
+   [PossibilityDocumentation("MethodWeaving", "PossibilityDescription", "On methods", "MethodWeaving")]
+   [PossibilityDocumentation("ConstructorWeaving", "PossibilityDescription", "On constructors", "MethodWeaving")]
+   [PossibilityDocumentation("PropertyGetWeaving", "PossibilityDescription", "On properties (For getter)", "MethodWeaving")]
+   [PossibilityDocumentation("PropertySetWeaving", "PossibilityDescription", "On properties (For setter)", "MethodWeaving")]
 
 
 
@@ -47,10 +47,27 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
 
 
 
-   [PossibilityDocumentation("InstructionMethodWeaving", "PossibilityDescription", "On methods")]
-   [PossibilityDocumentation("InstructionConstructorWeaving", "PossibilityDescription", "On constructors")]
-   [PossibilityDocumentation("InstructionPropertyGetWeaving", "PossibilityDescription", "On properties (For getter)")]
-   [PossibilityDocumentation("InstructionPropertySetWeaving", "PossibilityDescription", "On properties (For setter)")]
+    [PossibilityDocumentation("InstructionGetFieldWeaving", "PossibilityDescription", "On fields", "InstructionWeaving")]
+   // [PossibilityDocumentation("InstructionMethodWeaving", "PossibilityDescription", "On methods", "InstructionWeaving")]
+   //[PossibilityDocumentation("InstructionConstructorWeaving", "PossibilityDescription", "On constructors", "InstructionWeaving")]
+   //[PossibilityDocumentation("InstructionPropertyGetWeaving", "PossibilityDescription", "On properties (For getter)", "InstructionWeaving")]
+   //[PossibilityDocumentation("InstructionPropertySetWeaving", "PossibilityDescription", "On properties (For setter)", "InstructionWeaving")]
+
+
+    [InterceptorDescription("BeforeGetField", "before an instruction get the value of a field")]
+    [InterceptorDescription("AfterGetField", "after an instruction get the value of a field")]
+
+
+    [ParameterDescription("caller", "The caller", "InstructionWeaving")]
+    [ParameterDescription("called", "The called", "InstructionWeaving")]
+    [ParameterDescription("field", "The field", "InstructionWeaving")]
+    [ParameterDescription("columnNumber", "The column number in the source file of the instruction", "InstructionWeaving")]
+    [ParameterDescription("lineNumber", "The line number in the source file of the instruction", "InstructionWeaving")]
+    [ParameterDescription("fileName", "The file name of the source file of the instruction", "InstructionWeaving")]
+    [ParameterDescription("filePath", "The file path of the source file of the instruction", "InstructionWeaving")]
+    [ParameterDescription("callerParameters", "The parameters of the method which contains the weaved instruction", "InstructionWeaving")]
+    [ParameterDescription("callerMethod", "The method which contains the weaved instruction", "InstructionWeaving")]
+    [ParameterDescription("caller + parameter name", "the value of the parameter of the method which contains the weaved instruction", "InstructionWeaving")]
 
    public class DocConfiguration
    {

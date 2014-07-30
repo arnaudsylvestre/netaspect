@@ -9,6 +9,12 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
     public class Part5Sample1BeforeInstructionGetFieldPossibilityTest :
         NetAspectTest<Part5Sample1BeforeInstructionGetFieldPossibilityTest.MyInt>
     {
+
+        public Part5Sample1BeforeInstructionGetFieldPossibilityTest()
+            : base("Instruction which get field value Weaving possibilities", "GetFieldInstructionWeavingBefore", "InstructionGetFieldWeaving")
+      {
+      }
+
         protected override Action CreateEnsure()
         {
             return () =>

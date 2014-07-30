@@ -1,10 +1,10 @@
-﻿<input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#MethodWeavingPossibilities" value="Show possibilities">
+﻿<input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#CallWeavingPossibilities" value="Show possibilities">
     <!-- Collapsible Element HTML -->
-    <div id="MethodWeavingPossibilities" class="collapse">
+    <div id="CallWeavingPossibilities" class="collapse">
 
 
 
-#foreach ($possibility in $documentation.Possibilities)
+#foreach ($possibility in $documentation.InstructionWeavings)
 
 <!-- 
 ================================================	  

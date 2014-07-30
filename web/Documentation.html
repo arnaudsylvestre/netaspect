@@ -1366,7 +1366,6 @@ public class MyInt
                <li><b>filePath</b> : the file path of the instruction which call our member</li>
                <li><b>fileName</b> : the file name of the instruction which call our member</li>
             </ul>
-          
 <input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#CallWeavingPossibilities" value="Show possibilities">
     <!-- Collapsible Element HTML -->
     <div id="CallWeavingPossibilities" class="collapse">
@@ -1374,338 +1373,100 @@ public class MyInt
 	
       <!-- 
 ================================================	  
-	  Method call weaving possibilities
+	  InstructionGetFieldWeaving possibilities
 ================================================
 	  -->
-            <h4 id="dropdowns-example">On methods</h4>
-            <p>These aspects are called when the aspect is put on a <b>method</b></p>
+            <h4 id="dropdowns-example">On fields</h4>
+            <p>These aspects are called when the aspect is put on a <b>field</b></p>
 			
-<div class="panel-group" id="MethodPossibilities">
+<div class="panel-group" id="GroupInstructionGetFieldWeaving">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingBefore">Before Method Weaving possibilities</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#GetFieldInstructionWeavingBefore">Instruction which get field value Weaving possibilities</a>
                 </h4>
             </div>
-            <div id="MethodWeavingBefore" class="panel-collapse collapse">
+            <div id="GetFieldInstructionWeavingBefore" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <p>The <b>BeforeMethod</b> method is called before the method is executed. The available parameters are :</p>
+                    <p>The <b>BeforeGetField</b> method is called before an instruction get the value of a field. The available parameters are :</p>
             <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
+               <li><b>caller + parameter name</b> : the value of the parameter of the method which contains the weaved instruction</li>
+               <li><b>caller</b> : The caller</li>
+               <li><b>called</b> : The called</li>
+               <li><b>columnNumber</b> : The column number in the source file of the instruction</li>
+               <li><b>lineNumber</b> : The line number in the source file of the instruction</li>
+               <li><b>fileName</b> : The file name of the source file of the instruction</li>
+               <li><b>filePath</b> : The file path of the source file of the instruction</li>
+               <li><b>callerParameters</b> : The parameters of the method which contains the weaved instruction</li>
+               <li><b>callerMethod</b> : The method which contains the weaved instruction</li>
+               <li><b>field</b> : The field</li>
             </ul>
+<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeGetField (int callerv, MyInt caller, MyInt called, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, FieldInfo field)
+	{
+		Called = true;
+		Assert.AreEqual (caller, called);
+		Assert.NotNull (caller);
+		Assert.AreEqual (15, columnNumber);
+		Assert.AreEqual (34, lineNumber);
+		Assert.AreEqual ("Part5Sample1BeforeInstructionGetFieldPossibilityTest.cs", fileName);
+		Assert.AreEqual (fileName, Path.GetFileName (filePath));
+		Assert.AreEqual (1, callerParameters.Length);
+		Assert.AreEqual ("DivideBy", callerMethod.Name);
+		Assert.AreEqual ("value", field.Name);
+		Assert.AreEqual (6, callerv);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	[Log]
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var classToWeave_L = new MyInt (12);
+	classToWeave_L.DivideBy (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingAfter">After Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingAfter" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>The <b>AfterMethod</b> method is called after the method is executed. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
-               <li>result</li>
-            </ul>
-                </div>
+        
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnException">On Exception Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingOnException" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>The <b>OnExceptionMethod</b> method is called when an exception occured in the method. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
-               <li>exception</li>
-            </ul>
-                </div>
-            </div>
-        </div>
-		<div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnFinally">On Finally Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingOnFinally" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>The <b>OnFinallyMethod</b> method is called after the method is executed when an exception occured or not. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
-            </ul>
-                </div>
-            </div>
-        </div>
+        
+		
     </div>
 			
             
             
           
 	
-      <!-- 
-================================================	  
-	  Constructor weaving possibilities
-================================================
-	  -->  
-            
-            <h4 id="dropdowns-example">On constructors</h4>
-            <p>These aspects are called when the aspect is put on a <b>constructor</b></p>
-			
-			<div class="panel-group" id="ConstructorPossibilities">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingBeforeConstructor">Before Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingBeforeConstructor" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>The <b>BeforeMethod</b> method is called before the method is executed. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
-            </ul>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingAfterConstructor">After Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingAfterConstructor" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>The <b>AfterMethod</b> method is called after the method is executed. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
-               <li>result</li>
-            </ul>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnExceptionConstructor">On Exception Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingOnExceptionConstructor" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>The <b>OnExceptionMethod</b> method is called when an exception occured in the method. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
-               <li>exception</li>
-            </ul>
-                </div>
-            </div>
-        </div>
-		<div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnFinallyConstructor">On Finally Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingOnFinallyConstructor" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>The <b>OnFinallyMethod</b> method is called after the method is executed when an exception occured or not. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>method</li>
-               <li>parameters</li>
-               <li>parameter name</li>
-            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-		
-      <!-- 
-================================================	  
-	  Property getter weaving possibilities
-================================================
-	  -->  	
-			
-			<h4 id="dropdowns-example">On property getter</h4>
-            <p>These aspects are called when the aspect is put on a <b>property</b></p>
-			
-			<div class="panel-group" id="PropertyGetterPossibilities">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingBeforePropertyGetter">Before Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingBeforePropertyGetter" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>The <b>BeforePropertyGetMethod</b> method is called before the getter is executed. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>property</li>
-            </ul>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingAfterPropertyGetter">After Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingAfterPropertyGetter" class="panel-collapse collapse">
-                <div class="panel-body">
-                <p>The <b>AfterPropertyGetMethod</b> method is called after the getter is executed. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>property</li>
-               <li>result</li>
-            </ul>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnExceptionPropertyGetter">On Exception Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingOnExceptionPropertyGetter" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>The <b>OnExceptionPropertyGetMethod</b> method is called when an exception occured in the getter. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>property</li>
-               <li>exception</li>
-            </ul>
-                </div>
-            </div>
-        </div>
-		<div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnFinallyPropertyGetter">On Finally Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingOnFinallyPropertyGetter" class="panel-collapse collapse">
-                <div class="panel-body">
-            <p>The <b>OnFinallyPropertyGetMethod</b> method is called after the getter is executed when an exception occured or not. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>property</li>
-            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 	
-	
-      <!-- 
-================================================	  
-	  Property setter weaving possibilities
-================================================
-	  -->  	
-			
-			<h4 id="dropdowns-example">On property setter</h4>
-            <p>These aspects are called when the aspect is put on a <b>property</b></p>
-			
-			<div class="panel-group" id="PropertySetterPossibilities">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingBeforePropertySetter">Before Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingBeforePropertySetter" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>The <b>BeforePropertySetMethod</b> method is called before the setter is executed. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>property</li>
-               <li>value</li>
-            </ul>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingAfterPropertySetter">After Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingAfterPropertySetter" class="panel-collapse collapse">
-                <div class="panel-body">
-            <p>The <b>AfterPropertySetMethod</b> method is called after the setter is executed. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>property</li>
-               <li>value</li>
-            </ul>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnExceptionPropertySetter">On Exception Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingOnExceptionPropertySetter" class="panel-collapse collapse">
-                <div class="panel-body">
-                    
-            <p>The <b>OnExceptionPropertySetMethod</b> method is called when an exception occured in the setter. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>property</li>
-               <li>value</li>
-               <li>exception</li>
-            </ul>
-                </div>
-            </div>
-        </div>
-		<div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnFinallyPropertySetter">On Finally Method Weaving possibilities</a>
-                </h4>
-            </div>
-            <div id="MethodWeavingOnFinallyPropertySetter" class="panel-collapse collapse">
-                <div class="panel-body">
-            <p>The <b>OnFinallyPropertySetMethod</b> method is called after the setter is executed when an exception occured or not. The available parameters are :</p>
-            <ul>
-               <li>instance</li>
-               <li>property</li>
-               <li>value</li>
-            </ul>
-                </div>
-            </div>
-        </div>
     </div>
 	
 			

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Commons.Collections;
 using NVelocity;
 using NVelocity.App;
@@ -17,6 +18,7 @@ namespace NetAspect.Doc.Builder
       public string Title { get; set; }
 
       public string Member { get; set; }
+      public string Group { get; set; }
    }
 
    public class TestDescription
@@ -60,6 +62,16 @@ namespace NetAspect.Doc.Builder
 
             public string InstructionWeavingPossibilities { get; set; }
 
+
+            public List<Possibility> InstructionWeavings { get { return Possibilities.Where(p => p.Group == "InstructionWeaving").ToList(); } }
+            public List<Possibility> MethodWeavings
+            {
+                get
+                {
+                    return Possibilities.Where(p => p.Group == "MethodWeaving").ToList();
+                }
+            } 
+
             public List<Possibility> Possibilities { get; set; }
         }
 
@@ -88,17 +100,17 @@ namespace NetAspect.Doc.Builder
             var context = new VelocityContext(hashtable);
             var props = new ExtendedProperties();
             velocity.Init(props);
-            documentation.MethodWeavingPossibilities = BuildMethodWeavingPossibilities(velocity, context);
-            documentation.InstructionWeavingPossibilities = BuildMethodWeavingPossibilities(velocity, context);
+            documentation.MethodWeavingPossibilities = BuildMethodWeavingPossibilities(velocity, context, Templates.Templates.WeavingPossibilities);
+            documentation.InstructionWeavingPossibilities = BuildMethodWeavingPossibilities(velocity, context, Templates.Templates.InstructionWeavingPossibilities);
 
             using (var streamWriter = new StreamWriter(File.Create(filePath)))
                 velocity.Evaluate(context, streamWriter, "", Templates.Templates.Documentation);
         }
 
-        private static string BuildMethodWeavingPossibilities(VelocityEngine velocity, VelocityContext context)
+        private static string BuildMethodWeavingPossibilities(VelocityEngine velocity, VelocityContext context, string template)
         {
             var stringWriter = new StringWriter();
-            velocity.Evaluate(context, stringWriter, "", Templates.Templates.WeavingPossibilities);
+            velocity.Evaluate(context, stringWriter, "", template);
 
            return stringWriter.ToString();
         }
@@ -118,6 +130,8 @@ namespace NetAspect.Doc.Builder
         public string Title { get; set; }
 
         public string Member { get; set; }
+
+        public string Group { get; set; }
     }
 
     public class PossibilityEvent

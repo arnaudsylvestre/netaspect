@@ -41,10 +41,11 @@ namespace NetAspect.Doc.Builder
 
    public class DocumentationFromTest
    {
-      public List<ParameterDescription> Parameters = new List<ParameterDescription>(); 
-      public List<PossibilityDescription> Possibilities = new List<PossibilityDescription>();
+       public List<ParameterDescription> Parameters = new List<ParameterDescription>();
+       public List<PossibilityDescription> Possibilities = new List<PossibilityDescription>();
       public List<TestDescription> Tests = new List<TestDescription>();
       public List<InterceptorDescription> Interceptors = new List<InterceptorDescription>();
+
    }
 
    public class ParameterDescription
@@ -58,7 +59,7 @@ namespace NetAspect.Doc.Builder
    {
       private readonly List<PossibilityDescription> _possibilities;
       private readonly List<InterceptorDescription> _interceptors;
-      private readonly List<ParameterDescription> _parameters;
+       private readonly List<ParameterDescription> _parameters;
       private readonly TestDescription _test;
 
        public FindInvocationsVisitor(List<PossibilityDescription> possibilities_P, List<ParameterDescription> parameters, TestDescription test_P, List<InterceptorDescription> interceptors_P)
@@ -71,16 +72,18 @@ namespace NetAspect.Doc.Builder
 
       public override void VisitAttribute(Attribute attribute)
        {
-          if (attribute.Type.ToString().Contains("PossibilityDocumentation"))
-          {
-             var arguments = attribute.Arguments.Cast<PrimitiveExpression>().ToList();
-             _possibilities.Add(new PossibilityDescription()
-             {
-                Description = GetValue(arguments[1]),
-                Kind = GetValue(arguments[0]),
-                Title = GetValue(arguments[2]),
-             });
-          }
+           if (attribute.Type.ToString().Contains("PossibilityDocumentation"))
+           {
+               var arguments = attribute.Arguments.Cast<PrimitiveExpression>().ToList();
+               var group = GetValue(arguments[3]);
+               var possibilityDescription = new PossibilityDescription()
+                   {
+                       Description = GetValue(arguments[1]), Kind = GetValue(arguments[0]), Title = GetValue(arguments[2]),
+                       Group = group
+                   };
+                       _possibilities.Add(possibilityDescription);
+               
+           }
           if (attribute.Type.ToString().Contains("ParameterDescription"))
           {
              var arguments = attribute.Arguments.Cast<PrimitiveExpression>().ToList();
@@ -113,6 +116,13 @@ namespace NetAspect.Doc.Builder
           if (IsWeaved(propertyDeclaration.Attributes))
               _test.Member = "property";
           base.VisitPropertyDeclaration(propertyDeclaration);
+      }
+
+      public override void VisitFieldDeclaration(FieldDeclaration fieldDeclaration)
+      {
+          if (IsWeaved(fieldDeclaration.Attributes))
+              _test.Member = "field";
+          base.VisitFieldDeclaration(fieldDeclaration);
       }
 
       public override void VisitConstructorDeclaration(ConstructorDeclaration constructorDeclaration)
