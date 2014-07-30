@@ -18,3 +18,5 @@ $documentation.Basics
 $documentation.MethodWeaving
 $documentation.MethodWeavingPossibilities
 
+$documentation.InstructionWeaving
+

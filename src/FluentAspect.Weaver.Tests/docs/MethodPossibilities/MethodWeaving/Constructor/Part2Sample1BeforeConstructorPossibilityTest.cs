@@ -18,9 +18,9 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
             int value;
          
             [Log]
-            public MyInt(int value)
+            public MyInt(int intValue)
             {
-                this.value = value;
+               this.value = intValue;
             }
 
             public int Value
@@ -49,13 +49,13 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
             public bool NetAspectAttribute = true;
            public static bool Called;
 
-           public void BeforeConstructor(object instance, MethodBase constructor, object[] parameters, int value)
+           public void BeforeConstructor(object instance, MethodBase constructor, object[] parameters, int intValue)
            {
                 Called = true;
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
                 Assert.AreEqual(".ctor", constructor.Name);
                 Assert.AreEqual(1, parameters.Length);
-                Assert.AreEqual(24, value);
+                Assert.AreEqual(24, intValue);
             }
         }
     }

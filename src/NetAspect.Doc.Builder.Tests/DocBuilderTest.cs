@@ -13,10 +13,13 @@ namespace NetAspect.Doc.Builder.Tests
     {
          [Test]
          public void CheckBuild()
-         {
+       {
+          string baseDirectory = @"D:\Sources\3rdParty\fluentaspect-git\fluentaspect\";
+          //string baseDirectory = @"D:\Developpement\fluentaspect\";
+
             DocumentationFromTestExtractor extractor = new DocumentationFromTestExtractor();
 
-            var documentationFromTest_L = extractor.ExtractDocumentationFromTests(@"D:\Developpement\fluentaspect\src\FluentAspect.Weaver.Tests\docs\MethodPossibilities");
+            var documentationFromTest_L = extractor.ExtractDocumentationFromTests(baseDirectory + @"src\FluentAspect.Weaver.Tests\docs\MethodPossibilities");
 
             var possibilities = new List<Possibility>();
             BuildPossibilities(possibilities, documentationFromTest_L);
@@ -27,7 +30,7 @@ namespace NetAspect.Doc.Builder.Tests
                builder.Add(possibility);
             }
 
-             builder.Generate(@"D:\Developpement\fluentaspect\web\generated.html");
+             builder.Generate(baseDirectory + @"web\generated.html");
          }
 
        private void BuildPossibilities(List<Possibility> possibilities_P, DocumentationFromTest documentationFromTest_P)

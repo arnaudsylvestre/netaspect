@@ -1,0 +1,21 @@
+﻿<h2 id="dropdowns">Call Weaving</h2>
+            <h3 id="dropdowns-example">Theory in NetAspect</h3>
+            <p>The "call weaving" will modify the code of the method which call the member with the aspect. It is possible to add the following behaviors :</p>
+            <ul>
+               <li><b>Before</b> the member is called</li>
+               <li><b>After</b> the member is called</li>
+            </ul>
+            <p>For each of these behaviors, we can get some information about the caller and the member called by adding some parameters to the aspect method :</p>
+            <ul>
+               <li><b>caller</b> : the <i>this</i> of the method which call our member</li>
+               <li><b>callerMethod</b> : the MethodInfo of the method which call our member</li>
+               <li><b>callerParameters</b> : the parameters of the method which call our member</li>
+               <li><b>caller + parameter name</b> : the parameter of the method which call our member</li>
+               <li><b>called</b> : the <i>this</i> of our member</li>
+               <li><b>calledParameters</b> : the parameters of our member if our member is a method</li>
+               <li><b>called + parameter name</b> : the parameter of our member if our member is a method</li>
+               <li><b>lineNumber</b> : the line number of the instruction which call our member</li>
+               <li><b>columnNumber</b> : the column number of the instruction which call our member</li>
+               <li><b>filePath</b> : the file path of the instruction which call our member</li>
+               <li><b>fileName</b> : the file name of the instruction which call our member</li>
+            </ul>

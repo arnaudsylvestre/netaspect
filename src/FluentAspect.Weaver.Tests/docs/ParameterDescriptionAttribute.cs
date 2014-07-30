@@ -9,7 +9,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
       private readonly string _theInstance;
 
 
-      public ParameterDescriptionAttribute(string instance_P, string theInstance_P)
+      public ParameterDescriptionAttribute(string instance_P, string theInstance_P, string weavingType)
       {
          _instance = instance_P;
          _theInstance = theInstance_P;

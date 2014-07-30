@@ -17,15 +17,3 @@
                <li><b>exception</b> : the exception raised in the weaved method.</b></li>
                <li><b>value</b> : the new value of the property in a property setter</li>
             </ul>
-            <p>Here is a sample with parameters</p>
-            <pre class="prettyprint">
-public class LogAttribute : Attribute
-{
-    public bool IsNetAspectAttribute { get { return true; } }
-	
-    public void Before(MyInt instance, int v) 
-    {
-        Console.WriteLine(string.Format("Start Division {0} / {1}", instance.Value, v));
-    }
-}
-</pre>

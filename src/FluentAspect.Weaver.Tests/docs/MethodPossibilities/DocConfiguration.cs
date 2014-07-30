@@ -1,13 +1,14 @@
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
 {
-   [ParameterDescription("instance", "The instance")]
-   [ParameterDescription("method", "The method")]
-   [ParameterDescription("property", "The property")]
-   [ParameterDescription("constructor", "The constructor")]
-   [ParameterDescription("parameters", "The parameters")]
-   [ParameterDescription("parameter name", "The parameter's name")]
-   [ParameterDescription("result", "The result")]
-   [ParameterDescription("exception", "The exception raised")]
+   [ParameterDescription("instance", "The instance", "MethodWeaving")]
+   [ParameterDescription("method", "The method", "MethodWeaving")]
+   [ParameterDescription("property", "The property", "MethodWeaving")]
+   [ParameterDescription("constructor", "The constructor", "MethodWeaving")]
+   [ParameterDescription("parameters", "The parameters", "MethodWeaving")]
+   [ParameterDescription("parameter name", "The parameter's name", "MethodWeaving")]
+   [ParameterDescription("result", "The result", "MethodWeaving")]
+   [ParameterDescription("exception", "The exception raised", "MethodWeaving")]
+   [ParameterDescription("value", "The property value", "MethodWeaving")]
 
 
    [InterceptorDescription("Before", "before the method is executed")]
@@ -31,10 +32,25 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
     [InterceptorDescription("OnFinallyPropertySetMethod", "after the set method of the property is executed when an exception occured or not")]
 
 
-    [PossibilityDocumentation("MethodWeaving", "PossibilityDescription", "On methods")]
-    [PossibilityDocumentation("ConstructorWeaving", "PossibilityDescription", "On constructors")]
-    [PossibilityDocumentation("PropertyGetWeaving", "PossibilityDescription", "On properties (For getter)")]
-    [PossibilityDocumentation("PropertySetWeaving", "PossibilityDescription", "On properties (For setter)")]
+   [PossibilityDocumentation("MethodWeaving", "PossibilityDescription", "On methods")]
+   [PossibilityDocumentation("ConstructorWeaving", "PossibilityDescription", "On constructors")]
+   [PossibilityDocumentation("PropertyGetWeaving", "PossibilityDescription", "On properties (For getter)")]
+   [PossibilityDocumentation("PropertySetWeaving", "PossibilityDescription", "On properties (For setter)")]
+
+
+
+
+
+
+
+
+
+
+
+   [PossibilityDocumentation("InstructionMethodWeaving", "PossibilityDescription", "On methods")]
+   [PossibilityDocumentation("InstructionConstructorWeaving", "PossibilityDescription", "On constructors")]
+   [PossibilityDocumentation("InstructionPropertyGetWeaving", "PossibilityDescription", "On properties (For getter)")]
+   [PossibilityDocumentation("InstructionPropertySetWeaving", "PossibilityDescription", "On properties (For setter)")]
 
    public class DocConfiguration
    {

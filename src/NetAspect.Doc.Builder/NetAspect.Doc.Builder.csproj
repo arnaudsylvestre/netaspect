@@ -79,6 +79,8 @@
       <DependentUpon>Templates.resx</DependentUpon>
     </Compile>
     <Content Include="Resources\Basics.txt" />
+    <Content Include="Resources\InstructionWeaving.txt" />
+    <Content Include="Templates\InstructionWeavingPossibilities.txt" />
     <Content Include="Templates\WeavingPossibilities.txt" />
     <Content Include="Resources\MethodWeaving.txt" />
     <Content Include="Resources\Header.txt" />

@@ -17,11 +17,11 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
             int value;
 
             [Log]
-            public MyInt(int value)
+            public MyInt(int intValue)
             {
                if (value == 0)
                   throw new NotSupportedException();
-                this.value = value;
+               this.value = intValue;
             }
 
             public int Value
@@ -57,13 +57,13 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
             public bool NetAspectAttribute = true;
            public static bool Called;
 
-           public void OnExceptionConstructor(object instance, MethodBase constructor, object[] parameters, int value, Exception exception)
+           public void OnExceptionConstructor(object instance, MethodBase constructor, object[] parameters, int intValue, Exception exception)
            {
                 Called = true;
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
                 Assert.AreEqual(".ctor", constructor.Name);
                 Assert.AreEqual(1, parameters.Length);
-                Assert.AreEqual(0, value);
+                Assert.AreEqual(0, intValue);
                 Assert.AreEqual("NotSupportedException", exception.GetType().Name);
             }
         }

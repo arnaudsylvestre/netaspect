@@ -56,6 +56,10 @@ namespace NetAspect.Doc.Builder
 
             public string MethodWeavingPossibilities { get; set; }
 
+            public string InstructionWeaving { get; set; }
+
+            public string InstructionWeavingPossibilities { get; set; }
+
             public List<Possibility> Possibilities { get; set; }
         }
 
@@ -67,6 +71,7 @@ namespace NetAspect.Doc.Builder
             documentation.Header = Content.Header;
             documentation.Basics = Content.Basics;
             documentation.MethodWeaving = Content.MethodWeaving;
+            documentation.InstructionWeaving = Content.InstructionWeaving;
         }
 
 
@@ -84,6 +89,7 @@ namespace NetAspect.Doc.Builder
             var props = new ExtendedProperties();
             velocity.Init(props);
             documentation.MethodWeavingPossibilities = BuildMethodWeavingPossibilities(velocity, context);
+            documentation.InstructionWeavingPossibilities = BuildMethodWeavingPossibilities(velocity, context);
 
             using (var streamWriter = new StreamWriter(File.Create(filePath)))
                 velocity.Evaluate(context, streamWriter, "", Templates.Templates.Documentation);
@@ -94,8 +100,7 @@ namespace NetAspect.Doc.Builder
             var stringWriter = new StringWriter();
             velocity.Evaluate(context, stringWriter, "", Templates.Templates.WeavingPossibilities);
 
-            var methodWeavingPossibilities = stringWriter.ToString();
-            return methodWeavingPossibilities;
+           return stringWriter.ToString();
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Mono.Cecil.Cil;
@@ -14,7 +15,10 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
             foreach (ParameterInfo parameterInfo in parameters)
             {
                 string key_L = parameterInfo.Name.ToLower();
-                interceptorParameterConfigurations_P.PossibleParameters.First(i => i.Name == key_L).Generator.GenerateIl(parameterInfo, instructions, info);
+               var interceptorParameterConfiguration_L = interceptorParameterConfigurations_P.PossibleParameters.FirstOrDefault(i => i.Name == key_L);
+               if (interceptorParameterConfiguration_L == null)
+                  throw new Exception("Parameter unknown : " + parameterInfo.Name);
+               interceptorParameterConfiguration_L.Generator.GenerateIl(parameterInfo, instructions, info);
             }
         }
     }

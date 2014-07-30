@@ -163,18 +163,6 @@ public class MyInt
                <li><b>exception</b> : the exception raised in the weaved method.</b></li>
                <li><b>value</b> : the new value of the property in a property setter</li>
             </ul>
-            <p>Here is a sample with parameters</p>
-            <pre class="prettyprint">
-public class LogAttribute : Attribute
-{
-    public bool IsNetAspectAttribute { get { return true; } }
-	
-    public void Before(MyInt instance, int v) 
-    {
-        Console.WriteLine(string.Format("Start Division {0} / {1}", instance.Value, v));
-    }
-}
-</pre>
 <input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#MethodWeavingPossibilities" value="Show possibilities">
     <!-- Collapsible Element HTML -->
     <div id="MethodWeavingPossibilities" class="collapse">
@@ -516,13 +504,13 @@ public class LogAttribute : Attribute
 
 	public static bool Called;
 
-	public void BeforeConstructor (object instance, MethodBase constructor, object[] parameters, int value)
+	public void BeforeConstructor (object instance, MethodBase constructor, object[] parameters, int intValue)
 	{
 		Called = true;
 		Assert.AreEqual (typeof(MyInt), instance.GetType ());
 		Assert.AreEqual (".ctor", constructor.Name);
 		Assert.AreEqual (1, parameters.Length);
-		Assert.AreEqual (24, value);
+		Assert.AreEqual (24, intValue);
 	}
 }
 
@@ -533,9 +521,9 @@ public class MyInt
 	int value;
 
 	[Log]
-	public MyInt (int value)
+	public MyInt (int intValue)
 	{
-		this.value = value;
+		this.value = intValue;
 	}
 
 	public int Value {
@@ -584,13 +572,13 @@ public class LogAttribute : Attribute
 
 	public static bool Called;
 
-	public void AfterConstructor (object instance, MethodBase constructor, object[] parameters, int value)
+	public void AfterConstructor (object instance, MethodBase constructor, object[] parameters, int intValue)
 	{
 		Called = true;
 		Assert.AreEqual (typeof(MyInt), instance.GetType ());
 		Assert.AreEqual (".ctor", constructor.Name);
 		Assert.AreEqual (1, parameters.Length);
-		Assert.AreEqual (24, value);
+		Assert.AreEqual (24, intValue);
 	}
 }
 
@@ -601,9 +589,9 @@ public class MyInt
 	int value;
 
 	[Log]
-	public MyInt (int value)
+	public MyInt (int intValue)
 	{
-		this.value = value;
+		this.value = intValue;
 	}
 
 	public int Value {
@@ -654,13 +642,13 @@ public class LogAttribute : Attribute
 
 	public static bool Called;
 
-	public void OnExceptionConstructor (object instance, MethodBase constructor, object[] parameters, int value, Exception exception)
+	public void OnExceptionConstructor (object instance, MethodBase constructor, object[] parameters, int intValue, Exception exception)
 	{
 		Called = true;
 		Assert.AreEqual (typeof(MyInt), instance.GetType ());
 		Assert.AreEqual (".ctor", constructor.Name);
 		Assert.AreEqual (1, parameters.Length);
-		Assert.AreEqual (0, value);
+		Assert.AreEqual (0, intValue);
 		Assert.AreEqual ("NotSupportedException", exception.GetType ().Name);
 	}
 }
@@ -672,11 +660,11 @@ public class MyInt
 	int value;
 
 	[Log]
-	public MyInt (int value)
+	public MyInt (int intValue)
 	{
 		if (value == 0)
 			throw new NotSupportedException ();
-		this.value = value;
+		this.value = intValue;
 	}
 
 	public int Value {
@@ -730,13 +718,13 @@ public class LogAttribute : Attribute
 
 	public static bool Called;
 
-	public void OnFinallyConstructor (object instance, MethodBase constructor, object[] parameters, int value)
+	public void OnFinallyConstructor (object instance, MethodBase constructor, object[] parameters, int intValue)
 	{
 		Called = true;
 		Assert.AreEqual (typeof(MyInt), instance.GetType ());
 		Assert.AreEqual (".ctor", constructor.Name);
 		Assert.AreEqual (1, parameters.Length);
-		Assert.AreEqual (24, value);
+		Assert.AreEqual (24, intValue);
 	}
 }
 
@@ -747,9 +735,9 @@ public class MyInt
 	int value;
 
 	[Log]
-	public MyInt (int value)
+	public MyInt (int intValue)
 	{
-		this.value = value;
+		this.value = intValue;
 	}
 
 	public int Value {
@@ -1088,7 +1076,7 @@ public class MyInt
             <ul>
                <li><b>instance</b> : The instance</li>
                <li><b>property</b> : The property</li>
-               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>value</b> : The property value</li>
             </ul>
 			<p>Sample on how to use</p>
 <pre class="prettyprint">
@@ -1155,7 +1143,7 @@ public class MyInt
             <ul>
                <li><b>instance</b> : The instance</li>
                <li><b>property</b> : The property</li>
-               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>value</b> : The property value</li>
             </ul>
 			<p>Sample on how to use</p>
 <pre class="prettyprint">
@@ -1296,7 +1284,7 @@ public class MyInt
             <ul>
                <li><b>instance</b> : The instance</li>
                <li><b>property</b> : The property</li>
-               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>value</b> : The property value</li>
             </ul>
 			<p>Sample on how to use</p>
 <pre class="prettyprint">
@@ -1356,4 +1344,26 @@ public class MyInt
 
 
     </div>
+
+<h2 id="dropdowns">Call Weaving</h2>
+            <h3 id="dropdowns-example">Theory in NetAspect</h3>
+            <p>The "call weaving" will modify the code of the method which call the member with the aspect. It is possible to add the following behaviors :</p>
+            <ul>
+               <li><b>Before</b> the member is called</li>
+               <li><b>After</b> the member is called</li>
+            </ul>
+            <p>For each of these behaviors, we can get some information about the caller and the member called by adding some parameters to the aspect method :</p>
+            <ul>
+               <li><b>caller</b> : the <i>this</i> of the method which call our member</li>
+               <li><b>callerMethod</b> : the MethodInfo of the method which call our member</li>
+               <li><b>callerParameters</b> : the parameters of the method which call our member</li>
+               <li><b>caller + parameter name</b> : the parameter of the method which call our member</li>
+               <li><b>called</b> : the <i>this</i> of our member</li>
+               <li><b>calledParameters</b> : the parameters of our member if our member is a method</li>
+               <li><b>called + parameter name</b> : the parameter of our member if our member is a method</li>
+               <li><b>lineNumber</b> : the line number of the instruction which call our member</li>
+               <li><b>columnNumber</b> : the column number of the instruction which call our member</li>
+               <li><b>filePath</b> : the file path of the instruction which call our member</li>
+               <li><b>fileName</b> : the file name of the instruction which call our member</li>
+            </ul>
 

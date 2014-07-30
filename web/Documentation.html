@@ -57,10 +57,12 @@
             </div>
          </div>
       </div>
-      <div class="container bs-docs-container">
+
+<div class="container bs-docs-container">
       <div class="row">
       <div class="col-md-12" role="main">
-         <div class="bs-docs-section">
+
+<div class="bs-docs-section">
 		 
       <!-- 
 ================================================	  
@@ -142,7 +144,7 @@ public class MyInt
             <div class="page-header">
                <h1 id="dropdowns">Weaving</h1>
             </div>
-            <h2 id="dropdowns">Method Weaving</h2>
+<h2 id="dropdowns">Method Weaving</h2>
             <p>The "method weaving" will modify the code of the method to add behavior. It is possible to add behavior :</p>
             <ul>
                <li><b>Before</b> the method is executed</li>
@@ -161,29 +163,20 @@ public class MyInt
                <li><b>exception</b> : the exception raised in the weaved method.</b></li>
                <li><b>value</b> : the new value of the property in a property setter</li>
             </ul>
-            <p>Here is a sample with parameters</p>
-            <pre class="prettyprint">
-public class LogAttribute : Attribute
-{
-    public bool IsNetAspectAttribute { get { return true; } }
-	
-    public void Before(MyInt instance, int v) 
-    {
-        Console.WriteLine(string.Format("Start Division {0} / {1}", instance.Value, v));
-    }
-}
-</pre>
-			<input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#MethodWeavingPossibilities" value="Show possibilities">
+<input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#MethodWeavingPossibilities" value="Show possibilities">
     <!-- Collapsible Element HTML -->
     <div id="MethodWeavingPossibilities" class="collapse">
-			
-	
-      <!-- 
+
+
+
+
+<!-- 
 ================================================	  
 	  MethodWeaving possibilities
 ================================================
 	  -->
-            <h4 id="dropdowns-example">On methods</h4>
+
+	<h4 id="dropdowns-example">On methods</h4>
             <p>These aspects are called when the aspect is put on a <b>method</b></p>
 			
 <div class="panel-group" id="GroupMethodWeaving">
@@ -210,6 +203,7 @@ public class LogAttribute : Attribute
 	public bool NetAspectAttribute = true;
 
 	public static bool Called;
+
 	public void Before (object instance, MethodBase method, object[] parameters, int v)
 	{
 		Called = true;
@@ -279,6 +273,7 @@ public class LogAttribute : Attribute
 	public bool NetAspectAttribute = true;
 
 	public static bool Called;
+
 	public void After (object instance, MethodBase method, object[] parameters, int v, int result)
 	{
 		Called = true;
@@ -401,7 +396,7 @@ public class MyInt
                 </div>
             </div>
         </div>
-		<div class="panel panel-default">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnFinally">On finally method weaving possibilities</a>
@@ -411,12 +406,12 @@ public class MyInt
                 <div class="panel-body">
                     <p>The <b>OnFinally</b> method is called after the method is executed when an exception occured or not. The available parameters are :</p>
             <ul>
-                <li><b>instance</b> : The instance</li>
+               <li><b>instance</b> : The instance</li>
                <li><b>method</b> : The method</li>
                <li><b>parameters</b> : The parameters</li>
                <li><b>parameter name</b> : The parameter's name</li>
             </ul>
-						<p>Sample on how to use</p>
+			<p>Sample on how to use</p>
 <pre class="prettyprint">
 // The aspect
 public class LogAttribute : Attribute
@@ -470,21 +465,21 @@ public class MyInt
                 </div>
             </div>
         </div>
-            
+        
     </div>
-            
-          
-	
-      <!-- 
+
+
+
+<!-- 
 ================================================	  
 	  ConstructorWeaving possibilities
 ================================================
-	  -->  
-            
-            <h4 id="dropdowns-example">On constructors</h4>
+	  -->
+
+	<h4 id="dropdowns-example">On constructors</h4>
             <p>These aspects are called when the aspect is put on a <b>constructor</b></p>
 			
-			<div class="panel-group" id="GroupConstructorWeaving">
+<div class="panel-group" id="GroupConstructorWeaving">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -500,7 +495,7 @@ public class MyInt
                <li><b>parameters</b> : The parameters</li>
                <li><b>parameter name</b> : The parameter's name</li>
             </ul>
-<p>Sample on how to use</p>
+			<p>Sample on how to use</p>
 <pre class="prettyprint">
 // The aspect
 public class LogAttribute : Attribute
@@ -509,13 +504,13 @@ public class LogAttribute : Attribute
 
 	public static bool Called;
 
-	public void BeforeConstructor (object instance, MethodBase constructor, object[] parameters, int value)
+	public void BeforeConstructor (object instance, MethodBase constructor, object[] parameters, int intValue)
 	{
 		Called = true;
 		Assert.AreEqual (typeof(MyInt), instance.GetType ());
 		Assert.AreEqual (".ctor", constructor.Name);
 		Assert.AreEqual (1, parameters.Length);
-		Assert.AreEqual (24, value);
+		Assert.AreEqual (24, intValue);
 	}
 }
 
@@ -526,9 +521,9 @@ public class MyInt
 	int value;
 
 	[Log]
-	public MyInt (int value)
+	public MyInt (int intValue)
 	{
-		this.value = value;
+		this.value = intValue;
 	}
 
 	public int Value {
@@ -568,7 +563,7 @@ public class MyInt
                <li><b>parameters</b> : The parameters</li>
                <li><b>parameter name</b> : The parameter's name</li>
             </ul>
-<p>Sample on how to use</p>
+			<p>Sample on how to use</p>
 <pre class="prettyprint">
 // The aspect
 public class LogAttribute : Attribute
@@ -577,13 +572,13 @@ public class LogAttribute : Attribute
 
 	public static bool Called;
 
-	public void AfterConstructor (object instance, MethodBase constructor, object[] parameters, int value)
+	public void AfterConstructor (object instance, MethodBase constructor, object[] parameters, int intValue)
 	{
 		Called = true;
 		Assert.AreEqual (typeof(MyInt), instance.GetType ());
 		Assert.AreEqual (".ctor", constructor.Name);
 		Assert.AreEqual (1, parameters.Length);
-		Assert.AreEqual (24, value);
+		Assert.AreEqual (24, intValue);
 	}
 }
 
@@ -594,9 +589,9 @@ public class MyInt
 	int value;
 
 	[Log]
-	public MyInt (int value)
+	public MyInt (int intValue)
 	{
-		this.value = value;
+		this.value = intValue;
 	}
 
 	public int Value {
@@ -638,7 +633,7 @@ public class MyInt
                <li><b>parameter name</b> : The parameter's name</li>
                <li><b>exception</b> : The exception raised</li>
             </ul>
-<p>Sample on how to use</p>
+			<p>Sample on how to use</p>
 <pre class="prettyprint">
 // The aspect
 public class LogAttribute : Attribute
@@ -647,14 +642,14 @@ public class LogAttribute : Attribute
 
 	public static bool Called;
 
-	public void OnExceptionConstructor (object instance, MethodBase constructor, object[] parameters, int value, Exception exception)
+	public void OnExceptionConstructor (object instance, MethodBase constructor, object[] parameters, int intValue, Exception exception)
 	{
 		Called = true;
 		Assert.AreEqual (typeof(MyInt), instance.GetType ());
 		Assert.AreEqual (".ctor", constructor.Name);
 		Assert.AreEqual (1, parameters.Length);
-		Assert.AreEqual (0, value);
-		Assert.AreEqual ("DivideByZeroException", exception.GetType ().Name);
+		Assert.AreEqual (0, intValue);
+		Assert.AreEqual ("NotSupportedException", exception.GetType ().Name);
 	}
 }
 
@@ -665,11 +660,11 @@ public class MyInt
 	int value;
 
 	[Log]
-	public MyInt (int value)
+	public MyInt (int intValue)
 	{
 		if (value == 0)
-			throw new Exception ();
-		this.value = value;
+			throw new NotSupportedException ();
+		this.value = intValue;
 	}
 
 	public int Value {
@@ -691,7 +686,7 @@ public class MyInt
 		new MyInt (0);
 		Assert.Fail ("Must raise an exception");
 	}
-	catch (Exception) {
+	catch (NotSupportedException) {
 	}
 	Assert.True (LogAttribute.Called);
 }
@@ -699,7 +694,7 @@ public class MyInt
                 </div>
             </div>
         </div>
-		<div class="panel panel-default">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#ConstructorWeavingOnFinally">On finally constructor weaving possibilities</a>
@@ -714,7 +709,7 @@ public class MyInt
                <li><b>parameters</b> : The parameters</li>
                <li><b>parameter name</b> : The parameter's name</li>
             </ul>
-<p>Sample on how to use</p>
+			<p>Sample on how to use</p>
 <pre class="prettyprint">
 // The aspect
 public class LogAttribute : Attribute
@@ -723,13 +718,13 @@ public class LogAttribute : Attribute
 
 	public static bool Called;
 
-	public void OnFinallyConstructor (object instance, MethodBase constructor, object[] parameters, int value)
+	public void OnFinallyConstructor (object instance, MethodBase constructor, object[] parameters, int intValue)
 	{
 		Called = true;
 		Assert.AreEqual (typeof(MyInt), instance.GetType ());
 		Assert.AreEqual (".ctor", constructor.Name);
 		Assert.AreEqual (1, parameters.Length);
-		Assert.AreEqual (24, value);
+		Assert.AreEqual (24, intValue);
 	}
 }
 
@@ -740,9 +735,9 @@ public class MyInt
 	int value;
 
 	[Log]
-	public MyInt (int value)
+	public MyInt (int intValue)
 	{
-		this.value = value;
+		this.value = intValue;
 	}
 
 	public int Value {
@@ -770,13 +765,15 @@ public class MyInt
         </div>
         
     </div>
-		
-      <!-- 
+
+
+
+<!-- 
 ================================================	  
 	  PropertyGetWeaving possibilities
 ================================================
-	  -->  	
-			
+	  -->
+
 	<h4 id="dropdowns-example">On properties (For getter)</h4>
             <p>These aspects are called when the aspect is put on a <b>property</b></p>
 			
@@ -794,7 +791,7 @@ public class MyInt
                <li><b>instance</b> : The instance</li>
                <li><b>property</b> : The property</li>
             </ul>
-<p>Sample on how to use</p>
+			<p>Sample on how to use</p>
 <pre class="prettyprint">
 // The aspect
 public class LogAttribute : Attribute
@@ -854,13 +851,13 @@ public class MyInt
             </div>
             <div id="PropertyGetWeavingAfter" class="panel-collapse collapse">
                 <div class="panel-body">
-                <p>The <b>AfterPropertyGetMethod</b> method is called after the get method of the property is executed. The available parameters are :</p>
+                    <p>The <b>AfterPropertyGetMethod</b> method is called after the get method of the property is executed. The available parameters are :</p>
             <ul>
                <li><b>instance</b> : The instance</li>
                <li><b>property</b> : The property</li>
                <li><b>result</b> : The result</li>
             </ul>
-<p>Sample on how to use</p>
+			<p>Sample on how to use</p>
 <pre class="prettyprint">
 // The aspect
 public class LogAttribute : Attribute
@@ -927,7 +924,7 @@ public class MyInt
                <li><b>property</b> : The property</li>
                <li><b>exception</b> : The exception raised</li>
             </ul>
-<p>Sample on how to use</p>
+			<p>Sample on how to use</p>
 <pre class="prettyprint">
 // The aspect
 public class LogAttribute : Attribute
@@ -940,8 +937,8 @@ public class LogAttribute : Attribute
 	{
 		Called = true;
 		Assert.AreEqual (typeof(MyInt), instance.GetType ());
-		Assert.AreEqual ("DivideBy", property.Name);
-		Assert.AreEqual ("Exception", exception.GetType ().Name);
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual ("NotSupportedException", exception.GetType ().Name);
 	}
 }
 
@@ -960,7 +957,7 @@ public class MyInt
 	public int Value {
 		get {
 			if (value == 0)
-				throw new Exception ("Must not be 0");
+				throw new NotSupportedException ("Must not be 0");
 			return value;
 		}
 	}
@@ -979,7 +976,7 @@ public class MyInt
 		var val = myInt.Value;
 		Assert.Fail ("Must raise an exception");
 	}
-	catch (Exception) {
+	catch (NotSupportedException) {
 	}
 	Assert.True (LogAttribute.Called);
 }
@@ -987,7 +984,7 @@ public class MyInt
                 </div>
             </div>
         </div>
-		<div class="panel panel-default">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#PropertyGetWeavingOnFinally">On finally property getter weaving possibilities</a>
@@ -1000,7 +997,7 @@ public class MyInt
                <li><b>instance</b> : The instance</li>
                <li><b>property</b> : The property</li>
             </ul>
-<p>Sample on how to use</p>
+			<p>Sample on how to use</p>
 <pre class="prettyprint">
 // The aspect
 public class LogAttribute : Attribute
@@ -1052,95 +1049,303 @@ public class MyInt
                 </div>
             </div>
         </div>
+        
     </div>
-	
-	
-      <!-- 
+
+
+
+<!-- 
 ================================================	  
-	  Property setter weaving possibilities
+	  PropertySetWeaving possibilities
 ================================================
-	  -->  	
-			
-			<h4 id="dropdowns-example">On property setter</h4>
+	  -->
+
+	<h4 id="dropdowns-example">On properties (For setter)</h4>
             <p>These aspects are called when the aspect is put on a <b>property</b></p>
 			
-			<div class="panel-group" id="PropertySetterPossibilities">
+<div class="panel-group" id="GroupPropertySetWeaving">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingBeforePropertySetter">Before Method Weaving possibilities</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#PropertySetWeavingBefore">Before Property Setter possibilities</a>
                 </h4>
             </div>
-            <div id="MethodWeavingBeforePropertySetter" class="panel-collapse collapse">
+            <div id="PropertySetWeavingBefore" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <p>The <b>BeforePropertySetMethod</b> method is called before the setter is executed. The available parameters are :</p>
+                    <p>The <b>BeforePropertySetMethod</b> method is called before the set method of the property is executed. The available parameters are :</p>
             <ul>
-               <li>instance</li>
-               <li>property</li>
-               <li>value</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>property</b> : The property</li>
+               <li><b>value</b> : The property value</li>
             </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void BeforePropertySetMethod (object instance, PropertyInfo property, int value)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (32, value);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		set {
+			this.value = value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	myInt.Value = 32;
+	Assert.True (LogAttribute.Called);
+}
+</pre>
                 </div>
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingAfterPropertySetter">After Method Weaving possibilities</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#PropertySetWeavingAfter">After Property Setter Weaving possibilities</a>
                 </h4>
             </div>
-            <div id="MethodWeavingAfterPropertySetter" class="panel-collapse collapse">
+            <div id="PropertySetWeavingAfter" class="panel-collapse collapse">
                 <div class="panel-body">
-            <p>The <b>AfterPropertySetMethod</b> method is called after the setter is executed. The available parameters are :</p>
+                    <p>The <b>AfterPropertySetMethod</b> method is called after the set method of the property is executed. The available parameters are :</p>
             <ul>
-               <li>instance</li>
-               <li>property</li>
-               <li>value</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>property</b> : The property</li>
+               <li><b>value</b> : The property value</li>
             </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void AfterPropertySetMethod (object instance, PropertyInfo property, int value)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (32, value);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		set {
+			this.value = value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	myInt.Value = 32;
+	Assert.True (LogAttribute.Called);
+}
+</pre>
                 </div>
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnExceptionPropertySetter">On Exception Method Weaving possibilities</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#PropertySetWeavingOnException">On exception property set weaving possibilities</a>
                 </h4>
             </div>
-            <div id="MethodWeavingOnExceptionPropertySetter" class="panel-collapse collapse">
+            <div id="PropertySetWeavingOnException" class="panel-collapse collapse">
                 <div class="panel-body">
-                    
-            <p>The <b>OnExceptionPropertySetMethod</b> method is called when an exception occured in the setter. The available parameters are :</p>
+                    <p>The <b>OnExceptionPropertySetMethod</b> method is called when an exception occured in the set method of the property. The available parameters are :</p>
             <ul>
-               <li>instance</li>
-               <li>property</li>
-               <li>value</li>
-               <li>exception</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>property</b> : The property</li>
+               <li><b>exception</b> : The exception raised</li>
             </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void OnExceptionPropertySetMethod (object instance, PropertyInfo property, Exception exception)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual ("NotSupportedException", exception.GetType ().Name);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		set {
+			if (value == 0)
+				throw new NotSupportedException ("Must not be 0");
+			this.value = value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	try {
+		var myInt = new MyInt (0);
+		myInt.Value = 0;
+		Assert.Fail ("Must raise an exception");
+	}
+	catch (NotSupportedException) {
+	}
+	Assert.True (LogAttribute.Called);
+}
+</pre>
                 </div>
             </div>
         </div>
-		<div class="panel panel-default">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#MethodWeavingOnFinallyPropertySetter">On Finally Method Weaving possibilities</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#PropertySetWeavingOnFinally">On finally property setter weaving possibilities</a>
                 </h4>
             </div>
-            <div id="MethodWeavingOnFinallyPropertySetter" class="panel-collapse collapse">
+            <div id="PropertySetWeavingOnFinally" class="panel-collapse collapse">
                 <div class="panel-body">
-            <p>The <b>OnFinallyPropertySetMethod</b> method is called after the setter is executed when an exception occured or not. The available parameters are :</p>
+                    <p>The <b>OnFinallyPropertySetMethod</b> method is called after the set method of the property is executed when an exception occured or not. The available parameters are :</p>
             <ul>
-               <li>instance</li>
-               <li>property</li>
-               <li>value</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>property</b> : The property</li>
+               <li><b>value</b> : The property value</li>
             </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void OnFinallyPropertySetMethod (object instance, PropertyInfo property, int value)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (12, value);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		set {
+			this.value = value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	myInt.Value = 12;
+	Assert.True (LogAttribute.Called);
+}
+</pre>
                 </div>
             </div>
         </div>
+        
     </div>
-	
-			
+
+
     </div>
-			            
-            <h2 id="dropdowns">Call Weaving</h2>
+
+<h2 id="dropdowns">Call Weaving</h2>
             <h3 id="dropdowns-example">Theory in NetAspect</h3>
             <p>The "call weaving" will modify the code of the method which call the member with the aspect. It is possible to add the following behaviors :</p>
             <ul>
@@ -1161,29 +1366,6 @@ public class MyInt
                <li><b>filePath</b> : the file path of the instruction which call our member</li>
                <li><b>fileName</b> : the file name of the instruction which call our member</li>
             </ul>
-            <p>Here is a sample to get the line number of the code which call our DivideBy method</p>
-            <pre class="prettyprint">
-public class LogAttribute : Attribute
-{
-    public bool NetAspectAttribute = true;
-
-    public static int LineNumber;
-
-    public void BeforeCallMethod(int lineNumber)
-    {
-        LineNumber = lineNumber;
-    }
-}
-
-public class Computer
-{
-    public static int Divide(int a, int b)
-    {
-        MyInt myInt = new MyInt(a);
-        return myInt.DivideBy(b);
-    }
-}
-</pre>
           
 <input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#CallWeavingPossibilities" value="Show possibilities">
     <!-- Collapsible Element HTML -->

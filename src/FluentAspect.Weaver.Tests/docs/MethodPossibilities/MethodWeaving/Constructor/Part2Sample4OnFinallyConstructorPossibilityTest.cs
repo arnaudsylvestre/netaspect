@@ -5,10 +5,10 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
 {
-   public class Part2Sample2AfterConstructorPossibilityTest : NetAspectTest<Part2Sample2AfterConstructorPossibilityTest.MyInt>
+   public class Part2Sample4OnFinallyConstructorPossibilityTest : NetAspectTest<Part2Sample4OnFinallyConstructorPossibilityTest.MyInt>
     {
-      public Part2Sample2AfterConstructorPossibilityTest()
-         : base("After Constructor Weaving possibilities", "ConstructordWeavingAfter", "ConstructorWeaving")
+      public Part2Sample4OnFinallyConstructorPossibilityTest()
+         : base("On finally constructor weaving possibilities", "ConstructorWeavingOnFinally", "ConstructorWeaving")
       {
       }
 
@@ -17,9 +17,9 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
             int value;
 
             [Log]
-            public MyInt(int value)
+            public MyInt(int intValue)
             {
-                this.value = value;
+               this.value = intValue;
             }
 
             public int Value
@@ -37,9 +37,9 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
         {
             return () =>
                 {
-                    var myInt = new MyInt(24);
-                    Assert.AreEqual(2, myInt.DivideBy(12));
-                    Assert.True(LogAttribute.Called);
+                      var myInt = new MyInt(24);
+                      myInt.DivideBy(12);
+                      Assert.True(LogAttribute.Called);
                 };
         }
         
@@ -47,16 +47,15 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
         public class LogAttribute : Attribute
         {
             public bool NetAspectAttribute = true;
-
            public static bool Called;
 
-            public void AfterConstructor(object instance, MethodBase constructor, object[] parameters, int value)
-            {
+           public void OnFinallyConstructor(object instance, MethodBase constructor, object[] parameters, int intValue)
+           {
                 Called = true;
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
                 Assert.AreEqual(".ctor", constructor.Name);
                 Assert.AreEqual(1, parameters.Length);
-                Assert.AreEqual(24, value);
+                Assert.AreEqual(24, intValue);
             }
         }
     }
