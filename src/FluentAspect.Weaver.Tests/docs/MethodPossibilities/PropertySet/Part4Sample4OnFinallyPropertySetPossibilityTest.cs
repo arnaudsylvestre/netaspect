@@ -6,10 +6,10 @@ using NetAspect.Weaver.Tests.unit;
 
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
 {
-   public class Part3Sample4OnFinallyPropertyGetPossibilityTest : NetAspectTest<Part3Sample4OnFinallyPropertyGetPossibilityTest.MyInt>
+   public class Part4Sample4OnFinallyPropertySetPossibilityTest : NetAspectTest<Part4Sample4OnFinallyPropertySetPossibilityTest.MyInt>
     {
-       public Part3Sample4OnFinallyPropertyGetPossibilityTest()
-           : base("On finally property getter weaving possibilities", "PropertyGetWeavingOnFinally", "PropertyGetWeaving")
+       public Part4Sample4OnFinallyPropertySetPossibilityTest()
+           : base("On finally property setter weaving possibilities", "PropertySetWeavingOnFinally", "PropertySetWeaving")
       {
       }
 
@@ -25,7 +25,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
             [Log]
             public int Value
             {
-                get { return value; }
+                set { this.value = value; }
             }
             public int DivideBy(int v)
             {
@@ -38,7 +38,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
             return () =>
                 {
                       var myInt = new MyInt(24);
-                      var val = myInt.Value;
+                      myInt.Value = 12;
                       Assert.True(LogAttribute.Called);
                 };
         }
@@ -49,11 +49,12 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
             public bool NetAspectAttribute = true;
            public static bool Called;
 
-           public void OnFinallyPropertyGetMethod(object instance, PropertyInfo property)
+           public void OnFinallyPropertySetMethod(object instance, PropertyInfo property, int value)
            {
               Called = true;
-                Assert.AreEqual(typeof(MyInt), instance.GetType());
-                Assert.AreEqual("Value", property.Name);
+              Assert.AreEqual(typeof(MyInt), instance.GetType());
+              Assert.AreEqual("Value", property.Name);
+              Assert.AreEqual(12, value);
             }
         }
     }

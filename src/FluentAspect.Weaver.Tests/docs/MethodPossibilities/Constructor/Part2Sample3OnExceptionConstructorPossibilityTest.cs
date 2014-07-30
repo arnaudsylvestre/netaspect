@@ -20,7 +20,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
             public MyInt(int value)
             {
                if (value == 0)
-                  throw new Exception();
+                  throw new NotSupportedException();
                 this.value = value;
             }
 
@@ -44,7 +44,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
                       new MyInt(0);
                       Assert.Fail("Must raise an exception");
                    }
-                   catch (Exception)
+                   catch (NotSupportedException)
                    {
                    }
                    Assert.True(LogAttribute.Called);
@@ -64,7 +64,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Constructor
                 Assert.AreEqual(".ctor", constructor.Name);
                 Assert.AreEqual(1, parameters.Length);
                 Assert.AreEqual(0, value);
-                Assert.AreEqual("DivideByZeroException", exception.GetType().Name);
+                Assert.AreEqual("NotSupportedException", exception.GetType().Name);
             }
         }
     }

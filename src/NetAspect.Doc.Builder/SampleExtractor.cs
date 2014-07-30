@@ -107,6 +107,14 @@ namespace NetAspect.Doc.Builder
          return expression.LiteralValue.Replace("\"", "");
       }
 
+      public override void VisitPropertyDeclaration(PropertyDeclaration propertyDeclaration)
+      {
+
+          if (IsWeaved(propertyDeclaration.Attributes))
+              _test.Member = "property";
+          base.VisitPropertyDeclaration(propertyDeclaration);
+      }
+
       public override void VisitConstructorDeclaration(ConstructorDeclaration constructorDeclaration)
       {
          if (constructorDeclaration.Initializer.Arguments.Count == 3)

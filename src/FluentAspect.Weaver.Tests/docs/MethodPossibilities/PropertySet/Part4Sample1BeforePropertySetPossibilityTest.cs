@@ -1,17 +1,18 @@
 using System;
 using System.Reflection;
+using NetAspect.Weaver.Tests.unit;
 using NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.Called;
 using NUnit.Framework;
-using NetAspect.Weaver.Tests.unit;
 
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
 {
-   public class Part3Sample4OnFinallyPropertyGetPossibilityTest : NetAspectTest<Part3Sample4OnFinallyPropertyGetPossibilityTest.MyInt>
+   public class Part4Sample1BeforePropertySetPossibilityTest : NetAspectTest<Part4Sample1BeforePropertySetPossibilityTest.MyInt>
     {
-       public Part3Sample4OnFinallyPropertyGetPossibilityTest()
-           : base("On finally property getter weaving possibilities", "PropertyGetWeavingOnFinally", "PropertyGetWeaving")
+       public Part4Sample1BeforePropertySetPossibilityTest()
+         : base("Before Property Setter possibilities", "PropertySetWeavingBefore", "PropertySetWeaving")
       {
       }
+
 
       public class MyInt
         {
@@ -25,8 +26,9 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
             [Log]
             public int Value
             {
-                get { return value; }
+                set { this.value = value; }
             }
+
             public int DivideBy(int v)
             {
                 return value / v;
@@ -37,9 +39,9 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
         {
             return () =>
                 {
-                      var myInt = new MyInt(24);
-                      var val = myInt.Value;
-                      Assert.True(LogAttribute.Called);
+                    var myInt = new MyInt(24);
+                    myInt.Value = 32;
+                    Assert.True(LogAttribute.Called);
                 };
         }
         
@@ -49,11 +51,12 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
             public bool NetAspectAttribute = true;
            public static bool Called;
 
-           public void OnFinallyPropertyGetMethod(object instance, PropertyInfo property)
+           public void BeforePropertySetMethod(object instance, PropertyInfo property, int value)
            {
-              Called = true;
+                Called = true;
                 Assert.AreEqual(typeof(MyInt), instance.GetType());
                 Assert.AreEqual("Value", property.Name);
+               Assert.AreEqual(32, value);
             }
         }
     }

@@ -6,10 +6,10 @@ using NetAspect.Weaver.Tests.unit;
 
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
 {
-   public class Part3Sample3OnExceptionPropertyGetPossibilityTest : NetAspectTest<Part3Sample3OnExceptionPropertyGetPossibilityTest.MyInt>
+   public class Part4Sample3OnExceptionPropertySetPossibilityTest : NetAspectTest<Part4Sample3OnExceptionPropertySetPossibilityTest.MyInt>
     {
-       public Part3Sample3OnExceptionPropertyGetPossibilityTest()
-         : base("On exception property get weaving possibilities", "PropertyGetWeavingOnException", "PropertyGetWeaving")
+       public Part4Sample3OnExceptionPropertySetPossibilityTest()
+         : base("On exception property set weaving possibilities", "PropertySetWeavingOnException", "PropertySetWeaving")
       {
       }
 
@@ -25,11 +25,11 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
             [Log]
             public int Value
             {
-                get
+                set
                 {
                     if (value == 0)
                         throw new NotSupportedException("Must not be 0");
-                    return value; 
+                    this.value = value; 
                 }
             }
             public int DivideBy(int v)
@@ -46,7 +46,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
                    {
 
                       var myInt = new MyInt(0);
-                      var val = myInt.Value;
+                      myInt.Value = 0;
                       Assert.Fail("Must raise an exception");
                    }
                    catch (NotSupportedException)
@@ -62,7 +62,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
             public bool NetAspectAttribute = true;
            public static bool Called;
 
-           public void OnExceptionPropertyGetMethod(object instance, PropertyInfo property, Exception exception)
+           public void OnExceptionPropertySetMethod(object instance, PropertyInfo property, Exception exception)
            {
               Called = true;
                 Assert.AreEqual(typeof(MyInt), instance.GetType());

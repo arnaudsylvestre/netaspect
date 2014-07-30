@@ -37,7 +37,7 @@
 $event.Sample.AspectCode
 
 // The class to weave
-$event.Sample.ClassToWeave
+$event.Sample.ClassToWeaveCode
 
 // The code which will call our aspect
 $event.Sample.CallCode

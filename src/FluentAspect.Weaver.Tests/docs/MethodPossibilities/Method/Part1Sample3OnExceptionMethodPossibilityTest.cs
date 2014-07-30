@@ -43,11 +43,11 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
                       var myInt = new MyInt(24);
                       myInt.DivideBy(0);
                       Assert.Fail("Must raise an exception");
-                      Assert.True(LogAttribute.Called);
                    }
-                   catch (Exception)
+                   catch (DivideByZeroException)
                    {
                    }
+                   Assert.True(LogAttribute.Called);
                 };
         }
         

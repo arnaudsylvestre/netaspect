@@ -227,6 +227,30 @@ public class LogAttribute : Attribute
 }
 
 
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
 // The code which will call our aspect
 {
 	var myInt = new MyInt (24);
@@ -270,6 +294,30 @@ public class LogAttribute : Attribute
 		Assert.AreEqual (1, parameters.Length);
 		Assert.AreEqual (12, v);
 		Assert.AreEqual (2, result);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
 	}
 }
 
@@ -321,16 +369,40 @@ public class LogAttribute : Attribute
 }
 
 
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
 // The code which will call our aspect
 {
 	try {
 		var myInt = new MyInt (24);
 		myInt.DivideBy (0);
 		Assert.Fail ("Must raise an exception");
-		Assert.True (LogAttribute.Called);
 	}
-	catch (Exception) {
+	catch (DivideByZeroException) {
 	}
+	Assert.True (LogAttribute.Called);
 }
 </pre>
                 </div>
@@ -367,6 +439,30 @@ public class LogAttribute : Attribute
 		Assert.AreEqual ("DivideBy", method.Name);
 		Assert.AreEqual (1, parameters.Length);
 		Assert.AreEqual (12, v);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
 	}
 }
 
@@ -431,10 +527,33 @@ public class LogAttribute : Attribute
 }
 
 
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	[Log]
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
 // The code which will call our aspect
 {
 	var myInt = new MyInt (24);
-	Assert.AreEqual (2, myInt.DivideBy (12));
 	Assert.True (LogAttribute.Called);
 }
 </pre>
@@ -472,6 +591,30 @@ public class LogAttribute : Attribute
 		Assert.AreEqual (".ctor", constructor.Name);
 		Assert.AreEqual (1, parameters.Length);
 		Assert.AreEqual (24, value);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	[Log]
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
 	}
 }
 
@@ -518,7 +661,33 @@ public class LogAttribute : Attribute
 		Assert.AreEqual (".ctor", constructor.Name);
 		Assert.AreEqual (1, parameters.Length);
 		Assert.AreEqual (0, value);
-		Assert.AreEqual ("DivideByZeroException", exception.GetType ().Name);
+		Assert.AreEqual ("NotSupportedException", exception.GetType ().Name);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	[Log]
+	public MyInt (int value)
+	{
+		if (value == 0)
+			throw new NotSupportedException ();
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
 	}
 }
 
@@ -529,7 +698,7 @@ public class LogAttribute : Attribute
 		new MyInt (0);
 		Assert.Fail ("Must raise an exception");
 	}
-	catch (Exception) {
+	catch (NotSupportedException) {
 	}
 	Assert.True (LogAttribute.Called);
 }
@@ -545,7 +714,7 @@ public class LogAttribute : Attribute
             </div>
             <div id="ConstructorWeavingOnFinally" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <p>The <b>OnFinallyConstructor</b> method is called after the method is executed when an constructor occured or not. The available parameters are :</p>
+                    <p>The <b>OnFinallyConstructor</b> method is called after the constructor is executed when an exception occured or not. The available parameters are :</p>
             <ul>
                <li><b>instance</b> : The instance</li>
                <li><b>constructor</b> : The constructor</li>
@@ -572,10 +741,610 @@ public class LogAttribute : Attribute
 }
 
 
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	[Log]
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
 // The code which will call our aspect
 {
 	var myInt = new MyInt (24);
 	myInt.DivideBy (12);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+<!-- 
+================================================	  
+	  PropertyGetWeaving possibilities
+================================================
+	  -->
+
+	<h4 id="dropdowns-example">On properties (For getter)</h4>
+            <p>These aspects are called when the aspect is put on a <b>property</b></p>
+			
+<div class="panel-group" id="GroupPropertyGetWeaving">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#PropertyGetWeavingBefore">Before Property Getter possibilities</a>
+                </h4>
+            </div>
+            <div id="PropertyGetWeavingBefore" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>BeforePropertyGetMethod</b> method is called before the get method of the property is executed. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+               <li><b>property</b> : The property</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void BeforePropertyGetMethod (object instance, PropertyInfo property)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (24, myInt.Value);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#PropertyGetWeavingAfter">After Property Getter Weaving possibilities</a>
+                </h4>
+            </div>
+            <div id="PropertyGetWeavingAfter" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>AfterPropertyGetMethod</b> method is called after the get method of the property is executed. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+               <li><b>property</b> : The property</li>
+               <li><b>result</b> : The result</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void AfterPropertyGetMethod (object instance, PropertyInfo property, int result)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (24, result);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (24, myInt.Value);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#PropertyGetWeavingOnException">On exception property get weaving possibilities</a>
+                </h4>
+            </div>
+            <div id="PropertyGetWeavingOnException" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnExceptionPropertyGetMethod</b> method is called when an exception occured in the get method of the property. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+               <li><b>property</b> : The property</li>
+               <li><b>exception</b> : The exception raised</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void OnExceptionPropertyGetMethod (object instance, PropertyInfo property, Exception exception)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual ("NotSupportedException", exception.GetType ().Name);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		get {
+			if (value == 0)
+				throw new NotSupportedException ("Must not be 0");
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	try {
+		var myInt = new MyInt (0);
+		var val = myInt.Value;
+		Assert.Fail ("Must raise an exception");
+	}
+	catch (NotSupportedException) {
+	}
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#PropertyGetWeavingOnFinally">On finally property getter weaving possibilities</a>
+                </h4>
+            </div>
+            <div id="PropertyGetWeavingOnFinally" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnFinallyPropertyGetMethod</b> method is called after the get method of the property is executed when an exception occured or not. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+               <li><b>property</b> : The property</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void OnFinallyPropertyGetMethod (object instance, PropertyInfo property)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	var val = myInt.Value;
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+<!-- 
+================================================	  
+	  PropertySetWeaving possibilities
+================================================
+	  -->
+
+	<h4 id="dropdowns-example">On properties (For setter)</h4>
+            <p>These aspects are called when the aspect is put on a <b>property</b></p>
+			
+<div class="panel-group" id="GroupPropertySetWeaving">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#PropertySetWeavingBefore">Before Property Setter possibilities</a>
+                </h4>
+            </div>
+            <div id="PropertySetWeavingBefore" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>BeforePropertySetMethod</b> method is called before the set method of the property is executed. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+               <li><b>property</b> : The property</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void BeforePropertySetMethod (object instance, PropertyInfo property, int value)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (32, value);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		set {
+			this.value = value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	myInt.Value = 32;
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#PropertySetWeavingAfter">After Property Setter Weaving possibilities</a>
+                </h4>
+            </div>
+            <div id="PropertySetWeavingAfter" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>AfterPropertySetMethod</b> method is called after the set method of the property is executed. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+               <li><b>property</b> : The property</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void AfterPropertySetMethod (object instance, PropertyInfo property, int value)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (32, value);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		set {
+			this.value = value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	myInt.Value = 32;
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#PropertySetWeavingOnException">On exception property set weaving possibilities</a>
+                </h4>
+            </div>
+            <div id="PropertySetWeavingOnException" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnExceptionPropertySetMethod</b> method is called when an exception occured in the set method of the property. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+               <li><b>property</b> : The property</li>
+               <li><b>exception</b> : The exception raised</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void OnExceptionPropertySetMethod (object instance, PropertyInfo property, Exception exception)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual ("NotSupportedException", exception.GetType ().Name);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		set {
+			if (value == 0)
+				throw new NotSupportedException ("Must not be 0");
+			this.value = value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	try {
+		var myInt = new MyInt (0);
+		myInt.Value = 0;
+		Assert.Fail ("Must raise an exception");
+	}
+	catch (NotSupportedException) {
+	}
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#PropertySetWeavingOnFinally">On finally property setter weaving possibilities</a>
+                </h4>
+            </div>
+            <div id="PropertySetWeavingOnFinally" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnFinallyPropertySetMethod</b> method is called after the set method of the property is executed when an exception occured or not. The available parameters are :</p>
+            <ul>
+               <li><b>instance</b> : The instance</li>
+               <li><b>property</b> : The property</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public bool NetAspectAttribute = true;
+
+	public static bool Called;
+
+	public void OnFinallyPropertySetMethod (object instance, PropertyInfo property, int value)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (12, value);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		set {
+			this.value = value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var myInt = new MyInt (24);
+	myInt.Value = 12;
 	Assert.True (LogAttribute.Called);
 }
 </pre>
