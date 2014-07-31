@@ -71,6 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="docs\InstructionWeavingForDocTest.cs" />
+    <Compile Include="docs\MethodPossibilities\InstructionWeaving\Fields\Part5Sample3BeforeInstructionSetFieldPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\InstructionWeaving\Fields\Part5Sample2AfterInstructionGetFieldPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\InstructionWeaving\Fields\Part5Sample1BeforeInstructionGetFieldPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\MethodWeaving\Constructor\Part2Sample1BeforeConstructorPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\MethodWeaving\Constructor\Part2Sample2AfterConstructorPossibilityTest.cs" />

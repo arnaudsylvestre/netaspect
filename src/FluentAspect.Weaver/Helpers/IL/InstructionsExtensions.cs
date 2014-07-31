@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
@@ -18,27 +19,30 @@ namespace NetAspect.Weaver.Helpers.IL
                                                  ModuleDefinition module)
        {
           instructions.Add(Instruction.Create(OpCodes.Ldstr, fieldName));
+          instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 60));
           instructions.Add(Instruction.Create(OpCodes.Callvirt,
                                               module.Import(typeof(Type).GetMethod("GetField",
-                                                                                    new[] { typeof(string) }))));
+                                                                                    new[] { typeof(string), typeof(BindingFlags) }))));
        }
 
        public static void AppendCallToGetMethod(this List<Instruction> instructions, string methodName,
                                                  ModuleDefinition module)
        {
           instructions.Add(Instruction.Create(OpCodes.Ldstr, methodName));
+          instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 60));
           instructions.Add(Instruction.Create(OpCodes.Callvirt,
                                               module.Import(typeof(Type).GetMethod("GetMethod",
-                                                                                    new[] { typeof(string) }))));
+                                                                                    new[] { typeof(string), typeof(BindingFlags) }))));
        }
 
         public static void AppendCallToGetProperty(this List<Instruction> instructions, string propertyName,
                                                    ModuleDefinition module)
         {
-            instructions.Add(Instruction.Create(OpCodes.Ldstr, propertyName));
+           instructions.Add(Instruction.Create(OpCodes.Ldstr, propertyName));
+           instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 60));
             instructions.Add(Instruction.Create(OpCodes.Callvirt,
                                                 module.Import(typeof (Type).GetMethod("GetProperty",
-                                                                                      new[] {typeof (string)}))));
+                                                                                      new[] { typeof(string), typeof(BindingFlags) }))));
         }
 
         public static void AppendSaveResultTo(this List<Instruction> instructions, VariableDefinition variable)

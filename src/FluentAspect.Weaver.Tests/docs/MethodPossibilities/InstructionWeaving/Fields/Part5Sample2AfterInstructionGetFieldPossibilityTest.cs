@@ -6,12 +6,12 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fields
 {
-    public class Part5Sample1BeforeInstructionGetFieldPossibilityTest :
-        NetAspectTest<Part5Sample1BeforeInstructionGetFieldPossibilityTest.MyInt>
+    public class Part5Sample2AfterInstructionGetFieldPossibilityTest :
+        NetAspectTest<Part5Sample2AfterInstructionGetFieldPossibilityTest.MyInt>
     {
 
-        public Part5Sample1BeforeInstructionGetFieldPossibilityTest()
-            : base("Instruction which get field value Weaving possibilities", "GetFieldInstructionWeavingBefore", "InstructionGetFieldWeaving")
+       public Part5Sample2AfterInstructionGetFieldPossibilityTest()
+            : base("Instruction which get field value after weaving possibilities", "GetFieldInstructionWeavingAfter", "InstructionGetFieldWeaving")
       {
       }
 
@@ -46,7 +46,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
             public static bool Called;
             public bool NetAspectAttribute = true;
 
-            public void BeforeGetField(int callerv, MyInt caller, MyInt called,
+            public void AfterGetField(int callerv, MyInt caller, MyInt called,
                int columnNumber, int lineNumber,
                string fileName, string filePath,
                object[] callerParameters, MethodBase callerMethod, FieldInfo field)
@@ -56,7 +56,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
                Assert.NotNull(caller);
                Assert.AreEqual(15, columnNumber);
                Assert.AreEqual(40, lineNumber);
-               Assert.AreEqual("Part5Sample1BeforeInstructionGetFieldPossibilityTest.cs", fileName);
+               Assert.AreEqual("Part5Sample2AfterInstructionGetFieldPossibilityTest.cs", fileName);
                Assert.AreEqual(fileName, Path.GetFileName(filePath));
                Assert.AreEqual(1, callerParameters.Length);
                Assert.AreEqual("DivideBy", callerMethod.Name);

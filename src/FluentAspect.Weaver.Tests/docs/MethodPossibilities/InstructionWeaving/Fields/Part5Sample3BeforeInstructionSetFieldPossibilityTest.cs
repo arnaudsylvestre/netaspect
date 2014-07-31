@@ -6,12 +6,12 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fields
 {
-    public class Part5Sample1BeforeInstructionGetFieldPossibilityTest :
-        NetAspectTest<Part5Sample1BeforeInstructionGetFieldPossibilityTest.MyInt>
+    public class Part5Sample3BeforeInstructionSetFieldPossibilityTest :
+        NetAspectTest<Part5Sample3BeforeInstructionSetFieldPossibilityTest.MyInt>
     {
 
-        public Part5Sample1BeforeInstructionGetFieldPossibilityTest()
-            : base("Instruction which get field value Weaving possibilities", "GetFieldInstructionWeavingBefore", "InstructionGetFieldWeaving")
+       public Part5Sample3BeforeInstructionSetFieldPossibilityTest()
+            : base("Instruction which set field value before Weaving possibilities", "SetFieldInstructionWeavingBefore", "InstructionSetFieldWeaving")
       {
       }
 
@@ -19,8 +19,8 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
         {
             return () =>
                 {
-                   var classToWeave_L = new MyInt(12);
-                    classToWeave_L.DivideBy(6);
+                   var classToWeave_L = new MyInt();
+                    classToWeave_L.UpdateValue(6);
                     Assert.True(LogAttribute.Called);
                 };
         }
@@ -30,9 +30,9 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
            [Log]
            int value;
 
-           public MyInt(int value)
+           public void UpdateValue(int intValue)
            {
-              this.value = value;
+              value = intValue;
            }
 
            public int DivideBy(int v)
@@ -46,7 +46,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
             public static bool Called;
             public bool NetAspectAttribute = true;
 
-            public void BeforeGetField(int callerv, MyInt caller, MyInt called,
+            public void BeforeUpdateField(int callerIntValue, MyInt caller, MyInt called,
                int columnNumber, int lineNumber,
                string fileName, string filePath,
                object[] callerParameters, MethodBase callerMethod, FieldInfo field)
@@ -55,13 +55,13 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
                Assert.AreEqual(caller, called);
                Assert.NotNull(caller);
                Assert.AreEqual(15, columnNumber);
-               Assert.AreEqual(40, lineNumber);
-               Assert.AreEqual("Part5Sample1BeforeInstructionGetFieldPossibilityTest.cs", fileName);
+               Assert.AreEqual(35, lineNumber);
+               Assert.AreEqual("Part5Sample3BeforeInstructionSetFieldPossibilityTest.cs", fileName);
                Assert.AreEqual(fileName, Path.GetFileName(filePath));
                Assert.AreEqual(1, callerParameters.Length);
-               Assert.AreEqual("DivideBy", callerMethod.Name);
+               Assert.AreEqual("UpdateValue", callerMethod.Name);
                Assert.AreEqual("value", field.Name);
-               Assert.AreEqual(6, callerv);
+               Assert.AreEqual(6, callerIntValue);
             }
         }
     }
