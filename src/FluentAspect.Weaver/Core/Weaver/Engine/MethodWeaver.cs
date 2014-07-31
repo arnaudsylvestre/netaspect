@@ -47,7 +47,6 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                v.Weave(aroundInstructionIl, variablesForInstruction);
                ils.Add(aroundInstructionIl);
             }
-            instructionIl.Before.AddRange(variablesForInstruction.calledInstructions);
             instructionIl.Before.AddRange(variablesForInstruction.calledParametersInstructions);
             instructionIl.Before.AddRange(variablesForInstruction.calledParametersObjectInstructions);
             availableVariables.BeforeInstructions.AddRange(variablesForInstruction.BeforeInstructions);

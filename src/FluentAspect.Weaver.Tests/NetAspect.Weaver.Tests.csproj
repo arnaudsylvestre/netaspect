@@ -71,9 +71,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="docs\InstructionWeavingForDocTest.cs" />
+    <Compile Include="docs\MethodPossibilities\InstructionWeaving\Properties\Part5Sample1BeforeInstructionGetFieldPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\InstructionWeaving\Properties\Part5Sample2AfterInstructionGetFieldPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\InstructionWeaving\Properties\Part5Sample3BeforeInstructionSetFieldPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\InstructionWeaving\Properties\Part5Sample4AfterInstructionSetFieldPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\InstructionWeaving\Fields\Part5Sample4AfterInstructionSetFieldPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\InstructionWeaving\Fields\Part5Sample3BeforeInstructionSetFieldPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\InstructionWeaving\Fields\Part5Sample2AfterInstructionGetFieldPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\InstructionWeaving\Fields\Part5Sample1BeforeInstructionGetFieldPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\InstructionWeaving\Methods\Part6Sample2AfterInstructionCallMethodPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\InstructionWeaving\Methods\Part6Sample1BeforeInstructionCallMethodPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\MethodWeaving\Constructor\Part2Sample1BeforeConstructorPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\MethodWeaving\Constructor\Part2Sample2AfterConstructorPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\MethodWeaving\Constructor\Part2Sample3OnExceptionConstructorPossibilityTest.cs" />

@@ -11,7 +11,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
     {
 
         public Part5Sample1BeforeInstructionGetFieldPossibilityTest()
-            : base("Instruction which get field value Weaving possibilities", "GetFieldInstructionWeavingBefore", "InstructionGetFieldWeaving")
+            : base("Instruction which get field value Weaving possibilities", "GetFieldInstructionWeavingBefore", "InstructionFieldWeaving")
       {
       }
 

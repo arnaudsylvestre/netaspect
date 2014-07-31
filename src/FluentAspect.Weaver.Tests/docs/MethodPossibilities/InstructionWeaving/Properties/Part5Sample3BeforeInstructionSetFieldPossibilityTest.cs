@@ -6,12 +6,12 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fields
 {
-    public class Part5Sample3BeforeInstructionSetFieldPossibilityTest :
-        NetAspectTest<Part5Sample3BeforeInstructionSetFieldPossibilityTest.MyInt>
+    public class Part7Sample3BeforeInstructionSetPropertyPossibilityTest :
+        NetAspectTest<Part7Sample3BeforeInstructionSetPropertyPossibilityTest.MyInt>
     {
 
-       public Part5Sample3BeforeInstructionSetFieldPossibilityTest()
-            : base("Instruction which set field value before Weaving possibilities", "SetFieldInstructionWeavingBefore", "InstructionFieldWeaving")
+        public Part7Sample3BeforeInstructionSetPropertyPossibilityTest()
+            : base("Instruction which set property value before Weaving possibilities", "SetPropertyInstructionWeavingBefore", "InstructionPropertyWeaving")
       {
       }
 
@@ -27,17 +27,17 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
 
         public class MyInt
         {
-           [Log]
-           int value;
+            [Log]
+            int Value { get; set; }
 
            public void UpdateValue(int intValue)
            {
-              value = intValue;
+              Value = intValue;
            }
 
            public int DivideBy(int v)
            {
-              return value / v;
+              return Value / v;
            }
         }
 
@@ -46,21 +46,21 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
             public static bool Called;
             public bool NetAspectAttribute = true;
 
-            public void BeforeUpdateField(int callerIntValue, MyInt caller, MyInt called,
+            public void BeforeUpdateProperty(int callerIntValue, MyInt caller, MyInt called,
                int columnNumber, int lineNumber,
                string fileName, string filePath,
-               object[] callerParameters, MethodBase callerMethod, FieldInfo field)
+               object[] callerParameters, MethodBase callerMethod, PropertyInfo property)
             {
                Called = true;
                Assert.AreEqual(caller, called);
                Assert.NotNull(caller);
                Assert.AreEqual(15, columnNumber);
                Assert.AreEqual(35, lineNumber);
-               Assert.AreEqual("Part5Sample3BeforeInstructionSetFieldPossibilityTest.cs", fileName);
+               Assert.AreEqual("Part7Sample3BeforeInstructionSetPropertyPossibilityTest.cs", fileName);
                Assert.AreEqual(fileName, Path.GetFileName(filePath));
                Assert.AreEqual(1, callerParameters.Length);
                Assert.AreEqual("UpdateValue", callerMethod.Name);
-               Assert.AreEqual("value", field.Name);
+               Assert.AreEqual("Value", property.Name);
                Assert.AreEqual(6, callerIntValue);
             }
         }

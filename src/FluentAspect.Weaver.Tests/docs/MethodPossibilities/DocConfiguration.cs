@@ -47,8 +47,8 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
 
 
 
-   [PossibilityDocumentation("InstructionGetFieldWeaving", "PossibilityDescription", "On fields", "InstructionWeaving")]
-   [PossibilityDocumentation("InstructionSetFieldWeaving", "PossibilityDescription", "On fields", "InstructionWeaving")]
+    [PossibilityDocumentation("InstructionFieldWeaving", "PossibilityDescription", "On fields", "InstructionWeaving")]
+    [PossibilityDocumentation("InstructionMethodWeaving", "PossibilityDescription", "On methods", "InstructionWeaving")]
    // [PossibilityDocumentation("InstructionMethodWeaving", "PossibilityDescription", "On methods", "InstructionWeaving")]
    //[PossibilityDocumentation("InstructionConstructorWeaving", "PossibilityDescription", "On constructors", "InstructionWeaving")]
    //[PossibilityDocumentation("InstructionPropertyGetWeaving", "PossibilityDescription", "On properties (For getter)", "InstructionWeaving")]
@@ -58,7 +58,10 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
     [InterceptorDescription("BeforeGetField", "before an instruction get the value of a field")]
    [InterceptorDescription("AfterGetField", "after an instruction get the value of a field")]
    [InterceptorDescription("BeforeUpdateField", "before an instruction set the value of a field")]
-   [InterceptorDescription("AfterUpdateField", "after an instruction set the value of a field")]
+    [InterceptorDescription("AfterUpdateField", "after an instruction set the value of a field")]
+
+    [InterceptorDescription("BeforeCallMethod", "before an instruction call a method")]
+    [InterceptorDescription("AfterCallMethod", "after an instruction call a method")]
 
 
     [ParameterDescription("caller", "The caller", "InstructionWeaving")]

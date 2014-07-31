@@ -6,11 +6,11 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fields
 {
-    public class Part5Sample2AfterInstructionGetFieldPossibilityTest :
-        NetAspectTest<Part5Sample2AfterInstructionGetFieldPossibilityTest.MyInt>
+    public class Part7Sample2AfterInstructionGetPropertyPossibilityTest :
+        NetAspectTest<Part7Sample2AfterInstructionGetPropertyPossibilityTest.MyInt>
     {
 
-       public Part5Sample2AfterInstructionGetFieldPossibilityTest()
+        public Part7Sample2AfterInstructionGetPropertyPossibilityTest()
             : base("Instruction which get field value after weaving possibilities", "GetFieldInstructionWeavingAfter", "InstructionFieldWeaving")
       {
       }
@@ -27,8 +27,8 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
 
         public class MyInt
         {
-           [Log]
-           int value;
+            [Log]
+            int value { get; set; }
 
            public MyInt(int value)
            {
@@ -49,18 +49,18 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
             public void AfterGetField(int callerv, MyInt caller, MyInt called,
                int columnNumber, int lineNumber,
                string fileName, string filePath,
-               object[] callerParameters, MethodBase callerMethod, FieldInfo field)
+               object[] callerParameters, MethodBase callerMethod, PropertyInfo property)
             {
                Called = true;
                Assert.AreEqual(caller, called);
                Assert.NotNull(caller);
                Assert.AreEqual(15, columnNumber);
                Assert.AreEqual(40, lineNumber);
-               Assert.AreEqual("Part5Sample2AfterInstructionGetFieldPossibilityTest.cs", fileName);
+               Assert.AreEqual("Part7Sample2AfterInstructionGetPropertyPossibilityTest.cs", fileName);
                Assert.AreEqual(fileName, Path.GetFileName(filePath));
                Assert.AreEqual(1, callerParameters.Length);
                Assert.AreEqual("DivideBy", callerMethod.Name);
-               Assert.AreEqual("value", field.Name);
+               Assert.AreEqual("Value", property.Name);
                Assert.AreEqual(6, callerv);
             }
         }
