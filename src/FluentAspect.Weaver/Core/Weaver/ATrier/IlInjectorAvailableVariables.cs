@@ -161,9 +161,9 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             {
                _calledParameters = new Dictionary<string, VariableDefinition>();
                var calledMethod = Instruction.GetCalledMethod();
-               var fieldType = (Instruction.Operand as FieldReference).Resolve().FieldType;
-               var variableDefinition = new VariableDefinition(fieldType);
-               calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+               //var fieldType = (Instruction.Operand as FieldReference).Resolve().FieldType;
+               //var variableDefinition = new VariableDefinition(fieldType);
+               //calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
                foreach (var parameter in calledMethod.Parameters.Reverse())
                {
                   var variableDefinition = new VariableDefinition(parameter.ParameterType);

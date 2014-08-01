@@ -8,6 +8,10 @@
             </ul>
             <p>For each of these behaviors, we can get some information about the weaved method by adding some parameters to the aspect method :</p>
             <ul>
+#foreach ($parameter in $document.AvailableParameters)
+               <li><b>$parameter.Name</b> : $parameter.Description</li>
+#end
+
                <li><b>instance</b> : the <i>this</i> of the weaved method.</li>
                <li><b>method</b> : the MethodInfo of the weaved method (in our case Divide)</li>
                <li><b>property</b> : the PropertyInfo of the property if the aspect is put on a property</li>

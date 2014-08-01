@@ -1,4 +1,6 @@
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
+using NetAspect.Weaver.Tests.docs.MethodPossibilities.Before;
+
+namespace NetAspect.Weaver.Tests.docs.MethodPossibilities
 {
    [ParameterDescription("instance", "The instance", "MethodWeaving")]
    [ParameterDescription("method", "The method", "MethodWeaving")]
@@ -49,10 +51,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
 
     [PossibilityDocumentation("InstructionFieldWeaving", "PossibilityDescription", "On fields", "InstructionWeaving")]
     [PossibilityDocumentation("InstructionMethodWeaving", "PossibilityDescription", "On methods", "InstructionWeaving")]
-   // [PossibilityDocumentation("InstructionMethodWeaving", "PossibilityDescription", "On methods", "InstructionWeaving")]
-   //[PossibilityDocumentation("InstructionConstructorWeaving", "PossibilityDescription", "On constructors", "InstructionWeaving")]
-   //[PossibilityDocumentation("InstructionPropertyGetWeaving", "PossibilityDescription", "On properties (For getter)", "InstructionWeaving")]
-   //[PossibilityDocumentation("InstructionPropertySetWeaving", "PossibilityDescription", "On properties (For setter)", "InstructionWeaving")]
+    [PossibilityDocumentation("InstructionPropertyWeaving", "PossibilityDescription", "On properties", "InstructionWeaving")]
 
 
     [InterceptorDescription("BeforeGetField", "before an instruction get the value of a field")]
@@ -62,6 +61,12 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
 
     [InterceptorDescription("BeforeCallMethod", "before an instruction call a method")]
     [InterceptorDescription("AfterCallMethod", "after an instruction call a method")]
+
+    [InterceptorDescription("BeforeGetProperty", "before an instruction get the value of a property")]
+    [InterceptorDescription("AfterGetProperty", "after an instruction get the value of a property")]
+    [InterceptorDescription("BeforeSetProperty", "before an instruction set the value of a property")]
+    [InterceptorDescription("AfterSetProperty", "after an instruction set the value of a property")]
+
 
 
     [ParameterDescription("caller", "The caller", "InstructionWeaving")]

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using NUnit.Framework;
 using NetAspect.Doc.Builder.Tests.Resources;
 
@@ -87,6 +88,11 @@ namespace NetAspect.Doc.Builder.Tests
                    Description = parameterDescription_L.Description
                 });
              }
+              possibility_L.AvailableParameters.AddRange(from p in documentationFromTest_P.Parameters select new Parameter()
+                  {
+                      Description = p.Description,
+                      Name = p.Name,
+                  });
              possibility_L.Events.Add(possibilityEvent_L);
           }
        }

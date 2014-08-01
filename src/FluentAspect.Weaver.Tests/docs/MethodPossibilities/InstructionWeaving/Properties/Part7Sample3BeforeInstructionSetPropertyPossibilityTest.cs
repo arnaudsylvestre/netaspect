@@ -4,14 +4,14 @@ using System.Reflection;
 using NetAspect.Weaver.Tests.unit;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fields
+namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Properties
 {
-    public class Part7Sample1BeforeInstructionGetPropertyPossibilityTest :
-        NetAspectTest<Part7Sample1BeforeInstructionGetPropertyPossibilityTest.MyInt>
+    public class Part7Sample3BeforeInstructionSetPropertyPossibilityTest :
+        NetAspectTest<Part7Sample3BeforeInstructionSetPropertyPossibilityTest.MyInt>
     {
 
-        public Part7Sample1BeforeInstructionGetPropertyPossibilityTest()
-            : base("Instruction which get property value Weaving possibilities", "GetPropertyInstructionWeavingBefore", "InstructionPropertyWeaving")
+        public Part7Sample3BeforeInstructionSetPropertyPossibilityTest()
+            : base("Instruction which set property value before Weaving possibilities", "SetPropertyInstructionWeavingBefore", "InstructionPropertyWeaving")
       {
       }
 
@@ -19,20 +19,20 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
         {
             return () =>
                 {
-                   var classToWeave_L = new MyInt(12);
-                    classToWeave_L.DivideBy(6);
+                   var classToWeave_L = new MyInt();
+                    classToWeave_L.UpdateValue(6);
                     Assert.True(LogAttribute.Called);
                 };
         }
 
         public class MyInt
         {
-           [Log]
-           int Value { get; set; }
+            [Log]
+            int Value { get; set; }
 
-           public MyInt(int value)
+           public void UpdateValue(int intValue)
            {
-              this.Value = value;
+              Value = intValue;
            }
 
            public int DivideBy(int v)
@@ -46,7 +46,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
             public static bool Called;
             public bool NetAspectAttribute = true;
 
-            public void BeforeGetProperty(int callerv, MyInt caller, MyInt called,
+            public void BeforeSetProperty(int callerIntValue, MyInt caller, MyInt called,
                int columnNumber, int lineNumber,
                string fileName, string filePath,
                object[] callerParameters, MethodBase callerMethod, PropertyInfo property)
@@ -55,13 +55,13 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
                Assert.AreEqual(caller, called);
                Assert.NotNull(caller);
                Assert.AreEqual(15, columnNumber);
-               Assert.AreEqual(40, lineNumber);
-               Assert.AreEqual("Part5Sample1BeforeInstructionGetFieldPossibilityTest.cs", fileName);
+               Assert.AreEqual(35, lineNumber);
+               Assert.AreEqual("Part7Sample3BeforeInstructionSetPropertyPossibilityTest.cs", fileName);
                Assert.AreEqual(fileName, Path.GetFileName(filePath));
                Assert.AreEqual(1, callerParameters.Length);
-               Assert.AreEqual("DivideBy", callerMethod.Name);
+               Assert.AreEqual("UpdateValue", callerMethod.Name);
                Assert.AreEqual("Value", property.Name);
-               Assert.AreEqual(6, callerv);
+               Assert.AreEqual(6, callerIntValue);
             }
         }
     }

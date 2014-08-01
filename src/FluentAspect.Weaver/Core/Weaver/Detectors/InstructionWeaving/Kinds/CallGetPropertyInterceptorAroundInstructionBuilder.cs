@@ -13,6 +13,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds
             weavingInfo_P.AddCaller(parametersIlGenerator_P);
             weavingInfo_P.AddCallerParameters(parametersIlGenerator_P);
             weavingInfo_P.AddCallerParameterNames(parametersIlGenerator_P);
+            weavingInfo_P.AddCallerMethod(parametersIlGenerator_P);
 
             weavingInfo_P.AddColumnNumber(parametersIlGenerator_P);
             weavingInfo_P.AddLineNumber(parametersIlGenerator_P);

@@ -1,10 +1,9 @@
 using System;
 using System.Reflection;
-using NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.Called;
 using NUnit.Framework;
 using NetAspect.Weaver.Tests.unit;
 
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
+namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.PropertySet
 {
    public class Part4Sample2AfterPropertySetPossibilityTest : NetAspectTest<Part4Sample2AfterPropertySetPossibilityTest.MyInt>
     {

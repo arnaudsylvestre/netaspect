@@ -70,7 +70,7 @@ namespace NetAspect.Doc.Builder
                 {
                     return Possibilities.Where(p => p.Group == "MethodWeaving").ToList();
                 }
-            } 
+            }
 
             public List<Possibility> Possibilities { get; set; }
         }
@@ -82,8 +82,6 @@ namespace NetAspect.Doc.Builder
         {
             documentation.Header = Content.Header;
             documentation.Basics = Content.Basics;
-            documentation.MethodWeaving = Content.MethodWeaving;
-            documentation.InstructionWeaving = Content.InstructionWeaving;
         }
 
 
@@ -100,6 +98,8 @@ namespace NetAspect.Doc.Builder
             var context = new VelocityContext(hashtable);
             var props = new ExtendedProperties();
             velocity.Init(props);
+            documentation.MethodWeaving = BuildMethodWeavingPossibilities(velocity, context, Content.MethodWeaving);
+            documentation.InstructionWeaving = BuildMethodWeavingPossibilities(velocity, context, Content.InstructionWeaving);
             documentation.MethodWeavingPossibilities = BuildMethodWeavingPossibilities(velocity, context, Templates.Templates.WeavingPossibilities);
             documentation.InstructionWeavingPossibilities = BuildMethodWeavingPossibilities(velocity, context, Templates.Templates.InstructionWeavingPossibilities);
 
@@ -121,11 +121,13 @@ namespace NetAspect.Doc.Builder
         public Possibility()
         {
             Events = new List<PossibilityEvent>();
+            AvailableParameters = new List<Parameter>();
         }
 
         public string Kind { get; set; }
         public string Description { get; set; }
         public List<PossibilityEvent> Events { get; set; }
+        public List<Parameter> AvailableParameters { get; set; }
 
         public string Title { get; set; }
 
