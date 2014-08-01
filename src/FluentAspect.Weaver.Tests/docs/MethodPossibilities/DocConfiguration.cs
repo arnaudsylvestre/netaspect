@@ -69,9 +69,9 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities
 
 
 
-    [ParameterDescription("caller", "The caller", "InstructionWeaving")]
-    [ParameterDescription("called", "The called", "InstructionWeaving")]
-    [ParameterDescription("field", "The field", "InstructionWeaving")]
+    [ParameterDescription("caller", "the <i>this</i> of the method which call our member", "InstructionWeaving")]
+    [ParameterDescription("called", "the <i>this</i> of our member", "InstructionWeaving")]
+    [ParameterDescription("field", "The weaved field", "InstructionWeaving")]
     [ParameterDescription("columnNumber", "The column number in the source file of the instruction", "InstructionWeaving")]
     [ParameterDescription("lineNumber", "The line number in the source file of the instruction", "InstructionWeaving")]
     [ParameterDescription("fileName", "The file name of the source file of the instruction", "InstructionWeaving")]
@@ -79,6 +79,14 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities
     [ParameterDescription("callerParameters", "The parameters of the method which contains the weaved instruction", "InstructionWeaving")]
     [ParameterDescription("callerMethod", "The method which contains the weaved instruction", "InstructionWeaving")]
     [ParameterDescription("caller + parameter name", "the value of the parameter of the method which contains the weaved instruction", "InstructionWeaving")]
+
+
+    [PossibilityDocumentation("ParameterWeaving", "PossibilityDescription", "On Parameters", "ParameterWeaving")]
+
+    [InterceptorDescription("BeforeMethodForParameter", "before the constructor is executed")]
+    [InterceptorDescription("AfterMethodForParameter", "after the constructor is executed")]
+    [InterceptorDescription("OnExceptionMethodForParameter", "when an exception occured in the constructor")]
+    [InterceptorDescription("OnFinallyMethodForParameter", "after the constructor is executed when an exception occured or not")]
 
    public class DocConfiguration
    {

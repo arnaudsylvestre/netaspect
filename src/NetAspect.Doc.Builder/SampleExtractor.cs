@@ -52,6 +52,8 @@ namespace NetAspect.Doc.Builder
    {
       public string Name { get; set; }
       public string Description { get; set; }
+
+       public string Kind { get; set; }
    }
 
 
@@ -91,6 +93,7 @@ namespace NetAspect.Doc.Builder
              {
                 Name = GetValue(arguments[0]),
                 Description = GetValue(arguments[1]),
+                Kind = GetValue(arguments[2]),
              });
           }
           if (attribute.Type.ToString().Contains("InterceptorDescription"))
@@ -108,6 +111,13 @@ namespace NetAspect.Doc.Builder
       private static string GetValue(PrimitiveExpression expression)
       {
          return expression.LiteralValue.Replace("\"", "");
+      }
+
+      public override void VisitParameterDeclaration(ParameterDeclaration parameterDeclaration)
+      {
+          if (IsWeaved(parameterDeclaration.Attributes))
+              _test.Member = "parameter";
+          base.VisitParameterDeclaration(parameterDeclaration);
       }
 
       public override void VisitPropertyDeclaration(PropertyDeclaration propertyDeclaration)

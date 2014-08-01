@@ -47,21 +47,16 @@ namespace NetAspect.Doc.Builder
             public Documentation()
             {
                 Possibilities = new List<Possibility>();
+                AvailableParameters = new List<Parameter>();
             }
+
+            public List<Parameter> AvailableParameters { get; set; }
 
             public string Header { get; set; }
             public string Footer { get; set; }
             
             public string Basics { get; set; }
-
-            public string MethodWeaving { get; set; }
-
-            public string MethodWeavingPossibilities { get; set; }
-
-            public string InstructionWeaving { get; set; }
-
-            public string InstructionWeavingPossibilities { get; set; }
-
+            
 
             public List<Possibility> InstructionWeavings { get { return Possibilities.Where(p => p.Group == "InstructionWeaving").ToList(); } }
             public List<Possibility> MethodWeavings
@@ -71,6 +66,10 @@ namespace NetAspect.Doc.Builder
                     return Possibilities.Where(p => p.Group == "MethodWeaving").ToList();
                 }
             }
+            public List<Possibility> ParameterWeavings { get { return Possibilities.Where(p => p.Group == "ParameterWeaving").ToList(); } }
+            public List<Parameter> InstructionWeavingParameters { get { return AvailableParameters.Where(p => p.Kind == "InstructionWeaving").ToList(); } }
+            public List<Parameter> MethodWeavingParameters { get { return AvailableParameters.Where(p => p.Kind == "MethodWeaving").ToList(); } }
+            public List<Parameter> ParameterWeavingParameters { get { return AvailableParameters.Where(p => p.Kind == "ParameterWeaving").ToList(); } }
 
             public List<Possibility> Possibilities { get; set; }
         }
@@ -85,9 +84,9 @@ namespace NetAspect.Doc.Builder
         }
 
 
-        public void Add(Possibility possibility)
+        public void Add(IEnumerable<Parameter> parameters)
         {
-            documentation.Possibilities.Add(possibility);
+            documentation.AvailableParameters.AddRange(parameters);
         }
 
         public void Generate(string filePath)
@@ -98,21 +97,14 @@ namespace NetAspect.Doc.Builder
             var context = new VelocityContext(hashtable);
             var props = new ExtendedProperties();
             velocity.Init(props);
-            documentation.MethodWeaving = BuildMethodWeavingPossibilities(velocity, context, Content.MethodWeaving);
-            documentation.InstructionWeaving = BuildMethodWeavingPossibilities(velocity, context, Content.InstructionWeaving);
-            documentation.MethodWeavingPossibilities = BuildMethodWeavingPossibilities(velocity, context, Templates.Templates.WeavingPossibilities);
-            documentation.InstructionWeavingPossibilities = BuildMethodWeavingPossibilities(velocity, context, Templates.Templates.InstructionWeavingPossibilities);
 
             using (var streamWriter = new StreamWriter(File.Create(filePath)))
                 velocity.Evaluate(context, streamWriter, "", Templates.Templates.Documentation);
         }
 
-        private static string BuildMethodWeavingPossibilities(VelocityEngine velocity, VelocityContext context, string template)
+        public void Add(Possibility possibility)
         {
-            var stringWriter = new StringWriter();
-            velocity.Evaluate(context, stringWriter, "", template);
-
-           return stringWriter.ToString();
+            documentation.Possibilities.Add(possibility);
         }
     }
 
@@ -157,5 +149,6 @@ namespace NetAspect.Doc.Builder
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Kind { get; set; }
     }
 }

@@ -30,7 +30,12 @@ namespace NetAspect.Doc.Builder.Tests
             {
                builder.Add(possibility);
             }
-
+             builder.Add(from p in documentationFromTest_L.Parameters select new Parameter()
+                 {
+                     Description = p.Description,
+                     Name = p.Name,
+                     Kind = p.Kind,
+                 });
              builder.Generate(baseDirectory + @"web\generated.html");
          }
 

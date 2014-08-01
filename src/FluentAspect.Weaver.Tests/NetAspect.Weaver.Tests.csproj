@@ -100,6 +100,9 @@
     <Compile Include="docs\MethodPossibilities\MethodWeaving\PropertySet\Part4Sample2AfterPropertySetPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\MethodWeaving\PropertySet\Part4Sample3OnExceptionPropertySetPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\MethodWeaving\PropertySet\Part4Sample4OnFinallyPropertySetPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\ParameterWeaving\Part8Sample4OnFinallyParameterPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\ParameterWeaving\Part8Sample3OnExceptionParameterPossibilityTest.cs" />
+    <Compile Include="docs\MethodPossibilities\ParameterWeaving\Part8Sample2AfterParameterPossibilityTest.cs" />
     <Compile Include="docs\MethodPossibilities\ParameterWeaving\Part5Sample1BeforeInstructionGetFieldPossibilityTest.cs" />
     <Compile Include="docs\ParameterDescriptionAttribute.cs" />
     <Compile Include="docs\PossibilityDocumentationAttribute.cs" />

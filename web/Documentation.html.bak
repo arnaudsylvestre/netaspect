@@ -145,24 +145,14 @@ public class MyInt
                <h1 id="dropdowns">Weaving</h1>
             </div>
 <h2 id="dropdowns">Method Weaving</h2>
-            <p>The "method weaving" will modify the code of the method to add behavior. It is possible to add behavior :</p>
+            <p>The "method weaving" will modify the code of the method to add behavior. It is possible to add behaviors :</p>
             <ul>
                <li><b>Before</b> the method is executed</li>
                <li><b>After</b> the method is executed when no exception is raised</li>
                <li><b>When exception occurs</b> in the method</li>
                <li><b>On finally</b> : at the end of the method when an exception is raised or not</li>
             </ul>
-            <p>For each of these behaviors, we can get some information about the weaved method by adding some parameters to the aspect method :</p>
-            <ul>
-               <li><b>instance</b> : the <i>this</i> of the weaved method.</li>
-               <li><b>method</b> : the MethodInfo of the weaved method (in our case Divide)</li>
-               <li><b>property</b> : the PropertyInfo of the property if the aspect is put on a property</li>
-               <li><b>parameters</b> : the parameters of the weaved method.</li>
-               <li><b>parameter name</b> : if a parameter name in the aspect method is in the weaved method so the value will be the same.</li>
-               <li><b>result</b> : the value returned by the weaved method. The type of result must be the same type as the weaved method</li>
-               <li><b>exception</b> : the exception raised in the weaved method.</b></li>
-               <li><b>value</b> : the new value of the property in a property setter</li>
-            </ul>
+            <p>For each of these behaviors, we can get some information about the weaved method by adding some parameters to the aspect method.</p>
 <input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#MethodWeavingPossibilities" value="Show possibilities">
     <!-- Collapsible Element HTML -->
     <div id="MethodWeavingPossibilities" class="collapse">
@@ -1345,27 +1335,14 @@ public class MyInt
 
     </div>
 
-<h2 id="dropdowns">Call Weaving</h2>
+			<h2 id="dropdowns">Instruction Weaving</h2>
             <h3 id="dropdowns-example">Theory in NetAspect</h3>
-            <p>The "call weaving" will modify the code of the method which call the member with the aspect. It is possible to add the following behaviors :</p>
+            <p>The "instruction weaving" will modify the code of the method which call the member with the aspect. It is possible to add behaviors :</p>
             <ul>
                <li><b>Before</b> the member is called</li>
                <li><b>After</b> the member is called</li>
             </ul>
-            <p>For each of these behaviors, we can get some information about the caller and the member called by adding some parameters to the aspect method :</p>
-            <ul>
-               <li><b>caller</b> : the <i>this</i> of the method which call our member</li>
-               <li><b>callerMethod</b> : the MethodInfo of the method which call our member</li>
-               <li><b>callerParameters</b> : the parameters of the method which call our member</li>
-               <li><b>caller + parameter name</b> : the parameter of the method which call our member</li>
-               <li><b>called</b> : the <i>this</i> of our member</li>
-               <li><b>calledParameters</b> : the parameters of our member if our member is a method</li>
-               <li><b>called + parameter name</b> : the parameter of our member if our member is a method</li>
-               <li><b>lineNumber</b> : the line number of the instruction which call our member</li>
-               <li><b>columnNumber</b> : the column number of the instruction which call our member</li>
-               <li><b>filePath</b> : the file path of the instruction which call our member</li>
-               <li><b>fileName</b> : the file name of the instruction which call our member</li>
-            </ul>
+            <p>For each of these behaviors, we can get some information about the caller and the member called by adding some parameters to the aspect method.</p>
 <input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#CallWeavingPossibilities" value="Show possibilities">
     <!-- Collapsible Element HTML -->
     <div id="CallWeavingPossibilities" class="collapse">
@@ -1394,15 +1371,15 @@ public class MyInt
                     <p>The <b>BeforeGetField</b> method is called before an instruction get the value of a field. The available parameters are :</p>
             <ul>
                <li><b>caller + parameter name</b> : the value of the parameter of the method which contains the weaved instruction</li>
-               <li><b>caller</b> : The caller</li>
-               <li><b>called</b> : The called</li>
+               <li><b>caller</b> : the <i>this</i> of the method which call our member</li>
+               <li><b>called</b> : the <i>this</i> of our member</li>
                <li><b>columnNumber</b> : The column number in the source file of the instruction</li>
                <li><b>lineNumber</b> : The line number in the source file of the instruction</li>
                <li><b>fileName</b> : The file name of the source file of the instruction</li>
                <li><b>filePath</b> : The file path of the source file of the instruction</li>
                <li><b>callerParameters</b> : The parameters of the method which contains the weaved instruction</li>
                <li><b>callerMethod</b> : The method which contains the weaved instruction</li>
-               <li><b>field</b> : The field</li>
+               <li><b>field</b> : The weaved field</li>
             </ul>
 			<p>Sample on how to use</p>
 <pre class="prettyprint">
@@ -1469,15 +1446,15 @@ public class MyInt
                     <p>The <b>AfterGetField</b> method is called after an instruction get the value of a field. The available parameters are :</p>
             <ul>
                <li><b>caller + parameter name</b> : the value of the parameter of the method which contains the weaved instruction</li>
-               <li><b>caller</b> : The caller</li>
-               <li><b>called</b> : The called</li>
+               <li><b>caller</b> : the <i>this</i> of the method which call our member</li>
+               <li><b>called</b> : the <i>this</i> of our member</li>
                <li><b>columnNumber</b> : The column number in the source file of the instruction</li>
                <li><b>lineNumber</b> : The line number in the source file of the instruction</li>
                <li><b>fileName</b> : The file name of the source file of the instruction</li>
                <li><b>filePath</b> : The file path of the source file of the instruction</li>
                <li><b>callerParameters</b> : The parameters of the method which contains the weaved instruction</li>
                <li><b>callerMethod</b> : The method which contains the weaved instruction</li>
-               <li><b>field</b> : The field</li>
+               <li><b>field</b> : The weaved field</li>
             </ul>
 			<p>Sample on how to use</p>
 <pre class="prettyprint">
@@ -1544,15 +1521,15 @@ public class MyInt
                     <p>The <b>BeforeUpdateField</b> method is called before an instruction set the value of a field. The available parameters are :</p>
             <ul>
                <li><b>caller + parameter name</b> : the value of the parameter of the method which contains the weaved instruction</li>
-               <li><b>caller</b> : The caller</li>
-               <li><b>called</b> : The called</li>
+               <li><b>caller</b> : the <i>this</i> of the method which call our member</li>
+               <li><b>called</b> : the <i>this</i> of our member</li>
                <li><b>columnNumber</b> : The column number in the source file of the instruction</li>
                <li><b>lineNumber</b> : The line number in the source file of the instruction</li>
                <li><b>fileName</b> : The file name of the source file of the instruction</li>
                <li><b>filePath</b> : The file path of the source file of the instruction</li>
                <li><b>callerParameters</b> : The parameters of the method which contains the weaved instruction</li>
                <li><b>callerMethod</b> : The method which contains the weaved instruction</li>
-               <li><b>field</b> : The field</li>
+               <li><b>field</b> : The weaved field</li>
             </ul>
 			<p>Sample on how to use</p>
 <pre class="prettyprint">
@@ -1619,15 +1596,15 @@ public class MyInt
                     <p>The <b>AfterUpdateField</b> method is called after an instruction set the value of a field. The available parameters are :</p>
             <ul>
                <li><b>caller + parameter name</b> : the value of the parameter of the method which contains the weaved instruction</li>
-               <li><b>caller</b> : The caller</li>
-               <li><b>called</b> : The called</li>
+               <li><b>caller</b> : the <i>this</i> of the method which call our member</li>
+               <li><b>called</b> : the <i>this</i> of our member</li>
                <li><b>columnNumber</b> : The column number in the source file of the instruction</li>
                <li><b>lineNumber</b> : The line number in the source file of the instruction</li>
                <li><b>fileName</b> : The file name of the source file of the instruction</li>
                <li><b>filePath</b> : The file path of the source file of the instruction</li>
                <li><b>callerParameters</b> : The parameters of the method which contains the weaved instruction</li>
                <li><b>callerMethod</b> : The method which contains the weaved instruction</li>
-               <li><b>field</b> : The field</li>
+               <li><b>field</b> : The weaved field</li>
             </ul>
 			<p>Sample on how to use</p>
 <pre class="prettyprint">
@@ -1637,7 +1614,7 @@ public class LogAttribute : Attribute
 	public static bool Called;
 
 	public bool NetAspectAttribute = true;
-        
+
 	public void AfterUpdateField (int callerIntValue, MyInt caller, MyInt called, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, FieldInfo field)
 	{
 		Called = true;
@@ -1679,12 +1656,12 @@ public class MyInt
 	classToWeave_L.UpdateValue (6);
 	Assert.True (LogAttribute.Called);
 }
-</pre>            
-</div>          
-</div>    
-</div> 
+</pre>
+                </div>
+            </div>
+        </div>
         
-</div>
+    </div>
 
 
 
@@ -1709,8 +1686,8 @@ public class MyInt
                     <p>The <b>BeforeCallMethod</b> method is called before an instruction call a method. The available parameters are :</p>
             <ul>
                <li><b>caller + parameter name</b> : the value of the parameter of the method which contains the weaved instruction</li>
-               <li><b>caller</b> : The caller</li>
-               <li><b>called</b> : The called</li>
+               <li><b>caller</b> : the <i>this</i> of the method which call our member</li>
+               <li><b>called</b> : the <i>this</i> of our member</li>
                <li><b>columnNumber</b> : The column number in the source file of the instruction</li>
                <li><b>lineNumber</b> : The line number in the source file of the instruction</li>
                <li><b>fileName</b> : The file name of the source file of the instruction</li>
@@ -1772,7 +1749,7 @@ public class MyInt
 	Assert.True (LogAttribute.Called);
 }
 </pre>
-</div>
+                </div>
             </div>
         </div>
         <div class="panel panel-default">
@@ -1786,8 +1763,8 @@ public class MyInt
                     <p>The <b>AfterCallMethod</b> method is called after an instruction call a method. The available parameters are :</p>
             <ul>
                <li><b>caller + parameter name</b> : the value of the parameter of the method which contains the weaved instruction</li>
-               <li><b>caller</b> : The caller</li>
-               <li><b>called</b> : The called</li>
+               <li><b>caller</b> : the <i>this</i> of the method which call our member</li>
+               <li><b>called</b> : the <i>this</i> of our member</li>
                <li><b>columnNumber</b> : The column number in the source file of the instruction</li>
                <li><b>lineNumber</b> : The line number in the source file of the instruction</li>
                <li><b>fileName</b> : The file name of the source file of the instruction</li>
@@ -1849,9 +1826,9 @@ public class MyInt
 	Assert.True (LogAttribute.Called);
 }
 </pre>
-    </div>
+                </div>
             </div>
-         </div>
+        </div>
         
     </div>
 
@@ -1878,8 +1855,8 @@ public class MyInt
                     <p>The <b>BeforeGetProperty</b> method is called before an instruction get the value of a property. The available parameters are :</p>
             <ul>
                <li><b>caller + parameter name</b> : the value of the parameter of the method which contains the weaved instruction</li>
-               <li><b>caller</b> : The caller</li>
-               <li><b>called</b> : The called</li>
+               <li><b>caller</b> : the <i>this</i> of the method which call our member</li>
+               <li><b>called</b> : the <i>this</i> of our member</li>
                <li><b>columnNumber</b> : The column number in the source file of the instruction</li>
                <li><b>lineNumber</b> : The line number in the source file of the instruction</li>
                <li><b>fileName</b> : The file name of the source file of the instruction</li>
@@ -1956,8 +1933,8 @@ public class MyInt
                     <p>The <b>AfterGetProperty</b> method is called after an instruction get the value of a property. The available parameters are :</p>
             <ul>
                <li><b>caller + parameter name</b> : the value of the parameter of the method which contains the weaved instruction</li>
-               <li><b>caller</b> : The caller</li>
-               <li><b>called</b> : The called</li>
+               <li><b>caller</b> : the <i>this</i> of the method which call our member</li>
+               <li><b>called</b> : the <i>this</i> of our member</li>
                <li><b>columnNumber</b> : The column number in the source file of the instruction</li>
                <li><b>lineNumber</b> : The line number in the source file of the instruction</li>
                <li><b>fileName</b> : The file name of the source file of the instruction</li>
@@ -2034,8 +2011,8 @@ public class MyInt
                     <p>The <b>BeforeSetProperty</b> method is called before an instruction set the value of a property. The available parameters are :</p>
             <ul>
                <li><b>caller + parameter name</b> : the value of the parameter of the method which contains the weaved instruction</li>
-               <li><b>caller</b> : The caller</li>
-               <li><b>called</b> : The called</li>
+               <li><b>caller</b> : the <i>this</i> of the method which call our member</li>
+               <li><b>called</b> : the <i>this</i> of our member</li>
                <li><b>columnNumber</b> : The column number in the source file of the instruction</li>
                <li><b>lineNumber</b> : The line number in the source file of the instruction</li>
                <li><b>fileName</b> : The file name of the source file of the instruction</li>
@@ -2106,14 +2083,14 @@ public class MyInt
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#SetPropertyInstructionWeavingAfter">Instruction which set property value before Weaving possibilities</a>
                 </h4>
-         </div>
+            </div>
             <div id="SetPropertyInstructionWeavingAfter" class="panel-collapse collapse">
                 <div class="panel-body">
                     <p>The <b>AfterSetProperty</b> method is called after an instruction set the value of a property. The available parameters are :</p>
             <ul>
                <li><b>caller + parameter name</b> : the value of the parameter of the method which contains the weaved instruction</li>
-               <li><b>caller</b> : The caller</li>
-               <li><b>called</b> : The called</li>
+               <li><b>caller</b> : the <i>this</i> of the method which call our member</li>
+               <li><b>called</b> : the <i>this</i> of our member</li>
                <li><b>columnNumber</b> : The column number in the source file of the instruction</li>
                <li><b>lineNumber</b> : The line number in the source file of the instruction</li>
                <li><b>fileName</b> : The file name of the source file of the instruction</li>
@@ -2183,6 +2160,314 @@ public class MyInt
     </div>
 
 
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+	<h2 id="dropdowns">Parameter Weaving</h2>
+            <h3 id="dropdowns-example">Theory in NetAspect</h3>
+            <p>The "parameter weaving" will modify the code of the method which is declared with a parameter with the aspect. It is possible to add behaviors :</p>
+            <ul>
+               <li><b>Before</b> the method is executed</li>
+               <li><b>After</b> the method is executed when no exception is raised</li>
+               <li><b>When exception occurs</b> in the method</li>
+               <li><b>On finally</b> : at the end of the method when an exception is raised or not</li>
+            </ul>
+            </ul>
+            <p>For each of these behaviors, we can get some information by adding some parameters to the aspect method.</p>
+<input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#ParameterWeavingPossibilities" value="Show possibilities">
+    <!-- Collapsible Element HTML -->
+    <div id="ParameterWeavingPossibilities" class="collapse">
+
+
+
+
+<!-- 
+================================================	  
+	  ParameterWeaving possibilities
+================================================
+	  -->
+
+	<h4 id="dropdowns-example">On Parameters</h4>
+            <p>These aspects are called when the aspect is put on a <b>$possibility.Member</b></p>
+			
+<div class="panel-group" id="GroupParameterWeaving">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#ParameterWeavingBefore">Before parameter</a>
+                </h4>
+            </div>
+            <div id="ParameterWeavingBefore" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>BeforeMethodForParameter</b> method is called before the constructor is executed. The available parameters are :</p>
+            <ul>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>parameters</b> : The parameters</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeMethodForParameter (int parameterValue, string parameterName, MyInt instance, int v, object[] parameters, ParameterInfo parameter)
+	{
+		Called = true;
+		Assert.NotNull (instance);
+		Assert.AreEqual ("v", parameter.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual ("v", parameterName);
+		Assert.AreEqual (6, parameterValue);
+		Assert.AreEqual (6, v);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy ([Log] int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var classToWeave_L = new MyInt (12);
+	classToWeave_L.DivideBy (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+    </div>
+    </div>
+    </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#ParameterWeavingAfter">After parameter</a>
+                </h4>
+            </div>
+            <div id="ParameterWeavingAfter" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>AfterMethodForParameter</b> method is called after the constructor is executed. The available parameters are :</p>
+            <ul>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>parameters</b> : The parameters</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterMethodForParameter (int parameterValue, string parameterName, MyInt instance, int v, object[] parameters, ParameterInfo parameter)
+	{
+		Called = true;
+		Assert.NotNull (instance);
+		Assert.AreEqual ("v", parameter.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual ("v", parameterName);
+		Assert.AreEqual (6, parameterValue);
+		Assert.AreEqual (6, v);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy ([Log] int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var classToWeave_L = new MyInt (12);
+	classToWeave_L.DivideBy (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#ParameterWeavingOnException">On exception parameter</a>
+                </h4>
+            </div>
+            <div id="ParameterWeavingOnException" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnExceptionMethodForParameter</b> method is called when an exception occured in the constructor. The available parameters are :</p>
+            <ul>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>parameters</b> : The parameters</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>exception</b> : The exception raised</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void OnExceptionMethodForParameter (int parameterValue, string parameterName, MyInt instance, int v, object[] parameters, ParameterInfo parameter, Exception exception)
+	{
+		Called = true;
+		Assert.NotNull (instance);
+		Assert.AreEqual ("v", parameter.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual ("v", parameterName);
+		Assert.AreEqual (0, parameterValue);
+		Assert.AreEqual ("DivideByZeroException", exception.GetType ().Name);
+		Assert.AreEqual (0, v);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy ([Log] int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	try {
+		var classToWeave_L = new MyInt (12);
+		classToWeave_L.DivideBy (0);
+		Assert.Fail ("Must Fail");
+	}
+	catch (Exception) {
+		Assert.True (LogAttribute.Called);
+	}
+}
+</pre>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#ParameterWeavingOnFinally">On Finally parameter</a>
+                </h4>
+            </div>
+            <div id="ParameterWeavingOnFinally" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>The <b>OnFinallyMethodForParameter</b> method is called after the constructor is executed when an exception occured or not. The available parameters are :</p>
+            <ul>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>instance</b> : The instance</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+               <li><b>parameters</b> : The parameters</li>
+               <li><b>parameter name</b> : The parameter's name</li>
+            </ul>
+			<p>Sample on how to use</p>
+<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void OnFinallyMethodForParameter (int parameterValue, string parameterName, MyInt instance, int v, object[] parameters, ParameterInfo parameter)
+	{
+		Called = true;
+		Assert.NotNull (instance);
+		Assert.AreEqual ("v", parameter.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual ("v", parameterName);
+		Assert.AreEqual (6, parameterValue);
+		Assert.AreEqual (6, v);
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy ([Log] int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The code which will call our aspect
+{
+	var classToWeave_L = new MyInt (12);
+	classToWeave_L.DivideBy (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
     </div>
         
       <!-- Bootstrap core JavaScript

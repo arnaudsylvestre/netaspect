@@ -73,22 +73,18 @@
     <Compile Include="DocBuilder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Content.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Content.resx</DependentUpon>
+    </Compile>
     <Compile Include="Templates\Templates.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Templates.resx</DependentUpon>
     </Compile>
     <Content Include="Resources\Basics.txt" />
-    <Content Include="Resources\InstructionWeaving.txt" />
-    <Content Include="Templates\InstructionWeavingPossibilities.txt" />
-    <Content Include="Templates\WeavingPossibilities.txt" />
-    <Content Include="Resources\MethodWeaving.txt" />
     <Content Include="Resources\Header.txt" />
-    <Compile Include="Resources\Content.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Content.resx</DependentUpon>
-    </Compile>
     <Compile Include="SampleExtractor.cs" />
   </ItemGroup>
   <ItemGroup>
