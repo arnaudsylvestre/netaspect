@@ -55,17 +55,19 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
               onExceptions.Add(aroundMethodWeaverFactory.CreateForExceptions(method, onExceptionInterceptorProvider(aspect).Method, parameter_L));
               onFinallys.Add(aroundMethodWeaverFactory.CreateForOnFinally(method, onFinallyInterceptorProvider(aspect).Method, parameter_L));
            }
-            
 
 
-            return new AroundMethodWeavingModel()
-            {
-                Afters = afters,
-                OnExceptions = onExceptions,
-                OnFinallys = onFinallys,
-                BeforeConstructorBaseCalls = beforeConstructorBaseCalls
-              
-                };
+           var aroundMethodWeavingModel_L = new AroundMethodWeavingModel()
+           {
+              Afters = afters,
+              OnExceptions = onExceptions,
+              OnFinallys = onFinallys,
+           };
+           if (method.IsConstructor)
+              aroundMethodWeavingModel_L.BeforeConstructorBaseCalls = beforeConstructorBaseCalls;
+           else
+              aroundMethodWeavingModel_L.Befores = beforeConstructorBaseCalls;
+           return aroundMethodWeavingModel_L;
         }
     }
 }
