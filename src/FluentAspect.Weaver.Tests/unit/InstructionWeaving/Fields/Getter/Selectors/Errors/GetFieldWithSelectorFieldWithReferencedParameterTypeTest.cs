@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 
@@ -17,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Selectors
                     Level = ErrorLevel.Error,
                     Message =
                     string.Format(
-                        "The parameter fieldName in the method SelectField of the aspect {0} is expected to be System.String",
+                        "The parameter field in the method SelectField of the aspect {0} is expected to be System.FieldInfo",
                         typeof(MyAspect).FullName)
                 });
         }
@@ -42,7 +43,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Selectors
                 Caller = caller;
             }
 
-            public static bool SelectField(ref string fieldName)
+            public static bool SelectField(ref FieldInfo field)
             {
                 return true;
             }

@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameter
                     Level = ErrorLevel.Error,
                     Message =
                     string.Format(
-                        "the called parameter in the method AfterGetField of the type '{0}' is not available for static field in struct",
+                        "the called parameter in the method AfterGetField of the type '{0}' is not available for static member in struct",
                         typeof(MyAspect).FullName)
                 });
         }

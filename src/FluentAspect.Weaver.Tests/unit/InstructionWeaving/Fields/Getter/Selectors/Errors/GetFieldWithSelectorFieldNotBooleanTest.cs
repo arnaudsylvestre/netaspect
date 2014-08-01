@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 
@@ -42,7 +43,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Selectors
                 Caller = caller;
             }
 
-            public static int SelectField(string fieldName)
+            public static int SelectField(FieldInfo field)
             {
                 return 1;
             }

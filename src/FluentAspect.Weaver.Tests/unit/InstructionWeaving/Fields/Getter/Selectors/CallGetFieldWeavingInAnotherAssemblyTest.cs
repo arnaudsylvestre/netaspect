@@ -33,9 +33,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Selectors
                 Caller = caller;
             }
 
-            public static bool SelectField(string fieldName)
+            public static bool SelectField(FieldInfo field)
             {
-                return fieldName == "Field";
+                return field.Name == "Field";
             }
         }
     }
