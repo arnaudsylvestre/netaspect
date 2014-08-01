@@ -70,7 +70,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\WebsiteGenerator.cs" />
     <Compile Include="DocBuilder.cs" />
+    <Compile Include="Helpers\NVelocityHelper.cs" />
+    <Compile Include="Model\WebSite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Content.Designer.cs">
@@ -86,11 +89,15 @@
     <Content Include="Resources\Basics.txt" />
     <Content Include="Resources\Header.txt" />
     <Compile Include="SampleExtractor.cs" />
+    <Content Include="Templates\Page.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Templates\GettingStartedPage.txt" />
+    <Content Include="Templates\HomePage.txt" />
+    <Content Include="Templates\DocumentationPage.txt" />
     <Content Include="Templates\Documentation.txt" />
   </ItemGroup>
   <ItemGroup>

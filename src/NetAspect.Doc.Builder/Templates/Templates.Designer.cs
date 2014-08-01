@@ -69,21 +69,106 @@ namespace NetAspect.Doc.Builder.Templates {
         ///
         ///$documentation.Basics
         ///
-        ///      &lt;!-- 
-        ///================================================	  
-        ///	  Weaving
-        ///================================================
-        ///	  --&gt;
         ///         &lt;div class=&quot;bs-docs-section&quot;&gt;
         ///            &lt;div class=&quot;page-header&quot;&gt;
-        ///               &lt;h1 id=&quot;dropdowns&quot;&gt;Weaving&lt;/h1&gt;
+        ///               &lt;h1 id=&quot;dropdowns&quot;&gt;Interceptors&lt;/h1&gt;
         ///            &lt;/div&gt;
-        ///			&lt;h2 id=&quot;dropdowns&quot;&gt;Method Weaving&lt;/h2&gt;
-        ///            &lt;p&gt;The &quot;met [rest of string was truncated]&quot;;.
+        ///			&lt;p&gt;In NetAspect, an interceptor is a method which will be called on &lt;/p&gt;
+        ///			&lt;h2 id=&quot;dropdowns&quot;&gt;For method weaving&lt;/h2&gt;
+        ///            &lt;p&gt;The &quot;method weaving&quot; will modify the code of the method to [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Documentation {
             get {
                 return ResourceManager.GetString("Documentation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to $documentation.Header
+        ///
+        ///&lt;div class=&quot;container bs-docs-container&quot;&gt;
+        ///      &lt;div class=&quot;row&quot;&gt;
+        ///      &lt;div class=&quot;col-md-12&quot; role=&quot;main&quot;&gt;
+        ///
+        ///$documentation.Basics
+        ///
+        ///         &lt;div class=&quot;bs-docs-section&quot;&gt;
+        ///            &lt;div class=&quot;page-header&quot;&gt;
+        ///               &lt;h1 id=&quot;dropdowns&quot;&gt;Interceptors&lt;/h1&gt;
+        ///            &lt;/div&gt;
+        ///			&lt;p&gt;In NetAspect, an interceptor is a method which will be called &lt;/p&gt;
+        ///			&lt;h2 id=&quot;dropdowns&quot;&gt;For method weaving&lt;/h2&gt;
+        ///            &lt;p&gt;The &quot;method weaving&quot; will modify the code of the method to ad [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DocumentationPage {
+            get {
+                return ResourceManager.GetString("DocumentationPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to $documentation.Header
+        ///
+        ///&lt;div class=&quot;container bs-docs-container&quot;&gt;
+        ///      &lt;div class=&quot;row&quot;&gt;
+        ///      &lt;div class=&quot;col-md-12&quot; role=&quot;main&quot;&gt;
+        ///
+        ///$documentation.Basics
+        ///
+        ///         &lt;div class=&quot;bs-docs-section&quot;&gt;
+        ///            &lt;div class=&quot;page-header&quot;&gt;
+        ///               &lt;h1 id=&quot;dropdowns&quot;&gt;Interceptors&lt;/h1&gt;
+        ///            &lt;/div&gt;
+        ///			&lt;p&gt;In NetAspect, an interceptor is a method which will be called &lt;/p&gt;
+        ///			&lt;h2 id=&quot;dropdowns&quot;&gt;For method weaving&lt;/h2&gt;
+        ///            &lt;p&gt;The &quot;method weaving&quot; will modify the code of the method to ad [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GettingStartedPage {
+            get {
+                return ResourceManager.GetString("GettingStartedPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to $documentation.Header
+        ///
+        ///&lt;div class=&quot;container bs-docs-container&quot;&gt;
+        ///      &lt;div class=&quot;row&quot;&gt;
+        ///      &lt;div class=&quot;col-md-12&quot; role=&quot;main&quot;&gt;
+        ///
+        ///$documentation.Basics
+        ///
+        ///         &lt;div class=&quot;bs-docs-section&quot;&gt;
+        ///            &lt;div class=&quot;page-header&quot;&gt;
+        ///               &lt;h1 id=&quot;dropdowns&quot;&gt;Interceptors&lt;/h1&gt;
+        ///            &lt;/div&gt;
+        ///			&lt;p&gt;In NetAspect, an interceptor is a method which will be called &lt;/p&gt;
+        ///			&lt;h2 id=&quot;dropdowns&quot;&gt;For method weaving&lt;/h2&gt;
+        ///            &lt;p&gt;The &quot;method weaving&quot; will modify the code of the method to ad [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string HomePage {
+            get {
+                return ResourceManager.GetString("HomePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+        ///&lt;html lang=&quot;en&quot;&gt;
+        ///   &lt;head&gt;
+        ///      &lt;meta charset=&quot;utf-8&quot;&gt;
+        ///      &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+        ///      &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+        ///      &lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
+        ///      &lt;meta name=&quot;author&quot; content=&quot;&quot;&gt;
+        ///      &lt;link rel=&quot;shortcut icon&quot; href=&quot;../../docs-assets/ico/favicon.png&quot;&gt;
+        ///      &lt;title&gt;NetAspect&lt;/title&gt;
+        ///      &lt;link href=&quot;bootstrap-3.0.2/dist/css/bootstrap.css&quot; rel=&quot;stylesheet&quot;&gt;
+        ///      &lt;link href=&quot;jumbotron.cs [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Page {
+            get {
+                return ResourceManager.GetString("Page", resourceCulture);
             }
         }
     }

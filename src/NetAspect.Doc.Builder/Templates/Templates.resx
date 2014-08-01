@@ -121,4 +121,16 @@
   <data name="Documentation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>documentation.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="DocumentationPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>documentationpage.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GettingStartedPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>gettingstartedpage.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="HomePage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>homepage.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>page.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

@@ -51,6 +51,7 @@
     </Compile>
     <Compile Include="SampleExtractorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebsiteGenerateTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

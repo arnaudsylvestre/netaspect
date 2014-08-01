@@ -10,7 +10,7 @@ $documentation.Basics
             <div class="page-header">
                <h1 id="dropdowns">Interceptors</h1>
             </div>
-			<p>In NetAspect, an interceptor is a method which will be called on </p>
+			<p>In NetAspect, an interceptor is a method which will be called </p>
 			<h2 id="dropdowns">For method weaving</h2>
             <p>The "method weaving" will modify the code of the method to add behavior. It is possible to add behaviors :</p>
             <ul>
