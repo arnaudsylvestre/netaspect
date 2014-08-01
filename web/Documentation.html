@@ -1637,7 +1637,7 @@ public class LogAttribute : Attribute
 	public static bool Called;
 
 	public bool NetAspectAttribute = true;
-        
+
 	public void AfterUpdateField (int callerIntValue, MyInt caller, MyInt called, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, FieldInfo field)
 	{
 		Called = true;
@@ -1679,12 +1679,12 @@ public class MyInt
 	classToWeave_L.UpdateValue (6);
 	Assert.True (LogAttribute.Called);
 }
-</pre>            
-</div>          
-</div>    
-</div> 
+</pre>
+                </div>
+            </div>
+        </div>
         
-</div>
+    </div>
 
 
 
@@ -1772,7 +1772,7 @@ public class MyInt
 	Assert.True (LogAttribute.Called);
 }
 </pre>
-</div>
+                </div>
             </div>
         </div>
         <div class="panel panel-default">
@@ -1849,9 +1849,9 @@ public class MyInt
 	Assert.True (LogAttribute.Called);
 }
 </pre>
-    </div>
+                </div>
             </div>
-         </div>
+        </div>
         
     </div>
 
@@ -2106,7 +2106,7 @@ public class MyInt
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#SetPropertyInstructionWeavingAfter">Instruction which set property value before Weaving possibilities</a>
                 </h4>
-         </div>
+            </div>
             <div id="SetPropertyInstructionWeavingAfter" class="panel-collapse collapse">
                 <div class="panel-body">
                     <p>The <b>AfterSetProperty</b> method is called after an instruction set the value of a property. The available parameters are :</p>

@@ -12,7 +12,8 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.After
             return errorHandler => errorHandler.Add(new ErrorReport.Error()
                 {
                     Level = ErrorLevel.Error,
-                    Message =(string.Format("The parameter 'unknown' is unknown"))});
+                    Message = (string.Format("The parameter 'unknown' is unknown. Expected one of : instance, constructor, parameters, i"))
+                });
         }
 
         public class ClassToWeave

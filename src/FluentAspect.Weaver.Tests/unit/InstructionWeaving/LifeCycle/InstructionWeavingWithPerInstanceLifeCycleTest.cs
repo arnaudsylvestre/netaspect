@@ -12,6 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.LifeCycle
         {
             return () =>
                 {
+                   MyAspect.aspects = new List<MyAspect>();
                     ClassCalled called = new ClassCalled();
                     var classToWeave_L = new ClassToWeave(called);
                     classToWeave_L.Weaved();
@@ -60,6 +61,10 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.LifeCycle
 
             public static string LifeCycle = "PerInstance";
 
+           static MyAspect()
+           {
+              aspects = new List<MyAspect>();
+           }
             public MyAspect()
             {
                 aspects.Add(this);

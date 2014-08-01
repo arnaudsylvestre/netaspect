@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Parameters
             return errorHandler => errorHandler.Add(new ErrorReport.Error()
                 {
                     Level = ErrorLevel.Error,
-                    Message = string.Format("The parameter 'unknown' is unknown")
+                    Message = string.Format("The parameter 'unknown' is unknown. Expected one of : instance, property, result")
                 });
         }
 

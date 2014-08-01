@@ -12,6 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.LifeCycle
         {
             return () =>
                 {
+                   MyAspect.aspects = new List<MyAspect>();
                     Assert.AreEqual(0, MyAspect.aspects.Count);
                     ClassCalled called = new ClassCalled();
                     var classToWeave_L = new ClassToWeave(called);
