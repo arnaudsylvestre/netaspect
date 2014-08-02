@@ -5,6 +5,11 @@ namespace NetAspect.Doc.Builder.Model
 {
     public class WebSite
     {
+        public WebSite()
+        {
+            Pages = new List<Page>();
+        }
+
         public List<Page> Pages { get; set; } 
     }
 
@@ -23,7 +28,11 @@ namespace NetAspect.Doc.Builder.Model
 
         public string Content
         {
-            get { return NVelocityHelper.GenerateContent("page", this, Template); }
+            get { return NVelocityHelper.GenerateContent(Template, new NVelocityHelper.NVelocityEntry()
+                {
+                    Key = "page",
+                    Value = this,
+                }); }
             
         }
 

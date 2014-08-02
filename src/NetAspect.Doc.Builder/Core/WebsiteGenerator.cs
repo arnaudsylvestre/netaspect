@@ -11,7 +11,17 @@ namespace NetAspect.Doc.Builder.Core
             foreach (var page in website.Pages)
             {
                 string filePath = Path.Combine(folder, string.Format("{0}.html", page.Name));
-                File.WriteAllText(filePath, NVelocityHelper.GenerateContent("page", page, Templates.Templates.Page));
+                File.WriteAllText(filePath, NVelocityHelper.GenerateContent(Templates.Templates.Page,
+                    new NVelocityHelper.NVelocityEntry()
+                        {
+                            Key = "page",
+                            Value = page, 
+                        },
+                        new NVelocityHelper.NVelocityEntry()
+                            {
+                                Key = "website"                                ,
+                                Value = website,
+                            }));
             }
             
         }

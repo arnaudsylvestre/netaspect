@@ -8,11 +8,21 @@ namespace NetAspect.Doc.Builder.Helpers
 {
     public class NVelocityHelper
     {
-        public static string GenerateContent(string key, object value, string template)
+        public class NVelocityEntry
+        {
+            public string Key { get; set; }
+            public object Value { get; set; }
+        }
+
+        public static string GenerateContent(string template, params NVelocityEntry[] entries)
         {
             var velocity = new VelocityEngine();
             var hashtable = new Hashtable();
-            hashtable.Add(key, value);
+            foreach (var entry in entries)
+            {
+                hashtable.Add(entry.Key, entry.Value);
+                
+            }
             var context = new VelocityContext(hashtable);
             var props = new ExtendedProperties();
             velocity.Init(props);
