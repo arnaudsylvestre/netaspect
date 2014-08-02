@@ -12,7 +12,7 @@
 #end
 #foreach ($paragraph in $section.Paragraphs)
 				<h2 id="dropdowns">$paragraph.Title</h2>
-$template. paragraph.Description
+$template.GenerateDescription($paragraph)
 
 				<input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#{paragraph.Name}Collapsible" value="Show more">
 				<div id="${paragraph.Name}Collapsible" class="collapse">
