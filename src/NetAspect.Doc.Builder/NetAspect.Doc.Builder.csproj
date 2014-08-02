@@ -82,6 +82,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Content.resx</DependentUpon>
     </Compile>
+    <Compile Include="Templates\Documentation\DocumentationTemplates.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DocumentationTemplates.resx</DependentUpon>
+    </Compile>
     <Compile Include="Templates\Templates.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -90,6 +95,9 @@
     <Content Include="Resources\Basics.txt" />
     <Content Include="Resources\Header.txt" />
     <Compile Include="SampleExtractor.cs" />
+    <Content Include="Templates\Documentation\SubParagraphDescriptionMethodInterceptor.txt" />
+    <Content Include="Templates\NetAspectPage.txt" />
+    <Content Include="Templates\Documentation\ParagraphDescriptionMethodInterceptor.txt" />
     <Content Include="Templates\Page.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -106,10 +114,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Content.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Documentation\DocumentationTemplates.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DocumentationTemplates.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Templates\Templates.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Templates.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Templates\Documentation\Sections\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

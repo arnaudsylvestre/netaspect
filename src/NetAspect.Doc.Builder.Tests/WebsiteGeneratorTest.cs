@@ -13,19 +13,23 @@ namespace NetAspect.Doc.Builder.Tests
         {
             string baseDirectory = @"D:\Developpement\fluentaspect\";
             var tests = baseDirectory + @"web\Tests";
-            var gettingStartedPage1 = baseDirectory +
-                                      @"src\FluentAspect.Weaver.Tests\docs\GettingStarted\GettingStartedPart1Test.cs";
-            var gettingStartedPage2 = baseDirectory +
-                                      @"src\FluentAspect.Weaver.Tests\docs\GettingStarted\GettingStartedPart2Test.cs";
-             var generator = new WebsiteGenerator();
+            //var gettingStartedPage1 = baseDirectory +
+            //                          @"src\FluentAspect.Weaver.Tests\docs\GettingStarted\GettingStartedPart1Test.cs";
+            //var gettingStartedPage2 = baseDirectory +
+            //                          @"src\FluentAspect.Weaver.Tests\docs\GettingStarted\GettingStartedPart2Test.cs";
+            // var generator = new WebsiteGenerator();
 
-            var website = new WebSite();
-            website.Pages.Add(new HomePage());
-            var gettingStartedPage = new GettingStartedPage();
-            var reader = new GettingStartedReader();
-            reader.Read(gettingStartedPage, gettingStartedPage1, gettingStartedPage2);
-            website.Pages.Add(gettingStartedPage);
-            generator.Generate(website, tests);
+            //var website = new WebSite();
+            //website.Pages.Add(new HomePage());
+            //var gettingStartedPage = new GettingStartedPage();
+            //var reader = new GettingStartedReader();
+            //reader.Read(gettingStartedPage, gettingStartedPage1, gettingStartedPage2);
+            //website.Pages.Add(gettingStartedPage);
+            //generator.Generate(website, tests);
+
+            var generator = new WebsiteGenerator();
+            var webSite = WebsiteFactory.Create(baseDirectory + @"src\FluentAspect.Weaver.Tests\docs\");
+            generator.Generate(webSite, tests);
          }
     }
 }

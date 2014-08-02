@@ -84,21 +84,21 @@ namespace NetAspect.Doc.Builder.Templates {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to $documentation.Header
-        ///
-        ///&lt;div class=&quot;container bs-docs-container&quot;&gt;
+        ///   Looks up a localized string similar to &lt;div class=&quot;container bs-docs-container&quot;&gt;
         ///      &lt;div class=&quot;row&quot;&gt;
         ///      &lt;div class=&quot;col-md-12&quot; role=&quot;main&quot;&gt;
         ///
-        ///$documentation.Basics
-        ///
+        ///#foreach ($section in $page.Sections)
         ///         &lt;div class=&quot;bs-docs-section&quot;&gt;
         ///            &lt;div class=&quot;page-header&quot;&gt;
-        ///               &lt;h1 id=&quot;dropdowns&quot;&gt;Interceptors&lt;/h1&gt;
+        ///               &lt;h1 id=&quot;dropdowns&quot;&gt;$section.Name&lt;/h1&gt;
         ///            &lt;/div&gt;
-        ///			&lt;p&gt;In NetAspect, an interceptor is a method which will be called &lt;/p&gt;
-        ///			&lt;h2 id=&quot;dropdowns&quot;&gt;For method weaving&lt;/h2&gt;
-        ///            &lt;p&gt;The &quot;method weaving&quot; will modify the code of the method to ad [rest of string was truncated]&quot;;.
+        ///			&lt;p&gt;$section.Description&lt;/p&gt;
+        ///#foreach ($paragraph in $section.Paragraphs)
+        ///			&lt;h2 id=&quot;dropdowns&quot;&gt;$paragraph.Title&lt;/h2&gt;
+        ///$paragraph.Description
+        ///
+        ///&lt;input type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-toggle=&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DocumentationPage {
             get {
@@ -107,21 +107,24 @@ namespace NetAspect.Doc.Builder.Templates {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to $documentation.Header
+        ///   Looks up a localized string similar to 
+        ///  &lt;div class=&quot;container bs-docs-container&quot;&gt;
+        ///	
+        ///	&lt;div class=&quot;row&quot;&gt;
+        ///      
+        ///	  &lt;div class=&quot;span9&quot; role=&quot;main&quot;&gt;
         ///
-        ///&lt;div class=&quot;container bs-docs-container&quot;&gt;
-        ///      &lt;div class=&quot;row&quot;&gt;
-        ///      &lt;div class=&quot;col-md-12&quot; role=&quot;main&quot;&gt;
         ///
-        ///$documentation.Basics
         ///
-        ///         &lt;div class=&quot;bs-docs-section&quot;&gt;
-        ///            &lt;div class=&quot;page-header&quot;&gt;
-        ///               &lt;h1 id=&quot;dropdowns&quot;&gt;Interceptors&lt;/h1&gt;
-        ///            &lt;/div&gt;
-        ///			&lt;p&gt;In NetAspect, an interceptor is a method which will be called &lt;/p&gt;
-        ///			&lt;h2 id=&quot;dropdowns&quot;&gt;For method weaving&lt;/h2&gt;
-        ///            &lt;p&gt;The &quot;method weaving&quot; will modify the code of the method to ad [rest of string was truncated]&quot;;.
+        ///        &lt;div class=&quot;bs-docs-section&quot;&gt;
+        ///          &lt;div class=&quot;page-header&quot;&gt;
+        ///            &lt;h1&gt;What to weave ?&lt;/h1&gt;
+        ///          &lt;/div&gt;
+        ///		  &lt;p&gt;Here is a sample class to divide two numbers. We want to log when there is an exception. This class is in a C# project named &lt;b&gt;Math.csproj&lt;/b&gt;&lt;/p&gt;
+        ///		  &lt;pre class=&quot;prettyprint&quot;&gt;
+        ///$page.CodeWithoutAspect&lt;/pre&gt;
+        ///          &lt;div class=&quot;page-header&quot;&gt;
+        ///      [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GettingStartedPage {
             get {
@@ -130,25 +133,51 @@ namespace NetAspect.Doc.Builder.Templates {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to $documentation.Header
+        ///   Looks up a localized string similar to     &lt;div class=&quot;jumbotron&quot;&gt;
+        ///      &lt;div class=&quot;container&quot;&gt;
+        ///        &lt;h1&gt;NetAspect&lt;/h1&gt;
+        ///        &lt;p&gt;An open source AOP framework for .Net and .Net Compact Framework&lt;/p&gt;
+        ///        &lt;p&gt;&lt;a class=&quot;btn btn-primary btn-lg&quot; href=&quot;NetAspect.html&quot; role=&quot;button&quot;&gt;Learn more &amp;raquo;&lt;/a&gt;&lt;/p&gt;
+        ///      &lt;/div&gt;
+        ///    &lt;/div&gt;
         ///
-        ///&lt;div class=&quot;container bs-docs-container&quot;&gt;
+        ///    &lt;div class=&quot;container&quot;&gt;
+        ///      &lt;!-- Example row of columns --&gt;
         ///      &lt;div class=&quot;row&quot;&gt;
-        ///      &lt;div class=&quot;col-md-12&quot; role=&quot;main&quot;&gt;
-        ///
-        ///$documentation.Basics
-        ///
-        ///         &lt;div class=&quot;bs-docs-section&quot;&gt;
-        ///            &lt;div class=&quot;page-header&quot;&gt;
-        ///               &lt;h1 id=&quot;dropdowns&quot;&gt;Interceptors&lt;/h1&gt;
-        ///            &lt;/div&gt;
-        ///			&lt;p&gt;In NetAspect, an interceptor is a method which will be called &lt;/p&gt;
-        ///			&lt;h2 id=&quot;dropdowns&quot;&gt;For method weaving&lt;/h2&gt;
-        ///            &lt;p&gt;The &quot;method weaving&quot; will modify the code of the method to ad [rest of string was truncated]&quot;;.
+        ///        &lt;div class=&quot;col-md-4&quot;&gt;
+        ///          &lt;h2&gt;Simple configuration&lt;/h2&gt;
+        ///          &lt;p&gt;NetAspect try to be the most user friend [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HomePage {
             get {
                 return ResourceManager.GetString("HomePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///  &lt;div class=&quot;container bs-docs-container&quot;&gt;
+        ///	
+        ///	&lt;div class=&quot;row&quot;&gt;
+        ///      
+        ///	  &lt;div class=&quot;span9&quot; role=&quot;main&quot;&gt;
+        ///
+        ///
+        ///
+        ///        &lt;div class=&quot;bs-docs-section&quot;&gt;
+        ///          &lt;div class=&quot;page-header&quot;&gt;
+        ///            &lt;h1&gt;What is AOP ?&lt;/h1&gt;
+        ///          &lt;/div&gt;
+        ///		  &lt;p&gt;Here is a sample class to divide two numbers. We want to log when there is an exception. This class is in a C# project named &lt;b&gt;Math.csproj&lt;/b&gt;&lt;/p&gt;
+        ///
+        ///          &lt;div class=&quot;page-header&quot;&gt;
+        ///            &lt;h1&gt;Prepare your project&lt;/h1&gt;
+        ///          &lt;/div&gt;
+        ///       [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string NetAspectPage {
+            get {
+                return ResourceManager.GetString("NetAspectPage", resourceCulture);
             }
         }
         

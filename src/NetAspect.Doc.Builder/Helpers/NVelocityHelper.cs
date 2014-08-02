@@ -14,6 +14,15 @@ namespace NetAspect.Doc.Builder.Helpers
             public object Value { get; set; }
         }
 
+        public static string GenerateContent(string template, string key, object value)
+        {
+            return GenerateContent(template, new NVelocityEntry()
+                {
+                    Key = key,
+                    Value = value,
+                });
+        }
+
         public static string GenerateContent(string template, params NVelocityEntry[] entries)
         {
             var velocity = new VelocityEngine();

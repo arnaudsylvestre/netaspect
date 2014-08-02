@@ -8,14 +8,14 @@ namespace NetAspect.Doc.Builder.Core.GettingStarted
     {
         CSharpParser parser = new CSharpParser();
 
-        public void Read(GettingStartedPage page, string gettingStartedPat1File, string gettingStartedPat2File)
+        public void Read(GettingStartedPageModel page, string gettingStartedPat1File, string gettingStartedPat2File)
         {
             ReadGettingStartedPage1(page, gettingStartedPat1File);
             ReadGettingStartedPage2(page, gettingStartedPat2File);
             
         }
 
-        private void ReadGettingStartedPage1(GettingStartedPage page, string gettingStartedPat1File)
+        private void ReadGettingStartedPage1(GettingStartedPageModel page, string gettingStartedPat1File)
         {
             using (var stream = File.OpenRead(gettingStartedPat1File))
             {
@@ -25,7 +25,7 @@ namespace NetAspect.Doc.Builder.Core.GettingStarted
             }
         }
 
-        private void ReadGettingStartedPage2(GettingStartedPage page, string gettingStartedPart2File)
+        private void ReadGettingStartedPage2(GettingStartedPageModel page, string gettingStartedPart2File)
         {
             using (var stream = File.OpenRead(gettingStartedPart2File))
             {
@@ -38,9 +38,9 @@ namespace NetAspect.Doc.Builder.Core.GettingStarted
 
     internal class GettingStartedPage1Visitor : DepthFirstAstVisitor
     {
-        private readonly GettingStartedPage _page;
+        private readonly GettingStartedPageModel _page;
 
-        public GettingStartedPage1Visitor(GettingStartedPage page)
+        public GettingStartedPage1Visitor(GettingStartedPageModel page)
         {
             _page = page;
         }
@@ -54,9 +54,9 @@ namespace NetAspect.Doc.Builder.Core.GettingStarted
     }
     internal class GettingStartedPage2Visitor : DepthFirstAstVisitor
     {
-        private readonly GettingStartedPage _page;
+        private readonly GettingStartedPageModel _page;
 
-        public GettingStartedPage2Visitor(GettingStartedPage page)
+        public GettingStartedPage2Visitor(GettingStartedPageModel page)
         {
             _page = page;
         }
