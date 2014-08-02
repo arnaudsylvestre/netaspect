@@ -2,7 +2,7 @@
       <div class="row">
 		<div class="col-md-12" role="main">
 
-#foreach ($section in $page.Sections)
+#foreach ($section in $page)
 			<div class="bs-docs-section">
 				<div class="page-header">
 					<h1 id="dropdowns">$section.Name</h1>
@@ -12,7 +12,7 @@
 #end
 #foreach ($paragraph in $section.Paragraphs)
 				<h2 id="dropdowns">$paragraph.Title</h2>
-$paragraph.Description
+$template. paragraph.Description
 
 				<input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#{paragraph.Name}Collapsible" value="Show more">
 				<div id="${paragraph.Name}Collapsible" class="collapse">
@@ -39,6 +39,9 @@ $template.GenerateDescription($detail)
 									<pre class="prettyprint">
 $template.GenerateCode($sample)
 </pre>
+#end
+#end
+#end
 #end
 								</div>
 							</div>

@@ -25,7 +25,15 @@ namespace NetAspect.Doc.Builder.Model
         }
         public string GenerateDescription(Section.Paragraph paragraph)
         {
-            return NVelocityHelper.GenerateContent(paragraph.DescriptionTemplate, "paragraph", paragraph.Model);
+            return NVelocityHelper.GenerateContent(paragraph.DescriptionTemplate, new NVelocityHelper.NVelocityEntry()
+            {
+                Key = "paragraph",
+                Value = paragraph.Model,
+            }, new NVelocityHelper.NVelocityEntry()
+            {
+                Key = "template",
+                Value = this,
+            });
         }
         public string GenerateCode(Section.Paragraph.SubParagraph.Detail.Sample sample)
         {
@@ -51,7 +59,7 @@ namespace NetAspect.Doc.Builder.Model
             var extractor = new DocumentationFromTestExtractor();
             var tests = extractor.ExtractDocumentationFromTests(Path.Combine(baseFolder, "Documentation"));
             List<Section> sections = Convert(tests);
-            return new Page("Getting Started", Templates.Templates.GettingStartedPage, "GettingStarted", sections);
+            return new Page("Documentation", Templates.Templates.DocumentationPage, "Documentation", sections);
         }
 
         private static List<Section> Convert(DocumentationFromTest tests)
@@ -75,7 +83,10 @@ namespace NetAspect.Doc.Builder.Model
             foreach (var possibilityDescription in possibilityDescriptions)
             {
                 var details = new List<Section.Paragraph.SubParagraph.Detail>();
-                subParagraphs.Add(new Section.Paragraph.SubParagraph(details, possibilityDescription.Title, DocumentationTemplates.SubParagraphDescriptionMethodInterceptor, ));
+                subParagraphs.Add(new Section.Paragraph.SubParagraph(details, possibilityDescription.Title, DocumentationTemplates.SubParagraphDescriptionMethodInterceptor, new SubParagraphModel
+                    {
+                        Member = possibilityDescription.Member
+                    }));
             }
             return new Section.Paragraph(subParagraphs, "Method interceptors", null, DocumentationTemplates.ParagraphDescriptionMethodInterceptor);
         }
@@ -130,7 +141,12 @@ namespace NetAspect.Doc.Builder.Model
                 {
                     Key = "page",
                     Value = Model,
-                }); }
+                }, new NVelocityHelper.NVelocityEntry()
+                {
+                    Key = "template",
+                    Value = new TemplateHelper(),
+                });
+            }
             
         }
 
