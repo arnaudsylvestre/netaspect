@@ -81,6 +81,11 @@ namespace NetAspect.Doc.Builder.Model
         {
         }
 
+        public string CodeWithoutAspect { get; set; }
+        public string AspectCode { get; set; }
+        public string CodeWithAspect { get; set; }
+        public string TestWithAspect { get; set; }
+
     }
 
     public class HomePage : Page
