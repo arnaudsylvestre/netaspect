@@ -12,10 +12,24 @@ namespace NetAspect.Doc.Builder.Tests
     public class WebsiteGeneratorTest
     {
         [Test]
+        public void CheckGenerateModel()
+        {
+            Dictionary<string, string> content = new Dictionary<string, string>();
+            content.Add("key1", "Value1");
+            content.Add("key2", "Value2");
+            ModelExtractor.SaveModel(content, @"C:\Documentation.xml");
+        }
+
+        [Test]
         public void CheckGenerate()
         {
             var configuration = new DocumentationConfiguration();
-            configuration.InterceptorKinds = new List<InterceptorKindConfiguration>
+            configuration.InterceptorKinds = new List<InterceptorKind>()
+                {
+                    new InterceptorKind()
+                        {
+                            Name = "Method",
+                            Configurations = new List<InterceptorKindConfiguration>
                 {
                     new InterceptorKindConfiguration()
                         {
@@ -37,7 +51,7 @@ namespace NetAspect.Doc.Builder.Tests
                                         }
                                 }
                         }
-                };
+                }}};
             var serializer = new XmlSerializer(typeof(DocumentationConfiguration));
             using (var file = File.Create(@"C:\Documentation.xml"))
             {

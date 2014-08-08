@@ -98,19 +98,19 @@ namespace NetAspect.Doc.Builder.Model
             return new Section(paragraphs, "Interceptors", null, DocumentationTemplates.SectionDescriptionInterceptors);
         }
 
-        private static Section.Paragraph CreateMethodInterceptorParagraph(DocumentationFromTest tests, InterceptorKindConfiguration interceptorKindConfiguration)
+        private static Section.Paragraph CreateMethodInterceptorParagraph(DocumentationFromTest tests, InterceptorKind interceptorKindConfiguration)
         {
             var subParagraphs = new List<Section.Paragraph.SubParagraph>();
-            foreach (var interceptorConfiguration in interceptorKindConfiguration.Interceptors)
+            foreach (var interceptorConfiguration in interceptorKindConfiguration.Configurations)
             {
-                interceptorConfiguration.
+                //interceptorConfiguration.
                 var details = new List<Section.Paragraph.SubParagraph.Detail>();
-                subParagraphs.Add(new Section.Paragraph.SubParagraph(details, interceptorConfiguration.Title, DocumentationTemplates.SubParagraphDescriptionMethodInterceptor, new SubParagraphModel
-                    {
-                        Member = interceptorConfiguration.Member
-                    }));
+                //subParagraphs.Add(new Section.Paragraph.SubParagraph(details, interceptorConfiguration.Title, DocumentationTemplates.SubParagraphDescriptionMethodInterceptor, new SubParagraphModel
+                //    {
+                //        Member = interceptorConfiguration.Member
+                //    }));
             }
-            return new Section.Paragraph(subParagraphs, interceptorKindConfiguration.Title, null, DocumentationTemplates.ParagraphDescriptionMethodInterceptor);
+            return new Section.Paragraph(subParagraphs, interceptorKindConfiguration.Name, null, DocumentationTemplates.ParagraphDescriptionMethodInterceptor);
         }
 
         private static Page CreateGettingStartedPage(string baseFolder)

@@ -105,8 +105,8 @@ namespace NetAspect.Doc.Builder.Model
             public string Description { get; set; }
         }
         public List<Parameter> Parameters { get; set; }
-        public Event Event { get { return InterceptorModelHelper.ExtractEvent(this); } }
-        public Kind Kind { get { return InterceptorModelHelper.ExtractKind(this); } }
+        public Event Event { get { return InterceptorModelHelper.ExtractEvent(Name); } }
+        public Kind Kind { get { return InterceptorModelHelper.ExtractKind(Name); } }
     }
 
     public enum Event
@@ -126,9 +126,9 @@ namespace NetAspect.Doc.Builder.Model
 
     public static class InterceptorModelHelper
     {
-        public static Event ExtractEvent(InterceptorModel model)
+        public static Event ExtractEvent(string interceptorName)
         {
-            var replace = Regex.Split(model.Name, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))");
+            var replace = Regex.Split(interceptorName, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))");
             if (replace.Contains("Before"))
                 return Event.Before;
             if (replace.Contains("After"))
@@ -137,12 +137,12 @@ namespace NetAspect.Doc.Builder.Model
                 return Event.OnException;
             if (replace.Contains("Finally"))
                 return Event.OnFinally;
-            throw new NotSupportedException(model.Name);
+            throw new NotSupportedException(interceptorName);
         }
 
-        public static Kind ExtractKind(InterceptorModel model)
+        public static Kind ExtractKind(string interceptorName)
         {
-            var replace = Regex.Split(model.Name, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))");
+            var replace = Regex.Split(interceptorName, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))");
             if (replace.Contains("Call"))
                 return Kind.Call;
             if (replace.Contains("Parameter"))
@@ -153,7 +153,7 @@ namespace NetAspect.Doc.Builder.Model
 
     public class DocumentationConfiguration
     {
-        public List<InterceptorKindConfiguration> InterceptorKinds { get; set; }
+        public List<InterceptorKind> InterceptorKinds { get; set; }
     }
 
     public class InterceptorKindConfiguration
@@ -166,6 +166,7 @@ namespace NetAspect.Doc.Builder.Model
 
     public class InterceptorKind
     {
+        public string Name { get; set; }
         public List<InterceptorKindConfiguration> Configurations { get; set; }
     }
 
