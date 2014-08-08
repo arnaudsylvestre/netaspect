@@ -121,6 +121,9 @@
   <data name="ParagraphDescriptionMethodInterceptor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>paragraphdescriptionmethodinterceptor.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="SectionDescriptionInterceptors" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sectiondescriptioninterceptors.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="SubParagraphDescriptionMethodInterceptor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>subparagraphdescriptionmethodinterceptor.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

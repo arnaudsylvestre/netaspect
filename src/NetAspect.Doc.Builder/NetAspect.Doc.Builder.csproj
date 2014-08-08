@@ -74,6 +74,7 @@
     <Compile Include="Core\WebsiteGenerator.cs" />
     <Compile Include="DocBuilder.cs" />
     <Compile Include="Helpers\NVelocityHelper.cs" />
+    <Compile Include="Model\DocumentationConfiguration.cs" />
     <Compile Include="Model\WebSite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,8 +94,11 @@
       <DependentUpon>Templates.resx</DependentUpon>
     </Compile>
     <Content Include="Resources\Basics.txt" />
-    <Content Include="Resources\Header.txt" />
     <Compile Include="SampleExtractor.cs" />
+    <Content Include="Resources\DocumentationPage.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Templates\Documentation\SectionDescriptionInterceptors.txt" />
     <Content Include="Templates\Documentation\SubParagraphDescriptionMethodInterceptor.txt" />
     <Content Include="Templates\NetAspectPage.txt" />
     <Content Include="Templates\Documentation\ParagraphDescriptionMethodInterceptor.txt" />

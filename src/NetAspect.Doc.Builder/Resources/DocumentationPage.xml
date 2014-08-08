@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<DocumentationConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <InterceptorKinds>
+    <InterceptorKind>
+      <Name>Method</Name>
+      <InterceptorKindConfiguration>
+        <Parameters>
+          <ParameterConfiguration>
+            <Name>instance</Name>
+            <Description>The instance</Description>
+          </ParameterConfiguration>
+          <ParameterConfiguration>
+            <Name>method</Name>
+            <Description>The method</Description>
+          </ParameterConfiguration>
+          <ParameterConfiguration>
+            <Name>property</Name>
+            <Description>The property</Description>
+          </ParameterConfiguration>
+          <ParameterConfiguration>
+            <Name>constructor</Name>
+            <Description>The constructor</Description>
+          </ParameterConfiguration>
+          <ParameterConfiguration>
+            <Name>parameters</Name>
+            <Description>The parameters</Description>
+          </ParameterConfiguration>
+          <ParameterConfiguration>
+            <Name>parameter name</Name>
+            <Description>The parameter name</Description>
+          </ParameterConfiguration>
+          <ParameterConfiguration>
+            <Name>result</Name>
+            <Description>The result</Description>
+          </ParameterConfiguration>
+          <ParameterConfiguration>
+            <Name>exception</Name>
+            <Description>The exception</Description>
+          </ParameterConfiguration>
+          <ParameterConfiguration>
+            <Name>value</Name>
+            <Description>The property value</Description>
+          </ParameterConfiguration>
+        </Parameters>
+        <Interceptors>
+          <InterceptorConfiguration>
+            <MethodName>Before</MethodName>
+            <When>before the method is executed</When>
+          </InterceptorConfiguration>
+          <InterceptorConfiguration>
+            <MethodName>After</MethodName>
+            <When>after the method is executed</When>
+          </InterceptorConfiguration>
+          <InterceptorConfiguration>
+            <MethodName>OnException</MethodName>
+            <When>when an exception occured in the method</When>
+          </InterceptorConfiguration>
+          <InterceptorConfiguration>
+            <MethodName>OnFinally</MethodName>
+            <When>after the method is executed when an exception occured or not</When>
+          </InterceptorConfiguration>
+        </Interceptors>
+        <Title>On methods</Title>
+      </InterceptorKindConfiguration>
+    </InterceptorKind>
+  </InterceptorKinds>
+</DocumentationConfiguration>
+[InterceptorDescription("BeforeConstructor", "before the constructor is executed")]
+[InterceptorDescription("AfterConstructor", "after the constructor is executed")]
+[InterceptorDescription("OnExceptionConstructor", "when an exception occured in the constructor")]
+[InterceptorDescription("OnFinallyConstructor", "after the constructor is executed when an exception occured or not")]
+
+[InterceptorDescription("BeforePropertyGetMethod", "before the get method of the property is executed")]
+[InterceptorDescription("AfterPropertyGetMethod", "after the get method of the property is executed")]
+[InterceptorDescription("OnExceptionPropertyGetMethod", "when an exception occured in the get method of the property")]
+[InterceptorDescription("OnFinallyPropertyGetMethod", "after the get method of the property is executed when an exception occured or not")]
+
+[InterceptorDescription("BeforePropertySetMethod", "before the set method of the property is executed")]
+[InterceptorDescription("AfterPropertySetMethod", "after the set method of the property is executed")]
+[InterceptorDescription("OnExceptionPropertySetMethod", "when an exception occured in the set method of the property")]
+[InterceptorDescription("OnFinallyPropertySetMethod", "after the set method of the property is executed when an exception occured or not")]

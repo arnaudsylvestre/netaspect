@@ -52,7 +52,6 @@ namespace NetAspect.Doc.Builder
 
             public List<Parameter> AvailableParameters { get; set; }
 
-            public string Header { get; set; }
             public string Footer { get; set; }
             
             public string Basics { get; set; }
@@ -79,7 +78,7 @@ namespace NetAspect.Doc.Builder
 
         public DocBuilder()
         {
-            documentation.Header = Content.Header;
+            
             documentation.Basics = Content.Basics;
         }
 

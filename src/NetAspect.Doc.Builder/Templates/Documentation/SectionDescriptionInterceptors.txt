@@ -1,0 +1,1 @@
+﻿<p>An interceptor is a method declared in the aspect and which will be called at certain moment after the weaving</p>

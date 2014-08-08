@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 using NetAspect.Doc.Builder.Core.GettingStarted;
 using NetAspect.Doc.Builder.Helpers;
+using NetAspect.Doc.Builder.Resources;
 using NetAspect.Doc.Builder.Templates.Documentation;
 
 namespace NetAspect.Doc.Builder.Model
@@ -29,6 +31,18 @@ namespace NetAspect.Doc.Builder.Model
             {
                 Key = "paragraph",
                 Value = paragraph.Model,
+            }, new NVelocityHelper.NVelocityEntry()
+            {
+                Key = "template",
+                Value = this,
+            });
+        }
+        public string GenerateDescription(Section section)
+        {
+            return NVelocityHelper.GenerateContent(section.DescriptionTemplate, new NVelocityHelper.NVelocityEntry()
+            {
+                Key = "paragraph",
+                Value = section.Model,
             }, new NVelocityHelper.NVelocityEntry()
             {
                 Key = "template",
@@ -71,24 +85,32 @@ namespace NetAspect.Doc.Builder.Model
 
         private static Section CreateInterceptorsSection(DocumentationFromTest tests)
         {
+            var serializer = new XmlSerializer(typeof(DocumentationConfiguration));
+            var docPage = (DocumentationConfiguration)serializer.Deserialize(new StringReader(Content.DocumentationPage));
             var paragraphs = new List<Section.Paragraph>();
-            paragraphs.Add(CreateMethodInterceptorParagraph(tests));
-            return new Section(paragraphs, "Interceptors", "");
+
+            foreach (var interceptorKindConfiguration in docPage.InterceptorKinds)
+            {
+                paragraphs.Add(CreateMethodInterceptorParagraph(tests, interceptorKindConfiguration));
+                
+            }
+
+            return new Section(paragraphs, "Interceptors", null, DocumentationTemplates.SectionDescriptionInterceptors);
         }
 
-        private static Section.Paragraph CreateMethodInterceptorParagraph(DocumentationFromTest tests)
+        private static Section.Paragraph CreateMethodInterceptorParagraph(DocumentationFromTest tests, InterceptorKindConfiguration interceptorKindConfiguration)
         {
             var subParagraphs = new List<Section.Paragraph.SubParagraph>();
-            var possibilityDescriptions = from p in tests.Possibilities where p.Kind == "MethodWeaving" select p;
-            foreach (var possibilityDescription in possibilityDescriptions)
+            foreach (var interceptorConfiguration in interceptorKindConfiguration.Interceptors)
             {
+                interceptorConfiguration.
                 var details = new List<Section.Paragraph.SubParagraph.Detail>();
-                subParagraphs.Add(new Section.Paragraph.SubParagraph(details, possibilityDescription.Title, DocumentationTemplates.SubParagraphDescriptionMethodInterceptor, new SubParagraphModel
+                subParagraphs.Add(new Section.Paragraph.SubParagraph(details, interceptorConfiguration.Title, DocumentationTemplates.SubParagraphDescriptionMethodInterceptor, new SubParagraphModel
                     {
-                        Member = possibilityDescription.Member
+                        Member = interceptorConfiguration.Member
                     }));
             }
-            return new Section.Paragraph(subParagraphs, "Method interceptors", null, DocumentationTemplates.ParagraphDescriptionMethodInterceptor);
+            return new Section.Paragraph(subParagraphs, interceptorKindConfiguration.Title, null, DocumentationTemplates.ParagraphDescriptionMethodInterceptor);
         }
 
         private static Page CreateGettingStartedPage(string baseFolder)
@@ -157,31 +179,38 @@ namespace NetAspect.Doc.Builder.Model
 
         public class Section
         {
-            public Section(List<Paragraph> paragraphs, string name, string description)
+            public Section(List<Paragraph> paragraphs, string name, object model, string descriptionTemplate)
             {
+                DescriptionTemplate = descriptionTemplate;
+                Model = model;
                 Paragraphs = paragraphs;
                 Name = name;
-                Description = description;
             }
 
             public string Name { get; set; }
-            public string Description { get; set; }
 
-            public List<Paragraph> Paragraphs { get; set; } 
+            public List<Paragraph> Paragraphs { get; set; }
+
+            public object Model { get; set; }
+
+            public string DescriptionTemplate { get; set; }
 
             public class Paragraph
             {
+                private static int i;
+
                 public Paragraph(List<SubParagraph> subParagraphs, string title, object model, string descriptionTemplate)
                 {
                     DescriptionTemplate = descriptionTemplate;
                     Model = model;
                     SubParagraphs = subParagraphs;
                     Title = title;
+                    Id = "Paragraph" + i++;
                 }
 
-                public List<SubParagraph> SubParagraphs { get; set; } 
+                public List<SubParagraph> SubParagraphs { get; set; }
 
-
+                public string Id { get; set; }
                 public string Title { get; set; }
 
                 public object Model { get; set; }

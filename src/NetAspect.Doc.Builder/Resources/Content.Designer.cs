@@ -86,22 +86,24 @@ namespace NetAspect.Doc.Builder.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
-        ///&lt;html lang=&quot;en&quot;&gt;
-        ///   &lt;head&gt;
-        ///      &lt;meta charset=&quot;utf-8&quot;&gt;
-        ///      &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
-        ///      &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-        ///      &lt;meta name=&quot;description&quot; content=&quot;&quot;&gt;
-        ///      &lt;meta name=&quot;author&quot; content=&quot;&quot;&gt;
-        ///      &lt;link rel=&quot;shortcut icon&quot; href=&quot;../../docs-assets/ico/favicon.png&quot;&gt;
-        ///      &lt;title&gt;NetAspect&lt;/title&gt;
-        ///      &lt;link href=&quot;bootstrap-3.0.2/dist/css/bootstrap.css&quot; rel=&quot;stylesheet&quot;&gt;
-        ///      &lt;link href=&quot;jumbotron.cs [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
+        ///&lt;DocumentationConfiguration xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+        ///  &lt;InterceptorKinds&gt;
+        ///    &lt;InterceptorKindConfiguration&gt;
+        ///      &lt;Parameters&gt;
+        ///        &lt;ParameterConfiguration&gt;
+        ///          &lt;Name&gt;name&lt;/Name&gt;
+        ///          &lt;Description&gt;description&lt;/Description&gt;
+        ///        &lt;/ParameterConfiguration&gt;
+        ///      &lt;/Parameters&gt;
+        ///      &lt;Interceptors&gt;
+        ///        &lt;InterceptorConfiguration&gt;
+        ///          &lt;MethodName&gt;Method&lt;/MethodName&gt;
+        ///          &lt;W [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Header {
+        internal static string DocumentationPage {
             get {
-                return ResourceManager.GetString("Header", resourceCulture);
+                return ResourceManager.GetString("DocumentationPage", resourceCulture);
             }
         }
     }

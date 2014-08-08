@@ -1,4 +1,6 @@
-﻿<div class="container bs-docs-container">
+﻿#set( $H = '#' )
+
+<div class="container bs-docs-container">
       <div class="row">
 		<div class="col-md-12" role="main">
 
@@ -7,15 +9,13 @@
 				<div class="page-header">
 					<h1 id="dropdowns">$section.Name</h1>
 				</div>
-#if ($section.Description != "")
-				<p>$section.Description</p>
-#end
+$template.GenerateDescription($section)
 #foreach ($paragraph in $section.Paragraphs)
 				<h2 id="dropdowns">$paragraph.Title</h2>
 $template.GenerateDescription($paragraph)
 
-				<input type="button" class="btn btn-primary" data-toggle="collapse" data-target="#{paragraph.Name}Collapsible" value="Show more">
-				<div id="${paragraph.Name}Collapsible" class="collapse">
+				<input type="button" class="btn btn-primary" data-toggle="collapse" data-target="${H}${paragraph.Id}Collapsible" value="Show more">
+				<div id="${paragraph.Id}Collapsible" class="collapse">
 #foreach ($subParagraph in ${paragraph.SubParagraphs})
 
 					<h4 id="dropdowns-example">$subParagraph.Title</h4>
@@ -40,12 +40,12 @@ $template.GenerateDescription($detail)
 $template.GenerateCode($sample)
 </pre>
 #end
-#end
-#end
-#end
 								</div>
 							</div>
 						</div>
+#end
+#end
+#end
 #end
         
 					</div>

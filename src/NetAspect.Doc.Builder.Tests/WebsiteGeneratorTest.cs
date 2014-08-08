@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
+using NUnit.Framework;
 using NetAspect.Doc.Builder.Core;
 using NetAspect.Doc.Builder.Core.GettingStarted;
 using NetAspect.Doc.Builder.Model;
@@ -8,6 +11,41 @@ namespace NetAspect.Doc.Builder.Tests
     [TestFixture]
     public class WebsiteGeneratorTest
     {
+        [Test]
+        public void CheckGenerate()
+        {
+            var configuration = new DocumentationConfiguration();
+            configuration.InterceptorKinds = new List<InterceptorKindConfiguration>
+                {
+                    new InterceptorKindConfiguration()
+                        {
+                            Title = "Title",
+                            Parameters = new List<ParameterConfiguration>
+                                {
+                                    new ParameterConfiguration()
+                                        {
+                                            Name = "name",
+                                            Description = "description"
+                                        }
+                                },
+                            Interceptors = new List<InterceptorConfiguration>
+                                {
+                                    new InterceptorConfiguration()
+                                        {
+                                            MethodName = "Method",
+                                            When = "Hello"
+                                        }
+                                }
+                        }
+                };
+            var serializer = new XmlSerializer(typeof(DocumentationConfiguration));
+            using (var file = File.Create(@"C:\Documentation.xml"))
+            {
+                serializer.Serialize(file, configuration);
+                
+            }
+        }
+
         [Test]
          public void CheckWebsiteGeneration()
         {

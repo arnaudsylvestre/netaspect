@@ -61,18 +61,27 @@ namespace NetAspect.Doc.Builder.Templates.Documentation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to             &lt;p&gt;The &quot;method weaving&quot; will modify the code of the method to add behavior. It is possible to add behaviors :&lt;/p&gt;
+        ///   Looks up a localized string similar to             &lt;p&gt;The method interceptors will modify the code of the method to add behavior. It is possible to add behaviors :&lt;/p&gt;
         ///            &lt;ul&gt;
         ///               &lt;li&gt;&lt;b&gt;Before&lt;/b&gt; the method is executed&lt;/li&gt;
         ///               &lt;li&gt;&lt;b&gt;After&lt;/b&gt; the method is executed when no exception is raised&lt;/li&gt;
         ///               &lt;li&gt;&lt;b&gt;When exception occurs&lt;/b&gt; in the method&lt;/li&gt;
         ///               &lt;li&gt;&lt;b&gt;On finally&lt;/b&gt; : at the end of the method when an exception is raised or not&lt;/li&gt;
         ///            &lt;/ul&gt;
-        ///            &lt;p&gt;For each  [rest of string was truncated]&quot;;.
+        ///            &lt;p&gt;For ea [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ParagraphDescriptionMethodInterceptor {
             get {
                 return ResourceManager.GetString("ParagraphDescriptionMethodInterceptor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;An interceptor is a method declared in the aspect and which will be called at certain moment after the weaving&lt;/p&gt;.
+        /// </summary>
+        internal static string SectionDescriptionInterceptors {
+            get {
+                return ResourceManager.GetString("SectionDescriptionInterceptors", resourceCulture);
             }
         }
         
