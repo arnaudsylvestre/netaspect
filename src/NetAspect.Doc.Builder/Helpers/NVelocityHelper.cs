@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Commons.Collections;
 using NVelocity;
@@ -6,6 +7,19 @@ using NVelocity.App;
 
 namespace NetAspect.Doc.Builder.Helpers
 {
+
+    public class InterceptorDocumentation
+    {
+        
+    }
+
+    public class InterceptorGroupDocumentation
+    {
+        public string Name { get; set; }
+        public List<InterceptorDocumentation> Interceptors { get; set; }
+    }
+
+
     public class NVelocityHelper
     {
         public class NVelocityEntry
