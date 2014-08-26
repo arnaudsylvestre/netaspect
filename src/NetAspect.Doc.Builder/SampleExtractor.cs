@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using ICSharpCode.NRefactory.CSharp;
+using NetAspect.Doc.Builder.Helpers;
 
 namespace NetAspect.Doc.Builder
 {
@@ -14,6 +15,27 @@ namespace NetAspect.Doc.Builder
 
    public class DocumentationFromTestExtractor
    {
+       public List<InterceptorDocumentation> ExtractInterceptors(string directoryPath_P)
+       {
+           List<InterceptorDocumentation> doc = new List<InterceptorDocumentation>();
+           var parser = new CSharpParser();
+           var files_L = Directory.GetFiles(directoryPath_P, "*.cs", SearchOption.AllDirectories).OrderBy(f => Path.GetFileName(f));
+           foreach (var file_L in files_L)
+           {
+               using (var stream = File.OpenRead(file_L))
+               {
+                   var syntaxTree = parser.Parse(stream);
+                   var test = new InterceptorDocumentation();
+                   doc.Add(test);
+                   syntaxTree.AcceptVisitor(new InterceptorDocumentationVisitor(test));
+
+               }
+           }
+
+
+           return doc;
+       }
+
       public DocumentationFromTest ExtractDocumentationFromTests(string directoryPath_P)
       {
          DocumentationFromTest doc = new DocumentationFromTest();
@@ -197,4 +219,87 @@ namespace NetAspect.Doc.Builder
       public string Called { get; set; }
 
    }
+
+
+
+   class InterceptorDocumentationVisitor : DepthFirstAstVisitor
+   {
+       private readonly InterceptorDocumentation model;
+
+       public InterceptorDocumentationVisitor(InterceptorDocumentation model)
+       {
+           this.model = model;
+       }
+
+
+       public override void VisitParameterDeclaration(ParameterDeclaration parameterDeclaration)
+       {
+           if (IsWeaved(parameterDeclaration.Attributes))
+               model.Member = "parameter";
+           base.VisitParameterDeclaration(parameterDeclaration);
+       }
+
+       public override void VisitPropertyDeclaration(PropertyDeclaration propertyDeclaration)
+       {
+
+           if (IsWeaved(propertyDeclaration.Attributes))
+               model.Member = "property";
+           base.VisitPropertyDeclaration(propertyDeclaration);
+       }
+
+       public override void VisitFieldDeclaration(FieldDeclaration fieldDeclaration)
+       {
+           if (IsWeaved(fieldDeclaration.Attributes))
+               model.Member = "field";
+           base.VisitFieldDeclaration(fieldDeclaration);
+       }
+
+       public override void VisitConstructorDeclaration(ConstructorDeclaration constructorDeclaration)
+       {
+           if (IsWeaved(constructorDeclaration.Attributes))
+               model.Member = "constructor";
+           base.VisitConstructorDeclaration(constructorDeclaration);
+       }
+
+       public override void VisitLambdaExpression(LambdaExpression lambdaExpression)
+       {
+           model.CallCode = lambdaExpression.Body.ToString();
+           base.VisitLambdaExpression(lambdaExpression);
+       }
+
+       public override void VisitTypeDeclaration(TypeDeclaration typeDeclaration)
+       {
+           if (typeDeclaration.Name.EndsWith("Attribute"))
+           {
+               model.AspectCode = typeDeclaration.ToString();
+           }
+           if (typeDeclaration.Name == "MyInt")
+           {
+               model.ClassToWeaveCode = typeDeclaration.ToString();
+           }
+           base.VisitTypeDeclaration(typeDeclaration);
+       }
+
+       public override void VisitMethodDeclaration(MethodDeclaration methodDeclaration)
+       {
+           if (((TypeDeclaration)methodDeclaration.Parent).Name.EndsWith("Attribute"))
+           {
+               model.Name = methodDeclaration.Name;
+               foreach (var parameter_L in methodDeclaration.Parameters)
+               {
+                   model.Parameters.Add(parameter_L.Name);
+
+               }
+           }
+           if (IsWeaved(methodDeclaration.Attributes))
+               model.Member = "method";
+           base.VisitMethodDeclaration(methodDeclaration);
+       }
+
+       private bool IsWeaved(AstNodeCollection<AttributeSection> attributes_P)
+       {
+           return attributes_P.SelectMany(attributeSection_L => attributeSection_L.Attributes).Any(attribute_L => ((SimpleType)attribute_L.Type).Identifier == "Log");
+       }
+   }
+
 }

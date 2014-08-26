@@ -4,25 +4,41 @@
       <div class="row">
 		<div class="col-md-12" role="main">
 
-#foreach ($section in $page)
+		
+		<div class="bs-docs-section">
+		 
+            <div class="page-header">
+               <h1 id="kinds">Interceptors</h1>
+            </div>
+            <p>An interceptor is a method declared in the aspect and which will be called at certain moment after the weaving. In NetAspect, you can have 3 kinds of interceptors :</p>
+			<ul>
+               <li><b>Method interceptor</b> : the interceptor will be executed in the method (before the code of the method for example)</li>
+               <li><b>Instruction interceptor</b> : the interceptor will be executed before or after an instruction (before calling a method for example)</li>
+               <li><b>Parameter interceptor</b> : the interceptor will be executed in the method but the aspect is placed on a parameter</li>
+            </ul>
+            <p>Some parameters can be added to the interceptor to get more information</p>
+            
+         </div>
+
+
+
 			<div class="bs-docs-section">
 				<div class="page-header">
-					<h1 id="dropdowns">$section.Name</h1>
+					<h1 id="dropdowns">Available interceptors</h1>
 				</div>
-$template.GenerateDescription($section)
-#foreach ($paragraph in $section.Paragraphs)
-				<h2 id="dropdowns">$paragraph.Title</h2>
-$template.GenerateDescription($paragraph)
+            <p>The following interceptors are supported :</p>
+#foreach ($interceptor in $interceptors)
+				<h2 id="dropdowns">$interceptor.MethodName</h2>
+<p>This interceptor is a <b>$interceptor.Kind interceptor</b>. The following parameters are available :</p>
+			<ul>
+#foreach ($parameter in $interceptor.Parameters)
+               <li>$parameter</li>
+#end
+            </ul>
 
-				<input type="button" class="btn btn-primary" data-toggle="collapse" data-target="${H}${paragraph.Id}Collapsible" value="Show more">
-				<div id="${paragraph.Id}Collapsible" class="collapse">
-#foreach ($subParagraph in ${paragraph.SubParagraphs})
-
-					<h4 id="dropdowns-example">$subParagraph.Title</h4>
-$template.GenerateDescription($subParagraph)
+				<div id="${paragraph.Id}Collapsible" >
 			
 					<div class="panel-group" id="Group$possibility.Kind">
-#foreach ($detail in $subParagraph.Details)
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h4 class="panel-title">
@@ -31,29 +47,40 @@ $template.GenerateDescription($subParagraph)
 							</div>
 							<div id="$detail.Id" class="panel-collapse collapse">
 								<div class="panel-body">
-$template.GenerateDescription($detail)
-#if ($detail.Samples.Count > 0)
-					<p>Samples :</p>
-#endif
-#foreach ($sample in $detail.samples)
+					<p>Sample :</p>
 									<pre class="prettyprint">
 $template.GenerateCode($sample)
 </pre>
-#end
 								</div>
 							</div>
 						</div>
-#end
-#end
 #end
 #end
         
 					</div>
 
 
-#end
 				</div>
 			</div>
+
+			
+		
+		<div class="bs-docs-section">
+		 
+            <div class="page-header">
+               <h1 id="parameters">Available parameters</h1>
+            </div>
+			
+<div class="alert alert-warning" role="alert">The following parameters are <b>not</b> available for each interceptor.</div>
+			<ul>
+#foreach ($parameter in $parameters)
+               <li><b>$parameter.Name</b> : $parameter.Description</li>
+#end
+            </ul>
+            
+         </div>
+
+
 		</div>
 	</div>
 </div>

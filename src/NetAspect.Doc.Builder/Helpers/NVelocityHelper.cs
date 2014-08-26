@@ -4,19 +4,28 @@ using System.IO;
 using Commons.Collections;
 using NVelocity;
 using NVelocity.App;
+using NetAspect.Doc.Builder.Model;
 
 namespace NetAspect.Doc.Builder.Helpers
 {
 
     public class InterceptorDocumentation
     {
-        
-    }
+        public InterceptorDocumentation()
+        {
+            Parameters = new List<string>();
+        }
 
-    public class InterceptorGroupDocumentation
-    {
         public string Name { get; set; }
-        public List<InterceptorDocumentation> Interceptors { get; set; }
+        public string Kind {get { return InterceptorModelHelper.ExtractKind(Name).ToString(); }}
+        public List<string> Parameters { get; set; }
+        public string Member { get; set; }
+
+        public string CallCode { get; set; }
+
+        public string AspectCode { get; set; }
+
+        public string ClassToWeaveCode { get; set; }
     }
 
 

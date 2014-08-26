@@ -11,14 +11,6 @@ namespace NetAspect.Doc.Builder.Tests
     [TestFixture]
     public class WebsiteGeneratorTest
     {
-        [Test]
-        public void CheckGenerateModel()
-        {
-            Dictionary<string, string> content = new Dictionary<string, string>();
-            content.Add("key1", "Value1");
-            content.Add("key2", "Value2");
-            ModelExtractor.SaveModel(content, @"C:\Documentation.xml");
-        }
 
         [Test]
         public void CheckGenerate()

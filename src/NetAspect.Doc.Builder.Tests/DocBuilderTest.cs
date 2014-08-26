@@ -20,7 +20,7 @@ namespace NetAspect.Doc.Builder.Tests
 
             DocumentationFromTestExtractor extractor = new DocumentationFromTestExtractor();
 
-            var documentationFromTest_L = extractor.ExtractDocumentationFromTests(baseDirectory + @"src\FluentAspect.Weaver.Tests\docs\MethodPossibilities");
+            var documentationFromTest_L = extractor.ExtractDocumentationFromTests(baseDirectory + @"src\FluentAspect.Weaver.Tests\docs\Documentation");
 
             var possibilities = new List<Possibility>();
             BuildPossibilities(possibilities, documentationFromTest_L);
