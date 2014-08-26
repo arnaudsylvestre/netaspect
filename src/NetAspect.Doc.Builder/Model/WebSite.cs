@@ -71,9 +71,18 @@ namespace NetAspect.Doc.Builder.Model
         private static Page CreateDocumentationPage(string baseFolder)
         {
             var extractor = new DocumentationFromTestExtractor();
-            var tests = extractor.ExtractDocumentationFromTests(Path.Combine(baseFolder, "Documentation"));
-            List<Section> sections = Convert(tests);
-            return new Page("Documentation", Templates.Templates.DocumentationPage, "Documentation", sections);
+            return new Page("Documentation", Templates.Templates.DocumentationPage, "Documentation", new DocumentationPageModel
+                {
+                    Interceptors = extractor.ExtractInterceptors(Path.Combine(baseFolder, "Documentation")),
+                    Parameters = new List<int>()
+                });
+        }
+
+        public class DocumentationPageModel
+        {
+            public List<InterceptorDocumentation> Interceptors { get; set; }
+
+            public List<int> Parameters { get; set; }
         }
 
         private static List<Section> Convert(DocumentationFromTest tests)

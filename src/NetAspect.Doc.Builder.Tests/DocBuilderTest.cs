@@ -16,27 +16,27 @@ namespace NetAspect.Doc.Builder.Tests
          public void CheckBuild()
        {
           //string baseDirectory = @"D:\Sources\3rdParty\fluentaspect-git\fluentaspect\";
-          string baseDirectory = @"D:\Developpement\fluentaspect\";
+          //string baseDirectory = @"D:\Developpement\fluentaspect\";
 
-            DocumentationFromTestExtractor extractor = new DocumentationFromTestExtractor();
+          //  DocumentationFromTestExtractor extractor = new DocumentationFromTestExtractor();
 
-            var documentationFromTest_L = extractor.ExtractDocumentationFromTests(baseDirectory + @"src\FluentAspect.Weaver.Tests\docs\Documentation");
+          //  var documentationFromTest_L = extractor.ExtractInterceptors(baseDirectory + @"src\FluentAspect.Weaver.Tests\docs\Documentation");
 
-            var possibilities = new List<Possibility>();
-            BuildPossibilities(possibilities, documentationFromTest_L);
+          //  var possibilities = new List<Possibility>();
+          //  BuildPossibilities(possibilities, documentationFromTest_L);
 
-             var builder = new DocBuilder();
-             foreach (var possibility in possibilities)
-            {
-               builder.Add(possibility);
-            }
-             builder.Add(from p in documentationFromTest_L.Parameters select new Parameter()
-                 {
-                     Description = p.Description,
-                     Name = p.Name,
-                     Kind = p.Kind,
-                 });
-             builder.Generate(baseDirectory + @"web\generated.html");
+          //   var builder = new DocBuilder();
+          //   foreach (var possibility in possibilities)
+          //  {
+          //     builder.Add(possibility);
+          //  }
+          //   builder.Add(from p in documentationFromTest_L.Parameters select new Parameter()
+          //       {
+          //           Description = p.Description,
+          //           Name = p.Name,
+          //           Kind = p.Kind,
+          //       });
+          //   builder.Generate(baseDirectory + @"web\generated.html");
          }
 
        private void BuildPossibilities(List<Possibility> possibilities_P, DocumentationFromTest documentationFromTest_P)

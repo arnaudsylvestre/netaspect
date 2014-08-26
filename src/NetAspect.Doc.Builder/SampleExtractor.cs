@@ -19,15 +19,16 @@ namespace NetAspect.Doc.Builder
        {
            List<InterceptorDocumentation> doc = new List<InterceptorDocumentation>();
            var parser = new CSharpParser();
-           var files_L = Directory.GetFiles(directoryPath_P, "*.cs", SearchOption.AllDirectories).OrderBy(f => Path.GetFileName(f));
+           var files_L = Directory.GetFiles(directoryPath_P, "*.cs", SearchOption.AllDirectories).OrderBy(Path.GetFileName);
            foreach (var file_L in files_L)
            {
                using (var stream = File.OpenRead(file_L))
                {
                    var syntaxTree = parser.Parse(stream);
                    var test = new InterceptorDocumentation();
-                   doc.Add(test);
                    syntaxTree.AcceptVisitor(new InterceptorDocumentationVisitor(test));
+                   if(test.Name != null)
+                   doc.Add(test);
 
                }
            }

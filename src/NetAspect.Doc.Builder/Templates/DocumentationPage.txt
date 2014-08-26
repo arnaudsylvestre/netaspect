@@ -27,34 +27,34 @@
 					<h1 id="dropdowns">Available interceptors</h1>
 				</div>
             <p>The following interceptors are supported :</p>
-#foreach ($interceptor in $interceptors)
-				<h2 id="dropdowns">$interceptor.MethodName</h2>
-<p>This interceptor is a <b>$interceptor.Kind interceptor</b>. The following parameters are available :</p>
+#foreach ($interceptor in $page.Interceptors)
+
+
+				<div id="${interceptor.Name}InterceptorCollapsible" >
+			
+					<div class="panel-group" id="Group${interceptor.Name}">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="$H${interceptor.Name}Coll">The $interceptor.Name interceptor</a>
+								</h4>
+							</div>
+							<div id="${interceptor.Name}Coll" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The <b>$interceptor.Name</b> method is a <b>$interceptor.Kind interceptor</b>. The following parameters are available :</p>
 			<ul>
 #foreach ($parameter in $interceptor.Parameters)
                <li>$parameter</li>
 #end
             </ul>
 
-				<div id="${paragraph.Id}Collapsible" >
-			
-					<div class="panel-group" id="Group$possibility.Kind">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion" href="#$detail.Id">$detail.Title</a>
-								</h4>
-							</div>
-							<div id="$detail.Id" class="panel-collapse collapse">
-								<div class="panel-body">
-					<p>Sample :</p>
+								<p>Here is a sample on how to use</p>
 									<pre class="prettyprint">
-$template.GenerateCode($sample)
+$interceptor.CallCode
 </pre>
 								</div>
 							</div>
 						</div>
-#end
 #end
         
 					</div>
@@ -73,7 +73,7 @@ $template.GenerateCode($sample)
 			
 <div class="alert alert-warning" role="alert">The following parameters are <b>not</b> available for each interceptor.</div>
 			<ul>
-#foreach ($parameter in $parameters)
+#foreach ($parameter in $page.Parameters)
                <li><b>$parameter.Name</b> : $parameter.Description</li>
 #end
             </ul>
