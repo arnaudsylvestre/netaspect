@@ -82,7 +82,17 @@ namespace NetAspect.Doc.Builder.Model
         {
             public List<InterceptorDocumentation> Interceptors { get; set; }
 
-            public List<int> Parameters { get; set; }
+           public IEnumerable<string> Members
+           {
+              get { return Interceptors.Select(i => i.Member).Distinct(); }
+           }
+
+           public IEnumerable<InterceptorDocumentation> GetInterceptors(string member)
+           {
+              return from i in Interceptors where i.Member == member select i;
+           }
+
+           public List<int> Parameters { get; set; }
         }
 
         private static List<Section> Convert(DocumentationFromTest tests)
