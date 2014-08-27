@@ -128,14 +128,13 @@ namespace NetAspect.Doc.Builder.Model
     {
         public static Event ExtractEvent(string interceptorName)
         {
-            var replace = Regex.Split(interceptorName, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))");
-            if (replace.Contains("Before"))
+            if (interceptorName.Contains("Before"))
                 return Event.Before;
-            if (replace.Contains("After"))
+            if (interceptorName.Contains("After"))
                 return Event.After;
-            if (replace.Contains("Exception"))
+            if (interceptorName.Contains("Exception"))
                 return Event.OnException;
-            if (replace.Contains("Finally"))
+            if (interceptorName.Contains("Finally"))
                 return Event.OnFinally;
             throw new NotSupportedException(interceptorName);
         }
