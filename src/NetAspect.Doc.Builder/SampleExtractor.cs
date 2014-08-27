@@ -257,9 +257,20 @@ namespace NetAspect.Doc.Builder
 
        public override void VisitConstructorDeclaration(ConstructorDeclaration constructorDeclaration)
        {
+           if (constructorDeclaration.Initializer.Arguments.Count == 3)
+           {
+               var arguments = constructorDeclaration.Initializer.Arguments.Cast<PrimitiveExpression>().ToList();
+               model.When = GetValue(arguments[0]);
+           }
            if (IsWeaved(constructorDeclaration.Attributes))
                model.Member = "constructor";
            base.VisitConstructorDeclaration(constructorDeclaration);
+       }
+
+
+       private static string GetValue(PrimitiveExpression expression)
+       {
+           return expression.LiteralValue.Replace("\"", "");
        }
 
        public override void VisitLambdaExpression(LambdaExpression lambdaExpression)

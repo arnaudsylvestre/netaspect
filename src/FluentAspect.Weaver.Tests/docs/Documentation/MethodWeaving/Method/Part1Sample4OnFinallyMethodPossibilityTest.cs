@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.Method
    public class Part1Sample4OnFinallyMethodPossibilityTest : NetAspectTest<Part1Sample4OnFinallyMethodPossibilityTest.MyInt>
     {
       public Part1Sample4OnFinallyMethodPossibilityTest()
-         : base("On finally method weaving possibilities", "MethodWeavingOnFinally", "MethodWeaving")
+           : base("This method is executed after the method is executed if an exception is raised or not", "MethodWeavingOnFinally", "MethodWeaving")
       {
       }
 

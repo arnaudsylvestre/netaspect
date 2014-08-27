@@ -17,7 +17,8 @@ namespace NetAspect.Doc.Builder.Helpers
         }
 
         public string Name { get; set; }
-        public string Kind {get { return InterceptorModelHelper.ExtractKind(Name).ToString(); }}
+        public string Kind { get { return InterceptorModelHelper.ExtractKind(Name).ToString(); } }
+        public string Event { get { return InterceptorModelHelper.ExtractEvent(Name).ToString(); } }
         public List<string> Parameters { get; set; }
         public string Member { get; set; }
 
@@ -26,6 +27,8 @@ namespace NetAspect.Doc.Builder.Helpers
         public string AspectCode { get; set; }
 
         public string ClassToWeaveCode { get; set; }
+
+        public string When { get; set; }
     }
 
 

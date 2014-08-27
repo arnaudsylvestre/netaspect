@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.Construc
    public class Part2Sample2AfterConstructorPossibilityTest : NetAspectTest<Part2Sample2AfterConstructorPossibilityTest.MyInt>
     {
       public Part2Sample2AfterConstructorPossibilityTest()
-         : base("After Constructor Weaving possibilities", "ConstructordWeavingAfter", "ConstructorWeaving")
+           : base("This method is executed after the code of the constructor is executed", "ConstructordWeavingAfter", "ConstructorWeaving")
       {
       }
 

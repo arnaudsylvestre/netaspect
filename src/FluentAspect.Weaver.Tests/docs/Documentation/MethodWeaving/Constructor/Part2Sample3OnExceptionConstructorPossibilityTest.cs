@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.Construc
    public class Part2Sample3OnExceptionConstructorPossibilityTest : NetAspectTest<Part2Sample3OnExceptionConstructorPossibilityTest.MyInt>
     {
       public Part2Sample3OnExceptionConstructorPossibilityTest()
-         : base("On exception constructor weaving possibilities", "ConstructorWeavingOnException", "ConstructorWeaving")
+           : base("This method is executed when an exception occurs when the constructor is executed", "ConstructorWeavingOnException", "ConstructorWeaving")
       {
       }
 

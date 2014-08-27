@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.Method
    public class Part1Sample1BeforeMethodPossibilityTest : NetAspectTest<Part1Sample1BeforeMethodPossibilityTest.MyInt>
     {
       public Part1Sample1BeforeMethodPossibilityTest()
-         : base("Before Method Weaving possibilities", "MethodWeavingBefore", "MethodWeaving")
+           : base("This method is executed before the code of the method is executed", "MethodWeavingBefore", "MethodWeaving")
       {
       }
 

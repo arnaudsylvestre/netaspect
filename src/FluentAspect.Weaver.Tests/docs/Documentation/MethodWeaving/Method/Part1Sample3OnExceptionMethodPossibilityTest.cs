@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.Method
    public class Part1Sample3OnExceptionMethodPossibilityTest : NetAspectTest<Part1Sample3OnExceptionMethodPossibilityTest.MyInt>
     {
       public Part1Sample3OnExceptionMethodPossibilityTest()
-         : base("On exception method weaving possibilities", "MethodWeavingOnException", "MethodWeaving")
+           : base("This method is executed when an exception occurs when the method is executed", "MethodWeavingOnException", "MethodWeaving")
       {
       }
 

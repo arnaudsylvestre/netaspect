@@ -28,33 +28,36 @@
 				<div class="page-header">
 					<h1 id="dropdowns">Available interceptors</h1>
 				</div>
-            <p>The following interceptors are supported :</p>
-#foreach ($interceptor in $page.Interceptors)
+
+#foreach ($member in $page.Members)
+				<h2 class="list-group-item-heading">For an aspect put on a $member</h2>
+				
+#foreach ($interceptor in $page.GetInterceptors($member))
 
 
 				<div id="${interceptor.Name}InterceptorCollapsible" >
 			
 			
 			<div class="list-group">
-			  <a data-toggle="collapse" href="$H${interceptor.Name}Coll" class="list-group-item active">
-				<h4 class="list-group-item-heading">The $interceptor.Name interceptor <span class="badge">$interceptor.Member</span></h4>
-				<p class="list-group-item-text">The <b>$interceptor.Name</b> method is a <b>$interceptor.Kind interceptor</b></p>
-			  </a>
-			</div>
-
-
-					<div class="panel-group" id="Group${interceptor.Name}">
-						<div class="panel panel-default">
+			  <a data-toggle="collapse" href="$H${interceptor.Name}Coll" class="list-group-item">
+				<h4 class="list-group-item-heading ">The $interceptor.Name interceptor</h4>
+#if ($interceptor.Event == 'Before')
+				<p class="list-group-item-text">This method is executed before the code of the $member is executed</p>
+#elseif ($interceptor.Event == 'After')
+				<p class="list-group-item-text">This method is executed after the code of the $member is executed</p>
+#elseif ($interceptor.Event == 'OnException')
+				<p class="list-group-item-text">This method is executed after the code of the $member is executed</p>
+#end
+				
 							
 							<div id="${interceptor.Name}Coll" class="panel-collapse collapse">
 								<div class="panel-body">
-								<p>The <b>$interceptor.Name</b> method is a <b>$interceptor.Kind interceptor</b>. The following parameters are available :</p>
+								<p>The $interceptor.Name method is a $interceptor.Kind interceptor. The following parameters are available :</p>
 			<ul>
 #foreach ($parameter in $interceptor.Parameters)
                <li>$parameter</li>
 #end
             </ul>
-			
 								<p>Here is a sample on how to use</p>
 								<p>Imagine the following class :</p>
 									<pre class="prettyprint">
@@ -69,8 +72,12 @@ $interceptor.AspectCode
 $interceptor.CallCode
 </pre>
 								</div>
-							</div>
-						</div>
+			  </a>
+			</div>
+
+					
+#end
+			<br/>
 #end
         
 					</div>

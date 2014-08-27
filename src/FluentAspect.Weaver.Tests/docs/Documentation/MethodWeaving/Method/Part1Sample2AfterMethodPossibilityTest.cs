@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.Method
    public class Part1Sample2AfterMethodPossibilityTest : NetAspectTest<Part1Sample2AfterMethodPossibilityTest.MyInt>
     {
       public Part1Sample2AfterMethodPossibilityTest()
-         : base("After Method Weaving possibilities", "MethodWeavingAfter", "MethodWeaving")
+           : base("This method is executed after the code of the method is executed", "MethodWeavingAfter", "MethodWeaving")
       {
       }
 
