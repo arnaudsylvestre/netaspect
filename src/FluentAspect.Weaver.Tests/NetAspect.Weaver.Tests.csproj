@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="docs\Documentation\Parameters\Copy of InstanceParameterWithRealTypeParameterTest.cs" />
     <Compile Include="docs\Documentation\Parameters\InstanceParameterWithObjectTypeParameterTest.cs" />
     <Compile Include="docs\Documentation\Parameters\InstanceParameterWithRealTypeParameterTest.cs" />
     <Compile Include="docs\Documentation\Weaving\WeaveWithSelectSampleTest.cs" />
