@@ -69,7 +69,7 @@ $page.Weaving.WeaveWithSelectSampleClassToWeave
 			
 			<div class="list-group">
 			  <a data-toggle="collapse" href="$H${interceptor.Name}Coll" class="list-group-item list-group-item-info">
-				<h4 class="list-group-item-heading ">The $interceptor.Name interceptor</h4>
+				<h4 class="list-group-item-heading ">$interceptor.Name</h4>
 #if ($interceptor.Kind == 'Method')
 #if ($interceptor.Event == 'Before')
 				<p class="list-group-item-text">This interceptor is executed before the code of the $member is executed</p>
