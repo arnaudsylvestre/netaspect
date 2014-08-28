@@ -1,4 +1,5 @@
 ﻿#set( $H = '#' )
+$page.SetParameterDescription('instance', 'the current instance of the member')
 
 <div class="container bs-docs-container">
       <div class="row">
@@ -142,10 +143,58 @@ $interceptor.CallCode
                <h1 id="parameters">Available parameters</h1>
             </div>
 			
+
+
+
+
+<div class="list-group">
+
+#foreach ($parameter in $page.Parameters)
+  <a href="#parameterId$velocityCount" data-toggle="collapse"  class="list-group-item">
+    <h4 class="list-group-item-heading">$parameter.Name</h4>
+    <p class="list-group-item-text">$page.GetParameterDescription($parameter.Name)</p>
+  </a>
+  <div id="parameterId$velocityCount" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>Here are some samples on how to use it</p>
+#foreach ($sample in $parameter.Samples)
+								<pre class="prettyprint">
+// The aspect
+$sample.AspectCode
+
+// The class to weave
+$sample.ClassToWeaveCode
+</pre>
+#end
+								</div>
+								</div>
+#end
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="alert alert-warning" role="alert">The following parameters are <b>not</b> available for each interceptor.</div>
 			<ul>
 #foreach ($parameter in $page.Parameters)
-               <li><b>$parameter.Name</b> : $parameter.Description</li>
+               <li><b>$parameter.Name</b> : $page.GetParameterDescription($parameter.Name)</li>
+			   
 #end
             </ul>
             

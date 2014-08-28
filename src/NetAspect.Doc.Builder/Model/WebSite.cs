@@ -95,6 +95,18 @@ namespace NetAspect.Doc.Builder.Model
 
            public List<ParameterModel> Parameters { get; set; }
            public WeavingModel Weaving { get; set; }
+
+            Dictionary<string, string> parameterDescriptions = new Dictionary<string, string>(); 
+
+            public void SetParameterDescription(string parameterName, string description)
+            {
+                parameterDescriptions.Add(parameterName, description);
+            }
+
+            public string GetParameterDescription(string parameterName)
+            {
+                return parameterDescriptions[parameterName];
+            }
         }
 
         private static List<Section> Convert(DocumentationFromTest tests)

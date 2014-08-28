@@ -99,11 +99,22 @@ namespace NetAspect.Doc.Builder
                var syntaxTree = parser.Parse(stream);
                var test = new InterceptorDocumentation();
                syntaxTree.AcceptVisitor(new InterceptorDocumentationVisitor(test));
-                  doc.Add(new ParameterModel()
-                  {
-                     Samples = 
-                  });
-
+                var model = doc.FirstOrDefault(p => p.Name == test.Parameters[0]);
+                if (model == null)
+                {
+                    model = new ParameterModel()
+                        {
+                            Name = test.Parameters[0],
+                            Samples = new List<ParameterModel.ParameterSample>()
+                        };
+                    doc.Add(model);
+                }
+                model.Samples.Add(new ParameterModel.ParameterSample()
+                    {
+                        AspectCode = test.AspectCode,
+                        CallCode = test.CallCode,
+                        ClassToWeaveCode = test.ClassToWeaveCode,
+                    });
             }
          }
 
