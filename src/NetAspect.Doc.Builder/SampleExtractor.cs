@@ -101,7 +101,7 @@ namespace NetAspect.Doc.Builder
                syntaxTree.AcceptVisitor(new InterceptorDocumentationVisitor(test));
                   doc.Add(new ParameterModel()
                   {
-                     
+                     Samples = 
                   });
 
             }
