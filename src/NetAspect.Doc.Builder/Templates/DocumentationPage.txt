@@ -5,30 +5,57 @@
 		<div class="col-md-12" role="main">
 
 		
-		<div class="bs-docs-section">
+	<div class="bs-docs-section">
 		 
             <div class="page-header">
-               <h1 id="kinds">Interceptors</h1>
+               <h1 id="kinds">Put aspects</h1>
             </div>
-            <p>An interceptor is a method declared in the aspect and which will be called at certain moment after the weaving. In NetAspect, you can have 3 kinds of interceptors :</p>
-			<ul>
-               <li><b>Method interceptor</b> : the interceptor will be executed in the method (before the code of the method for example)</li>
-               <li><b>Instruction interceptor</b> : the interceptor will be executed before or after an instruction (before calling a method for example)</li>
-               <li><b>Parameter interceptor</b> : the interceptor will be executed in the method but the aspect is placed on a parameter</li>
-            </ul>
+            <p>In NetAspect, aspects can be put on fields/properties/methods/constructors. There is 2 ways to put an aspect on a member :</p>
 
+			<div class="list-group">
+  <a href="#AttributesSample" data-toggle="collapse"  class="list-group-item">
+    <h4 class="list-group-item-heading">By attributes</h4>
+    <p class="list-group-item-text">Just consider the aspect as an attribute and put the attribute on the member.</p>
+  </a>
+  <div id="AttributesSample" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+$page.Weaving.WeaveWithAttributeSampleAspect
 
-            <p>Some parameters can be added to the interceptor to get more information</p>
-            
-         </div>
+// The class to weave
+$page.Weaving.WeaveWithAttributeSampleClassToWeave
+</pre>
+								</div>
+								</div>
+    <a href="#SelectSample" data-toggle="collapse" class="list-group-item">
+    <h4 class="list-group-item-heading">By selecting the member</h4>
+    <p class="list-group-item-text">If you can't add an attribute to your member to weave, you can just declare a <b>select</b> method in your aspect.</p>
+  </a>
+    <div id="SelectSample" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+$page.Weaving.WeaveWithSelectSampleAspect
+
+// The class to weave
+$page.Weaving.WeaveWithSelectSampleClassToWeave
+</pre>
+								</div>
+								</div>
+</div>
+
+			
+         </div
 
 
 
 			<div class="bs-docs-section">
 				<div class="page-header">
-					<h1 id="dropdowns">Available interceptors</h1>
+					<h1 id="dropdowns">Interceptors</h1>
 				</div>
-
+				<p>An interceptor is a <b>method</b> declared in the <b>aspect</b> and which will be called at certain moment after the weaving.<br/>Some <b>parameters</b> can be added to the interceptor to get more information</p>
+				<p>The following interceptors are available :</p>
 #foreach ($member in $page.Members)
 				<h2 class="list-group-item-heading">For an aspect put on a $member</h2>
 				
@@ -39,22 +66,40 @@
 			
 			
 			<div class="list-group">
-			  <a data-toggle="collapse" href="$H${interceptor.Name}Coll" class="list-group-item">
+			  <a data-toggle="collapse" href="$H${interceptor.Name}Coll" class="list-group-item list-group-item-info">
 				<h4 class="list-group-item-heading ">The $interceptor.Name interceptor</h4>
 #if ($interceptor.Kind == 'Method')
 #if ($interceptor.Event == 'Before')
-				<p class="list-group-item-text">This method is executed before the code of the $member is executed</p>
+				<p class="list-group-item-text">This interceptor is executed before the code of the $member is executed</p>
 #elseif ($interceptor.Event == 'After')
-				<p class="list-group-item-text">This method is executed after the code of the $member is executed</p>
+				<p class="list-group-item-text">This interceptor is executed after the code of the $member is executed</p>
 #elseif ($interceptor.Event == 'OnException')
-				<p class="list-group-item-text">This method is executed when an exception is raised by the $member</p>
+				<p class="list-group-item-text">This interceptor is executed when an exception is raised by the $member</p>
 #elseif ($interceptor.Event == 'OnFinally')
-				<p class="list-group-item-text">This method is executed after the code of the $member is executed if an exception is raised or not</p>
+				<p class="list-group-item-text">This interceptor is executed after the code of the $member is executed if an exception is raised or not</p>
+#end
+#elseif ($interceptor.Kind == 'Call')
+#if ($interceptor.Event == 'Before')
+				<p class="list-group-item-text">This interceptor is executed before calling the $member</p>
+#elseif ($interceptor.Event == 'After')
+				<p class="list-group-item-text">This interceptor is executed after calling the $member</p>
+#end
+#elseif ($interceptor.Kind == 'Parameter')
+#if ($interceptor.Event == 'Before')
+				<p class="list-group-item-text">This interceptor is executed before the code of the method is executed</p>
+#elseif ($interceptor.Event == 'After')
+				<p class="list-group-item-text">This interceptor is executed after the code of the method is executed</p>
+#elseif ($interceptor.Event == 'OnException')
+				<p class="list-group-item-text">This interceptor is executed when an exception is raised by the method</p>
+#elseif ($interceptor.Event == 'OnFinally')
+				<p class="list-group-item-text">This interceptor is executed after the code of the method is executed if an exception is raised or not</p>
 #end
 #end
 				
 							
-							<div id="${interceptor.Name}Coll" class="panel-collapse collapse">
+							
+			  </a>
+			  <div id="${interceptor.Name}Coll" class="panel-collapse collapse">
 								<div class="panel-body">
 								<p>The $interceptor.Name method is a $interceptor.Kind interceptor. The following parameters are available :</p>
 			<ul>
@@ -76,7 +121,6 @@ $interceptor.AspectCode
 $interceptor.CallCode
 </pre>
 								</div>
-			  </a>
 			</div>
 
 					

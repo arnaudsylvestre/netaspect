@@ -72,9 +72,10 @@ namespace NetAspect.Doc.Builder.Model
         {
             var extractor = new DocumentationFromTestExtractor();
             return new Page("Documentation", Templates.Templates.DocumentationPage, "Documentation", new DocumentationPageModel
-                {
-                    Interceptors = extractor.ExtractInterceptors(Path.Combine(baseFolder, "Documentation")),
-                    Parameters = new List<int>()
+            {
+               Interceptors = extractor.ExtractInterceptors(Path.Combine(baseFolder, @"Documentation\Interceptors")),
+               Weaving = extractor.ExtractWeaving(Path.Combine(baseFolder, @"Documentation\Weaving")),
+               Parameters = extractor.ExtractParameters(Path.Combine(baseFolder, @"Documentation\Parameters")),
                 });
         }
 
@@ -92,7 +93,8 @@ namespace NetAspect.Doc.Builder.Model
               return from i in Interceptors where i.Member == member select i;
            }
 
-           public List<int> Parameters { get; set; }
+           public List<ParameterModel> Parameters { get; set; }
+           public WeavingModel Weaving { get; set; }
         }
 
         private static List<Section> Convert(DocumentationFromTest tests)
@@ -151,8 +153,29 @@ namespace NetAspect.Doc.Builder.Model
         }
     }
 
+   public class ParameterModel
+   {
+      public class ParameterSample
+      {
+         public string ClassToWeaveCode { get; set; }
+         public string AspectCode { get; set; }
+         public string CallCode { get; set; }
+      }
 
-    public class WebSite
+      public string Name { get; set; }
+      public List<ParameterSample> Samples { get; set; }
+   }
+
+   public class WeavingModel
+   {
+      public string WeaveWithAttributeSampleAspect { get; set; }
+      public string WeaveWithAttributeSampleClassToWeave { get; set; }
+      public string WeaveWithSelectSampleAspect { get; set; }
+      public string WeaveWithSelectSampleClassToWeave { get; set; }
+   }
+
+
+   public class WebSite
     {
         public WebSite()
         {

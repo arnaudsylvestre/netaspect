@@ -141,10 +141,9 @@ namespace NetAspect.Doc.Builder.Model
 
         public static Kind ExtractKind(string interceptorName)
         {
-            var replace = Regex.Split(interceptorName, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))");
-            if (replace.Contains("Call"))
+            if (interceptorName.Contains("Call"))
                 return Kind.Call;
-            if (replace.Contains("Parameter"))
+            if (interceptorName.Contains("Parameter"))
                 return Kind.Parameter;
             return Kind.Method;
         }

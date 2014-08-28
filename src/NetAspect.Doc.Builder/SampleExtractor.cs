@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using ICSharpCode.NRefactory.CSharp;
 using NetAspect.Doc.Builder.Helpers;
+using NetAspect.Doc.Builder.Model;
 
 namespace NetAspect.Doc.Builder
 {
@@ -15,7 +16,34 @@ namespace NetAspect.Doc.Builder
 
    public class DocumentationFromTestExtractor
    {
-       public List<InterceptorDocumentation> ExtractInterceptors(string directoryPath_P)
+
+
+      public WeavingModel ExtractWeaving(string directoryPath_P)
+      {
+         WeavingModel doc = new WeavingModel();
+         var parser = new CSharpParser();
+         using (var stream = File.OpenRead(Path.Combine(directoryPath_P, "WeaveWithAttributeSampleTest.cs")))
+         {
+            var syntaxTree = parser.Parse(stream);
+            var test = new InterceptorDocumentation();
+            syntaxTree.AcceptVisitor(new InterceptorDocumentationVisitor(test));
+            doc.WeaveWithAttributeSampleAspect = test.AspectCode;
+            doc.WeaveWithAttributeSampleClassToWeave = test.ClassToWeaveCode;
+         }
+         using (var stream = File.OpenRead(Path.Combine(directoryPath_P, "WeaveWithSelectSampleTest.cs")))
+         {
+            var syntaxTree = parser.Parse(stream);
+            var test = new InterceptorDocumentation();
+            syntaxTree.AcceptVisitor(new InterceptorDocumentationVisitor(test));
+            if (test.Name != null)
+               doc.WeaveWithSelectSampleAspect = test.AspectCode;
+            doc.WeaveWithSelectSampleClassToWeave = test.ClassToWeaveCode;
+         }
+
+         return doc;
+      }
+
+      public List<InterceptorDocumentation> ExtractInterceptors(string directoryPath_P)
        {
            List<InterceptorDocumentation> doc = new List<InterceptorDocumentation>();
            var parser = new CSharpParser();
@@ -57,6 +85,30 @@ namespace NetAspect.Doc.Builder
 
          return doc;
          
+      }
+
+      public List<ParameterModel> ExtractParameters(string directoryPath_P)
+      {
+         List<ParameterModel> doc = new List<ParameterModel>();
+         var parser = new CSharpParser();
+         var files_L = Directory.GetFiles(directoryPath_P, "*.cs", SearchOption.AllDirectories).OrderBy(Path.GetFileName);
+         foreach (var file_L in files_L)
+         {
+            using (var stream = File.OpenRead(file_L))
+            {
+               var syntaxTree = parser.Parse(stream);
+               var test = new InterceptorDocumentation();
+               syntaxTree.AcceptVisitor(new InterceptorDocumentationVisitor(test));
+                  doc.Add(new ParameterModel()
+                  {
+                     
+                  });
+
+            }
+         }
+
+
+         return doc;
       }
    }
 
