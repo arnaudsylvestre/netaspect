@@ -7,7 +7,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters
    public class InstanceParameterWithObjectTypeParameterTest : NetAspectTest<InstanceParameterWithObjectTypeParameterTest.MyInt>
     {
       public InstanceParameterWithObjectTypeParameterTest()
-           : base("This method is executed before the code of the method is executed", "MethodWeavingBefore", "MethodWeaving")
+           : base("It can be declared as object", "MethodWeavingBefore", "MethodWeaving")
       {
       }
 

@@ -1,5 +1,5 @@
 ﻿#set( $H = '#' )
-$page.SetParameterDescription('instance', 'the current instance of the member')
+$page.SetParameterDescription('instance', 'this parameter is used to have the <b>this</b> of the weaved member')
 
 <div class="container bs-docs-container">
       <div class="row">
@@ -150,22 +150,39 @@ $interceptor.CallCode
 <div class="list-group">
 
 #foreach ($parameter in $page.Parameters)
-  <a href="#parameterId$velocityCount" data-toggle="collapse"  class="list-group-item">
+  <a href="#parameterId$velocityCount" data-toggle="collapse"  class="list-group-item list-group-item-info">
     <h4 class="list-group-item-heading">$parameter.Name</h4>
     <p class="list-group-item-text">$page.GetParameterDescription($parameter.Name)</p>
   </a>
   <div id="parameterId$velocityCount" class="panel-collapse collapse">
 								<div class="panel-body">
-								<p>Here are some samples on how to use it</p>
+
+								<div class="list-group">
+
+#set ($counter = $velocityCount)
+
 #foreach ($sample in $parameter.Samples)
+	<a href="#parameterId${counter}P$velocityCount" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">${sample.Description}</h4>
+	  </a>
+	  
+			  <div id="parameterId${counter}P$velocityCount" class="panel-collapse collapse">
+								<div class="panel-body">
 								<pre class="prettyprint">
 // The aspect
 $sample.AspectCode
 
 // The class to weave
 $sample.ClassToWeaveCode
+
+// This code will work
+$sample.CallCode
 </pre>
+
+								</div>
+								</div>
 #end
+</div>
 								</div>
 								</div>
 #end
@@ -182,23 +199,6 @@ $sample.ClassToWeaveCode
 
 
 
-
-
-
-
-
-
-
-
-<div class="alert alert-warning" role="alert">The following parameters are <b>not</b> available for each interceptor.</div>
-			<ul>
-#foreach ($parameter in $page.Parameters)
-               <li><b>$parameter.Name</b> : $page.GetParameterDescription($parameter.Name)</li>
-			   
-#end
-            </ul>
-            
-         </div>
 
 
 		</div>

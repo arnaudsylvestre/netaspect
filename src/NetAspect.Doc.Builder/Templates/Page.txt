@@ -8,7 +8,7 @@
       <meta name="author" content="">
       <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
       <title>NetAspect</title>
-      <link href="bootstrap-3.0.2/dist/css/bootstrap.css" rel="stylesheet">
+      <link href="bootstrap-3.2.0/dist/css/bootstrap.css" rel="stylesheet">
       <link href="jumbotron.css" rel="stylesheet">
    </head>
    <body>
@@ -38,7 +38,7 @@ $page.Content
          ================================================== -->
       <!-- Placed at the end of the document so the pages load faster -->
       <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-      <script src="bootstrap-3.0.2/dist/js/bootstrap.min.js"></script>
+      <script src="bootstrap-3.2.0/dist/js/bootstrap.min.js"></script>
       <script src="google-code-prettify/run_prettify.js"></script>
    </body>
 </html>

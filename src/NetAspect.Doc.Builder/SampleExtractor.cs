@@ -65,29 +65,7 @@ namespace NetAspect.Doc.Builder
            return doc;
        }
 
-      public DocumentationFromTest ExtractDocumentationFromTests(string directoryPath_P)
-      {
-         DocumentationFromTest doc = new DocumentationFromTest();
-         var parser = new CSharpParser();
-         var files_L = Directory.GetFiles(directoryPath_P, "*.cs", SearchOption.AllDirectories).OrderBy(f => Path.GetFileName(f));
-         foreach (var file_L in files_L)
-         {
-            using (var stream = File.OpenRead(file_L))
-            {
-               var syntaxTree = parser.Parse(stream);
-               var test = new TestDescription();
-               doc.Tests.Add(test);
-               syntaxTree.AcceptVisitor(new FindInvocationsVisitor(doc.Possibilities, doc.Parameters, test, doc.Interceptors));
-               
-            }
-         }
-
-
-         return doc;
-         
-      }
-
-      public List<ParameterModel> ExtractParameters(string directoryPath_P)
+       public List<ParameterModel> ExtractParameters(string directoryPath_P)
       {
          List<ParameterModel> doc = new List<ParameterModel>();
          var parser = new CSharpParser();
@@ -111,6 +89,7 @@ namespace NetAspect.Doc.Builder
                 }
                 model.Samples.Add(new ParameterModel.ParameterSample()
                     {
+                        Description = test.When,
                         AspectCode = test.AspectCode,
                         CallCode = test.CallCode,
                         ClassToWeaveCode = test.ClassToWeaveCode,

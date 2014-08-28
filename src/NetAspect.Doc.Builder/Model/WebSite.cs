@@ -172,6 +172,8 @@ namespace NetAspect.Doc.Builder.Model
          public string ClassToWeaveCode { get; set; }
          public string AspectCode { get; set; }
          public string CallCode { get; set; }
+
+          public string Description { get; set; }
       }
 
       public string Name { get; set; }

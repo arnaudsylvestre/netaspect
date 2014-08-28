@@ -7,7 +7,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters
    public class InstanceParameterWithRealTypeParameterTest : NetAspectTest<InstanceParameterWithRealTypeParameterTest.MyInt>
     {
       public InstanceParameterWithRealTypeParameterTest()
-           : base("This method is executed before the code of the method is executed", "MethodWeavingBefore", "MethodWeaving")
+           : base("It can be declared with the real type", "MethodWeavingBefore", "MethodWeaving")
       {
       }
 
