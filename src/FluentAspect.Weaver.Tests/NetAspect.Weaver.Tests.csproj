@@ -443,6 +443,7 @@
     <Compile Include="unit\InstructionWeaving\Methods\Selectors\AfterCallMethodCalledParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Selectors\WeavePublicMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Interceptors\CheckInterceptorReturnTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\Before\LineNumber\BeforeMethodLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Selectors\WeavePublicMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Selectors\WeavePublicPropertyTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\Selectors\WeavePublicPropertyTest.cs" />
@@ -919,7 +920,7 @@
     <Compile Include="unit\ParameterWeaving\Method\Before\Parameter\BeforeMethodParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\Before\Parameter\BeforeMethodParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\Before\Parameter\BeforeMethodParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Method\Selectors\Copy of WeaveParameterWithSelectorAndBadParameterNameTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Selectors\WeaveParameterWithSelectorWithMultipleDefinitionTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\Selectors\WeaveParameterWithSelectorAndBadParameterNameTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\Selectors\WeaveParameterWithSelectorTest.cs" />
     <Compile Include="unit\RunWeavingTest.cs" />

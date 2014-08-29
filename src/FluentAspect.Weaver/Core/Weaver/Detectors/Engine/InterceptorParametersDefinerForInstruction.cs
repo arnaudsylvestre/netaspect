@@ -180,11 +180,11 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 
         public static InstructionWeavingInfo AddColumnNumber(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-           interceptorParameterConfigurations_P.AddPossibleParameter("columnnumber")
-                .WhichCanNotBeReferenced()
-                .WhichPdbPresent(weavingInfo_P)
-                .WhichMustBeOfType<int>()
-                .AndInjectThePdbInfo(s => s.StartColumn, weavingInfo_P);
+            interceptorParameterConfigurations_P.AddPossibleParameter("columnnumber")
+                 .WhichCanNotBeReferenced()
+                 .WhichPdbPresent(weavingInfo_P)
+                 .WhichMustBeOfType<int>()
+                 .AndInjectThePdbInfo(s => s.StartColumn, weavingInfo_P);
             return weavingInfo_P;
         }
         public static InstructionWeavingInfo AddLineNumber(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
@@ -196,22 +196,49 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                 .AndInjectThePdbInfo(s => s.StartLine, weavingInfo_P);
             return weavingInfo_P;
         }
+        public static MethodWeavingInfo AddLineNumberForMethod(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+            interceptorParameterConfigurations_P.AddPossibleParameter("linenumber")
+                 .WhichCanNotBeReferenced()
+                 .WhichPdbPresentForMethod(weavingInfo_P)
+                 .WhichMustBeOfType<int>()
+                 .AndInjectThePdbInfoForMethod(s => s.StartLine, weavingInfo_P);
+            return weavingInfo_P;
+        }
         public static InstructionWeavingInfo AddFilePath(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-           interceptorParameterConfigurations_P.AddPossibleParameter("filepath")
-                .WhichCanNotBeReferenced()
-                .WhichPdbPresent(weavingInfo_P)
-                .WhichMustBeOfType<string>()
-                .AndInjectThePdbInfo(s => s.Document.Url, weavingInfo_P);
+            interceptorParameterConfigurations_P.AddPossibleParameter("filepath")
+                 .WhichCanNotBeReferenced()
+                 .WhichPdbPresent(weavingInfo_P)
+                 .WhichMustBeOfType<string>()
+                 .AndInjectThePdbInfo(s => s.Document.Url, weavingInfo_P);
+            return weavingInfo_P;
+        }
+        public static MethodWeavingInfo AddFilePathForMethod(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+            interceptorParameterConfigurations_P.AddPossibleParameter("filepath")
+                 .WhichCanNotBeReferenced()
+                 .WhichPdbPresentForMethod(weavingInfo_P)
+                 .WhichMustBeOfType<string>()
+                 .AndInjectThePdbInfoForMethod(s => s.Document.Url, weavingInfo_P);
             return weavingInfo_P;
         }
         public static InstructionWeavingInfo AddFileName(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
-           interceptorParameterConfigurations_P.AddPossibleParameter("filename")
-                .WhichCanNotBeReferenced()
-                .WhichPdbPresent(weavingInfo_P)
-                .WhichMustBeOfType<string>()
-                .AndInjectThePdbInfo(s => Path.GetFileName(s.Document.Url), weavingInfo_P);
+            interceptorParameterConfigurations_P.AddPossibleParameter("filename")
+                 .WhichCanNotBeReferenced()
+                 .WhichPdbPresent(weavingInfo_P)
+                 .WhichMustBeOfType<string>()
+                 .AndInjectThePdbInfo(s => Path.GetFileName(s.Document.Url), weavingInfo_P);
+            return weavingInfo_P;
+        }
+        public static InstructionWeavingInfo AddFileNameForMethod(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+            interceptorParameterConfigurations_P.AddPossibleParameter("filename")
+                 .WhichCanNotBeReferenced()
+                 .WhichPdbPresentForMethod(weavingInfo_P)
+                 .WhichMustBeOfType<string>()
+                 .AndInjectThePdbInfoForMethod(s => Path.GetFileName(s.Document.Url), weavingInfo_P);
             return weavingInfo_P;
         }
         public static InstructionWeavingInfo AddCalledFieldInfo(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)

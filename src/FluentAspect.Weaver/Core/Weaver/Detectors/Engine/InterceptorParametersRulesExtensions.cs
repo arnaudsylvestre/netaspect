@@ -37,11 +37,21 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 
       public static InterceptorParameterConfiguration WhichPdbPresent(this InterceptorParameterConfiguration configuration, InstructionWeavingInfo info)
       {
-         configuration.Checker.Add((parameter, errorListener) => Ensure.SequencePoint(info.Instruction, errorListener, parameter));
-         return configuration;
+          configuration.Checker.Add((parameter, errorListener) => Ensure.SequencePoint(info.Instruction, errorListener, parameter));
+          return configuration;
+      }
+      public static InterceptorParameterConfiguration WhichPdbPresentForMethod(this InterceptorParameterConfiguration configuration, MethodWeavingInfo info)
+      {
+          configuration.Checker.Add((parameter, errorListener) => Ensure.SequencePoint(GetFirstInstruction(info), errorListener, parameter));
+          return configuration;
       }
 
-      public static InterceptorParameterConfiguration WhichCanNotBeOut(this InterceptorParameterConfiguration configuration)
+       private static Instruction GetFirstInstruction(MethodWeavingInfo info)
+       {
+           return info.Method.Body.Instructions.First();
+       }
+
+       public static InterceptorParameterConfiguration WhichCanNotBeOut(this InterceptorParameterConfiguration configuration)
       {
          configuration.Checker.Add(new ParameterReferencedChecker(ParameterReferencedChecker.ReferenceModel.Referenced));
          return configuration;
@@ -106,17 +116,42 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          });
          return configuration;
       }
+
+      public static InterceptorParameterConfiguration AndInjectThePdbInfoForMethod(this InterceptorParameterConfiguration configuration, Func<SequencePoint, int> pdbInfoProvider, MethodWeavingInfo weavingInfo)
+      {
+          configuration.Generator.Generators.Add((parameter, instructions, info) =>
+          {
+              SequencePoint instruction = GetFirstInstruction(weavingInfo).GetLastSequencePoint();
+              instructions.Add(Instruction.Create(OpCodes.Ldc_I4,
+                                                  instruction == null
+                                                      ? 0
+                                                      : pdbInfoProvider(instruction)));
+          });
+          return configuration;
+      }
       public static InterceptorParameterConfiguration AndInjectThePdbInfo(this InterceptorParameterConfiguration configuration, Func<SequencePoint, string> pdbInfoProvider, InstructionWeavingInfo weavingInfo_P)
       {
-         configuration.Generator.Generators.Add((parameter, instructions, info) =>
-         {
-            SequencePoint instructionPP = weavingInfo_P.Instruction.GetLastSequencePoint();
-            instructions.Add(Instruction.Create(OpCodes.Ldstr,
-                                                instructionPP == null
-                                                    ? null
-                                                    : pdbInfoProvider(instructionPP)));
-         });
-         return configuration;
+          configuration.Generator.Generators.Add((parameter, instructions, info) =>
+          {
+              SequencePoint instructionPP = weavingInfo_P.Instruction.GetLastSequencePoint();
+              instructions.Add(Instruction.Create(OpCodes.Ldstr,
+                                                  instructionPP == null
+                                                      ? null
+                                                      : pdbInfoProvider(instructionPP)));
+          });
+          return configuration;
+      }
+      public static InterceptorParameterConfiguration AndInjectThePdbInfoForMethod(this InterceptorParameterConfiguration configuration, Func<SequencePoint, string> pdbInfoProvider, MethodWeavingInfo weavingInfo_P)
+      {
+          configuration.Generator.Generators.Add((parameter, instructions, info) =>
+          {
+              SequencePoint instructionPP = GetFirstInstruction(weavingInfo_P).GetLastSequencePoint();
+              instructions.Add(Instruction.Create(OpCodes.Ldstr,
+                                                  instructionPP == null
+                                                      ? null
+                                                      : pdbInfoProvider(instructionPP)));
+          });
+          return configuration;
       }
 
       
