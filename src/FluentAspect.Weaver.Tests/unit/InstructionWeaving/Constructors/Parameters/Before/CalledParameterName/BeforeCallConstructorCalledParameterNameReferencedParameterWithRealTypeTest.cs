@@ -20,8 +20,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
         {
 			[MyAspect]
             public ClassToWeave(ref int param1)
-            {
-            }
+			{
+			    param1 = 15;
+			}
 
             public static void Create()
             {

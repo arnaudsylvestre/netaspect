@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
             {
             }
 
-            public static ClassToWeave Create()
+            public ClassToWeave Create()
             {
                 return new ClassToWeave();
             }

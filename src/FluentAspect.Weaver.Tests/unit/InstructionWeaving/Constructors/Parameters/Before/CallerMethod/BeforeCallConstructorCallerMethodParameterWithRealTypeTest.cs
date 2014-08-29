@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters.Before.CallerMethod
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters.Before.CallerConstructor
 {
     public class BeforeCallConstructorCallerMethodParameterWithRealTypeTest :
         NetAspectTest<BeforeCallConstructorCallerMethodParameterWithRealTypeTest.ClassToWeave>
@@ -13,7 +13,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
                 {
                     Assert.AreEqual(null, MyAspect.Method);
                     ClassToWeave.Create();
-                    Assert.AreEqual("Weaved", MyAspect.Method.Name);
+                    Assert.AreEqual("Create", MyAspect.Method.Name);
                 };
         }
 		

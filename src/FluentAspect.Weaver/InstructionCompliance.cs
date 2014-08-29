@@ -27,7 +27,7 @@ namespace NetAspect.Weaver
         }
         public static bool IsCallConstructorInstruction(Instruction instruction, NetAspectDefinition aspect, MethodDefinition method)
         {
-           return instruction.IsACallInstruction() && (instruction.Operand as MethodReference).Resolve().IsConstructor; ;
+            return instruction.IsANewInstruction() && (instruction.Operand as MethodReference).Resolve().IsConstructor; ;
         }
         public static bool IsGetPropertyCall(Instruction instruction, NetAspectDefinition aspect, MethodDefinition method)
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters.Before.CallerMethod
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters.Before.CallerConstructor
 {
     public class BeforeCallConstructorCallerMethodParameterWithBadTypeTest :
         NetAspectTest<BeforeCallConstructorCallerMethodParameterWithBadTypeTest.ClassToWeave>

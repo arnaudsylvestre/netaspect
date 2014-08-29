@@ -127,10 +127,6 @@
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\CalledParameters\AfterCallConstructorCalledParametersParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\CalledParameters\AfterCallConstructorCalledParametersParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\CalledParameters\AfterCallConstructorCalledParametersParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\Called\AfterCallConstructorCalledParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\Called\AfterCallConstructorCalledParameterWithObjectTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\Called\AfterCallConstructorCalledParameterWithRealTypeReferencedTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\Called\AfterCallConstructorCalledParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\CallerMethod\AfterCallConstructorCallerMethodParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\CallerMethod\AfterCallConstructorCallerMethodParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\CallerMethod\AfterCallConstructorCallerMethodParameterWithRealTypeTest.cs" />
@@ -169,10 +165,6 @@
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\Before\CalledParameters\BeforeCallConstructorCalledParametersParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\Before\CalledParameters\BeforeCallConstructorCalledParametersParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\Before\CalledParameters\BeforeCallConstructorCalledParametersParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Constructors\Parameters\Before\Called\BeforeCallConstructorCalledParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Constructors\Parameters\Before\Called\BeforeCallConstructorCalledParameterWithObjectTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Constructors\Parameters\Before\Called\BeforeCallConstructorCalledParameterWithRealTypeReferencedTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Constructors\Parameters\Before\Called\BeforeCallConstructorCalledParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\Before\CallerMethod\BeforeCallConstructorCallerMethodParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\Before\CallerMethod\BeforeCallConstructorCallerMethodParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\Before\CallerMethod\BeforeCallConstructorCallerMethodParameterWithRealTypeTest.cs" />

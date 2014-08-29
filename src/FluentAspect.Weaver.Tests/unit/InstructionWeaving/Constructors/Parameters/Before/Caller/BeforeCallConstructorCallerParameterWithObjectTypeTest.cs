@@ -11,8 +11,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
             return () =>
                 {
                     Assert.IsNull(MyAspect.Caller);
-                    var classToWeave_L = ClassToWeave.Create();
-                    Assert.AreEqual(classToWeave_L, MyAspect.Caller);
+                    var classToWeave = new ClassToWeave();
+                    classToWeave.Create();
+                    Assert.AreSame(classToWeave, MyAspect.Caller);
                 };
         }
 
@@ -23,7 +24,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
             {
             }
 
-            public static ClassToWeave Create()
+            public ClassToWeave Create()
             {
                 return new ClassToWeave();
             }

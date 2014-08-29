@@ -9,10 +9,11 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
         protected override Action CreateEnsure()
         {
             return () =>
-                {
-                    Assert.IsNull(MyAspect.Caller);
-                    var classToWeave_L = ClassToWeave.Create();
-                    Assert.AreEqual(classToWeave_L, MyAspect.Caller);
+            {
+                Assert.IsNull(MyAspect.Caller);
+                var classToWeave = new ClassToWeave();
+                var classToWeave_L = classToWeave.Create();
+                Assert.AreEqual(classToWeave, MyAspect.Caller);
                 };
         }
 
@@ -23,7 +24,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
             {
             }
 
-            public static ClassToWeave Create()
+            public ClassToWeave Create()
             {
                 return new ClassToWeave();
             }

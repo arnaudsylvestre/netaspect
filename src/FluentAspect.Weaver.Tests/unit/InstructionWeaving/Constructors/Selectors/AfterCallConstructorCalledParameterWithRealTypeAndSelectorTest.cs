@@ -11,9 +11,10 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Selectors
         {
             return () =>
                 {
-                    Assert.IsNull(MyAspect.Called);
-                   var classToWeave_L = ClassToWeave.Create();
-                    Assert.AreEqual(classToWeave_L, MyAspect.Called);
+                    Assert.IsNull(MyAspect.Caller);
+                    var classToWeave = new ClassToWeave();
+                    var classToWeave_L = classToWeave.Create();
+                    Assert.AreEqual(classToWeave, MyAspect.Caller);
                 };
         }
 
@@ -23,7 +24,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Selectors
             {
             }
 
-            public static ClassToWeave Create()
+            public ClassToWeave Create()
             {
                 return new ClassToWeave();
             }
@@ -31,12 +32,12 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Selectors
 
         public class MyAspect : Attribute
         {
-            public static ClassToWeave Called;
+            public static ClassToWeave Caller;
             public bool NetAspectAttribute = true;
 
-            public void AfterCallConstructor(ClassToWeave called)
+            public void AfterCallConstructor(ClassToWeave caller)
             {
-                Called = called;
+                Caller = caller;
             }
 
             public static bool SelectConstructor(ConstructorInfo constructor)

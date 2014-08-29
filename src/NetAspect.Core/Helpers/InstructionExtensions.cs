@@ -25,5 +25,10 @@ namespace NetAspect.Core.Helpers
                    instruction.OpCode == OpCodes.Calli ||
                    instruction.OpCode == OpCodes.Callvirt;
         }
+
+        public static bool IsANewInstruction(this Instruction instruction)
+        {
+            return instruction.OpCode == OpCodes.Newobj;
+        }
     }
 }
