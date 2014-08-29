@@ -76,6 +76,9 @@ namespace NetAspect.Weaver
                     {ErrorCode.ParameterAlreadyDeclared, new ErrorInfo("The parameter {0} is already declared")},
                     {ErrorCode.SelectorMustReturnBooleanValue, new ErrorInfo("The selector {0} in the aspect {1} must return boolean value")},
                     {ErrorCode.SelectorBadParameterType, new ErrorInfo("The parameter {0} in the method {1} of the aspect {2} is expected to be {3}")},
+                    {ErrorCode.SelectorBadParameterName, new ErrorInfo("The parameter {0} in the method {1} of the aspect {2} is unexpected. {3} can be used")},
+                    {ErrorCode.InterceptorMustBeVoid, new ErrorInfo("The {0} interceptor in the {1} aspect must be void")},
+                    {ErrorCode.TooManySelectorsWithSameName, new ErrorInfo("Only one {0} can be defined in the aspect {1}")},
                     {ErrorCode.AssemblyGeneratedIsNotCompliant, new ErrorInfo(ErrorLevel.Failure, "An internal error : {0}")}
                 }));
        }

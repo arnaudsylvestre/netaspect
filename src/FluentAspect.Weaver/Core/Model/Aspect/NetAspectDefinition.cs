@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Collections.Generic;
@@ -190,7 +191,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
            {
                var selectorParametersGenerator = new SelectorParametersGenerator<FieldDefinition>();
               selectorParametersGenerator.AddPossibleParameter<FieldInfo>("field", GetField);
-              return new Selector<FieldDefinition>(_attribute.GetMethod("SelectField"), selectorParametersGenerator);
+              return new Selector<FieldDefinition>(_attribute, "SelectField", selectorParametersGenerator);
            }
         }
 
@@ -200,7 +201,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
            {
                var selectorParametersGenerator = new SelectorParametersGenerator<PropertyDefinition>();
                selectorParametersGenerator.AddPossibleParameter<PropertyInfo>("property", GetProperty);
-              return new Selector<PropertyDefinition>(_attribute.GetMethod("SelectProperty"), selectorParametersGenerator);
+              return new Selector<PropertyDefinition>(_attribute, "SelectProperty", selectorParametersGenerator);
            }
         }
 
@@ -209,16 +210,20 @@ namespace NetAspect.Weaver.Core.Model.Aspect
            var assembly = Assembly.LoadFrom(arg.Module.FullyQualifiedName);
            return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetProperty(arg.Name);
         }
-        private MethodInfo GetMethod(MethodDefinition arg)
+        private MethodInfo GetMethod(MethodReference arg)
         {
            var assembly = Assembly.LoadFrom(arg.Module.FullyQualifiedName);
            return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetMethod(arg.Name, ConvertParameters(arg.Parameters));
         }
         private ConstructorInfo GetConstructor(MethodDefinition arg)
         {
-           var assembly = Assembly.LoadFrom(arg.Module.FullyQualifiedName);
-
-           return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetConstructor(ConvertParameters(arg.Parameters));
+            var assembly = Assembly.LoadFrom(arg.Module.FullyQualifiedName);
+            return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetConstructor(ConvertParameters(arg.Parameters));
+        }
+        private ParameterInfo GetParameter(ParameterDefinition arg)
+        {
+            var method = GetMethod((MethodReference)arg.Method);
+            return method.GetParameters().First(p => p.Name == arg.Name);
         }
 
        private Type[] ConvertParameters(Collection<ParameterDefinition> parameters_P)
@@ -243,7 +248,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
            {
                var selectorParametersGenerator = new SelectorParametersGenerator<MethodDefinition>();
                selectorParametersGenerator.AddPossibleParameter<MethodInfo>("method", GetMethod);
-              return new Selector<MethodDefinition>(_attribute.GetMethod("SelectMethod"), selectorParametersGenerator);
+              return new Selector<MethodDefinition>(_attribute, "SelectMethod", selectorParametersGenerator);
            }
         }
 
@@ -253,16 +258,16 @@ namespace NetAspect.Weaver.Core.Model.Aspect
            {
               var selectorParametersGenerator = new SelectorParametersGenerator<MethodDefinition>();
               selectorParametersGenerator.AddPossibleParameter<ConstructorInfo>("constructor", GetConstructor);
-              return new Selector<MethodDefinition>(_attribute.GetMethod("SelectConstructor"), selectorParametersGenerator);
+              return new Selector<MethodDefinition>(_attribute, "SelectConstructor", selectorParametersGenerator);
            }
         }
         public Selector<ParameterDefinition> ParameterSelector
         {
            get
            {
-              var selectorParametersGenerator = new SelectorParametersGenerator<ParameterDefinition>();
-              selectorParametersGenerator.AddPossibleParameter<string>("parameterName", parameter => parameter.Name);
-              return new Selector<ParameterDefinition>(_attribute.GetMethod("SelectParameter"), selectorParametersGenerator);
+               var selectorParametersGenerator = new SelectorParametersGenerator<ParameterDefinition>();
+               selectorParametersGenerator.AddPossibleParameter<ParameterInfo>("parameter", GetParameter);
+              return new Selector<ParameterDefinition>(_attribute, "SelectParameter", selectorParametersGenerator);
            }
         }
 

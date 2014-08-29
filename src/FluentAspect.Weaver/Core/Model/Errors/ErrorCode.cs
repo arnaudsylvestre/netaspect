@@ -17,6 +17,9 @@
       NotAvailableInStatic,
       ParameterAlreadyDeclared,
       SelectorMustReturnBooleanValue,
-      SelectorBadParameterType
+      SelectorBadParameterType,
+       InterceptorMustBeVoid,
+       SelectorBadParameterName,
+       TooManySelectorsWithSameName
    }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
@@ -39,7 +40,14 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine.Selectors
         {
             foreach (var parameterInfo in method.GetParameters())
             {
-                var possibleParameter = possibleParameters[parameterInfo.Name.ToLower()];
+                var parameterName = parameterInfo.Name.ToLower();
+                if (!possibleParameters.ContainsKey(parameterName))
+                {
+                    string availableNames = string.Join(", ", (from p in possibleParameters.Keys select "'" + p + "'").ToArray());
+                    errorHandler.OnError(ErrorCode.SelectorBadParameterName, FileLocation.None, parameterInfo.Name, method.Name, method.DeclaringType.FullName, availableNames);
+                    continue;
+                }
+                var possibleParameter = possibleParameters[parameterName];
                 if (possibleParameter.Type != parameterInfo.ParameterType)
                     errorHandler.OnError(ErrorCode.SelectorBadParameterType, FileLocation.None, parameterInfo.Name, method.Name, method.DeclaringType.FullName, possibleParameter.Type);
             }

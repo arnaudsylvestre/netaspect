@@ -6,6 +6,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Core.Helpers;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
@@ -65,6 +66,8 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 
       public void Check(ErrorHandler errorHandler)
       {
+          if (interceptorMethod.ReturnType != typeof(void))
+              errorHandler.OnError(ErrorCode.InterceptorMustBeVoid, FileLocation.None, interceptorMethod.Name, interceptorMethod.DeclaringType.FullName);
          interceptorParameterConfigurations.Check(interceptorMethod.GetParameters(), errorHandler);
       }
 
