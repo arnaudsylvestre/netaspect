@@ -94,6 +94,7 @@
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\AroundInstructionWeaverFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Kinds\CallGetFieldInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\IInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Kinds\CallConstructorInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\InterceptorParametersDefinerForMethod.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Kinds\ConstructorWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\Kinds\PropertySetterWeavingMethodInjectorFactory.cs" />

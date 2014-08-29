@@ -43,6 +43,7 @@ namespace NetAspect.Weaver
                           BuildCallGetFieldDetector(aspectBuilder),
                           BuildCallUpdateFieldDetector(aspectBuilder),
                           BuildCallMethodDetector(aspectBuilder),
+                          BuildCallConstructorDetector(aspectBuilder),
                           BuildCallGetPropertyDetector(aspectBuilder),
                           BuildCallUpdatePropertyDetector(aspectBuilder),
                      },
@@ -215,6 +216,18 @@ namespace NetAspect.Weaver
               aspect => aspect.BeforeCallMethod,
               aspect => aspect.AfterCallMethod,
               aspectBuilder);
+      }
+
+      private static InstructionWeavingDetector<MethodDefinition> BuildCallConstructorDetector(AspectBuilder aspectBuilder)
+      {
+         return new InstructionWeavingDetector<MethodDefinition>(
+             InstructionCompliance.IsCallConstructorInstruction,
+             aspect => aspect.ConstructorSelector,
+             new AroundInstructionWeaverFactory(new CallConstructorInterceptorAroundInstructionBuilder(), new OverrideWevingPreconditionInjector()),
+             instruction => (instruction.Operand as MethodReference).Resolve(),
+             aspect => aspect.BeforeCallConstructor,
+             aspect => aspect.AfterCallConstructor,
+             aspectBuilder);
       }
 
 

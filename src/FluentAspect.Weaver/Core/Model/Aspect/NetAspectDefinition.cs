@@ -144,14 +144,24 @@ namespace NetAspect.Weaver.Core.Model.Aspect
             get { return new Interceptor(_attribute.GetMethod("BeforeRaiseEvent")); }
         }
 
-       public Interceptor BeforeCallMethod
+        public Interceptor BeforeCallMethod
         {
-            get { return new Interceptor(_attribute.GetMethod("BeforeCallMethod")); }
+           get { return new Interceptor(_attribute.GetMethod("BeforeCallMethod")); }
         }
 
         public Interceptor AfterCallMethod
         {
-            get { return new Interceptor(_attribute.GetMethod("AfterCallMethod")); }
+           get { return new Interceptor(_attribute.GetMethod("AfterCallMethod")); }
+        }
+
+        public Interceptor BeforeCallConstructor
+        {
+           get { return new Interceptor(_attribute.GetMethod("BeforeCallConstructor")); }
+        }
+
+        public Interceptor AfterCallConstructor
+        {
+           get { return new Interceptor(_attribute.GetMethod("AfterCallConstructor")); }
         }
 
         public Interceptor BeforeConstructor
