@@ -443,9 +443,13 @@
     <Compile Include="unit\InstructionWeaving\Methods\Selectors\AfterCallMethodCalledParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Selectors\WeavePublicMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Interceptors\CheckInterceptorReturnTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Method\Parameters\Before\LineNumber\BeforeMethodLineNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Pdb\BeforeMethodLineNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Pdb\BeforeMethodFileNameParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Pdb\BeforeMethodFilePathParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Selectors\WeavePublicMethodTest.cs" />
+    <Compile Include="unit\MethodWeaving\Properties\Getter\Parameters\Before\Pdb\BeforePropertyGetLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Selectors\WeavePublicPropertyTest.cs" />
+    <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\Before\Pdb\BeforePropertyValueParameterWithRealTypeByteReferencedInInterceptorTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\Selectors\WeavePublicPropertyTest.cs" />
     <Compile Include="unit\MultiWeaving\AspectDefinedOnDeclaringTypeTest.cs" />
     <Compile Include="unit\MultiWeaving\CheckCallWeavingAndMethodWeavingOnsameMethodTest.cs" />

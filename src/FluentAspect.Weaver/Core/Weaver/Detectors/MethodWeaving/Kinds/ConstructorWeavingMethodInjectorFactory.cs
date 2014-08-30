@@ -12,6 +12,10 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Kinds
                          .AddParameters(interceptorParameterConfigurations_P)
                          .AddParameterNames(interceptorParameterConfigurations_P)
 
+
+                         .AddLineNumberForMethod(interceptorParameterConfigurations_P)
+                         .AddFileNameForMethod(interceptorParameterConfigurations_P)
+                         .AddFilePathForMethod(interceptorParameterConfigurations_P)
                          ;
         }
 

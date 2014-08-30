@@ -232,7 +232,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                  .AndInjectThePdbInfo(s => Path.GetFileName(s.Document.Url), weavingInfo_P);
             return weavingInfo_P;
         }
-        public static InstructionWeavingInfo AddFileNameForMethod(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        public static MethodWeavingInfo AddFileNameForMethod(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
         {
             interceptorParameterConfigurations_P.AddPossibleParameter("filename")
                  .WhichCanNotBeReferenced()

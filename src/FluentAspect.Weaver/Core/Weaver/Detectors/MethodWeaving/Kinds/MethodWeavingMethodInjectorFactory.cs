@@ -14,6 +14,8 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Kinds
 
 
                          .AddLineNumberForMethod(interceptorParameterConfigurations_P)
+                         .AddFileNameForMethod(interceptorParameterConfigurations_P)
+                         .AddFilePathForMethod(interceptorParameterConfigurations_P)
                          ;
         }
 
