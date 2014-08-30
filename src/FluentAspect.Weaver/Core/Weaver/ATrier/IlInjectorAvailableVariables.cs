@@ -166,7 +166,8 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                //calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
                foreach (var parameter in calledMethod.Parameters.Reverse())
                {
-                  var variableDefinition = new VariableDefinition(parameter.ParameterType);
+                   var generics = ((MethodReference) Instruction.Operand).GenericParameters;
+                   var variableDefinition = new VariableDefinition(ComputeVariableType(parameter, Instruction));
                   _calledParameters.Add("called" + parameter.Name, variableDefinition);
                   Variables.Add(variableDefinition);
                   calledParametersInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
@@ -191,7 +192,12 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          return _calledParameters;
       }}
 
-      public VariableDefinition CalledParametersObject
+       private static TypeReference ComputeVariableType(ParameterDefinition parameter)
+       {
+           return parameter.ParameterType;
+       }
+
+       public VariableDefinition CalledParametersObject
       {
          get
          {
