@@ -356,6 +356,8 @@
     <Compile Include="unit\InstructionWeaving\LifeCycle\InstructionWeavingWithTransientLifeCycleTest.cs" />
     <Compile Include="unit\InstructionWeaving\LifeCycle\InstructionWeavingWithNoLifeCycleTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Generics\BeforeCallMethodCalledParameterNameParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Methods\Generics\BeforeCallMethodCalledParameterNameInGenericsParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Methods\Generics\Copy of BeforeCallMethodCalledParameterNameInGenericsParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Override\AfterCallMethodCalledParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\CalledParameterName\AfterCallMethodCalledParameterNameParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\CalledParameterName\AfterCallMethodCalledParameterNameParameterWithObjectTypeTest.cs" />
