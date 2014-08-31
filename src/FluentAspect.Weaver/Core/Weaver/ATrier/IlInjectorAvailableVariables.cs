@@ -166,7 +166,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
                //calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
                foreach (var parameter in calledMethod.Parameters.Reverse())
                {
-                   var generics = ((MethodReference) Instruction.Operand).GenericParameters;
+                   
                    var variableDefinition = new VariableDefinition(ComputeVariableType(parameter, Instruction));
                   _calledParameters.Add("called" + parameter.Name, variableDefinition);
                   Variables.Add(variableDefinition);
@@ -192,8 +192,28 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          return _calledParameters;
       }}
 
-       private static TypeReference ComputeVariableType(ParameterDefinition parameter)
+       public static TypeReference ComputeVariableType(ParameterDefinition parameter, Instruction instruction)
        {
+           if (instruction.Operand is GenericInstanceMethod && parameter.ParameterType is GenericParameter)
+           {
+               var method = (GenericInstanceMethod) instruction.Operand;
+               var genericParameter = (GenericParameter)parameter.ParameterType;
+               var genericParameters = ((MethodReference) parameter.Method).GenericParameters;
+               int index = -1;
+               for (int i = 0; i < genericParameters.Count; i++)
+               {
+                   if (genericParameters[i] == genericParameter)
+                   {
+                       index = i;
+                       break;
+                   }
+               }
+               if (index != -1)
+               {
+                   return method.GenericArguments[index];
+               }
+               
+           }
            return parameter.ParameterType;
        }
 

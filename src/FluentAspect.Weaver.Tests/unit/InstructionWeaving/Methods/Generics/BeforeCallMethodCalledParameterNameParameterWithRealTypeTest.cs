@@ -10,7 +10,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Generics
         {
             return () =>
                 {
-                    Assert.AreEqual(0, MyAspect.ParameterName);
+                    Assert.AreEqual(null, MyAspect.ParameterName);
                     var classToWeave_L = new ClassToWeave();
                     classToWeave_L.Weaved();
                     Assert.AreEqual(12, MyAspect.ParameterName);
@@ -27,7 +27,8 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Generics
 
             public string Weaved()
             {
-                return Method(12);
+                int toto = 12;
+                return Method(toto);
             }
         }
 

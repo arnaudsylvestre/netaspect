@@ -255,7 +255,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
             if (parameter.ParameterType != moduleDefinition.TypeSystem.Object &&
                 parameterInfo.ParameterType == typeof(Object))
             {
-               TypeReference reference = parameter.ParameterType;
+               TypeReference reference = info.CalledParameters["called" + parameter.Name].VariableType;
                if (reference.IsByReference)
                {
                   reference =
@@ -298,7 +298,9 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                           t => t.Name == reference.Name.TrimEnd('&'));
                   instructions.Add(Instruction.Create(OpCodes.Ldobj, reference));
                }
-               instructions.Add(Instruction.Create(OpCodes.Box, reference));
+
+               if (parameter.ParameterType.IsValueType || parameter.ParameterType is GenericParameter)
+                instructions.Add(Instruction.Create(OpCodes.Box, reference));
             }
          });
          return configuration;
