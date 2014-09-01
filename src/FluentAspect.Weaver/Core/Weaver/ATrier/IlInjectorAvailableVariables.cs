@@ -26,6 +26,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
       public List<Instruction> calledParametersObjectInstructions = new List<Instruction>();
       public List<Instruction> recallcalledInstructions = new List<Instruction>();
       public List<Instruction> recallcalledParametersInstructions = new List<Instruction>();
+      public List<Instruction> resultInstructions = new List<Instruction>();
       private List<Instruction> beforeAfter = new List<Instruction>();
 
       private VariableDefinition _called;
@@ -70,6 +71,37 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
       public VariableDefinition Result
       {
          get { return _result; }
+      }
+
+      private VariableDefinition _resultForInstruction;
+
+      public VariableDefinition ResultForInstruction
+      {
+         get
+         {
+            if (_resultForInstruction == null)
+            {
+               if (Instruction.Operand is MethodReference)
+               {
+                  var method = Instruction.Operand as MethodReference;
+                  if (method.ReturnType == method.Module.TypeSystem.Void)
+                     return null;
+                  _resultForInstruction = new VariableDefinition(method.ReturnType);
+                  Variables.Add(_resultForInstruction);
+                  resultInstructions.Add(Instruction.Create(OpCodes.Stloc, _resultForInstruction));
+                  resultInstructions.Add(Instruction.Create(OpCodes.Ldloc, _resultForInstruction));
+               }
+               if (Instruction.IsAGetField())
+               {
+                  var fieldReference_L = Instruction.Operand as FieldReference;
+                  _resultForInstruction = new VariableDefinition(fieldReference_L.FieldType);
+                  Variables.Add(_resultForInstruction);
+                  resultInstructions.Add(Instruction.Create(OpCodes.Stloc, _resultForInstruction));
+                  resultInstructions.Add(Instruction.Create(OpCodes.Ldloc, _resultForInstruction));
+               }
+            }
+            return _resultForInstruction;
+         }
       }
 
       public VariableDefinition Parameters

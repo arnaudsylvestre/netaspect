@@ -44,12 +44,15 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                 }
                 
                v.Check(errorHandler, variablesForInstruction);
+               if (errorHandler.Errors.Any())
+                  return;
                v.Weave(aroundInstructionIl, variablesForInstruction);
                ils.Add(aroundInstructionIl);
             }
             instructionIl.Before.AddRange(variablesForInstruction.calledParametersInstructions);
             instructionIl.Before.AddRange(variablesForInstruction.calledInstructions);
             instructionIl.Before.AddRange(variablesForInstruction.calledParametersObjectInstructions);
+            instructionIl.After.AddRange(variablesForInstruction.resultInstructions);
             availableVariables.BeforeInstructions.AddRange(variablesForInstruction.BeforeInstructions);
             allVariables.AddRange(variablesForInstruction.Variables);
             allVariables.Add(variablesForInstruction.InterceptorVariable);

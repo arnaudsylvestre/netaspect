@@ -187,5 +187,11 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             }
 
         }
+
+       public static void ResultOfTypeNotReferenced(ParameterInfo parameter_P, ErrorHandler errorListener_P, MethodDefinition method_P)
+       {
+          ResultOfType(parameter_P, errorListener_P, method_P);
+          NotReferenced(parameter_P, errorListener_P);
+       }
     }
 }

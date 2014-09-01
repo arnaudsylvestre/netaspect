@@ -196,6 +196,10 @@
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\Before\LineNumber\BeforeCallConstructorLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Selectors\AfterCallConstructorCalledParameterWithRealTypeAndSelectorTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\After\Field\AfterCallGetFieldFieldInOtherTypeParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\After\Result\AfterCallGetFieldResultParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\After\Result\AfterCallGetFieldResultParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\After\Result\AfterCallGetFieldResultParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\After\Result\AfterCallGetFieldResultParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Selectors\CallGetFieldWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetStaticFieldCalledParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\After\Called\AfterCallGetStaticFieldCalledStructParameterWithRealTypeTest.cs" />
@@ -311,6 +315,10 @@
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\LineNumber\AfterCallUpdateFieldLineNumberParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\LineNumber\AfterCallUpdateFieldLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\LineNumber\AfterCallUpdateFieldLineNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\Value\AfterCallUpdateFieldValueParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\Value\AfterCallUpdateFieldValueParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\Value\AfterCallUpdateFieldValueParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\After\Value\AfterCallUpdateFieldValueParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\Before\Called\BeforeCallUpdateFieldCalledParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\Before\Called\BeforeCallUpdateFieldCalledParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Update\Parameters\Before\Called\BeforeCallUpdateFieldCalledParameterWithRealTypeReferencedTypeTest.cs" />
@@ -401,6 +409,10 @@
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\LineNumber\AfterCallMethodLineNumberParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\LineNumber\AfterCallMethodLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\LineNumber\AfterCallMethodLineNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\Result\AfterCallMethodLineNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\Result\AfterCallMethodResultParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\Result\AfterCallMethodResultParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\Result\AfterCallMethodResultParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\Before\CalledParameterName\BeforeCallMethodCalledParameterNameParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\Before\CalledParameterName\BeforeCallMethodCalledParameterNameParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\Before\CalledParameterName\BeforeCallMethodCalledParameterNameParameterWithRealTypeOutTest.cs" />
@@ -444,6 +456,10 @@
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\Before\LineNumber\BeforeCallMethodLineNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\Before\LineNumber\BeforeCallMethodLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Selectors\AfterCallMethodCalledParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\After\Result\AfterCallGetPropertyResultParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\After\Result\AfterCallGetPropertyResultParameterWithObjectTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\After\Result\AfterCallGetPropertyResultParameterWithRealTypeReferencedTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\After\Result\AfterCallGetPropertyResultParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Selectors\WeavePublicMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Interceptors\CheckInterceptorReturnTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Pdb\BeforeMethodLineNumberParameterWithRealTypeTest.cs" />

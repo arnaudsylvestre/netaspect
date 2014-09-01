@@ -25,6 +25,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return configuration;
       }
 
+      public static InterceptorParameterConfiguration WhereParameterTypeIsSameAsMethodResultAndNotReferenced(this InterceptorParameterConfiguration configuration, MethodWeavingInfo info)
+      {
+         configuration.Checker.Add((parameter, errorListener) => Ensure.ResultOfTypeNotReferenced(parameter, errorListener, info.Method));
+         return configuration;
+      }
+
       public static InterceptorParameterConfiguration AndInjectTheVariable(this InterceptorParameterConfiguration configuration, Func<IlInjectorAvailableVariables, VariableDefinition> variableProvider)
       {
          configuration.Generator.Generators.Add((parameterInfo, instructions, info) => 

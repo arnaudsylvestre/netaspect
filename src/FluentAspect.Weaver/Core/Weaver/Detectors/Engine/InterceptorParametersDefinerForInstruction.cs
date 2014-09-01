@@ -270,7 +270,14 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
            interceptorParameterConfigurations_P.AddPossibleParameter("result")
                 .WhereParameterTypeIsSameAsMethodResult(weavingInfo_P)
                 .AndInjectTheVariable(variables => variables.Result);
-            return weavingInfo_P;
+           return weavingInfo_P;
+        }
+        public static InstructionWeavingInfo AddResult(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+        {
+           interceptorParameterConfigurations_P.AddPossibleParameter("result")
+                .WhereParameterTypeIsSameAsMethodResultAndNotReferenced(weavingInfo_P)
+                .AndInjectTheVariable(variables => variables.ResultForInstruction);
+           return weavingInfo_P;
         }
     }
 }

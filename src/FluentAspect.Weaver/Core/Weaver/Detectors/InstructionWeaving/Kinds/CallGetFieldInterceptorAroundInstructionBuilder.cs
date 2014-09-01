@@ -29,6 +29,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds
 
         public void FillAfterSpecific(InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations generator_P)
         {
+           weavingInfo_P.AddResult(generator_P);
         }
     }
 }

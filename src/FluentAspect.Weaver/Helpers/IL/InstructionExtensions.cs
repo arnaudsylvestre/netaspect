@@ -11,12 +11,25 @@ namespace NetAspect.Weaver.Helpers.IL
           return instruction.OpCode == OpCodes.Stsfld ||
               instruction.OpCode == OpCodes.Stfld;
        }
+       public static bool IsAGetField(this Instruction instruction)
+       {
+          return instruction.OpCode == OpCodes.Ldsfld ||
+              instruction.OpCode == OpCodes.Ldfld;
+       }
        public static bool IsAnUpdatePropertyCall(this Instruction instruction)
        {
           if (!instruction.IsACallInstruction())
              return false;
-          var methodDefinition_L = ((MethodReference) instruction.Operand).Resolve();
+          var methodDefinition_L = ((MethodReference)instruction.Operand).Resolve();
           var property = methodDefinition_L.GetPropertyForSetter();
+          return (property != null);
+       }
+       public static bool IsAGetPropertyCall(this Instruction instruction)
+       {
+          if (!instruction.IsACallInstruction())
+             return false;
+          var methodDefinition_L = ((MethodReference)instruction.Operand).Resolve();
+          var property = methodDefinition_L.GetPropertyForGetter();
           return (property != null);
        }
         public static MethodDefinition GetCalledMethod(this Instruction instruction)
