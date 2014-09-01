@@ -19,6 +19,9 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds
             weavingInfo_P.AddLineNumber(parametersIlGenerator_P);
             weavingInfo_P.AddFilePath(parametersIlGenerator_P);
             weavingInfo_P.AddFileName(parametersIlGenerator_P);
+
+
+            weavingInfo_P.AddValueForInstruction(parametersIlGenerator_P);
         }
 
         public void FillBeforeSpecific(InstructionWeavingInfo weavingInfo_P)

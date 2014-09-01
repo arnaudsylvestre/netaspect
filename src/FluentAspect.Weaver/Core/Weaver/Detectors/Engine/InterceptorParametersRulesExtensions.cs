@@ -240,28 +240,69 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          });
          return configuration;
       }
-      
-      public static void AndInjectTheCalledParameter(this InterceptorParameterConfiguration configuration, ParameterDefinition parameter)
+
+       public static void AndInjectTheCalledParameter(this InterceptorParameterConfiguration configuration,
+                                                      ParameterDefinition parameter)
+       {
+           AndInjectTheCalledParameter(configuration, parameter, p => "called" + p.Name);
+       }
+
+       public static void AndInjectTheCalledValue(this InterceptorParameterConfiguration configuration,
+                                                      ParameterDefinition parameter)
+       {
+           AndInjectTheCalledParameter(configuration, parameter, p => p.Name);
+       }
+
+       public static void AndInjectTheFieldValue(this InterceptorParameterConfiguration configuration,
+                                                      FieldDefinition field)
+       {
+           configuration.Generator.Generators.Add((parameterInfo, instructions, info) =>
+           {
+               ModuleDefinition moduleDefinition = field.Module;
+               if (!parameterInfo.ParameterType.IsByRef && field.FieldType.IsByReference)
+               {
+                   instructions.Add(Instruction.Create(OpCodes.Ldloc,
+                                                       info.FieldValue));
+                   instructions.Add(Instruction.Create(OpCodes.Ldobj,
+                                                       moduleDefinition.Import(parameterInfo.ParameterType)));
+               }
+               else
+               {
+                   instructions.Add(Instruction.Create(OpCodes.Ldloc,
+                                                       info.FieldValue));
+               }
+               if (field.FieldType != moduleDefinition.TypeSystem.Object &&
+                   parameterInfo.ParameterType == typeof(Object))
+               {
+                   TypeReference reference = info.FieldValue.VariableType;
+                   
+                   instructions.Add(Instruction.Create(OpCodes.Box, reference));
+               }
+           });
+       }
+
+       private static void AndInjectTheCalledParameter(this InterceptorParameterConfiguration configuration, ParameterDefinition parameter, Func<ParameterDefinition, string> nameComputer)
       {
          configuration.Generator.Generators.Add((parameterInfo, instructions, info) =>
          {
             ModuleDefinition moduleDefinition = ((MethodDefinition)parameter.Method).Module;
-            if (!parameterInfo.ParameterType.IsByRef && parameter.ParameterType.IsByReference)
+             var parameterName = nameComputer(parameter);
+             if (!parameterInfo.ParameterType.IsByRef && parameter.ParameterType.IsByReference)
             {
                instructions.Add(Instruction.Create(OpCodes.Ldloc,
-                                                   info.CalledParameters["called" + parameter.Name]));
+                                                   info.CalledParameters[parameterName]));
                instructions.Add(Instruction.Create(OpCodes.Ldobj,
                                                    moduleDefinition.Import(parameterInfo.ParameterType)));
             }
             else
             {
                instructions.Add(Instruction.Create(OpCodes.Ldloc,
-                                                   info.CalledParameters["called" + parameter.Name]));
+                                                   info.CalledParameters[parameterName]));
             }
             if (parameter.ParameterType != moduleDefinition.TypeSystem.Object &&
                 parameterInfo.ParameterType == typeof(Object))
             {
-               TypeReference reference = info.CalledParameters["called" + parameter.Name].VariableType;
+               TypeReference reference = info.CalledParameters[parameterName].VariableType;
                if (reference.IsByReference)
                {
                   reference =

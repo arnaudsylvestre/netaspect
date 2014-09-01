@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
@@ -175,6 +176,29 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                                                 .WhichCanNotBeOut()
                                                 .WhichMustBeOfTypeOfParameter(parameter)
                                                 .AndInjectTheParameter(parameter);
+            return weavingInfo_P;
+        }
+        public static MethodWeavingInfo AddValueForInstruction(this InstructionWeavingInfo weavingInfo_P,
+                                                           InterceptorParameterConfigurations
+                                                               interceptorParameterConfigurations_P)
+        {
+            var parameter = weavingInfo_P.GetOperandAsMethod().Parameters.Last();
+            interceptorParameterConfigurations_P.AddPossibleParameter("value")
+                                                .WhichCanNotBeReferenced()
+                                                .WhichMustBeOfTypeOfParameter(parameter)
+                                                .AndInjectTheCalledValue(parameter);
+            return weavingInfo_P;
+        }
+        public static MethodWeavingInfo AddFieldValue(this InstructionWeavingInfo weavingInfo_P,
+                                                           InterceptorParameterConfigurations
+                                                               interceptorParameterConfigurations_P)
+        {
+            var field = weavingInfo_P.GetOperandAsField();
+            var parameter = field.FieldType;
+            interceptorParameterConfigurations_P.AddPossibleParameter("value")
+                                                .WhichCanNotBeReferenced()
+                                                .WhichMustBeOfTypeOf(parameter)
+                                                .AndInjectTheFieldValue(field);
             return weavingInfo_P;
         }
 

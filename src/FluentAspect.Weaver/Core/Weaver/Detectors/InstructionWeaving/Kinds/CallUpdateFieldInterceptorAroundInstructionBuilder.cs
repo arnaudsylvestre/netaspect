@@ -20,8 +20,11 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds
                 .AddCaller(parametersIlGenerator_P)
                 .AddCallerParameters(parametersIlGenerator_P)
                 .AddCallerMethod(parametersIlGenerator_P)
-                
-                .AddValue();
+
+                ;
+
+           weavingInfo_P.AddFieldValue(parametersIlGenerator_P);
+
         }
 
         public void FillBeforeSpecific(InstructionWeavingInfo weavingInfo_P)

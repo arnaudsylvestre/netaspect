@@ -365,7 +365,7 @@
     <Compile Include="unit\InstructionWeaving\LifeCycle\InstructionWeavingWithNoLifeCycleTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Generics\BeforeCallMethodCalledParameterNameParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Generics\BeforeCallMethodCalledParameterNameInGenericsParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Methods\Generics\Copy of BeforeCallMethodCalledParameterNameInGenericsParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Methods\Generics\BeforeCallMethodCalledParameterNameInGenericsParameterWithRealTypeClassTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Override\AfterCallMethodCalledParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\CalledParameterName\AfterCallMethodCalledParameterNameParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Methods\Parameters\After\CalledParameterName\AfterCallMethodCalledParameterNameParameterWithObjectTypeTest.cs" />
@@ -460,6 +460,9 @@
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\After\Result\AfterCallGetPropertyResultParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\After\Result\AfterCallGetPropertyResultParameterWithRealTypeReferencedTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\After\Result\AfterCallGetPropertyResultParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\After\Value\AfterCallUpdatePropertyValueParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\After\Value\AfterCallUpdatePropertyValueParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\After\Value\AfterCallUpdatePropertyValueParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Selectors\WeavePublicMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Interceptors\CheckInterceptorReturnTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\Pdb\BeforeMethodLineNumberParameterWithRealTypeTest.cs" />

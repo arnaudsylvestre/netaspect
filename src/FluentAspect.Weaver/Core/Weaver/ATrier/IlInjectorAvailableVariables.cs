@@ -74,8 +74,9 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
       }
 
       private VariableDefinition _resultForInstruction;
+       private VariableDefinition _fieldValue;
 
-      public VariableDefinition ResultForInstruction
+       public VariableDefinition ResultForInstruction
       {
          get
          {
@@ -298,5 +299,22 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             return _called;
          }
       }
+
+       public VariableDefinition FieldValue { get
+       {
+           if (_fieldValue == null)
+           {
+               //if (Instruction.IsAnUpdateFieldCall())
+               {
+                   var fieldDefinition = ((FieldReference) Instruction.Operand).Resolve();
+                   var propertyType_L = fieldDefinition.FieldType;
+                   _fieldValue = new VariableDefinition(propertyType_L);
+                   Variables.Add(_fieldValue);
+                   calledInstructions.Add(Instruction.Create(OpCodes.Stloc, _fieldValue));
+                   recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, _fieldValue));
+               }
+           }
+           return _fieldValue;
+       } }
    }
 }
