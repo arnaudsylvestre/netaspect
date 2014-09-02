@@ -1,10 +1,10 @@
 using System;
-using System.Reflection;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Attributes.Visibility
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Instance
 {
-   public class WeavePublicConstructorWithSelectorTest : NetAspectTest<WeavePublicConstructorWithSelectorTest.ClassToWeave>
+    public class AfterMethodInstanceParameterWithRealTypeTest :
+        NetAspectTest<AfterMethodInstanceParameterWithRealTypeTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
@@ -12,13 +12,15 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Attributes.Visib
                 {
                     Assert.IsNull(MyAspect.Instance);
                     var classToWeave_L = new ClassToWeave();
+                    classToWeave_L.Weaved();
                     Assert.AreEqual(classToWeave_L, MyAspect.Instance);
                 };
         }
 
         public class ClassToWeave
         {
-            public ClassToWeave()
+            [MyAspect]
+            public void Weaved()
             {
             }
         }
@@ -28,16 +30,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Attributes.Visib
             public static ClassToWeave Instance;
             public bool NetAspectAttribute = true;
 
-            public void BeforeConstructor(ClassToWeave instance)
+            public void After(ClassToWeave instance)
             {
                 Instance = instance;
-            }
-
-
-
-            public static bool SelectConstructor(ConstructorInfo constructor)
-            {
-               return constructor.DeclaringType.Name == "ClassToWeave";
             }
         }
     }
