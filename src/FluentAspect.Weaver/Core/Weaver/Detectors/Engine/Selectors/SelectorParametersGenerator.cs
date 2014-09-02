@@ -38,7 +38,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine.Selectors
 
         public void Check(MethodInfo method, ErrorHandler errorHandler)
         {
-            foreach (var parameterInfo in method.GetParameters())
+            var parameters = method.GetParameters();
+            if (!parameters.Any())
+            {
+                errorHandler.OnError(ErrorCode.SelectorMustHaveParameters, FileLocation.None, method.Name, method.DeclaringType.FullName, string.Join(",", possibleParameters.Keys.ToArray()));
+            }
+            foreach (var parameterInfo in parameters)
             {
                 var parameterName = parameterInfo.Name.ToLower();
                 if (!possibleParameters.ContainsKey(parameterName))

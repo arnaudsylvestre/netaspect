@@ -20,6 +20,7 @@
       SelectorBadParameterType,
        InterceptorMustBeVoid,
        SelectorBadParameterName,
-       TooManySelectorsWithSameName
+       TooManySelectorsWithSameName,
+       SelectorMustHaveParameters
    }
 }

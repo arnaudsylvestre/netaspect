@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.Selectors.Errors
                     Level = ErrorLevel.Error,
                     Message =
                     string.Format(
-                        "The parameter fieldName in the method SelectField of the aspect {0} is expected to be System.String",
+                        "The parameter field in the method SelectField of the aspect {0} is expected to be System.Reflection.FieldInfo",
                         typeof(MyAspect).FullName)
                 });
         }
@@ -43,7 +43,7 @@ namespace NetAspect.Weaver.Tests.unit.Selectors.Errors
                 Caller = caller;
             }
 
-            public static bool SelectField(FieldInfo field)
+            public static bool SelectField(string field)
             {
                 return true;
             }

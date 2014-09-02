@@ -79,6 +79,7 @@ namespace NetAspect.Weaver
                     {ErrorCode.SelectorBadParameterName, new ErrorInfo("The parameter {0} in the method {1} of the aspect {2} is unexpected. {3} can be used")},
                     {ErrorCode.InterceptorMustBeVoid, new ErrorInfo("The {0} interceptor in the {1} aspect must be void")},
                     {ErrorCode.TooManySelectorsWithSameName, new ErrorInfo("Only one {0} can be defined in the aspect {1}")},
+                    {ErrorCode.SelectorMustHaveParameters, new ErrorInfo("The selector {0} of the aspect {1} must have the following parameters : {2}")},
                     {ErrorCode.AssemblyGeneratedIsNotCompliant, new ErrorInfo(ErrorLevel.Failure, "An internal error : {0}")}
                 }));
        }
