@@ -29,9 +29,7 @@ namespace NetAspect.Weaver.Tests.unit
         public static void For<T, U>(Type t, Action<List<ErrorReport.Error>> resultProvider, Action ensureAssembly)
         {
             Assembly assembly = typeof(T).Assembly;
-            var assemblyFile = assembly.GetAssemblyPath() + ".Test";
-            if (File.Exists(assemblyFile))
-                File.Delete(assemblyFile);
+            var assemblyFile = assembly.GetAssemblyPath();
             Assembly otherAssembly = typeof(U).Assembly;
             AppDomainIsolatedTestRunner runner = CreateAppRunner(assembly);
 
@@ -39,11 +37,15 @@ namespace NetAspect.Weaver.Tests.unit
             resultProvider(errorHandler);
             string dll = assembly.GetAssemblyPath();
             var otherDll = otherAssembly.GetAssemblyPath();
-            Console.Write(runner.RunFromType(dll, typeof(T).FullName, errorHandler, otherDll, typeof(U).FullName));
 
+            string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            Directory.CreateDirectory(tempDirectory);
+            Console.WriteLine(tempDirectory);
+            Console.Write(runner.RunFromType(dll, typeof(T).FullName, errorHandler, otherDll, typeof(U).FullName, tempDirectory));
+            var newAssembly = Path.Combine(tempDirectory, Path.GetFileName(assemblyFile));
             runner = CreateAppRunner(assembly);
 
-            runner.Ensure(assemblyFile, t.FullName);
+            runner.Ensure(newAssembly, t.FullName);
            
         }
     }

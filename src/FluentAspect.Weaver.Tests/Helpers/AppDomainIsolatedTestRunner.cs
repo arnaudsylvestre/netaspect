@@ -16,14 +16,18 @@ namespace NetAspect.Weaver.Tests.Helpers
 {
     public class AppDomainIsolatedTestRunner : MarshalByRefObject
     {
-        public string RunFromType(string dll_L, string typeName, List<ErrorReport.Error> checkErrors, string otherDll, string otherTypeName)
+        public string RunFromType(string dll_L, string typeName, List<ErrorReport.Error> checkErrors, string otherDll, string otherTypeName, string tempDirectory)
         {
+            Copy(tempDirectory, "NetAspect.Weaver.dll");
+            Copy(tempDirectory, "NetAspect.Sample.Dep.dll");
+            Copy(tempDirectory, "Mono.Cecil.dll");
+            Copy(tempDirectory, "nunit.framework.dll");
             Assembly assembly = Assembly.LoadFrom(dll_L);
             Assembly otherAssembly = Assembly.LoadFrom(otherDll);
             Type type = assembly.GetTypes().First(t => t.FullName == typeName);
             Type otherType = otherAssembly.GetTypes().First(t => t.FullName == otherTypeName);
             WeaverEngine weaver = WeaverFactory.Create(t => TypeMustBeSaved(t, typeName, otherTypeName));
-            var errorHandler = weaver.Weave(ComputeTypes(type, otherType), ComputeTypes(type, otherType), (a) => a == dll_L.Replace(".dll.Test", ".dll") ? a + ".Test" : a);
+            var errorHandler = weaver.Weave(ComputeTypes(type, otherType), ComputeTypes(type, otherType), (a) => ChangeName(dll_L, a, tempDirectory));
             var builder = new StringBuilder();
             errorHandler.Dump(builder);
             File.WriteAllText(@"C:\temp.txt", builder.ToString());
@@ -31,7 +35,17 @@ namespace NetAspect.Weaver.Tests.Helpers
             return builder.ToString();
         }
 
-       private bool TypeMustBeSaved(TypeDefinition typeDefinition_P, string typeName_P, string otherTypeName_P)
+        private static void Copy(string tempDirectory, string filename)
+        {
+            File.Copy(filename, Path.Combine(tempDirectory, filename));
+        }
+
+        private static string ChangeName(string dll_L, string a, string tempDirectory)
+        {
+            return Path.Combine(tempDirectory, Path.GetFileName(a));
+        }
+
+        private bool TypeMustBeSaved(TypeDefinition typeDefinition_P, string typeName_P, string otherTypeName_P)
        {
           if (typeDefinition_P.Module.Assembly.FullName.Contains("NetAspect.Sample.Dep"))
              return true;
@@ -68,6 +82,7 @@ namespace NetAspect.Weaver.Tests.Helpers
 
         public void Ensure(string assemblyFile, string typeName)
         {
+            Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(assemblyFile), "NetAspect.Sample.Dep.dll"));
             var assemblyToTest = Assembly.LoadFrom(assemblyFile);
 
             var type_L = assemblyToTest.GetType(typeName);

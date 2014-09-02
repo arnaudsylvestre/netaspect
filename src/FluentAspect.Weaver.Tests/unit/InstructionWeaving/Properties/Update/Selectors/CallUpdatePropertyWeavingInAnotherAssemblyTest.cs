@@ -33,9 +33,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Selec
                 Caller = caller;
             }
 
-            public static bool SelectProperty(string PropertyName)
+            public static bool SelectProperty(PropertyInfo property)
             {
-                return PropertyName == "Property";
+                return property.Name == "Property";
             }
         }
     }
