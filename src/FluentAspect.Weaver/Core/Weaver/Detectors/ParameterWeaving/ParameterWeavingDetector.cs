@@ -4,8 +4,9 @@ using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
+using NetAspect.Weaver.Core.Weaver.Engine;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
+namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
 {
    public class ParameterWeavingDetector : IMethodWeavingDetector
    {

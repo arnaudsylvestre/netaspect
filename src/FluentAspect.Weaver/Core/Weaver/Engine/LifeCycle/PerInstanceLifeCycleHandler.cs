@@ -5,7 +5,7 @@ using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
+namespace NetAspect.Weaver.Core.Weaver.Engine.LifeCycle
 {
    public class PerInstanceLifeCycleHandler : ILifeCycleHandler
    {

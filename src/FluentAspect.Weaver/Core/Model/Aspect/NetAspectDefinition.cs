@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Collections.Generic;
+using NetAspect.Weaver.Core.Helpers;
 using NetAspect.Weaver.Core.Weaver.Detectors.Engine.Selectors;
 using NetAspect.Weaver.Helpers;
 

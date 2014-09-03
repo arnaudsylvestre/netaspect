@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using NetAspect.Weaver.Core.Model.Aspect;
 
-namespace NetAspect.Weaver.Core.Model.Aspect
+namespace NetAspect.Weaver.Core.Helpers
 {
    public static class NetAspectDefinitionExtensions
    {

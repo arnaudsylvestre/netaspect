@@ -4,7 +4,8 @@ using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
+using NetAspect.Weaver.Core.Weaver.ATrier;
+using NetAspect.Weaver.Core.Weaver.Engine.LifeCycle;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine
 {

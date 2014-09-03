@@ -3,7 +3,7 @@ using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors
+namespace NetAspect.Weaver.Core.Weaver.Engine
 {
    public interface ICallWeavingDetector
    {

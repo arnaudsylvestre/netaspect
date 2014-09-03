@@ -1,6 +1,6 @@
 ﻿using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
+namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
 {
    public interface IInterceptorAroundMethodForParameterBuilder
    {

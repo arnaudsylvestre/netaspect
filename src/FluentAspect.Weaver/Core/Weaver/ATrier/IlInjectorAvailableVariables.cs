@@ -7,7 +7,7 @@ using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
+namespace NetAspect.Weaver.Core.Weaver.ATrier
 {
    public class IlInjectorAvailableVariables
    {

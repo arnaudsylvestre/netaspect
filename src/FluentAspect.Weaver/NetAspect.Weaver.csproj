@@ -77,10 +77,10 @@
     <Compile Include="Core\Model\Errors\NetAspectError.cs" />
     <Compile Include="Core\Model\Aspect\Interceptor.cs" />
     <Compile Include="Core\Model\Aspect\LifeCycle.cs" />
-    <Compile Include="Core\Model\Aspect\LifeCycleHelper.cs" />
+    <Compile Include="Core\Helpers\LifeCycleHelper.cs" />
     <Compile Include="Core\Model\Weaving\AroundMethodWeavingModel.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
-    <Compile Include="Core\Model\Aspect\NetAspectDefinitionExtensions.cs" />
+    <Compile Include="Core\Helpers\NetAspectDefinitionExtensions.cs" />
     <Compile Include="Core\Model\Weaving\NoIIlInjector.cs" />
     <Compile Include="Core\Model\Weaving\MethodsWeavingModel.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensures\MethodChecker.cs" />
@@ -133,7 +133,6 @@
     <Compile Include="Core\Weaver\Detectors\Engine\ParametersChecker.cs" />
     <Compile Include="Core\Weaver\Helpers\ErrorHandlerExtensions.cs" />
     <Compile Include="Core\Weaver\WeaverEngine.cs" />
-    <Compile Include="Core\Errors\IErrorListener.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\AspectApplier.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\InstructionWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\ParametersIlGenerator.cs" />

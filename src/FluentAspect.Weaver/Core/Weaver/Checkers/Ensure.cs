@@ -183,7 +183,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
          }
       }
 
-      public static void NotStaticButDefaultValue(ParameterInfo parameter, IErrorListener handler, PropertyDefinition definition)
+      public static void NotStaticButDefaultValue(ParameterInfo parameter, ErrorHandler handler, PropertyDefinition definition)
       {
          if (definition.GetMethod.IsStatic)
          {
@@ -194,7 +194,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
          }
       }
 
-      public static void NotStaticButDefaultValue(ParameterInfo parameter, IErrorListener handler, MethodDefinition definition)
+      public static void NotStaticButDefaultValue(ParameterInfo parameter, ErrorHandler handler, MethodDefinition definition)
       {
          if (definition.IsStatic)
          {

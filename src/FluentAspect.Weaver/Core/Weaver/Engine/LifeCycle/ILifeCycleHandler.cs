@@ -3,7 +3,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
 
-namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
+namespace NetAspect.Weaver.Core.Weaver.Engine.LifeCycle
 {
    public interface ILifeCycleHandler
    {

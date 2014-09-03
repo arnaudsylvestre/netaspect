@@ -1,4 +1,4 @@
-﻿namespace NetAspect.Weaver.Core.Errors
+﻿namespace NetAspect.Weaver.Core.Model.Errors
 {
    public class ErrorInfo
    {

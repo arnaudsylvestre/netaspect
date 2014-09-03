@@ -5,7 +5,7 @@ using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
-namespace NetAspect.Weaver.Core.Weaver.Checkers
+namespace NetAspect.Weaver.Core.Weaver.Checkers.Ensures
 {
    public class ParameterTypeChecker : IChecker
    {

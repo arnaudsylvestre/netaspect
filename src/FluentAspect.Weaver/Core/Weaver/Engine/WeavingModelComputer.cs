@@ -5,10 +5,11 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Assemblies;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Helpers;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
+using NetAspect.Weaver.Core.Weaver.Engine.LifeCycle;
 using NetAspect.Weaver.Helpers;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine

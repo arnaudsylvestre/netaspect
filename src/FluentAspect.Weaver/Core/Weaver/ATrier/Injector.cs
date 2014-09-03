@@ -12,7 +12,7 @@ using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
+namespace NetAspect.Weaver.Core.Weaver.ATrier
 {
    public interface IWevingPreconditionInjector
    {

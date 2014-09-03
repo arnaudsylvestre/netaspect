@@ -3,13 +3,13 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
 
-namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
+namespace NetAspect.Weaver.Core.Weaver.Engine.LifeCycle
 {
    public class AspectBuilder
    {
-      private readonly Dictionary<LifeCycle, ILifeCycleHandler> lifeCycles;
+      private readonly Dictionary<Model.Aspect.LifeCycle, ILifeCycleHandler> lifeCycles;
 
-      public AspectBuilder(Dictionary<LifeCycle, ILifeCycleHandler> lifeCycles_P)
+      public AspectBuilder(Dictionary<Model.Aspect.LifeCycle, ILifeCycleHandler> lifeCycles_P)
       {
          lifeCycles = lifeCycles_P;
       }

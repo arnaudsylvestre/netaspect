@@ -2,10 +2,10 @@
 using System.Reflection;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Weaving;
+using NetAspect.Weaver.Core.Weaver.ATrier;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
-using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
+namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
 {
    public class AroundMethodForParameterWeaverFactory
    {
