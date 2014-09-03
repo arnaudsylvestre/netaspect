@@ -4,7 +4,7 @@ using NetAspect.Core.Helpers;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver
+namespace NetAspect.Weaver.Factory
 {
    public static class InstructionCompliance
    {

@@ -2,6 +2,7 @@ using System;
 using Microsoft.Build.Utilities;
 using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Weaver;
+using NetAspect.Weaver.Factory;
 
 namespace NetAspect.Weaver.Tasks
 {

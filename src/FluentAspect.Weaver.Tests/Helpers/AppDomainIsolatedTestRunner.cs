@@ -7,6 +7,7 @@ using System.Text;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Weaver;
+using NetAspect.Weaver.Factory;
 using NetAspect.Weaver.Tests.unit;
 using NUnit.Framework;
 

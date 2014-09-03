@@ -1,7 +1,4 @@
-﻿using System;
-using NetAspect.Weaver.Core.Weaver.Data.Variables;
-
-namespace NetAspect.Weaver.Core.Weaver.Data
+﻿namespace NetAspect.Weaver.Core.Weaver.Data.Variables
 {
    public class VariablesForInstruction
    {

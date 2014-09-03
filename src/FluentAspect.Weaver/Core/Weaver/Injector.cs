@@ -1,53 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NetAspect.Core.Helpers;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Model.Weaving;
+using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Data;
-using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
-using NetAspect.Weaver.Helpers.IL;
+using NetAspect.Weaver.Core.Weaver.ILInjector;
 
-namespace NetAspect.Weaver.Core.Weaver.ATrier
+namespace NetAspect.Weaver.Core.Weaver
 {
-   public interface IWevingPreconditionInjector
-   {
-      void Inject(List<Instruction> precondition, IlInjectorAvailableVariables availableInformations, MethodInfo interceptorMethod_P, MethodDefinition method_P);
-   }
-
-   public class OverrideWevingPreconditionInjector : IWevingPreconditionInjector
-   {
-      public void Inject(List<Instruction> precondition, IlInjectorAvailableVariables availableInformations, MethodInfo interceptorMethod_P, MethodDefinition method_P)
-      {
-         Instruction instruction_L = availableInformations.Instruction;
-         if (!instruction_L.IsACallInstruction())
-            return;
-         MethodDefinition calledMethod = instruction_L.GetCalledMethod();
-         if (calledMethod.IsVirtual)
-         {
-            precondition.Add(Instruction.Create(OpCodes.Ldstr, calledMethod.DeclaringType.FullName.Replace('/', '+')));
-            precondition.AppendCallToTargetGetType(method_P.Module, availableInformations.Called);
-            precondition.AppendCallToGetMethod(calledMethod.Name, method_P.Module);
-            precondition.Add(Instruction.Create(OpCodes.Callvirt, method_P.Module.Import(typeof (MemberInfo).GetMethod("get_DeclaringType"))));
-            precondition.Add(Instruction.Create(OpCodes.Callvirt, method_P.Module.Import(typeof (Type).GetMethod("get_FullName"))));
-            precondition.Add(Instruction.Create(OpCodes.Call, method_P.Module.Import(typeof (string).GetMethod("op_Equality"))));
-         }
-      }
-   }
-
-   public class NoWevingPreconditionInjector : IWevingPreconditionInjector
-   {
-      public void Inject(List<Instruction> precondition, IlInjectorAvailableVariables availableInformations, MethodInfo interceptorMethod_P, MethodDefinition method_P)
-      {
-      }
-   }
-
-   public class Injector : IIlInjector
+    public class Injector : IIlInjector
    {
       private readonly MethodDefinition _method;
       private readonly MethodInfo interceptorMethod;

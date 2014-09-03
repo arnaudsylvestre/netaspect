@@ -86,18 +86,23 @@
     <Compile Include="Core\Weaver\Checkers\Ensures\ParameterReferencedChecker.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensures\ParameterTypeChecker.cs" />
     <Compile Include="Core\Weaver\Data\InstructionsToInsert.cs" />
-    <Compile Include="Core\Weaver\Data\VariablesForMethod.cs" />
-    <Compile Include="Core\Weaver\Data\VariablesForInstruction.cs" />
-    <Compile Include="Core\Weaver\Data\Variable.cs" />
+    <Compile Include="Core\Weaver\Data\Variables\MultipleVariable.cs" />
+    <Compile Include="Core\Weaver\Data\Variables\VariableAspect.cs" />
+    <Compile Include="Core\Weaver\Data\Variables\VariablesForMethod.cs" />
+    <Compile Include="Core\Weaver\Data\Variables\VariablesForInstruction.cs" />
+    <Compile Include="Core\Weaver\Data\Variables\Variable.cs" />
     <Compile Include="Core\Weaver\Data\Variables\Instructions\VariableCalled.cs" />
     <Compile Include="Core\Weaver\Data\Variables\Instructions\VariableCalledParametersObject.cs" />
-    <Compile Include="Core\Weaver\Data\Variables\VariableCurrentMethod.cs" />
-    <Compile Include="Core\Weaver\Data\Variables\VariableCurrentProperty.cs" />
-    <Compile Include="Core\Weaver\Data\Variables\VariableException.cs" />
-    <Compile Include="Core\Weaver\Data\Variables\VariableFieldValue.cs" />
-    <Compile Include="Core\Weaver\Data\Variables\VariableParameters.cs" />
-    <Compile Include="Core\Weaver\Data\Variables\VariablesCalledParameters.cs" />
+    <Compile Include="Core\Weaver\Data\Variables\Method\VariableCurrentMethodBuilder.cs" />
+    <Compile Include="Core\Weaver\Data\Variables\Method\VariableCurrentProperty.cs" />
+    <Compile Include="Core\Weaver\Data\Variables\Method\VariableException.cs" />
+    <Compile Include="Core\Weaver\Data\Variables\Instructions\VariableFieldValue.cs" />
+    <Compile Include="Core\Weaver\Data\Variables\Method\VariableParameters.cs" />
+    <Compile Include="Core\Weaver\Data\Variables\Instructions\VariablesCalledParameters.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\InterceptorParametersRulesExtensions.cs" />
+    <Compile Include="Core\Weaver\IWevingPreconditionInjector.cs" />
+    <Compile Include="Core\Weaver\NoWevingPreconditionInjector.cs" />
+    <Compile Include="Core\Weaver\OverrideWevingPreconditionInjector.cs" />
     <Compile Include="Factory\Configuration\CallUpdateFieldInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Factory\Configuration\CallGetPropertyInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Factory\Configuration\CallMethodInterceptorAroundInstructionBuilder.cs" />
@@ -174,9 +179,7 @@
       <Name>NetAspect.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Weaver\Data\Variables\Method\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

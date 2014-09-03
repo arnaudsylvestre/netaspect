@@ -2,9 +2,10 @@
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Errors;
-using NetAspect.Weaver.Core.Weaver.Detectors.Engine.Selectors;
+using NetAspect.Weaver.Core.Selectors;
+using NetAspect.Weaver.Core.Weaver.Engine;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine.AspectCheckers
+namespace NetAspect.Weaver.Core.Weaver.Checkers.Aspects
 {
    public class DefaultAspectChecker : WeavingModelComputer.IAspectChecker
    {

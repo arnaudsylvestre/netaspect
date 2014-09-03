@@ -6,22 +6,18 @@ using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Weaver;
-using NetAspect.Weaver.Core.Weaver.ATrier;
-using NetAspect.Weaver.Core.Weaver.Detectors;
+using NetAspect.Weaver.Core.Weaver.Checkers.Aspects;
 using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving;
-using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds;
 using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving.Kinds;
 using NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving;
-using NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving.Kinds;
 using NetAspect.Weaver.Core.Weaver.Engine;
-using NetAspect.Weaver.Core.Weaver.Engine.AspectCheckers;
 using NetAspect.Weaver.Core.Weaver.Engine.AspectFinders;
 using NetAspect.Weaver.Core.Weaver.Engine.AssemblyPoolFactories;
 using NetAspect.Weaver.Core.Weaver.Engine.LifeCycle;
+using NetAspect.Weaver.Factory.Configuration;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver
+namespace NetAspect.Weaver.Factory
 {
    public static class WeaverFactory
    {

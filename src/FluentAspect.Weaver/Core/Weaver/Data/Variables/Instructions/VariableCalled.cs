@@ -1,14 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace NetAspect.Weaver.Core.Weaver.Data.Variables
+namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
 {
     public class VariableCalled : Variable.IVariableBuilder
     {
+        private Func<Dictionary<string, VariableDefinition>> calledParametersProvider;
+
+        public VariableCalled(Func<Dictionary<string, VariableDefinition>> calledParametersProvider)
+        {
+            this.calledParametersProvider = calledParametersProvider;
+        }
+
         public VariableDefinition Build(InstructionsToInsert instructionsToInsert, MethodDefinition method, Instruction Instruction)
         {
-            Dictionary<string, VariableDefinition> calledParameters = CalledParameters;
+            calledParametersProvider();
             TypeReference declaringType = null;
             var operand = Instruction.Operand as FieldReference;
             if (operand != null && !operand.Resolve().IsStatic)

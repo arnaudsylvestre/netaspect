@@ -1,7 +1,8 @@
 ﻿using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
+using NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving.Kinds
+namespace NetAspect.Weaver.Factory.Configuration
 {
    public class MethodWeavingParameterInjectorFactory : IInterceptorAroundMethodForParameterBuilder
    {

@@ -2,7 +2,7 @@
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver
+namespace NetAspect.Weaver.Factory
 {
    internal class MethodCompliance
    {

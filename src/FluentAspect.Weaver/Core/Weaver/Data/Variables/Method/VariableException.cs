@@ -2,7 +2,7 @@
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace NetAspect.Weaver.Core.Weaver.Data.Variables
+namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Method
 {
     public class VariableException : Variable.IVariableBuilder
     {

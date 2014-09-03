@@ -5,7 +5,7 @@ using System.Reflection;
 using Mono.Cecil;
 using Mono.Collections.Generic;
 using NetAspect.Weaver.Core.Helpers;
-using NetAspect.Weaver.Core.Weaver.Detectors.Engine.Selectors;
+using NetAspect.Weaver.Core.Selectors;
 using NetAspect.Weaver.Helpers;
 
 namespace NetAspect.Weaver.Core.Model.Aspect

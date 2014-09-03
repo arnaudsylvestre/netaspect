@@ -5,7 +5,6 @@ using Mono.Cecil.Cil;
 using NetAspect.Core;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.ATrier;
 using NetAspect.Weaver.Core.Weaver.Data;
 using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
 using NetAspect.Weaver.Helpers.IL;

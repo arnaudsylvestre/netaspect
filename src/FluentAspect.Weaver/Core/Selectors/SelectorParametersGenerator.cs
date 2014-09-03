@@ -5,7 +5,7 @@ using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine.Selectors
+namespace NetAspect.Weaver.Core.Selectors
 {
    public class SelectorParametersGenerator<T>
    {

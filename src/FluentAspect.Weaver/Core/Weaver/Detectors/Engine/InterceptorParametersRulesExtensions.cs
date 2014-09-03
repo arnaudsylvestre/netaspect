@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NetAspect.Weaver.Core.Weaver.ATrier;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Checkers.Ensures;
 using NetAspect.Weaver.Core.Weaver.Data;

@@ -1,7 +1,8 @@
 using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
+using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds
+namespace NetAspect.Weaver.Factory.Configuration
 {
    public class CallSetPropertyInterceptorAroundInstructionBuilder : IInterceptorAroundInstructionBuilder
    {
