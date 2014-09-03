@@ -32,32 +32,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
                (info.Member).Name,
                (info.Member.DeclaringType).FullName);
       }
-
-      //public static void ParameterType<T>(ParameterInfo info, ErrorHandler handler)
-      //{
-      //    if (info.ParameterType != typeof (T))
-      //        handler.Errors.Add(string.Format("Wrong parameter type for {0} in method {1} of type {2}", info.Name,
-      //                                         info.Member.Name, info.Member.DeclaringType.FullName));
-      //}
-
-      //public static void ParameterType(ParameterInfo info, ErrorHandler errorHandler, TypeReference declaringType,
-      //                                 Type type)
-      //{
-      //    bool secondTypeOk = true;
-      //    if (type != null)
-      //        secondTypeOk = info.ParameterType == type;
-      //    if (info.ParameterType.FullName != declaringType.FullName && !secondTypeOk)
-      //        errorHandler.Errors.Add(string.Format("Wrong parameter type for {0} in method {1} of type {2}",
-      //                                              info.Name, info.Member.Name, info.Member.DeclaringType.FullName));
-      //}
-
-
-      //public static void OfType<T>(ParameterInfo info, ErrorHandler handler)
-      //{
-      //    OfType(info, handler, typeof (T).FullName);
-      //}
-
-
+       
       public static void NotOut(ParameterInfo parameterInfo, ErrorHandler errorHandler)
       {
          if (parameterInfo.IsOut)
@@ -109,19 +84,6 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
          return false;
       }
 
-      //public static void OfType(ParameterInfo info, IErrorListener handler, params string[] types)
-      //{
-      //    if (
-      //        !(from t in types where info.ParameterType.FullName.Replace("&", "") == t.Replace("/", "+") select t)
-      //             .Any())
-      //    {
-      //        handler.OnError(
-      //            "the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4}",
-      //            info.Name, info.Member.Name, info.Member.DeclaringType.FullName, info.ParameterType.FullName,
-      //            string.Join(" or ", types.Select(type => type.Replace("/", "+")).ToArray()));
-      //    }
-      //}
-
       public static void OfType(ParameterInfo info, ErrorHandler handler, ParameterDefinition parameter)
       {
          if (parameter.ParameterType.IsGenericParameter && info.ParameterType.IsByRef)
@@ -155,24 +117,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
             handler.OnError(ErrorCode.ParameterCanNotBeUsedInStaticMethod, FileLocation.None, parameter.Name);
       }
 
-      public static void NotStatic(ParameterInfo parameter, ErrorHandler handler, FieldDefinition definition)
-      {
-         if (definition.IsStatic)
-            handler.OnError(ErrorCode.ParameterCanNotBeUsedInStaticMethod, FileLocation.None, parameter.Name);
-      }
-
-      public static void NotStaticButDefaultValue(ParameterInfo parameter, ErrorHandler handler, FieldDefinition definition)
-      {
-         if (definition.IsStatic)
-         {
-            if (definition.DeclaringType.IsValueType)
-               handler.OnError(ErrorCode.NotAvailableInStaticStruct, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
-            else
-               handler.OnError(ErrorCode.NotAvailableInStatic, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
-         }
-      }
-
-      public static void NotStaticButDefaultValue(ParameterInfo parameter, ErrorHandler handler, IMemberDefinition member)
+       public static void NotStaticButDefaultValue(ParameterInfo parameter, ErrorHandler handler, IMemberDefinition member)
       {
          if ((bool) member.GetType().GetProperty("IsStatic").GetValue(member, new object[0]))
          {
@@ -183,29 +128,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
          }
       }
 
-      public static void NotStaticButDefaultValue(ParameterInfo parameter, ErrorHandler handler, PropertyDefinition definition)
-      {
-         if (definition.GetMethod.IsStatic)
-         {
-            if (definition.DeclaringType.IsValueType)
-               handler.OnError(ErrorCode.NotAvailableInStaticStruct, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
-            else
-               handler.OnError(ErrorCode.NotAvailableInStatic, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
-         }
-      }
-
-      public static void NotStaticButDefaultValue(ParameterInfo parameter, ErrorHandler handler, MethodDefinition definition)
-      {
-         if (definition.IsStatic)
-         {
-            if (definition.DeclaringType.IsValueType)
-               handler.OnError(ErrorCode.NotAvailableInStaticStruct, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
-            else
-               handler.OnError(ErrorCode.NotAvailableInStatic, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName);
-         }
-      }
-
-      public static void ResultOfTypeNotReferenced(ParameterInfo parameter_P, ErrorHandler errorListener_P, MethodDefinition method_P)
+       public static void ResultOfTypeNotReferenced(ParameterInfo parameter_P, ErrorHandler errorListener_P, MethodDefinition method_P)
       {
          ResultOfType(parameter_P, errorListener_P, method_P);
          NotReferenced(parameter_P, errorListener_P);

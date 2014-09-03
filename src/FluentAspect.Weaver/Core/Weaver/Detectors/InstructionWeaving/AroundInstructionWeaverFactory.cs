@@ -21,7 +21,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
 
       public IIlInjector CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Instruction instruction)
       {
-         return Create(method, interceptorMethod, instruction, (factory, interceptorInfo, generator) => factory.FillBeforeSpecific(interceptorInfo));
+         return Create(method, interceptorMethod, instruction, (factory, interceptorInfo, generator) => { });
       }
 
       private IIlInjector Create(MethodDefinition method,

@@ -22,7 +22,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds
          weavingInfo_P.AddFileName(parametersIlGenerator_P);
       }
 
-      public void FillBeforeSpecific(InstructionWeavingInfo weavingInfo_P)
+      public void FillBeforeSpecific()
       {
       }
 

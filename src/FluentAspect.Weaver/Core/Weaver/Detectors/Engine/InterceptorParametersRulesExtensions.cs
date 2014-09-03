@@ -16,7 +16,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
    {
       public static InterceptorParameterConfiguration WhichCanNotBeReferenced(this InterceptorParameterConfiguration configuration)
       {
-         configuration.Checker.Add((parameter, errorListener) => Ensure.NotReferenced(parameter, errorListener));
+         configuration.Checker.Add(Ensure.NotReferenced);
          return configuration;
       }
 

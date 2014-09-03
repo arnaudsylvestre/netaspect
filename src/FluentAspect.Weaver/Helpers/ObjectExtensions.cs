@@ -11,14 +11,19 @@ namespace NetAspect.Weaver.Helpers
 
       public static T GetValueForField<T>(this Type o, string field, Func<T> defaultValueProvider)
       {
-         try
-         {
-            return (T) o.GetField(field, BINDING_FLAGS).GetValue(null);
-         }
-         catch (Exception)
-         {
-            return defaultValueProvider();
-         }
+          try
+          {
+              return (T)o.GetField(field, BINDING_FLAGS).GetValue(null);
+          }
+          catch (Exception)
+          {
+              return defaultValueProvider();
+          }
+      }
+
+      public static bool FieldExists(this Type o, string field)
+      {
+          return o.GetField(field, BINDING_FLAGS) != null;
       }
    }
 }

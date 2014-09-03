@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NetAspect.Weaver.Core.Model.Aspect;
+using NetAspect.Weaver.Helpers;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine.AspectFinders
 {
@@ -12,16 +13,13 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.AspectFinders
       {
          return types_P.
             Select(t => new NetAspectDefinition(t)).
-            Where(t => IsValid(t))
+            Where(IsValid)
             .ToList();
       }
 
-      public bool IsValid(NetAspectDefinition aspect)
+       private bool IsValid(NetAspectDefinition aspect)
       {
-         return aspect.Type.GetField(
-            "NetAspectAttribute",
-            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
-            BindingFlags.Instance) != null;
+         return aspect.Type.FieldExists("NetAspectAttribute");
       }
    }
 }

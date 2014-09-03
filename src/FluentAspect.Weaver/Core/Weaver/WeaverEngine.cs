@@ -22,18 +22,17 @@ namespace NetAspect.Weaver.Core.Weaver
          this.errorInfoComputer = errorInfoComputer;
       }
 
-      public ErrorReport Weave(string assemblyFilePath,
-         Func<string, string> newAssemblyNameProvider)
+      public ErrorReport Weave(string assemblyFilePath, Func<string, string> newAssemblyNameProvider)
       {
          return Weave(Assembly.LoadFrom(assemblyFilePath).GetTypes(), null, newAssemblyNameProvider);
       }
 
-      public ErrorReport Weave(Type[] typesP_L, Type[] filter, Func<string, string> newAssemblyNameProvider)
+      public ErrorReport Weave(Type[] types, Type[] filter, Func<string, string> newAssemblyNameProvider)
       {
          var errorHandler = new ErrorHandler();
          AssemblyPool assemblyPool = assemblyPoolFactory.Create();
 
-         MethodsWeavingModel weavingModels_L = weavingModelComputer.ComputeWeavingModels(typesP_L, filter, assemblyPool, errorHandler);
+         MethodsWeavingModel weavingModels_L = weavingModelComputer.ComputeWeavingModels(types, filter, assemblyPool, errorHandler);
          foreach (var weavingModel in weavingModels_L.weavingModels)
             weavingModel.Key.Weave(weavingModel.Value, errorHandler);
 

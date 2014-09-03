@@ -3,7 +3,7 @@ using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds
 {
-   public class CallGetPropertyInterceptorAroundInstructionBuilder : IInterceptorAroundInstructionBuilder
+   public class CallSetPropertyInterceptorAroundInstructionBuilder : IInterceptorAroundInstructionBuilder
    {
       public void FillCommon(InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations parametersIlGenerator_P)
       {
@@ -19,15 +19,17 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving.Kinds
          weavingInfo_P.AddLineNumber(parametersIlGenerator_P);
          weavingInfo_P.AddFilePath(parametersIlGenerator_P);
          weavingInfo_P.AddFileName(parametersIlGenerator_P);
+
+
+         weavingInfo_P.AddValueForInstruction(parametersIlGenerator_P);
       }
 
-      public void FillBeforeSpecific(InstructionWeavingInfo weavingInfo_P)
+      public void FillBeforeSpecific()
       {
       }
 
       public void FillAfterSpecific(InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations generator_P)
       {
-         weavingInfo_P.AddResult(generator_P);
       }
    }
 }
