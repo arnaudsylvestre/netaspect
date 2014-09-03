@@ -7,13 +7,12 @@ using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
 using NetAspect.Weaver.Helpers.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.ATrier
+namespace NetAspect.Weaver.Core.Weaver.Data
 {
    public class IlInjectorAvailableVariables
    {
       private readonly VariableDefinition _result;
       private readonly MethodDefinition method;
-      public List<Instruction> BeforeInstructions = new List<Instruction>();
       private VariableDefinition _called;
       private Dictionary<string, VariableDefinition> _calledParameters;
       private VariableDefinition _calledParametersObject;
@@ -22,21 +21,16 @@ namespace NetAspect.Weaver.Core.Weaver.ATrier
       private VariableDefinition _fieldValue;
       private VariableDefinition _parameters;
       private VariableDefinition _resultForInstruction;
-      private List<Instruction> beforeAfter = new List<Instruction>();
 
-
-      public List<Instruction> calledInstructions = new List<Instruction>();
-      public List<Instruction> calledParametersInstructions = new List<Instruction>();
-      public List<Instruction> calledParametersObjectInstructions = new List<Instruction>();
       private VariableDefinition currentMethodInfo;
       private VariableDefinition currentPropertyInfo;
-      public List<Instruction> recallcalledInstructions = new List<Instruction>();
-      public List<Instruction> recallcalledParametersInstructions = new List<Instruction>();
-      public List<Instruction> resultInstructions = new List<Instruction>();
 
-      public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method, Instruction instruction)
+      InstructionsToInsert instructionsToInsert;
+
+      public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method, Instruction instruction, InstructionsToInsert instructionsToInsert_P)
       {
          Instruction = instruction;
+         instructionsToInsert = instructionsToInsert_P;
          Variables = new List<VariableDefinition>();
          Fields = new List<FieldDefinition>();
          _result = result;
@@ -60,14 +54,14 @@ namespace NetAspect.Weaver.Core.Weaver.ATrier
                currentMethodInfo = new VariableDefinition(method.Module.Import(typeof (MethodBase)));
                Variables.Add(currentMethodInfo);
 
-               BeforeInstructions.Add(
+               instructionsToInsert.BeforeInstructions.Add(
                   Instruction.Create(
                      OpCodes.Call,
                      method.Module.Import(
                         typeof (MethodBase).GetMethod(
                            "GetCurrentMethod",
                            new Type[] {}))));
-               BeforeInstructions.AppendSaveResultTo(currentMethodInfo);
+               instructionsToInsert.BeforeInstructions.Add(Instruction.Create(OpCodes.Stloc, currentMethodInfo));
             }
             return currentMethodInfo;
          }
@@ -91,16 +85,16 @@ namespace NetAspect.Weaver.Core.Weaver.ATrier
                      return null;
                   _resultForInstruction = new VariableDefinition(method.ReturnType);
                   Variables.Add(_resultForInstruction);
-                  resultInstructions.Add(Instruction.Create(OpCodes.Stloc, _resultForInstruction));
-                  resultInstructions.Add(Instruction.Create(OpCodes.Ldloc, _resultForInstruction));
+                  instructionsToInsert.resultInstructions.Add(Instruction.Create(OpCodes.Stloc, _resultForInstruction));
+                  instructionsToInsert.resultInstructions.Add(Instruction.Create(OpCodes.Ldloc, _resultForInstruction));
                }
                if (Instruction.IsAGetField())
                {
                   var fieldReference_L = Instruction.Operand as FieldReference;
                   _resultForInstruction = new VariableDefinition(fieldReference_L.FieldType);
                   Variables.Add(_resultForInstruction);
-                  resultInstructions.Add(Instruction.Create(OpCodes.Stloc, _resultForInstruction));
-                  resultInstructions.Add(Instruction.Create(OpCodes.Ldloc, _resultForInstruction));
+                  instructionsToInsert.resultInstructions.Add(Instruction.Create(OpCodes.Stloc, _resultForInstruction));
+                  instructionsToInsert.resultInstructions.Add(Instruction.Create(OpCodes.Ldloc, _resultForInstruction));
                }
             }
             return _resultForInstruction;
@@ -116,7 +110,7 @@ namespace NetAspect.Weaver.Core.Weaver.ATrier
                _parameters = new VariableDefinition(method.Module.Import(typeof (object[])));
                Variables.Add(_parameters);
 
-               method.FillArgsArrayFromParameters(BeforeInstructions, _parameters);
+               method.FillArgsArrayFromParameters(instructionsToInsert.BeforeInstructions, _parameters);
             }
             return _parameters;
          }
@@ -145,24 +139,24 @@ namespace NetAspect.Weaver.Core.Weaver.ATrier
                Variables.Add(currentPropertyInfo);
 
 
-               BeforeInstructions.Add(
+               instructionsToInsert.BeforeInstructions.Add(
                   Instruction.Create(
                      OpCodes.Call,
                      method.Module.Import(
                         typeof (MethodBase).GetMethod(
                            "GetCurrentMethod",
                            new Type[] {}))));
-               BeforeInstructions.Add(
+               instructionsToInsert.BeforeInstructions.Add(
                   Instruction.Create(
                      OpCodes.Callvirt,
                      method.Module.Import(
                         typeof (MemberInfo).GetMethod(
                            "get_DeclaringType",
                            new Type[] {}))));
-               BeforeInstructions.AppendCallToGetProperty(
+               instructionsToInsert.BeforeInstructions.AppendCallToGetProperty(
                   method.Name.Replace("get_", "").Replace("set_", ""),
                   method.Module);
-               BeforeInstructions.AppendSaveResultTo(currentPropertyInfo);
+               instructionsToInsert.BeforeInstructions.Add(Instruction.Create(OpCodes.Stloc, currentPropertyInfo));
             }
             return currentPropertyInfo;
          }
@@ -197,8 +191,8 @@ namespace NetAspect.Weaver.Core.Weaver.ATrier
                   var variableDefinition = new VariableDefinition(propertyType_L);
                   Variables.Add(variableDefinition);
                   _calledParameters.Add("value", variableDefinition);
-                  calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
-                  recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
+                  instructionsToInsert.calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                  instructionsToInsert.recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
                }
                else if (Instruction.Operand is MethodReference)
                {
@@ -212,11 +206,11 @@ namespace NetAspect.Weaver.Core.Weaver.ATrier
                      var variableDefinition = new VariableDefinition(ComputeVariableType(parameter, Instruction));
                      _calledParameters.Add("called" + parameter.Name, variableDefinition);
                      Variables.Add(variableDefinition);
-                     calledParametersInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                     instructionsToInsert.calledParametersInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
                   }
                   foreach (ParameterDefinition parameter in calledMethod.Parameters)
                   {
-                     recallcalledParametersInstructions.Add(Instruction.Create(OpCodes.Ldloc, _calledParameters["called" + parameter.Name]));
+                     instructionsToInsert.recallcalledParametersInstructions.Add(Instruction.Create(OpCodes.Ldloc, _calledParameters["called" + parameter.Name]));
                   }
                }
                else if (Instruction.IsAnUpdateField())
@@ -226,8 +220,8 @@ namespace NetAspect.Weaver.Core.Weaver.ATrier
                   var variableDefinition = new VariableDefinition(fieldType);
                   Variables.Add(variableDefinition);
                   _calledParameters.Add("value", variableDefinition);
-                  calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
-                  recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
+                  instructionsToInsert.calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                  instructionsToInsert.recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
                }
             }
             return _calledParameters;
@@ -247,7 +241,7 @@ namespace NetAspect.Weaver.Core.Weaver.ATrier
                   _calledParametersObject = new VariableDefinition(calledMethod.Module.Import(typeof (object[])));
                   Variables.Add(_calledParametersObject);
 
-                  calledMethod.FillCalledArgsArrayFromParameters(calledParametersObjectInstructions, _calledParametersObject, p);
+                  calledMethod.FillCalledArgsArrayFromParameters(instructionsToInsert.calledParametersObjectInstructions, _calledParametersObject, p);
                }
             }
             return _calledParametersObject;
@@ -275,8 +269,8 @@ namespace NetAspect.Weaver.Core.Weaver.ATrier
                _called = new VariableDefinition(declaringType);
                Variables.Add(_called);
 
-               calledInstructions.Add(Instruction.Create(OpCodes.Stloc, _called));
-               calledInstructions.Add(Instruction.Create(OpCodes.Ldloc, _called));
+               instructionsToInsert.calledInstructions.Add(Instruction.Create(OpCodes.Stloc, _called));
+               instructionsToInsert.calledInstructions.Add(Instruction.Create(OpCodes.Ldloc, _called));
             }
             return _called;
          }
@@ -294,8 +288,8 @@ namespace NetAspect.Weaver.Core.Weaver.ATrier
                   TypeReference propertyType_L = fieldDefinition.FieldType;
                   _fieldValue = new VariableDefinition(propertyType_L);
                   Variables.Add(_fieldValue);
-                  calledInstructions.Add(Instruction.Create(OpCodes.Stloc, _fieldValue));
-                  recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, _fieldValue));
+                  instructionsToInsert.calledInstructions.Add(Instruction.Create(OpCodes.Stloc, _fieldValue));
+                  instructionsToInsert.recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, _fieldValue));
                }
             }
             return _fieldValue;

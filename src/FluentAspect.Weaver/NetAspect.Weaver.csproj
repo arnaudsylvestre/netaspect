@@ -71,7 +71,6 @@
     <Compile Include="Core\Model\Errors\ErrorLevel.cs" />
     <Compile Include="Core\Model\Errors\ErrorCode.cs" />
     <Compile Include="Core\Errors\ErrorHandler.cs" />
-    <Compile Include="Core\Model\Errors\ErrorKind.cs" />
     <Compile Include="Core\Model\Errors\ErrorReport.cs" />
     <Compile Include="Core\Model\Errors\FileLocation.cs" />
     <Compile Include="Core\Model\Errors\NetAspectError.cs" />
@@ -86,6 +85,11 @@
     <Compile Include="Core\Weaver\Checkers\Ensures\MethodChecker.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensures\ParameterReferencedChecker.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensures\ParameterTypeChecker.cs" />
+    <Compile Include="Core\Weaver\Data\InstructionsToInsert.cs" />
+    <Compile Include="Core\Weaver\Data\VariablesForMethod.cs" />
+    <Compile Include="Core\Weaver\Data\VariablesForInstruction.cs" />
+    <Compile Include="Core\Weaver\Data\Variable.cs" />
+    <Compile Include="Core\Weaver\Data\Variables\VariableCurrentMethod.cs" />
     <Compile Include="Core\Weaver\Detectors\Engine\InterceptorParametersRulesExtensions.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Kinds\CallUpdateFieldInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\Kinds\CallGetPropertyInterceptorAroundInstructionBuilder.cs" />
@@ -139,7 +143,7 @@
     <Compile Include="Core\Model\Weaving\IIlInjectorsExtensions.cs" />
     <Compile Include="Core\Weaver\Engine\LifeCycle\AspectBuilder.cs" />
     <Compile Include="Core\Weaver\Engine\LifeCycle\ILifeCycleHandler.cs" />
-    <Compile Include="Core\Weaver\ATrier\IlInjectorAvailableVariables.cs" />
+    <Compile Include="Core\Weaver\Data\IlInjectorAvailableVariables.cs" />
     <Compile Include="Core\Weaver\Engine\LifeCycle\TransientLifeCycleHandler.cs" />
     <Compile Include="Core\Weaver\Engine\WeavingModelComputer.cs" />
     <Compile Include="Helpers\IL\CollectionExtensions.cs" />
@@ -163,6 +167,7 @@
       <Name>NetAspect.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

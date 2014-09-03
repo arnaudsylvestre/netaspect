@@ -4,6 +4,7 @@ using System.Reflection;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Weaver.ATrier;
+using NetAspect.Weaver.Core.Weaver.Data;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.Model
 {

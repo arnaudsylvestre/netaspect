@@ -6,6 +6,7 @@ using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.ATrier;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Checkers.Ensures;
+using NetAspect.Weaver.Core.Weaver.Data;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 using NetAspect.Weaver.Helpers.IL;
 

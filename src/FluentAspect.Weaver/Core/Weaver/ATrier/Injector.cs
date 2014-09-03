@@ -8,6 +8,7 @@ using NetAspect.Core.Helpers;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Model.Weaving;
+using NetAspect.Weaver.Core.Weaver.Data;
 using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 using NetAspect.Weaver.Helpers.IL;

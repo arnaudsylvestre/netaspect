@@ -6,6 +6,7 @@ using NetAspect.Core;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.ATrier;
+using NetAspect.Weaver.Core.Weaver.Data;
 using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
 using NetAspect.Weaver.Helpers.IL;
 
@@ -24,14 +25,16 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
             ? null
             : new VariableDefinition(method.ReturnType);
 
-         var availableVariables = new IlInjectorAvailableVariables(result, method, null);
+         var instructionsToInsertP_L = new InstructionsToInsert();
+         var availableVariables = new IlInjectorAvailableVariables(result, method, null, instructionsToInsertP_L);
          var allVariables = new List<VariableDefinition>();
 
          foreach (var instruction in methodWeavingModel.Instructions)
          {
             var instructionIl = new NetAspectWeavingMethod.InstructionIl();
             w.Instructions.Add(instruction.Key, instructionIl);
-            var variablesForInstruction = new IlInjectorAvailableVariables(result, method, instruction.Key);
+            var instructions = new InstructionsToInsert();
+            var variablesForInstruction = new IlInjectorAvailableVariables(result, method, instruction.Key, instructions);
             var ils = new List<AroundInstructionIl>();
             foreach (AroundInstructionWeaver v in instruction.Value)
             {
@@ -47,11 +50,11 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                v.Weave(aroundInstructionIl, variablesForInstruction);
                ils.Add(aroundInstructionIl);
             }
-            instructionIl.Before.AddRange(variablesForInstruction.calledParametersInstructions);
-            instructionIl.Before.AddRange(variablesForInstruction.calledInstructions);
-            instructionIl.Before.AddRange(variablesForInstruction.calledParametersObjectInstructions);
-            instructionIl.After.AddRange(variablesForInstruction.resultInstructions);
-            availableVariables.BeforeInstructions.AddRange(variablesForInstruction.BeforeInstructions);
+            instructionIl.Before.AddRange(instructions.calledParametersInstructions);
+            instructionIl.Before.AddRange(instructions.calledInstructions);
+            instructionIl.Before.AddRange(instructions.calledParametersObjectInstructions);
+            instructionIl.After.AddRange(instructions.resultInstructions);
+            instructionsToInsertP_L.BeforeInstructions.AddRange(instructions.BeforeInstructions);
             allVariables.AddRange(variablesForInstruction.Variables);
             allVariables.Add(variablesForInstruction.InterceptorVariable);
             foreach (AroundInstructionIl aroundInstructionIl in ils)
@@ -59,8 +62,8 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                instructionIl.Before.AddRange(aroundInstructionIl.BeforeInstruction);
                instructionIl.After.AddRange(aroundInstructionIl.AfterInstruction);
             }
-            instructionIl.Before.AddRange(variablesForInstruction.recallcalledInstructions);
-            instructionIl.Before.AddRange(variablesForInstruction.recallcalledParametersInstructions);
+            instructionIl.Before.AddRange(instructions.recallcalledInstructions);
+            instructionIl.Before.AddRange(instructions.recallcalledParametersInstructions);
          }
 
          methodWeavingModel.Method.Check(errorHandler);
@@ -87,7 +90,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
             befores.InsertRange(0, interceptorFactoryInstructions);
          }
          w.BeforeConstructorBaseCall.AddRange(beforeConstructorBaseCall);
-         w.BeforeInstructions.AddRange(availableVariables.BeforeInstructions);
+         w.BeforeInstructions.AddRange(instructionsToInsertP_L.BeforeInstructions);
          w.BeforeInstructions.AddRange(befores);
          w.AfterInstructions.AddRange(afters);
          if (onExceptions.Any())

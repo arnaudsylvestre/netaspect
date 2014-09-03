@@ -62,11 +62,6 @@ namespace NetAspect.Weaver.Helpers.IL
                      new[] {typeof (string), typeof (BindingFlags)}))));
       }
 
-      public static void AppendSaveResultTo(this List<Instruction> instructions, VariableDefinition variable)
-      {
-         instructions.Add(Instruction.Create(OpCodes.Stloc, variable));
-      }
-
       public static void AppendCreateNewObject(this List<Instruction> instructions,
          VariableDefinition interceptor,
          Type interceptorType,
@@ -74,6 +69,13 @@ namespace NetAspect.Weaver.Helpers.IL
       {
          instructions.Add(Instruction.Create(OpCodes.Newobj, module.Import(interceptorType.GetConstructors()[0])));
          instructions.Add(Instruction.Create(OpCodes.Stloc, interceptor));
+      }
+
+      public static void AppendCallStaticMethodAnsSaveResultInto(this List<Instruction> instructions, MethodInfo method, VariableDefinition variable, ModuleDefinition module)
+      {
+         var methodToCall = module.Import(method);
+         instructions.Add(Instruction.Create(OpCodes.Call, methodToCall));
+         instructions.Add(Instruction.Create(OpCodes.Stloc, variable));
       }
    }
 }
