@@ -25,7 +25,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
          CheckType(parameter, errorHandler);
       }
 
-      public void CheckType(ParameterInfo parameterInfo, IErrorListener errorHandler)
+      public void CheckType(ParameterInfo parameterInfo, ErrorHandler errorHandler)
       {
          Type parameterType = parameterInfo.ParameterType;
          if (parameterType.FullName.Replace("&", "") == typeof (object).FullName)
@@ -48,7 +48,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
          return expectedType.Replace("/", "+").Replace("&", "");
       }
 
-      public void CheckGenericType(ParameterInfo info, IErrorListener errorHandler)
+      public void CheckGenericType(ParameterInfo info, ErrorHandler errorHandler)
       {
          if (parameterDefinition == null)
             return;

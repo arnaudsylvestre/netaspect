@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
@@ -41,7 +42,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine.Selectors
                return false;
             var errorHandler = new ErrorHandler();
             Check(errorHandler);
-            if (errorHandler.Errors.Count > 0)
+            if (errorHandler.Errors.Any())
                return false;
             object[] target = selectorParametersGenerator.Generate(_method, member);
             if (target[0] == null)

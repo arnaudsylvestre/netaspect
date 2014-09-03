@@ -27,7 +27,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
          CheckOut(parameterInfo, errorHandler);
       }
 
-      public void CheckReferenced(ParameterInfo parameterInfo, IErrorListener errorHandler)
+      public void CheckReferenced(ParameterInfo parameterInfo, ErrorHandler errorHandler)
       {
          if (Referenced != ReferenceModel.None)
             return;

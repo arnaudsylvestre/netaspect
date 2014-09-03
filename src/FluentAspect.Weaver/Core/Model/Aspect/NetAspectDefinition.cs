@@ -48,26 +48,6 @@ namespace NetAspect.Weaver.Core.Model.Aspect
          get { return new Interceptor(_attribute.GetMethod("OnFinally")); }
       }
 
-      public MethodInfo SelectorConstructor
-      {
-         get { return _attribute.GetMethod("WeaveConstructor"); }
-      }
-
-      public MethodInfo SelectorMethod
-      {
-         get { return _attribute.GetMethod("WeaveMethod"); }
-      }
-
-      public Interceptor BeforeInterceptor
-      {
-         get { return new Interceptor(_attribute.GetMethod("BeforeCall")); }
-      }
-
-      public Interceptor AfterInterceptor
-      {
-         get { return new Interceptor(_attribute.GetMethod("AfterCall")); }
-      }
-
       public Interceptor BeforeUpdateField
       {
          get { return new Interceptor(_attribute.GetMethod("BeforeUpdateField")); }
@@ -107,41 +87,6 @@ namespace NetAspect.Weaver.Core.Model.Aspect
       public Interceptor BeforeSetProperty
       {
          get { return new Interceptor(_attribute.GetMethod("BeforeSetProperty")); }
-      }
-
-      public Interceptor OnExceptionPropertySet
-      {
-         get { return new Interceptor(_attribute.GetMethod("OnExceptionPropertySet")); }
-      }
-
-      public Interceptor OnFinallyPropertySet
-      {
-         get { return new Interceptor(_attribute.GetMethod("OnFinallyPropertySet")); }
-      }
-
-      public Interceptor AfterParameter
-      {
-         get { return new Interceptor(_attribute.GetMethod("AfterParameter")); }
-      }
-
-      public Interceptor BeforeParameter
-      {
-         get { return new Interceptor(_attribute.GetMethod("BeforeParameter")); }
-      }
-
-      public Interceptor OnExceptionParameter
-      {
-         get { return new Interceptor(_attribute.GetMethod("OnExceptionParameter")); }
-      }
-
-      public Interceptor AfterRaiseEvent
-      {
-         get { return new Interceptor(_attribute.GetMethod("AfterRaiseEvent")); }
-      }
-
-      public Interceptor BeforeRaiseEvent
-      {
-         get { return new Interceptor(_attribute.GetMethod("BeforeRaiseEvent")); }
       }
 
       public Interceptor BeforeCallMethod

@@ -3,11 +3,11 @@ using NetAspect.Weaver.Core.Model.Errors;
 
 namespace NetAspect.Weaver.Core.Errors
 {
-   public class ErrorHandler : IErrorListener
+   public class ErrorHandler
    {
       private readonly List<NetAspectError> errors = new List<NetAspectError>();
 
-      public List<NetAspectError> Errors
+      public IEnumerable<NetAspectError> Errors
       {
          get { return errors; }
       }

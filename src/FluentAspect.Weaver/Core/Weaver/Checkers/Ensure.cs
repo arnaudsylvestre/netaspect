@@ -9,7 +9,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
    internal static class Ensure
    {
-      public static void NotReferenced(ParameterInfo parameterInfo, IErrorListener errorHandler)
+      public static void NotReferenced(ParameterInfo parameterInfo, ErrorHandler errorHandler)
       {
          if (parameterInfo.ParameterType.IsByRef)
          {
@@ -149,19 +149,19 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
          }
       }
 
-      public static void NotStatic(ParameterInfo parameter, IErrorListener handler, MethodDefinition definition)
+      public static void NotStatic(ParameterInfo parameter, ErrorHandler handler, MethodDefinition definition)
       {
          if (definition.IsStatic)
             handler.OnError(ErrorCode.ParameterCanNotBeUsedInStaticMethod, FileLocation.None, parameter.Name);
       }
 
-      public static void NotStatic(ParameterInfo parameter, IErrorListener handler, FieldDefinition definition)
+      public static void NotStatic(ParameterInfo parameter, ErrorHandler handler, FieldDefinition definition)
       {
          if (definition.IsStatic)
             handler.OnError(ErrorCode.ParameterCanNotBeUsedInStaticMethod, FileLocation.None, parameter.Name);
       }
 
-      public static void NotStaticButDefaultValue(ParameterInfo parameter, IErrorListener handler, FieldDefinition definition)
+      public static void NotStaticButDefaultValue(ParameterInfo parameter, ErrorHandler handler, FieldDefinition definition)
       {
          if (definition.IsStatic)
          {
@@ -172,7 +172,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
          }
       }
 
-      public static void NotStaticButDefaultValue(ParameterInfo parameter, IErrorListener handler, IMemberDefinition member)
+      public static void NotStaticButDefaultValue(ParameterInfo parameter, ErrorHandler handler, IMemberDefinition member)
       {
          if ((bool) member.GetType().GetProperty("IsStatic").GetValue(member, new object[0]))
          {
