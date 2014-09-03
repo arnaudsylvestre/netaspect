@@ -84,7 +84,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
          return false;
       }
 
-      public static void OfType(ParameterInfo info, ErrorHandler handler, ParameterDefinition parameter)
+      public static void ParameterOfType(ParameterInfo info, ErrorHandler handler, ParameterDefinition parameter)
       {
          if (parameter.ParameterType.IsGenericParameter && info.ParameterType.IsByRef)
          {

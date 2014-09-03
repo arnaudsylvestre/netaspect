@@ -84,7 +84,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 
       public static InterceptorParameterConfiguration WhichMustBeOfTypeOfParameter(this InterceptorParameterConfiguration configuration, ParameterDefinition parameterDefinition)
       {
-         configuration.Checker.Add((info, handler) => Ensure.OfType(info, handler, parameterDefinition));
+         configuration.Checker.Add((info, handler) => Ensure.ParameterOfType(info, handler, parameterDefinition));
          return configuration;
       }
 
