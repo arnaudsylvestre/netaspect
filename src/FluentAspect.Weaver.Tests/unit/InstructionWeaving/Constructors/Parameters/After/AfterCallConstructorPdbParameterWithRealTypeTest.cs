@@ -3,8 +3,8 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters.After.ColumnNumber
 {
-    public class AfterCallConstructorColumnNumberParameterWithRealTypeTest :
-        NetAspectTest<AfterCallConstructorColumnNumberParameterWithRealTypeTest.ClassToWeave>
+    public class AfterCallConstructorPdbParameterWithRealTypeTest :
+        NetAspectTest<AfterCallConstructorPdbParameterWithRealTypeTest.ClassToWeave>
     {
         protected override Action CreateEnsure()
         {
@@ -13,6 +13,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
                     Assert.AreEqual(0, MyAspect.ColumnNumber);
                     var classToWeave_L = ClassToWeave.Create();
                     Assert.AreEqual(17, MyAspect.ColumnNumber);
+                    Assert.AreEqual(30, MyAspect.LineNumber);
                 };
         }
 
@@ -32,12 +33,14 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
 
         public class MyAspect : Attribute
         {
-            public static int ColumnNumber;
+           public static int ColumnNumber;
+           public static int LineNumber;
             public bool NetAspectAttribute = true;
 
-            public void AfterCallConstructor(int columnNumber)
+            public void AfterCallConstructor(int columnNumber, int lineNumber)
             {
-                ColumnNumber = columnNumber;
+               LineNumber = lineNumber;
+               ColumnNumber = columnNumber;
             }
         }
     }
