@@ -3,5 +3,5 @@ using NetAspect.Weaver.Core.Weaver.Detectors.Engine.Selectors;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors
 {
-    public delegate Selector<T> SelectorProvider<T>(NetAspectDefinition aspect);
+   public delegate Selector<T> SelectorProvider<T>(NetAspectDefinition aspect);
 }

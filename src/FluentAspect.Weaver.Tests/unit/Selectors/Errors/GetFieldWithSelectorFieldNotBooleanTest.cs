@@ -6,47 +6,48 @@ using NetAspect.Weaver.Core.Model.Errors;
 
 namespace NetAspect.Weaver.Tests.unit.Selectors.Errors
 {
-    public class GetFieldWithSelectorFieldNotBooleanTest :
-        NetAspectTest<GetFieldWithSelectorFieldNotBooleanTest.ClassToWeave>
-    {
-        protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
-        {
-            return
-                errorHandler =>
-                errorHandler.Add(new ErrorReport.Error()
-                {
-                    Level = ErrorLevel.Error,
-                    Message =
-                    string.Format(
-                        "The selector SelectField in the aspect {0} must return boolean value",
-                        typeof(MyAspect).FullName)
-                });
-        }
+   public class GetFieldWithSelectorFieldNotBooleanTest :
+      NetAspectTest<GetFieldWithSelectorFieldNotBooleanTest.ClassToWeave>
+   {
+      protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
+      {
+         return
+            errorHandler =>
+               errorHandler.Add(
+                  new ErrorReport.Error
+                  {
+                     Level = ErrorLevel.Error,
+                     Message =
+                        string.Format(
+                           "The selector SelectField in the aspect {0} must return boolean value",
+                           typeof (MyAspect).FullName)
+                  });
+      }
 
-        public class ClassToWeave
-        {
-            public string Field;
+      public class ClassToWeave
+      {
+         public string Field;
 
-            public string Weaved()
-            {
-                return Field;
-            }
-        }
+         public string Weaved()
+         {
+            return Field;
+         }
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static ClassToWeave Caller;
-            public bool NetAspectAttribute = true;
+      public class MyAspect : Attribute
+      {
+         public static ClassToWeave Caller;
+         public bool NetAspectAttribute = true;
 
-            public void BeforeGetField(ClassToWeave caller)
-            {
-                Caller = caller;
-            }
+         public void BeforeGetField(ClassToWeave caller)
+         {
+            Caller = caller;
+         }
 
-            public static int SelectField(FieldInfo field)
-            {
-                return 1;
-            }
-        }
-    }
+         public static int SelectField(FieldInfo field)
+         {
+            return 1;
+         }
+      }
+   }
 }

@@ -6,57 +6,57 @@ using NUnit.Framework;
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.Constructor
 {
    public class Part2Sample1BeforeConstructorPossibilityTest : NetAspectTest<Part2Sample1BeforeConstructorPossibilityTest.MyInt>
-    {
+   {
       public Part2Sample1BeforeConstructorPossibilityTest()
-           : base("This method is executed before the code of the constructor is executed", "ConstructorWeavingBefore", "ConstructorWeaving")
+         : base("This method is executed before the code of the constructor is executed", "ConstructorWeavingBefore", "ConstructorWeaving")
       {
       }
 
 
       public class MyInt
-        {
-            int value;
-         
-            [Log]
-            public MyInt(int intValue)
-            {
-               this.value = intValue;
-            }
+      {
+         private readonly int value;
 
-            public int Value
-            {
-                get { return value; }
-            }
-            
-            public int DivideBy(int v)
-            {
-                return value / v;
-            }
-        }
+         [Log]
+         public MyInt(int intValue)
+         {
+            value = intValue;
+         }
 
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    var myInt = new MyInt(24);
-                    Assert.True(LogAttribute.Called);
-                };
-        }
-        
+         public int Value
+         {
+            get { return value; }
+         }
 
-        public class LogAttribute : Attribute
-        {
-            public bool NetAspectAttribute = true;
-           public static bool Called;
+         public int DivideBy(int v)
+         {
+            return value / v;
+         }
+      }
 
-           public void BeforeConstructor(object instance, MethodBase constructor, object[] parameters, int intValue)
-           {
-                Called = true;
-                Assert.AreEqual(typeof(MyInt), instance.GetType());
-                Assert.AreEqual(".ctor", constructor.Name);
-                Assert.AreEqual(1, parameters.Length);
-                Assert.AreEqual(24, intValue);
-            }
-        }
-    }
+      protected override Action CreateEnsure()
+      {
+         return () =>
+         {
+            var myInt = new MyInt(24);
+            Assert.True(LogAttribute.Called);
+         };
+      }
+
+
+      public class LogAttribute : Attribute
+      {
+         public static bool Called;
+         public bool NetAspectAttribute = true;
+
+         public void BeforeConstructor(object instance, MethodBase constructor, object[] parameters, int intValue)
+         {
+            Called = true;
+            Assert.AreEqual(typeof (MyInt), instance.GetType());
+            Assert.AreEqual(".ctor", constructor.Name);
+            Assert.AreEqual(1, parameters.Length);
+            Assert.AreEqual(24, intValue);
+         }
+      }
+   }
 }

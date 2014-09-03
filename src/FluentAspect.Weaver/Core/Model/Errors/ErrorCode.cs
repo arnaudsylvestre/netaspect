@@ -2,11 +2,11 @@
 {
    public enum ErrorCode
    {
-        ImpossibleToReferenceTheParameter,
-        ImpossibleToOutTheParameter,
-       ParameterWithBadType,
-       AssemblyGeneratedIsNotCompliant,
-       NoDebuggingInformationAvailable,
+      ImpossibleToReferenceTheParameter,
+      ImpossibleToOutTheParameter,
+      ParameterWithBadType,
+      AssemblyGeneratedIsNotCompliant,
+      NoDebuggingInformationAvailable,
       SelectorMustBeStatic,
       ParameterWithBadTypeBecauseReturnMethod,
       MustNotBeVoid,
@@ -18,9 +18,9 @@
       ParameterAlreadyDeclared,
       SelectorMustReturnBooleanValue,
       SelectorBadParameterType,
-       InterceptorMustBeVoid,
-       SelectorBadParameterName,
-       TooManySelectorsWithSameName,
-       SelectorMustHaveParameters
+      InterceptorMustBeVoid,
+      SelectorBadParameterName,
+      TooManySelectorsWithSameName,
+      SelectorMustHaveParameters
    }
 }

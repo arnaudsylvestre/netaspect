@@ -2,8 +2,8 @@
 {
    public class FileLocation
    {
-       public static readonly FileLocation None = new FileLocation();
-       public string FilePath { get; set; }
+      public static readonly FileLocation None = new FileLocation();
+      public string FilePath { get; set; }
       public int Column { get; set; }
       public int Line { get; set; }
    }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
 
 namespace NetAspect.ProjectUpdater.Tests
@@ -12,7 +9,7 @@ namespace NetAspect.ProjectUpdater.Tests
       [Test]
       public void CheckUpdateProject()
       {
-         ProjectUdapterForWeaving projectUdapter_L = new ProjectUdapterForWeaving();
+         var projectUdapter_L = new ProjectUdapterForWeaving();
          projectUdapter_L.Load("Sample.csproj");
          projectUdapter_L.AddNetAspectSupport();
          projectUdapter_L.Save("SampleUpdated.csproj");
@@ -24,7 +21,6 @@ namespace NetAspect.ProjectUpdater.Tests
    {
       public void Load(string pathToFile)
       {
-         
       }
 
       public void AddNetAspectSupport()

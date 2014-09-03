@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.AssemblyPoolFactories
    public class DefaultAssemblyPoolFactory : WeaverEngine.IAssemblyPoolFactory
    {
       private readonly IAssemblyChecker assemblyChecker;
-      private Func<TypeDefinition, bool> typesToSave;
+      private readonly Func<TypeDefinition, bool> typesToSave;
 
       public DefaultAssemblyPoolFactory(IAssemblyChecker assemblyChecker_P, Func<TypeDefinition, bool> typesToSave_P)
       {

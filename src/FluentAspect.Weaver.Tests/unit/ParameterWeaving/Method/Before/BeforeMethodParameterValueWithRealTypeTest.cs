@@ -4,37 +4,36 @@ using NUnit.Framework;
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Instance
 {
    public class BeforeMethodParameterValueWithRealTypeTest :
-        NetAspectTest<BeforeMethodParameterValueWithRealTypeTest.ClassToWeave>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                   Assert.IsNull(MyAspect.ParameterValue);
-                    var classToWeave_L = new ClassToWeave();
-                    classToWeave_L.Weaved("value");
-                    Assert.AreEqual("value", MyAspect.ParameterValue);
-                };
-        }
+      NetAspectTest<BeforeMethodParameterValueWithRealTypeTest.ClassToWeave>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
+         {
+            Assert.IsNull(MyAspect.ParameterValue);
+            var classToWeave_L = new ClassToWeave();
+            classToWeave_L.Weaved("value");
+            Assert.AreEqual("value", MyAspect.ParameterValue);
+         };
+      }
 
-        public class ClassToWeave
-        {
-            
-            public void Weaved([MyAspect] string p)
-            {
-               p = "OtherValue";
-            }
-        }
+      public class ClassToWeave
+      {
+         public void Weaved([MyAspect] string p)
+         {
+            p = "OtherValue";
+         }
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static string ParameterValue;
-            public bool NetAspectAttribute = true;
+      public class MyAspect : Attribute
+      {
+         public static string ParameterValue;
+         public bool NetAspectAttribute = true;
 
-            public void BeforeMethodForParameter(string parameterValue)
-            {
-               ParameterValue = parameterValue;
-            }
-        }
-    }
+         public void BeforeMethodForParameter(string parameterValue)
+         {
+            ParameterValue = parameterValue;
+         }
+      }
+   }
 }

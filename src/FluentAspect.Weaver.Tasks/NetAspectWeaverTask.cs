@@ -6,60 +6,63 @@ using Microsoft.Build.Utilities;
 
 namespace NetAspect.Weaver.Tasks
 {
-    public class NetAspectWeaverTask : Task
-    {
-        [Required]
-        public string ConfigFile { get; set; }
+   public class NetAspectWeaverTask : Task
+   {
+      [Required]
+      public string ConfigFile { get; set; }
 
-        public override bool Execute()
-        {
-            Stopwatch stopwatch = Stopwatch.StartNew();
+      public override bool Execute()
+      {
+         Stopwatch stopwatch = Stopwatch.StartNew();
+
+         try
+         {
+            string directoryPath = Path.GetDirectoryName(ConfigFile);
+            string[] weavedFiles;
+            AppDomain domain = AppDomain.CreateDomain(
+               "SheepAspect Weaving",
+               null,
+               new AppDomainSetup
+               {
+                  ApplicationBase = directoryPath,
+                  ShadowCopyFiles = "true"
+               });
 
             try
             {
-                string directoryPath = Path.GetDirectoryName(ConfigFile);
-                string[] weavedFiles;
-                AppDomain domain = AppDomain.CreateDomain("SheepAspect Weaving", null,
-                                                          new AppDomainSetup
-                                                              {
-                                                                  ApplicationBase = directoryPath,
-                                                                  ShadowCopyFiles = "true"
-                                                              });
+               Type runnerType = typeof (AppDomainIsolatedDiscoveryRunner);
 
-                try
-                {
-                    Type runnerType = typeof (AppDomainIsolatedDiscoveryRunner);
+               var runner =
+                  domain.CreateInstanceFromAndUnwrap(
+                     new Uri(runnerType.Assembly.CodeBase).LocalPath,
+                     runnerType.FullName) as
+                     AppDomainIsolatedDiscoveryRunner;
 
-                    var runner =
-                        domain.CreateInstanceFromAndUnwrap(new Uri(runnerType.Assembly.CodeBase).LocalPath,
-                                                           runnerType.FullName) as
-                        AppDomainIsolatedDiscoveryRunner;
-
-                    if (!runner.Process(ConfigFile, Log, out weavedFiles))
-                    {
-                        string targetFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(ConfigFile);
-                        if (File.Exists(targetFileName))
-                            File.Delete(targetFileName);
-                        return false;
-                    }
-                }
-                finally
-                {
-                    AppDomain.Unload(domain);
-                }
-                string tempFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(ConfigFile);
-                File.Copy(tempFileName, ConfigFile, true);
-                File.Delete(tempFileName);
+               if (!runner.Process(ConfigFile, Log, out weavedFiles))
+               {
+                  string targetFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(ConfigFile);
+                  if (File.Exists(targetFileName))
+                     File.Delete(targetFileName);
+                  return false;
+               }
             }
-            catch (Exception e)
+            finally
             {
-                Log.LogError(e.ToString());
-                return false;
+               AppDomain.Unload(domain);
             }
+            string tempFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(ConfigFile);
+            File.Copy(tempFileName, ConfigFile, true);
+            File.Delete(tempFileName);
+         }
+         catch (Exception e)
+         {
+            Log.LogError(e.ToString());
+            return false;
+         }
 
-            stopwatch.Stop();
-            Log.LogMessage("[SheepAspect-Compiler] Compiled {0} in {1:n} ms", ConfigFile, stopwatch.ElapsedMilliseconds);
-            return true;
-        }
-    }
+         stopwatch.Stop();
+         Log.LogMessage("[SheepAspect-Compiler] Compiled {0} in {1:n} ms", ConfigFile, stopwatch.ElapsedMilliseconds);
+         return true;
+      }
+   }
 }

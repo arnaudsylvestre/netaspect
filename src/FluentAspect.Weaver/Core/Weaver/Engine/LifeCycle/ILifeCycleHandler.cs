@@ -7,7 +7,9 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
    public interface ILifeCycleHandler
    {
-       void CreateInterceptor(NetAspectDefinition aspect_P, MethodDefinition method_P,
-                               VariableDefinition interceptorVariable, List<Instruction> instructions);
+      void CreateInterceptor(NetAspectDefinition aspect_P,
+         MethodDefinition method_P,
+         VariableDefinition interceptorVariable,
+         List<Instruction> instructions);
    }
 }

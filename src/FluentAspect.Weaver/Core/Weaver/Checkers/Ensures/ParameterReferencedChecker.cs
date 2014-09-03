@@ -5,52 +5,57 @@ using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
 namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
-    public class ParameterReferencedChecker : IChecker
-    {
+   public class ParameterReferencedChecker : IChecker
+   {
+      public enum ReferenceModel
+      {
+         None,
+         Referenced,
+         Out,
+      }
 
-        public enum ReferenceModel
-        {
-            None,
-            Referenced,
-            Out,
-        }
+      public ParameterReferencedChecker(ReferenceModel referenced)
+      {
+         Referenced = referenced;
+      }
 
-        private ReferenceModel Referenced { get; set; }
+      private ReferenceModel Referenced { get; set; }
 
-        public ParameterReferencedChecker(ReferenceModel referenced)
-        {
-            Referenced = referenced;
-        }
+      public void Check(ParameterInfo parameterInfo, ErrorHandler errorHandler)
+      {
+         CheckReferenced(parameterInfo, errorHandler);
+         CheckOut(parameterInfo, errorHandler);
+      }
 
-        public void CheckReferenced(ParameterInfo parameterInfo, IErrorListener errorHandler)
-        {
-            if (Referenced != ReferenceModel.None)
-                return;
-            if (parameterInfo.ParameterType.IsByRef)
-            {
-                errorHandler.OnError(ErrorCode.ImpossibleToReferenceTheParameter, FileLocation.None,
-                                     parameterInfo.Name, parameterInfo.Member.Name,
-                                     parameterInfo.Member.DeclaringType.FullName);
-            }
-        }
+      public void CheckReferenced(ParameterInfo parameterInfo, IErrorListener errorHandler)
+      {
+         if (Referenced != ReferenceModel.None)
+            return;
+         if (parameterInfo.ParameterType.IsByRef)
+         {
+            errorHandler.OnError(
+               ErrorCode.ImpossibleToReferenceTheParameter,
+               FileLocation.None,
+               parameterInfo.Name,
+               parameterInfo.Member.Name,
+               parameterInfo.Member.DeclaringType.FullName);
+         }
+      }
 
 
-        public void CheckOut(ParameterInfo parameterInfo, ErrorHandler errorHandler)
-        {
-            if (Referenced == ReferenceModel.Out)
-                return;
-            if (parameterInfo.IsOut)
-            {
-                errorHandler.OnError(ErrorCode.ImpossibleToOutTheParameter, FileLocation.None,
-                                     parameterInfo.Name, parameterInfo.Member.Name,
-                                     parameterInfo.Member.DeclaringType.FullName);
-            }
-        }
-
-        public void Check(ParameterInfo parameterInfo, ErrorHandler errorHandler)
-        {
-            CheckReferenced(parameterInfo, errorHandler);
-            CheckOut(parameterInfo, errorHandler);
-        }
-    }
+      public void CheckOut(ParameterInfo parameterInfo, ErrorHandler errorHandler)
+      {
+         if (Referenced == ReferenceModel.Out)
+            return;
+         if (parameterInfo.IsOut)
+         {
+            errorHandler.OnError(
+               ErrorCode.ImpossibleToOutTheParameter,
+               FileLocation.None,
+               parameterInfo.Name,
+               parameterInfo.Member.Name,
+               parameterInfo.Member.DeclaringType.FullName);
+         }
+      }
+   }
 }

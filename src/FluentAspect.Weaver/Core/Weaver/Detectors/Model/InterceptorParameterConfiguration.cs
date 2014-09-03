@@ -7,31 +7,19 @@ using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.Model
 {
-    public class InterceptorParameterConfiguration
+   public class InterceptorParameterConfiguration
    {
-      public class MyInterceptorParameterChecker
+      public string Name;
+
+      public InterceptorParameterConfiguration(string name)
       {
-         private List<Action<ParameterInfo, ErrorHandler>> Checkers = new List<Action<ParameterInfo, ErrorHandler>>();
-
-         public void Check(ParameterInfo parameter, ErrorHandler errorListener)
-         {
-            foreach (var checker in Checkers)
-            {
-               checker(parameter, errorListener);
-            }
-         }
-
-         public void Add(Action<ParameterInfo, ErrorHandler> action)
-         {
-             Checkers.Add(action);
-         }
-
-         public void Add(IChecker checker)
-         {
-             Checkers.Add(checker.Check);
-         }
+         Name = name;
+         Generator = new MyGenerator();
+         Checker = new MyInterceptorParameterChecker();
       }
 
+      public MyGenerator Generator { get; private set; }
+      public MyInterceptorParameterChecker Checker { get; private set; }
 
       public class MyGenerator
       {
@@ -46,15 +34,27 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Model
          }
       }
 
-      public InterceptorParameterConfiguration(string name)
+      public class MyInterceptorParameterChecker
       {
-         Name = name;
-         Generator = new MyGenerator();
-         Checker = new MyInterceptorParameterChecker();
-      }
+         private readonly List<Action<ParameterInfo, ErrorHandler>> Checkers = new List<Action<ParameterInfo, ErrorHandler>>();
 
-      public MyGenerator Generator { get; private set; }
-      public MyInterceptorParameterChecker Checker { get; private set; }
-      public string Name;
+         public void Check(ParameterInfo parameter, ErrorHandler errorListener)
+         {
+            foreach (var checker in Checkers)
+            {
+               checker(parameter, errorListener);
+            }
+         }
+
+         public void Add(Action<ParameterInfo, ErrorHandler> action)
+         {
+            Checkers.Add(action);
+         }
+
+         public void Add(IChecker checker)
+         {
+            Checkers.Add(checker.Check);
+         }
+      }
    }
 }

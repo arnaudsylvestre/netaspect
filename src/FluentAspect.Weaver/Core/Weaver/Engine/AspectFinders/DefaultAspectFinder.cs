@@ -11,16 +11,17 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.AspectFinders
       public List<NetAspectDefinition> Find(IEnumerable<Type> types_P)
       {
          return types_P.
-             Select(t => new NetAspectDefinition(t)).
-             Where(t => IsValid(t))
-                       .ToList();
+            Select(t => new NetAspectDefinition(t)).
+            Where(t => IsValid(t))
+            .ToList();
       }
 
       public bool IsValid(NetAspectDefinition aspect)
       {
-         return aspect.Type.GetField("NetAspectAttribute",
-                                 BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
-                                 BindingFlags.Instance) != null;
+         return aspect.Type.GetField(
+            "NetAspectAttribute",
+            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+            BindingFlags.Instance) != null;
       }
    }
 }

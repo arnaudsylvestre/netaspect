@@ -5,7 +5,6 @@ using Mono.Cecil.Cil;
 using NetAspect.Core;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 using NetAspect.Weaver.Helpers.IL;
@@ -15,15 +14,15 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
    public static class MethodWeaver
    {
       public static void Weave(this MethodDefinition method,
-                               MethodWeavingModel methodWeavingModel,
-                               ErrorHandler errorHandler)
+         MethodWeavingModel methodWeavingModel,
+         ErrorHandler errorHandler)
       {
          var w = new NetAspectWeavingMethod();
 
-         var result = method.ReturnType ==
+         VariableDefinition result = method.ReturnType ==
                                      method.Module.TypeSystem.Void
-                                        ? null
-                                        : new VariableDefinition(method.ReturnType);
+            ? null
+            : new VariableDefinition(method.ReturnType);
 
          var availableVariables = new IlInjectorAvailableVariables(result, method, null);
          var allVariables = new List<VariableDefinition>();
@@ -34,15 +33,14 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
             w.Instructions.Add(instruction.Key, instructionIl);
             var variablesForInstruction = new IlInjectorAvailableVariables(result, method, instruction.Key);
             var ils = new List<AroundInstructionIl>();
-            foreach (var v in instruction.Value)
+            foreach (AroundInstructionWeaver v in instruction.Value)
             {
-                var aroundInstructionIl = new AroundInstructionIl();
-                if (variablesForInstruction.InterceptorVariable == null)
-                {
+               var aroundInstructionIl = new AroundInstructionIl();
+               if (variablesForInstruction.InterceptorVariable == null)
+               {
+                  variablesForInstruction.InterceptorVariable = v.CreateAspect(aroundInstructionIl);
+               }
 
-                    variablesForInstruction.InterceptorVariable = v.CreateAspect(aroundInstructionIl);
-                }
-                
                v.Check(errorHandler, variablesForInstruction);
                if (errorHandler.Errors.Any())
                   return;
@@ -56,7 +54,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
             availableVariables.BeforeInstructions.AddRange(variablesForInstruction.BeforeInstructions);
             allVariables.AddRange(variablesForInstruction.Variables);
             allVariables.Add(variablesForInstruction.InterceptorVariable);
-            foreach (var aroundInstructionIl in ils)
+            foreach (AroundInstructionIl aroundInstructionIl in ils)
             {
                instructionIl.Before.AddRange(aroundInstructionIl.BeforeInstruction);
                instructionIl.After.AddRange(aroundInstructionIl.AfterInstruction);
@@ -65,12 +63,12 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
             instructionIl.Before.AddRange(variablesForInstruction.recallcalledParametersInstructions);
          }
 
-          methodWeavingModel.Method.Check(errorHandler);
-          if (errorHandler.Errors.Count > 0)
+         methodWeavingModel.Method.Check(errorHandler);
+         if (errorHandler.Errors.Count > 0)
             return;
 
-          var befores = new List<Instruction>();
-          var beforeConstructorBaseCall = new List<Instruction>();
+         var befores = new List<Instruction>();
+         var beforeConstructorBaseCall = new List<Instruction>();
          var afters = new List<Instruction>();
          var onExceptions = new List<Instruction>();
          var onFinallys = new List<Instruction>();
@@ -80,13 +78,14 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
          allVariables.Add(availableVariables.InterceptorVariable);
          methodWeavingModel.Method.Inject(befores, afters, onExceptions, onFinallys, availableVariables, beforeConstructorBaseCall);
 
-         if ( beforeConstructorBaseCall.Any())
+         if (beforeConstructorBaseCall.Any())
          {
             beforeConstructorBaseCall.InsertRange(0, interceptorFactoryInstructions);
-         } else if (befores.Any() || afters.Any() || onExceptions.Any() || onFinallys.Any())
-          {
-             befores.InsertRange(0, interceptorFactoryInstructions);
-          }
+         }
+         else if (befores.Any() || afters.Any() || onExceptions.Any() || onFinallys.Any())
+         {
+            befores.InsertRange(0, interceptorFactoryInstructions);
+         }
          w.BeforeConstructorBaseCall.AddRange(beforeConstructorBaseCall);
          w.BeforeInstructions.AddRange(availableVariables.BeforeInstructions);
          w.BeforeInstructions.AddRange(befores);

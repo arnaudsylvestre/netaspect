@@ -1,59 +1,60 @@
 using System;
 using System.Reflection;
-using NUnit.Framework;
 using NetAspect.Weaver.Tests.unit;
+using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.PropertyGet
 {
    public class Part3Sample4OnFinallyPropertyGetPossibilityTest : NetAspectTest<Part3Sample4OnFinallyPropertyGetPossibilityTest.MyInt>
-    {
-       public Part3Sample4OnFinallyPropertyGetPossibilityTest()
-           : base("On finally property getter weaving possibilities", "PropertyGetWeavingOnFinally", "PropertyGetWeaving")
+   {
+      public Part3Sample4OnFinallyPropertyGetPossibilityTest()
+         : base("On finally property getter weaving possibilities", "PropertyGetWeavingOnFinally", "PropertyGetWeaving")
       {
       }
 
       public class MyInt
-        {
-            int value;
+      {
+         private readonly int value;
 
-            public MyInt(int value)
-            {
-                this.value = value;
-            }
+         public MyInt(int value)
+         {
+            this.value = value;
+         }
 
-            [Log]
-            public int Value
-            {
-                get { return value; }
-            }
-            public int DivideBy(int v)
-            {
-                return value / v;
-            }
-        }
+         [Log]
+         public int Value
+         {
+            get { return value; }
+         }
 
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                      var myInt = new MyInt(24);
-                      var val = myInt.Value;
-                      Assert.True(LogAttribute.Called);
-                };
-        }
-        
+         public int DivideBy(int v)
+         {
+            return value / v;
+         }
+      }
 
-        public class LogAttribute : Attribute
-        {
-            public bool NetAspectAttribute = true;
-           public static bool Called;
+      protected override Action CreateEnsure()
+      {
+         return () =>
+         {
+            var myInt = new MyInt(24);
+            int val = myInt.Value;
+            Assert.True(LogAttribute.Called);
+         };
+      }
 
-           public void OnFinallyPropertyGetMethod(object instance, PropertyInfo property)
-           {
-              Called = true;
-                Assert.AreEqual(typeof(MyInt), instance.GetType());
-                Assert.AreEqual("Value", property.Name);
-            }
-        }
-    }
+
+      public class LogAttribute : Attribute
+      {
+         public static bool Called;
+         public bool NetAspectAttribute = true;
+
+         public void OnFinallyPropertyGetMethod(object instance, PropertyInfo property)
+         {
+            Called = true;
+            Assert.AreEqual(typeof (MyInt), instance.GetType());
+            Assert.AreEqual("Value", property.Name);
+         }
+      }
+   }
 }

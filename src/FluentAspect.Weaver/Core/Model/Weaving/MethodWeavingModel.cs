@@ -8,24 +8,22 @@ using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
 
 namespace NetAspect.Weaver.Core.Model.Weaving
 {
-    public class MethodWeavingModel
-    {
-        public MethodWeavingModel(MethodDefinition method, NetAspectDefinition aspect, AspectBuilder aspectBuilder)
-        {
-            Method = new AroundMethodWeaver(method, aspect, aspectBuilder);
-        }
+   public class MethodWeavingModel
+   {
+      public readonly Dictionary<Instruction, List<AroundInstructionWeaver>> Instructions = new Dictionary<Instruction, List<AroundInstructionWeaver>>();
 
-        public readonly Dictionary<Instruction, List<AroundInstructionWeaver>> Instructions = new Dictionary<Instruction, List<AroundInstructionWeaver>>();
+      public AroundMethodWeaver Method;
 
-        public void AddAroundInstructionWeaver(Instruction instruction, AroundInstructionWeaver weaver)
-        {
-            if (!Instructions.ContainsKey(instruction))
-                Instructions.Add(instruction, new List<AroundInstructionWeaver>());
-            Instructions[instruction].Add(weaver);
-        }
+      public MethodWeavingModel(MethodDefinition method, NetAspectDefinition aspect, AspectBuilder aspectBuilder)
+      {
+         Method = new AroundMethodWeaver(method, aspect, aspectBuilder);
+      }
 
-        public AroundMethodWeaver Method;
-
-        
-    }
+      public void AddAroundInstructionWeaver(Instruction instruction, AroundInstructionWeaver weaver)
+      {
+         if (!Instructions.ContainsKey(instruction))
+            Instructions.Add(instruction, new List<AroundInstructionWeaver>());
+         Instructions[instruction].Add(weaver);
+      }
+   }
 }

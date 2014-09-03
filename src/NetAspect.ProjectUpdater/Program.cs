@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace NetAspect.ProjectUpdater
 {
-   static class Program
+   internal static class Program
    {
       /// <summary>
-      /// Point d'entrée principal de l'application.
+      ///    Point d'entrée principal de l'application.
       /// </summary>
       [STAThread]
-      static void Main(string[] args)
+      private static void Main(string[] args)
       {
-         List<string> projectFilesToWeave = new List<string>();
+         var projectFilesToWeave = new List<string>();
          projectFilesToWeave.AddRange(projectFilesToWeave);
-         OpenFileDialog openFileDialog = new OpenFileDialog();
+         var openFileDialog = new OpenFileDialog();
          if (openFileDialog.ShowDialog() == DialogResult.OK)
          {
-            
          }
       }
    }

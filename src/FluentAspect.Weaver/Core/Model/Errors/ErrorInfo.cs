@@ -1,18 +1,19 @@
 ﻿namespace NetAspect.Weaver.Core.Errors
 {
-    public class ErrorInfo
-    {
-       public ErrorInfo(ErrorLevel level, string message)
-       {
-          Level = level;
-          Message = message;
-       }
-       public ErrorInfo(string message)
-          : this(ErrorLevel.Error, message)
-       {
-       }
+   public class ErrorInfo
+   {
+      public ErrorInfo(ErrorLevel level, string message)
+      {
+         Level = level;
+         Message = message;
+      }
 
-        public ErrorLevel Level { get; set; }
-        public string Message { get; set; }
-    }
+      public ErrorInfo(string message)
+         : this(ErrorLevel.Error, message)
+      {
+      }
+
+      public ErrorLevel Level { get; set; }
+      public string Message { get; set; }
+   }
 }

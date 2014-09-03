@@ -8,10 +8,12 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
 {
    public class TransientLifeCycleHandler : ILifeCycleHandler
    {
-       public void CreateInterceptor(NetAspectDefinition aspect_P, MethodDefinition method_P, VariableDefinition interceptorVariable,
-                                     List<Instruction> instructions)
-       {
-           instructions.AppendCreateNewObject(interceptorVariable, aspect_P.Type, method_P.Module);
-       }
+      public void CreateInterceptor(NetAspectDefinition aspect_P,
+         MethodDefinition method_P,
+         VariableDefinition interceptorVariable,
+         List<Instruction> instructions)
+      {
+         instructions.AppendCreateNewObject(interceptorVariable, aspect_P.Type, method_P.Module);
+      }
    }
 }

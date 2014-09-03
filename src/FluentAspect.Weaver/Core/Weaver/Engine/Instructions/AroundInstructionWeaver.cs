@@ -9,19 +9,19 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
 {
    public class AroundInstructionWeaver
    {
-       private IIlInjector before;
-       private IIlInjector after;
-       private AspectBuilder aspectBuilder;
-       private NetAspectDefinition aspect;
-       private MethodDefinition method;
+      private readonly IIlInjector after;
+      private readonly NetAspectDefinition aspect;
+      private readonly AspectBuilder aspectBuilder;
+      private readonly IIlInjector before;
+      private readonly MethodDefinition method;
 
-       public AroundInstructionWeaver(IIlInjector before, IIlInjector after, AspectBuilder aspectBuilder, NetAspectDefinition aspect, MethodDefinition method)
+      public AroundInstructionWeaver(IIlInjector before, IIlInjector after, AspectBuilder aspectBuilder, NetAspectDefinition aspect, MethodDefinition method)
       {
          this.before = before;
          this.after = after;
-           this.aspectBuilder = aspectBuilder;
-           this.aspect = aspect;
-           this.method = method;
+         this.aspectBuilder = aspectBuilder;
+         this.aspect = aspect;
+         this.method = method;
       }
 
       public void Check(ErrorHandler errorHandler, IlInjectorAvailableVariables variables)
@@ -36,11 +36,11 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
          after.Inject(il.AfterInstruction, variables);
       }
 
-       public VariableDefinition CreateAspect(AroundInstructionIl il)
-       {
-           VariableDefinition interceptorVariable = new VariableDefinition(method.Module.Import(aspect.Type));
-           aspectBuilder.CreateInterceptor(aspect, method, interceptorVariable, il.BeforeInstruction);
-           return interceptorVariable;
-       }
+      public VariableDefinition CreateAspect(AroundInstructionIl il)
+      {
+         var interceptorVariable = new VariableDefinition(method.Module.Import(aspect.Type));
+         aspectBuilder.CreateInterceptor(aspect, method, interceptorVariable, il.BeforeInstruction);
+         return interceptorVariable;
+      }
    }
 }

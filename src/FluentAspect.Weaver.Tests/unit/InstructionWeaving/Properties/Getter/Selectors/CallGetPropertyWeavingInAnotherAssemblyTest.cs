@@ -6,37 +6,37 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Selectors
 {
-    public class CallGetPropertyWeavingInAnotherAssemblyTest :
-        NetAspectTest<CallGetPropertyWeavingInAnotherAssemblyTest.MyAspect, DepClassWhichCallProperty>
-    {
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    Assert.IsNull(MyAspect.Caller);
-                    var classToWeave_L = new DepClassWhichCallProperty();
-                    classToWeave_L.CallProperty("value");
-                    Assert.AreEqual(classToWeave_L, MyAspect.Caller);
-                };
-        }
+   public class CallGetPropertyWeavingInAnotherAssemblyTest :
+      NetAspectTest<CallGetPropertyWeavingInAnotherAssemblyTest.MyAspect, DepClassWhichCallProperty>
+   {
+      protected override Action CreateEnsure()
+      {
+         return () =>
+         {
+            Assert.IsNull(MyAspect.Caller);
+            var classToWeave_L = new DepClassWhichCallProperty();
+            classToWeave_L.CallProperty("value");
+            Assert.AreEqual(classToWeave_L, MyAspect.Caller);
+         };
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static DepClassWhichCallProperty Caller;
-            public bool NetAspectAttribute = true;
+      public class MyAspect : Attribute
+      {
+         public static DepClassWhichCallProperty Caller;
 
 
-            public static IEnumerable<Assembly> AssembliesToWeave = new List<Assembly> { typeof(DepClassWhichCallProperty).Assembly };
+         public static IEnumerable<Assembly> AssembliesToWeave = new List<Assembly> {typeof (DepClassWhichCallProperty).Assembly};
+         public bool NetAspectAttribute = true;
 
-            public void BeforeGetProperty(DepClassWhichCallProperty caller)
-            {
-                Caller = caller;
-            }
+         public void BeforeGetProperty(DepClassWhichCallProperty caller)
+         {
+            Caller = caller;
+         }
 
-            public static bool SelectProperty(PropertyInfo property)
-            {
-                return property.Name == "Property";
-            }
-        }
-    }
+         public static bool SelectProperty(PropertyInfo property)
+         {
+            return property.Name == "Property";
+         }
+      }
+   }
 }

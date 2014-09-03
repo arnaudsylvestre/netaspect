@@ -5,45 +5,45 @@ using NetAspect.Weaver.Core.Model.Errors;
 
 namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
 {
-    public class AfterCallUpdateFieldValueParameterWithRealTypeReferencedTest :
-        NetAspectTest<AfterCallUpdateFieldValueParameterWithRealTypeReferencedTest.ClassToWeave>
-    {
-       protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
-       {
-          return
-              errorHandler =>
-              errorHandler.Add(new ErrorReport.Error()
-              {
-                 Level = ErrorLevel.Error,
-                 Message =
-                 string.Format(
-                     "impossible to ref/out the parameter 'value' in the method AfterUpdateField of the type '{0}'",
-                     typeof(MyAspect).FullName)
-              });
-       }
+   public class AfterCallUpdateFieldValueParameterWithRealTypeReferencedTest :
+      NetAspectTest<AfterCallUpdateFieldValueParameterWithRealTypeReferencedTest.ClassToWeave>
+   {
+      protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
+      {
+         return
+            errorHandler =>
+               errorHandler.Add(
+                  new ErrorReport.Error
+                  {
+                     Level = ErrorLevel.Error,
+                     Message =
+                        string.Format(
+                           "impossible to ref/out the parameter 'value' in the method AfterUpdateField of the type '{0}'",
+                           typeof (MyAspect).FullName)
+                  });
+      }
 
-       public class ClassToWeave
-       {
-          [MyAspect]
-          public string field;
+      public class ClassToWeave
+      {
+         [MyAspect] public string field;
 
-          public string Weaved()
-          {
-             field = "Hello";
-             return field;
-          }
-       }
+         public string Weaved()
+         {
+            field = "Hello";
+            return field;
+         }
+      }
 
-        public class MyAspect : Attribute
-        {
-            public static string Value;
-            public bool NetAspectAttribute = true;
+      public class MyAspect : Attribute
+      {
+         public static string Value;
+         public bool NetAspectAttribute = true;
 
-            public void AfterUpdateField(ref string value)
-            {
-               Value = value;
-               value = "New Hello";
-            }
-        }
-    }
+         public void AfterUpdateField(ref string value)
+         {
+            Value = value;
+            value = "New Hello";
+         }
+      }
+   }
 }

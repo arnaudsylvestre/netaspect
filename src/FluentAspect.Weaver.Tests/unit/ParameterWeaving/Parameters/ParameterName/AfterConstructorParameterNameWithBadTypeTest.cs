@@ -5,39 +5,40 @@ using NetAspect.Weaver.Core.Model.Errors;
 
 namespace NetAspect.Weaver.Tests.unit.ParameterWeaving.Parameters.ParameterName
 {
-    public class AfterConstructorParameterNameWithBadTypeTest :
-        NetAspectTest<AfterConstructorParameterNameWithBadTypeTest.ClassToWeave>
-    {
-       protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
-       {
-          return
-              errorHandler =>
-              errorHandler.Add(new ErrorReport.Error()
-              {
-                 Level = ErrorLevel.Error,
-                 Message =
-                 string.Format(
-                     "the parameterName parameter in the method AfterConstructorForParameter of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
-                     typeof(MyAspect).FullName, typeof(string).FullName)
-              });
-       }
+   public class AfterConstructorParameterNameWithBadTypeTest :
+      NetAspectTest<AfterConstructorParameterNameWithBadTypeTest.ClassToWeave>
+   {
+      protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
+      {
+         return
+            errorHandler =>
+               errorHandler.Add(
+                  new ErrorReport.Error
+                  {
+                     Level = ErrorLevel.Error,
+                     Message =
+                        string.Format(
+                           "the parameterName parameter in the method AfterConstructorForParameter of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
+                           typeof (MyAspect).FullName,
+                           typeof (string).FullName)
+                  });
+      }
 
-        public class ClassToWeave
-        {
-            
-            public ClassToWeave([MyAspect] string p)
-            {
-               p = "OtherValue";
-            }
-        }
+      public class ClassToWeave
+      {
+         public ClassToWeave([MyAspect] string p)
+         {
+            p = "OtherValue";
+         }
+      }
 
-        public class MyAspect : Attribute
-        {
-            public bool NetAspectAttribute = true;
+      public class MyAspect : Attribute
+      {
+         public bool NetAspectAttribute = true;
 
-            public void AfterConstructorForParameter(int parameterName)
-            {
-            }
-        }
-    }
+         public void AfterConstructorForParameter(int parameterName)
+         {
+         }
+      }
+   }
 }

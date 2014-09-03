@@ -8,24 +8,24 @@ using NetAspect.Core.Helpers;
 
 namespace NetAspect.Core.Tests
 {
-    public class NetAspectCoreTestHelper
-    {
-        public static void UpdateMethod(Type type, string methodName, NetAspectWeavingMethod weavingModel, Action<object, MethodInfo> callWeavedMethod, AssertInstructions assert)
-        {
-            var assembly = AssemblyDefinition.ReadAssembly("NetAspect.Core.Tests.dll");
+   public class NetAspectCoreTestHelper
+   {
+      public static void UpdateMethod(Type type, string methodName, NetAspectWeavingMethod weavingModel, Action<object, MethodInfo> callWeavedMethod, AssertInstructions assert)
+      {
+         AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly("NetAspect.Core.Tests.dll");
 
-            var methodDefinition = assembly.MainModule.GetType(type.FullName).Methods.First(m => m.Name == methodName);
-            methodDefinition.Weave(weavingModel, new VariableDefinition(methodDefinition.ReturnType));
-            var newAssemblyName = "NetAspect.Core.Tests.Weaved.dll";
-            assembly.Write(newAssemblyName);
-            ProcessHelper.Launch("peverify.exe", "\"" + Path.GetFullPath(newAssemblyName) + "\"");
-            var weavedType = Assembly.LoadFrom(newAssemblyName).GetType(type.FullName);
-            var instance = Activator.CreateInstance(weavedType);
-            var methodInfo = weavedType.GetMethod(methodName);
-            callWeavedMethod(instance, methodInfo);
+         MethodDefinition methodDefinition = assembly.MainModule.GetType(type.FullName).Methods.First(m => m.Name == methodName);
+         methodDefinition.Weave(weavingModel, new VariableDefinition(methodDefinition.ReturnType));
+         string newAssemblyName = "NetAspect.Core.Tests.Weaved.dll";
+         assembly.Write(newAssemblyName);
+         ProcessHelper.Launch("peverify.exe", "\"" + Path.GetFullPath(newAssemblyName) + "\"");
+         Type weavedType = Assembly.LoadFrom(newAssemblyName).GetType(type.FullName);
+         object instance = Activator.CreateInstance(weavedType);
+         MethodInfo methodInfo = weavedType.GetMethod(methodName);
+         callWeavedMethod(instance, methodInfo);
 
-            assembly = AssemblyDefinition.ReadAssembly(newAssemblyName);
-            assert.Check(assembly.MainModule.GetType(type.FullName).Methods.First(m => m.Name == methodName));
-        }
-    }
+         assembly = AssemblyDefinition.ReadAssembly(newAssemblyName);
+         assert.Check(assembly.MainModule.GetType(type.FullName).Methods.First(m => m.Name == methodName));
+      }
+   }
 }

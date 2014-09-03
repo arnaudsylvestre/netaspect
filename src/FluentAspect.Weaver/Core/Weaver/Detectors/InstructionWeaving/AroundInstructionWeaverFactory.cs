@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 using NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method;
@@ -13,15 +11,15 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
    public class AroundInstructionWeaverFactory
    {
       private readonly IInterceptorAroundInstructionBuilder _interceptorAroundInstructionBuilder;
-       private IWevingPreconditionInjector weavingPreconditionInjector;
+      private readonly IWevingPreconditionInjector weavingPreconditionInjector;
 
-       public AroundInstructionWeaverFactory(IInterceptorAroundInstructionBuilder interceptorAroundInstructionBuilder, IWevingPreconditionInjector weavingPreconditionInjector)
-       {
-           _interceptorAroundInstructionBuilder = interceptorAroundInstructionBuilder;
-           this.weavingPreconditionInjector = weavingPreconditionInjector;
-       }
+      public AroundInstructionWeaverFactory(IInterceptorAroundInstructionBuilder interceptorAroundInstructionBuilder, IWevingPreconditionInjector weavingPreconditionInjector)
+      {
+         _interceptorAroundInstructionBuilder = interceptorAroundInstructionBuilder;
+         this.weavingPreconditionInjector = weavingPreconditionInjector;
+      }
 
-       public IIlInjector CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Instruction instruction)
+      public IIlInjector CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Instruction instruction)
       {
          return Create(method, interceptorMethod, instruction, (factory, interceptorInfo, generator) => factory.FillBeforeSpecific(interceptorInfo));
       }
@@ -52,8 +50,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
          MethodInfo interceptorMethod,
          Instruction instruction)
       {
-          return Create(method, interceptorMethod, instruction, (factory, interceptorInfo, generator) => factory.FillAfterSpecific(interceptorInfo, generator));
+         return Create(method, interceptorMethod, instruction, (factory, interceptorInfo, generator) => factory.FillAfterSpecific(interceptorInfo, generator));
       }
-
    }
 }

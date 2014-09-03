@@ -6,58 +6,57 @@ using NUnit.Framework;
 namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.Constructor
 {
    public class Part2Sample2AfterConstructorPossibilityTest : NetAspectTest<Part2Sample2AfterConstructorPossibilityTest.MyInt>
-    {
+   {
       public Part2Sample2AfterConstructorPossibilityTest()
-           : base("This method is executed after the code of the constructor is executed", "ConstructordWeavingAfter", "ConstructorWeaving")
+         : base("This method is executed after the code of the constructor is executed", "ConstructordWeavingAfter", "ConstructorWeaving")
       {
       }
 
       public class MyInt
-        {
-            int value;
+      {
+         private readonly int value;
 
-            [Log]
-            public MyInt(int intValue)
-            {
-               this.value = intValue;
-            }
+         [Log]
+         public MyInt(int intValue)
+         {
+            value = intValue;
+         }
 
-            public int Value
-            {
-                get { return value; }
-            }
+         public int Value
+         {
+            get { return value; }
+         }
 
-            public int DivideBy(int v)
-            {
-                return value / v;
-            }
-        }
+         public int DivideBy(int v)
+         {
+            return value / v;
+         }
+      }
 
-        protected override Action CreateEnsure()
-        {
-            return () =>
-                {
-                    var myInt = new MyInt(24);
-                    Assert.AreEqual(2, myInt.DivideBy(12));
-                    Assert.True(LogAttribute.Called);
-                };
-        }
-        
+      protected override Action CreateEnsure()
+      {
+         return () =>
+         {
+            var myInt = new MyInt(24);
+            Assert.AreEqual(2, myInt.DivideBy(12));
+            Assert.True(LogAttribute.Called);
+         };
+      }
 
-        public class LogAttribute : Attribute
-        {
-            public bool NetAspectAttribute = true;
 
-           public static bool Called;
+      public class LogAttribute : Attribute
+      {
+         public static bool Called;
+         public bool NetAspectAttribute = true;
 
-           public void AfterConstructor(object instance, MethodBase constructor, object[] parameters, int intValue)
-            {
-                Called = true;
-                Assert.AreEqual(typeof(MyInt), instance.GetType());
-                Assert.AreEqual(".ctor", constructor.Name);
-                Assert.AreEqual(1, parameters.Length);
-                Assert.AreEqual(24, intValue);
-            }
-        }
-    }
+         public void AfterConstructor(object instance, MethodBase constructor, object[] parameters, int intValue)
+         {
+            Called = true;
+            Assert.AreEqual(typeof (MyInt), instance.GetType());
+            Assert.AreEqual(".ctor", constructor.Name);
+            Assert.AreEqual(1, parameters.Length);
+            Assert.AreEqual(24, intValue);
+         }
+      }
+   }
 }

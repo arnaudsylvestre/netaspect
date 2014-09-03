@@ -2,8 +2,8 @@
 
 namespace NetAspect.Weaver.Apis.AssemblyChecker
 {
-    public interface IAssemblyChecker
-    {
-        void Check(string assemblyFile, ErrorHandler errorHandler);
-    }
+   public interface IAssemblyChecker
+   {
+      void Check(string assemblyFile, ErrorHandler errorHandler);
+   }
 }

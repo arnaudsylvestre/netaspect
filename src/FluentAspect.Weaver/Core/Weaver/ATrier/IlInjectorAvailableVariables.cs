@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Collections.Generic;
 using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
@@ -12,41 +13,42 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
    {
       private readonly VariableDefinition _result;
       private readonly MethodDefinition method;
-      private VariableDefinition _exception;
-      private VariableDefinition _parameters;
-      private VariableDefinition currentMethodInfo;
-      private VariableDefinition currentPropertyInfo;
-      private VariableDefinition _field;
-
       public List<Instruction> BeforeInstructions = new List<Instruction>();
+      private VariableDefinition _called;
+      private Dictionary<string, VariableDefinition> _calledParameters;
+      private VariableDefinition _calledParametersObject;
+      private VariableDefinition _exception;
+      private VariableDefinition _field;
+      private VariableDefinition _fieldValue;
+      private VariableDefinition _parameters;
+      private VariableDefinition _resultForInstruction;
+      private List<Instruction> beforeAfter = new List<Instruction>();
 
 
       public List<Instruction> calledInstructions = new List<Instruction>();
       public List<Instruction> calledParametersInstructions = new List<Instruction>();
       public List<Instruction> calledParametersObjectInstructions = new List<Instruction>();
+      private VariableDefinition currentMethodInfo;
+      private VariableDefinition currentPropertyInfo;
       public List<Instruction> recallcalledInstructions = new List<Instruction>();
       public List<Instruction> recallcalledParametersInstructions = new List<Instruction>();
       public List<Instruction> resultInstructions = new List<Instruction>();
-      private List<Instruction> beforeAfter = new List<Instruction>();
-
-      private VariableDefinition _called;
-      public Instruction Instruction { get; private set; }
-      private Dictionary<string, VariableDefinition> _calledParameters;
-      private VariableDefinition _calledParametersObject;
-
-      public List<VariableDefinition> Variables { get; private set; }
-      public List<FieldDefinition> Fields { get; private set; }
-
-      public VariableDefinition InterceptorVariable { get; set; }
 
       public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method, Instruction instruction)
       {
-         this.Instruction = instruction;
+         Instruction = instruction;
          Variables = new List<VariableDefinition>();
          Fields = new List<FieldDefinition>();
          _result = result;
          this.method = method;
       }
+
+      public Instruction Instruction { get; private set; }
+
+      public List<VariableDefinition> Variables { get; private set; }
+      public List<FieldDefinition> Fields { get; private set; }
+
+      public VariableDefinition InterceptorVariable { get; set; }
 
 
       public VariableDefinition CurrentMethodBase
@@ -55,13 +57,16 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          {
             if (currentMethodInfo == null)
             {
-               currentMethodInfo = new VariableDefinition(method.Module.Import(typeof(MethodBase)));
+               currentMethodInfo = new VariableDefinition(method.Module.Import(typeof (MethodBase)));
                Variables.Add(currentMethodInfo);
 
-               BeforeInstructions.Add(Instruction.Create(OpCodes.Call,
-                                                   method.Module.Import(
-                                                       typeof(MethodBase).GetMethod("GetCurrentMethod",
-                                                                                     new Type[] { }))));
+               BeforeInstructions.Add(
+                  Instruction.Create(
+                     OpCodes.Call,
+                     method.Module.Import(
+                        typeof (MethodBase).GetMethod(
+                           "GetCurrentMethod",
+                           new Type[] {}))));
                BeforeInstructions.AppendSaveResultTo(currentMethodInfo);
             }
             return currentMethodInfo;
@@ -73,10 +78,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          get { return _result; }
       }
 
-      private VariableDefinition _resultForInstruction;
-       private VariableDefinition _fieldValue;
-
-       public VariableDefinition ResultForInstruction
+      public VariableDefinition ResultForInstruction
       {
          get
          {
@@ -111,7 +113,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          {
             if (_parameters == null)
             {
-               _parameters = new VariableDefinition(method.Module.Import(typeof(object[])));
+               _parameters = new VariableDefinition(method.Module.Import(typeof (object[])));
                Variables.Add(_parameters);
 
                method.FillArgsArrayFromParameters(BeforeInstructions, _parameters);
@@ -126,7 +128,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          {
             if (_exception == null)
             {
-               _exception = new VariableDefinition(method.Module.Import(typeof(Exception)));
+               _exception = new VariableDefinition(method.Module.Import(typeof (Exception)));
                Variables.Add(_exception);
             }
             return _exception;
@@ -139,20 +141,27 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          {
             if (currentPropertyInfo == null)
             {
-               currentPropertyInfo = new VariableDefinition(method.Module.Import(typeof(PropertyInfo)));
+               currentPropertyInfo = new VariableDefinition(method.Module.Import(typeof (PropertyInfo)));
                Variables.Add(currentPropertyInfo);
 
 
-               BeforeInstructions.Add(Instruction.Create(OpCodes.Call,
-                                                   method.Module.Import(
-                                                       typeof(MethodBase).GetMethod("GetCurrentMethod",
-                                                                                     new Type[] { }))));
-               BeforeInstructions.Add(Instruction.Create(OpCodes.Callvirt,
-                                                   method.Module.Import(
-                                                       typeof(MemberInfo).GetMethod("get_DeclaringType",
-                                                                                     new Type[] { }))));
-               BeforeInstructions.AppendCallToGetProperty(method.Name.Replace("get_", "").Replace("set_", ""),
-                                                    method.Module);
+               BeforeInstructions.Add(
+                  Instruction.Create(
+                     OpCodes.Call,
+                     method.Module.Import(
+                        typeof (MethodBase).GetMethod(
+                           "GetCurrentMethod",
+                           new Type[] {}))));
+               BeforeInstructions.Add(
+                  Instruction.Create(
+                     OpCodes.Callvirt,
+                     method.Module.Import(
+                        typeof (MemberInfo).GetMethod(
+                           "get_DeclaringType",
+                           new Type[] {}))));
+               BeforeInstructions.AppendCallToGetProperty(
+                  method.Name.Replace("get_", "").Replace("set_", ""),
+                  method.Module);
                BeforeInstructions.AppendSaveResultTo(currentPropertyInfo);
             }
             return currentPropertyInfo;
@@ -166,91 +175,66 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          {
             if (_field == null)
             {
-
-               _field = new VariableDefinition(method.Module.Import(typeof(FieldInfo)));
+               _field = new VariableDefinition(method.Module.Import(typeof (FieldInfo)));
                Variables.Add(_field);
             }
             return _field;
          }
       }
 
-      public Dictionary<string, VariableDefinition> CalledParameters { get
+      public Dictionary<string, VariableDefinition> CalledParameters
       {
-         if (_calledParameters == null)
+         get
          {
-            if (Instruction.IsAnUpdatePropertyCall())
+            if (_calledParameters == null)
             {
-               var methodDefinition_L = ((MethodReference)Instruction.Operand).Resolve();
-               var property = methodDefinition_L.GetPropertyForSetter();
-               _calledParameters = new Dictionary<string, VariableDefinition>();
-               var propertyType_L = property.PropertyType;
-               var variableDefinition = new VariableDefinition(propertyType_L);
-               Variables.Add(variableDefinition);
-               _calledParameters.Add("value", variableDefinition);
-               calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
-               recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
-            }
-            else if (Instruction.Operand is MethodReference)
-            {
-               _calledParameters = new Dictionary<string, VariableDefinition>();
-               var calledMethod = Instruction.GetCalledMethod();
-               //var fieldType = (Instruction.Operand as FieldReference).Resolve().FieldType;
-               //var variableDefinition = new VariableDefinition(fieldType);
-               //calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
-               foreach (var parameter in calledMethod.Parameters.Reverse())
+               if (Instruction.IsAnUpdatePropertyCall())
                {
-                   
-                   var variableDefinition = new VariableDefinition(ComputeVariableType(parameter, Instruction));
-                  _calledParameters.Add("called" + parameter.Name, variableDefinition);
+                  MethodDefinition methodDefinition_L = ((MethodReference) Instruction.Operand).Resolve();
+                  PropertyDefinition property = methodDefinition_L.GetPropertyForSetter();
+                  _calledParameters = new Dictionary<string, VariableDefinition>();
+                  TypeReference propertyType_L = property.PropertyType;
+                  var variableDefinition = new VariableDefinition(propertyType_L);
                   Variables.Add(variableDefinition);
-                  calledParametersInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                  _calledParameters.Add("value", variableDefinition);
+                  calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                  recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
                }
-               foreach (var parameter in calledMethod.Parameters)
+               else if (Instruction.Operand is MethodReference)
                {
-                  recallcalledParametersInstructions.Add(Instruction.Create(OpCodes.Ldloc, _calledParameters["called" + parameter.Name]));
+                  _calledParameters = new Dictionary<string, VariableDefinition>();
+                  MethodDefinition calledMethod = Instruction.GetCalledMethod();
+                  //var fieldType = (Instruction.Operand as FieldReference).Resolve().FieldType;
+                  //var variableDefinition = new VariableDefinition(fieldType);
+                  //calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                  foreach (ParameterDefinition parameter in calledMethod.Parameters.Reverse())
+                  {
+                     var variableDefinition = new VariableDefinition(ComputeVariableType(parameter, Instruction));
+                     _calledParameters.Add("called" + parameter.Name, variableDefinition);
+                     Variables.Add(variableDefinition);
+                     calledParametersInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                  }
+                  foreach (ParameterDefinition parameter in calledMethod.Parameters)
+                  {
+                     recallcalledParametersInstructions.Add(Instruction.Create(OpCodes.Ldloc, _calledParameters["called" + parameter.Name]));
+                  }
+               }
+               else if (Instruction.IsAnUpdateField())
+               {
+                  _calledParameters = new Dictionary<string, VariableDefinition>();
+                  TypeReference fieldType = (Instruction.Operand as FieldReference).Resolve().FieldType;
+                  var variableDefinition = new VariableDefinition(fieldType);
+                  Variables.Add(variableDefinition);
+                  _calledParameters.Add("value", variableDefinition);
+                  calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                  recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
                }
             }
-            else if (Instruction.IsAnUpdateField())
-            {
-               _calledParameters = new Dictionary<string, VariableDefinition>();
-               var fieldType = (Instruction.Operand as FieldReference).Resolve().FieldType;
-               var variableDefinition = new VariableDefinition(fieldType);
-               Variables.Add(variableDefinition);
-               _calledParameters.Add("value", variableDefinition);
-               calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
-               recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
-            }
-                
+            return _calledParameters;
          }
-         return _calledParameters;
-      }}
+      }
 
-       public static TypeReference ComputeVariableType(ParameterDefinition parameter, Instruction instruction)
-       {
-           if (instruction.Operand is GenericInstanceMethod && parameter.ParameterType is GenericParameter)
-           {
-               var method = (GenericInstanceMethod) instruction.Operand;
-               var genericParameter = (GenericParameter)parameter.ParameterType;
-               var genericParameters = ((MethodReference) parameter.Method).GenericParameters;
-               int index = -1;
-               for (int i = 0; i < genericParameters.Count; i++)
-               {
-                   if (genericParameters[i] == genericParameter)
-                   {
-                       index = i;
-                       break;
-                   }
-               }
-               if (index != -1)
-               {
-                   return method.GenericArguments[index];
-               }
-               
-           }
-           return parameter.ParameterType;
-       }
-
-       public VariableDefinition CalledParametersObject
+      public VariableDefinition CalledParametersObject
       {
          get
          {
@@ -258,15 +242,13 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
             {
                if (Instruction.Operand is MethodReference)
                {
-                  var p = CalledParameters;
-                  var calledMethod = Instruction.GetCalledMethod();
-                  _calledParametersObject = new VariableDefinition(calledMethod.Module.Import(typeof(object[])));
+                  Dictionary<string, VariableDefinition> p = CalledParameters;
+                  MethodDefinition calledMethod = Instruction.GetCalledMethod();
+                  _calledParametersObject = new VariableDefinition(calledMethod.Module.Import(typeof (object[])));
                   Variables.Add(_calledParametersObject);
 
                   calledMethod.FillCalledArgsArrayFromParameters(calledParametersObjectInstructions, _calledParametersObject, p);
                }
-
-                    
             }
             return _calledParametersObject;
          }
@@ -278,7 +260,7 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          {
             if (_called == null)
             {
-               var calledParameters = CalledParameters;
+               Dictionary<string, VariableDefinition> calledParameters = CalledParameters;
                TypeReference declaringType = null;
                var operand = Instruction.Operand as FieldReference;
                if (operand != null && !operand.Resolve().IsStatic)
@@ -300,21 +282,48 @@ namespace NetAspect.Weaver.Core.Weaver.WeavingBuilders.Method
          }
       }
 
-       public VariableDefinition FieldValue { get
-       {
-           if (_fieldValue == null)
-           {
+      public VariableDefinition FieldValue
+      {
+         get
+         {
+            if (_fieldValue == null)
+            {
                //if (Instruction.IsAnUpdateFieldCall())
                {
-                   var fieldDefinition = ((FieldReference) Instruction.Operand).Resolve();
-                   var propertyType_L = fieldDefinition.FieldType;
-                   _fieldValue = new VariableDefinition(propertyType_L);
-                   Variables.Add(_fieldValue);
-                   calledInstructions.Add(Instruction.Create(OpCodes.Stloc, _fieldValue));
-                   recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, _fieldValue));
+                  FieldDefinition fieldDefinition = ((FieldReference) Instruction.Operand).Resolve();
+                  TypeReference propertyType_L = fieldDefinition.FieldType;
+                  _fieldValue = new VariableDefinition(propertyType_L);
+                  Variables.Add(_fieldValue);
+                  calledInstructions.Add(Instruction.Create(OpCodes.Stloc, _fieldValue));
+                  recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, _fieldValue));
                }
-           }
-           return _fieldValue;
-       } }
+            }
+            return _fieldValue;
+         }
+      }
+
+      public static TypeReference ComputeVariableType(ParameterDefinition parameter, Instruction instruction)
+      {
+         if (instruction.Operand is GenericInstanceMethod && parameter.ParameterType is GenericParameter)
+         {
+            var method = (GenericInstanceMethod) instruction.Operand;
+            var genericParameter = (GenericParameter) parameter.ParameterType;
+            Collection<GenericParameter> genericParameters = ((MethodReference) parameter.Method).GenericParameters;
+            int index = -1;
+            for (int i = 0; i < genericParameters.Count; i++)
+            {
+               if (genericParameters[i] == genericParameter)
+               {
+                  index = i;
+                  break;
+               }
+            }
+            if (index != -1)
+            {
+               return method.GenericArguments[index];
+            }
+         }
+         return parameter.ParameterType;
+      }
    }
 }
