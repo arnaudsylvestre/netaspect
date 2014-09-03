@@ -124,10 +124,9 @@
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\AfterCallConstructorCallerParameterNameParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\AfterCallConstructorCallerParametersParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\AfterCallConstructorCallerParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\AfterCallConstructorColumnNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\AfterCallConstructorPdbParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\AfterCallConstructorFileNameParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\AfterCallConstructorFilePathParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Constructors\Parameters\After\AfterCallConstructorLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Selectors\AfterCallConstructorCalledParameterWithRealTypeAndSelectorTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Parameters\After\AfterCallGetFieldResultParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Fields\Getter\Selectors\CallGetFieldWeavingInAnotherAssemblyTest.cs" />
