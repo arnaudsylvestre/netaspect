@@ -6,6 +6,8 @@ using NetAspect.Core;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Data;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.Data.Variables.Method;
 using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
 using NetAspect.Weaver.Helpers.IL;
 
@@ -41,7 +43,8 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            
 
            var instructionsToInsertP_L = new InstructionsToInsert();
-           availableVariables = new IlInjectorAvailableVariables(result, method, null, instructionsToInsertP_L);
+           availableVariables = /*new IlInjectorAvailableVariables(result, method, null, instructionsToInsertP_L)*/null;
+           var variablesForMethod = CreateVariablesForMethod(instructionsToInsertP_L, method);
            
 
            if (FillForInstructions(method, methodWeavingModel, errorHandler, w, result, instructionsToInsertP_L, allVariables))
@@ -77,12 +80,27 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            w.AfterInstructions.AddRange(afters);
            if (onExceptions.Any())
            {
-               w.OnExceptionInstructions.Add(Instruction.Create(OpCodes.Stloc, availableVariables.Exception));
-               w.OnExceptionInstructions.AddRange(onExceptions);
-               w.OnExceptionInstructions.Add(Instruction.Create(OpCodes.Rethrow));
+               GenerateOnExceptionStatements(variablesForMethod, w.OnExceptionInstructions, onExceptions);
            }
            w.OnFinallyInstructions.AddRange(onFinallys);
            return false;
+       }
+
+       private static VariablesForMethod CreateVariablesForMethod(InstructionsToInsert instructionsToInsert, MethodDefinition method)
+       {
+           return new VariablesForMethod(
+               new Variable(instructionsToInsert, new VariableCurrentMethodBuilder(), method, null),
+               new Variable(instructionsToInsert, new VariableCurrentProperty(), method, null),
+               new Variable(instructionsToInsert, new VariableParameters(), method, null),
+               new Variable(instructionsToInsert, new VariableException(), method, null));
+       }
+
+       private static void GenerateOnExceptionStatements(VariablesForMethod availableVariables,
+                                                         List<Instruction> onExceptionInstructions, IEnumerable<Instruction> onExceptions)
+       {
+           onExceptionInstructions.Add(Instruction.Create(OpCodes.Stloc, availableVariables.Exception.Definition));
+           onExceptionInstructions.AddRange(onExceptions);
+           onExceptionInstructions.Add(Instruction.Create(OpCodes.Rethrow));
        }
 
        private static VariableDefinition CreateMethodResultVariable(MethodDefinition method)

@@ -25,7 +25,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data
       private VariableDefinition currentMethodInfo;
       private VariableDefinition currentPropertyInfo;
 
-      InstructionsToInsert instructionsToInsert;
+       readonly InstructionsToInsert instructionsToInsert;
 
       public IlInjectorAvailableVariables(VariableDefinition result, MethodDefinition method, Instruction instruction, InstructionsToInsert instructionsToInsert_P)
       {
