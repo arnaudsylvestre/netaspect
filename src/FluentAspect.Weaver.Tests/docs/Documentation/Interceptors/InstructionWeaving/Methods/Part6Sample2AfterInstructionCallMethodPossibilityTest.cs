@@ -70,8 +70,8 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Met
             Called = true;
             Assert.NotNull(caller);
             Assert.NotNull(caller);
-            Assert.AreEqual(17, columnNumber);
-            Assert.AreEqual(33, lineNumber);
+            Assert.AreEqual(13, columnNumber);
+            Assert.AreEqual(32, lineNumber);
             Assert.AreEqual("Part6Sample2AfterInstructionCallMethodPossibilityTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(3, callerParameters.Length);

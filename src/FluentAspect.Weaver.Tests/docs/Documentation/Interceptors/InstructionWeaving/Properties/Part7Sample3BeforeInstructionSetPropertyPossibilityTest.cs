@@ -59,8 +59,8 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Pro
             Called = true;
             Assert.AreEqual(caller, called);
             Assert.NotNull(caller);
-            Assert.AreEqual(15, columnNumber);
-            Assert.AreEqual(35, lineNumber);
+            Assert.AreEqual(13, columnNumber);
+            Assert.AreEqual(34, lineNumber);
             Assert.AreEqual("Part7Sample3BeforeInstructionSetPropertyPossibilityTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(1, callerParameters.Length);

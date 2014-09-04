@@ -13,7 +13,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Update.Parameter
             Assert.AreEqual(0, MyAspect.ColumnNumber);
             var classToWeave_L = new ClassToWeave();
             classToWeave_L.Weaved();
-            Assert.AreEqual(17, MyAspect.ColumnNumber);
+            Assert.AreEqual(13, MyAspect.ColumnNumber);
          };
       }
 

@@ -58,8 +58,8 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Fie
             Called = true;
             Assert.AreEqual(caller, called);
             Assert.NotNull(caller);
-            Assert.AreEqual(15, columnNumber);
-            Assert.AreEqual(40, lineNumber);
+            Assert.AreEqual(13, columnNumber);
+            Assert.AreEqual(38, lineNumber);
             Assert.AreEqual("Part5Sample2AfterInstructionGetFieldPossibilityTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(1, callerParameters.Length);

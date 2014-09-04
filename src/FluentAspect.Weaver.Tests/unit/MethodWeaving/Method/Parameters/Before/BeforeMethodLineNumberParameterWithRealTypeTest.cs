@@ -13,7 +13,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Lin
             Assert.AreEqual(0, MyAspect.LineNumber);
             var classToWeave_L = new ClassToWeave();
             classToWeave_L.Weaved();
-            Assert.AreEqual(25, MyAspect.LineNumber);
+            Assert.AreEqual(24, MyAspect.LineNumber);
          };
       }
 
