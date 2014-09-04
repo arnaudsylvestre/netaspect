@@ -8,17 +8,17 @@ namespace NetAspect.Weaver.Core.Model.Weaving
 {
    public static class IIlInjectorsExtensions
    {
-      public static void Check(this IEnumerable<IIlInjector> injectors, ErrorHandler errorHandler)
+      public static void Check<T>(this IEnumerable<IIlInjector<T>> injectors, ErrorHandler errorHandler)
       {
-         foreach (IIlInjector ilInjector in injectors)
+         foreach (var ilInjector in injectors)
          {
             ilInjector.Check(errorHandler);
          }
       }
 
-      public static void Inject(this IEnumerable<IIlInjector> injectors, List<Instruction> instructions, VariablesForMethod info)
+      public static void Inject<T>(this IEnumerable<IIlInjector<T>> injectors, List<Instruction> instructions, T info)
       {
-         foreach (IIlInjector ilInjector in injectors)
+         foreach (var ilInjector in injectors)
          {
             ilInjector.Inject(instructions, info);
          }

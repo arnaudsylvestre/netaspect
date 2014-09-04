@@ -3,13 +3,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 {
    public static class InterceptorParametersDefinerForInstruction
    {
-      public static InstructionWeavingInfo AddCalled(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P, IMemberDefinition member)
+       public static InstructionWeavingInfo AddCalled(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForInstruction> interceptorParameterConfigurations_P, IMemberDefinition member)
       {
          interceptorParameterConfigurations_P.AddPossibleParameter("called")
             .WhichCanNotBeReferenced()
@@ -19,17 +20,17 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return weavingInfo_P;
       }
 
-      public static MethodWeavingInfo AddCaller(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+       public static MethodWeavingInfo AddCaller(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForInstruction> interceptorParameterConfigurations_P)
       {
          return AddCaller(weavingInfo_P, interceptorParameterConfigurations_P, "caller");
       }
 
-      public static MethodWeavingInfo AddInstance(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+       public static MethodWeavingInfo AddInstance(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForInstruction> interceptorParameterConfigurations_P)
       {
          return AddCaller(weavingInfo_P, interceptorParameterConfigurations_P, "instance");
       }
 
-      public static ParameterWeavingInfo AddParameterValue(this ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+       public static ParameterWeavingInfo AddParameterValue(this ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForInstruction> interceptorParameterConfigurations_P)
       {
          interceptorParameterConfigurations_P.AddPossibleParameter("parametervalue")
             .WhichCanNotBeOut()
@@ -38,7 +39,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return weavingInfo_P;
       }
 
-      public static ParameterWeavingInfo AddParameterName(this ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+       public static ParameterWeavingInfo AddParameterName(this ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForInstruction> interceptorParameterConfigurations_P)
       {
          interceptorParameterConfigurations_P.AddPossibleParameter("parametername")
             .WhichCanNotBeReferenced()

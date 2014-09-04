@@ -6,6 +6,7 @@ using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Checkers.Ensures;
 using NetAspect.Weaver.Core.Weaver.Data;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 using NetAspect.Weaver.Helpers.IL;
 
@@ -13,25 +14,25 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 {
    public static class InterceptorParametersRulesExtensions
    {
-      public static InterceptorParameterConfiguration WhichCanNotBeReferenced(this InterceptorParameterConfiguration configuration)
-      {
+       public static InterceptorParameterConfiguration<T> WhichCanNotBeReferenced<T>(this InterceptorParameterConfiguration<T> configuration) where T : VariablesForMethod
+       {
          configuration.Checker.Add(Ensure.NotReferenced);
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration WhereParameterTypeIsSameAsMethodResult(this InterceptorParameterConfiguration configuration, MethodWeavingInfo info)
+      public static InterceptorParameterConfiguration<T> WhereParameterTypeIsSameAsMethodResult(this InterceptorParameterConfiguration<T> configuration, MethodWeavingInfo info)
       {
          configuration.Checker.Add((parameter, errorListener) => Ensure.ResultOfType(parameter, errorListener, info.Method));
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration WhereParameterTypeIsSameAsMethodResultAndNotReferenced(this InterceptorParameterConfiguration configuration, MethodWeavingInfo info)
+      public static InterceptorParameterConfiguration<T> WhereParameterTypeIsSameAsMethodResultAndNotReferenced(this InterceptorParameterConfiguration<T> configuration, MethodWeavingInfo info)
       {
          configuration.Checker.Add((parameter, errorListener) => Ensure.ResultOfTypeNotReferenced(parameter, errorListener, info.Method));
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration AndInjectTheVariable(this InterceptorParameterConfiguration configuration, Func<IlInjectorAvailableVariables, VariableDefinition> variableProvider)
+      public static InterceptorParameterConfiguration<T> AndInjectTheVariable(this InterceptorParameterConfiguration<T> configuration, Func<VariablesForMethod, VariableDefinition> variableProvider)
       {
          configuration.Generator.Generators.Add(
             (parameterInfo, instructions, info) =>
@@ -42,13 +43,13 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
       }
 
 
-      public static InterceptorParameterConfiguration WhichPdbPresent(this InterceptorParameterConfiguration configuration, InstructionWeavingInfo info)
+      public static InterceptorParameterConfiguration<T> WhichPdbPresent(this InterceptorParameterConfiguration<T> configuration, InstructionWeavingInfo info)
       {
          configuration.Checker.Add((parameter, errorListener) => Ensure.SequencePoint(info.Instruction, errorListener, parameter));
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration WhichPdbPresentForMethod(this InterceptorParameterConfiguration configuration, MethodWeavingInfo info)
+      public static InterceptorParameterConfiguration<T> WhichPdbPresentForMethod(this InterceptorParameterConfiguration<T> configuration, MethodWeavingInfo info)
       {
          configuration.Checker.Add((parameter, errorListener) => Ensure.SequencePoint(GetFirstInstruction(info), errorListener, parameter));
          return configuration;
@@ -59,59 +60,59 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return info.Method.Body.Instructions.First();
       }
 
-      public static InterceptorParameterConfiguration WhichCanNotBeOut(this InterceptorParameterConfiguration configuration)
+      public static InterceptorParameterConfiguration<T> WhichCanNotBeOut<T>(this InterceptorParameterConfiguration<T> configuration) where T : VariablesForMethod
       {
          configuration.Checker.Add(new ParameterReferencedChecker(ParameterReferencedChecker.ReferenceModel.Referenced));
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration WhereFieldCanNotBeStatic(this InterceptorParameterConfiguration configuration, IMemberDefinition member)
+      public static InterceptorParameterConfiguration<T> WhereFieldCanNotBeStatic<T>(this InterceptorParameterConfiguration<T> configuration, IMemberDefinition member) where T : VariablesForMethod
       {
          configuration.Checker.Add((parameter, errorListener) => Ensure.NotStaticButDefaultValue(parameter, errorListener, member));
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration WhereCurrentMethodCanNotBeStatic(this InterceptorParameterConfiguration configuration, MethodWeavingInfo weavingInfo)
+      public static InterceptorParameterConfiguration<T> WhereCurrentMethodCanNotBeStatic<T>(this InterceptorParameterConfiguration<T> configuration, MethodWeavingInfo weavingInfo) where T : VariablesForMethod
       {
          configuration.Checker.Add((parameter, errorListener) => Ensure.NotStatic(parameter, errorListener, weavingInfo.Method));
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration WhichMustBeOfType<T1>(this InterceptorParameterConfiguration configuration)
+      public static InterceptorParameterConfiguration<T> WhichMustBeOfType<T, T1>(this InterceptorParameterConfiguration<T> configuration) where T : VariablesForMethod
       {
          return configuration.WhichMustBeOfTypeOf(typeof (T1).FullName);
       }
 
-      public static InterceptorParameterConfiguration WhichMustBeOfTypeOfParameter(this InterceptorParameterConfiguration configuration, ParameterDefinition parameterDefinition)
+      public static InterceptorParameterConfiguration<T> WhichMustBeOfTypeOfParameter<T>(this InterceptorParameterConfiguration<T> configuration, ParameterDefinition parameterDefinition) where T : VariablesForMethod
       {
          configuration.Checker.Add((info, handler) => Ensure.ParameterOfType(info, handler, parameterDefinition));
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration OrOfType(this InterceptorParameterConfiguration configuration, TypeReference type)
+      public static InterceptorParameterConfiguration<T> OrOfType<T>(this InterceptorParameterConfiguration<T> configuration, TypeReference type) where T : VariablesForMethod
       {
          return WhichMustBeOfTypeOf(configuration, type);
       }
 
-      public static InterceptorParameterConfiguration WhichMustBeOfTypeOf(this InterceptorParameterConfiguration configuration, TypeReference type)
+      public static InterceptorParameterConfiguration<T> WhichMustBeOfTypeOf<T>(this InterceptorParameterConfiguration<T> configuration, TypeReference type) where T : VariablesForMethod
       {
          WhichMustBeOfTypeOf(configuration, type.FullName);
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration WhichMustBeOfTypeOf(this InterceptorParameterConfiguration configuration, string fullName)
+      public static InterceptorParameterConfiguration<T> WhichMustBeOfTypeOf<T>(this InterceptorParameterConfiguration<T> configuration, string fullName) where T : VariablesForMethod
       {
          configuration.Checker.Add(new ParameterTypeChecker(fullName, null));
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration OrOfCurrentMethodDeclaringType(this InterceptorParameterConfiguration configuration, MethodWeavingInfo weavingInfo)
+      public static InterceptorParameterConfiguration<T> OrOfCurrentMethodDeclaringType<T>(this InterceptorParameterConfiguration<T> configuration, MethodWeavingInfo weavingInfo) where T : VariablesForMethod
       {
          return OrOfType(configuration, weavingInfo.Method.DeclaringType);
       }
 
 
-      public static InterceptorParameterConfiguration AndInjectThePdbInfo(this InterceptorParameterConfiguration configuration, Func<SequencePoint, int> pdbInfoProvider, InstructionWeavingInfo weavingInfo)
+      public static InterceptorParameterConfiguration<T> AndInjectThePdbInfo<T>(this InterceptorParameterConfiguration<T> configuration, Func<SequencePoint, int> pdbInfoProvider, InstructionWeavingInfo weavingInfo) where T : VariablesForMethod
       {
          configuration.Generator.Generators.Add(
             (parameter, instructions, info) =>
@@ -127,7 +128,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration AndInjectThePdbInfoForMethod(this InterceptorParameterConfiguration configuration, Func<SequencePoint, int> pdbInfoProvider, MethodWeavingInfo weavingInfo)
+      public static InterceptorParameterConfiguration<T> AndInjectThePdbInfoForMethod<T>(this InterceptorParameterConfiguration<T> configuration, Func<SequencePoint, int> pdbInfoProvider, MethodWeavingInfo weavingInfo) where T : VariablesForMethod
       {
          configuration.Generator.Generators.Add(
             (parameter, instructions, info) =>
@@ -143,7 +144,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration AndInjectThePdbInfo(this InterceptorParameterConfiguration configuration, Func<SequencePoint, string> pdbInfoProvider, InstructionWeavingInfo weavingInfo_P)
+      public static InterceptorParameterConfiguration<T> AndInjectThePdbInfo<T>(this InterceptorParameterConfiguration<T> configuration, Func<SequencePoint, string> pdbInfoProvider, InstructionWeavingInfo weavingInfo_P) where T : VariablesForMethod
       {
          configuration.Generator.Generators.Add(
             (parameter, instructions, info) =>
@@ -159,7 +160,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration AndInjectThePdbInfoForMethod(this InterceptorParameterConfiguration configuration, Func<SequencePoint, string> pdbInfoProvider, MethodWeavingInfo weavingInfo_P)
+      public static InterceptorParameterConfiguration<T> AndInjectThePdbInfoForMethod<T>(this InterceptorParameterConfiguration<T> configuration, Func<SequencePoint, string> pdbInfoProvider, MethodWeavingInfo weavingInfo_P) where T : VariablesForMethod
       {
          configuration.Generator.Generators.Add(
             (parameter, instructions, info) =>
@@ -176,19 +177,19 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
       }
 
 
-      public static InterceptorParameterConfiguration AndInjectTheCalledPropertyInfo(this InterceptorParameterConfiguration configuration, InstructionWeavingInfo weavingInfo)
+      public static InterceptorParameterConfiguration<VariablesForInstruction> AndInjectTheCalledPropertyInfo(this InterceptorParameterConfiguration<VariablesForInstruction> configuration, InstructionWeavingInfo weavingInfo) where T : VariablesForMethod
       {
          configuration.Generator.Generators.Add(
             (parameter, instructions, info) =>
             {
                InstructionWeavingInfo interceptor = weavingInfo;
-               instructions.AppendCallToTargetGetType(interceptor.Method.Module, info.Called);
+               instructions.AppendCallToTargetGetType(interceptor.Method.Module, info.Called.Definition);
                instructions.AppendCallToGetProperty(interceptor.GetOperandAsMethod().GetProperty().Name, interceptor.Method.Module);
             });
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration AndInjectTheCalledInstance(this InterceptorParameterConfiguration configuration)
+      public static InterceptorParameterConfiguration<T> AndInjectTheCalledInstance<T>(this InterceptorParameterConfiguration<T> configuration) where T : VariablesForMethod
       {
          configuration.Generator.Generators.Add(
             (parameter, instructions, info) =>
@@ -202,31 +203,31 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration AndInjectTheCurrentInstance(this InterceptorParameterConfiguration configuration)
+      public static InterceptorParameterConfiguration<T> AndInjectTheCurrentInstance(this InterceptorParameterConfiguration<T> configuration)
       {
-         configuration.Generator.Generators.Add((parameter, instructions, info) => { instructions.Add(Instruction.Create(OpCodes.Ldarg_0)); });
+         configuration.Generator.Generators.Add((parameter, instructions, info) => instructions.Add(Instruction.Create(OpCodes.Ldarg_0)));
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration AndInjectTheCurrentMethod(this InterceptorParameterConfiguration configuration)
+      public static InterceptorParameterConfiguration<T> AndInjectTheCurrentMethod<T>(this InterceptorParameterConfiguration<T> configuration) where T : VariablesForMethod
       {
-         configuration.Generator.Generators.Add((parameter, instructions, info) => { instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentMethodBase)); });
+         configuration.Generator.Generators.Add((parameter, instructions, info) => instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CallerMethod.Definition)));
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration AndInjectTheCurrentProperty(this InterceptorParameterConfiguration configuration)
+      public static InterceptorParameterConfiguration<T> AndInjectTheCurrentProperty(this InterceptorParameterConfiguration<T> configuration)
       {
          configuration.Generator.Generators.Add((parameter, instructions, info) => { instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CurrentPropertyInfo)); });
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration AndInjectTheValue(this InterceptorParameterConfiguration configuration, string value)
+      public static InterceptorParameterConfiguration<T> AndInjectTheValue(this InterceptorParameterConfiguration<T> configuration, string value)
       {
          configuration.Generator.Generators.Add((parameter, instructions, info) => { instructions.Add(Instruction.Create(OpCodes.Ldstr, value)); });
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration AndInjectTheParameterInfo(this InterceptorParameterConfiguration configuration, ParameterDefinition parameterDefinition, MethodDefinition method)
+      public static InterceptorParameterConfiguration<T> AndInjectTheParameterInfo(this InterceptorParameterConfiguration<T> configuration, ParameterDefinition parameterDefinition, MethodDefinition method)
       {
          configuration.Generator.Generators.Add(
             (parameter, instructions, info) =>
@@ -239,7 +240,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return configuration;
       }
 
-      public static InterceptorParameterConfiguration AndInjectTheCalledFieldInfo(this InterceptorParameterConfiguration configuration, InstructionWeavingInfo weavingInfo_P)
+      public static InterceptorParameterConfiguration<T> AndInjectTheCalledFieldInfo(this InterceptorParameterConfiguration<T> configuration, InstructionWeavingInfo weavingInfo_P)
       {
          configuration.Generator.Generators.Add(
             (parameter, instructions, info) =>
@@ -252,19 +253,19 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return configuration;
       }
 
-      public static void AndInjectTheCalledParameter(this InterceptorParameterConfiguration configuration,
+      public static void AndInjectTheCalledParameter(this InterceptorParameterConfiguration<T> configuration,
          ParameterDefinition parameter)
       {
          AndInjectTheCalledParameter(configuration, parameter, p => "called" + p.Name);
       }
 
-      public static void AndInjectTheCalledValue(this InterceptorParameterConfiguration configuration,
+      public static void AndInjectTheCalledValue(this InterceptorParameterConfiguration<T> configuration,
          ParameterDefinition parameter)
       {
          AndInjectTheCalledParameter(configuration, parameter, p => p.Name);
       }
 
-      public static void AndInjectTheFieldValue(this InterceptorParameterConfiguration configuration,
+      public static void AndInjectTheFieldValue(this InterceptorParameterConfiguration<T> configuration,
          FieldDefinition field)
       {
          configuration.Generator.Generators.Add(
@@ -299,7 +300,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
             });
       }
 
-      private static void AndInjectTheCalledParameter(this InterceptorParameterConfiguration configuration, ParameterDefinition parameter, Func<ParameterDefinition, string> nameComputer)
+      private static void AndInjectTheCalledParameter(this InterceptorParameterConfiguration<T> configuration, ParameterDefinition parameter, Func<ParameterDefinition, string> nameComputer)
       {
          configuration.Generator.Generators.Add(
             (parameterInfo, instructions, info) =>
@@ -341,7 +342,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
       }
 
 
-      public static InterceptorParameterConfiguration AndInjectTheParameter(this InterceptorParameterConfiguration configuration, ParameterDefinition parameter)
+      public static InterceptorParameterConfiguration<T> AndInjectTheParameter(this InterceptorParameterConfiguration<T> configuration, ParameterDefinition parameter)
       {
          configuration.Generator.Generators.Add(
             (parameterInfo, instructions, info) =>

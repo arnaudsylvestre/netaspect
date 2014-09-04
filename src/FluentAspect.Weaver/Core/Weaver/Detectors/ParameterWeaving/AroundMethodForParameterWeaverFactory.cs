@@ -2,6 +2,7 @@
 using System.Reflection;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Weaving;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
@@ -9,15 +10,15 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
    public class AroundMethodForParameterWeaverFactory
    {
       private readonly IInterceptorAroundMethodForParameterBuilder builder;
-      private readonly IWevingPreconditionInjector weavingPreconditionInjector;
+      private readonly IWevingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector;
 
-      public AroundMethodForParameterWeaverFactory(IInterceptorAroundMethodForParameterBuilder builder, IWevingPreconditionInjector weavingPreconditionInjector)
+      public AroundMethodForParameterWeaverFactory(IInterceptorAroundMethodForParameterBuilder builder, IWevingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector)
       {
          this.builder = builder;
          this.weavingPreconditionInjector = weavingPreconditionInjector;
       }
 
-      public IIlInjector Create(MethodDefinition method, MethodInfo interceptorMethod, Action<ParameterWeavingInfo, InterceptorParameterConfigurations> fillSpecific, ParameterDefinition parameter)
+      public IIlInjector Create(MethodDefinition method, MethodInfo interceptorMethod, Action<ParameterWeavingInfo, InterceptorParameterConfigurations<VariablesForMethod>> fillSpecific, ParameterDefinition parameter)
       {
          if (interceptorMethod == null)
             return new NoIIlInjector();
@@ -28,7 +29,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
             Method = method,
             Parameter = parameter,
          };
-         var interceptorParameterConfigurations = new InterceptorParameterConfigurations();
+         var interceptorParameterConfigurations = new InterceptorParameterConfigurations<VariablesForMethod>();
          builder.FillCommon(weavingInfo_P, interceptorParameterConfigurations);
          fillSpecific(weavingInfo_P, interceptorParameterConfigurations);
 

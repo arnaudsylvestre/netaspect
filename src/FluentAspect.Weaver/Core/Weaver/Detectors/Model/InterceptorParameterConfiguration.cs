@@ -8,25 +8,26 @@ using NetAspect.Weaver.Core.Weaver.Data.Variables;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.Model
 {
-   public class InterceptorParameterConfiguration
-   {
+    public class InterceptorParameterConfiguration<T> where T : VariablesForMethod
+    {
       public string Name;
 
       public InterceptorParameterConfiguration(string name)
       {
          Name = name;
-         Generator = new MyGenerator();
+         Generator = new MyGenerator<T>();
          Checker = new MyInterceptorParameterChecker();
       }
 
-      public MyGenerator Generator { get; private set; }
+      public MyGenerator<T> Generator { get; private set; }
       public MyInterceptorParameterChecker Checker { get; private set; }
 
-      public class MyGenerator
+      public class MyGenerator<T>
+          where T : VariablesForMethod
       {
-          public List<Action<ParameterInfo, List<Instruction>, VariablesForMethod>> Generators = new List<Action<ParameterInfo, List<Instruction>, VariablesForMethod>>();
+          public List<Action<ParameterInfo, List<Instruction>, T>> Generators = new List<Action<ParameterInfo, List<Instruction>, T>>();
 
-         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, VariablesForMethod info)
+         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, T info)
          {
             foreach (var generator in Generators)
             {

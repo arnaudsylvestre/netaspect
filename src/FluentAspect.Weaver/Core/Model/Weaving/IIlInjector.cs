@@ -6,9 +6,9 @@ using NetAspect.Weaver.Core.Weaver.Data.Variables;
 
 namespace NetAspect.Weaver.Core.Model.Weaving
 {
-   public interface IIlInjector
+   public interface IIlInjector<T>
    {
       void Check(ErrorHandler errorHandler);
-      void Inject(List<Instruction> instructions, VariablesForMethod availableInformations);
+      void Inject(List<Instruction> instructions, T availableInformations);
    }
 }

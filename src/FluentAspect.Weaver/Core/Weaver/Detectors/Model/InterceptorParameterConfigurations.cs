@@ -1,25 +1,26 @@
 ﻿using System.Collections.Generic;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.Model
 {
-   public class InterceptorParameterConfigurations
+   public class InterceptorParameterConfigurations<T> where T : VariablesForMethod
    {
-      private readonly List<InterceptorParameterConfiguration> possibleParameters = new List<InterceptorParameterConfiguration>();
+       private readonly List<InterceptorParameterConfiguration<T>> possibleParameters = new List<InterceptorParameterConfiguration<T>>();
 
-      public IEnumerable<InterceptorParameterConfiguration> PossibleParameters
+       public IEnumerable<InterceptorParameterConfiguration<T>> PossibleParameters
       {
          get { return possibleParameters; }
       }
 
 
-      public InterceptorParameterConfiguration AddPossibleParameter(string parameterName)
+       public InterceptorParameterConfiguration<T> AddPossibleParameter(string parameterName)
       {
          return Create(parameterName);
       }
 
-      public InterceptorParameterConfiguration Create(string parameterName)
+       public InterceptorParameterConfiguration<T> Create(string parameterName)
       {
-         var item = new InterceptorParameterConfiguration(parameterName);
+          var item = new InterceptorParameterConfiguration<T>(parameterName);
          possibleParameters.Add(item);
          return item;
       }

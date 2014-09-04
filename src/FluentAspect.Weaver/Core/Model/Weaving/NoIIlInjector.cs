@@ -6,13 +6,13 @@ using NetAspect.Weaver.Core.Weaver.Data.Variables;
 
 namespace NetAspect.Weaver.Core.Model.Weaving
 {
-   public class NoIIlInjector : IIlInjector
+   public class NoIIlInjector<T> : IIlInjector<T>
    {
       public void Check(ErrorHandler errorHandler)
       {
       }
 
-      public void Inject(List<Instruction> instructions, VariablesForMethod availableInformations)
+      public void Inject(List<Instruction> instructions, T availableInformations)
       {
       }
    }

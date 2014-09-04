@@ -4,13 +4,14 @@ using System.Linq;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
 namespace NetAspect.Weaver.Core.Weaver.Checkers
 {
    public static class ParametersChecker
    {
-      public static void Check(this InterceptorParameterConfigurations interceptorParameterConfigurations_P, IEnumerable<ParameterInfo> parameters, ErrorHandler errorHandler)
+      public static void Check(this InterceptorParameterConfigurations<VariablesForMethod> interceptorParameterConfigurations_P, IEnumerable<ParameterInfo> parameters, ErrorHandler errorHandler)
       {
          CheckDuplicates(errorHandler, interceptorParameterConfigurations_P);
          foreach (ParameterInfo parameterInfo in parameters)
@@ -19,7 +20,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
          }
       }
 
-      private static void CheckParameter(ErrorHandler errorHandler, InterceptorParameterConfigurations interceptorParameterConfigurations_P, ParameterInfo parameterInfo)
+      private static void CheckParameter(ErrorHandler errorHandler, InterceptorParameterConfigurations<VariablesForMethod> interceptorParameterConfigurations_P, ParameterInfo parameterInfo)
       {
          string key_L = parameterInfo.Name.ToLower();
          try
@@ -33,11 +34,11 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
          }
       }
 
-      private static void CheckDuplicates(ErrorHandler errorHandler, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+      private static void CheckDuplicates(ErrorHandler errorHandler, InterceptorParameterConfigurations<VariablesForMethod> interceptorParameterConfigurations_P)
       {
-         IEnumerable<InterceptorParameterConfiguration> duplicates =
+          IEnumerable<InterceptorParameterConfiguration<VariablesForMethod>> duplicates =
             interceptorParameterConfigurations_P.PossibleParameters.GroupBy(s => s.Name).SelectMany(grp => grp.Skip(1));
-         foreach (InterceptorParameterConfiguration duplicate in duplicates)
+          foreach (InterceptorParameterConfiguration<VariablesForMethod> duplicate in duplicates)
          {
             errorHandler.OnError(ErrorCode.ParameterAlreadyDeclared, FileLocation.None, duplicate.Name);
          }
