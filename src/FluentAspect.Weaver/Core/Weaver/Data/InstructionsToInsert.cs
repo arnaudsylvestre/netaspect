@@ -6,6 +6,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data
    public class InstructionsToInsert
    {
 
+      public List<Instruction> aspectInitialisation = new List<Instruction>();
       public List<Instruction> calledInstructions = new List<Instruction>();
       public List<Instruction> calledParametersInstructions = new List<Instruction>();
       public List<Instruction> calledParametersObjectInstructions = new List<Instruction>();

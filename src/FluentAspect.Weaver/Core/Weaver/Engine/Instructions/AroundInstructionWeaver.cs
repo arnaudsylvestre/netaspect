@@ -4,6 +4,7 @@ using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Data;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.Engine.LifeCycle;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
@@ -25,13 +26,13 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
          this.method = method;
       }
 
-      public void Check(ErrorHandler errorHandler, IlInjectorAvailableVariables variables)
+      public void Check(ErrorHandler errorHandler, VariablesForInstruction variables)
       {
          before.Check(errorHandler);
          after.Check(errorHandler);
       }
 
-      public void Weave(AroundInstructionIl il, IlInjectorAvailableVariables variables)
+      public void Weave(AroundInstructionIl il, VariablesForInstruction variables)
       {
          before.Inject(il.BeforeInstruction, variables);
          after.Inject(il.AfterInstruction, variables);

@@ -16,23 +16,36 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
         private IVariableBuilder variableBuilder;
         private MethodDefinition method;
         private readonly Instruction instruction;
+        private readonly List<VariableDefinition> _variables;
 
-        public MultipleVariable(InstructionsToInsert instructionsToInsert_P, IVariableBuilder variableBuilder_P, MethodDefinition method_P, Instruction instruction)
+        public MultipleVariable(InstructionsToInsert instructionsToInsert_P, IVariableBuilder variableBuilder_P, MethodDefinition method_P, Instruction instruction, List<VariableDefinition> variables)
         {
             instructionsToInsert = instructionsToInsert_P;
             variableBuilder = variableBuilder_P;
             method = method_P;
             this.instruction = instruction;
+            _variables = variables;
         }
 
+        public Dictionary<string, VariableDefinition> Definitions
+        {
+            get
+            {
+                if (_definitions == null)
+                {
+                    _definitions = variableBuilder.Build(instructionsToInsert, method, instruction);
+                    foreach (var variableDefinition in _definitions.Values)
+                    {
+                        _variables.Add(variableDefinition);
+                    }
+                }
+                return _definitions;
+            }
+        } 
 
         public VariableDefinition GetDefinition(string parameterName)
         {
-            if (_definitions == null)
-            {
-                _definitions = variableBuilder.Build(instructionsToInsert, method, instruction);
-            }
-            return _definitions[parameterName];
+            return Definitions[parameterName];
         }
     }
 }

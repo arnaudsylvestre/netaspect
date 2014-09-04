@@ -7,15 +7,24 @@ using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Data;
 using NetAspect.Weaver.Core.Weaver.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions;
 using NetAspect.Weaver.Core.Weaver.Data.Variables.Method;
 using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
+using NetAspect.Weaver.Core.Weaver.Engine.LifeCycle;
 using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine
 {
-   public static class MethodWeaver
+   public class MethodWeaver
    {
-      public static void Weave(this MethodDefinition method,
+       private AspectBuilder aspectBuilder;
+
+       public MethodWeaver(AspectBuilder aspectBuilder)
+       {
+           this.aspectBuilder = aspectBuilder;
+       }
+
+       public void Weave(MethodDefinition method,
          MethodWeavingModel methodWeavingModel,
          ErrorHandler errorHandler)
       {
@@ -23,19 +32,18 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
           VariableDefinition result = CreateMethodResultVariable(method);
           IlInjectorAvailableVariables availableVariables;
           List<VariableDefinition> allVariables = new List<VariableDefinition>(); ;
-          if (BuildNetAspectWeavingModel(method, methodWeavingModel, errorHandler, out w, result, out availableVariables, allVariables)) return;
+          if (BuildNetAspectWeavingModel(method, methodWeavingModel, errorHandler, out w, result, allVariables)) return;
 
           method.Body.Variables.AddRange(allVariables);
-         method.Body.Variables.AddRange(availableVariables.Variables);
 
 
          method.Weave(w, result);
       }
 
-       private static bool BuildNetAspectWeavingModel(MethodDefinition method, MethodWeavingModel methodWeavingModel,
+       private bool BuildNetAspectWeavingModel(MethodDefinition method, MethodWeavingModel methodWeavingModel,
                                                       ErrorHandler errorHandler, out NetAspectWeavingMethod w,
                                                       VariableDefinition result,
-                                                      out IlInjectorAvailableVariables availableVariables,
+                                                      //out IlInjectorAvailableVariables availableVariables,
                                                       List<VariableDefinition> allVariables)
        {
            w = new NetAspectWeavingMethod();
@@ -43,8 +51,8 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            
 
            var instructionsToInsertP_L = new InstructionsToInsert();
-           availableVariables = /*new IlInjectorAvailableVariables(result, method, null, instructionsToInsertP_L)*/null;
-           var variablesForMethod = CreateVariablesForMethod(instructionsToInsertP_L, method);
+           //availableVariables = /*new IlInjectorAvailableVariables(result, method, null, instructionsToInsertP_L)*/null;
+           var variablesForMethod = CreateVariablesForMethod(instructionsToInsertP_L, method, allVariables);
            
 
            if (FillForInstructions(method, methodWeavingModel, errorHandler, w, result, instructionsToInsertP_L, allVariables))
@@ -61,9 +69,9 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            var onFinallys = new List<Instruction>();
 
            var interceptorFactoryInstructions = new List<Instruction>();
-           availableVariables.InterceptorVariable = methodWeavingModel.Method.CreateAspect(interceptorFactoryInstructions);
-           allVariables.Add(availableVariables.InterceptorVariable);
-           methodWeavingModel.Method.Inject(befores, afters, onExceptions, onFinallys, availableVariables,
+           var aspectVariable = methodWeavingModel.Method.CreateAspect(interceptorFactoryInstructions);
+           allVariables.Add(aspectVariable);
+           methodWeavingModel.Method.Inject(befores, afters, onExceptions, onFinallys, variablesForMethod,
                                             beforeConstructorBaseCall);
 
            if (beforeConstructorBaseCall.Any())
@@ -86,13 +94,14 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            return false;
        }
 
-       private static VariablesForMethod CreateVariablesForMethod(InstructionsToInsert instructionsToInsert, MethodDefinition method)
+       private VariablesForMethod CreateVariablesForMethod(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables)
        {
            return new VariablesForMethod(
-               new Variable(instructionsToInsert, new VariableCurrentMethodBuilder(), method, null),
-               new Variable(instructionsToInsert, new VariableCurrentProperty(), method, null),
-               new Variable(instructionsToInsert, new VariableParameters(), method, null),
-               new Variable(instructionsToInsert, new VariableException(), method, null));
+               new Variable(instructionsToInsert, new VariableCurrentMethodBuilder(), method, null, variables),
+               new Variable(instructionsToInsert, new VariableCurrentProperty(), method, null, variables),
+               new Variable(instructionsToInsert, new VariableParameters(), method, null, variables),
+               new Variable(instructionsToInsert, new VariableException(), method, null, variables),
+               new Variable(instructionsToInsert, new VariableAspect(aspectBuilder), method, null, variables));
        }
 
        private static void GenerateOnExceptionStatements(VariablesForMethod availableVariables,
@@ -111,7 +120,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                       : new VariableDefinition(method.ReturnType);
        }
 
-       private static bool FillForInstructions(MethodDefinition method, MethodWeavingModel methodWeavingModel,
+       private bool FillForInstructions(MethodDefinition method, MethodWeavingModel methodWeavingModel,
                                                ErrorHandler errorHandler, NetAspectWeavingMethod w, VariableDefinition result,
                                                InstructionsToInsert instructionsToInsertP_L, List<VariableDefinition> allVariables)
        {
@@ -120,15 +129,13 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                var instructionIl = new NetAspectWeavingMethod.InstructionIl();
                w.Instructions.Add(instruction.Key, instructionIl);
                var instructions = new InstructionsToInsert();
-               var variablesForInstruction = new IlInjectorAvailableVariables(result, method, instruction.Key, instructions);
+               //var variablesForInstruction = new IlInjectorAvailableVariables(result, method, instruction.Key, instructions);
+               var variablesForInstruction = CreateVariablesForInstruction(instructions, method, allVariables, instruction.Key);
                var ils = new List<AroundInstructionIl>();
                foreach (var v in instruction.Value)
                {
                    var aroundInstructionIl = new AroundInstructionIl();
-                   if (variablesForInstruction.InterceptorVariable == null)
-                   {
-                       variablesForInstruction.InterceptorVariable = v.CreateAspect(aroundInstructionIl);
-                   }
+                   allVariables.Add(variablesForInstruction.Aspect.Definition);
 
                    v.Check(errorHandler, variablesForInstruction);
                    if (errorHandler.Errors.Any())
@@ -141,8 +148,6 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                instructionIl.Before.AddRange(instructions.calledParametersObjectInstructions);
                instructionIl.After.AddRange(instructions.resultInstructions);
                instructionsToInsertP_L.BeforeInstructions.AddRange(instructions.BeforeInstructions);
-               allVariables.AddRange(variablesForInstruction.Variables);
-               allVariables.Add(variablesForInstruction.InterceptorVariable);
                foreach (AroundInstructionIl aroundInstructionIl in ils)
                {
                    instructionIl.Before.AddRange(aroundInstructionIl.BeforeInstruction);
@@ -152,6 +157,19 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                instructionIl.Before.AddRange(instructions.recallcalledParametersInstructions);
            }
            return false;
+       }
+
+       private VariablesForInstruction CreateVariablesForInstruction(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables, Instruction instruction)
+       {
+           VariablesForMethod variablesForMethod = CreateVariablesForMethod(instructionsToInsert, method, variables);
+           var calledParameters = new MultipleVariable(instructionsToInsert, new VariablesCalledParameters(), method, instruction, variables);
+           return new VariablesForInstruction(variablesForMethod.CallerMethod,
+               variablesForMethod.CallerProperty,
+               variablesForMethod.Parameters,
+               variablesForMethod.Exception,
+               calledParameters,
+               new Variable(instructionsToInsert, new VariableAspect(aspectBuilder), method, instruction, variables),
+               new Variable(instructionsToInsert, new VariableCalled(() => calledParameters.Definitions ), method, instruction, variables ));
        }
    }
 }

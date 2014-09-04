@@ -85,7 +85,8 @@ namespace NetAspect.Weaver.Factory
                   {ErrorCode.TooManySelectorsWithSameName, new ErrorInfo("Only one {0} can be defined in the aspect {1}")},
                   {ErrorCode.SelectorMustHaveParameters, new ErrorInfo("The selector {0} of the aspect {1} must have the following parameters : {2}")},
                   {ErrorCode.AssemblyGeneratedIsNotCompliant, new ErrorInfo(ErrorLevel.Failure, "An internal error : {0}")}
-               }));
+               }),
+               new MethodWeaver(aspectBuilder));
       }
 
       private static IMethodWeavingDetector BuildMethodDetector(AspectBuilder aspectBuilder)

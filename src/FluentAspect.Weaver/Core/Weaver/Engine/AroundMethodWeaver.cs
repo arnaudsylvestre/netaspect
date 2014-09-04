@@ -5,6 +5,7 @@ using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Data;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.Engine.LifeCycle;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine
@@ -32,7 +33,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
          Model.OnFinallys.Check(errorHandler);
       }
 
-      public void Inject(List<Instruction> befores, List<Instruction> afters, List<Instruction> onExceptions, List<Instruction> onFinallys, IlInjectorAvailableVariables availableVariables, List<Instruction> beforeConstructorBaseCall_P)
+      public void Inject(List<Instruction> befores, List<Instruction> afters, List<Instruction> onExceptions, List<Instruction> onFinallys, VariablesForMethod availableVariables, List<Instruction> beforeConstructorBaseCall_P)
       {
          Model.BeforeConstructorBaseCalls.Inject(beforeConstructorBaseCall_P, availableVariables);
          Model.Befores.Inject(befores, availableVariables);

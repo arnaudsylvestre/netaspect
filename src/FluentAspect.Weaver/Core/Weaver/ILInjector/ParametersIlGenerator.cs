@@ -4,13 +4,14 @@ using System.Linq;
 using System.Reflection;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Data;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
 namespace NetAspect.Weaver.Core.Weaver.ILInjector
 {
    public static class ParametersIlGenerator
    {
-      public static void Generate(IEnumerable<ParameterInfo> parameters, List<Instruction> instructions, IlInjectorAvailableVariables info, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+      public static void Generate(IEnumerable<ParameterInfo> parameters, List<Instruction> instructions, VariablesForMethod info, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
       {
          foreach (ParameterInfo parameterInfo in parameters)
          {

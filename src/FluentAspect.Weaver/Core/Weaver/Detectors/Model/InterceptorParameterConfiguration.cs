@@ -4,6 +4,7 @@ using System.Reflection;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Weaver.Data;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.Model
 {
@@ -23,9 +24,9 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Model
 
       public class MyGenerator
       {
-         public List<Action<ParameterInfo, List<Instruction>, IlInjectorAvailableVariables>> Generators = new List<Action<ParameterInfo, List<Instruction>, IlInjectorAvailableVariables>>();
+          public List<Action<ParameterInfo, List<Instruction>, VariablesForMethod>> Generators = new List<Action<ParameterInfo, List<Instruction>, VariablesForMethod>>();
 
-         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, IlInjectorAvailableVariables info)
+         public void GenerateIl(ParameterInfo parameterInfo, List<Instruction> instructions, VariablesForMethod info)
          {
             foreach (var generator in Generators)
             {

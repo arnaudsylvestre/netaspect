@@ -8,6 +8,7 @@ using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Checkers;
 using NetAspect.Weaver.Core.Weaver.Data;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 using NetAspect.Weaver.Core.Weaver.ILInjector;
 
@@ -36,7 +37,7 @@ namespace NetAspect.Weaver.Core.Weaver
          interceptorParameterConfigurations.Check(interceptorMethod.GetParameters(), errorHandler);
       }
 
-      public void Inject(List<Instruction> instructions, IlInjectorAvailableVariables availableInformations)
+      public void Inject(List<Instruction> instructions, VariablesForMethod availableInformations)
       {
          Instruction end = Instruction.Create(OpCodes.Nop);
          var precondition = new List<Instruction>();
@@ -47,7 +48,7 @@ namespace NetAspect.Weaver.Core.Weaver
             instructions.Add(Instruction.Create(OpCodes.Brfalse, end));
          }
          // TODO : InterceptorVariable doit etre multiple 
-         instructions.Add(Instruction.Create(OpCodes.Ldloc, availableInformations.InterceptorVariable));
+         instructions.Add(Instruction.Create(OpCodes.Ldloc, availableInformations.Aspect.Definition));
          ParametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations, interceptorParameterConfigurations);
          instructions.Add(Instruction.Create(OpCodes.Call, _method.Module.Import(interceptorMethod)));
          instructions.Add(end);

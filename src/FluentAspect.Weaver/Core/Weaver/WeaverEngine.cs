@@ -14,12 +14,14 @@ namespace NetAspect.Weaver.Core.Weaver
       private readonly IAssemblyPoolFactory assemblyPoolFactory;
       private readonly ErrorInfoComputer errorInfoComputer;
       private readonly WeavingModelComputer weavingModelComputer;
+       private MethodWeaver methodWeaver;
 
-      public WeaverEngine(WeavingModelComputer weavingModelComputer, IAssemblyPoolFactory assemblyPoolFactory, ErrorInfoComputer errorInfoComputer)
+      public WeaverEngine(WeavingModelComputer weavingModelComputer, IAssemblyPoolFactory assemblyPoolFactory, ErrorInfoComputer errorInfoComputer, MethodWeaver methodWeaver)
       {
          this.weavingModelComputer = weavingModelComputer;
          this.assemblyPoolFactory = assemblyPoolFactory;
          this.errorInfoComputer = errorInfoComputer;
+          this.methodWeaver = methodWeaver;
       }
 
       public ErrorReport Weave(string assemblyFilePath, Func<string, string> newAssemblyNameProvider)
@@ -34,7 +36,7 @@ namespace NetAspect.Weaver.Core.Weaver
 
          MethodsWeavingModel weavingModels_L = weavingModelComputer.ComputeWeavingModels(types, filter, assemblyPool, errorHandler);
          foreach (var weavingModel in weavingModels_L.weavingModels)
-            weavingModel.Key.Weave(weavingModel.Value, errorHandler);
+             methodWeaver.Weave(weavingModel.Key, weavingModel.Value, errorHandler);
 
          assemblyPool.Save(errorHandler, newAssemblyNameProvider);
          return ConvertErrorReport(errorHandler, errorInfoComputer);
