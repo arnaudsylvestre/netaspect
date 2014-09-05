@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine.LifeCycle
+namespace NetAspect.Weaver.Core.Weaver.Engine.Lifecycle
 {
    public class AspectBuilder
    {
@@ -14,9 +15,9 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.LifeCycle
          lifeCycles = lifeCycles_P;
       }
 
-      public void CreateInterceptor(NetAspectDefinition aspect_P, MethodDefinition method_P, VariableDefinition interceptorVariable, List<Instruction> instructions)
+      public void CreateInterceptor(Type aspectType, LifeCycle lifeCycle, MethodDefinition method_P, VariableDefinition interceptorVariable, List<Instruction> instructions)
       {
-         lifeCycles[aspect_P.LifeCycle].CreateInterceptor(aspect_P, method_P, interceptorVariable, instructions);
+          lifeCycles[lifeCycle].CreateInterceptor(aspectType, method_P, interceptorVariable, instructions);
       }
    }
 }

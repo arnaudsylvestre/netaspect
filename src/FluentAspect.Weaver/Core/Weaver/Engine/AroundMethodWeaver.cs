@@ -6,7 +6,7 @@ using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Data;
 using NetAspect.Weaver.Core.Weaver.Data.Variables;
-using NetAspect.Weaver.Core.Weaver.Engine.LifeCycle;
+using NetAspect.Weaver.Core.Weaver.Engine.Lifecycle;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine
 {
@@ -45,7 +45,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
       public VariableDefinition CreateAspect(List<Instruction> befores)
       {
          var interceptorVariable = new VariableDefinition(method.Module.Import(aspect.Type));
-         aspectBuilder.CreateInterceptor(aspect, method, interceptorVariable, befores);
+         aspectBuilder.CreateInterceptor(aspect.Type, aspect.LifeCycle, method, interceptorVariable, befores);
          return interceptorVariable;
       }
    }

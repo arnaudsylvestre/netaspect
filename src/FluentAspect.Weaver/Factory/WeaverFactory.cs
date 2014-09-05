@@ -13,7 +13,7 @@ using NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Engine.AspectFinders;
 using NetAspect.Weaver.Core.Weaver.Engine.AssemblyPoolFactories;
-using NetAspect.Weaver.Core.Weaver.Engine.LifeCycle;
+using NetAspect.Weaver.Core.Weaver.Engine.Lifecycle;
 using NetAspect.Weaver.Factory.Configuration;
 using NetAspect.Weaver.Helpers.IL;
 

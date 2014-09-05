@@ -9,7 +9,7 @@ using NetAspect.Weaver.Core.Helpers;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Detectors;
-using NetAspect.Weaver.Core.Weaver.Engine.LifeCycle;
+using NetAspect.Weaver.Core.Weaver.Engine.Lifecycle;
 using NetAspect.Weaver.Helpers;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine

@@ -1,7 +1,8 @@
-﻿using Mono.Cecil;
+﻿using System;
+using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
-using NetAspect.Weaver.Core.Weaver.Engine.LifeCycle;
+using NetAspect.Weaver.Core.Weaver.Engine.Lifecycle;
 
 namespace NetAspect.Weaver.Core.Weaver.Data.Variables
 {
@@ -9,17 +10,20 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
     {
 
         private readonly AspectBuilder aspectBuilder;
-        private NetAspectDefinition aspect;
+        private Type aspectType;
+        private LifeCycle lifeCycle;
 
-        public VariableAspect(AspectBuilder aspectBuilder)
+        public VariableAspect(AspectBuilder aspectBuilder, Type aspectType, LifeCycle lifeCycle)
         {
             this.aspectBuilder = aspectBuilder;
+            this.aspectType = aspectType;
+            this.lifeCycle = lifeCycle;
         }
 
         public VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Instruction instruction)
         {
-            var interceptorVariable = new VariableDefinition(method.Module.Import(aspect.Type));
-            aspectBuilder.CreateInterceptor(aspect, method, interceptorVariable, instructionsToInsert_P.aspectInitialisation);
+            var interceptorVariable = new VariableDefinition(method.Module.Import(aspectType));
+            aspectBuilder.CreateInterceptor(aspectType, lifeCycle, method, interceptorVariable, instructionsToInsert_P.aspectInitialisation);
             return interceptorVariable;
         }
     }
