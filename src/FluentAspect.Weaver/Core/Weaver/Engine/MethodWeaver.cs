@@ -83,6 +83,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                befores.InsertRange(0, interceptorFactoryInstructions);
            }
            w.BeforeConstructorBaseCall.AddRange(beforeConstructorBaseCall);
+           w.BeforeInstructions.AddRange(instructionsToInsertP_L.aspectInitialisation);
            w.BeforeInstructions.AddRange(instructionsToInsertP_L.BeforeInstructions);
            w.BeforeInstructions.AddRange(befores);
            w.AfterInstructions.AddRange(afters);
@@ -137,6 +138,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                {
                    var aroundInstructionIl = new AroundInstructionIl();
                    allVariables.Add(variablesForInstruction.Aspect.Definition);
+                   instructionIl.Before.AddRange(instructions.aspectInitialisation);
 
                    v.Check(errorHandler, variablesForInstruction);
                    if (errorHandler.Errors.Any())
