@@ -14,15 +14,15 @@ using NetAspect.Weaver.Core.Weaver.ILInjector;
 
 namespace NetAspect.Weaver.Core.Weaver
 {
-    public class Injector : IIlInjector
-   {
+    public class Injector<T> : IIlInjector<T> where T : VariablesForMethod
+    {
       private readonly MethodDefinition _method;
       private readonly MethodInfo interceptorMethod;
-      private readonly InterceptorParameterConfigurations interceptorParameterConfigurations;
-      private readonly IWevingPreconditionInjector weavingPreconditionInjector;
+      private readonly InterceptorParameterConfigurations<T> interceptorParameterConfigurations;
+      private readonly IWevingPreconditionInjector<T> weavingPreconditionInjector;
 
 
-      public Injector(MethodDefinition method_P, MethodInfo interceptorMethod_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P, IWevingPreconditionInjector weavingPreconditionInjector)
+      public Injector(MethodDefinition method_P, MethodInfo interceptorMethod_P, InterceptorParameterConfigurations<T> interceptorParameterConfigurations_P, IWevingPreconditionInjector<T> weavingPreconditionInjector)
       {
          _method = method_P;
          interceptorMethod = interceptorMethod_P;
@@ -37,7 +37,7 @@ namespace NetAspect.Weaver.Core.Weaver
          interceptorParameterConfigurations.Check(interceptorMethod.GetParameters(), errorHandler);
       }
 
-      public void Inject(List<Instruction> instructions, VariablesForMethod availableInformations)
+      public void Inject(List<Instruction> instructions, T availableInformations)
       {
          Instruction end = Instruction.Create(OpCodes.Nop);
          var precondition = new List<Instruction>();

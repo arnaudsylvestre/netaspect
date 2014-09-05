@@ -11,13 +11,13 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
 {
    public class AroundInstructionWeaver
    {
-      private readonly IIlInjector after;
+      private readonly IIlInjector<VariablesForInstruction> after;
       private readonly NetAspectDefinition aspect;
       private readonly AspectBuilder aspectBuilder;
-      private readonly IIlInjector before;
+      private readonly IIlInjector<VariablesForInstruction> before;
       private readonly MethodDefinition method;
 
-      public AroundInstructionWeaver(IIlInjector before, IIlInjector after, AspectBuilder aspectBuilder, NetAspectDefinition aspect, MethodDefinition method)
+      public AroundInstructionWeaver(IIlInjector<VariablesForInstruction> before, IIlInjector<VariablesForInstruction> after, AspectBuilder aspectBuilder, NetAspectDefinition aspect, MethodDefinition method)
       {
          this.before = before;
          this.after = after;

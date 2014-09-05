@@ -3,6 +3,7 @@ using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Weaving;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
@@ -10,26 +11,26 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
    public class AroundInstructionWeaverFactory
    {
       private readonly IInterceptorAroundInstructionBuilder _interceptorAroundInstructionBuilder;
-      private readonly IWevingPreconditionInjector weavingPreconditionInjector;
+      private readonly IWevingPreconditionInjector<VariablesForInstruction> weavingPreconditionInjector;
 
-      public AroundInstructionWeaverFactory(IInterceptorAroundInstructionBuilder interceptorAroundInstructionBuilder, IWevingPreconditionInjector weavingPreconditionInjector)
+      public AroundInstructionWeaverFactory(IInterceptorAroundInstructionBuilder interceptorAroundInstructionBuilder, IWevingPreconditionInjector<VariablesForInstruction> weavingPreconditionInjector)
       {
          _interceptorAroundInstructionBuilder = interceptorAroundInstructionBuilder;
          this.weavingPreconditionInjector = weavingPreconditionInjector;
       }
 
-      public IIlInjector CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Instruction instruction)
+      public IIlInjector<VariablesForInstruction> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Instruction instruction)
       {
          return Create(method, interceptorMethod, instruction, (factory, interceptorInfo, generator) => { });
       }
 
-      private IIlInjector Create(MethodDefinition method,
+      private IIlInjector<VariablesForInstruction> Create(MethodDefinition method,
          MethodInfo interceptorMethod,
          Instruction instruction,
-         Action<IInterceptorAroundInstructionBuilder, InstructionWeavingInfo, InterceptorParameterConfigurations> specificFiller)
+         Action<IInterceptorAroundInstructionBuilder, InstructionWeavingInfo, InterceptorParameterConfigurations<VariablesForInstruction>> specificFiller)
       {
          if (interceptorMethod == null)
-            return new NoIIlInjector();
+            return new NoIIlInjector<VariablesForInstruction>();
 
          var info = new InstructionWeavingInfo
          {
@@ -37,7 +38,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
             Interceptor = interceptorMethod,
             Method = method,
          };
-         var parametersIlGenerator = new InterceptorParameterConfigurations();
+         var parametersIlGenerator = new InterceptorParameterConfigurations<VariablesForInstruction>();
          _interceptorAroundInstructionBuilder.FillCommon(info, parametersIlGenerator);
          specificFiller(_interceptorAroundInstructionBuilder, info, parametersIlGenerator);
 

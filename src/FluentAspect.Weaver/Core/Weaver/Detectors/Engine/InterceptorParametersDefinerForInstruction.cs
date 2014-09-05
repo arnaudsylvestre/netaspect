@@ -48,17 +48,17 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return weavingInfo_P;
       }
 
-      public static ParameterWeavingInfo AddParameterInfo(this ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations interceptorParameterConfigurations_P)
+      public static ParameterWeavingInfo AddParameterInfo(this ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForMethod> interceptorParameterConfigurations_P)
       {
          interceptorParameterConfigurations_P.AddPossibleParameter("parameter")
             .WhichCanNotBeReferenced()
-            .WhichMustBeOfType<ParameterInfo>()
+            .WhichMustBeOfType<VariablesForMethod, ParameterInfo>()
             .AndInjectTheParameterInfo(weavingInfo_P.Parameter, weavingInfo_P.Method);
          return weavingInfo_P;
       }
 
       private static MethodWeavingInfo AddCaller(MethodWeavingInfo weavingInfo_P,
-         InterceptorParameterConfigurations interceptorParameterConfigurations_P,
+         InterceptorParameterConfigurations<> interceptorParameterConfigurations_P,
          string parameterName)
       {
          interceptorParameterConfigurations_P.AddPossibleParameter(parameterName)
