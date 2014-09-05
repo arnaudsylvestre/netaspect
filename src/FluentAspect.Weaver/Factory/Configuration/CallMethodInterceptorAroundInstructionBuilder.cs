@@ -1,3 +1,4 @@
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving;
 using NetAspect.Weaver.Core.Weaver.Detectors.Model;
@@ -6,7 +7,7 @@ namespace NetAspect.Weaver.Factory.Configuration
 {
    public class CallMethodInterceptorAroundInstructionBuilder : IInterceptorAroundInstructionBuilder
    {
-      public void FillCommon(InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations parametersIlGenerator_P)
+       public void FillCommon(InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForInstruction> parametersIlGenerator_P)
       {
          weavingInfo_P.AddCalled(parametersIlGenerator_P, weavingInfo_P.GetOperandAsMethod());
          weavingInfo_P.AddCalledParameters(parametersIlGenerator_P);
@@ -27,7 +28,7 @@ namespace NetAspect.Weaver.Factory.Configuration
       {
       }
 
-      public void FillAfterSpecific(InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations generator_P)
+      public void FillAfterSpecific(InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForInstruction> generator_P)
       {
          weavingInfo_P.AddResult(generator_P);
       }

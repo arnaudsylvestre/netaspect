@@ -86,6 +86,7 @@
     <Compile Include="Core\Weaver\Checkers\Ensures\ParameterReferencedChecker.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensures\ParameterTypeChecker.cs" />
     <Compile Include="Core\Weaver\Data\InstructionsToInsert.cs" />
+    <Compile Include="Core\Weaver\Data\Variables\Instructions\VariableResultForInstruction.cs" />
     <Compile Include="Core\Weaver\Data\Variables\MultipleVariable.cs" />
     <Compile Include="Core\Weaver\Data\Variables\VariableAspect.cs" />
     <Compile Include="Core\Weaver\Data\Variables\VariablesForMethod.cs" />

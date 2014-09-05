@@ -52,7 +52,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
 
            var instructionsToInsertP_L = new InstructionsToInsert();
            //availableVariables = /*new IlInjectorAvailableVariables(result, method, null, instructionsToInsertP_L)*/null;
-           var variablesForMethod = CreateVariablesForMethod(instructionsToInsertP_L, method, allVariables);
+           var variablesForMethod = CreateVariablesForMethod(instructionsToInsertP_L, method, allVariables, result);
            
 
            if (FillForInstructions(method, methodWeavingModel, errorHandler, w, result, instructionsToInsertP_L, allVariables))
@@ -94,14 +94,15 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            return false;
        }
 
-       private VariablesForMethod CreateVariablesForMethod(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables)
+       private VariablesForMethod CreateVariablesForMethod(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables, VariableDefinition result)
        {
            return new VariablesForMethod(
                new Variable(instructionsToInsert, new VariableCurrentMethodBuilder(), method, null, variables),
                new Variable(instructionsToInsert, new VariableCurrentProperty(), method, null, variables),
                new Variable(instructionsToInsert, new VariableParameters(), method, null, variables),
                new Variable(instructionsToInsert, new VariableException(), method, null, variables),
-               new Variable(instructionsToInsert, new VariableAspect(aspectBuilder), method, null, variables));
+               new Variable(instructionsToInsert, new VariableAspect(aspectBuilder), method, null, variables),
+               new Variable(instructionsToInsert, new ExistingVariable(result), method, null, variables));
        }
 
        private static void GenerateOnExceptionStatements(VariablesForMethod availableVariables,
@@ -130,7 +131,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                w.Instructions.Add(instruction.Key, instructionIl);
                var instructions = new InstructionsToInsert();
                //var variablesForInstruction = new IlInjectorAvailableVariables(result, method, instruction.Key, instructions);
-               var variablesForInstruction = CreateVariablesForInstruction(instructions, method, allVariables, instruction.Key);
+               var variablesForInstruction = CreateVariablesForInstruction(instructions, method, allVariables, instruction.Key, result);
                var ils = new List<AroundInstructionIl>();
                foreach (var v in instruction.Value)
                {
@@ -159,17 +160,36 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            return false;
        }
 
-       private VariablesForInstruction CreateVariablesForInstruction(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables, Instruction instruction)
+       private VariablesForInstruction CreateVariablesForInstruction(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables, Instruction instruction, VariableDefinition result)
        {
-           VariablesForMethod variablesForMethod = CreateVariablesForMethod(instructionsToInsert, method, variables);
+           VariablesForMethod variablesForMethod = CreateVariablesForMethod(instructionsToInsert, method, variables, result);
            var calledParameters = new MultipleVariable(instructionsToInsert, new VariablesCalledParameters(), method, instruction, variables);
-           return new VariablesForInstruction(variablesForMethod.CallerMethod,
+           return new VariablesForInstruction(instruction,
+               variablesForMethod.CallerMethod,
                variablesForMethod.CallerProperty,
                variablesForMethod.Parameters,
                variablesForMethod.Exception,
                calledParameters,
                new Variable(instructionsToInsert, new VariableAspect(aspectBuilder), method, instruction, variables),
-               new Variable(instructionsToInsert, new VariableCalled(() => calledParameters.Definitions ), method, instruction, variables ));
+               new Variable(instructionsToInsert, new VariableCalled(() => calledParameters.Definitions ), method, instruction, variables ),
+               new Variable(instructionsToInsert, new VariableFieldValue(), method, instruction, variables), 
+               variablesForMethod.Result,
+               new Variable(instructionsToInsert, new VariableResultForInstruction(), method, instruction, variables));
        }
    }
+
+    internal class ExistingVariable : Variable.IVariableBuilder
+    {
+        private readonly VariableDefinition _variable;
+
+        public ExistingVariable(VariableDefinition variable)
+        {
+            _variable = variable;
+        }
+
+        public VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Instruction instruction)
+        {
+            return _variable;
+        }
+    }
 }

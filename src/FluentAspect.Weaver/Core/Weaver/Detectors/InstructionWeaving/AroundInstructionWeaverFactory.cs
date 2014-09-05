@@ -42,11 +42,11 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
          _interceptorAroundInstructionBuilder.FillCommon(info, parametersIlGenerator);
          specificFiller(_interceptorAroundInstructionBuilder, info, parametersIlGenerator);
 
-         return new Injector(method, interceptorMethod, parametersIlGenerator, weavingPreconditionInjector);
+         return new Injector<VariablesForInstruction>(method, interceptorMethod, parametersIlGenerator, weavingPreconditionInjector);
       }
 
 
-      public IIlInjector CreateForAfter(MethodDefinition method,
+      public IIlInjector<VariablesForInstruction> CreateForAfter(MethodDefinition method,
          MethodInfo interceptorMethod,
          Instruction instruction)
       {

@@ -4,6 +4,7 @@ using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Aspects;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 using NetAspect.Weaver.Core.Weaver.Engine;
 
@@ -56,10 +57,10 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
 
          return new AroundMethodWeavingModel
          {
-            Befores = new List<IIlInjector> {aroundMethodWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method)},
-            Afters = new List<IIlInjector> {aroundMethodWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method)},
-            OnExceptions = new List<IIlInjector> {aroundMethodWeaverFactory.CreateForExceptions(method, onExceptionInterceptorProvider(aspect).Method)},
-            OnFinallys = new List<IIlInjector> {aroundMethodWeaverFactory.CreateForOnFinally(method, onFinallyInterceptorProvider(aspect).Method)}
+            Befores = new List<IIlInjector<VariablesForMethod>> {aroundMethodWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method)},
+            Afters = new List<IIlInjector<VariablesForMethod>> { aroundMethodWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method) },
+            OnExceptions = new List<IIlInjector<VariablesForMethod>> { aroundMethodWeaverFactory.CreateForExceptions(method, onExceptionInterceptorProvider(aspect).Method) },
+            OnFinallys = new List<IIlInjector<VariablesForMethod>> { aroundMethodWeaverFactory.CreateForOnFinally(method, onFinallyInterceptorProvider(aspect).Method) }
          };
       }
    }

@@ -4,6 +4,7 @@ using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Aspects;
+using NetAspect.Weaver.Core.Weaver.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 using NetAspect.Weaver.Core.Weaver.Engine;
 
@@ -43,10 +44,10 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
 
       public AroundMethodWeavingModel DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect)
       {
-         var beforeConstructorBaseCalls = new List<IIlInjector>();
-         var afters = new List<IIlInjector>();
-         var onExceptions = new List<IIlInjector>();
-         var onFinallys = new List<IIlInjector>();
+          var beforeConstructorBaseCalls = new List<IIlInjector<VariablesForMethod>>();
+          var afters = new List<IIlInjector<VariablesForMethod>>();
+          var onExceptions = new List<IIlInjector<VariablesForMethod>>();
+          var onFinallys = new List<IIlInjector<VariablesForMethod>>();
          foreach (ParameterDefinition parameter_L in method.Parameters)
          {
             if (!_isParameterCompliant(aspect, parameter_L, method))
