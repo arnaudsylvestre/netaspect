@@ -11,7 +11,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
             Dictionary<string, VariableDefinition> Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Instruction instruction);
         }
 
-        private Dictionary<string, VariableDefinition> _definitions = new Dictionary<string, VariableDefinition>();
+        private Dictionary<string, VariableDefinition> _definitions;
         private readonly InstructionsToInsert instructionsToInsert;
         private IVariableBuilder variableBuilder;
         private MethodDefinition method;

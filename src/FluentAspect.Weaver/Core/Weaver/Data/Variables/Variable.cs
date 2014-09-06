@@ -1,9 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
 namespace NetAspect.Weaver.Core.Weaver.Data.Variables
 {
+    public class VariableByAspectType
+    {
+        ---------------------------------
+        private VariableAspect variableAspect;
+
+        public VariableByAspectType(InstructionsToInsert instructionsToInsert_P, VariableAspect variableBuilder_P, MethodDefinition method_P, Instruction instruction, List<VariableDefinition> variables)
+        {
+            this.variableAspect = variableAspect;
+        }
+
+        private Dictionary<Type, VariableDefinition> variables = new Dictionary<Type, VariableDefinition>(); 
+
+        public VariableDefinition GetAspect(Type type)
+        {
+            if (!variables.ContainsKey(type))
+            {
+                variables.Add(type, variableAspect.Build());
+            }
+        }
+    }
+
     public class Variable
    {
        public interface IVariableBuilder
@@ -35,9 +57,8 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
            {
                if (_definition == null)
                {
-                   var variableDefinition = variableBuilder.Build(instructionsToInsert, method, instruction);
-                   variables.Add(variableDefinition);
-                   return variableDefinition;
+                   _definition = variableBuilder.Build(instructionsToInsert, method, instruction);
+                   variables.Add(_definition);
                }
                return _definition;
            }

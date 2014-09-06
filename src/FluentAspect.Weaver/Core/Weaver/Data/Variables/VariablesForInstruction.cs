@@ -5,7 +5,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
    public class VariablesForInstruction : VariablesForMethod
    {
 
-       public VariablesForInstruction(Instruction instruction, Variable callerMethod, Variable callerProperty, Variable parameters, Variable exception, MultipleVariable calledParameters, Variable aspect, Variable called, Variable fieldValue, Variable result, Variable resultForInstruction)
+       public VariablesForInstruction(Instruction instruction, Variable callerMethod, Variable callerProperty, Variable parameters, Variable exception, MultipleVariable calledParameters, Variable aspect, Variable called, Variable fieldValue, Variable result, Variable resultForInstruction, Variable calledParametersObjects)
            : base(callerMethod, callerProperty, parameters, exception, aspect, result)
        {
            Instruction = instruction;
@@ -13,6 +13,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
            Called = called;
            FieldValue = fieldValue;
            ResultForInstruction = resultForInstruction;
+           CalledParametersObjects = calledParametersObjects;
        }
 
        public Instruction Instruction { get; private set; }
@@ -21,5 +22,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
        public Variable Called { get; set; }
        public Variable FieldValue { get; set; }
        public Variable ResultForInstruction { get; set; }
+
+       public Variable CalledParametersObjects { get; set; }
    }
 }

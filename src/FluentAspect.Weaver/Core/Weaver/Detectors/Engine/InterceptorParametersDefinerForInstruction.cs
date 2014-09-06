@@ -136,7 +136,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          interceptorParameterConfigurations_P.AddPossibleParameter("calledparameters")
             .WhichCanNotBeReferenced()
             .WhichMustBeOfType<VariablesForInstruction, object[]>()
-            .AndInjectTheVariable(variables => variables.Parameters.Definition);
+            .AndInjectTheVariable(variables => variables.CalledParametersObjects.Definition);
          return weavingInfo_P;
       }
 

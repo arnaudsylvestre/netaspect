@@ -39,9 +39,10 @@ namespace NetAspect.Weaver.Tests.unit
          string dll = assembly.GetAssemblyPath();
          string otherDll = otherAssembly.GetAssemblyPath();
 
-         string tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+         string tempDirectory = Path.Combine(Path.GetTempPath(), "NetAspect");
+         if (Directory.Exists(tempDirectory))
+             Directory.Delete(tempDirectory, true);
          Directory.CreateDirectory(tempDirectory);
-         Console.WriteLine(tempDirectory);
          Console.Write(runner.RunFromType(dll, typeof (T).FullName, errorHandler, otherDll, typeof (U).FullName, tempDirectory));
          string newAssembly = Path.Combine(tempDirectory, Path.GetFileName(assemblyFile));
          runner = CreateAppRunner(assembly);

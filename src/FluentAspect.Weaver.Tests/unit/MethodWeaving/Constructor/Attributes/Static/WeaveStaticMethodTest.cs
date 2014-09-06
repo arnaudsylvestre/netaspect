@@ -18,6 +18,10 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Attributes.Stati
 
       public class ClassToWeave
       {
+          static ClassToWeave()
+          {
+              
+          }
       }
 
       public class MyAspect : Attribute
