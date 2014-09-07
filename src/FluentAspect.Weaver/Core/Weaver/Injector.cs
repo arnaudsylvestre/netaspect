@@ -48,7 +48,7 @@ namespace NetAspect.Weaver.Core.Weaver
             instructions.Add(Instruction.Create(OpCodes.Brfalse, end));
          }
          // TODO : InterceptorVariable doit etre multiple 
-         instructions.Add(Instruction.Create(OpCodes.Ldloc, availableInformations.Aspect.Definition));
+         instructions.Add(Instruction.Create(OpCodes.Ldloc, availableInformations.Aspect.GetAspect(interceptorMethod.DeclaringType)));
          ParametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations, interceptorParameterConfigurations);
          instructions.Add(Instruction.Create(OpCodes.Call, _method.Module.Import(interceptorMethod)));
          instructions.Add(end);

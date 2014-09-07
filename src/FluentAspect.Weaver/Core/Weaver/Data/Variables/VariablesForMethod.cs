@@ -4,7 +4,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
 {
    public class VariablesForMethod
    {
-       public VariablesForMethod(Variable callerMethod, Variable callerProperty, Variable parameters, Variable exception, Variable aspect, Variable result)
+       public VariablesForMethod(Variable callerMethod, Variable callerProperty, Variable parameters, Variable exception, VariableByAspectType aspect, Variable result)
        {
            CallerMethod = callerMethod;
            CallerProperty = callerProperty;
@@ -20,6 +20,6 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
        public Variable Exception { get; private set; }
        public Variable Result { get; private set; }
 
-       public Variable Aspect { get; private set; }
+       public VariableByAspectType Aspect { get; private set; }
    }
 }

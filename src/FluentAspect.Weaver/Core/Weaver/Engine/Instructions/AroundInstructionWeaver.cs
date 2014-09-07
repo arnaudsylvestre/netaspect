@@ -1,7 +1,5 @@
-﻿using Mono.Cecil;
-using Mono.Cecil.Cil;
+﻿using System;
 using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Data;
 using NetAspect.Weaver.Core.Weaver.Data.Variables;
@@ -12,21 +10,18 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
    public class AroundInstructionWeaver
    {
       private readonly IIlInjector<VariablesForInstruction> after;
-      private readonly NetAspectDefinition aspect;
-      private readonly AspectBuilder aspectBuilder;
-      private readonly IIlInjector<VariablesForInstruction> before;
-      private readonly MethodDefinition method;
+       private readonly IIlInjector<VariablesForInstruction> before;
 
-      public AroundInstructionWeaver(IIlInjector<VariablesForInstruction> before, IIlInjector<VariablesForInstruction> after, AspectBuilder aspectBuilder, NetAspectDefinition aspect, MethodDefinition method)
+       public AroundInstructionWeaver(IIlInjector<VariablesForInstruction> before, IIlInjector<VariablesForInstruction> after, Type aspectType)
       {
-         this.before = before;
+           AspectType = aspectType;
+           this.before = before;
          this.after = after;
-         this.aspectBuilder = aspectBuilder;
-         this.aspect = aspect;
-         this.method = method;
       }
 
-      public void Check(ErrorHandler errorHandler, VariablesForInstruction variables)
+       public Type AspectType { get; private set; }
+
+      public void Check(ErrorHandler errorHandler)
       {
          before.Check(errorHandler);
          after.Check(errorHandler);
@@ -36,13 +31,6 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
       {
          before.Inject(il.BeforeInstruction, variables);
          after.Inject(il.AfterInstruction, variables);
-      }
-
-      public VariableDefinition CreateAspect(AroundInstructionIl il)
-      {
-         var interceptorVariable = new VariableDefinition(method.Module.Import(aspect.Type));
-         aspectBuilder.CreateInterceptor(aspect.Type, aspect.LifeCycle, method, interceptorVariable, il.BeforeInstruction);
-         return interceptorVariable;
       }
    }
 }

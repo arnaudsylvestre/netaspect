@@ -7,12 +7,19 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
 {
     public class VariableByAspectType
     {
-        ---------------------------------
+        private readonly InstructionsToInsert _instructionsToInsertP;
         private VariableAspect variableAspect;
+        private readonly MethodDefinition _methodP;
+        private readonly Instruction _instruction;
+        private readonly List<VariableDefinition> _variables;
 
-        public VariableByAspectType(InstructionsToInsert instructionsToInsert_P, VariableAspect variableBuilder_P, MethodDefinition method_P, Instruction instruction, List<VariableDefinition> variables)
+        public VariableByAspectType(InstructionsToInsert instructionsToInsert_P, VariableAspect variableAspect, MethodDefinition method_P, Instruction instruction, List<VariableDefinition> variables)
         {
+            _instructionsToInsertP = instructionsToInsert_P;
             this.variableAspect = variableAspect;
+            _methodP = method_P;
+            _instruction = instruction;
+            _variables = variables;
         }
 
         private Dictionary<Type, VariableDefinition> variables = new Dictionary<Type, VariableDefinition>(); 
@@ -21,8 +28,11 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
         {
             if (!variables.ContainsKey(type))
             {
-                variables.Add(type, variableAspect.Build());
+                var variableDefinition = variableAspect.Build(_instructionsToInsertP, _methodP, type);
+                variables.Add(type, variableDefinition);
+                _variables.Add(variableDefinition);
             }
+            return variables[type];
         }
     }
 

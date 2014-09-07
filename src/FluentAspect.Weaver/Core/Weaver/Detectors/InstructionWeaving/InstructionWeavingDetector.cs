@@ -55,9 +55,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
          return new AroundInstructionWeaver(
             aroundInstructionWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, instruction),
             aroundInstructionWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, instruction),
-            aspectBuilder,
-            aspect,
-            method
+            aspect.Type
             );
       }
    }
