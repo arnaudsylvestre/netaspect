@@ -1,12 +1,20 @@
-language: c
+language: objective-c
  
 env:
  global:
   - EnableNuGetPackageRestore=true 
+  matrix:
+  - MONO_VERSION="3.8.0"
  
-install:
-  - sudo apt-get install mono-devel mono-gmcs nunit-console
+ before_install:
+ - wget "http://download.mono-project.com/archive/${MONO_VERSION}/macos-10-x86/MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg"
+ - sudo installer -pkg "MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg" -target /
+
+ 
+#install:
+#  - sudo apt-get install mono-devel mono-gmcs nunit-console
  
 script:
   - xbuild ./src/xbuild.xml
+ # - .ci/nunit.sh Tests/bin/Debug/Tests.dll
  # - nunit-console ./src/FluentAspect.Weaver.Tests/bin/Debug/NetAspect.Weaver.Tests.dll -exclude Integration,NotWorkingOnMono
