@@ -198,11 +198,13 @@
     <Compile Include="unit\InstructionWeaving\Parameters\Value\AfterCallUpdateFieldValueParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\BeforeCallGetPropertyParametersTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Parameters\AfterCallGetPropertyParametersTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\After\AfterCallUpdatePropertyValueParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\BeforeUpdatePropertyParametersTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\AfterUpdatePropertyParametersTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\AfterConstructorParameterNameParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Selectors\WeavePublicMethodTest.cs" />
+    <Compile Include="unit\MethodWeaving\Constructor\Parameters\BeforeConstructorParametersTest.cs" />
+    <Compile Include="unit\MethodWeaving\Constructor\Parameters\AfterConstructorParametersTest.cs" />
+    <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnExceptionConstructorParametersTest.cs" />
+    <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnFinallyConstructorParametersTest.cs" />
+    <Compile Include="unit\MethodWeaving\Constructor\Selectors\WeavePublicConstructorWithSelectorTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Interceptors\CheckInterceptorReturnTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\Before\BeforeMethodLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Selectors\WeavePublicMethodTest.cs" />
@@ -311,40 +313,13 @@
     <Compile Include="unit\MultiWeaving\CheckCallFrom2DifferentInterceptors.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Selectors\CallGetPropertyWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Getter\Selectors\Infos\GetPropertyWithSelectorPropertyAllParametersTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\After\AfterCallUpdatePropertyCalledParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\After\AfterCallUpdatePropertyCallerParameterNameParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\After\AfterCallUpdatePropertyCallerParametersParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\After\AfterCallUpdatePropertyCallerParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\After\AfterCallUpdatePropertyColumnNumberParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\After\AfterCallUpdatePropertyPropertyParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\After\AfterCallUpdatePropertyFileNameParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\After\AfterCallUpdatePropertyFilePathParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Properties\Update\Parameters\After\AfterCallUpdatePropertyLineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Update\Selectors\CallUpdatePropertyWeavingInAnotherAssemblyTest.cs" />
     <Compile Include="unit\InstructionWeaving\Properties\Update\Selectors\UpdatePropertyWithSelectorPropertyTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Attributes\Static\WeaveStaticMethodTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Attributes\Visibility\WeaveInternalMethodTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Attributes\Visibility\WeavePublicMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Exceptions\After\CheckMethodWeavingAfterWithExceptionTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Exceptions\OnException\CheckMethodWeavingOnExceptionWithExceptionAndFinallyTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Exceptions\OnException\CheckMethodWeavingOnExceptionWithNoExceptionAndFinallyTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Exceptions\OnException\CheckMethodWeavingOnExceptionWithNoExceptionTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\AfterConstructorInstanceParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\AfterConstructorConstructorInfoParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\After\AfterConstructorParametersParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\Before\BeforeConstructorInstanceParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\Before\BeforeConstructorConstructorParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\Before\BeforeConstructorParameterNameParameterWithRealTypeByteTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\Before\BeforeConstructorParametersParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnException\OnExceptionConstructorExceptionParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnException\OnExceptionConstructorInstanceParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnException\OnExceptionConstructorMethodBaseParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnException\OnExceptionConstructorParameterNameParameterWithRealTypeByteTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnException\OnExceptionConstructorParametersParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnFinally\OnFinallyConstructorInstanceParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnFinally\OnFinallyConstructorMethodBaseParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnFinally\OnFinallyConstructorParameterNameParameterWithRealTypeByteTest.cs" />
-    <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnFinally\OnFinallyConstructorParametersParameterWithRealTypeTest.cs" />
     <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingChekSameInstanceTest.cs" />
     <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingWithNoLifeCycleTest.cs" />
     <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingWithPerInstanceLifeCycleTest.cs" />
@@ -480,9 +455,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="unit\InstructionWeaving\Properties\Update\Parameters\Before\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

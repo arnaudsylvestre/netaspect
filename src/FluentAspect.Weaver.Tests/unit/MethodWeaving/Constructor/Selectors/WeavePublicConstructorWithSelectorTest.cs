@@ -1,10 +1,10 @@
 using System;
+using System.Reflection;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFinally.Instance
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Selectors
 {
-   public class OnFinallyConstructorInstanceParameterWithRealTypeTest :
-      NetAspectTest<OnFinallyConstructorInstanceParameterWithRealTypeTest.ClassToWeave>
+   public class WeavePublicConstructorWithSelectorTest : NetAspectTest<WeavePublicConstructorWithSelectorTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
       {
@@ -18,10 +18,6 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFin
 
       public class ClassToWeave
       {
-         [MyAspect]
-         public ClassToWeave()
-         {
-         }
       }
 
       public class MyAspect : Attribute
@@ -29,9 +25,15 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Parameters.OnFin
          public static ClassToWeave Instance;
          public bool NetAspectAttribute = true;
 
-         public void OnFinallyConstructor(ClassToWeave instance)
+         public void BeforeConstructor(ClassToWeave instance)
          {
             Instance = instance;
+         }
+
+
+         public static bool SelectConstructor(ConstructorInfo constructor)
+         {
+            return constructor.DeclaringType.Name == "ClassToWeave";
          }
       }
    }
