@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Attributes.Visibility
 {
+    A déplacer
    public class WeaveInternalMethodTest : NetAspectTest<WeaveInternalMethodTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
