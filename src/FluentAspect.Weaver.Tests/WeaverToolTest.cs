@@ -72,11 +72,11 @@ namespace FluentAspect.Weaver.Tests
         }
 
         [Test]
-        public void CheckBefore()
+        public void CheckBeforeMethod()
         {
             runner.Run(() =>
             {
-                string res = new MyClassToWeave().CheckBefore(new BeforeParameter { Value = "not before" });
+                string res = new MyClassToWeave().CheckBeforeMethod(new BeforeParameter { Value = "not before" });
                 Assert.AreEqual("Value set in before", res);
             });
         }

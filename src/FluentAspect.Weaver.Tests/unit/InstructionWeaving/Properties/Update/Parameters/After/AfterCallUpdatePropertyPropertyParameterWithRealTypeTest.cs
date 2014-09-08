@@ -34,7 +34,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Param
          public static PropertyInfo Property;
          public bool NetAspectAttribute = true;
 
-         public void AfterSetProperty(PropertyInfo property)
+         public void AfterUpdateProperty(PropertyInfo property)
          {
             Property = property;
          }

@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Instance
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "impossible to ref/out the parameter 'instance' in the method After of the type '{0}'",
+                           "impossible to ref/out the parameter 'instance' in the method AfterMethod of the type '{0}'",
                            typeof (MyAspect))
                   });
       }
@@ -36,7 +36,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Instance
          public static object Instance;
          public bool NetAspectAttribute = true;
 
-         public void After(ref object instance)
+         public void AfterMethod(ref object instance)
          {
             Instance = instance;
          }

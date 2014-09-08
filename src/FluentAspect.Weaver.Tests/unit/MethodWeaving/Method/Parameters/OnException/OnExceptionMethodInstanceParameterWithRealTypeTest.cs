@@ -38,7 +38,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExceptio
          public static ClassToWeave Instance;
          public bool NetAspectAttribute = true;
 
-         public void OnException(ClassToWeave instance)
+         public void OnExceptionMethod(ClassToWeave instance)
          {
             Instance = instance;
          }

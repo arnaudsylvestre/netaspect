@@ -33,7 +33,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Param
          public static int LineNumber;
          public bool NetAspectAttribute = true;
 
-         public void AfterSetProperty(int lineNumber)
+         public void AfterUpdateProperty(int lineNumber)
          {
             LineNumber = lineNumber;
          }

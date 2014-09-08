@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Result
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "the result parameter in the method After of the type '{0}' is declared with the type 'System.Object&' but it is expected to be System.String because the return type of the method Weaved in the type {1}",
+                           "the result parameter in the method AfterMethod of the type '{0}' is declared with the type 'System.Object&' but it is expected to be System.String because the return type of the method Weaved in the type {1}",
                            typeof (MyAspect).FullName,
                            typeof (ClassToWeave).FullName)
                   });
@@ -39,7 +39,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Result
          public bool NetAspectAttribute = true;
 
 
-         public void After(ref object result)
+         public void AfterMethod(ref object result)
          {
          }
       }

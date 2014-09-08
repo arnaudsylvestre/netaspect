@@ -33,7 +33,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Param
          public static string FileName;
          public bool NetAspectAttribute = true;
 
-         public void AfterSetProperty(string fileName)
+         public void AfterUpdateProperty(string fileName)
          {
             FileName = fileName;
          }

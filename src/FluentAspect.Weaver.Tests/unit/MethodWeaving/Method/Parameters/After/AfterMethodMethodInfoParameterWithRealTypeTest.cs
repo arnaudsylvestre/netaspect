@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Meth
          public static MethodBase MethodInfo;
          public bool NetAspectAttribute = true;
 
-         public void After(MethodBase method)
+         public void AfterMethod(MethodBase method)
          {
             MethodInfo = method;
          }

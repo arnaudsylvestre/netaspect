@@ -39,7 +39,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.ParameterName
          public static TestEnum I;
          public bool NetAspectAttribute = true;
 
-         public void After(ref TestEnum i)
+         public void AfterMethod(ref TestEnum i)
          {
             I = i;
             i = TestEnum.C;

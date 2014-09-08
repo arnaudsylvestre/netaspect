@@ -49,7 +49,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.Method
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void After(object instance, MethodBase method, object[] parameters, int v, int result)
+         public void AfterMethod(object instance, MethodBase method, object[] parameters, int v, int result)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());

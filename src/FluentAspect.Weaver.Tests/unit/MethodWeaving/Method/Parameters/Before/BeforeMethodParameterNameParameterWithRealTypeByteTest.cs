@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Par
          public static int I;
          public bool NetAspectAttribute = true;
 
-         public void Before(byte i)
+         public void BeforeMethod(byte i)
          {
             I = i;
          }

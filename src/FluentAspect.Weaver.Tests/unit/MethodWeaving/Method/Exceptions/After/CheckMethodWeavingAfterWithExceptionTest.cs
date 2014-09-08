@@ -39,7 +39,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Exceptions.After
          public static MethodBase Method;
          public bool NetAspectAttribute = true;
 
-         public void After(MethodBase method)
+         public void AfterMethod(MethodBase method)
          {
             Method = method;
          }

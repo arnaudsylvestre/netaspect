@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Exceptions
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "impossible to ref/out the parameter 'exception' in the method OnException of the type '{0}'",
+                           "impossible to ref/out the parameter 'exception' in the method OnExceptionMethod of the type '{0}'",
                            typeof (MyAspect).FullName)
                   });
       }
@@ -35,7 +35,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Exceptions
       {
          public bool NetAspectAttribute = true;
 
-         public void OnException(out Exception exception)
+         public void OnExceptionMethod(out Exception exception)
          {
             exception = null;
          }

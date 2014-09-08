@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinally.
          public static MethodBase MethodBase;
          public bool NetAspectAttribute = true;
 
-         public void OnFinally(MethodBase method)
+         public void OnFinallyMethod(MethodBase method)
          {
             MethodBase = method;
          }

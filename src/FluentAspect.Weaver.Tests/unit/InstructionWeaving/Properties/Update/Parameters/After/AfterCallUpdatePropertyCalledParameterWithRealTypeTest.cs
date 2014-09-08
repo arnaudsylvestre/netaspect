@@ -45,7 +45,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Param
          public static ClassCalled Called;
          public bool NetAspectAttribute = true;
 
-         public void AfterSetProperty(ClassCalled called)
+         public void AfterUpdateProperty(ClassCalled called)
          {
             Called = called;
          }

@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.ParameterName
          public static ushort I;
          public bool NetAspectAttribute = true;
 
-         public void After(ushort i)
+         public void AfterMethod(ushort i)
          {
             I = i;
          }

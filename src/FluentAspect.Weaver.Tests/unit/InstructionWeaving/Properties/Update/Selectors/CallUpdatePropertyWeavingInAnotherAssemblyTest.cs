@@ -28,7 +28,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Selec
          public static IEnumerable<Assembly> AssembliesToWeave = new List<Assembly> {typeof (DepClassWhichCallProperty).Assembly};
          public bool NetAspectAttribute = true;
 
-         public void BeforeSetProperty(DepClassWhichCallProperty caller)
+         public void BeforeUpdateProperty(DepClassWhichCallProperty caller)
          {
             Caller = caller;
          }

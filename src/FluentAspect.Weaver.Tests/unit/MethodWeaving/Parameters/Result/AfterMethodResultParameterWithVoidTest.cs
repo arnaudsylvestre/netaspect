@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Result
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "Impossible to use the result parameter in the method After of the type '{0}' because the return type of the method Weaved in the type {1} is void",
+                           "Impossible to use the result parameter in the method AfterMethod of the type '{0}' because the return type of the method Weaved in the type {1} is void",
                            typeof (MyAspect).FullName,
                            typeof (ClassToWeave).FullName)
                   });
@@ -36,7 +36,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Result
       {
          public bool NetAspectAttribute = true;
 
-         public void After(int result)
+         public void AfterMethod(int result)
          {
          }
       }

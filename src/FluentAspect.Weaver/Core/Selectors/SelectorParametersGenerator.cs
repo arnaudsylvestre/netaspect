@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
@@ -9,55 +8,57 @@ namespace NetAspect.Weaver.Core.Selectors
 {
    public class SelectorParametersGenerator<T>
    {
-      private readonly Dictionary<string, PossibleParameter> possibleParameters = new Dictionary<string, PossibleParameter>();
+      
+       private string parameterName;
+       private Func<T, object> provider;
+       private Type Type;
 
-      public void AddPossibleParameter<TParameter>(string parameterName, Func<T, object> valueProvider)
+       public SelectorParametersGenerator(string parameterName, Func<T, object> valueProvider, Type type)
+       {
+           this.parameterName = parameterName;
+           provider = valueProvider;
+           Type = type;
+       }
+
+       public object Generate(T data)
       {
-         possibleParameters.Add(
-            parameterName.ToLower(),
-            new PossibleParameter
-            {
-               Provider = valueProvider,
-               Type = typeof (TParameter)
-            });
+          return provider(data);
       }
 
-      public object[] Generate(MethodInfo method, T data)
-      {
-         var parameters = new List<object>();
-         foreach (ParameterInfo parameterInfo in method.GetParameters())
-         {
-            parameters.Add(possibleParameters[parameterInfo.Name.ToLower()].Provider(data));
-         }
-         return parameters.ToArray();
-      }
+       public void Check(MethodInfo method, ErrorHandler errorHandler)
+       {
+           EnsureOneParameterInSelector(method, errorHandler);
+           if (errorHandler.Errors.Any())
+               return;
+           EnsureParameterNameIsAsExpected(method, errorHandler);
+           EnsureParameterTypeIsAsExpected(method, errorHandler);
+       }
 
-      public void Check(MethodInfo method, ErrorHandler errorHandler)
-      {
-         ParameterInfo[] parameters = method.GetParameters();
-         if (!parameters.Any())
-         {
-            errorHandler.OnError(ErrorCode.SelectorMustHaveParameters, FileLocation.None, method.Name, method.DeclaringType.FullName, string.Join(",", possibleParameters.Keys.ToArray()));
-         }
-         foreach (ParameterInfo parameterInfo in parameters)
-         {
-            string parameterName = parameterInfo.Name.ToLower();
-            if (!possibleParameters.ContainsKey(parameterName))
-            {
-               string availableNames = string.Join(", ", (from p in possibleParameters.Keys select "'" + p + "'").ToArray());
-               errorHandler.OnError(ErrorCode.SelectorBadParameterName, FileLocation.None, parameterInfo.Name, method.Name, method.DeclaringType.FullName, availableNames);
-               continue;
-            }
-            PossibleParameter possibleParameter = possibleParameters[parameterName];
-            if (possibleParameter.Type != parameterInfo.ParameterType)
-               errorHandler.OnError(ErrorCode.SelectorBadParameterType, FileLocation.None, parameterInfo.Name, method.Name, method.DeclaringType.FullName, possibleParameter.Type);
-         }
-      }
+       private void EnsureParameterTypeIsAsExpected(MethodInfo method, ErrorHandler errorHandler)
+       {
+           var parameterInfo = method.GetParameters().First();
+           if (Type != parameterInfo.ParameterType)
+               errorHandler.OnError(ErrorCode.SelectorBadParameterType, FileLocation.None, parameterInfo.Name,
+                                    method.Name, method.DeclaringType.FullName, Type);
+       }
 
-      private class PossibleParameter
-      {
-         public Func<T, object> Provider;
-         public Type Type;
-      }
+       private void EnsureParameterNameIsAsExpected(MethodInfo method, ErrorHandler errorHandler)
+       {
+           var parameterInfo = method.GetParameters().First();
+           if (parameterName != parameterInfo.Name.ToLower())
+           {
+               errorHandler.OnError(ErrorCode.SelectorBadParameterName, FileLocation.None, parameterInfo.Name,
+                                    method.Name, method.DeclaringType.FullName, this.parameterName);
+           }
+       }
+
+       private void EnsureOneParameterInSelector(MethodInfo method, ErrorHandler errorHandler)
+       {
+           if (method.GetParameters().Length != 1)
+           {
+               errorHandler.OnError(ErrorCode.SelectorMustHaveParameters, FileLocation.None, method.Name,
+                                    method.DeclaringType.FullName, this.parameterName);
+           }
+       }
    }
 }

@@ -35,7 +35,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.ParameterName
          public static TestStruct I;
          public bool NetAspectAttribute = true;
 
-         public void After(TestStruct i)
+         public void AfterMethod(TestStruct i)
          {
             I = i;
          }

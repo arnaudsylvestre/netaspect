@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Interceptors
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "The Before interceptor in the {0} aspect must be void",
+                           "The BeforeMethod interceptor in the {0} aspect must be void",
                            typeof (MyAspect).FullName)
                   });
       }
@@ -35,7 +35,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Interceptors
          public static ClassToWeave Instance;
          public bool NetAspectAttribute = true;
 
-         public bool Before(ClassToWeave instance)
+         public bool BeforeMethod(ClassToWeave instance)
          {
             Instance = instance;
             return false;

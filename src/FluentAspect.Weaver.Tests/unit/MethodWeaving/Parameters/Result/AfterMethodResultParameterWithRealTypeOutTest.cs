@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Result
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "impossible to out the parameter 'result' in the method After of the type '{0}'",
+                           "impossible to out the parameter 'result' in the method AfterMethod of the type '{0}'",
                            typeof (MyAspect).FullName)
                   });
       }
@@ -36,7 +36,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Result
       {
          public bool NetAspectAttribute = true;
 
-         public void After(out string result)
+         public void AfterMethod(out string result)
          {
             result = "MyNewValue";
          }

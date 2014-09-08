@@ -45,7 +45,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Pro
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void AfterSetProperty(int callerIntValue,
+         public void AfterUpdateProperty(int callerIntValue,
             MyInt caller,
             MyInt called,
             int columnNumber,

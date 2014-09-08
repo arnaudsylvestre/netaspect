@@ -41,12 +41,12 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Exceptions.OnExceptio
          public static MethodBase FinallyMethod;
          public bool NetAspectAttribute = true;
 
-         public void OnException(MethodBase method)
+         public void OnExceptionMethod(MethodBase method)
          {
             Method = method;
          }
 
-         public void OnFinally(MethodBase method)
+         public void OnFinallyMethod(MethodBase method)
          {
             FinallyMethod = method;
          }

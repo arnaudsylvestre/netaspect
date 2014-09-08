@@ -44,7 +44,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Visibilit
          public static StringBuilder Console;
          public bool NetAspectAttribute = true;
 
-         public void Before(MyInt instance, int v)
+         public void BeforeMethod(MyInt instance, int v)
          {
             Console.AppendFormat("Start Division {0} / {1}", instance.Value, v);
          }

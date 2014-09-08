@@ -42,7 +42,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Weaving
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void Before()
+         public void BeforeMethod()
          {
             Called = true;
          }

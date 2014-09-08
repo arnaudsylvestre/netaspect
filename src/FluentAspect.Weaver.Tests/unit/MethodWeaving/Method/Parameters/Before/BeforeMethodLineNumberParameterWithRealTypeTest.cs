@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Lin
          public static int LineNumber;
          public bool NetAspectAttribute = true;
 
-         public void Before(int lineNumber)
+         public void BeforeMethod(int lineNumber)
          {
             LineNumber = lineNumber;
          }

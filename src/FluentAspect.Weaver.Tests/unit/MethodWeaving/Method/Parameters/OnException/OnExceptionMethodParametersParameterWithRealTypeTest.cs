@@ -38,7 +38,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExceptio
          public static object[] Parameters;
          public bool NetAspectAttribute = true;
 
-         public void OnException(object[] parameters)
+         public void OnExceptionMethod(object[] parameters)
          {
             Parameters = parameters;
          }

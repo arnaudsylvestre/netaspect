@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.ParameterName
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "the i parameter in the method After of the type '{0}' is declared with the type 'System.String' but it is expected to be {1}",
+                           "the i parameter in the method AfterMethod of the type '{0}' is declared with the type 'System.String' but it is expected to be {1}",
                            typeof (MyAspect).FullName,
                            typeof (int),
                            typeof (ClassToWeave))
@@ -37,7 +37,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.ParameterName
       {
          public bool NetAspectAttribute = true;
 
-         public void After(string i)
+         public void AfterMethod(string i)
          {
          }
       }

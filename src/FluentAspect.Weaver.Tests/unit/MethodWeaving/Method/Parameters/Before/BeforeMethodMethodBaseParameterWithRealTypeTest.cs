@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Met
          public static MethodBase MethodBase;
          public bool NetAspectAttribute = true;
 
-         public void Before(MethodBase method)
+         public void BeforeMethod(MethodBase method)
          {
             MethodBase = method;
          }

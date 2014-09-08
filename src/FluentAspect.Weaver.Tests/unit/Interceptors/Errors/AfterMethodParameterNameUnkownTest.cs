@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Erro
       {
          public bool NetAspectAttribute = true;
 
-         public void After(string unknown)
+         public void AfterMethod(string unknown)
          {
          }
       }

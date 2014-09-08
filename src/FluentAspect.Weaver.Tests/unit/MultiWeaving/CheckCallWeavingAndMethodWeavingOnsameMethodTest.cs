@@ -52,7 +52,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Multi
             BeforeGetFieldCalled = called;
          }
 
-         public void Before(ClassToWeave instance)
+         public void BeforeMethod(ClassToWeave instance)
          {
             BeforeCalled = instance;
          }

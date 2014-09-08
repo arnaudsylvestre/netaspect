@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Resu
          public static string Result;
          public bool NetAspectAttribute = true;
 
-         public void After(string result)
+         public void AfterMethod(string result)
          {
             Result = result;
             result = "MyNewValue";

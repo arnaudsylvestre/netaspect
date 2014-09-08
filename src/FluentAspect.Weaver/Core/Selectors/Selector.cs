@@ -22,32 +22,32 @@ namespace NetAspect.Weaver.Core.Selectors
 
       public void Check(ErrorHandler errorHandler)
       {
-         MethodInfo _method = _aspect.GetMethod(SelectorName);
-         if (_method == null)
+         MethodInfo method = _aspect.GetMethod(SelectorName);
+         if (method == null)
             return;
-         selectorParametersGenerator.Check(_method, errorHandler);
-         if (!_method.IsStatic)
-            errorHandler.OnError(ErrorCode.SelectorMustBeStatic, FileLocation.None, _method.Name, _method.DeclaringType.FullName);
+         selectorParametersGenerator.Check(method, errorHandler);
+         if (!method.IsStatic)
+            errorHandler.OnError(ErrorCode.SelectorMustBeStatic, FileLocation.None, method.Name, method.DeclaringType.FullName);
 
-         if (_method.ReturnType != typeof (bool))
-            errorHandler.OnError(ErrorCode.SelectorMustReturnBooleanValue, FileLocation.None, _method.Name, _method.DeclaringType.FullName);
+         if (method.ReturnType != typeof (bool))
+            errorHandler.OnError(ErrorCode.SelectorMustReturnBooleanValue, FileLocation.None, method.Name, method.DeclaringType.FullName);
       }
 
       public bool IsCompliant(T member)
       {
          try
          {
-            MethodInfo _method = _aspect.GetMethod(SelectorName);
-            if (_method == null)
+            MethodInfo method = _aspect.GetMethod(SelectorName);
+            if (method == null)
                return false;
             var errorHandler = new ErrorHandler();
             Check(errorHandler);
             if (errorHandler.Errors.Any())
                return false;
-            object[] target = selectorParametersGenerator.Generate(_method, member);
-            if (target[0] == null)
+            object target = selectorParametersGenerator.Generate(member);
+            if (target == null)
                return false;
-            return (bool) _method.Invoke(null, target);
+            return (bool) method.Invoke(null, new[] { target });
          }
          catch (Exception)
          {

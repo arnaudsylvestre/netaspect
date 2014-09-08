@@ -50,7 +50,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters
          public static MethodBase MethodInfo;
          public bool NetAspectAttribute = true;
 
-         public void Before(MethodBase method)
+         public void BeforeMethod(MethodBase method)
          {
             MethodInfo = method;
          }

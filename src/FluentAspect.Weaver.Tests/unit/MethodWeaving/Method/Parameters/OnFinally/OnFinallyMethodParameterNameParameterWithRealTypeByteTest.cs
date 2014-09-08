@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnFinally.
          public static int I;
          public bool NetAspectAttribute = true;
 
-         public void OnFinally(byte i)
+         public void OnFinallyMethod(byte i)
          {
             I = i;
          }

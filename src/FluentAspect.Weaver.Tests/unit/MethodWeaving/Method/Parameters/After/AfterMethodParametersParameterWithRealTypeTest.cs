@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.After.Para
          public static object[] Parameters;
          public bool NetAspectAttribute = true;
 
-         public void After(object[] parameters)
+         public void AfterMethod(object[] parameters)
          {
             Parameters = parameters;
          }

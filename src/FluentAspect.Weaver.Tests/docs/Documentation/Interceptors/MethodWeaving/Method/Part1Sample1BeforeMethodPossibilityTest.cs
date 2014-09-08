@@ -50,7 +50,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.Method
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void Before(object instance, MethodBase method, object[] parameters, int v)
+         public void BeforeMethod(object instance, MethodBase method, object[] parameters, int v)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());

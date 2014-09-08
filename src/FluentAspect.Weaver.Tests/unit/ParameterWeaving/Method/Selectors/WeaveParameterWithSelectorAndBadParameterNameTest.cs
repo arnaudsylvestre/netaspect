@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.ParameterWeaving.Method.Selectors
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "The parameter unknown in the method SelectParameter of the aspect {0} is unexpected. 'parameter' can be used",
+                           "The parameter unknown in the method SelectParameter of the aspect {0} is unexpected. 'parameter' parameter must be used",
                            typeof (MyAspect).FullName)
                   });
       }

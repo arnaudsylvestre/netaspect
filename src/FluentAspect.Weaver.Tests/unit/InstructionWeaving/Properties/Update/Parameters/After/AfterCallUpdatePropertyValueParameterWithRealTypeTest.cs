@@ -33,7 +33,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Param
          public static string Value;
          public bool NetAspectAttribute = true;
 
-         public void AfterSetProperty(string value)
+         public void AfterUpdateProperty(string value)
          {
             Value = value;
          }

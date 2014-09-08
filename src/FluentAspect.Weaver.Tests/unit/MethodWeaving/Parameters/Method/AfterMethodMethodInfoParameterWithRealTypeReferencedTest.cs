@@ -19,7 +19,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Method
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "impossible to ref/out the parameter 'method' in the method After of the type '{0}'",
+                           "impossible to ref/out the parameter 'method' in the method AfterMethod of the type '{0}'",
                            typeof (MyAspect).FullName)
                   });
       }
@@ -37,7 +37,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Method
          public static MethodBase Method;
          public bool NetAspectAttribute = true;
 
-         public void After(ref MethodBase method)
+         public void AfterMethod(ref MethodBase method)
          {
             Method = method;
          }

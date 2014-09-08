@@ -19,9 +19,8 @@ namespace NetAspect.Weaver.Tests.unit.Selectors.Infos
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "The selector SelectField of the aspect {0} must have the following parameters : field",
-                           typeof (MyAspect).FullName,
-                           typeof (FieldInfo).FullName)
+                           "The selector SelectField of the aspect {0} must have the following parameter : field",
+                           typeof (MyAspect).FullName)
                   });
       }
 

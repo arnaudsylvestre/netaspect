@@ -33,7 +33,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Instance
       {
          public bool NetAspectAttribute = true;
 
-         public void After(ClassToWeave instance)
+         public void AfterMethod(ClassToWeave instance)
          {
          }
       }

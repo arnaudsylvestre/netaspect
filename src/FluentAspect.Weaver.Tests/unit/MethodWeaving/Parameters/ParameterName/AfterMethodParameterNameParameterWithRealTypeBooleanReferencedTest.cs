@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.ParameterName
          public static Boolean I;
          public bool NetAspectAttribute = true;
 
-         public void After(Boolean i)
+         public void AfterMethod(Boolean i)
          {
             I = i;
          }

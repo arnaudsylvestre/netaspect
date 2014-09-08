@@ -31,22 +31,22 @@ namespace NetAspect.Weaver.Core.Model.Aspect
 
       public Interceptor Before
       {
-         get { return new Interceptor(_attribute.GetMethod("Before")); }
+         get { return new Interceptor(_attribute.GetMethod("BeforeMethod")); }
       }
 
       public Interceptor After
       {
-         get { return new Interceptor(_attribute.GetMethod("After")); }
+         get { return new Interceptor(_attribute.GetMethod("AfterMethod")); }
       }
 
       public Interceptor OnException
       {
-         get { return new Interceptor(_attribute.GetMethod("OnException")); }
+         get { return new Interceptor(_attribute.GetMethod("OnExceptionMethod")); }
       }
 
       public Interceptor OnFinally
       {
-         get { return new Interceptor(_attribute.GetMethod("OnFinally")); }
+         get { return new Interceptor(_attribute.GetMethod("OnFinallyMethod")); }
       }
 
       public Interceptor BeforeUpdateField
@@ -82,12 +82,12 @@ namespace NetAspect.Weaver.Core.Model.Aspect
 
       public Interceptor AfterSetProperty
       {
-         get { return new Interceptor(_attribute.GetMethod("AfterSetProperty")); }
+         get { return new Interceptor(_attribute.GetMethod("AfterUpdateProperty")); }
       }
 
       public Interceptor BeforeSetProperty
       {
-         get { return new Interceptor(_attribute.GetMethod("BeforeSetProperty")); }
+         get { return new Interceptor(_attribute.GetMethod("BeforeUpdateProperty")); }
       }
 
       public Interceptor BeforeCallMethod
@@ -134,9 +134,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
       {
          get
          {
-            var selectorParametersGenerator = new SelectorParametersGenerator<FieldDefinition>();
-            selectorParametersGenerator.AddPossibleParameter<FieldInfo>("field", GetField);
-            return new Selector<FieldDefinition>(_attribute, "SelectField", selectorParametersGenerator);
+             return new Selector<FieldDefinition>(_attribute, "SelectField", new SelectorParametersGenerator<FieldDefinition>("field", GetField, typeof(FieldInfo)));
          }
       }
 
@@ -144,9 +142,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
       {
          get
          {
-            var selectorParametersGenerator = new SelectorParametersGenerator<PropertyDefinition>();
-            selectorParametersGenerator.AddPossibleParameter<PropertyInfo>("property", GetProperty);
-            return new Selector<PropertyDefinition>(_attribute, "SelectProperty", selectorParametersGenerator);
+             return new Selector<PropertyDefinition>(_attribute, "SelectProperty", new SelectorParametersGenerator<PropertyDefinition>("property", GetProperty, typeof(PropertyInfo)));
          }
       }
 
@@ -154,9 +150,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
       {
          get
          {
-            var selectorParametersGenerator = new SelectorParametersGenerator<MethodDefinition>();
-            selectorParametersGenerator.AddPossibleParameter<MethodInfo>("method", GetMethod);
-            return new Selector<MethodDefinition>(_attribute, "SelectMethod", selectorParametersGenerator);
+             return new Selector<MethodDefinition>(_attribute, "SelectMethod", new SelectorParametersGenerator<MethodDefinition>("method", GetMethod, typeof(MethodInfo)));
          }
       }
 
@@ -164,9 +158,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
       {
          get
          {
-            var selectorParametersGenerator = new SelectorParametersGenerator<MethodDefinition>();
-            selectorParametersGenerator.AddPossibleParameter<ConstructorInfo>("constructor", GetConstructor);
-            return new Selector<MethodDefinition>(_attribute, "SelectConstructor", selectorParametersGenerator);
+             return new Selector<MethodDefinition>(_attribute, "SelectConstructor", new SelectorParametersGenerator<MethodDefinition>("constructor", GetConstructor, typeof(ConstructorInfo)));
          }
       }
 
@@ -174,9 +166,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
       {
          get
          {
-            var selectorParametersGenerator = new SelectorParametersGenerator<ParameterDefinition>();
-            selectorParametersGenerator.AddPossibleParameter<ParameterInfo>("parameter", GetParameter);
-            return new Selector<ParameterDefinition>(_attribute, "SelectParameter", selectorParametersGenerator);
+             return new Selector<ParameterDefinition>(_attribute, "SelectParameter", new SelectorParametersGenerator<ParameterDefinition>("parameter", GetParameter, typeof(ParameterInfo)));
          }
       }
 

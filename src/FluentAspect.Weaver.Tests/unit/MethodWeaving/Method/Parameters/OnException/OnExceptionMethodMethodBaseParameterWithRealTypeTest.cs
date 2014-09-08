@@ -39,7 +39,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.OnExceptio
          public static MethodBase MethodBase;
          public bool NetAspectAttribute = true;
 
-         public void OnException(MethodBase method)
+         public void OnExceptionMethod(MethodBase method)
          {
             MethodBase = method;
          }

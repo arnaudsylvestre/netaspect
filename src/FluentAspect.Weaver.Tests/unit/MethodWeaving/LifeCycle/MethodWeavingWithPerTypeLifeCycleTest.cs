@@ -42,12 +42,12 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.LifeCycle
             aspects.Add(this);
          }
 
-         public void After()
+         public void AfterMethod()
          {
             nbAfter++;
          }
 
-         public void Before()
+         public void BeforeMethod()
          {
             nbBefore++;
          }

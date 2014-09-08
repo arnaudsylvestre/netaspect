@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters.Before.Ins
          public static ClassToWeave Instance;
          public bool NetAspectAttribute = true;
 
-         public void Before(ClassToWeave instance)
+         public void BeforeMethod(ClassToWeave instance)
          {
             Instance = instance;
          }

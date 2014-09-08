@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Exceptions
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "the exception parameter in the method OnException of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Exception",
+                           "the exception parameter in the method OnExceptionMethod of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Exception",
                            typeof (MyAspect).FullName)
                   });
       }
@@ -35,7 +35,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Exceptions
       {
          public bool NetAspectAttribute = true;
 
-         public void OnException(int exception)
+         public void OnExceptionMethod(int exception)
          {
          }
       }

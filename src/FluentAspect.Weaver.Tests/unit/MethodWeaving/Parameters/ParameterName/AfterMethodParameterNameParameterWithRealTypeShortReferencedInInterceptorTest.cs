@@ -30,7 +30,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.ParameterName
          public static short I;
          public bool NetAspectAttribute = true;
 
-         public void After(ref short i)
+         public void AfterMethod(ref short i)
          {
             I = i;
          }

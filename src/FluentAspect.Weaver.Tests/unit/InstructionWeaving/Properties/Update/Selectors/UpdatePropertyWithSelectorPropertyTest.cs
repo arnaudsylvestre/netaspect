@@ -33,7 +33,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Selec
          public static ClassToWeave Caller;
          public bool NetAspectAttribute = true;
 
-         public void BeforeSetProperty(ClassToWeave caller)
+         public void BeforeUpdateProperty(ClassToWeave caller)
          {
             Caller = caller;
          }

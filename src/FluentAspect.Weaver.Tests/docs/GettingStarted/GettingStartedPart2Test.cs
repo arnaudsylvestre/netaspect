@@ -34,7 +34,7 @@ namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.Method
 
          public bool NetAspectAttribute = true;
 
-         public void Before()
+         public void BeforeMethod()
          {
             writer.Write("Before calling method");
          }

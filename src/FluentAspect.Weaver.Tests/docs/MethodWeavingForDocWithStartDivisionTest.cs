@@ -44,7 +44,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Visibilit
          public static StringBuilder Console;
          public bool NetAspectAttribute = true;
 
-         public void Before()
+         public void BeforeMethod()
          {
             Console.Append("Start Division");
          }

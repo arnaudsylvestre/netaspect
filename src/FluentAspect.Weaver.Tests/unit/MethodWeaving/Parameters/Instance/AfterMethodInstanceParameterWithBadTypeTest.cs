@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Instance
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "the instance parameter in the method After of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
+                           "the instance parameter in the method AfterMethod of the type '{0}' is declared with the type 'System.Int32' but it is expected to be {1}",
                            typeof (MyAspect).FullName,
                            typeof (ClassToWeave).FullName)
                   });
@@ -36,7 +36,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Instance
       {
          public bool NetAspectAttribute = true;
 
-         public void After(int instance)
+         public void AfterMethod(int instance)
          {
          }
       }

@@ -32,7 +32,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.ParameterName
          public static sbyte I;
          public bool NetAspectAttribute = true;
 
-         public void After(ref sbyte i)
+         public void AfterMethod(ref sbyte i)
          {
             I = i;
             i = 15;

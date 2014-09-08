@@ -49,7 +49,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters
          public static MyInt Instance;
          public bool NetAspectAttribute = true;
 
-         public void Before(MyInt instance)
+         public void BeforeMethod(MyInt instance)
          {
             Instance = instance;
          }
