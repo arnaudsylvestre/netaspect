@@ -1,9 +1,9 @@
 using System;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Attributes.Visibility
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Attributes.Visibility
 {
-   public class WeavePublicPropertyTest : NetAspectTest<WeavePublicPropertyTest.ClassToWeave>
+   public class WeaveInternalMethodTest : NetAspectTest<WeaveInternalMethodTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
       {
@@ -11,7 +11,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Attributes
          {
             Assert.IsNull(MyAspect.Instance);
             var classToWeave_L = new ClassToWeave();
-            string value = classToWeave_L.Weaved;
+            classToWeave_L.Weaved();
             Assert.AreEqual(classToWeave_L, MyAspect.Instance);
          };
       }
@@ -19,9 +19,8 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Attributes
       public class ClassToWeave
       {
          [MyAspect]
-         public string Weaved
+         internal void Weaved()
          {
-            get { return "12"; }
          }
       }
 
@@ -30,7 +29,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Attributes
          public static ClassToWeave Instance;
          public bool NetAspectAttribute = true;
 
-         public void BeforePropertyGetMethod(ClassToWeave instance)
+         public void BeforeMethod(ClassToWeave instance)
          {
             Instance = instance;
          }
