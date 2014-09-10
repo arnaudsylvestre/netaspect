@@ -206,6 +206,10 @@
     <Compile Include="unit\MethodWeaving\Properties\Getter\Parameters\AfterPropertyGetMethodParametersTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Parameters\OnExceptionPropertyGetMethodParametersTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Parameters\OnFinallyPropertyGetMethodParametersTest.cs" />
+    <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\BeforePropertySetMethodParametersTest.cs" />
+    <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\AfterPropertySetMethodParametersTest.cs" />
+    <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\OnExceptionPropertySetMethodParametersTest.cs" />
+    <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\OnFinallyPropertySetMethodParametersTest.cs" />
     <Compile Include="unit\ParameterWeaving\Constructor\Parameters\BeforeMethodForParameterParametersTest.cs" />
     <Compile Include="unit\ParameterWeaving\Constructor\Parameters\AfterMethodForParameterParametersTest.cs" />
     <Compile Include="unit\ParameterWeaving\Constructor\Parameters\OnExceptionMethodForParameterParametersTest.cs" />
