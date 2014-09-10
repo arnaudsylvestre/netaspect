@@ -59,8 +59,8 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Param
             Assert.AreEqual(caller, called);
             Assert.NotNull(caller);
             Assert.AreEqual(13, columnNumber);
-            Assert.AreEqual(34, lineNumber);
-            Assert.AreEqual("Part7Sample4AfterInstructionSetPropertyPossibilityTest.cs", fileName);
+            Assert.AreEqual(33, lineNumber);
+            Assert.AreEqual("AfterUpdatePropertyParametersTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(1, callerParameters.Length);
             Assert.AreEqual("UpdateValue", callerMethod.Name);

@@ -68,8 +68,8 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
             Called = true;
             Assert.NotNull(caller);
             Assert.AreEqual(13, columnNumber);
-            Assert.AreEqual(31, lineNumber);
-            Assert.AreEqual("Part8Sample2AfterInstructionCallMethodPossibilityTest.cs", fileName);
+            Assert.AreEqual(30, lineNumber);
+            Assert.AreEqual("AfterCallConstructorParametersTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(3, callerParameters.Length);
             Assert.AreEqual(1, calledParameters.Length);

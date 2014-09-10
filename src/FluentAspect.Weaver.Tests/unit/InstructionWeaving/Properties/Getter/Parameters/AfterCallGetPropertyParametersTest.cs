@@ -59,8 +59,8 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Param
             Assert.AreEqual(caller, called);
             Assert.NotNull(caller);
             Assert.AreEqual(13, columnNumber);
-            Assert.AreEqual(39, lineNumber);
-            Assert.AreEqual("Part7Sample2AfterInstructionGetPropertyPossibilityTest.cs", fileName);
+            Assert.AreEqual(38, lineNumber);
+            Assert.AreEqual("AfterCallGetPropertyParametersTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(1, callerParameters.Length);
             Assert.AreEqual("DivideBy", callerMethod.Name);

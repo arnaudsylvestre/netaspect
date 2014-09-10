@@ -58,8 +58,8 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Update.Parameter
             Assert.AreEqual(caller, called);
             Assert.NotNull(caller);
             Assert.AreEqual(13, columnNumber);
-            Assert.AreEqual(33, lineNumber);
-            Assert.AreEqual("Part5Sample3BeforeInstructionSetFieldPossibilityTest.cs", fileName);
+            Assert.AreEqual(32, lineNumber);
+            Assert.AreEqual("BeforeUpdateFieldParametersTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(1, callerParameters.Length);
             Assert.AreEqual("UpdateValue", callerMethod.Name);

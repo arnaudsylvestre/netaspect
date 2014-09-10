@@ -69,9 +69,6 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
             OnExceptions = onExceptions,
             OnFinallys = onFinallys,
          };
-         //if (method.IsConstructor)
-         //   aroundMethodWeavingModel_L.BeforeConstructorBaseCalls = beforeConstructorBaseCalls;
-         //else
          aroundMethodWeavingModel_L.Befores = beforeConstructorBaseCalls;
          return aroundMethodWeavingModel_L;
       }

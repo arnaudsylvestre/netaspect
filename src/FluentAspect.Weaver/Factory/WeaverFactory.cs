@@ -179,8 +179,7 @@ namespace NetAspect.Weaver.Factory
             new AroundInstructionWeaverFactory(new CallGetFieldInterceptorAroundInstructionBuilder(), new NoWevingPreconditionInjector()),
             instruction => (instruction.Operand as FieldReference).Resolve(),
             aspect => aspect.BeforeGetField,
-            aspect => aspect.AfterGetField,
-            aspectBuilder);
+            aspect => aspect.AfterGetField);
       }
 
       private static InstructionWeavingDetector<FieldDefinition> BuildCallUpdateFieldDetector(AspectBuilder aspectBuilder)
@@ -191,8 +190,7 @@ namespace NetAspect.Weaver.Factory
             new AroundInstructionWeaverFactory(new CallUpdateFieldInterceptorAroundInstructionBuilder(), new NoWevingPreconditionInjector()),
             instruction => (instruction.Operand as FieldReference).Resolve(),
             aspect => aspect.BeforeUpdateField,
-            aspect => aspect.AfterUpdateField,
-            aspectBuilder);
+            aspect => aspect.AfterUpdateField);
       }
 
       private static InstructionWeavingDetector<PropertyDefinition> BuildCallUpdatePropertyDetector(AspectBuilder aspectBuilder)
@@ -203,8 +201,7 @@ namespace NetAspect.Weaver.Factory
             new AroundInstructionWeaverFactory(new CallSetPropertyInterceptorAroundInstructionBuilder(), new NoWevingPreconditionInjector()),
             instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForSetter(),
             aspect => aspect.BeforeSetProperty,
-            aspect => aspect.AfterSetProperty,
-            aspectBuilder);
+            aspect => aspect.AfterSetProperty);
       }
 
       private static InstructionWeavingDetector<PropertyDefinition> BuildCallGetPropertyDetector(AspectBuilder aspectBuilder)
@@ -215,8 +212,7 @@ namespace NetAspect.Weaver.Factory
             new AroundInstructionWeaverFactory(new CallGetPropertyInterceptorAroundInstructionBuilder(), new NoWevingPreconditionInjector()),
             instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForGetter(),
             aspect => aspect.BeforeGetProperty,
-            aspect => aspect.AfterGetProperty,
-            aspectBuilder);
+            aspect => aspect.AfterGetProperty);
       }
 
       private static InstructionWeavingDetector<MethodDefinition> BuildCallMethodDetector(AspectBuilder aspectBuilder)
@@ -224,11 +220,10 @@ namespace NetAspect.Weaver.Factory
          return new InstructionWeavingDetector<MethodDefinition>(
             InstructionCompliance.IsCallMethodInstruction,
             aspect => aspect.MethodSelector,
-            new AroundInstructionWeaverFactory(new CallMethodInterceptorAroundInstructionBuilder(), new OverrideWevingPreconditionInjector()),
+            new AroundInstructionWeaverFactory(new CallMethodInterceptorAroundInstructionBuilder(), new OverrideWeavingPreconditionInjector()),
             instruction => (instruction.Operand as MethodReference).Resolve(),
             aspect => aspect.BeforeCallMethod,
-            aspect => aspect.AfterCallMethod,
-            aspectBuilder);
+            aspect => aspect.AfterCallMethod);
       }
 
       private static InstructionWeavingDetector<MethodDefinition> BuildCallConstructorDetector(AspectBuilder aspectBuilder)
@@ -236,11 +231,10 @@ namespace NetAspect.Weaver.Factory
          return new InstructionWeavingDetector<MethodDefinition>(
             InstructionCompliance.IsCallConstructorInstruction,
             aspect => aspect.ConstructorSelector,
-            new AroundInstructionWeaverFactory(new CallConstructorInterceptorAroundInstructionBuilder(), new OverrideWevingPreconditionInjector()),
+            new AroundInstructionWeaverFactory(new CallConstructorInterceptorAroundInstructionBuilder(), new OverrideWeavingPreconditionInjector()),
             instruction => (instruction.Operand as MethodReference).Resolve(),
             aspect => aspect.BeforeCallConstructor,
-            aspect => aspect.AfterCallConstructor,
-            aspectBuilder);
+            aspect => aspect.AfterCallConstructor);
       }
    }
 }

@@ -19,21 +19,10 @@ namespace NetAspect.Weaver.Factory.Configuration
             ;
       }
 
-       public void FillBeforeSpecific(ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForMethod> interceptorParameterConfigurations_P)
-      {
-      }
-
-       public void FillAfterSpecific(ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForMethod> interceptorParameterConfigurations_P)
-      {
-      }
-
        public void FillOnExceptionSpecific(ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForMethod> interceptorParameterConfigurations_P)
       {
          weavingInfo_P.AddException(interceptorParameterConfigurations_P);
       }
 
-       public void FillOnFinallySpecific(ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForMethod> interceptorParameterConfigurations_P)
-      {
-      }
    }
 }

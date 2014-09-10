@@ -38,22 +38,22 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
 
       public IIlInjector<VariablesForMethod> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, ParameterDefinition parameter)
       {
-         return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => builder.FillBeforeSpecific(info, interceptorParameterConfigurations), parameter);
+         return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => {}, parameter);
       }
 
       public IIlInjector<VariablesForMethod> CreateForOnFinally(MethodDefinition method, MethodInfo interceptorMethod, ParameterDefinition parameter)
       {
-         return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => builder.FillOnFinallySpecific(info, interceptorParameterConfigurations), parameter);
+          return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => { }, parameter);
       }
 
       public IIlInjector<VariablesForMethod> CreateForAfter(MethodDefinition method, MethodInfo interceptorMethod, ParameterDefinition parameter)
       {
-         return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => builder.FillAfterSpecific(info, interceptorParameterConfigurations), parameter);
+          return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => { }, parameter);
       }
 
-      public IIlInjector<VariablesForMethod> CreateForExceptions(MethodDefinition method, MethodInfo interceptorMethod, ParameterDefinition TODO)
+      public IIlInjector<VariablesForMethod> CreateForExceptions(MethodDefinition method, MethodInfo interceptorMethod, ParameterDefinition parameter)
       {
-         return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => builder.FillOnExceptionSpecific(info, interceptorParameterConfigurations), TODO);
+         return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => builder.FillOnExceptionSpecific(info, interceptorParameterConfigurations), parameter);
       }
    }
 }

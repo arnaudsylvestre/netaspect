@@ -11,14 +11,14 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers.Aspects
    {
       public void Check(NetAspectDefinition aspect_P, ErrorHandler errorHandler_P)
       {
-         Ensure(aspect_P.FieldSelector, errorHandler_P, aspect_P);
-         Ensure(aspect_P.MethodSelector, errorHandler_P, aspect_P);
-         Ensure(aspect_P.ConstructorSelector, errorHandler_P, aspect_P);
-         Ensure(aspect_P.PropertySelector, errorHandler_P, aspect_P);
-         Ensure(aspect_P.ParameterSelector, errorHandler_P, aspect_P);
+         EnsureSelector(aspect_P.FieldSelector, errorHandler_P, aspect_P);
+         EnsureSelector(aspect_P.MethodSelector, errorHandler_P, aspect_P);
+         EnsureSelector(aspect_P.ConstructorSelector, errorHandler_P, aspect_P);
+         EnsureSelector(aspect_P.PropertySelector, errorHandler_P, aspect_P);
+         EnsureSelector(aspect_P.ParameterSelector, errorHandler_P, aspect_P);
       }
 
-      private void Ensure<T>(Selector<T> fieldSelector, ErrorHandler errorHandler, NetAspectDefinition aspectP)
+      private void EnsureSelector<T>(Selector<T> fieldSelector, ErrorHandler errorHandler, NetAspectDefinition aspectP)
       {
          try
          {

@@ -10,9 +10,9 @@ using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver
 {
-    public class OverrideWevingPreconditionInjector : IWevingPreconditionInjector<VariablesForInstruction>
+    public class OverrideWeavingPreconditionInjector : IWevingPreconditionInjector<VariablesForInstruction>
     {
-        public void Inject(List<Instruction> precondition, VariablesForInstruction availableInformations, MethodInfo interceptorMethod_P, MethodDefinition method_P)
+        public void Inject(List<Instruction> precondition, VariablesForInstruction availableInformations, MethodDefinition method_P)
         {
             Instruction instruction_L = availableInformations.Instruction;
             if (!instruction_L.IsACallInstruction())

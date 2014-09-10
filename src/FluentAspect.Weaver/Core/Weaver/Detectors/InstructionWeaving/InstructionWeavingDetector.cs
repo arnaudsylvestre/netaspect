@@ -6,7 +6,6 @@ using NetAspect.Weaver.Core.Weaver.Aspects;
 using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
-using NetAspect.Weaver.Core.Weaver.Engine.Lifecycle;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
 {
@@ -19,8 +18,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
 
       private readonly Func<NetAspectDefinition, Interceptor> afterInterceptorProvider;
       private readonly AroundInstructionWeaverFactory aroundInstructionWeaverFactory;
-      private readonly AspectBuilder aspectBuilder;
-      private readonly Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider;
+       private readonly Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider;
       private readonly IsInstructionCompliant isInstructionCompliant;
       private readonly Func<Instruction, TMember> memberProvider;
       private readonly SelectorProvider<TMember> selectorProvider;
@@ -30,8 +28,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
          AroundInstructionWeaverFactory aroundInstructionWeaverFactory,
          Func<Instruction, TMember> memberProvider,
          Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider,
-         Func<NetAspectDefinition, Interceptor> afterInterceptorProvider,
-         AspectBuilder aspectBuilder)
+         Func<NetAspectDefinition, Interceptor> afterInterceptorProvider)
       {
          this.isInstructionCompliant = isInstructionCompliant;
          this.selectorProvider = selectorProvider;
@@ -39,7 +36,6 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
          this.memberProvider = memberProvider;
          this.beforeInterceptorProvider = beforeInterceptorProvider;
          this.afterInterceptorProvider = afterInterceptorProvider;
-         this.aspectBuilder = aspectBuilder;
       }
 
 

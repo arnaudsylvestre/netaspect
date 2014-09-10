@@ -41,13 +41,12 @@ namespace NetAspect.Weaver.Core.Weaver
       {
          Instruction end = Instruction.Create(OpCodes.Nop);
          var precondition = new List<Instruction>();
-         weavingPreconditionInjector.Inject(precondition, availableInformations, interceptorMethod, _method);
+         weavingPreconditionInjector.Inject(precondition, availableInformations, _method);
          if (precondition.Any())
          {
             instructions.AddRange(precondition);
             instructions.Add(Instruction.Create(OpCodes.Brfalse, end));
          }
-         // TODO : InterceptorVariable doit etre multiple 
          instructions.Add(Instruction.Create(OpCodes.Ldloc, availableInformations.Aspect.GetAspect(interceptorMethod.DeclaringType)));
          ParametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations, interceptorParameterConfigurations);
          instructions.Add(Instruction.Create(OpCodes.Call, _method.Module.Import(interceptorMethod)));

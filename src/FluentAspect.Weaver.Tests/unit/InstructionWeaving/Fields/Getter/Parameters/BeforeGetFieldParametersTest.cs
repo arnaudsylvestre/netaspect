@@ -58,8 +58,8 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameter
             Assert.AreEqual(caller, called);
             Assert.NotNull(caller);
             Assert.AreEqual(13, columnNumber);
-            Assert.AreEqual(38, lineNumber);
-            Assert.AreEqual("Part5Sample1BeforeInstructionGetFieldPossibilityTest.cs", fileName);
+            Assert.AreEqual(37, lineNumber);
+            Assert.AreEqual("BeforeGetFieldParametersTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(1, callerParameters.Length);
             Assert.AreEqual("DivideBy", callerMethod.Name);

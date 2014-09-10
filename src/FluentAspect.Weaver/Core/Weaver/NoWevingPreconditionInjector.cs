@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Weaver.Data;
@@ -9,7 +8,7 @@ namespace NetAspect.Weaver.Core.Weaver
 {
     public class NoWevingPreconditionInjector : IWevingPreconditionInjector<VariablesForMethod>
     {
-        public void Inject(List<Instruction> precondition, VariablesForMethod availableInformations, MethodInfo interceptorMethod_P, MethodDefinition method_P)
+        public void Inject(List<Instruction> precondition, VariablesForMethod availableInformations, MethodDefinition method_P)
         {
         }
     }
