@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters.After.Called
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Override
 {
    public class OverrideTest :
       NetAspectTest<OverrideTest.ClassToWeave>

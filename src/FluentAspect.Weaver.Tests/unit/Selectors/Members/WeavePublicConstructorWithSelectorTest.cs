@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Constructor.Selectors
+namespace NetAspect.Weaver.Tests.unit.Selectors.Members
 {
    public class WeavePublicConstructorWithSelectorTest : NetAspectTest<WeavePublicConstructorWithSelectorTest.ClassToWeave>
    {

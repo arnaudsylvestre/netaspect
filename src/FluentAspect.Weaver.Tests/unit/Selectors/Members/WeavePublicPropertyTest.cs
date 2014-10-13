@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Attributes.Visibility
+namespace NetAspect.Weaver.Tests.unit.Selectors.Members
 {
    public class WeavePublicPropertyWithSelectorTest : NetAspectTest<WeavePublicPropertyWithSelectorTest.ClassToWeave>
    {

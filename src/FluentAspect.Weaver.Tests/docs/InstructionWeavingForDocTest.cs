@@ -1,7 +1,8 @@
 using System;
 using NUnit.Framework;
+using NetAspect.Weaver.Tests.unit;
 
-namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Visibility
+namespace NetAspect.Weaver.Tests.docs
 {
    public class InstructionWeavingForDocTest :
       NetAspectTest<InstructionWeavingForDocTest.MyInt>

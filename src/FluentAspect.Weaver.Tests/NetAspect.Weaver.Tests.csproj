@@ -214,10 +214,10 @@
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\AfterPropertySetMethodParametersTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\OnExceptionPropertySetMethodParametersTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\OnFinallyPropertySetMethodParametersTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\Parameters\BeforeMethodForParameterParametersTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\Parameters\AfterMethodForParameterParametersTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\Parameters\OnExceptionMethodForParameterParametersTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Constructor\Parameters\OnFinallyMethodForParameterParametersTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Parameters\BeforeMethodForParameterParametersTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Parameters\AfterMethodForParameterParametersTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Parameters\OnExceptionMethodForParameterParametersTest.cs" />
+    <Compile Include="unit\ParameterWeaving\Method\Parameters\OnFinallyMethodForParameterParametersTest.cs" />
     <Compile Include="unit\Selectors\Members\UpdateFieldWithSelectorFieldNameTest.cs" />
     <Compile Include="unit\Selectors\Members\WeavePublicConstructorWithSelectorTest.cs" />
     <Compile Include="unit\Interceptors\Errors\CheckInterceptorReturnTypeTest.cs" />
@@ -333,12 +333,6 @@
     <Compile Include="unit\MethodWeaving\Properties\Getter\Return\CheckWeaveWithReturnIntTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Return\CheckWeaveWithReturnVoidTest.cs" />
     <Compile Include="unit\NetAspectTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Method\After\AfterMethodParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Method\After\AfterMethodParameterNameWithRealTypeTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Method\After\AfterMethodParameterValueWithRealTypeTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Method\Before\BeforeMethodParameterNameWithRealTypeTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Method\Before\BeforeMethodParameterValueWithRealTypeTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Method\Before\BeforeMethodParameterWithRealTypeTest.cs" />
     <Compile Include="unit\Selectors\Members\WeaveParameterWithSelectorTest.cs" />
     <Compile Include="unit\ParameterWeaving\Parameters\ParameterName\AfterConstructorParameterNameWithBadTypeTest.cs" />
     <Compile Include="unit\ParameterWeaving\Parameters\ParameterName\AfterConstructorParameterNameWithObjectTypeTest.cs" />

@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Update.Selectors
+namespace NetAspect.Weaver.Tests.unit.Selectors.Members
 {
    public class UpdateFieldWithSelectorFieldNameTest :
       NetAspectTest<UpdateFieldWithSelectorFieldNameTest.ClassToWeave>

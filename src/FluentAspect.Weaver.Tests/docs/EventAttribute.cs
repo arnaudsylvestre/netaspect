@@ -1,6 +1,6 @@
 using System;
 
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.Before
+namespace NetAspect.Weaver.Tests.docs
 {
    public class EventAttribute : Attribute
    {

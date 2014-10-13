@@ -3,7 +3,7 @@ using System.IO;
 using NetAspect.Weaver.Tests.unit;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.Method
+namespace NetAspect.Weaver.Tests.docs.GettingStarted
 {
    public class GettingStartedPart2Test : NetAspectTest<GettingStartedPart2Test.Computer>
    {

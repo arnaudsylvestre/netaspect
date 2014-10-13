@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Getter.Attributes.Static
+namespace NetAspect.Weaver.Tests.unit.Atttributes.Statics
 {
    public class WeaveStaticPropertyTest : NetAspectTest<WeaveStaticPropertyTest.ClassToWeave>
    {

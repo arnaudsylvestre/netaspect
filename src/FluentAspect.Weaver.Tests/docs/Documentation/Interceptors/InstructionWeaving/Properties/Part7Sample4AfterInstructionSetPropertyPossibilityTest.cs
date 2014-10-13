@@ -4,7 +4,7 @@ using System.Reflection;
 using NetAspect.Weaver.Tests.unit;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.InstructionWeaving.Properties
+namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeaving.Properties
 {
    public class Part7Sample4AfterInstructionSetPropertyPossibilityTest :
       NetAspectTest<Part7Sample4AfterInstructionSetPropertyPossibilityTest.MyInt>

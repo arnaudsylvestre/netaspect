@@ -2,13 +2,13 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.ParameterWeaving.Constructor.Parameters
+namespace NetAspect.Weaver.Tests.unit.ParameterWeaving.Method.Parameters
 {
-   public class BeforeMethodForParameterParametersTest :
-      NetAspectTest<BeforeMethodForParameterParametersTest.MyInt>
+   public class OnFinallyMethodForParameterParametersTest :
+      NetAspectTest<OnFinallyMethodForParameterParametersTest.MyInt>
    {
-      public BeforeMethodForParameterParametersTest()
-         : base("Before parameter", "ParameterWeavingBefore", "ParameterWeaving")
+      public OnFinallyMethodForParameterParametersTest()
+         : base("On Finally parameter", "ParameterWeavingOnFinally", "ParameterWeaving")
       {
       }
 
@@ -42,7 +42,7 @@ namespace NetAspect.Weaver.Tests.unit.ParameterWeaving.Constructor.Parameters
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void BeforeMethodForParameter(int parameterValue,
+         public void OnFinallyMethodForParameter(int parameterValue,
             string parameterName,
             MyInt instance,
             int v,

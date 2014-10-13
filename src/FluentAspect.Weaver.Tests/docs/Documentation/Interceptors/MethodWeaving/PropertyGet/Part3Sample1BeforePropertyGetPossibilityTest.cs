@@ -3,7 +3,7 @@ using System.Reflection;
 using NetAspect.Weaver.Tests.unit;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.PropertyGet
+namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.PropertyGet
 {
    public class Part3Sample1BeforePropertyGetPossibilityTest : NetAspectTest<Part3Sample1BeforePropertyGetPossibilityTest.MyInt>
    {

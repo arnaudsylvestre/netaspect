@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.ParameterWeaving.Constructor.Parameters
+namespace NetAspect.Weaver.Tests.unit.ParameterWeaving.Method.Parameters
 {
    public class OnExceptionMethodForParameterParametersTest :
       NetAspectTest<OnExceptionMethodForParameterParametersTest.MyInt>

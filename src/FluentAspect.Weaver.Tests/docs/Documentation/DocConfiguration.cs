@@ -1,6 +1,4 @@
-using NetAspect.Weaver.Tests.docs.MethodPossibilities.Before;
-
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities
+namespace NetAspect.Weaver.Tests.docs.Documentation
 {
    [PossibilityDocumentation("MethodWeaving", "PossibilityDescription", "On methods", "MethodWeaving")]
    [PossibilityDocumentation("ConstructorWeaving", "PossibilityDescription", "On constructors", "MethodWeaving")]

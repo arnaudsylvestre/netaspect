@@ -3,7 +3,7 @@ using System.Reflection;
 using NetAspect.Weaver.Tests.unit;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.docs.MethodPossibilities.MethodWeaving.Constructor
+namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.Constructor
 {
    public class Part2Sample4OnFinallyConstructorPossibilityTest : NetAspectTest<Part2Sample4OnFinallyConstructorPossibilityTest.MyInt>
    {

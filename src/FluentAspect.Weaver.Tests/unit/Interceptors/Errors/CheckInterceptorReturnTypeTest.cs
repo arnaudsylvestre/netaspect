@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Interceptors
+namespace NetAspect.Weaver.Tests.unit.Interceptors.Errors
 {
    public class CheckInterceptorReturnTypeTest : NetAspectTest<CheckInterceptorReturnTypeTest.ClassToWeave>
    {
