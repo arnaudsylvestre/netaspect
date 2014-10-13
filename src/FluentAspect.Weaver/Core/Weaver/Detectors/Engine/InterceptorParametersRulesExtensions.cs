@@ -247,7 +247,13 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
             {
                FieldDefinition fieldReference = weavingInfo_P.GetOperandAsField();
                ModuleDefinition module = weavingInfo_P.Method.Module;
-               instructions.AppendCallToTargetGetType(module, info.Called.Definition);
+                var definition = info.Called.Definition;
+                if (definition != null)
+                    instructions.AppendCallToTargetGetType(module, definition);
+                else
+                {
+                    instructions.AppendCallToTypeOf(module, fieldReference.DeclaringType);
+                }
                instructions.AppendCallToGetField(fieldReference.Name, module);
             });
          return configuration;

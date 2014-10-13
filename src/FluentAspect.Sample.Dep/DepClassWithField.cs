@@ -9,6 +9,7 @@ namespace NetAspect.Sample.Dep
       public void Test()
       {
          ParameterInfo toto = MethodBase.GetCurrentMethod().GetParameters()[3];
+          var toto2 = typeof (DepClassWithProperty);
       }
    }
 

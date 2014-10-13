@@ -120,6 +120,7 @@
     <Compile Include="docs\MethodWeavingForDocWithStartDivisionTest.cs" />
     <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
+    <Compile Include="unit\Atttributes\Statics\WeaveStaticFieldTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\BeforeCallConstructorParametersTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\AfterCallConstructorParametersTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Selectors\AfterCallConstructorCalledParameterWithRealTypeAndSelectorTest.cs" />
