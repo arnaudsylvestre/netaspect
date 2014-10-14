@@ -258,19 +258,19 @@ namespace NetAspect.Weaver.Core.Model.Aspect
       private PropertyInfo GetProperty(PropertyDefinition arg)
       {
          Assembly assembly = Assembly.LoadFrom(arg.Module.FullyQualifiedName);
-         return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetProperty(arg.Name);
+         return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetProperty(arg.Name, ObjectExtensions.BINDING_FLAGS);
       }
 
       private MethodInfo GetMethod(MethodReference arg)
       {
          Assembly assembly = Assembly.LoadFrom(arg.Module.FullyQualifiedName);
-         return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetMethod(arg.Name, ConvertParameters(arg.Parameters));
+         return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetMethod(arg.Name, ObjectExtensions.BINDING_FLAGS, null, ConvertParameters(arg.Parameters), new ParameterModifier[0]);
       }
 
       private ConstructorInfo GetConstructor(MethodDefinition arg)
       {
          Assembly assembly = Assembly.LoadFrom(arg.Module.FullyQualifiedName);
-         return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetConstructor(ConvertParameters(arg.Parameters));
+         return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetConstructor(ObjectExtensions.BINDING_FLAGS, null, ConvertParameters(arg.Parameters), new ParameterModifier[0]);
       }
 
       private ParameterInfo GetParameter(ParameterDefinition arg)
@@ -292,7 +292,7 @@ namespace NetAspect.Weaver.Core.Model.Aspect
       private FieldInfo GetField(FieldDefinition arg)
       {
          Assembly assembly = Assembly.LoadFrom(arg.Module.FullyQualifiedName);
-         return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetField(arg.Name);
+         return assembly.GetType(arg.DeclaringType.FullName.Replace("/", "+")).GetField(arg.Name, ObjectExtensions.BINDING_FLAGS);
       }
    }
 }

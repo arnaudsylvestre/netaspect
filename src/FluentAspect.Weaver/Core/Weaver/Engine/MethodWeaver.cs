@@ -35,7 +35,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            List<VariableDefinition> allVariables = new List<VariableDefinition>(); ;
           if (BuildNetAspectWeavingModel(method, methodWeavingModel, errorHandler, out w, result, allVariables)) return;
 
-          method.Body.Variables.AddRange(allVariables);
+          method.Body.Variables.AddRange(allVariables.Where(v => v != null));
 
 
          method.Weave(w, result);

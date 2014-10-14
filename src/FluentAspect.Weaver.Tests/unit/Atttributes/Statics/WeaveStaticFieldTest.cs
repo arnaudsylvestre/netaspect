@@ -57,7 +57,7 @@ namespace NetAspect.Weaver.Tests.unit.Atttributes.Statics
             Assert.NotNull(caller);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(37, lineNumber);
-            Assert.AreEqual("AfterGetFieldParametersTest.cs", fileName);
+            Assert.AreEqual("WeaveStaticFieldTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(1, callerParameters.Length);
             Assert.AreEqual("DivideBy", callerMethod.Name);

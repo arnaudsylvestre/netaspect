@@ -5,7 +5,7 @@ namespace NetAspect.Weaver.Helpers
 {
    public static class ObjectExtensions
    {
-      private const BindingFlags BINDING_FLAGS =
+      public const BindingFlags BINDING_FLAGS =
          BindingFlags.NonPublic | BindingFlags.Public |
          BindingFlags.Instance | BindingFlags.Static;
 

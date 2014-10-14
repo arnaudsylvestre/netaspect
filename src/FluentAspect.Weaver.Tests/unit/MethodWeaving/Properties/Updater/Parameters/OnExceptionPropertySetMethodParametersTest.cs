@@ -60,7 +60,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void OnExceptionPropertySetMethod(object instance, PropertyInfo property, Exception exception)
+         public void OnExceptionPropertySetMethod(object instance, PropertyInfo property, Exception exception, string fileName, string filePath, int lineNumber, int columnNumber)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());

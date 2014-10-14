@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.PropertyValue
 {
-   public class AfterCallUpdateFieldValueParameterWithBadTypeTest :
-      NetAspectTest<AfterCallUpdateFieldValueParameterWithBadTypeTest.ClassToWeave>
+   public class AfterCallUpdatePropertyValueParameterWithRealTypeReferencedTest :
+      NetAspectTest<AfterCallUpdatePropertyValueParameterWithRealTypeReferencedTest.ClassToWeave>
    {
       protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
       {
@@ -18,21 +17,20 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "the value parameter in the method AfterUpdateField of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.String",
-                           typeof (MyAspect).FullName,
-                           typeof (ClassToWeave).FullName)
+                           "impossible to ref/out the parameter 'propertyValue' in the method AfterUpdateProperty of the type '{0}'",
+                           typeof (MyAspect).FullName)
                   });
       }
 
-
       public class ClassToWeave
       {
-         [MyAspect] public string field;
+          [MyAspect]
+          public string Property { get; set; }
 
          public string Weaved()
          {
-            field = "Hello";
-            return field;
+            Property = "Hello";
+            return Property;
          }
       }
 
@@ -41,9 +39,10 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
          public static string Value;
          public bool NetAspectAttribute = true;
 
-         public void AfterUpdateField(int value)
+         public void AfterUpdateProperty(ref string propertyValue)
          {
-            Value = value.ToString();
+             Value = propertyValue;
+             propertyValue = "New Hello";
          }
       }
    }

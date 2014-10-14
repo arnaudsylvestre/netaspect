@@ -183,8 +183,13 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
             (parameter, instructions, info) =>
             {
                InstructionWeavingInfo interceptor = weavingInfo;
-               instructions.AppendCallToTargetGetType(interceptor.Method.Module, info.Called.Definition);
-               instructions.AppendCallToGetProperty(interceptor.GetOperandAsMethod().GetProperty().Name, interceptor.Method.Module);
+               var propertyDefinition = interceptor.GetOperandAsMethod().GetProperty();
+                var definition = info.Called.Definition;
+                if (definition != null)
+                    instructions.AppendCallToTargetGetType(interceptor.Method.Module, definition);
+                else
+                    instructions.AppendCallToTypeOf(interceptor.Method.Module, propertyDefinition.DeclaringType);
+                instructions.AppendCallToGetProperty(propertyDefinition.Name, interceptor.Method.Module);
             });
          return configuration;
       }

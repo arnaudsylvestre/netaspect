@@ -48,7 +48,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Parameters
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void OnFinallyMethod(object instance, MethodBase method, object[] parameters, int v)
+         public void OnFinallyMethod(object instance, MethodBase method, object[] parameters, int v, string fileName, string filePath, int lineNumber, int columnNumber)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());

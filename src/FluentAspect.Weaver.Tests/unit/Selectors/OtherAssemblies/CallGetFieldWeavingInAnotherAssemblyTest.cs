@@ -4,7 +4,7 @@ using System.Reflection;
 using NetAspect.Sample.Dep;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Selectors
+namespace NetAspect.Weaver.Tests.unit.Selectors.OtherAssemblies
 {
    public class CallGetFieldWeavingInAnotherAssemblyTest :
       NetAspectTest<CallGetFieldWeavingInAnotherAssemblyTest.MyAspect, DepClassWhichCallField>

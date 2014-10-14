@@ -49,7 +49,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void BeforePropertySetMethod(object instance, PropertyInfo property, int value)
+         public void BeforePropertySetMethod(object instance, PropertyInfo property, int value, string fileName, string filePath, int lineNumber, int columnNumber)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());

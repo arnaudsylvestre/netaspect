@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 
-namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
+namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.FilePath
 {
-   public class AfterCallUpdateFieldValueParameterWithRealTypeReferencedTest :
-      NetAspectTest<AfterCallUpdateFieldValueParameterWithRealTypeReferencedTest.ClassToWeave>
+   public class AfterMethodFilePathParameterWithRealTypeReferencedTypeTest :
+      NetAspectTest<AfterMethodFilePathParameterWithRealTypeReferencedTypeTest.ClassToWeave>
    {
       protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
       {
@@ -18,31 +17,31 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "impossible to ref/out the parameter 'value' in the method AfterUpdateField of the type '{0}'",
+                           "impossible to ref/out the parameter 'filePath' in the method AfterMethod of the type '{0}'",
                            typeof (MyAspect).FullName)
                   });
       }
 
       public class ClassToWeave
       {
-         [MyAspect] public string field;
+         [MyAspect]
+         public string Method()
+         {
+            return "Hello";
+         }
 
          public string Weaved()
          {
-            field = "Hello";
-            return field;
+            return Method();
          }
       }
 
       public class MyAspect : Attribute
       {
-         public static string Value;
          public bool NetAspectAttribute = true;
 
-         public void AfterUpdateField(ref string value)
+         public void AfterMethod(ref string filePath)
          {
-            Value = value;
-            value = "New Hello";
          }
       }
    }

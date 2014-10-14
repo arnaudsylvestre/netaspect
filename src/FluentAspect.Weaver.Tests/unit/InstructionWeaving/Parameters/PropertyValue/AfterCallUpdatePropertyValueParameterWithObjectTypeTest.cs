@@ -1,10 +1,10 @@
 using System;
 using NUnit.Framework;
 
-namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
+namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.PropertyValue
 {
-   public class AfterCallUpdateFieldValueParameterWithObjectTypeTest :
-      NetAspectTest<AfterCallUpdateFieldValueParameterWithObjectTypeTest.ClassToWeave>
+   public class AfterCallUpdatePropertyValueParameterWithObjectTypeTest :
+      NetAspectTest<AfterCallUpdatePropertyValueParameterWithObjectTypeTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
       {
@@ -20,12 +20,13 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
 
       public class ClassToWeave
       {
-         [MyAspect] public string field;
+          [MyAspect]
+          public string Property { get; set; }
 
          public string Weaved()
          {
-            field = "Hello";
-            return field;
+            Property = "Hello";
+            return Property;
          }
       }
 
@@ -34,9 +35,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
          public static string Value;
          public bool NetAspectAttribute = true;
 
-         public void AfterUpdateField(object value)
+         public void AfterUpdateProperty(object propertyValue)
          {
-            Value = value.ToString();
+             Value = propertyValue.ToString();
          }
       }
    }

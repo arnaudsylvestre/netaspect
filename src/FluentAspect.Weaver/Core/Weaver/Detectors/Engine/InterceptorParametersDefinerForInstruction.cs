@@ -194,12 +194,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
          return weavingInfo_P;
       }
 
-      public static MethodWeavingInfo AddValueForInstruction(this InstructionWeavingInfo weavingInfo_P,
+      public static MethodWeavingInfo AddPropertyValueForInstruction(this InstructionWeavingInfo weavingInfo_P,
          InterceptorParameterConfigurations<VariablesForInstruction>
             interceptorParameterConfigurations_P)
       {
          ParameterDefinition parameter = weavingInfo_P.GetOperandAsMethod().Parameters.Last();
-         interceptorParameterConfigurations_P.AddPossibleParameter("value")
+         interceptorParameterConfigurations_P.AddPossibleParameter("propertyvalue")
             .WhichCanNotBeReferenced()
             .WhichMustBeOfTypeOfParameter(parameter)
             .AndInjectTheCalledValue(parameter);
@@ -212,7 +212,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
       {
          FieldDefinition field = weavingInfo_P.GetOperandAsField();
          TypeReference parameter = field.FieldType;
-         interceptorParameterConfigurations_P.AddPossibleParameter("value")
+         interceptorParameterConfigurations_P.AddPossibleParameter("fieldvalue")
             .WhichCanNotBeReferenced()
             .WhichMustBeOfTypeOf(parameter)
             .AndInjectTheFieldValue(field);
@@ -241,12 +241,21 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
 
       public static MethodWeavingInfo AddLineNumberForMethod(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForMethod> interceptorParameterConfigurations_P)
       {
-         interceptorParameterConfigurations_P.AddPossibleParameter("linenumber")
-            .WhichCanNotBeReferenced()
-            .WhichPdbPresentForMethod(weavingInfo_P)
-            .WhichMustBeOfType<VariablesForMethod, int>()
-            .AndInjectThePdbInfoForMethod(s => s.StartLine, weavingInfo_P);
-         return weavingInfo_P;
+          interceptorParameterConfigurations_P.AddPossibleParameter("linenumber")
+             .WhichCanNotBeReferenced()
+             .WhichPdbPresentForMethod(weavingInfo_P)
+             .WhichMustBeOfType<VariablesForMethod, int>()
+             .AndInjectThePdbInfoForMethod(s => s.StartLine, weavingInfo_P);
+          return weavingInfo_P;
+      }
+      public static MethodWeavingInfo AddColumnNumberForMethod(this MethodWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForMethod> interceptorParameterConfigurations_P)
+      {
+          interceptorParameterConfigurations_P.AddPossibleParameter("columnnumber")
+             .WhichCanNotBeReferenced()
+             .WhichPdbPresentForMethod(weavingInfo_P)
+             .WhichMustBeOfType<VariablesForMethod, int>()
+             .AndInjectThePdbInfoForMethod(s => s.StartColumn, weavingInfo_P);
+          return weavingInfo_P;
       }
 
       public static InstructionWeavingInfo AddFilePath(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForInstruction> interceptorParameterConfigurations_P)

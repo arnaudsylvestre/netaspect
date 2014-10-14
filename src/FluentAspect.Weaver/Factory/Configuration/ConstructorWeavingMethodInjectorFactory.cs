@@ -14,6 +14,7 @@ namespace NetAspect.Weaver.Factory.Configuration
             .AddParameters(interceptorParameterConfigurations_P)
             .AddParameterNames(interceptorParameterConfigurations_P)
             .AddLineNumberForMethod(interceptorParameterConfigurations_P)
+            .AddColumnNumberForMethod(interceptorParameterConfigurations_P)
             .AddFileNameForMethod(interceptorParameterConfigurations_P)
             .AddFilePathForMethod(interceptorParameterConfigurations_P)
             ;

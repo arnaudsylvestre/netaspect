@@ -23,7 +23,7 @@ namespace NetAspect.Weaver.Factory.Configuration
          weavingInfo_P.AddFileName(parametersIlGenerator_P);
 
 
-         weavingInfo_P.AddValueForInstruction(parametersIlGenerator_P);
+         weavingInfo_P.AddPropertyValueForInstruction(parametersIlGenerator_P);
       }
 
       public void FillBeforeSpecific()

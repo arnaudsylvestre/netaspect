@@ -3,8 +3,8 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
 {
-   public class AfterCallUpdateFieldValueParameterWithRealTypeTest :
-      NetAspectTest<AfterCallUpdateFieldValueParameterWithRealTypeTest.ClassToWeave>
+   public class AfterCallUpdateFieldValueParameterWithObjectTypeTest :
+      NetAspectTest<AfterCallUpdateFieldValueParameterWithObjectTypeTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
       {
@@ -12,11 +12,11 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
          {
             Assert.AreEqual(null, MyAspect.Value);
             var classToWeave_L = new ClassToWeave();
-            classToWeave_L.field = "Hello";
             classToWeave_L.Weaved();
             Assert.AreEqual("Hello", MyAspect.Value);
          };
       }
+
 
       public class ClassToWeave
       {
@@ -34,9 +34,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
          public static string Value;
          public bool NetAspectAttribute = true;
 
-         public void AfterUpdateField(string value)
+         public void AfterUpdateField(object fieldValue)
          {
-            Value = value;
+             Value = fieldValue.ToString();
          }
       }
    }
