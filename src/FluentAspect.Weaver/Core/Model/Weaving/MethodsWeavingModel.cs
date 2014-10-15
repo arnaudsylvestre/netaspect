@@ -12,18 +12,17 @@ namespace NetAspect.Weaver.Core.Model.Weaving
       public readonly Dictionary<MethodDefinition, MethodWeavingModel> weavingModels = new Dictionary<MethodDefinition, MethodWeavingModel>();
 
 
-      public void Add(MethodDefinition method, IEnumerable<AroundMethodWeavingModel> detectWeavingModels, NetAspectDefinition aspect, AspectBuilder aspectBuilder)
+      public void Add(MethodDefinition method, MethodWeavingAspectInstance detectWeavingAspectInstance, NetAspectDefinition aspect, AspectBuilder aspectBuilder)
       {
-          if (detectWeavingModels == null)
+          if (detectWeavingAspectInstance == null)
             return;
-          foreach (var detectWeavingModel in detectWeavingModels)
           {
               MethodWeavingModel methodWeavingModel = GetMethodWeavingModel(method, aspect, aspectBuilder);
-              methodWeavingModel.Method.Model.BeforeConstructorBaseCalls.AddRange(detectWeavingModel.BeforeConstructorBaseCalls);
-              methodWeavingModel.Method.Model.Befores.AddRange(detectWeavingModel.Befores);
-              methodWeavingModel.Method.Model.Afters.AddRange(detectWeavingModel.Afters);
-              methodWeavingModel.Method.Model.OnExceptions.AddRange(detectWeavingModel.OnExceptions);
-              methodWeavingModel.Method.Model.OnFinallys.AddRange(detectWeavingModel.OnFinallys);
+              methodWeavingModel.Method.AspectInstance.BeforeConstructorBaseCalls.AddRange(detectWeavingAspectInstance.BeforeConstructorBaseCalls);
+              methodWeavingModel.Method.AspectInstance.Befores.AddRange(detectWeavingAspectInstance.Befores);
+              methodWeavingModel.Method.AspectInstance.Afters.AddRange(detectWeavingAspectInstance.Afters);
+              methodWeavingModel.Method.AspectInstance.OnExceptions.AddRange(detectWeavingAspectInstance.OnExceptions);
+              methodWeavingModel.Method.AspectInstance.OnFinallys.AddRange(detectWeavingAspectInstance.OnFinallys);
           }
       }
 

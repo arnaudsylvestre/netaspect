@@ -7,6 +7,6 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
 {
    public interface IMethodWeavingDetector
    {
-      List<AroundMethodWeavingModel> DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect);
+      MethodWeavingAspectInstance DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect);
    }
 }

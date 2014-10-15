@@ -12,14 +12,11 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
       private readonly IIlInjector<VariablesForInstruction> after;
        private readonly IIlInjector<VariablesForInstruction> before;
 
-       public AroundInstructionWeaver(IIlInjector<VariablesForInstruction> before, IIlInjector<VariablesForInstruction> after, Type aspectType)
+       public AroundInstructionWeaver(IIlInjector<VariablesForInstruction> before, IIlInjector<VariablesForInstruction> after)
       {
-           AspectType = aspectType;
            this.before = before;
          this.after = after;
       }
-
-       public Type AspectType { get; private set; }
 
        public void Check(ErrorHandler errorHandler, VariablesForInstruction variables)
       {

@@ -48,7 +48,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
          this.selectorProvider = selectorProvider;
       }
 
-      public List<AroundMethodWeavingModel> DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect)
+      public MethodWeavingAspectInstance DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect)
       {
          if (!isMethodCompliant(aspect, method))
             return null;
@@ -58,9 +58,9 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
             return null;
 
           var customAttributes = memberReference.GetAspectAttributes(aspect);
-          return customAttributes.Select(customAttribute => new AroundMethodWeavingModel
+          return customAttributes.Select(customAttribute => new MethodWeavingAspectInstance
               {
-                  Parameters = Compute(customAttribute.ConstructorArguments),
+                  Instances = customAttributes,
                   Befores = new List<IIlInjector<VariablesForMethod>> {aroundMethodWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method)},
                   Afters = new List<IIlInjector<VariablesForMethod>> {aroundMethodWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method)}, 
                   OnExceptions = new List<IIlInjector<VariablesForMethod>> {aroundMethodWeaverFactory.CreateForExceptions(method, onExceptionInterceptorProvider(aspect).Method)},

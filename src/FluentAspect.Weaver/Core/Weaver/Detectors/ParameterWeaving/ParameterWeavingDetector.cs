@@ -42,7 +42,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
          this.selectorProvider = selectorProvider;
       }
 
-      public List<AroundMethodWeavingModel> DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect)
+      public MethodWeavingAspectInstance DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect)
       {
           var beforeConstructorBaseCalls = new List<IIlInjector<VariablesForMethod>>();
           var afters = new List<IIlInjector<VariablesForMethod>>();
@@ -63,17 +63,14 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
          }
 
 
-         var aroundMethodWeavingModel_L = new AroundMethodWeavingModel
+         var aroundMethodWeavingModel_L = new MethodWeavingAspectInstance
              {
                  Afters = afters,
                  OnExceptions = onExceptions,
                  OnFinallys = onFinallys,
                  Befores = beforeConstructorBaseCalls,
              };
-          return new List<AroundMethodWeavingModel>()
-              {
-                  aroundMethodWeavingModel_L
-              };
+          return aroundMethodWeavingModel_L;
       }
    }
 }
