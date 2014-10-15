@@ -14,7 +14,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Lifecycle
          VariableDefinition interceptorVariable,
          List<Instruction> instructions)
       {
-          instructions.AppendCreateNewObject(interceptorVariable, aspectType, method_P.Module);
+          instructions.AppendCreateNewObject(interceptorVariable, aspectType, method_P.Module, TODO);
       }
    }
 }

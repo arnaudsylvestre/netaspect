@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Errors;
 
 namespace NetAspect.Weaver.Core.Weaver.Data.Variables
 {
@@ -33,6 +34,11 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
                 _variables.Add(variableDefinition);
             }
             return variables[type];
+        }
+
+        public void Check(ErrorHandler errorHandler, Type type)
+        {
+            variableAspect.Check(_methodP, errorHandler, type);
         }
     }
 

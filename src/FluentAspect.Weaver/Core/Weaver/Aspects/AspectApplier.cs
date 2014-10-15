@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
@@ -38,5 +39,13 @@ namespace NetAspect.Weaver.Core.Weaver.Aspects
       {
          return CanApply(member, netAspect, selectorProvider, module, null);
       }
+
+       public static IEnumerable<CustomAttribute> GetAspectAttributes(this ICustomAttributeProvider member, NetAspectDefinition aspect)
+      {
+          return member.CustomAttributes.Where(
+             customAttribute_L =>
+                customAttribute_L.AttributeType.FullName == aspect.Type.FullName).Select(c => c);
+      }
+
    }
 }

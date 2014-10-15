@@ -30,11 +30,12 @@ namespace NetAspect.Weaver.Core.Weaver
          this.weavingPreconditionInjector = weavingPreconditionInjector;
       }
 
-      public void Check(ErrorHandler errorHandler)
+      public void Check(ErrorHandler errorHandler, T availableInformations)
       {
          if (interceptorMethod.ReturnType != typeof (void))
             errorHandler.OnError(ErrorCode.InterceptorMustBeVoid, FileLocation.None, interceptorMethod.Name, interceptorMethod.DeclaringType.FullName);
          interceptorParameterConfigurations.Check(interceptorMethod.GetParameters(), errorHandler);
+         availableInformations.Aspect.Check(errorHandler, interceptorMethod.DeclaringType);
       }
 
       public void Inject(List<Instruction> instructions, T availableInformations)

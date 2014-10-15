@@ -120,6 +120,7 @@
     <Compile Include="docs\MethodWeavingForDocWithStartDivisionTest.cs" />
     <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
+    <Compile Include="unit\Aspects\Parameters\AfterMethodParameterNameParameterWithRealTypeTest.cs" />
     <Compile Include="unit\Atttributes\Statics\WeaveCallStaticPropertyTest.cs" />
     <Compile Include="unit\Atttributes\Statics\WeaveStaticFieldTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\BeforeCallConstructorParametersTest.cs" />
@@ -239,6 +240,12 @@
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\CheckAvailableParametersForOnExceptionConstructorParametersTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnExceptionConstructorParametersTest.cs" />
     <Compile Include="unit\MethodWeaving\Constructor\Parameters\OnFinallyConstructorParametersTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\PerInstance\MethodWeavingWithPerInstanceLifeCycleInStaticTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\PerInstance\MethodWeavingWithPerInstanceLifeCycleWithExceptionTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\PerInstance\MethodWeavingWithPerInstanceWith2InstancesLifeCycleTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\PerType\MethodWeavingWithPerTypeLifeCycleInStaticTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\PerType\MethodWeavingWithPerTypeLifeCycleIn2MethodsTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\Transient\MethodWeavingWithTransientLifeCycleInStaticTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\BeforeMethodParametersTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\AfterMethodParametersTest.cs" />
     <Compile Include="unit\MethodWeaving\Method\Parameters\CheckAvailableParametersForAfterMethodParametersTest.cs" />
@@ -393,11 +400,10 @@
     <Compile Include="unit\MultiWeaving\CheckCallWeavingAndMethodWeavingOnsameMethodTest.cs" />
     <Compile Include="unit\MultiWeaving\CheckCallFrom2DifferentInterceptors.cs" />
     <Compile Include="unit\Atttributes\Statics\WeaveStaticMethodTest.cs" />
-    <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingChekSameInstanceTest.cs" />
     <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingWithNoLifeCycleTest.cs" />
-    <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingWithPerInstanceLifeCycleTest.cs" />
-    <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingWithPerTypeLifeCycleTest.cs" />
-    <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingWithTransientLifeCycleTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\PerInstance\MethodWeavingWithPerInstanceLifeCycleTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\PerType\MethodWeavingWithPerTypeLifeCycleTest.cs" />
+    <Compile Include="unit\MethodWeaving\LifeCycle\Transient\MethodWeavingWithTransientLifeCycleTest.cs" />
     <Compile Include="unit\Atttributes\Statics\WeaveStaticPropertyTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Return\CheckWeaveWithReturnClassTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Getter\Return\CheckWeaveWithReturnIntTest.cs" />

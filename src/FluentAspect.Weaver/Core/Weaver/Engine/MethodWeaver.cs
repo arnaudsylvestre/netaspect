@@ -59,7 +59,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            if (FillForInstructions(method, methodWeavingModel, errorHandler, w, result, instructionsToInsertP_L, allVariables, aspectInit))
                return true;
 
-           methodWeavingModel.Method.Check(errorHandler);
+           methodWeavingModel.Method.Check(errorHandler, variablesForMethod);
            if (errorHandler.Errors.Any())
                return true;
 
@@ -140,13 +140,11 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                {
                    var aroundInstructionIl = new AroundInstructionIl();
 
-                   v.Check(errorHandler);
+                   v.Check(errorHandler, variablesForInstruction);
                    if (errorHandler.Errors.Any())
                        return true;
                    v.Weave(aroundInstructionIl, variablesForInstruction);
                    ils.Add(aroundInstructionIl);
-                   //if (aroundInstructionIl.BeforeInstruction.Count > 0 || aroundInstructionIl.AfterInstruction.Count > 0)
-                   //     variablesForInstruction.Aspect.GetAspect(v.AspectType);
                }
                instructionIl.Before.AddRange(instructions.calledParametersInstructions);
                instructionIl.Before.AddRange(instructions.calledInstructions);

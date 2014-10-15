@@ -8,11 +8,11 @@ namespace NetAspect.Weaver.Core.Model.Weaving
 {
    public static class IIlInjectorsExtensions
    {
-      public static void Check<T>(this IEnumerable<IIlInjector<T>> injectors, ErrorHandler errorHandler)
+       public static void Check<T>(this IEnumerable<IIlInjector<T>> injectors, ErrorHandler errorHandler, T info)
       {
          foreach (var ilInjector in injectors)
          {
-            ilInjector.Check(errorHandler);
+            ilInjector.Check(errorHandler, info);
          }
       }
 

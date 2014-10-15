@@ -14,7 +14,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Lifecycle
       public void CreateInterceptor(Type aspectType,
          MethodDefinition method_P,
          VariableDefinition interceptorVariable,
-         List<Instruction> instructions)
+         List<Instruction> instructions, CustomAttribute attribute)
       {
           TypeReference fieldType = method_P.Module.Import(aspectType);
          var fieldDefinition = new FieldDefinition(Guid.NewGuid().ToString(), FieldAttributes.Private, fieldType)
@@ -28,7 +28,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Lifecycle
          if (!Static) instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
          instructions.Add(Instruction.Create(Static ? OpCodes.Ldsfld : OpCodes.Ldfld, fieldDefinition));
          instructions.Add(Instruction.Create(OpCodes.Brtrue, end));
-         instructions.AppendCreateNewObject(interceptorVariable, aspectType, method_P.Module);
+         instructions.AppendCreateNewObject(interceptorVariable, aspectType, method_P.Module, attribute);
          if (!Static) instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
          instructions.Add(Instruction.Create(OpCodes.Ldloc, interceptorVariable));
          instructions.Add(Instruction.Create(Static ? OpCodes.Stsfld : OpCodes.Stfld, fieldDefinition));

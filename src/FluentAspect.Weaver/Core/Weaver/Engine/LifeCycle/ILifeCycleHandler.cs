@@ -11,6 +11,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Lifecycle
       void CreateInterceptor(Type aspectType,
          MethodDefinition method_P,
          VariableDefinition interceptorVariable,
-         List<Instruction> instructions);
+         List<Instruction> instructions,
+          CustomAttribute attribute);
    }
 }

@@ -70,12 +70,20 @@ namespace NetAspect.Weaver.Helpers.IL
                      new[] {typeof (string), typeof (BindingFlags)}))));
       }
 
-      public static void AppendCreateNewObject(this List<Instruction> instructions,
-         VariableDefinition interceptor,
-         Type interceptorType,
-         ModuleDefinition module)
+      public static void AppendCreateNewObject(this List<Instruction> instructions, VariableDefinition interceptor, Type interceptorType, ModuleDefinition module, CustomAttribute attribute)
       {
-         instructions.Add(Instruction.Create(OpCodes.Newobj, module.Import(interceptorType.GetConstructors()[0])));
+          for (int i = 0; i < attribute.Constructor.Parameters.Count; i++)
+          {
+              var parameter = attribute.Constructor.Parameters[i];
+
+              instructions.Add(Instruction.Create(OpCodes.Ldobj, argument.Value));
+          }
+
+          foreach (var argument in attribute.ConstructorArguments)
+          {
+              
+          }
+          instructions.Add(Instruction.Create(OpCodes.Newobj, attribute.Constructor));
          instructions.Add(Instruction.Create(OpCodes.Stloc, interceptor));
       }
 

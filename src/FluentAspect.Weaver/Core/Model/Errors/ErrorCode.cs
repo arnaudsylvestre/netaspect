@@ -21,6 +21,7 @@
       InterceptorMustBeVoid,
       SelectorBadParameterName,
       TooManySelectorsWithSameName,
-      SelectorMustHaveParameters
+      SelectorMustHaveParameters,
+       ImpossibleToHavePerInstanceLifeCycleInStaticMethod
    }
 }

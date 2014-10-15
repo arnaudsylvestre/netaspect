@@ -8,7 +8,7 @@ namespace NetAspect.Weaver.Core.Model.Weaving
 {
    public interface IIlInjector<T>
    {
-      void Check(ErrorHandler errorHandler);
+       void Check(ErrorHandler errorHandler, T availableInformations);
       void Inject(List<Instruction> instructions, T availableInformations);
    }
 }

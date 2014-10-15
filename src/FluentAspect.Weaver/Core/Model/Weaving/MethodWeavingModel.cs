@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Weaver.Engine;
 using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
-using NetAspect.Weaver.Core.Weaver.Engine.Lifecycle;
 
 namespace NetAspect.Weaver.Core.Model.Weaving
 {
@@ -15,10 +13,10 @@ namespace NetAspect.Weaver.Core.Model.Weaving
       public AroundMethodWeaver Method;
        public NetAspectDefinition Aspect { get; private set; }
 
-      public MethodWeavingModel(MethodDefinition method, NetAspectDefinition aspect, AspectBuilder aspectBuilder)
+      public MethodWeavingModel(NetAspectDefinition aspect)
       {
           Aspect = aspect;
-          Method = new AroundMethodWeaver(method, aspect, aspectBuilder);
+          Method = new AroundMethodWeaver();
       }
 
        public void AddAroundInstructionWeaver(Instruction instruction, AroundInstructionWeaver weaver)

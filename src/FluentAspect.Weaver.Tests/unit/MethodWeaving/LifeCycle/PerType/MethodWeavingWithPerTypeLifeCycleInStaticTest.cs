@@ -4,19 +4,19 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.MethodWeaving.LifeCycle
 {
-   public class MethodWeavingWithPerTypeLifeCycleTest :
-      NetAspectTest<MethodWeavingWithPerTypeLifeCycleTest.ClassToWeave>
+   public class MethodWeavingWithPerTypeLifeCycleInStaticTest :
+      NetAspectTest<MethodWeavingWithPerTypeLifeCycleInStaticTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
       {
          return () =>
          {
             MyAspect.aspects = new List<MyAspect>();
-            var classToWeave = new ClassToWeave();
-            classToWeave.Weaved();
-            classToWeave = new ClassToWeave();
-            classToWeave.Weaved();
+            ClassToWeave.Weaved();
+            ClassToWeave.Weaved();
             Assert.AreEqual(1, MyAspect.aspects.Count);
+            Assert.AreEqual(2, MyAspect.aspects[0].nbAfter);
+            Assert.AreEqual(2, MyAspect.aspects[0].nbBefore);
          };
       }
 
@@ -24,7 +24,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.LifeCycle
       public class ClassToWeave
       {
          [MyAspect]
-         public void Weaved()
+         public static void Weaved()
          {
          }
       }

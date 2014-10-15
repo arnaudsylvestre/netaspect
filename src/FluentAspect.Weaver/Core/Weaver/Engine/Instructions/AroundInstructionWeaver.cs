@@ -21,10 +21,10 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
 
        public Type AspectType { get; private set; }
 
-      public void Check(ErrorHandler errorHandler)
+       public void Check(ErrorHandler errorHandler, VariablesForInstruction variables)
       {
-         before.Check(errorHandler);
-         after.Check(errorHandler);
+          before.Check(errorHandler, variables);
+          after.Check(errorHandler, variables);
       }
 
       public void Weave(AroundInstructionIl il, VariablesForInstruction variables)
