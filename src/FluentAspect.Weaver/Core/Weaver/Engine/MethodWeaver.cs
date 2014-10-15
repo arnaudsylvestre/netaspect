@@ -96,14 +96,14 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            return false;
        }
 
-       private VariablesForMethod CreateVariablesForMethod(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables, VariableDefinition result, MethodWeavingModel model)
+       private VariablesForMethod CreateVariablesForMethod(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables, VariableDefinition result, MethodWeavingModel model, List<CustomAttribute> customAttributes)
        {
            return new VariablesForMethod(
                new Variable(instructionsToInsert, new VariableCurrentMethodBuilder(), method, null, variables),
                new Variable(instructionsToInsert, new VariableCurrentProperty(), method, null, variables),
                new Variable(instructionsToInsert, new VariableParameters(), method, null, variables),
                new Variable(instructionsToInsert, new VariableException(), method, null, variables),
-               new VariableByAspectType(instructionsToInsert, new VariableAspect(aspectBuilder, model.Aspect.LifeCycle), method, null, variables), 
+               new VariableByAspectType(instructionsToInsert, new VariableAspect(aspectBuilder, model.Aspect.LifeCycle), method, null, variables, customAttributes), 
                new Variable(instructionsToInsert, new ExistingVariable(result), method, null, variables));
        }
 
@@ -164,7 +164,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
 
        private VariablesForInstruction CreateVariablesForInstruction(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables, Instruction instruction, VariableDefinition result, MethodWeavingModel model)
        {
-           VariablesForMethod variablesForMethod = CreateVariablesForMethod(instructionsToInsert, method, variables, result, model);
+           VariablesForMethod variablesForMethod = CreateVariablesForMethod(instructionsToInsert, method, variables, result, model, );
            var calledParameters = new MultipleVariable(instructionsToInsert, new VariablesCalledParameters(), method, instruction, variables);
            return new VariablesForInstruction(instruction,
                variablesForMethod.CallerMethod,

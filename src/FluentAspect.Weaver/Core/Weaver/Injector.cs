@@ -48,7 +48,8 @@ namespace NetAspect.Weaver.Core.Weaver
             instructions.AddRange(precondition);
             instructions.Add(Instruction.Create(OpCodes.Brfalse, end));
          }
-         instructions.Add(Instruction.Create(OpCodes.Ldloc, availableInformations.Aspect.GetAspect(interceptorMethod.DeclaringType)));
+          var aspect = availableInformations.Aspect.GetAspect(interceptorMethod.DeclaringType);
+          instructions.Add(Instruction.Create(OpCodes.Ldloc, aspect));
          ParametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations, interceptorParameterConfigurations);
          instructions.Add(Instruction.Create(OpCodes.Call, _method.Module.Import(interceptorMethod)));
          instructions.Add(end);

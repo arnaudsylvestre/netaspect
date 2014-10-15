@@ -74,20 +74,19 @@ namespace NetAspect.Weaver.Helpers.IL
       {
           for (int i = 0; i < attribute.Constructor.Parameters.Count; i++)
           {
-              var parameter = attribute.Constructor.Parameters[i];
-
-              instructions.Add(Instruction.Create(OpCodes.Ldobj, argument.Value));
+              instructions.Add(adders[attribute.ConstructorArguments[i].Value.GetType()](attribute.ConstructorArguments[i].Value));
           }
 
-          foreach (var argument in attribute.ConstructorArguments)
-          {
-              
-          }
           instructions.Add(Instruction.Create(OpCodes.Newobj, attribute.Constructor));
          instructions.Add(Instruction.Create(OpCodes.Stloc, interceptor));
       }
 
-      public static void AppendCallStaticMethodAnsSaveResultInto(this List<Instruction> instructions, MethodInfo method, VariableDefinition variable, ModuleDefinition module)
+      static Dictionary<Type, Func<object, Instruction>> adders = new Dictionary<Type, Func<object, Instruction>>
+               {
+                   {typeof (string), o => Instruction.Create(OpCodes.Ldstr, o.ToString())}
+               };
+
+       public static void AppendCallStaticMethodAnsSaveResultInto(this List<Instruction> instructions, MethodInfo method, VariableDefinition variable, ModuleDefinition module)
       {
          var methodToCall = module.Import(method);
          instructions.Add(Instruction.Create(OpCodes.Call, methodToCall));

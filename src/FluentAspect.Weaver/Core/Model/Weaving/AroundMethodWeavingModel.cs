@@ -10,7 +10,5 @@ namespace NetAspect.Weaver.Core.Model.Weaving
       public List<IIlInjector<VariablesForMethod>> Befores = new List<IIlInjector<VariablesForMethod>>();
       public List<IIlInjector<VariablesForMethod>> OnExceptions = new List<IIlInjector<VariablesForMethod>>();
       public List<IIlInjector<VariablesForMethod>> OnFinallys = new List<IIlInjector<VariablesForMethod>>();
-
-       public List<object> Parameters { get; set; }
    }
 }

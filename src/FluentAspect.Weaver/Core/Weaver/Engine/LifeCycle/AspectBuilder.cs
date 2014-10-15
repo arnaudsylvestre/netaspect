@@ -15,9 +15,9 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Lifecycle
          lifeCycles = lifeCycles_P;
       }
 
-      public void CreateInterceptor(Type aspectType, LifeCycle lifeCycle, MethodDefinition method_P, VariableDefinition interceptorVariable, List<Instruction> instructions)
+      public void CreateInterceptor(Type aspectType, LifeCycle lifeCycle, MethodDefinition method_P, VariableDefinition interceptorVariable, List<Instruction> instructions, CustomAttribute customAttribute)
       {
-          lifeCycles[lifeCycle].CreateInterceptor(aspectType, method_P, interceptorVariable, instructions);
+          lifeCycles[lifeCycle].CreateInterceptor(aspectType, method_P, interceptorVariable, instructions, customAttribute);
       }
    }
 }

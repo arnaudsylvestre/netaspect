@@ -20,10 +20,10 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
             this.lifeCycle = lifeCycle;
         }
 
-        public VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Type aspectType)
+        public VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Type aspectType, CustomAttribute customAttribute)
         {
             var interceptorVariable = new VariableDefinition(method.Module.Import(aspectType));
-            aspectBuilder.CreateInterceptor(aspectType, lifeCycle, method, interceptorVariable, instructionsToInsert_P.aspectInitialisation);
+            aspectBuilder.CreateInterceptor(aspectType, lifeCycle, method, interceptorVariable, instructionsToInsert_P.aspectInitialisation, customAttribute);
             return interceptorVariable;
         }
 

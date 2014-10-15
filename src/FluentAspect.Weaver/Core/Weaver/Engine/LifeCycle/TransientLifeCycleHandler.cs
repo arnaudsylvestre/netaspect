@@ -12,9 +12,9 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Lifecycle
        public void CreateInterceptor(Type aspectType,
          MethodDefinition method_P,
          VariableDefinition interceptorVariable,
-         List<Instruction> instructions)
+         List<Instruction> instructions, CustomAttribute attibute)
       {
-          instructions.AppendCreateNewObject(interceptorVariable, aspectType, method_P.Module, TODO);
+          instructions.AppendCreateNewObject(interceptorVariable, aspectType, method_P.Module, attibute);
       }
    }
 }

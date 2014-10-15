@@ -20,7 +20,7 @@ namespace NetAspect.Sample.Dep
       {
          ParameterInfo toto = MethodBase.GetCurrentMethod().GetParameters()[3];
           var toto2 = typeof (DepClassWithProperty);
-           Attribute.GetCustomAttributes(MethodBase.GetCurrentMethod(), typeof(TotoAttribute))
+           Attribute.GetCustomAttributes(MethodBase.GetCurrentMethod(), typeof (TotoAttribute));
 
       }
    }
