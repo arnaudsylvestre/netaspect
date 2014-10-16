@@ -50,12 +50,22 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
          if (!AspectApplier.CanApply(memberReference, aspect, selectorProvider))
             return null;
 
-         var customAttributes = memberReference.GetAspectAttributes(aspect);
-         return customAttributes.Select(customAttribute => new AroundInstructionWeaver(customAttribute,
-             aspect,
-            aroundInstructionWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, instruction),
-            aroundInstructionWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, instruction)
-            ));
+         var customAttributes = memberReference.GetAspectAttributes(aspect).ToList();
+         if (customAttributes.Count == 0)
+             return new List<AroundInstructionWeaver>()
+                  {
+                      CreateAroundInstructionWeaver(method, instruction, aspect, null)
+                  };
+         return customAttributes.Select(customAttribute => CreateAroundInstructionWeaver(method, instruction, aspect, customAttribute));
       }
+
+       private AroundInstructionWeaver CreateAroundInstructionWeaver(MethodDefinition method, Instruction instruction, NetAspectDefinition aspect, CustomAttribute customAttribute)
+       {
+           return new AroundInstructionWeaver(customAttribute,
+                                              aspect,
+                                              aroundInstructionWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, instruction),
+                                              aroundInstructionWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, instruction)
+               );
+       }
    }
 }
