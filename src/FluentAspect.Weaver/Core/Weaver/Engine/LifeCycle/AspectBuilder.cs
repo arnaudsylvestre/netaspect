@@ -8,9 +8,9 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Lifecycle
 {
    public class AspectBuilder
    {
-      private readonly Dictionary<Model.Aspect.LifeCycle, ILifeCycleHandler> lifeCycles;
+      private readonly Dictionary<LifeCycle, ILifeCycleHandler> lifeCycles;
 
-      public AspectBuilder(Dictionary<Model.Aspect.LifeCycle, ILifeCycleHandler> lifeCycles_P)
+      public AspectBuilder(Dictionary<LifeCycle, ILifeCycleHandler> lifeCycles_P)
       {
          lifeCycles = lifeCycles_P;
       }

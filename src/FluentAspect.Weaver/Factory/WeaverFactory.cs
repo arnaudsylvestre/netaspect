@@ -94,7 +94,7 @@ namespace NetAspect.Weaver.Factory
       {
          return new MethodWeavingDetector<MethodDefinition>(
             aspect => aspect.After,
-            new AroundMethodWeaverFactory(new MethodWeavingMethodInjectorFactory(), new NoWevingPreconditionInjector()),
+            new AroundMethodWeaverFactory(new MethodWeavingMethodInjectorFactory(), new NoWeavingPreconditionInjector()),
             aspect => aspect.Before,
             MethodCompliance.IsMethod,
             m => m,
@@ -108,7 +108,7 @@ namespace NetAspect.Weaver.Factory
       {
          return new ParameterWeavingDetector(
             aspect => aspect.AfterMethodForParameter,
-            new AroundMethodForParameterWeaverFactory(new MethodWeavingParameterInjectorFactory(), new NoWevingPreconditionInjector()),
+            new AroundMethodForParameterWeaverFactory(new MethodWeavingParameterInjectorFactory(), new NoWeavingPreconditionInjector()),
             aspect => aspect.BeforeMethodForParameter,
             MethodCompliance.IsMethodParameter,
             aspect => aspect.OnExceptionMethodForParameter,
@@ -121,7 +121,7 @@ namespace NetAspect.Weaver.Factory
       {
          return new ParameterWeavingDetector(
             aspect => aspect.AfterConstructorForParameter,
-            new AroundMethodForParameterWeaverFactory(new MethodWeavingParameterInjectorFactory(), new NoWevingPreconditionInjector()),
+            new AroundMethodForParameterWeaverFactory(new MethodWeavingParameterInjectorFactory(), new NoWeavingPreconditionInjector()),
             aspect => aspect.BeforeConstructorForParameter,
             MethodCompliance.IsConstructorForParameter,
             aspect => aspect.OnExceptionConstructorForParameter,
@@ -134,7 +134,7 @@ namespace NetAspect.Weaver.Factory
       {
          return new MethodWeavingDetector<MethodDefinition>(
             aspect => aspect.AfterConstructor,
-            new AroundMethodWeaverFactory(new ConstructorWeavingMethodInjectorFactory(), new NoWevingPreconditionInjector()),
+            new AroundMethodWeaverFactory(new ConstructorWeavingMethodInjectorFactory(), new NoWeavingPreconditionInjector()),
             aspect => aspect.BeforeConstructor,
             MethodCompliance.IsConstructor,
             m => m,
@@ -148,7 +148,7 @@ namespace NetAspect.Weaver.Factory
       {
          return new MethodWeavingDetector<PropertyDefinition>(
             aspect => aspect.AfterPropertyGetMethod,
-            new AroundMethodWeaverFactory(new PropertyGetterWeavingMethodInjectorFactory(), new NoWevingPreconditionInjector()),
+            new AroundMethodWeaverFactory(new PropertyGetterWeavingMethodInjectorFactory(), new NoWeavingPreconditionInjector()),
             aspect => aspect.BeforePropertyGetMethod,
             MethodCompliance.IsPropertyGetterMethod,
             m => m.GetPropertyForGetter(),
@@ -162,7 +162,7 @@ namespace NetAspect.Weaver.Factory
       {
          return new MethodWeavingDetector<PropertyDefinition>(
             aspect => aspect.AfterPropertySetMethod,
-            new AroundMethodWeaverFactory(new PropertySetterWeavingMethodInjectorFactory(), new NoWevingPreconditionInjector()),
+            new AroundMethodWeaverFactory(new PropertySetterWeavingMethodInjectorFactory(), new NoWeavingPreconditionInjector()),
             aspect => aspect.BeforePropertySetMethod,
             MethodCompliance.IsPropertySetterMethod,
             m => m.GetPropertyForSetter(),
@@ -177,7 +177,7 @@ namespace NetAspect.Weaver.Factory
          return new InstructionWeavingDetector<FieldDefinition>(
             InstructionCompliance.IsGetFieldInstruction,
             aspect => aspect.FieldSelector,
-            new AroundInstructionWeaverFactory(new CallGetFieldInterceptorAroundInstructionBuilder(), new NoWevingPreconditionInjector()),
+            new AroundInstructionWeaverFactory(new CallGetFieldInterceptorAroundInstructionBuilder(), new NoWeavingPreconditionInjector()),
             instruction => (instruction.Operand as FieldReference).Resolve(),
             aspect => aspect.BeforeGetField,
             aspect => aspect.AfterGetField);
@@ -188,7 +188,7 @@ namespace NetAspect.Weaver.Factory
          return new InstructionWeavingDetector<FieldDefinition>(
             InstructionCompliance.IsUpdateFieldInstruction,
             aspect => aspect.FieldSelector,
-            new AroundInstructionWeaverFactory(new CallUpdateFieldInterceptorAroundInstructionBuilder(), new NoWevingPreconditionInjector()),
+            new AroundInstructionWeaverFactory(new CallUpdateFieldInterceptorAroundInstructionBuilder(), new NoWeavingPreconditionInjector()),
             instruction => (instruction.Operand as FieldReference).Resolve(),
             aspect => aspect.BeforeUpdateField,
             aspect => aspect.AfterUpdateField);
@@ -199,7 +199,7 @@ namespace NetAspect.Weaver.Factory
          return new InstructionWeavingDetector<PropertyDefinition>(
             InstructionCompliance.IsSetPropertyCall,
             aspect => aspect.PropertySelector,
-            new AroundInstructionWeaverFactory(new CallSetPropertyInterceptorAroundInstructionBuilder(), new NoWevingPreconditionInjector()),
+            new AroundInstructionWeaverFactory(new CallSetPropertyInterceptorAroundInstructionBuilder(), new NoWeavingPreconditionInjector()),
             instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForSetter(),
             aspect => aspect.BeforeSetProperty,
             aspect => aspect.AfterSetProperty);
@@ -210,7 +210,7 @@ namespace NetAspect.Weaver.Factory
          return new InstructionWeavingDetector<PropertyDefinition>(
             InstructionCompliance.IsGetPropertyCall,
             aspect => aspect.PropertySelector,
-            new AroundInstructionWeaverFactory(new CallGetPropertyInterceptorAroundInstructionBuilder(), new NoWevingPreconditionInjector()),
+            new AroundInstructionWeaverFactory(new CallGetPropertyInterceptorAroundInstructionBuilder(), new NoWeavingPreconditionInjector()),
             instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForGetter(),
             aspect => aspect.BeforeGetProperty,
             aspect => aspect.AfterGetProperty);
