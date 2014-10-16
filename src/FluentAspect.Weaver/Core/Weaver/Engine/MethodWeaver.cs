@@ -151,8 +151,8 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                    v.Check(errorHandler, variablesForInstruction);
                    if (errorHandler.Errors.Any())
                        return true;
-                   v.Weave(aroundInstructionIl, variablesForInstruction);
                    variablesForInstruction.Aspects.Add(new Variable(instructions, new VariableAspect(aspectBuilder, v.Aspect.LifeCycle, v.Aspect.Type, v.Instance), method, instruction.Key, allVariables));
+                   v.Weave(aroundInstructionIl, variablesForInstruction);
                    ils.Add(aroundInstructionIl);
                }
                instructionIl.Before.AddRange(instructions.calledParametersInstructions);
