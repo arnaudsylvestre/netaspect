@@ -10,20 +10,20 @@ namespace NetAspect.Weaver.Core.Model.Weaving
    {
        public readonly Dictionary<Instruction, List<AroundInstructionWeaver>> Instructions = new Dictionary<Instruction, List<AroundInstructionWeaver>>();
 
-      public AroundMethodWeaver Method;
+       public List<AspectInstanceForMethodWeaving> Method;
        public NetAspectDefinition Aspect { get; private set; }
 
       public MethodWeavingModel(NetAspectDefinition aspect)
       {
           Aspect = aspect;
-          Method = new AroundMethodWeaver();
+          Method = new List<AspectInstanceForMethodWeaving>();
       }
 
-       public void AddAroundInstructionWeaver(Instruction instruction, AroundInstructionWeaver weaver)
+       public void AddAroundInstructionWeaver(Instruction instruction, IEnumerable<AroundInstructionWeaver> weaver)
       {
          if (!Instructions.ContainsKey(instruction))
             Instructions.Add(instruction, new List<AroundInstructionWeaver>());
-         Instructions[instruction].Add(weaver);
+         Instructions[instruction].AddRange(weaver);
       }
    }
 }

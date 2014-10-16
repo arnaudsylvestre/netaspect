@@ -40,11 +40,19 @@ namespace NetAspect.Weaver.Core.Weaver.Aspects
          return CanApply(member, netAspect, selectorProvider, module, null);
       }
 
-       public static IEnumerable<CustomAttribute> GetAspectAttributes(this ICustomAttributeProvider member, NetAspectDefinition aspect)
+      public static IEnumerable<CustomAttribute> GetAspectAttributes<T>(this T member, NetAspectDefinition aspect)
+         where T : MemberReference, ICustomAttributeProvider
       {
+          return GetAspectAttributes(member, aspect, member.Module);
+      }
+
+      public static IEnumerable<CustomAttribute> GetAspectAttributes<T>(this T member, NetAspectDefinition aspect, ModuleDefinition module)
+         where T : ICustomAttributeProvider
+      {
+          TypeReference aspectType = module.Import(aspect.Type);
           return member.CustomAttributes.Where(
              customAttribute_L =>
-                customAttribute_L.AttributeType.FullName == aspect.Type.FullName).Select(c => c);
+                customAttribute_L.AttributeType.FullName == aspectType.FullName).Select(c => c);
       }
 
    }

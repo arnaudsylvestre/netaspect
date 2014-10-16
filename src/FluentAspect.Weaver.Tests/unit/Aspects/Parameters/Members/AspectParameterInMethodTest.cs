@@ -3,8 +3,8 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.Aspects.Parameters
 {
-   public class AfterMethodParameterNameParameterWithRealTypeTest :
-      NetAspectTest<AfterMethodParameterNameParameterWithRealTypeTest.ClassToWeave>
+   public class AspectParameterInMethodTest :
+      NetAspectTest<AspectParameterInMethodTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
       {

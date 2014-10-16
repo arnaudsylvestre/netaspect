@@ -77,7 +77,7 @@
     <Compile Include="Core\Model\Aspect\Interceptor.cs" />
     <Compile Include="Core\Model\Aspect\LifeCycle.cs" />
     <Compile Include="Core\Helpers\LifeCycleHelper.cs" />
-    <Compile Include="Core\Model\Weaving\MethodWeavingAspectInstance.cs" />
+    <Compile Include="Core\Model\Weaving\AspectInstanceForMethodWeaving.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
     <Compile Include="Core\Helpers\NetAspectDefinitionExtensions.cs" />
     <Compile Include="Core\Model\Weaving\NoIIlInjector.cs" />

@@ -120,7 +120,9 @@
     <Compile Include="docs\MethodWeavingForDocWithStartDivisionTest.cs" />
     <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
-    <Compile Include="unit\Aspects\Parameters\AfterMethodParameterNameParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Members\AfterParameterInGetFieldTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInConstructorTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInMethodTest.cs" />
     <Compile Include="unit\Atttributes\Statics\WeaveCallStaticPropertyTest.cs" />
     <Compile Include="unit\Atttributes\Statics\WeaveStaticFieldTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\BeforeCallConstructorParametersTest.cs" />
@@ -463,7 +465,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="unit\Aspects\Parameters\Types\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,5 +1,7 @@
 ﻿using System;
+using Mono.Cecil;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Data;
 using NetAspect.Weaver.Core.Weaver.Data.Variables;
@@ -9,14 +11,19 @@ namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
 {
    public class AroundInstructionWeaver
    {
-      private readonly IIlInjector<VariablesForInstruction> after;
+       public CustomAttribute Instance { get; private set; }
+       public NetAspectDefinition Aspect { get; private set; }
+       private readonly IIlInjector<VariablesForInstruction> after;
        private readonly IIlInjector<VariablesForInstruction> before;
 
-       public AroundInstructionWeaver(IIlInjector<VariablesForInstruction> before, IIlInjector<VariablesForInstruction> after)
+       public AroundInstructionWeaver(CustomAttribute instance, NetAspectDefinition aspect, IIlInjector<VariablesForInstruction> before, IIlInjector<VariablesForInstruction> after)
       {
+           Instance = instance;
+           Aspect = aspect;
            this.before = before;
          this.after = after;
       }
+
 
        public void Check(ErrorHandler errorHandler, VariablesForInstruction variables)
       {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
@@ -12,18 +13,12 @@ namespace NetAspect.Weaver.Core.Model.Weaving
       public readonly Dictionary<MethodDefinition, MethodWeavingModel> weavingModels = new Dictionary<MethodDefinition, MethodWeavingModel>();
 
 
-      public void Add(MethodDefinition method, MethodWeavingAspectInstance detectWeavingAspectInstance, NetAspectDefinition aspect, AspectBuilder aspectBuilder)
+      public void Add(MethodDefinition method, IEnumerable<AspectInstanceForMethodWeaving> detectWeavingModels, NetAspectDefinition aspect, AspectBuilder aspectBuilder)
       {
-          if (detectWeavingAspectInstance == null)
+          if (detectWeavingModels == null)
             return;
-          {
-              MethodWeavingModel methodWeavingModel = GetMethodWeavingModel(method, aspect, aspectBuilder);
-              methodWeavingModel.Method.AspectInstance.BeforeConstructorBaseCalls.AddRange(detectWeavingAspectInstance.BeforeConstructorBaseCalls);
-              methodWeavingModel.Method.AspectInstance.Befores.AddRange(detectWeavingAspectInstance.Befores);
-              methodWeavingModel.Method.AspectInstance.Afters.AddRange(detectWeavingAspectInstance.Afters);
-              methodWeavingModel.Method.AspectInstance.OnExceptions.AddRange(detectWeavingAspectInstance.OnExceptions);
-              methodWeavingModel.Method.AspectInstance.OnFinallys.AddRange(detectWeavingAspectInstance.OnFinallys);
-          }
+          var methodWeavingModel = GetMethodWeavingModel(method, aspect, aspectBuilder);
+          methodWeavingModel.Method.AddRange(detectWeavingModels.ToList());
       }
 
       private MethodWeavingModel GetMethodWeavingModel(MethodDefinition method, NetAspectDefinition aspect, AspectBuilder aspectBuilder)
@@ -33,12 +28,11 @@ namespace NetAspect.Weaver.Core.Model.Weaving
          return weavingModels[method];
       }
 
-      public void Add(MethodDefinition method, Instruction instruction, AroundInstructionWeaver aroundInstructionWeaver, NetAspectDefinition aspect, AspectBuilder aspectBuilder)
+      public void Add(MethodDefinition method, Instruction instruction, IEnumerable<AroundInstructionWeaver> aroundInstructionWeaver, NetAspectDefinition aspect, AspectBuilder aspectBuilder)
       {
          if (aroundInstructionWeaver == null)
             return;
          GetMethodWeavingModel(method, aspect, aspectBuilder).AddAroundInstructionWeaver(instruction, aroundInstructionWeaver);
-         ;
       }
    }
 }

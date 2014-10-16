@@ -35,7 +35,11 @@ namespace NetAspect.Weaver.Core.Weaver
          if (interceptorMethod.ReturnType != typeof (void))
             errorHandler.OnError(ErrorCode.InterceptorMustBeVoid, FileLocation.None, interceptorMethod.Name, interceptorMethod.DeclaringType.FullName);
          interceptorParameterConfigurations.Check(interceptorMethod.GetParameters(), errorHandler);
-         availableInformations.Aspect.Check(errorHandler, interceptorMethod.DeclaringType);
+          foreach (var variableByAspectType in availableInformations.Aspects)
+          {
+              variableByAspectType.Check(errorHandler);
+              
+          }
       }
 
       public void Inject(List<Instruction> instructions, T availableInformations)
@@ -48,10 +52,13 @@ namespace NetAspect.Weaver.Core.Weaver
             instructions.AddRange(precondition);
             instructions.Add(Instruction.Create(OpCodes.Brfalse, end));
          }
-          var aspect = availableInformations.Aspect.GetAspect(interceptorMethod.DeclaringType);
-          instructions.Add(Instruction.Create(OpCodes.Ldloc, aspect));
-         ParametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations, interceptorParameterConfigurations);
-         instructions.Add(Instruction.Create(OpCodes.Call, _method.Module.Import(interceptorMethod)));
+          foreach (var aspect in availableInformations.Aspects)
+          {
+              instructions.Add(Instruction.Create(OpCodes.Ldloc, aspect.Definition));
+              ParametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations, interceptorParameterConfigurations);
+              instructions.Add(Instruction.Create(OpCodes.Call, _method.Module.Import(interceptorMethod)));
+              
+          }
          instructions.Add(end);
       }
    }

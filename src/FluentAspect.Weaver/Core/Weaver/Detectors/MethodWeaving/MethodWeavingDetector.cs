@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
-using Mono.Collections.Generic;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.Aspects;
@@ -48,7 +47,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
          this.selectorProvider = selectorProvider;
       }
 
-      public MethodWeavingAspectInstance DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect)
+      public IEnumerable<AspectInstanceForMethodWeaving> DetectWeavingModel(MethodDefinition method, NetAspectDefinition aspect)
       {
          if (!isMethodCompliant(aspect, method))
             return null;
@@ -57,20 +56,26 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
          if (!AspectApplier.CanApply(memberReference, aspect, selectorProvider))
             return null;
 
-          var customAttributes = memberReference.GetAspectAttributes(aspect);
-          return customAttributes.Select(customAttribute => new MethodWeavingAspectInstance
-              {
-                  Instances = customAttributes,
-                  Befores = new List<IIlInjector<VariablesForMethod>> {aroundMethodWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method)},
-                  Afters = new List<IIlInjector<VariablesForMethod>> {aroundMethodWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method)}, 
-                  OnExceptions = new List<IIlInjector<VariablesForMethod>> {aroundMethodWeaverFactory.CreateForExceptions(method, onExceptionInterceptorProvider(aspect).Method)},
-                  OnFinallys = new List<IIlInjector<VariablesForMethod>> {aroundMethodWeaverFactory.CreateForOnFinally(method, onFinallyInterceptorProvider(aspect).Method)}
-              }).ToList();
+          var customAttributes = memberReference.GetAspectAttributes(aspect).ToList();
+          if (customAttributes.Count == 0)
+              return new List<AspectInstanceForMethodWeaving>()
+                  {
+                      CreateAspectInstanceForMethodWeaving(method, aspect, null)
+                  };
+          return customAttributes.Select(customAttribute => CreateAspectInstanceForMethodWeaving(method, aspect, customAttribute));
       }
 
-       private List<object> Compute(Collection<CustomAttributeArgument> constructorArguments)
+       private AspectInstanceForMethodWeaving CreateAspectInstanceForMethodWeaving(MethodDefinition method, NetAspectDefinition aspect, CustomAttribute customAttribute)
        {
-           return constructorArguments.Select(argument => argument.Value).ToList();
+           return new AspectInstanceForMethodWeaving
+               {
+                   Instance = customAttribute,
+                   Aspect = aspect,
+                   Befores = new List<IIlInjector<VariablesForMethod>> {aroundMethodWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method)},
+                   Afters = new List<IIlInjector<VariablesForMethod>> {aroundMethodWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method)}, 
+                   OnExceptions = new List<IIlInjector<VariablesForMethod>> {aroundMethodWeaverFactory.CreateForExceptions(method, onExceptionInterceptorProvider(aspect).Method)},
+                   OnFinallys = new List<IIlInjector<VariablesForMethod>> {aroundMethodWeaverFactory.CreateForOnFinally(method, onFinallyInterceptorProvider(aspect).Method)}
+               };
        }
    }
 }

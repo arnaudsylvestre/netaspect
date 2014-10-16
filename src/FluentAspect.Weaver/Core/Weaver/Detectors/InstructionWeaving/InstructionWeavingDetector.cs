@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Model.Aspect;
@@ -39,7 +41,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
       }
 
 
-      public AroundInstructionWeaver DetectWeavingModel(MethodDefinition method, Instruction instruction, NetAspectDefinition aspect)
+      public IEnumerable<AroundInstructionWeaver> DetectWeavingModel(MethodDefinition method, Instruction instruction, NetAspectDefinition aspect)
       {
          if (!isInstructionCompliant(instruction, aspect, method))
             return null;
@@ -48,11 +50,12 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
          if (!AspectApplier.CanApply(memberReference, aspect, selectorProvider))
             return null;
 
-         return new AroundInstructionWeaver(
+         var customAttributes = memberReference.GetAspectAttributes(aspect);
+         return customAttributes.Select(customAttribute => new AroundInstructionWeaver(customAttribute,
+             aspect,
             aroundInstructionWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, instruction),
-            aroundInstructionWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, instruction),
-            aspect.Type
-            );
+            aroundInstructionWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, instruction)
+            ));
       }
    }
 }

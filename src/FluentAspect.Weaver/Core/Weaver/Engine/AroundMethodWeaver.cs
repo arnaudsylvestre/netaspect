@@ -10,11 +10,9 @@ using NetAspect.Weaver.Core.Weaver.Engine.Lifecycle;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine
 {
-   public class AroundMethodWeaver
+   public static class AroundMethodWeaver
    {
-       public MethodWeavingAspectInstance AspectInstance = new MethodWeavingAspectInstance();
-
-       public void Check(ErrorHandler errorHandler, VariablesForMethod availableVariables)
+       public static void Check(this AspectInstanceForMethodWeaving AspectInstance, ErrorHandler errorHandler, VariablesForMethod availableVariables)
       {
           AspectInstance.Befores.Check(errorHandler, availableVariables);
           AspectInstance.BeforeConstructorBaseCalls.Check(errorHandler, availableVariables);
@@ -23,7 +21,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
           AspectInstance.OnFinallys.Check(errorHandler, availableVariables);
       }
 
-      public void Inject(List<Instruction> befores, List<Instruction> afters, List<Instruction> onExceptions, List<Instruction> onFinallys, VariablesForMethod availableVariables, List<Instruction> beforeConstructorBaseCall_P)
+      public static void Inject(this AspectInstanceForMethodWeaving AspectInstance, List<Instruction> befores, List<Instruction> afters, List<Instruction> onExceptions, List<Instruction> onFinallys, VariablesForMethod availableVariables, List<Instruction> beforeConstructorBaseCall_P)
       {
          AspectInstance.BeforeConstructorBaseCalls.Inject(beforeConstructorBaseCall_P, availableVariables);
          AspectInstance.Befores.Inject(befores, availableVariables);

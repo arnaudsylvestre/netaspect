@@ -6,86 +6,48 @@ using NetAspect.Weaver.Core.Errors;
 
 namespace NetAspect.Weaver.Core.Weaver.Data.Variables
 {
-    public class VariableByAspectType
+    public class Variable
     {
-        private readonly InstructionsToInsert _instructionsToInsertP;
-        private VariableAspect variableAspect;
-        private readonly MethodDefinition _methodP;
-        private readonly Instruction _instruction;
-        private readonly List<VariableDefinition> _variables;
-        private List<CustomAttribute> customAttributes; 
-
-        public VariableByAspectType(InstructionsToInsert instructionsToInsert_P, VariableAspect variableAspect, MethodDefinition method_P, Instruction instruction, List<VariableDefinition> variables, List<CustomAttribute> customAttributes)
+        public interface IVariableBuilder
         {
-            _instructionsToInsertP = instructionsToInsert_P;
-            this.variableAspect = variableAspect;
-            _methodP = method_P;
-            _instruction = instruction;
-            _variables = variables;
-            this.customAttributes = customAttributes;
+            void Check(MethodDefinition method, ErrorHandler errorHandler);
+            VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Instruction instruction);
         }
 
-        private Dictionary<Type, List<VariableDefinition>> variables = new Dictionary<Type, List<VariableDefinition>>();
+        private VariableDefinition _definition;
+        private readonly InstructionsToInsert instructionsToInsert;
+        private IVariableBuilder variableBuilder;
+        private List<VariableDefinition> variables;
+        private MethodDefinition method;
+        private readonly Instruction instruction;
 
-        public List<VariableDefinition> GetAspect(Type type)
+        public Variable(InstructionsToInsert instructionsToInsert_P, IVariableBuilder variableBuilder_P, MethodDefinition method_P, Instruction instruction, List<VariableDefinition> variables)
         {
-            if (!variables.ContainsKey(type))
+            instructionsToInsert = instructionsToInsert_P;
+            variableBuilder = variableBuilder_P;
+            method = method_P;
+            this.instruction = instruction;
+            this.variables = variables;
+        }
+
+
+        public VariableDefinition Definition
+        {
+            get
             {
-                variables.Add(type, new List<VariableDefinition>());
-                foreach (var attribute in customAttributes)
+                if (_definition == null)
                 {
-                    var variableDefinition = variableAspect.Build(_instructionsToInsertP, _methodP, type, attribute);
-                    variables[type].Add(variableDefinition);
-                    _variables.Add(variableDefinition);
-                    
+                    _definition = variableBuilder.Build(instructionsToInsert, method, instruction);
+                    variables.Add(_definition);
                 }
+                return _definition;
             }
-            return variables[type];
         }
 
-        public void Check(ErrorHandler errorHandler, Type type)
+        public void Check(ErrorHandler errorHandler)
         {
-            variableAspect.Check(_methodP, errorHandler, type);
+            variableBuilder.Check(method, errorHandler);
         }
     }
-
-    public class Variable
-   {
-       public interface IVariableBuilder
-       {
-
-           VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Instruction instruction);
-       }
-
-       private VariableDefinition _definition;
-       private readonly InstructionsToInsert instructionsToInsert;
-       private IVariableBuilder variableBuilder;
-       private List<VariableDefinition> variables;
-       private MethodDefinition method;
-       private readonly Instruction instruction;
-
-       public Variable(InstructionsToInsert instructionsToInsert_P, IVariableBuilder variableBuilder_P, MethodDefinition method_P, Instruction instruction, List<VariableDefinition> variables)
-       {
-           instructionsToInsert = instructionsToInsert_P;
-           variableBuilder = variableBuilder_P;
-           method = method_P;
-           this.instruction = instruction;
-           this.variables = variables;
-       }
-
-
-       public VariableDefinition Definition
-       {
-           get
-           {
-               if (_definition == null)
-               {
-                   _definition = variableBuilder.Build(instructionsToInsert, method, instruction);
-                   variables.Add(_definition);
-               }
-               return _definition;
-           }
-       }
-   }
 
 }

@@ -83,7 +83,8 @@ namespace NetAspect.Weaver.Helpers.IL
 
       static Dictionary<Type, Func<object, Instruction>> adders = new Dictionary<Type, Func<object, Instruction>>
                {
-                   {typeof (string), o => Instruction.Create(OpCodes.Ldstr, o.ToString())}
+                   {typeof (string), o => Instruction.Create(OpCodes.Ldstr, o.ToString())},
+                   {typeof (int), o => Instruction.Create(OpCodes.Ldc_I4, (int)o)},
                };
 
        public static void AppendCallStaticMethodAnsSaveResultInto(this List<Instruction> instructions, MethodInfo method, VariableDefinition variable, ModuleDefinition module)

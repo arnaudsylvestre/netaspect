@@ -2,12 +2,18 @@
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Helpers.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Method
 {
     public class VariableCurrentProperty : Variable.IVariableBuilder
     {
+        public void Check(MethodDefinition method, ErrorHandler errorHandler)
+        {
+            
+        }
+
         public VariableDefinition Build(InstructionsToInsert instructionsToInsert, MethodDefinition method, Instruction instruction)
         {
             var currentPropertyInfo = new VariableDefinition(method.Module.Import(typeof(PropertyInfo)));

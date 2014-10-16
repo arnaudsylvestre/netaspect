@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using NetAspect.Weaver.Core.Errors;
 
 namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
 {
@@ -12,6 +13,11 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
         public VariableCalled(Func<Dictionary<string, VariableDefinition>> calledParametersProvider)
         {
             this.calledParametersProvider = calledParametersProvider;
+        }
+
+        public void Check(MethodDefinition method, ErrorHandler errorHandler)
+        {
+            
         }
 
         public VariableDefinition Build(InstructionsToInsert instructionsToInsert, MethodDefinition method, Instruction Instruction)
