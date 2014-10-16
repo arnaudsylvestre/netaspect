@@ -72,12 +72,18 @@ namespace NetAspect.Weaver.Helpers.IL
 
       public static void AppendCreateNewObject(this List<Instruction> instructions, VariableDefinition interceptor, Type interceptorType, ModuleDefinition module, CustomAttribute attribute)
       {
-          for (int i = 0; i < attribute.Constructor.Parameters.Count; i++)
+          if (attribute != null)
           {
-              instructions.Add(adders[attribute.ConstructorArguments[i].Value.GetType()](attribute.ConstructorArguments[i].Value));
+              for (int i = 0; i < attribute.Constructor.Parameters.Count; i++)
+              {
+                  instructions.Add(adders[attribute.ConstructorArguments[i].Value.GetType()](attribute.ConstructorArguments[i].Value));
+              }
+              instructions.Add(Instruction.Create(OpCodes.Newobj, attribute.Constructor));
           }
-
-          instructions.Add(Instruction.Create(OpCodes.Newobj, attribute.Constructor));
+          else
+          {
+              instructions.Add(Instruction.Create(OpCodes.Newobj, module.Import(interceptorType.GetConstructors()[0])));
+          }
          instructions.Add(Instruction.Create(OpCodes.Stloc, interceptor));
       }
 
