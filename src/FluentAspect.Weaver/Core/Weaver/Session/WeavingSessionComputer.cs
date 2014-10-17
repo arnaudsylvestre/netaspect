@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
-using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Assemblies;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Helpers;
@@ -17,13 +16,13 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
     {
         private readonly IAspectChecker _aspectChecker;
         private readonly IAspectFinder _aspectFinder;
-        private readonly List<IInstructionWeavingDetector> instructionWeavingDetector;
-        private readonly List<IMethodWeavingDetector> methodWeavingDetector;
+        private readonly List<IInstructionAspectInstanceDetector> instructionWeavingDetector;
+        private readonly List<IMethodAspectInstanceDetector> methodWeavingDetector;
 
         public WeavingSessionComputer(IAspectFinder aspectFinder,
                                       IAspectChecker aspectChecker,
-                                      List<IInstructionWeavingDetector> instructionWeavingDetector,
-                                      List<IMethodWeavingDetector> methodWeavingDetector)
+                                      List<IInstructionAspectInstanceDetector> instructionWeavingDetector,
+                                      List<IMethodAspectInstanceDetector> methodWeavingDetector)
         {
             _aspectFinder = aspectFinder;
             _aspectChecker = aspectChecker;
@@ -70,14 +69,14 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
         {
             foreach (var aspect in aspects)
             {
-                methodWeavingDetector.ForEach(model => session.Add(method, model.DetectWeavingModel(method, aspect)));
+                methodWeavingDetector.ForEach(model => session.Add(method, model.GetAspectInstances(method, aspect)));
                 foreach (var instruction in method.Body.Instructions)
                 {
                     instructionWeavingDetector.ForEach(
                         model => session.Add(
                             method,
                             instruction,
-                            model.DetectWeavingModel(method, instruction, aspect)));
+                            model.GetAspectInstances(method, instruction, aspect)));
                 }
             }
         }

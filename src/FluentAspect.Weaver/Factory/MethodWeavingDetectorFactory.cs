@@ -10,11 +10,11 @@ namespace NetAspect.Weaver.Factory
 {
     public static class MethodWeavingDetectorFactory
     {
-        public static IMethodWeavingDetector BuildMethodDetector()
+        public static IMethodAspectInstanceDetector BuildMethodDetector()
         {
-            return new MethodWeavingDetector<MethodDefinition>(
+            return new MethodAspectInstanceDetector<MethodDefinition>(
                aspect => aspect.After,
-               new AroundMethodWeaverFactory(new MethodWeavingMethodInjectorFactory(), new NoWeavingPreconditionInjector()),
+               new IlInjectorsFactoryForMethod(new MethodInterceptorParameterConfigurationForMethodFiller(), new NoWeavingPreconditionInjector()),
                aspect => aspect.Before,
                MethodCompliance.IsMethod,
                m => m,
@@ -24,11 +24,11 @@ namespace NetAspect.Weaver.Factory
                );
         }
 
-        public static IMethodWeavingDetector BuildMethodParameterDetector()
+        public static IMethodAspectInstanceDetector BuildMethodParameterDetector()
         {
-            return new ParameterWeavingDetector(
+            return new ParameterAspectInstanceDetector(
                aspect => aspect.AfterMethodForParameter,
-               new AroundMethodForParameterWeaverFactory(new MethodWeavingParameterInjectorFactory(), new NoWeavingPreconditionInjector()),
+               new IlInjectorsFactoryForParameter(new MethodParameterInterceptorParameterConfigurationForMethodFiller(), new NoWeavingPreconditionInjector()),
                aspect => aspect.BeforeMethodForParameter,
                MethodCompliance.IsMethodParameter,
                aspect => aspect.OnExceptionMethodForParameter,
@@ -37,11 +37,11 @@ namespace NetAspect.Weaver.Factory
                );
         }
 
-        public static IMethodWeavingDetector BuildConstructorParameterDetector()
+        public static IMethodAspectInstanceDetector BuildConstructorParameterDetector()
         {
-            return new ParameterWeavingDetector(
+            return new ParameterAspectInstanceDetector(
                aspect => aspect.AfterConstructorForParameter,
-               new AroundMethodForParameterWeaverFactory(new MethodWeavingParameterInjectorFactory(), new NoWeavingPreconditionInjector()),
+               new IlInjectorsFactoryForParameter(new MethodParameterInterceptorParameterConfigurationForMethodFiller(), new NoWeavingPreconditionInjector()),
                aspect => aspect.BeforeConstructorForParameter,
                MethodCompliance.IsConstructorForParameter,
                aspect => aspect.OnExceptionConstructorForParameter,
@@ -50,11 +50,11 @@ namespace NetAspect.Weaver.Factory
                );
         }
 
-        public static IMethodWeavingDetector BuildConstructorDetector()
+        public static IMethodAspectInstanceDetector BuildConstructorDetector()
         {
-            return new MethodWeavingDetector<MethodDefinition>(
+            return new MethodAspectInstanceDetector<MethodDefinition>(
                aspect => aspect.AfterConstructor,
-               new AroundMethodWeaverFactory(new ConstructorWeavingMethodInjectorFactory(), new NoWeavingPreconditionInjector()),
+               new IlInjectorsFactoryForMethod(new ConstructorInterceptorParameterConfigurationForMethodFiller(), new NoWeavingPreconditionInjector()),
                aspect => aspect.BeforeConstructor,
                MethodCompliance.IsConstructor,
                m => m,
@@ -64,11 +64,11 @@ namespace NetAspect.Weaver.Factory
                );
         }
 
-        public static IMethodWeavingDetector BuildPropertyGetterDetector()
+        public static IMethodAspectInstanceDetector BuildPropertyGetterDetector()
         {
-            return new MethodWeavingDetector<PropertyDefinition>(
+            return new MethodAspectInstanceDetector<PropertyDefinition>(
                aspect => aspect.AfterPropertyGetMethod,
-               new AroundMethodWeaverFactory(new PropertyGetterWeavingMethodInjectorFactory(), new NoWeavingPreconditionInjector()),
+               new IlInjectorsFactoryForMethod(new PropertyGetterInterceptorParameterConfigurationForMethodFiller(), new NoWeavingPreconditionInjector()),
                aspect => aspect.BeforePropertyGetMethod,
                MethodCompliance.IsPropertyGetterMethod,
                m => m.GetPropertyForGetter(),
@@ -78,11 +78,11 @@ namespace NetAspect.Weaver.Factory
                );
         }
 
-        public static IMethodWeavingDetector BuildPropertyUpdaterDetector()
+        public static IMethodAspectInstanceDetector BuildPropertyUpdaterDetector()
         {
-            return new MethodWeavingDetector<PropertyDefinition>(
+            return new MethodAspectInstanceDetector<PropertyDefinition>(
                aspect => aspect.AfterPropertySetMethod,
-               new AroundMethodWeaverFactory(new PropertySetterWeavingMethodInjectorFactory(), new NoWeavingPreconditionInjector()),
+               new IlInjectorsFactoryForMethod(new PropertySetterInterceptorParameterConfigurationForMethodFiller(), new NoWeavingPreconditionInjector()),
                aspect => aspect.BeforePropertySetMethod,
                MethodCompliance.IsPropertySetterMethod,
                m => m.GetPropertyForSetter(),

@@ -20,7 +20,7 @@ namespace NetAspect.Weaver.Factory
             new WeavingSessionComputer(
                new DefaultAspectFinder(),
                new DefaultAspectChecker(),
-               new List<IInstructionWeavingDetector>
+               new List<IInstructionAspectInstanceDetector>
                {
                   InstructionWeavingDetectorFactory.BuildCallGetFieldDetector(),
                   InstructionWeavingDetectorFactory.BuildCallUpdateFieldDetector(),
@@ -29,7 +29,7 @@ namespace NetAspect.Weaver.Factory
                   InstructionWeavingDetectorFactory.BuildCallGetPropertyDetector(),
                   InstructionWeavingDetectorFactory.BuildCallUpdatePropertyDetector(),
                },
-               new List<IMethodWeavingDetector>
+               new List<IMethodAspectInstanceDetector>
                {
                   MethodWeavingDetectorFactory.BuildMethodDetector(),
                   MethodWeavingDetectorFactory.BuildPropertyGetterDetector(),

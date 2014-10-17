@@ -9,67 +9,67 @@ namespace NetAspect.Weaver.Factory
     public static class InstructionWeavingDetectorFactory
     {
 
-        public static InstructionWeavingDetector<FieldDefinition> BuildCallGetFieldDetector()
+        public static InstructionAspectInstanceDetector<FieldDefinition> BuildCallGetFieldDetector()
         {
-            return new InstructionWeavingDetector<FieldDefinition>(
+            return new InstructionAspectInstanceDetector<FieldDefinition>(
                InstructionCompliance.IsGetFieldInstruction,
                aspect => aspect.FieldSelector,
-               new AroundInstructionWeaverFactory(new CallGetFieldInterceptorAroundInstructionBuilder(), new NoWeavingPreconditionInjector()),
+               new IlInjectorsFactoryForInstruction(new CallGetFieldInterceptorParameterConfigurationForInstructionFiller(), new NoWeavingPreconditionInjector()),
                instruction => (instruction.Operand as FieldReference).Resolve(),
                aspect => aspect.BeforeGetField,
                aspect => aspect.AfterGetField);
         }
 
-        public static InstructionWeavingDetector<FieldDefinition> BuildCallUpdateFieldDetector()
+        public static InstructionAspectInstanceDetector<FieldDefinition> BuildCallUpdateFieldDetector()
         {
-            return new InstructionWeavingDetector<FieldDefinition>(
+            return new InstructionAspectInstanceDetector<FieldDefinition>(
                InstructionCompliance.IsUpdateFieldInstruction,
                aspect => aspect.FieldSelector,
-               new AroundInstructionWeaverFactory(new CallUpdateFieldInterceptorAroundInstructionBuilder(), new NoWeavingPreconditionInjector()),
+               new IlInjectorsFactoryForInstruction(new CallUpdateFieldInterceptorParameterConfigurationForInstructionFiller(), new NoWeavingPreconditionInjector()),
                instruction => (instruction.Operand as FieldReference).Resolve(),
                aspect => aspect.BeforeUpdateField,
                aspect => aspect.AfterUpdateField);
         }
 
-        public static InstructionWeavingDetector<PropertyDefinition> BuildCallUpdatePropertyDetector()
+        public static InstructionAspectInstanceDetector<PropertyDefinition> BuildCallUpdatePropertyDetector()
         {
-            return new InstructionWeavingDetector<PropertyDefinition>(
+            return new InstructionAspectInstanceDetector<PropertyDefinition>(
                InstructionCompliance.IsSetPropertyCall,
                aspect => aspect.PropertySelector,
-               new AroundInstructionWeaverFactory(new CallSetPropertyInterceptorAroundInstructionBuilder(), new NoWeavingPreconditionInjector()),
+               new IlInjectorsFactoryForInstruction(new CallSetPropertyInterceptorParameterConfigurationForInstructionFiller(), new NoWeavingPreconditionInjector()),
                instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForSetter(),
                aspect => aspect.BeforeSetProperty,
                aspect => aspect.AfterSetProperty);
         }
 
-        public static InstructionWeavingDetector<PropertyDefinition> BuildCallGetPropertyDetector()
+        public static InstructionAspectInstanceDetector<PropertyDefinition> BuildCallGetPropertyDetector()
         {
-            return new InstructionWeavingDetector<PropertyDefinition>(
+            return new InstructionAspectInstanceDetector<PropertyDefinition>(
                InstructionCompliance.IsGetPropertyCall,
                aspect => aspect.PropertySelector,
-               new AroundInstructionWeaverFactory(new CallGetPropertyInterceptorAroundInstructionBuilder(), new NoWeavingPreconditionInjector()),
+               new IlInjectorsFactoryForInstruction(new CallGetPropertyInterceptorParameterConfigurationForInstructionFiller(), new NoWeavingPreconditionInjector()),
                instruction => (instruction.Operand as MethodReference).Resolve().GetPropertyForGetter(),
                aspect => aspect.BeforeGetProperty,
                aspect => aspect.AfterGetProperty);
         }
 
-        public static InstructionWeavingDetector<MethodDefinition> BuildCallMethodDetector()
+        public static InstructionAspectInstanceDetector<MethodDefinition> BuildCallMethodDetector()
         {
-            return new InstructionWeavingDetector<MethodDefinition>(
+            return new InstructionAspectInstanceDetector<MethodDefinition>(
                InstructionCompliance.IsCallMethodInstruction,
                aspect => aspect.MethodSelector,
-               new AroundInstructionWeaverFactory(new CallMethodInterceptorAroundInstructionBuilder(), new OverrideWeavingPreconditionInjector()),
+               new IlInjectorsFactoryForInstruction(new CallMethodInterceptorParameterConfigurationForInstructionFiller(), new OverrideWeavingPreconditionInjector()),
                instruction => (instruction.Operand as MethodReference).Resolve(),
                aspect => aspect.BeforeCallMethod,
                aspect => aspect.AfterCallMethod);
         }
 
-        public static InstructionWeavingDetector<MethodDefinition> BuildCallConstructorDetector()
+        public static InstructionAspectInstanceDetector<MethodDefinition> BuildCallConstructorDetector()
         {
-            return new InstructionWeavingDetector<MethodDefinition>(
+            return new InstructionAspectInstanceDetector<MethodDefinition>(
                InstructionCompliance.IsCallConstructorInstruction,
                aspect => aspect.ConstructorSelector,
-               new AroundInstructionWeaverFactory(new CallConstructorInterceptorAroundInstructionBuilder(), new OverrideWeavingPreconditionInjector()),
+               new IlInjectorsFactoryForInstruction(new CallConstructorInterceptorParameterConfigurationForInstructionFiller(), new OverrideWeavingPreconditionInjector()),
                instruction => (instruction.Operand as MethodReference).Resolve(),
                aspect => aspect.BeforeCallConstructor,
                aspect => aspect.AfterCallConstructor);
