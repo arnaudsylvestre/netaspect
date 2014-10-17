@@ -11,7 +11,7 @@ using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
 
 namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
 {
-   public class InstructionWeavingDetector<TMember> : ICallWeavingDetector where TMember : MemberReference, ICustomAttributeProvider
+   public class InstructionWeavingDetector<TMember> : IInstructionWeavingDetector where TMember : MemberReference, ICustomAttributeProvider
    {
       public delegate bool IsInstructionCompliant(
          Instruction instruction,
@@ -41,7 +41,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
       }
 
 
-      public IEnumerable<AroundInstructionWeaver> DetectWeavingModel(MethodDefinition method, Instruction instruction, NetAspectDefinition aspect)
+      public IEnumerable<AspectInstanceForInstruction> DetectWeavingModel(MethodDefinition method, Instruction instruction, NetAspectDefinition aspect)
       {
          if (!isInstructionCompliant(instruction, aspect, method))
             return null;
@@ -52,20 +52,22 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving
 
          var customAttributes = memberReference.GetAspectAttributes(aspect).ToList();
          if (customAttributes.Count == 0)
-             return new List<AroundInstructionWeaver>()
+             return new List<AspectInstanceForInstruction>()
                   {
                       CreateAroundInstructionWeaver(method, instruction, aspect, null)
                   };
          return customAttributes.Select(customAttribute => CreateAroundInstructionWeaver(method, instruction, aspect, customAttribute));
       }
 
-       private AroundInstructionWeaver CreateAroundInstructionWeaver(MethodDefinition method, Instruction instruction, NetAspectDefinition aspect, CustomAttribute customAttribute)
+       private AspectInstanceForInstruction CreateAroundInstructionWeaver(MethodDefinition method, Instruction instruction, NetAspectDefinition aspect, CustomAttribute customAttribute)
        {
-           return new AroundInstructionWeaver(customAttribute,
-                                              aspect,
-                                              aroundInstructionWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, instruction),
-                                              aroundInstructionWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, instruction)
-               );
+           return new AspectInstanceForInstruction()
+               {
+                   Instance = customAttribute,
+                   Aspect = aspect,
+                   Before = aroundInstructionWeaverFactory.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, instruction),
+                   After = aroundInstructionWeaverFactory.CreateForAfter(method, afterInterceptorProvider(aspect).Method, instruction)
+               };
        }
    }
 }

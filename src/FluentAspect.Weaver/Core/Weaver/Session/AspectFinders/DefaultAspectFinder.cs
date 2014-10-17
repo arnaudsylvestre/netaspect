@@ -7,7 +7,7 @@ using NetAspect.Weaver.Helpers;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine.AspectFinders
 {
-   public class DefaultAspectFinder : WeavingModelComputer.IAspectFinder
+   public class DefaultAspectFinder : WeavingSessionComputer.IAspectFinder
    {
       public List<NetAspectDefinition> Find(IEnumerable<Type> types_P)
       {

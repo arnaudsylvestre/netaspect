@@ -16,9 +16,9 @@ namespace NetAspect.Doc.Builder
 
    public class DocumentationFromTestExtractor
    {
-      public WeavingModel ExtractWeaving(string directoryPath_P)
+      public WeavingModelDoc ExtractWeaving(string directoryPath_P)
       {
-         var doc = new WeavingModel();
+         var doc = new WeavingModelDoc();
          var parser = new CSharpParser();
          using (FileStream stream = File.OpenRead(Path.Combine(directoryPath_P, "WeaveWithAttributeSampleTest.cs")))
          {

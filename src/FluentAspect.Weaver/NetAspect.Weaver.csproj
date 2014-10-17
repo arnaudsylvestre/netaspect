@@ -77,12 +77,14 @@
     <Compile Include="Core\Model\Aspect\Interceptor.cs" />
     <Compile Include="Core\Model\Aspect\LifeCycle.cs" />
     <Compile Include="Core\Helpers\LifeCycleHelper.cs" />
+    <Compile Include="Core\Weaver\Engine\AspectInstanceForInstructionExtensions.cs" />
     <Compile Include="Core\Model\Weaving\AspectInstanceForMethodWeaving.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
     <Compile Include="Core\Helpers\NetAspectDefinitionExtensions.cs" />
-    <Compile Include="Core\Model\Weaving\NoIIlInjector.cs" />
-    <Compile Include="Core\Model\Weaving\MethodsWeavingModel.cs" />
-    <Compile Include="Core\Weaver\Checkers\Aspects\MultiAspectChecker.cs" />
+    <Compile Include="Core\Weaver\ILInjector\NoIIlInjector.cs" />
+    <Compile Include="Core\Model\Weaving\WeavingSession.cs" />
+    <Compile Include="Core\Model\Weaving\AspectInstanceForInstruction.cs" />
+    <Compile Include="Core\Weaver\Session\AspectCheckers\MultiAspectChecker.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensures\ParameterReferencedChecker.cs" />
     <Compile Include="Core\Weaver\Checkers\Ensures\ParameterTypeChecker.cs" />
     <Compile Include="Core\Weaver\Data\InstructionsToInsert.cs" />
@@ -104,17 +106,17 @@
     <Compile Include="Core\Weaver\IWevingPreconditionInjector.cs" />
     <Compile Include="Core\Weaver\NoWeavingPreconditionInjector.cs" />
     <Compile Include="Core\Weaver\OverrideWeavingPreconditionInjector.cs" />
-    <Compile Include="Factory\Configuration\CallUpdateFieldInterceptorAroundInstructionBuilder.cs" />
-    <Compile Include="Factory\Configuration\CallGetPropertyInterceptorAroundInstructionBuilder.cs" />
-    <Compile Include="Factory\Configuration\CallMethodInterceptorAroundInstructionBuilder.cs" />
-    <Compile Include="Factory\Configuration\CallSetPropertyInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Factory\Configuration\Instruction\CallUpdateFieldInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Factory\Configuration\Instruction\CallGetPropertyInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Factory\Configuration\Instruction\CallMethodInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Factory\Configuration\Instruction\CallSetPropertyInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\AroundInstructionWeaverFactory.cs" />
-    <Compile Include="Factory\Configuration\CallGetFieldInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Factory\Configuration\Instruction\CallGetFieldInterceptorAroundInstructionBuilder.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\IInterceptorAroundInstructionBuilder.cs" />
-    <Compile Include="Factory\Configuration\CallConstructorInterceptorAroundInstructionBuilder.cs" />
-    <Compile Include="Factory\Configuration\ConstructorWeavingMethodInjectorFactory.cs" />
-    <Compile Include="Factory\Configuration\PropertySetterWeavingMethodInjectorFactory.cs" />
-    <Compile Include="Factory\Configuration\PropertyGetterWeavingMethodInjectorFactory.cs" />
+    <Compile Include="Factory\Configuration\Instruction\CallConstructorInterceptorAroundInstructionBuilder.cs" />
+    <Compile Include="Factory\Configuration\Method\ConstructorWeavingMethodInjectorFactory.cs" />
+    <Compile Include="Factory\Configuration\Method\PropertySetterWeavingMethodInjectorFactory.cs" />
+    <Compile Include="Factory\Configuration\Method\PropertyGetterWeavingMethodInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\Model\IChecker.cs" />
     <Compile Include="Core\Weaver\Detectors\Model\InstructionWeavingInfo.cs" />
     <Compile Include="Core\Weaver\Detectors\Model\AroundInstructionInfoExtensions.cs" />
@@ -126,21 +128,20 @@
     <Compile Include="Core\Weaver\Detectors\Model\ParameterWeavingInfo.cs" />
     <Compile Include="Core\Weaver\Detectors\ParameterWeaving\AroundMethodForParameterWeaverFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\ParameterWeaving\IInterceptorAroundMethodForParameterBuilder.cs" />
-    <Compile Include="Factory\Configuration\MethodWeavingParameterInjectorFactory.cs" />
+    <Compile Include="Factory\Configuration\Parameters\MethodWeavingParameterInjectorFactory.cs" />
     <Compile Include="Core\Weaver\Detectors\ParameterWeaving\ParameterWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\SelectorProvider.cs" />
     <Compile Include="Core\Weaver\Engine\AspectInstanceForMethodWeavingExtensions.cs" />
-    <Compile Include="Core\Weaver\Engine\ICallWeavingDetector.cs" />
-    <Compile Include="Core\Weaver\Engine\IMethodWeavingDetector.cs" />
+    <Compile Include="Core\Weaver\Session\IInstructionWeavingDetector.cs" />
+    <Compile Include="Core\Weaver\Session\IMethodWeavingDetector.cs" />
     <Compile Include="Core\Weaver\Detectors\MethodWeaving\MethodWeavingDetector.cs" />
-    <Compile Include="Core\Weaver\Checkers\Aspects\DefaultAspectChecker.cs" />
-    <Compile Include="Core\Weaver\Engine\AspectFinders\DefaultAspectFinder.cs" />
+    <Compile Include="Core\Weaver\Session\AspectCheckers\DefaultAspectChecker.cs" />
+    <Compile Include="Core\Weaver\Session\AspectFinders\DefaultAspectFinder.cs" />
     <Compile Include="Core\Weaver\Engine\AssemblyPoolFactories\DefaultAssemblyPoolFactory.cs" />
     <Compile Include="Core\Selectors\Selector.cs" />
     <Compile Include="Core\Selectors\SelectorParametersGenerator.cs" />
-    <Compile Include="Core\Model\Weaving\MethodWeavingModel.cs" />
+    <Compile Include="Core\Model\Weaving\WeavingMethodSession.cs" />
     <Compile Include="Core\Weaver\Engine\Instructions\AroundInstructionIl.cs" />
-    <Compile Include="Core\Weaver\Engine\Instructions\AroundInstructionWeaver.cs" />
     <Compile Include="Core\Weaver\Engine\LifeCycle\PerInstanceLifeCycleHandler.cs" />
     <Compile Include="Core\Weaver\Engine\MethodWeaver.cs" />
     <Compile Include="Core\Weaver\Detectors\Model\InterceptorParameterConfiguration.cs" />
@@ -151,24 +152,28 @@
     <Compile Include="Core\Weaver\Aspects\AspectApplier.cs" />
     <Compile Include="Core\Weaver\Detectors\InstructionWeaving\InstructionWeavingDetector.cs" />
     <Compile Include="Core\Weaver\ILInjector\ParametersIlGenerator.cs" />
-    <Compile Include="Core\Model\Weaving\IIlInjectorsExtensions.cs" />
+    <Compile Include="Core\Weaver\ILInjector\IIlInjectorsExtensions.cs" />
     <Compile Include="Core\Weaver\Engine\LifeCycle\AspectBuilder.cs" />
     <Compile Include="Core\Weaver\Engine\LifeCycle\ILifeCycleHandler.cs" />
     <Compile Include="Core\Weaver\Data\IlInjectorAvailableVariables.cs" />
     <Compile Include="Core\Weaver\Engine\LifeCycle\TransientLifeCycleHandler.cs" />
-    <Compile Include="Core\Weaver\Engine\WeavingModelComputer.cs" />
-    <Compile Include="Helpers\IL\CollectionExtensions.cs" />
-    <Compile Include="Core\Model\Weaving\IIlInjector.cs" />
+    <Compile Include="Core\Weaver\Session\WeavingSessionComputer.cs" />
+    <Compile Include="Factory\ErrorsFactory.cs" />
+    <Compile Include="Factory\InstructionWeavingDetectorFactory.cs" />
+    <Compile Include="Factory\LifeCyclesFactory.cs" />
+    <Compile Include="Factory\MethodWeavingDetectorFactory.cs" />
+    <Compile Include="Helpers\Mono.Cecil\IL\CollectionExtensions.cs" />
+    <Compile Include="Core\Weaver\ILInjector\IIlInjector.cs" />
     <Compile Include="Core\Weaver\Injector.cs" />
-    <Compile Include="Factory\Configuration\MethodWeavingMethodInjectorFactory.cs" />
-    <Compile Include="Helpers\IL\InstructionsExtensions.cs" />
-    <Compile Include="Helpers\IL\InstructionExtensions.cs" />
-    <Compile Include="Helpers\IL\MethodDefinitionExtensions.cs" />
-    <Compile Include="Helpers\AssemblyExtensions.cs" />
-    <Compile Include="Helpers\ObjectExtensions.cs" />
-    <Compile Include="Helpers\AssemblyDefinitionExtensions.cs" />
-    <Compile Include="Factory\InstructionCompliance.cs" />
-    <Compile Include="Factory\MethodCompliance.cs" />
+    <Compile Include="Factory\Configuration\Method\MethodWeavingMethodInjectorFactory.cs" />
+    <Compile Include="Helpers\Mono.Cecil\IL\InstructionsExtensions.cs" />
+    <Compile Include="Helpers\Mono.Cecil\IL\InstructionExtensions.cs" />
+    <Compile Include="Helpers\Mono.Cecil\IL\MethodDefinitionExtensions.cs" />
+    <Compile Include="Helpers\NetFramework\AssemblyExtensions.cs" />
+    <Compile Include="Helpers\NetFramework\ObjectExtensions.cs" />
+    <Compile Include="Helpers\Mono.Cecil\AssemblyDefinitionExtensions.cs" />
+    <Compile Include="Factory\Tools\InstructionCompliance.cs" />
+    <Compile Include="Factory\Tools\MethodCompliance.cs" />
     <Compile Include="Factory\WeaverFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -178,7 +183,11 @@
       <Name>NetAspect.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\Weaver\Instruction\" />
+    <Folder Include="Core\Weaver\Method\" />
+    <Folder Include="Core\Weaver\Parameters\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -156,7 +156,7 @@ namespace NetAspect.Doc.Builder.Model
          }
 
          public List<ParameterModel> Parameters { get; set; }
-         public WeavingModel Weaving { get; set; }
+         public WeavingModelDoc Weaving { get; set; }
 
          public IEnumerable<InterceptorDocumentation> GetInterceptors(string member)
          {
@@ -190,7 +190,7 @@ namespace NetAspect.Doc.Builder.Model
       }
    }
 
-   public class WeavingModel
+   public class WeavingModelDoc
    {
       public string WeaveWithAttributeSampleAspect { get; set; }
       public string WeaveWithAttributeSampleClassToWeave { get; set; }

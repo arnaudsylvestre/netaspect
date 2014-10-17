@@ -7,15 +7,15 @@ using NetAspect.Weaver.Core.Weaver.Engine;
 
 namespace NetAspect.Weaver.Core.Weaver.Checkers.Aspects
 {
-    public class DefaultAspectChecker : WeavingModelComputer.IAspectChecker
+    public class DefaultAspectChecker : WeavingSessionComputer.IAspectChecker
    {
-      public void Check(NetAspectDefinition aspect_P, ErrorHandler errorHandler_P)
+      public void Check(NetAspectDefinition aspect, ErrorHandler errorHandler)
       {
-         EnsureSelector(aspect_P.FieldSelector, errorHandler_P, aspect_P);
-         EnsureSelector(aspect_P.MethodSelector, errorHandler_P, aspect_P);
-         EnsureSelector(aspect_P.ConstructorSelector, errorHandler_P, aspect_P);
-         EnsureSelector(aspect_P.PropertySelector, errorHandler_P, aspect_P);
-         EnsureSelector(aspect_P.ParameterSelector, errorHandler_P, aspect_P);
+         EnsureSelector(aspect.FieldSelector, errorHandler, aspect);
+         EnsureSelector(aspect.MethodSelector, errorHandler, aspect);
+         EnsureSelector(aspect.ConstructorSelector, errorHandler, aspect);
+         EnsureSelector(aspect.PropertySelector, errorHandler, aspect);
+         EnsureSelector(aspect.ParameterSelector, errorHandler, aspect);
       }
 
       private void EnsureSelector<T>(Selector<T> fieldSelector, ErrorHandler errorHandler, NetAspectDefinition aspectP)

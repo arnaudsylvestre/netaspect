@@ -6,8 +6,8 @@ using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
 
 namespace NetAspect.Weaver.Core.Weaver.Engine
 {
-   public interface ICallWeavingDetector
+   public interface IInstructionWeavingDetector
    {
-       IEnumerable<AroundInstructionWeaver> DetectWeavingModel(MethodDefinition method, Instruction instruction, NetAspectDefinition aspect);
+       IEnumerable<AspectInstanceForInstruction> DetectWeavingModel(MethodDefinition method, Instruction instruction, NetAspectDefinition aspect);
    }
 }
