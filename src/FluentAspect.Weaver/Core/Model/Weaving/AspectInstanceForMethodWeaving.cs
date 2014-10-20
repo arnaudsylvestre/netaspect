@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
-using NetAspect.Weaver.Core.Weaver.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.ToSort.ILInjector;
 
 namespace NetAspect.Weaver.Core.Model.Weaving
 {

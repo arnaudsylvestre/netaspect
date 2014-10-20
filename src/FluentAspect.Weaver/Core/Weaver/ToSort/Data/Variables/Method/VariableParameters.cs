@@ -1,9 +1,9 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Helpers.IL;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Method
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Method
 {
     public class VariableParameters : Variable.IVariableBuilder
     {
@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Method
             
         }
 
-        public VariableDefinition Build(InstructionsToInsert instructionsToInsert, MethodDefinition method, Instruction instruction)
+        public VariableDefinition Build(InstructionsToInsert instructionsToInsert, MethodDefinition method, Mono.Cecil.Cil.Instruction instruction)
         {
             var parameters = new VariableDefinition(method.Module.Import(typeof(object[])));
 

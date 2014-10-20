@@ -3,9 +3,8 @@ using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Selectors;
-using NetAspect.Weaver.Core.Weaver.Engine;
 
-namespace NetAspect.Weaver.Core.Weaver.Checkers.Aspects
+namespace NetAspect.Weaver.Core.Weaver.Session.AspectCheckers
 {
     public class DefaultAspectChecker : WeavingSessionComputer.IAspectChecker
    {

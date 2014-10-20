@@ -3,9 +3,9 @@ using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Helpers.IL;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Method
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Method
 {
     public class VariableCurrentProperty : Variable.IVariableBuilder
     {
@@ -14,20 +14,20 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Method
             
         }
 
-        public VariableDefinition Build(InstructionsToInsert instructionsToInsert, MethodDefinition method, Instruction instruction)
+        public VariableDefinition Build(InstructionsToInsert instructionsToInsert, MethodDefinition method, Mono.Cecil.Cil.Instruction instruction)
         {
             var currentPropertyInfo = new VariableDefinition(method.Module.Import(typeof(PropertyInfo)));
 
 
             instructionsToInsert.BeforeInstructions.Add(
-               Instruction.Create(
+               Mono.Cecil.Cil.Instruction.Create(
                   OpCodes.Call,
                   method.Module.Import(
                      typeof(MethodBase).GetMethod(
                         "GetCurrentMethod",
                         new Type[] { }))));
             instructionsToInsert.BeforeInstructions.Add(
-               Instruction.Create(
+               Mono.Cecil.Cil.Instruction.Create(
                   OpCodes.Callvirt,
                   method.Module.Import(
                      typeof(MemberInfo).GetMethod(
@@ -36,7 +36,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Method
             instructionsToInsert.BeforeInstructions.AppendCallToGetProperty(
                method.Name.Replace("get_", "").Replace("set_", ""),
                method.Module);
-            instructionsToInsert.BeforeInstructions.Add(Instruction.Create(OpCodes.Stloc, currentPropertyInfo));
+            instructionsToInsert.BeforeInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, currentPropertyInfo));
             return currentPropertyInfo;
         }
     }

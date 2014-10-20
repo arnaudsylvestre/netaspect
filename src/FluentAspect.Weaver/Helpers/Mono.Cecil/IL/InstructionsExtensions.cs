@@ -4,7 +4,7 @@ using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace NetAspect.Weaver.Helpers.IL
+namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
 {
    public static class InstructionsExtensions
    {

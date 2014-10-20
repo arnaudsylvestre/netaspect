@@ -2,7 +2,6 @@
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
 
 namespace NetAspect.Weaver.Core.Model.Weaving
 {

@@ -3,7 +3,7 @@ using Mono.Cecil;
 using NetAspect.Weaver.Apis.AssemblyChecker;
 using NetAspect.Weaver.Core.Assemblies;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine.AssemblyPoolFactories
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine.AssemblyPoolFactories
 {
    public class DefaultAssemblyPoolFactory : WeaverEngine.IAssemblyPoolFactory
    {

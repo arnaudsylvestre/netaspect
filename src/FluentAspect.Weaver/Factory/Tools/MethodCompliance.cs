@@ -1,8 +1,8 @@
 ﻿using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
-using NetAspect.Weaver.Helpers.IL;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
-namespace NetAspect.Weaver.Factory
+namespace NetAspect.Weaver.Factory.Tools
 {
    internal class MethodCompliance
    {

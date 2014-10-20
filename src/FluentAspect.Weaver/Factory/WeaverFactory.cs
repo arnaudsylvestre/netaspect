@@ -4,11 +4,12 @@ using Mono.Cecil;
 using NetAspect.Weaver.Apis.AssemblyChecker.Peverify;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Weaver;
-using NetAspect.Weaver.Core.Weaver.Checkers.Aspects;
-using NetAspect.Weaver.Core.Weaver.Engine;
-using NetAspect.Weaver.Core.Weaver.Engine.AspectFinders;
-using NetAspect.Weaver.Core.Weaver.Engine.AssemblyPoolFactories;
-using NetAspect.Weaver.Core.Weaver.Engine.Lifecycle;
+using NetAspect.Weaver.Core.Weaver.Session;
+using NetAspect.Weaver.Core.Weaver.Session.AspectCheckers;
+using NetAspect.Weaver.Core.Weaver.Session.AspectFinders;
+using NetAspect.Weaver.Core.Weaver.ToSort.Engine;
+using NetAspect.Weaver.Core.Weaver.ToSort.Engine.AssemblyPoolFactories;
+using NetAspect.Weaver.Core.Weaver.ToSort.Engine.LifeCycle;
 
 namespace NetAspect.Weaver.Factory
 {

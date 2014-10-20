@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.ToSort.ILInjector;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
 {
    public static class AspectInstanceForMethodWeavingExtensions
    {
@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
           aspectInstance.OnFinallys.Check(errorHandler, availableVariables);
       }
 
-      public static void Inject(this AspectInstanceForMethodWeaving aspectInstance, List<Instruction> befores, List<Instruction> afters, List<Instruction> onExceptions, List<Instruction> onFinallys, VariablesForMethod availableVariables, List<Instruction> beforeConstructorBaseCall_P)
+      public static void Inject(this AspectInstanceForMethodWeaving aspectInstance, List<Mono.Cecil.Cil.Instruction> befores, List<Mono.Cecil.Cil.Instruction> afters, List<Mono.Cecil.Cil.Instruction> onExceptions, List<Mono.Cecil.Cil.Instruction> onFinallys, VariablesForMethod availableVariables, List<Mono.Cecil.Cil.Instruction> beforeConstructorBaseCall_P)
       {
          aspectInstance.BeforeConstructorBaseCalls.Inject(beforeConstructorBaseCall_P, availableVariables);
          aspectInstance.Befores.Inject(befores, availableVariables);

@@ -4,7 +4,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Instructions
 {
     public class VariableCalled : Variable.IVariableBuilder
     {
@@ -20,7 +20,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
             
         }
 
-        public VariableDefinition Build(InstructionsToInsert instructionsToInsert, MethodDefinition method, Instruction Instruction)
+        public VariableDefinition Build(InstructionsToInsert instructionsToInsert, MethodDefinition method, Mono.Cecil.Cil.Instruction Instruction)
         {
             calledParametersProvider();
             TypeReference declaringType = null;
@@ -36,8 +36,8 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
 
             var called = new VariableDefinition(declaringType);
 
-            instructionsToInsert.calledInstructions.Add(Instruction.Create(OpCodes.Stloc, called));
-            instructionsToInsert.calledInstructions.Add(Instruction.Create(OpCodes.Ldloc, called));
+            instructionsToInsert.calledInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, called));
+            instructionsToInsert.calledInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldloc, called));
             return called;
         }
     }

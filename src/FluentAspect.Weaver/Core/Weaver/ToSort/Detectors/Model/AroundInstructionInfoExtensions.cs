@@ -1,6 +1,6 @@
 using Mono.Cecil;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.Model
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model
 {
    public static class AroundInstructionInfoExtensions
    {

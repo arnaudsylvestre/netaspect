@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 
-namespace NetAspect.Weaver.Helpers
+namespace NetAspect.Weaver.Helpers.Mono.Cecil
 {
    public static class AssemblyDefinitionExtensions
    {

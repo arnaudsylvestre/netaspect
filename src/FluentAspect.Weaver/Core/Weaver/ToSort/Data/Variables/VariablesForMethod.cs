@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Mono.Cecil.Cil;
 
-namespace NetAspect.Weaver.Core.Weaver.Data.Variables
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables
 {
    public class VariablesForMethod
    {

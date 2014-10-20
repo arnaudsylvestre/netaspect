@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
-using Mono.Cecil.Cil;
 
-namespace NetAspect.Weaver.Core.Weaver.Data
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Data
 {
    public class InstructionsToInsert
    {
 
-      public List<Instruction> aspectInitialisation = new List<Instruction>();
-      public List<Instruction> calledInstructions = new List<Instruction>();
-      public List<Instruction> calledParametersInstructions = new List<Instruction>();
-      public List<Instruction> calledParametersObjectInstructions = new List<Instruction>();
-      public List<Instruction> recallcalledInstructions = new List<Instruction>();
-      public List<Instruction> recallcalledParametersInstructions = new List<Instruction>();
-      public List<Instruction> resultInstructions = new List<Instruction>();
+      public List<Mono.Cecil.Cil.Instruction> aspectInitialisation = new List<Mono.Cecil.Cil.Instruction>();
+      public List<Mono.Cecil.Cil.Instruction> calledInstructions = new List<Mono.Cecil.Cil.Instruction>();
+      public List<Mono.Cecil.Cil.Instruction> calledParametersInstructions = new List<Mono.Cecil.Cil.Instruction>();
+      public List<Mono.Cecil.Cil.Instruction> calledParametersObjectInstructions = new List<Mono.Cecil.Cil.Instruction>();
+      public List<Mono.Cecil.Cil.Instruction> recallcalledInstructions = new List<Mono.Cecil.Cil.Instruction>();
+      public List<Mono.Cecil.Cil.Instruction> recallcalledParametersInstructions = new List<Mono.Cecil.Cil.Instruction>();
+      public List<Mono.Cecil.Cil.Instruction> resultInstructions = new List<Mono.Cecil.Cil.Instruction>();
 
-      public List<Instruction> BeforeInstructions = new List<Instruction>();
+      public List<Mono.Cecil.Cil.Instruction> BeforeInstructions = new List<Mono.Cecil.Cil.Instruction>();
    }
 }

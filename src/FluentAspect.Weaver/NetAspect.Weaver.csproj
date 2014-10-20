@@ -77,6 +77,7 @@
     <Compile Include="Core\Model\Aspect\Interceptor.cs" />
     <Compile Include="Core\Model\Aspect\LifeCycle.cs" />
     <Compile Include="Core\Helpers\LifeCycleHelper.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\InterceptorParameterPossibilityExtensions.cs" />
     <Compile Include="Core\Weaver\ToSort\Engine\AspectInstanceForInstructionExtensions.cs" />
     <Compile Include="Core\Model\Weaving\AspectInstanceForMethodWeaving.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
@@ -124,7 +125,7 @@
     <Compile Include="Core\Weaver\ToSort\Detectors\Model\MethodWeavingInfo.cs" />
     <Compile Include="Core\Weaver\Method\Detector\IlInjectorsFactoryForMethod.cs" />
     <Compile Include="Core\Weaver\Method\Detector\IInterceptorParameterConfigurationForMethodFiller.cs" />
-    <Compile Include="Core\Weaver\Engine\InterceptorParameters\InterceptorParameterConfigurations.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\InterceptorParameterPossibilities.cs" />
     <Compile Include="Core\Weaver\ToSort\Detectors\Model\ParameterWeavingInfo.cs" />
     <Compile Include="Core\Weaver\Parameters\Detector\IlInjectorsFactoryForParameter.cs" />
     <Compile Include="Core\Weaver\Parameters\Detector\IInterceptorParameterConfigurationForParameterFiller.cs" />
@@ -143,7 +144,7 @@
     <Compile Include="Core\Weaver\ToSort\Engine\Instructions\AroundInstructionIl.cs" />
     <Compile Include="Core\Weaver\ToSort\Engine\LifeCycle\PerInstanceLifeCycleHandler.cs" />
     <Compile Include="Core\Weaver\ToSort\Engine\MethodWeaver.cs" />
-    <Compile Include="Core\Weaver\Engine\InterceptorParameters\InterceptorParameterConfiguration.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\InterceptorParameterPossibility.cs" />
     <Compile Include="Core\Weaver\ToSort\Checkers\Ensure.cs" />
     <Compile Include="Core\Weaver\ToSort\Checkers\ParametersChecker.cs" />
     <Compile Include="Core\Helpers\ErrorHandlerExtensions.cs" />

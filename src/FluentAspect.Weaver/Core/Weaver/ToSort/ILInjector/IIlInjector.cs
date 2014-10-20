@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Core.Model.Weaving
+namespace NetAspect.Weaver.Core.Weaver.ToSort.ILInjector
 {
    public interface IIlInjector<T>
    {
        void Check(ErrorHandler errorHandler, T availableInformations);
-      void Inject(List<Instruction> instructions, T availableInformations);
+      void Inject(List<Mono.Cecil.Cil.Instruction> instructions, T availableInformations);
    }
 }

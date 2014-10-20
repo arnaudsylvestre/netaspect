@@ -6,6 +6,7 @@ using Mono.Cecil;
 using NetAspect.Weaver.Apis.AssemblyChecker;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Helpers;
+using NetAspect.Weaver.Helpers.NetFramework;
 
 namespace NetAspect.Weaver.Core.Assemblies
 {

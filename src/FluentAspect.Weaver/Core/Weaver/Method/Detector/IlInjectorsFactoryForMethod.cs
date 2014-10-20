@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Reflection;
 using Mono.Cecil;
-using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.Data.Variables;
-using NetAspect.Weaver.Core.Weaver.Detectors.Model;
+using NetAspect.Weaver.Core.Weaver.Engine.InterceptorParameters;
+using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model;
+using NetAspect.Weaver.Core.Weaver.ToSort.ILInjector;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
+namespace NetAspect.Weaver.Core.Weaver.Method.Detector
 {
    public class IlInjectorsFactoryForMethod
    {
       private readonly IInterceptorParameterConfigurationForMethodFiller builder;
       private readonly IWevingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector;
-       private readonly Action<MethodWeavingInfo, InterceptorParameterConfigurations<VariablesForMethod>> NoSpecific = (info, interceptorParameterConfigurations) => { };
+       private readonly Action<MethodWeavingInfo, InterceptorParameterPossibilities<VariablesForMethod>> NoSpecific = (info, interceptorParameterConfigurations) => { };
 
       public IlInjectorsFactoryForMethod(IInterceptorParameterConfigurationForMethodFiller builder, IWevingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector)
       {
@@ -39,7 +40,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
          return Create(method, interceptorMethod, builder.FillOnExceptionSpecific);
       }
 
-      private IIlInjector<VariablesForMethod> Create(MethodDefinition method, MethodInfo interceptorMethod, Action<MethodWeavingInfo, InterceptorParameterConfigurations<VariablesForMethod>> fillSpecific)
+      private IIlInjector<VariablesForMethod> Create(MethodDefinition method, MethodInfo interceptorMethod, Action<MethodWeavingInfo, InterceptorParameterPossibilities<VariablesForMethod>> fillSpecific)
       {
           if (interceptorMethod == null)
               return new NoIIlInjector<VariablesForMethod>();
@@ -49,7 +50,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving
               Interceptor = interceptorMethod,
               Method = method,
           };
-          var interceptorParameterConfigurations = new InterceptorParameterConfigurations<VariablesForMethod>();
+          var interceptorParameterConfigurations = new InterceptorParameterPossibilities<VariablesForMethod>();
           builder.FillCommon(weavingInfo_P, interceptorParameterConfigurations);
           fillSpecific(weavingInfo_P, interceptorParameterConfigurations);
 

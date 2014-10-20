@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Core.Weaver.Data;
-using NetAspect.Weaver.Core.Weaver.Data.Variables;
 
-namespace NetAspect.Weaver.Core.Model.Weaving
+namespace NetAspect.Weaver.Core.Weaver.ToSort.ILInjector
 {
    public static class IIlInjectorsExtensions
    {
@@ -16,7 +13,7 @@ namespace NetAspect.Weaver.Core.Model.Weaving
          }
       }
 
-      public static void Inject<T>(this IEnumerable<IIlInjector<T>> injectors, List<Instruction> instructions, T info)
+      public static void Inject<T>(this IEnumerable<IIlInjector<T>> injectors, List<Mono.Cecil.Cil.Instruction> instructions, T info)
       {
          foreach (var ilInjector in injectors)
          {

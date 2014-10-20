@@ -3,7 +3,7 @@ using System.Linq;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
 
-namespace NetAspect.Weaver.Core.Weaver.Helpers
+namespace NetAspect.Weaver.Core.Helpers
 {
    public static class ErrorHandlerExtensions
    {

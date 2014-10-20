@@ -7,6 +7,7 @@ using Mono.Collections.Generic;
 using NetAspect.Weaver.Core.Helpers;
 using NetAspect.Weaver.Core.Selectors;
 using NetAspect.Weaver.Helpers;
+using NetAspect.Weaver.Helpers.NetFramework;
 
 namespace NetAspect.Weaver.Core.Model.Aspect
 {

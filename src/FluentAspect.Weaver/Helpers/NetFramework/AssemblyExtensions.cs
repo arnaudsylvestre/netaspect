@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace NetAspect.Weaver.Helpers
+namespace NetAspect.Weaver.Helpers.NetFramework
 {
    public static class AssemblyExtensions
    {

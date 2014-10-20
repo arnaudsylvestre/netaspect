@@ -1,9 +1,9 @@
 ﻿using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
-using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.ToSort.ILInjector;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
+namespace NetAspect.Weaver.Core.Model.Weaving
 {
     public class AspectInstanceForInstruction
    {

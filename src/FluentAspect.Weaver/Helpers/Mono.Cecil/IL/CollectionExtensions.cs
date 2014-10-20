@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mono.Collections.Generic;
 
-namespace NetAspect.Weaver.Helpers.IL
+namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
 {
    public static class CollectionExtensions
    {

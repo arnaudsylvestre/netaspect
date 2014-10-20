@@ -4,9 +4,9 @@ using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Errors;
-using NetAspect.Weaver.Core.Weaver.Engine.Lifecycle;
+using NetAspect.Weaver.Core.Weaver.ToSort.Engine.LifeCycle;
 
-namespace NetAspect.Weaver.Core.Weaver.Data.Variables
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables
 {
     public class VariableAspect : Variable.IVariableBuilder
     {
@@ -24,7 +24,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
             this.customAttribute = customAttribute;
         }
 
-        public VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Instruction instruction)
+        public VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Mono.Cecil.Cil.Instruction instruction)
         {
             var interceptorVariable = new VariableDefinition(method.Module.Import(aspectType));
             aspectBuilder.CreateInterceptor(aspectType, lifeCycle, method, interceptorVariable, instructionsToInsert_P.aspectInitialisation, customAttribute);

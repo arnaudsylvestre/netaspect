@@ -3,9 +3,9 @@ using System.Reflection;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
-using NetAspect.Weaver.Core.Weaver.Detectors.Model;
+using NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model;
 
-namespace NetAspect.Weaver.Core.Weaver.Checkers.Ensures
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Checkers.Ensures
 {
    public class ParameterTypeChecker : IChecker
    {

@@ -1,9 +1,9 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Helpers.IL;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Instructions
 {
     public class VariableResultForInstruction : Variable.IVariableBuilder
     {
@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
             
         }
 
-        public VariableDefinition Build(InstructionsToInsert instructionsToInsert, MethodDefinition methodToWeave, Instruction Instruction)
+        public VariableDefinition Build(InstructionsToInsert instructionsToInsert, MethodDefinition methodToWeave, Mono.Cecil.Cil.Instruction Instruction)
         {
             VariableDefinition _resultForInstruction = null;
             if (Instruction.Operand is MethodReference)
@@ -21,15 +21,15 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
                 if (method.ReturnType == method.Module.TypeSystem.Void)
                     return null;
                 _resultForInstruction = new VariableDefinition(method.ReturnType);
-                instructionsToInsert.resultInstructions.Add(Instruction.Create(OpCodes.Stloc, _resultForInstruction));
-                instructionsToInsert.resultInstructions.Add(Instruction.Create(OpCodes.Ldloc, _resultForInstruction));
+                instructionsToInsert.resultInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, _resultForInstruction));
+                instructionsToInsert.resultInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldloc, _resultForInstruction));
             }
             if (Instruction.IsAGetField())
             {
                 var fieldReference_L = Instruction.Operand as FieldReference;
                 _resultForInstruction = new VariableDefinition(fieldReference_L.FieldType);
-                instructionsToInsert.resultInstructions.Add(Instruction.Create(OpCodes.Stloc, _resultForInstruction));
-                instructionsToInsert.resultInstructions.Add(Instruction.Create(OpCodes.Ldloc, _resultForInstruction));
+                instructionsToInsert.resultInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, _resultForInstruction));
+                instructionsToInsert.resultInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldloc, _resultForInstruction));
             }
             return _resultForInstruction;
         }

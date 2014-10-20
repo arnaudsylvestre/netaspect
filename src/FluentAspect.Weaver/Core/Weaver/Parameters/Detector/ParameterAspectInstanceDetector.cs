@@ -4,13 +4,12 @@ using System.Linq;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Selectors;
-using NetAspect.Weaver.Core.Weaver.Aspects;
-using NetAspect.Weaver.Core.Weaver.Data.Variables;
-using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
-using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Core.Weaver.Session;
+using NetAspect.Weaver.Core.Weaver.ToSort.Aspects;
+using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.ToSort.ILInjector;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
+namespace NetAspect.Weaver.Core.Weaver.Parameters.Detector
 {
    public class ParameterAspectInstanceDetector : IMethodAspectInstanceDetector
    {

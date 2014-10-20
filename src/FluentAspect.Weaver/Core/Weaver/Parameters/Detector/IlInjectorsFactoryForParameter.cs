@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Reflection;
 using Mono.Cecil;
-using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.Data.Variables;
-using NetAspect.Weaver.Core.Weaver.Detectors.Model;
+using NetAspect.Weaver.Core.Weaver.Engine.InterceptorParameters;
+using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model;
+using NetAspect.Weaver.Core.Weaver.ToSort.ILInjector;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
+namespace NetAspect.Weaver.Core.Weaver.Parameters.Detector
 {
    public class IlInjectorsFactoryForParameter
    {
@@ -18,7 +19,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
          this.weavingPreconditionInjector = weavingPreconditionInjector;
       }
 
-      public IIlInjector<VariablesForMethod> Create(MethodDefinition method, MethodInfo interceptorMethod, Action<ParameterWeavingInfo, InterceptorParameterConfigurations<VariablesForMethod>> fillSpecific, ParameterDefinition parameter)
+      public IIlInjector<VariablesForMethod> Create(MethodDefinition method, MethodInfo interceptorMethod, Action<ParameterWeavingInfo, InterceptorParameterPossibilities<VariablesForMethod>> fillSpecific, ParameterDefinition parameter)
       {
          if (interceptorMethod == null)
              return new NoIIlInjector<VariablesForMethod>();
@@ -29,7 +30,7 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving
             Method = method,
             Parameter = parameter,
          };
-         var interceptorParameterConfigurations = new InterceptorParameterConfigurations<VariablesForMethod>();
+         var interceptorParameterConfigurations = new InterceptorParameterPossibilities<VariablesForMethod>();
          _filler.FillCommon(weavingInfo_P, interceptorParameterConfigurations);
          fillSpecific(weavingInfo_P, interceptorParameterConfigurations);
 

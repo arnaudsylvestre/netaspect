@@ -8,9 +8,9 @@ using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Helpers;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Helpers;
+using NetAspect.Weaver.Helpers.Mono.Cecil;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine
+namespace NetAspect.Weaver.Core.Weaver.Session
 {
     public class WeavingSessionComputer
     {

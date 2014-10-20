@@ -3,9 +3,8 @@ using System.Linq;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Selectors;
-using NetAspect.Weaver.Core.Weaver.Detectors;
 
-namespace NetAspect.Weaver.Core.Weaver.Aspects
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Aspects
 {
        public delegate Selector<T> SelectorProvider<T>(NetAspectDefinition aspect);
    public static class AspectApplier

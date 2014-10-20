@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Helpers;
+using NetAspect.Weaver.Helpers.NetFramework;
 using NetAspect.Weaver.Tests.Helpers;
 
 namespace NetAspect.Weaver.Tests.unit

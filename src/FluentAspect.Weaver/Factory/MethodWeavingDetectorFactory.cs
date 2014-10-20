@@ -1,10 +1,14 @@
 ﻿using Mono.Cecil;
 using NetAspect.Weaver.Core.Weaver;
-using NetAspect.Weaver.Core.Weaver.Detectors.MethodWeaving;
-using NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving;
-using NetAspect.Weaver.Core.Weaver.Engine;
+using NetAspect.Weaver.Core.Weaver.Method.Detector;
+using NetAspect.Weaver.Core.Weaver.Parameters.Detector;
+using NetAspect.Weaver.Core.Weaver.Session;
+using NetAspect.Weaver.Core.Weaver.ToSort.ILInjector;
 using NetAspect.Weaver.Factory.Configuration;
-using NetAspect.Weaver.Helpers.IL;
+using NetAspect.Weaver.Factory.Configuration.Method;
+using NetAspect.Weaver.Factory.Configuration.Parameters;
+using NetAspect.Weaver.Factory.Tools;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
 namespace NetAspect.Weaver.Factory
 {

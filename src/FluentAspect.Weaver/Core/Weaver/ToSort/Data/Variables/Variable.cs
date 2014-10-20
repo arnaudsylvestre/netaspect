@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 
-namespace NetAspect.Weaver.Core.Weaver.Data.Variables
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables
 {
     public class Variable
     {
         public interface IVariableBuilder
         {
             void Check(MethodDefinition method, ErrorHandler errorHandler);
-            VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Instruction instruction);
+            VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Mono.Cecil.Cil.Instruction instruction);
         }
 
         private VariableDefinition _definition;
@@ -19,9 +18,9 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
         private IVariableBuilder variableBuilder;
         private List<VariableDefinition> variables;
         private MethodDefinition method;
-        private readonly Instruction instruction;
+        private readonly Mono.Cecil.Cil.Instruction instruction;
 
-        public Variable(InstructionsToInsert instructionsToInsert_P, IVariableBuilder variableBuilder_P, MethodDefinition method_P, Instruction instruction, List<VariableDefinition> variables)
+        public Variable(InstructionsToInsert instructionsToInsert_P, IVariableBuilder variableBuilder_P, MethodDefinition method_P, Mono.Cecil.Cil.Instruction instruction, List<VariableDefinition> variables)
         {
             instructionsToInsert = instructionsToInsert_P;
             variableBuilder = variableBuilder_P;

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using Mono.Cecil.Cil;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine.Instructions
 {
    public class AroundInstructionIl
    {
-      public readonly List<Instruction> AfterInstruction = new List<Instruction>();
-      public readonly List<Instruction> BeforeInstruction = new List<Instruction>();
+      public readonly List<Mono.Cecil.Cil.Instruction> AfterInstruction = new List<Mono.Cecil.Cil.Instruction>();
+      public readonly List<Mono.Cecil.Cil.Instruction> BeforeInstruction = new List<Mono.Cecil.Cil.Instruction>();
    }
 }

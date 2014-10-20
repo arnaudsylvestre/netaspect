@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NetAspect.Weaver.Core.Model.Aspect;
-using NetAspect.Weaver.Helpers.IL;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine.Lifecycle
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine.LifeCycle
 {
    public class TransientLifeCycleHandler : ILifeCycleHandler
    {
        public void CreateInterceptor(Type aspectType,
          MethodDefinition method_P,
          VariableDefinition interceptorVariable,
-         List<Instruction> instructions, CustomAttribute attibute)
+         List<Mono.Cecil.Cil.Instruction> instructions, CustomAttribute attibute)
       {
           instructions.AppendCreateNewObject(interceptorVariable, aspectType, method_P.Module, attibute);
       }

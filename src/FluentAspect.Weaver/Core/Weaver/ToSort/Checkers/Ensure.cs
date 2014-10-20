@@ -1,11 +1,10 @@
 ﻿using System.Reflection;
 using Mono.Cecil;
-using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
-using NetAspect.Weaver.Helpers.IL;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Checkers
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Checkers
 {
    internal static class Ensure
    {
@@ -22,7 +21,7 @@ namespace NetAspect.Weaver.Core.Weaver.Checkers
          }
       }
 
-      public static void SequencePoint(Instruction instruction, ErrorHandler errorHandler, ParameterInfo info)
+      public static void SequencePoint(Mono.Cecil.Cil.Instruction instruction, ErrorHandler errorHandler, ParameterInfo info)
       {
          if (instruction.GetLastSequencePoint() == null)
             errorHandler.OnError(

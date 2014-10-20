@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using NetAspect.Weaver.Core.Model.Aspect;
-using NetAspect.Weaver.Helpers;
+using NetAspect.Weaver.Helpers.NetFramework;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine.AspectFinders
+namespace NetAspect.Weaver.Core.Weaver.Session.AspectFinders
 {
    public class DefaultAspectFinder : WeavingSessionComputer.IAspectFinder
    {

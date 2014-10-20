@@ -3,183 +3,184 @@ using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NetAspect.Weaver.Core.Weaver.Checkers;
-using NetAspect.Weaver.Core.Weaver.Checkers.Ensures;
-using NetAspect.Weaver.Core.Weaver.Data;
-using NetAspect.Weaver.Core.Weaver.Data.Variables;
-using NetAspect.Weaver.Core.Weaver.Detectors.Model;
-using NetAspect.Weaver.Helpers.IL;
+using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Weaver.Engine.InterceptorParameters;
+using NetAspect.Weaver.Core.Weaver.ToSort.Checkers;
+using NetAspect.Weaver.Core.Weaver.ToSort.Checkers.Ensures;
+using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Engine
 {
    public static class InterceptorParametersRulesExtensions
    {
-       public static InterceptorParameterConfiguration<T> WhichCanNotBeReferenced<T>(this InterceptorParameterConfiguration<T> configuration) where T : VariablesForMethod
+       public static InterceptorParameterPossibility<T> WhichCanNotBeReferenced<T>(this InterceptorParameterPossibility<T> possibility) where T : VariablesForMethod
        {
-         configuration.Checker.Add(Ensure.NotReferenced);
-         return configuration;
+           possibility.Checkers.Add(Ensure.NotReferenced);
+           return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> WhereParameterTypeIsSameAsMethodResult<T>(this InterceptorParameterConfiguration<T> configuration, MethodWeavingInfo info) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> WhereParameterTypeIsSameAsMethodResult<T>(this InterceptorParameterPossibility<T> possibility, MethodWeavingInfo info) where T : VariablesForMethod
       {
-         configuration.Checker.Add((parameter, errorListener) => Ensure.ResultOfType(parameter, errorListener, info.Method));
-         return configuration;
+          possibility.Checkers.Add((parameter, errorListener) => Ensure.ResultOfType(parameter, errorListener, info.Method));
+          return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> WhereParameterTypeIsSameAsMethodResultAndNotReferenced<T>(this InterceptorParameterConfiguration<T> configuration, MethodWeavingInfo info) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> WhereParameterTypeIsSameAsMethodResultAndNotReferenced<T>(this InterceptorParameterPossibility<T> possibility, MethodWeavingInfo info) where T : VariablesForMethod
       {
-         configuration.Checker.Add((parameter, errorListener) => Ensure.ResultOfTypeNotReferenced(parameter, errorListener, info.Method));
-         return configuration;
+          possibility.Checkers.Add((parameter, errorListener) => Ensure.ResultOfTypeNotReferenced(parameter, errorListener, info.Method));
+          return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> AndInjectTheVariable<T>(this InterceptorParameterConfiguration<T> configuration, Func<T, VariableDefinition> variableProvider) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> AndInjectTheVariable<T>(this InterceptorParameterPossibility<T> possibility, Func<T, VariableDefinition> variableProvider) where T : VariablesForMethod
       {
-         configuration.Generator.Generators.Add(
+         possibility.Generators.Add(
             (parameterInfo, instructions, info) =>
                instructions.Add(
-                  Instruction.Create(parameterInfo.ParameterType.IsByRef ? OpCodes.Ldloca : OpCodes.Ldloc, variableProvider(info))
+                  Mono.Cecil.Cil.Instruction.Create(parameterInfo.ParameterType.IsByRef ? OpCodes.Ldloca : OpCodes.Ldloc, variableProvider(info))
                   ));
-         return configuration;
+         return possibility;
       }
 
 
-      public static InterceptorParameterConfiguration<T> WhichPdbPresent<T>(this InterceptorParameterConfiguration<T> configuration, InstructionWeavingInfo info) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> WhichPdbPresent<T>(this InterceptorParameterPossibility<T> possibility, InstructionWeavingInfo info) where T : VariablesForMethod
       {
-         configuration.Checker.Add((parameter, errorListener) => Ensure.SequencePoint(info.Instruction, errorListener, parameter));
-         return configuration;
+          possibility.Checkers.Add((parameter, errorListener) => Ensure.SequencePoint(info.Instruction, errorListener, parameter));
+          return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> WhichPdbPresentForMethod<T>(this InterceptorParameterConfiguration<T> configuration, MethodWeavingInfo info) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> WhichPdbPresentForMethod<T>(this InterceptorParameterPossibility<T> possibility, MethodWeavingInfo info) where T : VariablesForMethod
       {
-         configuration.Checker.Add((parameter, errorListener) => Ensure.SequencePoint(GetFirstInstruction(info), errorListener, parameter));
-         return configuration;
+          possibility.Checkers.Add((parameter, errorListener) => Ensure.SequencePoint(GetFirstInstruction(info), errorListener, parameter));
+          return possibility;
       }
 
-      private static Instruction GetFirstInstruction(MethodWeavingInfo info)
+      private static Mono.Cecil.Cil.Instruction GetFirstInstruction(MethodWeavingInfo info)
       {
          return info.Method.Body.Instructions.First();
       }
 
-      public static InterceptorParameterConfiguration<T> WhichCanNotBeOut<T>(this InterceptorParameterConfiguration<T> configuration) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> WhichCanNotBeOut<T>(this InterceptorParameterPossibility<T> possibility) where T : VariablesForMethod
       {
-         configuration.Checker.Add(new ParameterReferencedChecker(ParameterReferencedChecker.ReferenceModel.Referenced));
-         return configuration;
+         possibility.AddChecker(new ParameterReferencedChecker(ParameterReferencedChecker.ReferenceModel.Referenced));
+         return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> WhereFieldCanNotBeStatic<T>(this InterceptorParameterConfiguration<T> configuration, IMemberDefinition member) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> WhereFieldCanNotBeStatic<T>(this InterceptorParameterPossibility<T> possibility, IMemberDefinition member) where T : VariablesForMethod
       {
-         configuration.Checker.Add((parameter, errorListener) => Ensure.NotStaticButDefaultValue(parameter, errorListener, member));
-         return configuration;
+          possibility.Checkers.Add((parameter, errorListener) => Ensure.NotStaticButDefaultValue(parameter, errorListener, member));
+          return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> WhereCurrentMethodCanNotBeStatic<T>(this InterceptorParameterConfiguration<T> configuration, MethodWeavingInfo weavingInfo) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> WhereCurrentMethodCanNotBeStatic<T>(this InterceptorParameterPossibility<T> possibility, MethodWeavingInfo weavingInfo) where T : VariablesForMethod
       {
-         configuration.Checker.Add((parameter, errorListener) => Ensure.NotStatic(parameter, errorListener, weavingInfo.Method));
-         return configuration;
+          possibility.Checkers.Add((parameter, errorListener) => Ensure.NotStatic(parameter, errorListener, weavingInfo.Method));
+          return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> WhichMustBeOfType<T, T1>(this InterceptorParameterConfiguration<T> configuration) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> WhichMustBeOfType<T, T1>(this InterceptorParameterPossibility<T> possibility) where T : VariablesForMethod
       {
-         return configuration.WhichMustBeOfTypeOf(typeof (T1).FullName);
+         return possibility.WhichMustBeOfTypeOf(typeof (T1).FullName);
       }
 
-      public static InterceptorParameterConfiguration<T> WhichMustBeOfTypeOfParameter<T>(this InterceptorParameterConfiguration<T> configuration, ParameterDefinition parameterDefinition) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> WhichMustBeOfTypeOfParameter<T>(this InterceptorParameterPossibility<T> possibility, ParameterDefinition parameterDefinition) where T : VariablesForMethod
       {
-         configuration.Checker.Add((info, handler) => Ensure.ParameterOfType(info, handler, parameterDefinition));
-         return configuration;
+          possibility.Checkers.Add((info, handler) => Ensure.ParameterOfType(info, handler, parameterDefinition));
+          return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> OrOfType<T>(this InterceptorParameterConfiguration<T> configuration, TypeReference type) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> OrOfType<T>(this InterceptorParameterPossibility<T> possibility, TypeReference type) where T : VariablesForMethod
       {
-         return WhichMustBeOfTypeOf(configuration, type);
+         return WhichMustBeOfTypeOf(possibility, type);
       }
 
-      public static InterceptorParameterConfiguration<T> WhichMustBeOfTypeOf<T>(this InterceptorParameterConfiguration<T> configuration, TypeReference type) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> WhichMustBeOfTypeOf<T>(this InterceptorParameterPossibility<T> possibility, TypeReference type) where T : VariablesForMethod
       {
-         WhichMustBeOfTypeOf(configuration, type.FullName);
-         return configuration;
+         WhichMustBeOfTypeOf(possibility, type.FullName);
+         return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> WhichMustBeOfTypeOf<T>(this InterceptorParameterConfiguration<T> configuration, string fullName) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> WhichMustBeOfTypeOf<T>(this InterceptorParameterPossibility<T> possibility, string fullName) where T : VariablesForMethod
       {
-         configuration.Checker.Add(new ParameterTypeChecker(fullName, null));
-         return configuration;
+         possibility.AddChecker(new ParameterTypeChecker(fullName, null));
+         return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> OrOfCurrentMethodDeclaringType<T>(this InterceptorParameterConfiguration<T> configuration, MethodWeavingInfo weavingInfo) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> OrOfCurrentMethodDeclaringType<T>(this InterceptorParameterPossibility<T> possibility, MethodWeavingInfo weavingInfo) where T : VariablesForMethod
       {
-         return OrOfType(configuration, weavingInfo.Method.DeclaringType);
+         return OrOfType(possibility, weavingInfo.Method.DeclaringType);
       }
 
 
-      public static InterceptorParameterConfiguration<T> AndInjectThePdbInfo<T>(this InterceptorParameterConfiguration<T> configuration, Func<SequencePoint, int> pdbInfoProvider, InstructionWeavingInfo weavingInfo) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> AndInjectThePdbInfo<T>(this InterceptorParameterPossibility<T> possibility, Func<SequencePoint, int> pdbInfoProvider, InstructionWeavingInfo weavingInfo) where T : VariablesForMethod
       {
-         configuration.Generator.Generators.Add(
+         possibility.Generators.Add(
             (parameter, instructions, info) =>
             {
                SequencePoint instructionPP = weavingInfo.Instruction.GetLastSequencePoint();
                instructions.Add(
-                  Instruction.Create(
+                  Mono.Cecil.Cil.Instruction.Create(
                      OpCodes.Ldc_I4,
                      instructionPP == null
                         ? 0
                         : pdbInfoProvider(instructionPP)));
             });
-         return configuration;
+         return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> AndInjectThePdbInfoForMethod<T>(this InterceptorParameterConfiguration<T> configuration, Func<SequencePoint, int> pdbInfoProvider, MethodWeavingInfo weavingInfo) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> AndInjectThePdbInfoForMethod<T>(this InterceptorParameterPossibility<T> possibility, Func<SequencePoint, int> pdbInfoProvider, MethodWeavingInfo weavingInfo) where T : VariablesForMethod
       {
-         configuration.Generator.Generators.Add(
+         possibility.Generators.Add(
             (parameter, instructions, info) =>
             {
                SequencePoint instruction = GetFirstInstruction(weavingInfo).GetLastSequencePoint();
                instructions.Add(
-                  Instruction.Create(
+                  Mono.Cecil.Cil.Instruction.Create(
                      OpCodes.Ldc_I4,
                      instruction == null
                         ? 0
                         : pdbInfoProvider(instruction)));
             });
-         return configuration;
+         return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> AndInjectThePdbInfo<T>(this InterceptorParameterConfiguration<T> configuration, Func<SequencePoint, string> pdbInfoProvider, InstructionWeavingInfo weavingInfo_P) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> AndInjectThePdbInfo<T>(this InterceptorParameterPossibility<T> possibility, Func<SequencePoint, string> pdbInfoProvider, InstructionWeavingInfo weavingInfo_P) where T : VariablesForMethod
       {
-         configuration.Generator.Generators.Add(
+         possibility.Generators.Add(
             (parameter, instructions, info) =>
             {
                SequencePoint instructionPP = weavingInfo_P.Instruction.GetLastSequencePoint();
                instructions.Add(
-                  Instruction.Create(
+                  Mono.Cecil.Cil.Instruction.Create(
                      OpCodes.Ldstr,
                      instructionPP == null
                         ? null
                         : pdbInfoProvider(instructionPP)));
             });
-         return configuration;
+         return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> AndInjectThePdbInfoForMethod<T>(this InterceptorParameterConfiguration<T> configuration, Func<SequencePoint, string> pdbInfoProvider, MethodWeavingInfo weavingInfo_P) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> AndInjectThePdbInfoForMethod<T>(this InterceptorParameterPossibility<T> possibility, Func<SequencePoint, string> pdbInfoProvider, MethodWeavingInfo weavingInfo_P) where T : VariablesForMethod
       {
-         configuration.Generator.Generators.Add(
+         possibility.Generators.Add(
             (parameter, instructions, info) =>
             {
                SequencePoint instructionPP = GetFirstInstruction(weavingInfo_P).GetLastSequencePoint();
                instructions.Add(
-                  Instruction.Create(
+                  Mono.Cecil.Cil.Instruction.Create(
                      OpCodes.Ldstr,
                      instructionPP == null
                         ? null
                         : pdbInfoProvider(instructionPP)));
             });
-         return configuration;
+         return possibility;
       }
 
 
-      public static InterceptorParameterConfiguration<VariablesForInstruction> AndInjectTheCalledPropertyInfo(this InterceptorParameterConfiguration<VariablesForInstruction> configuration, InstructionWeavingInfo weavingInfo)
+      public static InterceptorParameterPossibility<VariablesForInstruction> AndInjectTheCalledPropertyInfo(this InterceptorParameterPossibility<VariablesForInstruction> possibility, InstructionWeavingInfo weavingInfo)
       {
-         configuration.Generator.Generators.Add(
+         possibility.Generators.Add(
             (parameter, instructions, info) =>
             {
                InstructionWeavingInfo interceptor = weavingInfo;
@@ -191,63 +192,63 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                     instructions.AppendCallToTypeOf(interceptor.Method.Module, propertyDefinition.DeclaringType);
                 instructions.AppendCallToGetProperty(propertyDefinition.Name, interceptor.Method.Module);
             });
-         return configuration;
+         return possibility;
       }
 
-      public static InterceptorParameterConfiguration<VariablesForInstruction> AndInjectTheCalledInstance(this InterceptorParameterConfiguration<VariablesForInstruction> configuration) 
+      public static InterceptorParameterPossibility<VariablesForInstruction> AndInjectTheCalledInstance(this InterceptorParameterPossibility<VariablesForInstruction> possibility) 
       {
-         configuration.Generator.Generators.Add(
+         possibility.Generators.Add(
             (parameter, instructions, info) =>
             {
                VariableDefinition called = info.Called.Definition;
                instructions.Add(
                   called == null
-                     ? Instruction.Create(OpCodes.Ldnull)
-                     : Instruction.Create(OpCodes.Ldloc, called));
+                     ? Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldnull)
+                     : Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldloc, called));
             });
-         return configuration;
+         return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> AndInjectTheCurrentInstance<T>(this InterceptorParameterConfiguration<T> configuration) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> AndInjectTheCurrentInstance<T>(this InterceptorParameterPossibility<T> possibility) where T : VariablesForMethod
       {
-         configuration.Generator.Generators.Add((parameter, instructions, info) => instructions.Add(Instruction.Create(OpCodes.Ldarg_0)));
-         return configuration;
+         possibility.Generators.Add((parameter, instructions, info) => instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldarg_0)));
+         return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> AndInjectTheCurrentMethod<T>(this InterceptorParameterConfiguration<T> configuration) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> AndInjectTheCurrentMethod<T>(this InterceptorParameterPossibility<T> possibility) where T : VariablesForMethod
       {
-         configuration.Generator.Generators.Add((parameter, instructions, info) => instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CallerMethod.Definition)));
-         return configuration;
+         possibility.Generators.Add((parameter, instructions, info) => instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldloc, info.CallerMethod.Definition)));
+         return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> AndInjectTheCurrentProperty<T>(this InterceptorParameterConfiguration<T> configuration) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> AndInjectTheCurrentProperty<T>(this InterceptorParameterPossibility<T> possibility) where T : VariablesForMethod
       {
-         configuration.Generator.Generators.Add((parameter, instructions, info) => { instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CallerProperty.Definition)); });
-         return configuration;
+         possibility.Generators.Add((parameter, instructions, info) => { instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldloc, info.CallerProperty.Definition)); });
+         return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> AndInjectTheValue<T>(this InterceptorParameterConfiguration<T> configuration, string value) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> AndInjectTheValue<T>(this InterceptorParameterPossibility<T> possibility, string value) where T : VariablesForMethod
       {
-         configuration.Generator.Generators.Add((parameter, instructions, info) => { instructions.Add(Instruction.Create(OpCodes.Ldstr, value)); });
-         return configuration;
+         possibility.Generators.Add((parameter, instructions, info) => { instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldstr, value)); });
+         return possibility;
       }
 
-      public static InterceptorParameterConfiguration<T> AndInjectTheParameterInfo<T>(this InterceptorParameterConfiguration<T> configuration, ParameterDefinition parameterDefinition, MethodDefinition method) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> AndInjectTheParameterInfo<T>(this InterceptorParameterPossibility<T> possibility, ParameterDefinition parameterDefinition, MethodDefinition method) where T : VariablesForMethod
       {
-         configuration.Generator.Generators.Add(
+         possibility.Generators.Add(
             (parameter, instructions, info) =>
             {
-               instructions.Add(Instruction.Create(OpCodes.Ldloc, info.CallerMethod.Definition));
-               instructions.Add(Instruction.Create(OpCodes.Callvirt, method.Module.Import(typeof (MethodBase).GetMethod("GetParameters"))));
-               instructions.Add(Instruction.Create(OpCodes.Ldc_I4, method.Parameters.IndexOf(parameterDefinition)));
-               instructions.Add(Instruction.Create(OpCodes.Ldelem_Ref));
+               instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldloc, info.CallerMethod.Definition));
+               instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Callvirt, method.Module.Import(typeof (MethodBase).GetMethod("GetParameters"))));
+               instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldc_I4, method.Parameters.IndexOf(parameterDefinition)));
+               instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldelem_Ref));
             });
-         return configuration;
+         return possibility;
       }
 
-      public static InterceptorParameterConfiguration<VariablesForInstruction> AndInjectTheCalledFieldInfo(this InterceptorParameterConfiguration<VariablesForInstruction> configuration, InstructionWeavingInfo weavingInfo_P)
+      public static InterceptorParameterPossibility<VariablesForInstruction> AndInjectTheCalledFieldInfo(this InterceptorParameterPossibility<VariablesForInstruction> possibility, InstructionWeavingInfo weavingInfo_P)
       {
-         configuration.Generator.Generators.Add(
+         possibility.Generators.Add(
             (parameter, instructions, info) =>
             {
                FieldDefinition fieldReference = weavingInfo_P.GetOperandAsField();
@@ -261,43 +262,43 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                 }
                instructions.AppendCallToGetField(fieldReference.Name, module);
             });
-         return configuration;
+         return possibility;
       }
 
-      public static void AndInjectTheCalledParameter(this InterceptorParameterConfiguration<VariablesForInstruction> configuration,
+      public static void AndInjectTheCalledParameter(this InterceptorParameterPossibility<VariablesForInstruction> possibility,
          ParameterDefinition parameter)
       {
-         AndInjectTheCalledParameter(configuration, parameter, p => "called" + p.Name);
+         AndInjectTheCalledParameter(possibility, parameter, p => "called" + p.Name);
       }
 
-      public static void AndInjectTheCalledValue(this InterceptorParameterConfiguration<VariablesForInstruction> configuration,
+      public static void AndInjectTheCalledValue(this InterceptorParameterPossibility<VariablesForInstruction> possibility,
          ParameterDefinition parameter)
       {
-         AndInjectTheCalledParameter(configuration, parameter, p => p.Name);
+         AndInjectTheCalledParameter(possibility, parameter, p => p.Name);
       }
 
-      public static void AndInjectTheFieldValue<T>(this InterceptorParameterConfiguration<T> configuration,
+      public static void AndInjectTheFieldValue<T>(this InterceptorParameterPossibility<T> possibility,
          FieldDefinition field) where T : VariablesForInstruction
       {
-         configuration.Generator.Generators.Add(
+         possibility.Generators.Add(
             (parameterInfo, instructions, info) =>
             {
                ModuleDefinition moduleDefinition = field.Module;
                if (!parameterInfo.ParameterType.IsByRef && field.FieldType.IsByReference)
                {
                   instructions.Add(
-                     Instruction.Create(
+                     Mono.Cecil.Cil.Instruction.Create(
                         OpCodes.Ldloc,
                         info.FieldValue.Definition));
                   instructions.Add(
-                     Instruction.Create(
+                     Mono.Cecil.Cil.Instruction.Create(
                         OpCodes.Ldobj,
                         moduleDefinition.Import(parameterInfo.ParameterType)));
                }
                else
                {
                   instructions.Add(
-                     Instruction.Create(
+                     Mono.Cecil.Cil.Instruction.Create(
                         OpCodes.Ldloc,
                         info.FieldValue.Definition));
                }
@@ -306,14 +307,14 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                {
                   TypeReference reference = info.FieldValue.Definition.VariableType;
 
-                  instructions.Add(Instruction.Create(OpCodes.Box, reference));
+                  instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Box, reference));
                }
             });
       }
 
-      private static void AndInjectTheCalledParameter(this InterceptorParameterConfiguration<VariablesForInstruction> configuration, ParameterDefinition parameter, Func<ParameterDefinition, string> nameComputer)
+      private static void AndInjectTheCalledParameter(this InterceptorParameterPossibility<VariablesForInstruction> possibility, ParameterDefinition parameter, Func<ParameterDefinition, string> nameComputer)
       {
-         configuration.Generator.Generators.Add(
+         possibility.Generators.Add(
             (parameterInfo, instructions, info) =>
             {
                ModuleDefinition moduleDefinition = ((MethodDefinition) parameter.Method).Module;
@@ -321,18 +322,18 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                if (!parameterInfo.ParameterType.IsByRef && parameter.ParameterType.IsByReference)
                {
                   instructions.Add(
-                     Instruction.Create(
+                     Mono.Cecil.Cil.Instruction.Create(
                         OpCodes.Ldloc,
                         info.CalledParameters.GetDefinition(parameterName)));
                   instructions.Add(
-                     Instruction.Create(
+                     Mono.Cecil.Cil.Instruction.Create(
                         OpCodes.Ldobj,
                         moduleDefinition.Import(parameterInfo.ParameterType)));
                }
                else
                {
                   instructions.Add(
-                     Instruction.Create(
+                     Mono.Cecil.Cil.Instruction.Create(
                         OpCodes.Ldloc,
                         info.CalledParameters.GetDefinition(parameterName)));
                }
@@ -345,32 +346,32 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                      reference =
                         ((MethodDefinition) parameter.Method).GenericParameters.First(
                            t => t.Name == reference.Name.TrimEnd('&'));
-                     instructions.Add(Instruction.Create(OpCodes.Ldobj, reference));
+                     instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldobj, reference));
                   }
-                  instructions.Add(Instruction.Create(OpCodes.Box, reference));
+                  instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Box, reference));
                }
             });
       }
 
 
-      public static InterceptorParameterConfiguration<T> AndInjectTheParameter<T>(this InterceptorParameterConfiguration<T> configuration, ParameterDefinition parameter) where T : VariablesForMethod
+      public static InterceptorParameterPossibility<T> AndInjectTheParameter<T>(this InterceptorParameterPossibility<T> possibility, ParameterDefinition parameter) where T : VariablesForMethod
       {
-         configuration.Generator.Generators.Add(
+         possibility.Generators.Add(
             (parameterInfo, instructions, info) =>
             {
                ModuleDefinition moduleDefinition = ((MethodDefinition) parameter.Method).Module;
                if (parameterInfo.ParameterType.IsByRef && !parameter.ParameterType.IsByReference)
                {
-                  instructions.Add(Instruction.Create(OpCodes.Ldarga, parameter));
+                  instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldarga, parameter));
                }
                else if (!parameterInfo.ParameterType.IsByRef && parameter.ParameterType.IsByReference)
                {
-                  instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter));
-                  instructions.Add(Instruction.Create(OpCodes.Ldobj, moduleDefinition.Import(parameterInfo.ParameterType)));
+                  instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldarg, parameter));
+                  instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldobj, moduleDefinition.Import(parameterInfo.ParameterType)));
                }
                else
                {
-                  instructions.Add(Instruction.Create(OpCodes.Ldarg, parameter));
+                  instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldarg, parameter));
                }
                if (parameter.ParameterType != moduleDefinition.TypeSystem.Object &&
                    parameterInfo.ParameterType == typeof (Object))
@@ -381,14 +382,14 @@ namespace NetAspect.Weaver.Core.Weaver.Detectors.Engine
                      reference =
                         ((MethodDefinition) parameter.Method).GenericParameters.First(
                            t => t.Name == reference.Name.TrimEnd('&'));
-                     instructions.Add(Instruction.Create(OpCodes.Ldobj, reference));
+                     instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldobj, reference));
                   }
 
                   if (parameter.ParameterType.IsValueType || parameter.ParameterType is GenericParameter)
-                     instructions.Add(Instruction.Create(OpCodes.Box, reference));
+                     instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Box, reference));
                }
             });
-         return configuration;
+         return possibility;
       }
    }
 }

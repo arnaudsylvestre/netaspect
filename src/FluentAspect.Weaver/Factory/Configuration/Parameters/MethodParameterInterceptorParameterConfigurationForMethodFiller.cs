@@ -1,27 +1,28 @@
-﻿using NetAspect.Weaver.Core.Weaver.Data.Variables;
-using NetAspect.Weaver.Core.Weaver.Detectors.Engine;
-using NetAspect.Weaver.Core.Weaver.Detectors.Model;
-using NetAspect.Weaver.Core.Weaver.Detectors.ParameterWeaving;
+﻿using NetAspect.Weaver.Core.Weaver.Engine.InterceptorParameters;
+using NetAspect.Weaver.Core.Weaver.Parameters.Detector;
+using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Engine;
+using NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model;
 
-namespace NetAspect.Weaver.Factory.Configuration
+namespace NetAspect.Weaver.Factory.Configuration.Parameters
 {
    public class MethodParameterInterceptorParameterConfigurationForMethodFiller : IInterceptorParameterConfigurationForParameterFiller
    {
-       public void FillCommon(ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForMethod> interceptorParameterConfigurations_P)
+       public void FillCommon(ParameterWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilitiesP)
       {
-         weavingInfo_P.AddParameterValue(interceptorParameterConfigurations_P)
-            .AddParameterName(interceptorParameterConfigurations_P)
-            .AddParameterInfo(interceptorParameterConfigurations_P)
-            .AddConstructor(interceptorParameterConfigurations_P)
-            .AddParameters(interceptorParameterConfigurations_P)
-            .AddParameterNames(interceptorParameterConfigurations_P)
-            .AddInstance(interceptorParameterConfigurations_P)
+         weavingInfo_P.AddParameterValue(interceptorParameterPossibilitiesP)
+            .AddParameterName(interceptorParameterPossibilitiesP)
+            .AddParameterInfo(interceptorParameterPossibilitiesP)
+            .AddConstructor(interceptorParameterPossibilitiesP)
+            .AddParameters(interceptorParameterPossibilitiesP)
+            .AddParameterNames(interceptorParameterPossibilitiesP)
+            .AddInstance(interceptorParameterPossibilitiesP)
             ;
       }
 
-       public void FillOnExceptionSpecific(ParameterWeavingInfo weavingInfo_P, InterceptorParameterConfigurations<VariablesForMethod> interceptorParameterConfigurations_P)
+       public void FillOnExceptionSpecific(ParameterWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilitiesP)
       {
-         weavingInfo_P.AddException(interceptorParameterConfigurations_P);
+         weavingInfo_P.AddException(interceptorParameterPossibilitiesP);
       }
 
    }

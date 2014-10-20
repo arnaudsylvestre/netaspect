@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Helpers.IL;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Instructions
 {
     public class VariableCalledParametersObject : Variable.IVariableBuilder
     {
@@ -22,7 +22,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
             
         }
 
-        public VariableDefinition Build(InstructionsToInsert instructionsToInsert, MethodDefinition method, Instruction Instruction)
+        public VariableDefinition Build(InstructionsToInsert instructionsToInsert, MethodDefinition method, Mono.Cecil.Cil.Instruction Instruction)
         {
             Dictionary<string, VariableDefinition> p = calledParametersProvider();
             MethodDefinition calledMethod = Instruction.GetCalledMethod();

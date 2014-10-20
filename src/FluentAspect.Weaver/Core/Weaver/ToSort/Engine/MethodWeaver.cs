@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using NetAspect.Core;
 using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.Data;
-using NetAspect.Weaver.Core.Weaver.Data.Variables;
-using NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions;
-using NetAspect.Weaver.Core.Weaver.Data.Variables.Method;
-using NetAspect.Weaver.Core.Weaver.Engine.Instructions;
-using NetAspect.Weaver.Core.Weaver.Engine.Lifecycle;
-using NetAspect.Weaver.Helpers.IL;
+using NetAspect.Weaver.Core.Weaver.ToSort.Data;
+using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Instructions;
+using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Method;
+using NetAspect.Weaver.Core.Weaver.ToSort.Engine.Instructions;
+using NetAspect.Weaver.Core.Weaver.ToSort.Engine.LifeCycle;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
 {
    public class MethodWeaver
    {
@@ -53,15 +51,15 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
 
            var instructionsToInsertP_L = new InstructionsToInsert();
            
-           List<Instruction> aspectInit = new List<Instruction>();
+           List<Mono.Cecil.Cil.Instruction> aspectInit = new List<Mono.Cecil.Cil.Instruction>();
            if (FillForInstructions(method, weavingMethodSession, errorHandler, w, result, instructionsToInsertP_L, allVariables, aspectInit))
                return true;
 
-           var befores = new List<Instruction>();
-           var beforeConstructorBaseCall = new List<Instruction>();
-           var afters = new List<Instruction>();
-           var onExceptions = new List<Instruction>();
-           var onFinallys = new List<Instruction>();
+           var befores = new List<Mono.Cecil.Cil.Instruction>();
+           var beforeConstructorBaseCall = new List<Mono.Cecil.Cil.Instruction>();
+           var afters = new List<Mono.Cecil.Cil.Instruction>();
+           var onExceptions = new List<Mono.Cecil.Cil.Instruction>();
+           var onFinallys = new List<Mono.Cecil.Cil.Instruction>();
            var variablesForMethod = CreateVariablesForMethod(instructionsToInsertP_L, method, allVariables, result);
 
            foreach (var aspectInstanceForMethodWeaving in weavingMethodSession.Method)
@@ -74,7 +72,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
                aspectInstanceForMethodWeaving.Inject(befores, afters, onExceptions, onFinallys, variablesForMethod,
                                                 beforeConstructorBaseCall);
 
-               var interceptorFactoryInstructions = new List<Instruction>();
+               var interceptorFactoryInstructions = new List<Mono.Cecil.Cil.Instruction>();
 
                if (beforeConstructorBaseCall.Any())
                {
@@ -114,11 +112,11 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
        }
 
        private static void GenerateOnExceptionStatements(VariablesForMethod availableVariables,
-                                                         List<Instruction> onExceptionInstructions, IEnumerable<Instruction> onExceptions)
+                                                         List<Mono.Cecil.Cil.Instruction> onExceptionInstructions, IEnumerable<Mono.Cecil.Cil.Instruction> onExceptions)
        {
-           onExceptionInstructions.Add(Instruction.Create(OpCodes.Stloc, availableVariables.Exception.Definition));
+           onExceptionInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, availableVariables.Exception.Definition));
            onExceptionInstructions.AddRange(onExceptions);
-           onExceptionInstructions.Add(Instruction.Create(OpCodes.Rethrow));
+           onExceptionInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Rethrow));
        }
 
        private static VariableDefinition CreateMethodResultVariable(MethodDefinition method)
@@ -131,7 +129,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
 
        private bool FillForInstructions(MethodDefinition method, WeavingMethodSession weavingMethodSession,
                                                ErrorHandler errorHandler, NetAspectWeavingMethod w, VariableDefinition result,
-                                               InstructionsToInsert instructionsToInsertP_L, List<VariableDefinition> allVariables, List<Instruction> aspectInstructions)
+                                               InstructionsToInsert instructionsToInsertP_L, List<VariableDefinition> allVariables, List<Mono.Cecil.Cil.Instruction> aspectInstructions)
        {
            foreach (var instruction in weavingMethodSession.Instructions)
            {
@@ -171,7 +169,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
            return false;
        }
 
-       private VariablesForInstruction CreateVariablesForInstruction(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables, Instruction instruction, VariableDefinition result, WeavingMethodSession model)
+       private VariablesForInstruction CreateVariablesForInstruction(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables, Mono.Cecil.Cil.Instruction instruction, VariableDefinition result, WeavingMethodSession model)
        {
            VariablesForMethod variablesForMethod = CreateVariablesForMethod(instructionsToInsert, method, variables, result);
            var calledParameters = new MultipleVariable(instructionsToInsert, new VariablesCalledParameters(), method, instruction, variables);
@@ -203,7 +201,7 @@ namespace NetAspect.Weaver.Core.Weaver.Engine
             
         }
 
-        public VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Instruction instruction)
+        public VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Mono.Cecil.Cil.Instruction instruction)
         {
             return _variable;
         }

@@ -1,7 +1,9 @@
 ﻿using NetAspect.Weaver.Core.Errors;
-using NetAspect.Weaver.Core.Weaver.Data.Variables;
+using NetAspect.Weaver.Core.Model.Weaving;
+using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
+using NetAspect.Weaver.Core.Weaver.ToSort.Engine.Instructions;
 
-namespace NetAspect.Weaver.Core.Weaver.Engine.Instructions
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
 {
     public static class AspectInstanceForInstructionExtensions
     {

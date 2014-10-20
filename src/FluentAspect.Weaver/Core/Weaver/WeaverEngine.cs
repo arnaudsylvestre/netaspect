@@ -2,10 +2,11 @@
 using System.Reflection;
 using NetAspect.Weaver.Core.Assemblies;
 using NetAspect.Weaver.Core.Errors;
+using NetAspect.Weaver.Core.Helpers;
 using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Model.Weaving;
-using NetAspect.Weaver.Core.Weaver.Engine;
-using NetAspect.Weaver.Core.Weaver.Helpers;
+using NetAspect.Weaver.Core.Weaver.Session;
+using NetAspect.Weaver.Core.Weaver.ToSort.Engine;
 
 namespace NetAspect.Weaver.Core.Weaver
 {

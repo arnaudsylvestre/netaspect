@@ -1,8 +1,11 @@
 ﻿using Mono.Cecil;
 using NetAspect.Weaver.Core.Weaver;
-using NetAspect.Weaver.Core.Weaver.Detectors.InstructionWeaving;
+using NetAspect.Weaver.Core.Weaver.Instruction.Detector;
+using NetAspect.Weaver.Core.Weaver.ToSort.ILInjector;
 using NetAspect.Weaver.Factory.Configuration;
-using NetAspect.Weaver.Helpers.IL;
+using NetAspect.Weaver.Factory.Configuration.Instruction;
+using NetAspect.Weaver.Factory.Tools;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
 namespace NetAspect.Weaver.Factory
 {

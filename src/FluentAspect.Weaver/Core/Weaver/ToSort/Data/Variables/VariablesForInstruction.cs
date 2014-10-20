@@ -1,11 +1,9 @@
-﻿using Mono.Cecil.Cil;
-
-namespace NetAspect.Weaver.Core.Weaver.Data.Variables
+﻿namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables
 {
    public class VariablesForInstruction : VariablesForMethod
    {
 
-       public VariablesForInstruction(Instruction instruction, Variable callerMethod, Variable callerProperty, Variable parameters, Variable exception, MultipleVariable calledParameters, Variable called, Variable fieldValue, Variable result, Variable resultForInstruction, Variable calledParametersObjects)
+       public VariablesForInstruction(Mono.Cecil.Cil.Instruction instruction, Variable callerMethod, Variable callerProperty, Variable parameters, Variable exception, MultipleVariable calledParameters, Variable called, Variable fieldValue, Variable result, Variable resultForInstruction, Variable calledParametersObjects)
            : base(callerMethod, callerProperty, parameters, exception, result)
        {
            Instruction = instruction;
@@ -16,7 +14,7 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables
            CalledParametersObjects = calledParametersObjects;
        }
 
-       public Instruction Instruction { get; private set; }
+       public Mono.Cecil.Cil.Instruction Instruction { get; private set; }
        public MultipleVariable CalledParameters { get; private set; }
 
        public Variable Called { get; set; }

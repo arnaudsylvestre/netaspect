@@ -2,13 +2,13 @@
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using NetAspect.Weaver.Helpers.IL;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
-namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
+namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Instructions
 {
     public class VariablesCalledParameters : MultipleVariable.IVariableBuilder
     {
-        public Dictionary<string, VariableDefinition> Build(InstructionsToInsert instructionsToInsert, MethodDefinition method, Instruction Instruction)
+        public Dictionary<string, VariableDefinition> Build(InstructionsToInsert instructionsToInsert, MethodDefinition method, Mono.Cecil.Cil.Instruction Instruction)
         {
             Dictionary<string, VariableDefinition> _calledParameters = new Dictionary<string, VariableDefinition>();
             if (Instruction.IsAnUpdatePropertyCall())
@@ -19,8 +19,8 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
                 TypeReference propertyType_L = property.PropertyType;
                 var variableDefinition = new VariableDefinition(propertyType_L);
                 _calledParameters.Add("value", variableDefinition);
-                instructionsToInsert.calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
-                instructionsToInsert.recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
+                instructionsToInsert.calledInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, variableDefinition));
+                instructionsToInsert.recallcalledInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldloc, variableDefinition));
             }
             else if (Instruction.Operand is MethodReference)
             {
@@ -30,11 +30,11 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
                 {
                     var variableDefinition = new VariableDefinition(IlInjectorAvailableVariables.ComputeVariableType(parameter, Instruction));
                     _calledParameters.Add("called" + parameter.Name, variableDefinition);
-                    instructionsToInsert.calledParametersInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
+                    instructionsToInsert.calledParametersInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, variableDefinition));
                 }
                 foreach (ParameterDefinition parameter in calledMethod.Parameters)
                 {
-                    instructionsToInsert.recallcalledParametersInstructions.Add(Instruction.Create(OpCodes.Ldloc, _calledParameters["called" + parameter.Name]));
+                    instructionsToInsert.recallcalledParametersInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldloc, _calledParameters["called" + parameter.Name]));
                 }
             }
             else if (Instruction.IsAnUpdateField())
@@ -43,8 +43,8 @@ namespace NetAspect.Weaver.Core.Weaver.Data.Variables.Instructions
                 TypeReference fieldType = (Instruction.Operand as FieldReference).Resolve().FieldType;
                 var variableDefinition = new VariableDefinition(fieldType);
                 _calledParameters.Add("value", variableDefinition);
-                instructionsToInsert.calledInstructions.Add(Instruction.Create(OpCodes.Stloc, variableDefinition));
-                instructionsToInsert.recallcalledInstructions.Add(Instruction.Create(OpCodes.Ldloc, variableDefinition));
+                instructionsToInsert.calledInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, variableDefinition));
+                instructionsToInsert.recallcalledInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldloc, variableDefinition));
             }
             return _calledParameters;
         }

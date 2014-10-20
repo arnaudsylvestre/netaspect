@@ -2,7 +2,7 @@
 using Mono.Cecil.Cil;
 using NetAspect.Core.Helpers;
 
-namespace NetAspect.Weaver.Helpers.IL
+namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
 {
    public static class InstructionExtensions
    {

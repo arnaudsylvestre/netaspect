@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using NetAspect.Weaver.Core.Model.Aspect;
-using NetAspect.Weaver.Core.Weaver.Engine.Lifecycle;
+using NetAspect.Weaver.Core.Weaver.ToSort.Engine.LifeCycle;
 
 namespace NetAspect.Weaver.Factory
 {
