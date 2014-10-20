@@ -79,6 +79,7 @@
     <Compile Include="Core\Model\Aspect\Interceptor.cs" />
     <Compile Include="Core\Model\Aspect\LifeCycle.cs" />
     <Compile Include="Core\Helpers\LifeCycleHelper.cs" />
+    <Compile Include="Core\Weaver\Engine\IL\VariablesFactory.cs" />
     <Compile Include="Core\Weaver\ToSort\Data\Variables\ExistingVariable.cs" />
     <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\MemberKindCheckers.cs" />
     <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\ParameterKindCheckers.cs" />

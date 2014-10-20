@@ -9,28 +9,13 @@ using NetAspect.Weaver.Core.Model.Weaving;
 using NetAspect.Weaver.Core.Weaver.ToSort.Data;
 using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Instructions;
-using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Method;
 using NetAspect.Weaver.Core.Weaver.ToSort.Engine.Instructions;
 using NetAspect.Weaver.Core.Weaver.ToSort.Engine.LifeCycle;
 using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
 {
-    public static class VariablesFactory
-    {
-
-        public static VariablesForMethod CreateVariablesForMethod(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables, VariableDefinition result)
-        {
-            return new VariablesForMethod(
-                new Variable(instructionsToInsert, new VariableCurrentMethodBuilder(), method, null, variables),
-                new Variable(instructionsToInsert, new VariableCurrentProperty(), method, null, variables),
-                new Variable(instructionsToInsert, new VariableParameters(), method, null, variables),
-                new Variable(instructionsToInsert, new VariableException(), method, null, variables),
-                new Variable(instructionsToInsert, new ExistingVariable(result), method, null, variables));
-        }
-    }
-
-   public class MethodWeaver
+    public class MethodWeaver
    {
        private AspectInstanceBuilder _aspectInstanceBuilder;
 
@@ -85,24 +70,14 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
 
            foreach (var aspectInstanceForMethodWeaving in weavingMethodSession.Method)
            {
-               variablesForMethod.Aspects.Add(new Variable(instructionsToInsertP_L, new VariableAspect(_aspectInstanceBuilder, aspectInstanceForMethodWeaving.Aspect.LifeCycle, aspectInstanceForMethodWeaving.Aspect.Type, aspectInstanceForMethodWeaving.Instance), method, null, allVariables));
-               aspectInstanceForMethodWeaving.Check(errorHandler, variablesForMethod);
+               var aspectInstance = new Variable(instructionsToInsertP_L, new VariableAspect(_aspectInstanceBuilder, aspectInstanceForMethodWeaving.Aspect.LifeCycle, aspectInstanceForMethodWeaving.Aspect.Type, aspectInstanceForMethodWeaving.Instance), method, null, allVariables);
+               //variablesForMethod.Aspects.Add(aspectInstance);
+               aspectInstanceForMethodWeaving.Check(errorHandler, variablesForMethod, aspectInstance);
                if (errorHandler.Errors.Any())
                    throw new Exception();
 
                aspectInstanceForMethodWeaving.Inject(befores, afters, onExceptions, onFinallys, variablesForMethod,
-                                                beforeConstructorBaseCall);
-
-               var interceptorFactoryInstructions = new List<Mono.Cecil.Cil.Instruction>();
-
-               if (beforeConstructorBaseCall.Any())
-               {
-                   beforeConstructorBaseCall.InsertRange(0, interceptorFactoryInstructions);
-               }
-               else if (befores.Any() || afters.Any() || onExceptions.Any() || onFinallys.Any())
-               {
-                   befores.InsertRange(0, interceptorFactoryInstructions);
-               }
+                                                beforeConstructorBaseCall, aspectInstance);
                
            }
 
@@ -141,7 +116,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
 
        private void FillForInstructions(MethodDefinition method, WeavingMethodSession weavingMethodSession,
                                                ErrorHandler errorHandler, NetAspectWeavingMethod w, VariableDefinition result,
-                                               InstructionsToInsert instructionsToInsertP_L, List<VariableDefinition> allVariables, List<Mono.Cecil.Cil.Instruction> aspectInstructions)
+                                               InstructionsToInsert instructionsToInsert, List<VariableDefinition> allVariables, List<Mono.Cecil.Cil.Instruction> aspectInstructions)
        {
            foreach (var instruction in weavingMethodSession.Instructions)
            {
@@ -149,28 +124,27 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
                w.Instructions.Add(instruction.Key, instructionIl);
                var instructions = new InstructionsToInsert();
                instructions.aspectInitialisation = aspectInstructions;
-               //var variablesForInstruction = new IlInjectorAvailableVariables(result, method, instruction.Key, instructions);
-               var variablesForInstruction = CreateVariablesForInstruction(instructions, method, allVariables, instruction.Key, result, weavingMethodSession);
+               var variablesForInstruction = VariablesFactory.CreateVariablesForInstruction(instructions, method, allVariables, instruction.Key, result, weavingMethodSession);
                
                var ils = new List<AroundInstructionIl>();
                foreach (var v in instruction.Value)
                {
-                   var aroundInstructionIl = new AroundInstructionIl(); 
-                   
+                   var aroundInstructionIl = new AroundInstructionIl();
 
-                   v.Check(errorHandler, variablesForInstruction);
+
+                   var aspectInstance = new Variable(instructions, new VariableAspect(_aspectInstanceBuilder, v.Aspect.LifeCycle, v.Aspect.Type, v.Instance), method, instruction.Key, allVariables);
+                   v.Check(errorHandler, variablesForInstruction, aspectInstance);
                    if (errorHandler.Errors.Any())
                        throw new Exception();
-                   variablesForInstruction.Aspects.Add(new Variable(instructions, new VariableAspect(_aspectInstanceBuilder, v.Aspect.LifeCycle, v.Aspect.Type, v.Instance), method, instruction.Key, allVariables));
-                   v.Inject(aroundInstructionIl, variablesForInstruction);
+                   v.Inject(aroundInstructionIl, variablesForInstruction, aspectInstance);
                    ils.Add(aroundInstructionIl);
                }
                instructionIl.Before.AddRange(instructions.calledParametersInstructions);
                instructionIl.Before.AddRange(instructions.calledInstructions);
                instructionIl.Before.AddRange(instructions.calledParametersObjectInstructions);
                instructionIl.After.AddRange(instructions.resultInstructions);
-               instructionsToInsertP_L.BeforeInstructions.AddRange(instructions.BeforeInstructions);
-               foreach (AroundInstructionIl aroundInstructionIl in ils)
+               instructionsToInsert.BeforeInstructions.AddRange(instructions.BeforeInstructions);
+               foreach (var aroundInstructionIl in ils)
                {
                    instructionIl.Before.AddRange(aroundInstructionIl.BeforeInstruction);
                    instructionIl.After.AddRange(aroundInstructionIl.AfterInstruction);
@@ -180,21 +154,5 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
            }
        }
 
-       private VariablesForInstruction CreateVariablesForInstruction(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables, Mono.Cecil.Cil.Instruction instruction, VariableDefinition result, WeavingMethodSession model)
-       {
-           VariablesForMethod variablesForMethod = VariablesFactory.CreateVariablesForMethod(instructionsToInsert, method, variables, result);
-           var calledParameters = new MultipleVariable(instructionsToInsert, new VariablesCalledParameters(), method, instruction, variables);
-           return new VariablesForInstruction(instruction,
-               variablesForMethod.CallerMethod,
-               variablesForMethod.CallerProperty,
-               variablesForMethod.Parameters,
-               variablesForMethod.Exception,
-               calledParameters,
-               new Variable(instructionsToInsert, new VariableCalled(() => calledParameters.Definitions ), method, instruction, variables ),
-               new Variable(instructionsToInsert, new VariableFieldValue(), method, instruction, variables), 
-               variablesForMethod.Result,
-               new Variable(instructionsToInsert, new VariableResultForInstruction(), method, instruction, variables),
-               new Variable(instructionsToInsert, new VariableCalledParametersObject(() => calledParameters.Definitions), method, instruction, variables));
-       }
    }
 }

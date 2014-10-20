@@ -27,36 +27,30 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.ILInjector
          this.weavingPreconditionInjector = weavingPreconditionInjector;
       }
 
-      public void Check(ErrorHandler errorHandler, T availableInformations)
+      public void Check(ErrorHandler errorHandler, T availableInformations, Variable aspectInstance)
       {
-         if (interceptorMethod.ReturnType != typeof (void))
-            errorHandler.OnError(ErrorCode.InterceptorMustBeVoid, FileLocation.None, interceptorMethod.Name, interceptorMethod.DeclaringType.FullName);
-         _interceptorParameterPossibilities.Check(interceptorMethod.GetParameters(), errorHandler);
-          foreach (var variableByAspectType in availableInformations.Aspects)
-          {
-              variableByAspectType.Check(errorHandler);
-              
-          }
+          if (interceptorMethod.ReturnType != typeof (void))
+              errorHandler.OnError(ErrorCode.InterceptorMustBeVoid, FileLocation.None, interceptorMethod.Name,
+                                   interceptorMethod.DeclaringType.FullName);
+          _interceptorParameterPossibilities.Check(interceptorMethod.GetParameters(), errorHandler);
+          aspectInstance.Check(errorHandler);
       }
 
-      public void Inject(List<Mono.Cecil.Cil.Instruction> instructions, T availableInformations)
-      {
-         Mono.Cecil.Cil.Instruction end = Mono.Cecil.Cil.Instruction.Create(OpCodes.Nop);
-         var precondition = new List<Mono.Cecil.Cil.Instruction>();
-         weavingPreconditionInjector.Inject(precondition, availableInformations, _method);
-         if (precondition.Any())
-         {
-            instructions.AddRange(precondition);
-            instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Brfalse, end));
-         }
-          foreach (var aspect in availableInformations.Aspects)
-          {
-              instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldloc, aspect.Definition));
-              ParametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations, _interceptorParameterPossibilities);
-              instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Call, _method.Module.Import(interceptorMethod)));
-              
-          }
-         instructions.Add(end);
-      }
-   }
+        public void Inject(List<Mono.Cecil.Cil.Instruction> instructions, T availableInformations, Variable aspectInstance)
+        {
+            Mono.Cecil.Cil.Instruction end = Mono.Cecil.Cil.Instruction.Create(OpCodes.Nop);
+            var precondition = new List<Mono.Cecil.Cil.Instruction>();
+            weavingPreconditionInjector.Inject(precondition, availableInformations, _method);
+            if (precondition.Any())
+            {
+                instructions.AddRange(precondition);
+                instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Brfalse, end));
+            }
+            instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldloc, aspectInstance.Definition));
+            ParametersIlGenerator.Generate(interceptorMethod.GetParameters(), instructions, availableInformations,
+                                           _interceptorParameterPossibilities);
+            instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Call, _method.Module.Import(interceptorMethod)));
+            instructions.Add(end);
+        }
+    }
 }

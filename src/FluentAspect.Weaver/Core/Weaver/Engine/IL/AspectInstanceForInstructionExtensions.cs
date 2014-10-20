@@ -10,16 +10,16 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
 
 
 
-        public static void Check(this AspectInstanceForInstruction instance, ErrorHandler errorHandler, VariablesForInstruction variables)
+        public static void Check(this AspectInstanceForInstruction instance, ErrorHandler errorHandler, VariablesForInstruction variables, Variable aspectInstance)
         {
-            instance.Before.Check(errorHandler, variables);
-            instance.After.Check(errorHandler, variables);
+            instance.Before.Check(errorHandler, variables, aspectInstance);
+            instance.After.Check(errorHandler, variables, aspectInstance);
         }
 
-        public static void Inject(this AspectInstanceForInstruction instance, AroundInstructionIl il, VariablesForInstruction variables)
+        public static void Inject(this AspectInstanceForInstruction instance, AroundInstructionIl il, VariablesForInstruction variables, Variable aspectInstance)
         {
-            instance.Before.Inject(il.BeforeInstruction, variables);
-            instance.After.Inject(il.AfterInstruction, variables);
+            instance.Before.Inject(il.BeforeInstruction, variables, aspectInstance);
+            instance.After.Inject(il.AfterInstruction, variables, aspectInstance);
         }
     }
 }
