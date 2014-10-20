@@ -9,7 +9,7 @@ using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
 
 namespace NetAspect.Weaver.Core.Weaver.ToSort.Checkers
 {
-   public static class ParametersChecker
+   public static class InterceptorParameterPossibilitiesExtensions
    {
       public static void Check<T>(this InterceptorParameterPossibilities<T> interceptorParameterPossibilitiesP, IEnumerable<ParameterInfo> parameters, ErrorHandler errorHandler)
            where T : VariablesForMethod

@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Core.Weaver.Method.Detector
    {
       private readonly IInterceptorParameterConfigurationForMethodFiller builder;
       private readonly IWevingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector;
-       private readonly Action<MethodWeavingInfo, InterceptorParameterPossibilities<VariablesForMethod>> NoSpecific = (info, interceptorParameterConfigurations) => { };
+       private readonly Action<CommonWeavingInfo, InterceptorParameterPossibilities<VariablesForMethod>> NoSpecific = (info, interceptorParameterConfigurations) => { };
 
       public IlInjectorsFactoryForMethod(IInterceptorParameterConfigurationForMethodFiller builder, IWevingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector)
       {
@@ -40,12 +40,12 @@ namespace NetAspect.Weaver.Core.Weaver.Method.Detector
          return Create(method, interceptorMethod, builder.FillOnExceptionSpecific);
       }
 
-      private IIlInjector<VariablesForMethod> Create(MethodDefinition method, MethodInfo interceptorMethod, Action<MethodWeavingInfo, InterceptorParameterPossibilities<VariablesForMethod>> fillSpecific)
+      private IIlInjector<VariablesForMethod> Create(MethodDefinition method, MethodInfo interceptorMethod, Action<CommonWeavingInfo, InterceptorParameterPossibilities<VariablesForMethod>> fillSpecific)
       {
           if (interceptorMethod == null)
               return new NoIIlInjector<VariablesForMethod>();
 
-          var weavingInfo_P = new MethodWeavingInfo
+          var weavingInfo_P = new CommonWeavingInfo
           {
               Interceptor = interceptorMethod,
               Method = method,

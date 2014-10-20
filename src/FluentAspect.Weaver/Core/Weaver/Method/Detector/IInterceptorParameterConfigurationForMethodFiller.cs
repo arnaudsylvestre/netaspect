@@ -6,8 +6,8 @@ namespace NetAspect.Weaver.Core.Weaver.Method.Detector
 {
    public interface IInterceptorParameterConfigurationForMethodFiller
    {
-      void FillCommon(MethodWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilitiesP);
-       void FillAfterSpecific(MethodWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilitiesP);
-      void FillOnExceptionSpecific(MethodWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilitiesP);
+      void FillCommon(CommonWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilitiesP);
+       void FillAfterSpecific(CommonWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilitiesP);
+      void FillOnExceptionSpecific(CommonWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilitiesP);
    }
 }

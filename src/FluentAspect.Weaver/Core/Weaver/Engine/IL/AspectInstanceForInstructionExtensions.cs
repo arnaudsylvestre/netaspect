@@ -16,7 +16,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
             instance.After.Check(errorHandler, variables);
         }
 
-        public static void Weave(this AspectInstanceForInstruction instance, AroundInstructionIl il, VariablesForInstruction variables)
+        public static void Inject(this AspectInstanceForInstruction instance, AroundInstructionIl il, VariablesForInstruction variables)
         {
             instance.Before.Inject(il.BeforeInstruction, variables);
             instance.After.Inject(il.AfterInstruction, variables);

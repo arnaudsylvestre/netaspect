@@ -9,6 +9,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Checkers.Ensures
 {
    public class ParameterTypeChecker : IChecker
    {
+       // TODO : Passer en Ensure
       private readonly ParameterDefinition parameterDefinition;
 
       public ParameterTypeChecker(string expectedType, ParameterDefinition parameterDefinition)

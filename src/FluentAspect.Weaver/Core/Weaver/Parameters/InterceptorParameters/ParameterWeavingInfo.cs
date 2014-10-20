@@ -2,7 +2,7 @@
 
 namespace NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model
 {
-   public class ParameterWeavingInfo : MethodWeavingInfo
+   public class ParameterWeavingInfo : CommonWeavingInfo
    {
       public ParameterDefinition Parameter { get; set; }
    }

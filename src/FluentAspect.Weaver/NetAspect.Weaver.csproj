@@ -79,17 +79,33 @@
     <Compile Include="Core\Model\Aspect\Interceptor.cs" />
     <Compile Include="Core\Model\Aspect\LifeCycle.cs" />
     <Compile Include="Core\Helpers\LifeCycleHelper.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\MemberKindCheckers.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\ParameterKindCheckers.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\ParameterTypeCheckers.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\PdbCheckers.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\Rules\EnsureParameter.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\Rules\EnsurePdb.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\Rules\EnsureResult.cs" />
     <Compile Include="Core\Weaver\Engine\InterceptorParameters\InterceptorParameterPossibilityExtensions.cs" />
-    <Compile Include="Core\Weaver\ToSort\Engine\AspectInstanceForInstructionExtensions.cs" />
-    <Compile Include="Core\Model\Weaving\AspectInstanceForMethodWeaving.cs" />
+    <Compile Include="Core\Weaver\Instruction\InterceptorParameters\Possibilities\CalledFieldPossibility.cs" />
+    <Compile Include="Core\Weaver\Instruction\InterceptorParameters\Possibilities\CalledPropertyPossibility.cs" />
+    <Compile Include="Core\Weaver\Instruction\InterceptorParameters\Possibilities\CallerPossiblity.cs" />
+    <Compile Include="Core\Weaver\Method\InterceptorParameters\Possibilities\CurrentMemberPossibility.cs" />
+    <Compile Include="Core\Weaver\Instruction\InterceptorParameters\Possibilities\CalledMethodPossiblity.cs" />
+    <Compile Include="Core\Weaver\Parameters\InterceptorParameters\Possibilities\CurrentParameterPossibility.cs" />
+    <Compile Include="Core\Weaver\Instruction\InterceptorParameters\Possibilities\PdbPossibility.cs" />
+    <Compile Include="Core\Weaver\Method\InterceptorParameters\Possibilities\MethodPossibility.cs" />
+    <Compile Include="Core\Weaver\Method\InterceptorParameters\Possibilities\PdbPossiblity.cs" />
+    <Compile Include="Core\Weaver\Method\InterceptorParameters\Possibilities\CurrentInstancePossibility.cs" />
+    <Compile Include="Core\Weaver\Engine\IL\AspectInstanceForInstructionExtensions.cs" />
+    <Compile Include="Core\Model\Weaving\AspectInstanceForMethod.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
     <Compile Include="Core\Helpers\NetAspectDefinitionExtensions.cs" />
     <Compile Include="Core\Weaver\ToSort\ILInjector\NoIIlInjector.cs" />
     <Compile Include="Core\Model\Weaving\WeavingSession.cs" />
     <Compile Include="Core\Model\Weaving\AspectInstanceForInstruction.cs" />
     <Compile Include="Core\Weaver\Session\AspectCheckers\MultiAspectChecker.cs" />
-    <Compile Include="Core\Weaver\ToSort\Checkers\Ensures\ParameterReferencedChecker.cs" />
-    <Compile Include="Core\Weaver\ToSort\Checkers\Ensures\ParameterTypeChecker.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\Rules\ParameterTypeChecker.cs" />
     <Compile Include="Core\Weaver\ToSort\Data\InstructionsToInsert.cs" />
     <Compile Include="Core\Weaver\ToSort\Data\Variables\Instructions\VariableResultForInstruction.cs" />
     <Compile Include="Core\Weaver\ToSort\Data\Variables\MultipleVariable.cs" />
@@ -105,7 +121,7 @@
     <Compile Include="Core\Weaver\ToSort\Data\Variables\Instructions\VariableFieldValue.cs" />
     <Compile Include="Core\Weaver\ToSort\Data\Variables\Method\VariableParameters.cs" />
     <Compile Include="Core\Weaver\ToSort\Data\Variables\Instructions\VariablesCalledParameters.cs" />
-    <Compile Include="Core\Weaver\ToSort\Detectors\Engine\InterceptorParametersRulesExtensions.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\ILGenerators\InterceptorParametersRulesExtensions.cs" />
     <Compile Include="Core\Weaver\ToSort\ILInjector\IWevingPreconditionInjector.cs" />
     <Compile Include="Core\Weaver\ToSort\ILInjector\NoWeavingPreconditionInjector.cs" />
     <Compile Include="Core\Weaver\ToSort\ILInjector\OverrideWeavingPreconditionInjector.cs" />
@@ -120,42 +136,42 @@
     <Compile Include="Factory\Configuration\Method\ConstructorInterceptorParameterConfigurationForMethodFiller.cs" />
     <Compile Include="Factory\Configuration\Method\PropertySetterInterceptorParameterConfigurationForMethodFiller.cs" />
     <Compile Include="Factory\Configuration\Method\PropertyGetterInterceptorParameterConfigurationForMethodFiller.cs" />
-    <Compile Include="Core\Weaver\ToSort\Detectors\Model\IChecker.cs" />
-    <Compile Include="Core\Weaver\ToSort\Detectors\Model\InstructionWeavingInfo.cs" />
-    <Compile Include="Core\Weaver\ToSort\Detectors\Model\AroundInstructionInfoExtensions.cs" />
-    <Compile Include="Core\Weaver\Instruction\InterceptorParameters\CalledPossibility.cs" />
-    <Compile Include="Core\Weaver\ToSort\Detectors\Model\MethodWeavingInfo.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\Rules\IChecker.cs" />
+    <Compile Include="Core\Weaver\Instruction\InterceptorParameters\InstructionWeavingInfo.cs" />
+    <Compile Include="Core\Weaver\Instruction\InterceptorParameters\InstructionWeavingInfoExtensions.cs" />
+    <Compile Include="Core\Weaver\Instruction\InterceptorParameters\Possibilities\CalledPossibility.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\CommonWeavingInfo.cs" />
     <Compile Include="Core\Weaver\Method\Detector\IlInjectorsFactoryForMethod.cs" />
     <Compile Include="Core\Weaver\Method\Detector\IInterceptorParameterConfigurationForMethodFiller.cs" />
     <Compile Include="Core\Weaver\Engine\InterceptorParameters\InterceptorParameterPossibilities.cs" />
-    <Compile Include="Core\Weaver\ToSort\Detectors\Model\ParameterWeavingInfo.cs" />
+    <Compile Include="Core\Weaver\Parameters\InterceptorParameters\ParameterWeavingInfo.cs" />
     <Compile Include="Core\Weaver\Parameters\Detector\IlInjectorsFactoryForParameter.cs" />
     <Compile Include="Core\Weaver\Parameters\Detector\IInterceptorParameterConfigurationForParameterFiller.cs" />
     <Compile Include="Factory\Configuration\Parameters\MethodParameterInterceptorParameterConfigurationForMethodFiller.cs" />
     <Compile Include="Core\Weaver\Parameters\Detector\ParameterAspectInstanceDetector.cs" />
-    <Compile Include="Core\Weaver\ToSort\Engine\AspectInstanceForMethodWeavingExtensions.cs" />
+    <Compile Include="Core\Weaver\Engine\IL\AspectInstanceForMethodExtensions.cs" />
     <Compile Include="Core\Weaver\Session\IInstructionAspectInstanceDetector.cs" />
     <Compile Include="Core\Weaver\Session\IMethodAspectInstanceDetector.cs" />
     <Compile Include="Core\Weaver\Method\Detector\MethodAspectInstanceDetector.cs" />
     <Compile Include="Core\Weaver\Session\AspectCheckers\DefaultAspectChecker.cs" />
     <Compile Include="Core\Weaver\Session\AspectFinders\DefaultAspectFinder.cs" />
-    <Compile Include="Core\Weaver\ToSort\Engine\AssemblyPoolFactories\DefaultAssemblyPoolFactory.cs" />
+    <Compile Include="Core\Weaver\Session\AssemblyPoolFactories\DefaultAssemblyPoolFactory.cs" />
     <Compile Include="Core\Selectors\Selector.cs" />
     <Compile Include="Core\Selectors\SelectorParametersGenerator.cs" />
     <Compile Include="Core\Model\Weaving\WeavingMethodSession.cs" />
     <Compile Include="Core\Weaver\ToSort\Engine\Instructions\AroundInstructionIl.cs" />
     <Compile Include="Core\Weaver\ToSort\Engine\LifeCycle\PerInstanceLifeCycleHandler.cs" />
-    <Compile Include="Core\Weaver\ToSort\Engine\MethodWeaver.cs" />
+    <Compile Include="Core\Weaver\Engine\IL\MethodWeaver.cs" />
     <Compile Include="Core\Weaver\Engine\InterceptorParameters\InterceptorParameterPossibility.cs" />
-    <Compile Include="Core\Weaver\ToSort\Checkers\Ensure.cs" />
-    <Compile Include="Core\Weaver\ToSort\Checkers\ParametersChecker.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\Rules\EnsureMethod.cs" />
+    <Compile Include="Core\Weaver\Engine\InterceptorParameters\InterceptorParameterPossibilitiesExtensions.cs" />
     <Compile Include="Core\Helpers\ErrorHandlerExtensions.cs" />
     <Compile Include="Core\Weaver\WeaverEngine.cs" />
-    <Compile Include="Core\Weaver\ToSort\Aspects\AspectApplier.cs" />
+    <Compile Include="Core\Weaver\Engine\Detector\AspectApplier.cs" />
     <Compile Include="Core\Weaver\Instruction\Detector\InstructionAspectInstanceDetector.cs" />
     <Compile Include="Core\Weaver\ToSort\ILInjector\ParametersIlGenerator.cs" />
     <Compile Include="Core\Weaver\ToSort\ILInjector\IIlInjectorsExtensions.cs" />
-    <Compile Include="Core\Weaver\ToSort\Engine\LifeCycle\AspectBuilder.cs" />
+    <Compile Include="Core\Weaver\ToSort\Engine\LifeCycle\AspectInstanceBuilder.cs" />
     <Compile Include="Core\Weaver\ToSort\Engine\LifeCycle\ILifeCycleHandler.cs" />
     <Compile Include="Core\Weaver\ToSort\Data\IlInjectorAvailableVariables.cs" />
     <Compile Include="Core\Weaver\ToSort\Engine\LifeCycle\TransientLifeCycleHandler.cs" />
@@ -185,11 +201,7 @@
       <Name>NetAspect.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Weaver\Engine\InterceptorParameters\Checkers\" />
-    <Folder Include="Core\Weaver\Engine\InterceptorParameters\ILGenerators\" />
-    <Folder Include="Core\Weaver\Method\InterceptorParameters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

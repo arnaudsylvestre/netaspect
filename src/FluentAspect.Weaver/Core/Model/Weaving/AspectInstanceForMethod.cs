@@ -6,7 +6,7 @@ using NetAspect.Weaver.Core.Weaver.ToSort.ILInjector;
 
 namespace NetAspect.Weaver.Core.Model.Weaving
 {
-   public class AspectInstanceForMethodWeaving
+   public class AspectInstanceForMethod
    {
       public List<IIlInjector<VariablesForMethod>> BeforeConstructorBaseCalls = new List<IIlInjector<VariablesForMethod>>();
       public List<IIlInjector<VariablesForMethod>> Befores = new List<IIlInjector<VariablesForMethod>>();

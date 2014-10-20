@@ -47,7 +47,7 @@ namespace NetAspect.Weaver.Core.Weaver.Method.Detector
          this.selectorProvider = selectorProvider;
       }
 
-      public IEnumerable<AspectInstanceForMethodWeaving> GetAspectInstances(MethodDefinition method, NetAspectDefinition aspect)
+      public IEnumerable<AspectInstanceForMethod> GetAspectInstances(MethodDefinition method, NetAspectDefinition aspect)
       {
          if (!isMethodCompliant(aspect, method))
             return null;
@@ -58,16 +58,16 @@ namespace NetAspect.Weaver.Core.Weaver.Method.Detector
 
           var customAttributes = memberReference.GetAspectAttributes(aspect).ToList();
           if (customAttributes.Count == 0)
-              return new List<AspectInstanceForMethodWeaving>()
+              return new List<AspectInstanceForMethod>()
                   {
                       CreateAspectInstanceForMethodWeaving(method, aspect, null)
                   };
           return customAttributes.Select(customAttribute => CreateAspectInstanceForMethodWeaving(method, aspect, customAttribute));
       }
 
-       private AspectInstanceForMethodWeaving CreateAspectInstanceForMethodWeaving(MethodDefinition method, NetAspectDefinition aspect, CustomAttribute customAttribute)
+       private AspectInstanceForMethod CreateAspectInstanceForMethodWeaving(MethodDefinition method, NetAspectDefinition aspect, CustomAttribute customAttribute)
        {
-           return new AspectInstanceForMethodWeaving
+           return new AspectInstanceForMethod
                {
                    Instance = customAttribute,
                    Aspect = aspect,

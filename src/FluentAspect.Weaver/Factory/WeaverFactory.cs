@@ -43,7 +43,7 @@ namespace NetAspect.Weaver.Factory
             new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker(), typesToSave),
             new ErrorInfoComputer(ErrorsFactory.CreateAvailableErrors()
                ),
-               new MethodWeaver(new AspectBuilder(LifeCyclesFactory.CreateLifeCycles())));
+               new MethodWeaver(new AspectInstanceBuilder(LifeCyclesFactory.CreateLifeCycles())));
       }
 
        

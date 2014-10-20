@@ -2,7 +2,7 @@ using Mono.Cecil;
 
 namespace NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model
 {
-   public static class AroundInstructionInfoExtensions
+   public static class InstructionWeavingInfoExtensions
    {
       public static FieldDefinition GetOperandAsField(this InstructionWeavingInfo instructionWeaving_P)
       {

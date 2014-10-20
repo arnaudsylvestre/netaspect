@@ -1,5 +1,6 @@
 using NetAspect.Weaver.Core.Weaver.Engine.InterceptorParameters;
 using NetAspect.Weaver.Core.Weaver.Instruction.Detector;
+using NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters;
 using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Engine;
 using NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model;

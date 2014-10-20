@@ -10,7 +10,7 @@ namespace NetAspect.Weaver.Core.Model.Weaving
       public readonly Dictionary<MethodDefinition, WeavingMethodSession> weavingModels = new Dictionary<MethodDefinition, WeavingMethodSession>();
 
 
-      public void Add(MethodDefinition method, IEnumerable<AspectInstanceForMethodWeaving> detectWeavingModels)
+      public void Add(MethodDefinition method, IEnumerable<AspectInstanceForMethod> detectWeavingModels)
       {
           if (detectWeavingModels == null)
             return;

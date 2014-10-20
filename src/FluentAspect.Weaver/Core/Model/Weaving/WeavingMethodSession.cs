@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Core.Model.Weaving
    {
        public readonly Dictionary<Instruction, List<AspectInstanceForInstruction>> Instructions = new Dictionary<Instruction, List<AspectInstanceForInstruction>>();
 
-       public readonly List<AspectInstanceForMethodWeaving> Method = new List<AspectInstanceForMethodWeaving>();
+       public readonly List<AspectInstanceForMethod> Method = new List<AspectInstanceForMethod>();
 
    }
 }

@@ -17,11 +17,11 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
 {
    public class MethodWeaver
    {
-       private AspectBuilder aspectBuilder;
+       private AspectInstanceBuilder _aspectInstanceBuilder;
 
-       public MethodWeaver(AspectBuilder aspectBuilder)
+       public MethodWeaver(AspectInstanceBuilder _aspectInstanceBuilder)
        {
-           this.aspectBuilder = aspectBuilder;
+           this._aspectInstanceBuilder = _aspectInstanceBuilder;
        }
 
        public void Weave(MethodDefinition method,
@@ -64,7 +64,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
 
            foreach (var aspectInstanceForMethodWeaving in weavingMethodSession.Method)
            {
-               variablesForMethod.Aspects.Add(new Variable(instructionsToInsertP_L, new VariableAspect(aspectBuilder, aspectInstanceForMethodWeaving.Aspect.LifeCycle, aspectInstanceForMethodWeaving.Aspect.Type, aspectInstanceForMethodWeaving.Instance), method, null, allVariables));
+               variablesForMethod.Aspects.Add(new Variable(instructionsToInsertP_L, new VariableAspect(_aspectInstanceBuilder, aspectInstanceForMethodWeaving.Aspect.LifeCycle, aspectInstanceForMethodWeaving.Aspect.Type, aspectInstanceForMethodWeaving.Instance), method, null, allVariables));
                aspectInstanceForMethodWeaving.Check(errorHandler, variablesForMethod);
                if (errorHandler.Errors.Any())
                    return true;
@@ -149,8 +149,8 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
                    v.Check(errorHandler, variablesForInstruction);
                    if (errorHandler.Errors.Any())
                        return true;
-                   variablesForInstruction.Aspects.Add(new Variable(instructions, new VariableAspect(aspectBuilder, v.Aspect.LifeCycle, v.Aspect.Type, v.Instance), method, instruction.Key, allVariables));
-                   v.Weave(aroundInstructionIl, variablesForInstruction);
+                   variablesForInstruction.Aspects.Add(new Variable(instructions, new VariableAspect(_aspectInstanceBuilder, v.Aspect.LifeCycle, v.Aspect.Type, v.Instance), method, instruction.Key, allVariables));
+                   v.Inject(aroundInstructionIl, variablesForInstruction);
                    ils.Add(aroundInstructionIl);
                }
                instructionIl.Before.AddRange(instructions.calledParametersInstructions);

@@ -43,13 +43,13 @@ namespace NetAspect.Weaver.Core.Weaver.Parameters.Detector
          this.selectorProvider = selectorProvider;
       }
 
-      public IEnumerable<AspectInstanceForMethodWeaving> GetAspectInstances(MethodDefinition method, NetAspectDefinition aspect)
+      public IEnumerable<AspectInstanceForMethod> GetAspectInstances(MethodDefinition method, NetAspectDefinition aspect)
       {
           var beforeConstructorBaseCalls = new List<IIlInjector<VariablesForMethod>>();
           var afters = new List<IIlInjector<VariablesForMethod>>();
           var onExceptions = new List<IIlInjector<VariablesForMethod>>();
           var onFinallys = new List<IIlInjector<VariablesForMethod>>();
-          List<AspectInstanceForMethodWeaving> instances = new List<AspectInstanceForMethodWeaving>();
+          List<AspectInstanceForMethod> instances = new List<AspectInstanceForMethod>();
          foreach (ParameterDefinition parameter_L in method.Parameters)
          {
             if (!_isParameterCompliant(aspect, parameter_L, method))
@@ -60,7 +60,7 @@ namespace NetAspect.Weaver.Core.Weaver.Parameters.Detector
 
             var customAttributes = parameter_L.GetAspectAttributes(aspect, method.Module).ToList();
             if (customAttributes.Count == 0)
-                return new List<AspectInstanceForMethodWeaving>()
+                return new List<AspectInstanceForMethod>()
                   {
                       CreateAspectInstanceForMethodWeaving(method, aspect, null, parameter_L)
                   };
@@ -71,9 +71,9 @@ namespace NetAspect.Weaver.Core.Weaver.Parameters.Detector
          return instances;
       }
 
-       private AspectInstanceForMethodWeaving CreateAspectInstanceForMethodWeaving(MethodDefinition method, NetAspectDefinition aspect, CustomAttribute customAttribute, ParameterDefinition parameter_L)
+       private AspectInstanceForMethod CreateAspectInstanceForMethodWeaving(MethodDefinition method, NetAspectDefinition aspect, CustomAttribute customAttribute, ParameterDefinition parameter_L)
        {
-           return new AspectInstanceForMethodWeaving
+           return new AspectInstanceForMethod
                {
                    Instance = customAttribute,
                    Aspect = aspect,

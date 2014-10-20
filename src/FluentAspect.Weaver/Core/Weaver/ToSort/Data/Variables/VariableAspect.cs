@@ -11,14 +11,14 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables
     public class VariableAspect : Variable.IVariableBuilder
     {
 
-        private readonly AspectBuilder aspectBuilder;
+        private readonly AspectInstanceBuilder _aspectInstanceBuilder;
         private LifeCycle lifeCycle;
         private Type aspectType;
         private CustomAttribute customAttribute;
 
-        public VariableAspect(AspectBuilder aspectBuilder, LifeCycle lifeCycle, Type aspectType, CustomAttribute customAttribute)
+        public VariableAspect(AspectInstanceBuilder _aspectInstanceBuilder, LifeCycle lifeCycle, Type aspectType, CustomAttribute customAttribute)
         {
-            this.aspectBuilder = aspectBuilder;
+            this._aspectInstanceBuilder = _aspectInstanceBuilder;
             this.lifeCycle = lifeCycle;
             this.aspectType = aspectType;
             this.customAttribute = customAttribute;
@@ -27,7 +27,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables
         public VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Mono.Cecil.Cil.Instruction instruction)
         {
             var interceptorVariable = new VariableDefinition(method.Module.Import(aspectType));
-            aspectBuilder.CreateInterceptor(aspectType, lifeCycle, method, interceptorVariable, instructionsToInsert_P.aspectInitialisation, customAttribute);
+            _aspectInstanceBuilder.CreateAspectInstance(aspectType, lifeCycle, method, interceptorVariable, instructionsToInsert_P.aspectInitialisation, customAttribute);
             return interceptorVariable;
         }
 

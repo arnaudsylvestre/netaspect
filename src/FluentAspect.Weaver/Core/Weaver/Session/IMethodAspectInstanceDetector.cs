@@ -7,6 +7,6 @@ namespace NetAspect.Weaver.Core.Weaver.Session
 {
    public interface IMethodAspectInstanceDetector
    {
-      IEnumerable<AspectInstanceForMethodWeaving> GetAspectInstances(MethodDefinition method, NetAspectDefinition aspect);
+      IEnumerable<AspectInstanceForMethod> GetAspectInstances(MethodDefinition method, NetAspectDefinition aspect);
    }
 }
