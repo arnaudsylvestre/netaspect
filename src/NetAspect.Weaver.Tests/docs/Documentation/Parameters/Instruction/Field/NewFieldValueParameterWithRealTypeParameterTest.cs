@@ -17,9 +17,8 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.Instruction.Field
          return () =>
          {
             var classToWeave_L = new ClassToWeave();
-            classToWeave_L.field = "Hello";
             classToWeave_L.Weaved();
-            Assert.AreEqual("Hello", MyAspect.Value);
+            Assert.AreEqual("Hello", MyAspectAttribute.Value);
          };
       }
 
@@ -34,7 +33,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.Instruction.Field
          }
       }
 
-      public class MyAspect : Attribute
+      public class MyAspectAttribute : Attribute
       {
          public static string Value;
          public bool NetAspectAttribute = true;

@@ -13,6 +13,15 @@ $section.SetParameterDescription('exception', 'this parameter is used to get the
 $section.SetParameterDescription('result', 'this parameter is used to get the return value of the weaved method')
 $section.SetParameterDescription('field', 'this parameter is used to get information of the accessed field')
 $section.SetParameterDescription('newFieldValue', 'this parameter is used to get the value that will be assigned to the weaved field')
+$section.SetParameterDescription('called', 'this parameter is used to have the instance of the object which is used to call the weaved member')
+$section.SetParameterDescription('calledParameters', 'this parameter is used to have the instance of the parameters passed to a call to a weaved method')
+$section.SetParameterDescription('called + parameter name', 'this parameter is used to have the value of a parameter passed to a call to a weaved method')
+$section.SetParameterDescription('propertyValue', 'this parameter is used to have the new value that will be assigned to the weaved property')
+$section.SetParameterDescription('caller', 'this parameter is used to have the instance of the object that call the weaved member')
+$section.SetParameterDescription('callerParameters', 'this parameter is used to have the parameters of the method that will call the weaved member')
+$section.SetParameterDescription('parameterValue', 'this parameter is used to have the value of the weaved parameter')
+$section.SetParameterDescription('parameter', 'this parameter is used to have the information of the weaved parameter')
+
 
 		<div class="bs-docs-section">
 		 

@@ -35,7 +35,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
                                                      interceptorParameterPossibilitiesP)
         {
             ParameterDefinition parameter = weavingInfo_P.Method.Parameters[0];
-            interceptorParameterPossibilitiesP.AddPossibleParameter("value")
+            interceptorParameterPossibilitiesP.AddPossibleParameter("propertyvalue")
                                               .WhichCanNotBeOut()
                                               .WhichMustBeOfTypeOfParameter(parameter)
                                               .AndInjectTheParameter(parameter);
