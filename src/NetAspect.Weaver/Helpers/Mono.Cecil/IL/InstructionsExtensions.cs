@@ -76,7 +76,7 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
           {
               for (int i = 0; i < attribute.Constructor.Parameters.Count; i++)
               {
-                  instructions.Add(adders[attribute.ConstructorArguments[i].Value.GetType()](attribute.ConstructorArguments[i].Value));
+                  instructions.Add(Get(attribute, i)(attribute.ConstructorArguments[i].Value));
               }
               instructions.Add(Instruction.Create(OpCodes.Newobj, attribute.Constructor));
           }
@@ -87,10 +87,35 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
          instructions.Add(Instruction.Create(OpCodes.Stloc, interceptor));
       }
 
-      static Dictionary<Type, Func<object, Instruction>> adders = new Dictionary<Type, Func<object, Instruction>>
+       private static Func<object, Instruction> Get(CustomAttribute attribute, int i)
+       {
+           try
+           {
+               return adders[attribute.ConstructorArguments[i].Value.GetType()];
+
+           }
+           catch (Exception)
+           {
+
+               throw;
+           }
+       }
+
+       public static Dictionary<Type, Func<object, Instruction>> adders = new Dictionary<Type, Func<object, Instruction>>
                {
                    {typeof (string), o => Instruction.Create(OpCodes.Ldstr, o.ToString())},
                    {typeof (int), o => Instruction.Create(OpCodes.Ldc_I4, (int)o)},
+                   {typeof (bool), o => Instruction.Create(OpCodes.Ldc_I4, (bool)o ? 1 : 0)},
+                   {typeof (byte), o => Instruction.Create(OpCodes.Ldc_I4, (int)(byte)o)},
+                   {typeof (char), o => Instruction.Create(OpCodes.Ldc_I4, (int)(char)o)},
+                   {typeof (double), o => Instruction.Create(OpCodes.Ldc_R8, (double)o)},
+                   {typeof (float), o => Instruction.Create(OpCodes.Ldc_R4, (float)o)},
+                   {typeof (long), o => Instruction.Create(OpCodes.Ldc_I8, (long)o)},
+                   {typeof (short), o => Instruction.Create(OpCodes.Ldc_I4, (short)o)},
+                   {typeof (sbyte), o => Instruction.Create(OpCodes.Ldc_I4, (int)(sbyte)o)},
+                   {typeof (uint), o => Instruction.Create(OpCodes.Ldc_I4, (int)(uint)o)},
+                   {typeof (ushort), o => Instruction.Create(OpCodes.Ldc_I4, (short)(ushort)o)},
+                   {typeof (ulong), o => Instruction.Create(OpCodes.Ldc_I8, (long)(ulong)o)},
                };
 
        public static void AppendCallStaticMethodAnsSaveResultInto(this List<Instruction> instructions, MethodInfo method, VariableDefinition variable, ModuleDefinition module)

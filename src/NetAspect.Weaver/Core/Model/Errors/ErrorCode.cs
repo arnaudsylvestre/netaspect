@@ -22,6 +22,7 @@
       SelectorBadParameterName,
       TooManySelectorsWithSameName,
       SelectorMustHaveParameters,
-       ImpossibleToHavePerInstanceLifeCycleInStaticMethod
+       ImpossibleToHavePerInstanceLifeCycleInStaticMethod,
+       AttributeTypeNotAllowed
    }
 }

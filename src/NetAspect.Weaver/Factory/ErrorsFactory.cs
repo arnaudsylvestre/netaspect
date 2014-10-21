@@ -32,7 +32,8 @@ namespace NetAspect.Weaver.Factory
                   {ErrorCode.TooManySelectorsWithSameName, new ErrorInfo("Only one {0} can be defined in the aspect {1}")},
                   {ErrorCode.SelectorMustHaveParameters, new ErrorInfo("The selector {0} of the aspect {1} must have the following parameter : {2}")},
                   {ErrorCode.AssemblyGeneratedIsNotCompliant, new ErrorInfo(ErrorLevel.Failure, "An internal error : {0}")},
-                  {ErrorCode.ImpossibleToHavePerInstanceLifeCycleInStaticMethod, new ErrorInfo("Impossible to use the aspect {0} in the method {1} of type {2} because this method is static and the aspect is declared as PerInstance")}
+                  {ErrorCode.ImpossibleToHavePerInstanceLifeCycleInStaticMethod, new ErrorInfo("Impossible to use the aspect {0} in the method {1} of type {2} because this method is static and the aspect is declared as PerInstance")},
+                  {ErrorCode.AttributeTypeNotAllowed, new ErrorInfo("The parameter '{0}' in a constructor of the aspect {1} can not be declared with the type {2}. Only the following types are allowed : {3}")},
                };
         }
     }

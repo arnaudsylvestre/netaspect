@@ -5,7 +5,9 @@ namespace NetAspect.Sample.Dep
 {
     public class TotoAttribute : Attribute
     {
-        public TotoAttribute(Type t)
+        public const uint T = 125;
+
+        public TotoAttribute(uint t)
         {
             
         }
@@ -14,13 +16,12 @@ namespace NetAspect.Sample.Dep
    public class DepClassWithField
    {
       public string Field;
-
-       [TotoAttribute(typeof(TotoAttribute))]
+       [TotoAttribute(TotoAttribute.T)]
       public void Test()
       {
          ParameterInfo toto = MethodBase.GetCurrentMethod().GetParameters()[3];
           var toto2 = typeof (DepClassWithProperty);
-           Attribute.GetCustomAttributes(MethodBase.GetCurrentMethod(), typeof (TotoAttribute));
+          new TotoAttribute((uint)0xfffffffe);
 
       }
    }

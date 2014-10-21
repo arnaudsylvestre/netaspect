@@ -5,10 +5,10 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.Aspects.Parameters.Members
 {
-   public class AfterParameterInGetFieldTest :
-      NetAspectTest<AfterParameterInGetFieldTest.MyInt>
+   public class AspectParameterInGetFieldTest :
+      NetAspectTest<AspectParameterInGetFieldTest.MyInt>
    {
-      public AfterParameterInGetFieldTest()
+      public AspectParameterInGetFieldTest()
          : base("Instruction which get field value after weaving possibilities", "GetFieldInstructionWeavingAfter", "InstructionFieldWeaving")
       {
       }
@@ -65,7 +65,7 @@ namespace NetAspect.Weaver.Tests.unit.Aspects.Parameters.Members
             Assert.NotNull(caller);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(37, lineNumber);
-            Assert.AreEqual("AfterParameterInGetFieldTest.cs", fileName);
+            Assert.AreEqual("AspectParameterInGetFieldTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(1, callerParameters.Length);
             Assert.AreEqual("DivideBy", callerMethod.Name);

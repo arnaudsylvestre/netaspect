@@ -1,8 +1,13 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Selectors;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
+using NetAspect.Weaver.Helpers.NetFramework;
 
 namespace NetAspect.Weaver.Core.Weaver.Session.AspectCheckers
 {
@@ -15,9 +20,24 @@ namespace NetAspect.Weaver.Core.Weaver.Session.AspectCheckers
          EnsureSelector(aspect.ConstructorSelector, errorHandler, aspect);
          EnsureSelector(aspect.PropertySelector, errorHandler, aspect);
          EnsureSelector(aspect.ParameterSelector, errorHandler, aspect);
+         EnsureAttributeConstructorTypeIsAllowed(aspect, InstructionsExtensions.adders.Keys.ToList(), errorHandler);
       }
 
-      private void EnsureSelector<T>(Selector<T> fieldSelector, ErrorHandler errorHandler, NetAspectDefinition aspectP)
+        private void EnsureAttributeConstructorTypeIsAllowed(NetAspectDefinition aspect, List<Type> allowedTypes, ErrorHandler errorHandler)
+        {
+            ConstructorInfo[] constructors = aspect.Type.GetConstructors(ObjectExtensions.BINDING_FLAGS);
+            foreach (var constructor in constructors)
+            {
+                ParameterInfo[] parameterInfos = constructor.GetParameters();
+                foreach (var parameterInfo in parameterInfos)
+                {
+                    if (!allowedTypes.Contains(parameterInfo.ParameterType))
+                        errorHandler.OnError(ErrorCode.AttributeTypeNotAllowed, FileLocation.None, parameterInfo.Name, aspect.Type.FullName, parameterInfo.ParameterType.FullName, string.Join(", ", allowedTypes.Select(t => t.FullName).ToArray()));
+                }
+            }
+        }
+
+        private void EnsureSelector<T>(Selector<T> fieldSelector, ErrorHandler errorHandler, NetAspectDefinition aspectP)
       {
          try
          {

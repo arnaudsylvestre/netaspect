@@ -139,9 +139,24 @@
     <Compile Include="docs\MethodWeavingForDocWithStartDivisionTest.cs" />
     <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
-    <Compile Include="unit\Aspects\Parameters\Members\AfterParameterInGetFieldTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInGetFieldTest.cs" />
     <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInConstructorTest.cs" />
     <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInMethodTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInParameterTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithBooleanTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithByteTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithCharTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithDoubleTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithFloatTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithLongTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithShortTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithStringTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithConstByteTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithSByteTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithULongTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithUShortTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithUIntTypeTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithTypeTypeTest.cs" />
     <Compile Include="unit\Atttributes\Statics\WeaveCallStaticPropertyTest.cs" />
     <Compile Include="unit\Atttributes\Statics\WeaveStaticFieldTest.cs" />
     <Compile Include="unit\InstructionWeaving\Constructors\Parameters\BeforeCallConstructorParametersTest.cs" />
@@ -484,9 +499,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="unit\Aspects\Parameters\Types\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
