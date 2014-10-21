@@ -9,7 +9,7 @@ namespace NetAspect.Doc.Builder.Core.Readers.Documentation
 {
     public static class DocumentationAvailableParametersSectionReader
     {
-        public static AvailableParametersSectionModel ExtractAvailableParameters(string baseFolder)
+        public static AvailableParametersSectionModel ExtractAvailableParameters(string baseFolder, Dictionary<string, string> parameterDescriptions)
         {
             var doc = new List<ParameterModel>();
             foreach (string file_L in baseFolder.GetAllCsFiles())
@@ -38,7 +38,7 @@ namespace NetAspect.Doc.Builder.Core.Readers.Documentation
             }
 
 
-            return new AvailableParametersSectionModel(doc);
+            return new AvailableParametersSectionModel(doc, parameterDescriptions);
         }
     }
 }

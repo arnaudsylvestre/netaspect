@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using NetAspect.Doc.Builder.Core.Readers.Documentation.Sections.PutAspects;
 using NetAspect.Doc.Builder.Model;
 
@@ -8,17 +9,16 @@ namespace NetAspect.Doc.Builder.Core.Readers.Documentation
     {
         public static DocumentationPageModel Read(string baseFolder)
         {
+            Dictionary<string, string> parameterDescriptions = ParameterDescriptionFactory.Create();
             return new DocumentationPageModel
                 {
                     Interceptors =
                         DocumentationInterceptorsSectionReader.ExtractInterceptors(Path.Combine(baseFolder,
-                                                                                                @"Documentation\Interceptors")),
+                                                                                                @"Documentation\Interceptors"), parameterDescriptions),
                     PutAspects =
-                        DocumentationPutAspectsSectionReader.ExtractPutAspects(Path.Combine(baseFolder,
-                                                                                            @"Documentation\Weaving")),
+                        DocumentationPutAspectsSectionReader.ExtractPutAspects(Path.Combine(baseFolder, @"Documentation\Weaving")),
                     AvailableParameters =
-                        DocumentationAvailableParametersSectionReader.ExtractAvailableParameters(Path.Combine(
-                            baseFolder, @"Documentation\Parameters")),
+                        DocumentationAvailableParametersSectionReader.ExtractAvailableParameters(Path.Combine(baseFolder, @"Documentation\Parameters"), parameterDescriptions),
                 };
         }
     }

@@ -54,7 +54,8 @@
 								<p>The following parameters are available for this interceptor :</p>
 			<ul>
 #foreach ($parameter in $interceptor.Parameters)
-               <li>$parameter</li>
+               <li>
+			   <a href="#Parameter$section.GetParameterId($parameter)" data-toggle="collapse" onclick="location.href='#Parameter$section.GetParameterId($parameter)';">$parameter</a></li>
 #end
             </ul>
 								<p>Here is a sample on how to use :</p>
