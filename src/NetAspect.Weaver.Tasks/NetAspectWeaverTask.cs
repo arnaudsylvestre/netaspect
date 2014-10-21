@@ -18,9 +18,8 @@ namespace NetAspect.Weaver.Tasks
          try
          {
              string directoryPath = Path.GetDirectoryName(AssemblyPath);
-            string[] weavedFiles;
-            AppDomain domain = AppDomain.CreateDomain(
-               "SheepAspect Weaving",
+             AppDomain domain = AppDomain.CreateDomain(
+               "NetAspect Weaving",
                null,
                new AppDomainSetup
                {
@@ -38,7 +37,8 @@ namespace NetAspect.Weaver.Tasks
                      runnerType.FullName) as
                      AppDomainIsolatedDiscoveryRunner;
 
-               if (!runner.Process(AssemblyPath, Log, out weavedFiles))
+                string[] weavedFiles;
+                if (!runner.Process(AssemblyPath, Log, out weavedFiles))
                {
                    string targetFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(AssemblyPath);
                   if (File.Exists(targetFileName))
@@ -56,12 +56,12 @@ namespace NetAspect.Weaver.Tasks
          }
          catch (Exception e)
          {
-            Log.LogError(e.ToString());
+             Log.LogError(e.ToString());
+             Log.LogError(e.StackTrace);
             return false;
          }
 
          stopwatch.Stop();
-         Log.LogMessage("[SheepAspect-Compiler] Compiled {0} in {1:n} ms", AssemblyPath, stopwatch.ElapsedMilliseconds);
          return true;
       }
    }

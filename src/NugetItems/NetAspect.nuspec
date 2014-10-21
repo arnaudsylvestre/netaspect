@@ -5,7 +5,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NetAspect</id>
-    <version>0.1.2</version>
+    <version>0.1.5</version>
     <authors>Arnaud SYLVESTRE</authors>
     <owners>Arnaud SYLVESTREk</owners>
     <language>en-US</language>
