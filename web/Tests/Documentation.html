@@ -1,0 +1,4526 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+      <title>NetAspect</title>
+      <link href="bootstrap-3.2.0/dist/css/bootstrap.css" rel="stylesheet">
+      <link href="jumbotron.css" rel="stylesheet">
+   </head>
+   <body>
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+         <div class="container">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="index.html">Home</a>
+            </div>
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="NetAspect.html">NetAspect</a>
+            </div>
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="GettingStarted.html">Getting Started</a>
+            </div>
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="Documentation.html">Documentation</a>
+            </div>
+         </div>
+      </div>
+
+
+			
+$page.SetParameterDescription('instance', 'this parameter is used to have the <b>this</b> of the weaved member')
+$page.SetParameterDescription('method', 'this parameter is used to get some information about the weaved method')
+
+<div class="container bs-docs-container">
+      <div class="row">
+		<div class="col-md-12" role="main">
+
+	
+            <div class="page-header">
+               <h1 id="kinds">Put aspects</h1>
+            </div>
+            <p>In NetAspect, aspects can be put on fields/properties/methods/constructors. There is 2 ways to put an aspect on a member :</p>
+
+			<div class="list-group">
+  <a href="#AttributesSample" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">By attributes</h4>
+    <p class="list-group-item-text">Just consider the aspect as an attribute and put the attribute on the member.</p>
+  </a>
+  <div id="AttributesSample" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeMethod ()
+	{
+		Called = true;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+								</div>
+								</div>
+    <a href="#SelectSample" data-toggle="collapse" class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">By selecting the member</h4>
+    <p class="list-group-item-text">If you can't add an attribute to your member to weave, you can just declare a <b>select</b> method in your aspect.</p>
+  </a>
+    <div id="SelectSample" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+								</div>
+								</div>
+</div>
+
+			
+         </div
+
+
+;
+	
+<div class="bs-docs-section">
+				<div class="page-header">
+					<h1 id="dropdowns">Interceptors</h1>
+				</div>
+				<p>An interceptor is a <b>method</b> declared in the <b>aspect</b> and which will be called at certain moment after the weaving.<br/>Some <b>parameters</b> can be added to the interceptor to get more information</p>
+				<p>The following interceptors are available :</p>
+				<h2 class="list-group-item-heading">For an aspect put on a method</h2>
+				
+
+
+				<div id="BeforeMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#BeforeMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">BeforeMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed before the code of the method is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="BeforeMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parametermethod" data-toggle="collapse" onclick="location.href='#Parametermethod';">method</a></li>
+               <li>
+			   <a href="#Parameterparameters" data-toggle="collapse" onclick="location.href='#Parameterparameters';">parameters</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">v</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeMethod (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="AfterMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#AfterMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">AfterMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the method is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="AfterMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parametermethod" data-toggle="collapse" onclick="location.href='#Parametermethod';">method</a></li>
+               <li>
+			   <a href="#Parameterparameters" data-toggle="collapse" onclick="location.href='#Parameterparameters';">parameters</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">v</a></li>
+               <li>
+			   <a href="#Parameterresult" data-toggle="collapse" onclick="location.href='#Parameterresult';">result</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterMethod (object instance, MethodBase method, object[] parameters, int v, int result)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+		Assert.AreEqual (2, result);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="OnExceptionMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#OnExceptionMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">OnExceptionMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed when an exception is raised by the method</p>
+				
+							
+							
+			  </a>
+			  <div id="OnExceptionMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parametermethod" data-toggle="collapse" onclick="location.href='#Parametermethod';">method</a></li>
+               <li>
+			   <a href="#Parameterparameters" data-toggle="collapse" onclick="location.href='#Parameterparameters';">parameters</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">v</a></li>
+               <li>
+			   <a href="#Parameterexception" data-toggle="collapse" onclick="location.href='#Parameterexception';">exception</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void OnExceptionMethod (object instance, MethodBase method, object[] parameters, int v, Exception exception)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (0, v);
+		Assert.AreEqual ("DivideByZeroException", exception.GetType ().Name);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	try {
+		var myInt = new MyInt (24);
+		myInt.DivideBy (0);
+		Assert.Fail ("Must raise an exception");
+	}
+	catch (DivideByZeroException) {
+	}
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="OnFinallyMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#OnFinallyMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">OnFinallyMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the method is executed if an exception is raised or not</p>
+				
+							
+							
+			  </a>
+			  <div id="OnFinallyMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parametermethod" data-toggle="collapse" onclick="location.href='#Parametermethod';">method</a></li>
+               <li>
+			   <a href="#Parameterparameters" data-toggle="collapse" onclick="location.href='#Parameterparameters';">parameters</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">v</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void OnFinallyMethod (object instance, MethodBase method, object[] parameters, int v)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("DivideBy", method.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (12, v);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var myInt = new MyInt (24);
+	myInt.DivideBy (12);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="BeforeCallMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#BeforeCallMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">BeforeCallMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed before calling the method</p>
+				
+							
+							
+			  </a>
+			  <div id="BeforeCallMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerFormat</a></li>
+               <li>
+			   <a href="#Parametercaller" data-toggle="collapse" onclick="location.href='#Parametercaller';">caller</a></li>
+               <li>
+			   <a href="#Parametercalled" data-toggle="collapse" onclick="location.href='#Parametercalled';">called</a></li>
+               <li>
+			   <a href="#ParametercolumnNumber" data-toggle="collapse" onclick="location.href='#ParametercolumnNumber';">columnNumber</a></li>
+               <li>
+			   <a href="#ParameterlineNumber" data-toggle="collapse" onclick="location.href='#ParameterlineNumber';">lineNumber</a></li>
+               <li>
+			   <a href="#ParameterfileName" data-toggle="collapse" onclick="location.href='#ParameterfileName';">fileName</a></li>
+               <li>
+			   <a href="#ParameterfilePath" data-toggle="collapse" onclick="location.href='#ParameterfilePath';">filePath</a></li>
+               <li>
+			   <a href="#ParametercallerParameters" data-toggle="collapse" onclick="location.href='#ParametercallerParameters';">callerParameters</a></li>
+               <li>
+			   <a href="#ParametercalledParameters" data-toggle="collapse" onclick="location.href='#ParametercalledParameters';">calledParameters</a></li>
+               <li>
+			   <a href="#Parametercalledparametername" data-toggle="collapse" onclick="location.href='#Parametercalledparametername';">calledV</a></li>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerMethod</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeCallMethod (string callerFormat, MyIntUser caller, MyInt called, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, object[] calledParameters, int calledV, MethodBase callerMethod)
+	{
+		Called = true;
+		Assert.NotNull (caller);
+		Assert.NotNull (caller);
+		Assert.AreEqual (13, columnNumber);
+		Assert.AreEqual (32, lineNumber);
+		Assert.AreEqual ("Part6Sample1BeforeInstructionCallMethodPossibilityTest.cs", fileName);
+		Assert.AreEqual (fileName, Path.GetFileName (filePath));
+		Assert.AreEqual (3, callerParameters.Length);
+		Assert.AreEqual (1, calledParameters.Length);
+		Assert.AreEqual ("Compute", callerMethod.Name);
+		Assert.AreEqual ("Result : {0}", callerFormat);
+		Assert.AreEqual (6, calledV);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var user = new MyIntUser ();
+	Assert.AreEqual ("Result : 2", user.Compute (12, 6, "Result : {0}"));
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="AfterCallMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#AfterCallMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">AfterCallMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed after calling the method</p>
+				
+							
+							
+			  </a>
+			  <div id="AfterCallMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerFormat</a></li>
+               <li>
+			   <a href="#Parametercaller" data-toggle="collapse" onclick="location.href='#Parametercaller';">caller</a></li>
+               <li>
+			   <a href="#Parametercalled" data-toggle="collapse" onclick="location.href='#Parametercalled';">called</a></li>
+               <li>
+			   <a href="#ParametercolumnNumber" data-toggle="collapse" onclick="location.href='#ParametercolumnNumber';">columnNumber</a></li>
+               <li>
+			   <a href="#ParameterlineNumber" data-toggle="collapse" onclick="location.href='#ParameterlineNumber';">lineNumber</a></li>
+               <li>
+			   <a href="#ParameterfileName" data-toggle="collapse" onclick="location.href='#ParameterfileName';">fileName</a></li>
+               <li>
+			   <a href="#ParameterfilePath" data-toggle="collapse" onclick="location.href='#ParameterfilePath';">filePath</a></li>
+               <li>
+			   <a href="#ParametercallerParameters" data-toggle="collapse" onclick="location.href='#ParametercallerParameters';">callerParameters</a></li>
+               <li>
+			   <a href="#ParametercalledParameters" data-toggle="collapse" onclick="location.href='#ParametercalledParameters';">calledParameters</a></li>
+               <li>
+			   <a href="#Parametercalledparametername" data-toggle="collapse" onclick="location.href='#Parametercalledparametername';">calledV</a></li>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerMethod</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterCallMethod (string callerFormat, MyIntUser caller, MyInt called, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, object[] calledParameters, int calledV, MethodBase callerMethod)
+	{
+		Called = true;
+		Assert.NotNull (caller);
+		Assert.NotNull (caller);
+		Assert.AreEqual (13, columnNumber);
+		Assert.AreEqual (32, lineNumber);
+		Assert.AreEqual ("Part6Sample2AfterInstructionCallMethodPossibilityTest.cs", fileName);
+		Assert.AreEqual (fileName, Path.GetFileName (filePath));
+		Assert.AreEqual (3, callerParameters.Length);
+		Assert.AreEqual (1, calledParameters.Length);
+		Assert.AreEqual ("Compute", callerMethod.Name);
+		Assert.AreEqual ("Result : {0}", callerFormat);
+		Assert.AreEqual (6, calledV);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var user = new MyIntUser ();
+	Assert.AreEqual ("Result : 2", user.Compute (12, 6, "Result : {0}"));
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+			<br/>
+				<h2 class="list-group-item-heading">For an aspect put on a constructor</h2>
+				
+
+
+				<div id="BeforeConstructorInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#BeforeConstructorColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">BeforeConstructor</h4>
+				<p class="list-group-item-text">This interceptor is executed before the code of the constructor is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="BeforeConstructorColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterconstructor" data-toggle="collapse" onclick="location.href='#Parameterconstructor';">constructor</a></li>
+               <li>
+			   <a href="#Parameterparameters" data-toggle="collapse" onclick="location.href='#Parameterparameters';">parameters</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">intValue</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	[Log]
+	public MyInt (int intValue)
+	{
+		value = intValue;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeConstructor (object instance, MethodBase constructor, object[] parameters, int intValue)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual (".ctor", constructor.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (24, intValue);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var myInt = new MyInt (24);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="AfterConstructorInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#AfterConstructorColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">AfterConstructor</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the constructor is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="AfterConstructorColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterconstructor" data-toggle="collapse" onclick="location.href='#Parameterconstructor';">constructor</a></li>
+               <li>
+			   <a href="#Parameterparameters" data-toggle="collapse" onclick="location.href='#Parameterparameters';">parameters</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">intValue</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	[Log]
+	public MyInt (int intValue)
+	{
+		value = intValue;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterConstructor (object instance, MethodBase constructor, object[] parameters, int intValue)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual (".ctor", constructor.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (24, intValue);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="OnExceptionConstructorInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#OnExceptionConstructorColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">OnExceptionConstructor</h4>
+				<p class="list-group-item-text">This interceptor is executed when an exception is raised by the constructor</p>
+				
+							
+							
+			  </a>
+			  <div id="OnExceptionConstructorColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterconstructor" data-toggle="collapse" onclick="location.href='#Parameterconstructor';">constructor</a></li>
+               <li>
+			   <a href="#Parameterparameters" data-toggle="collapse" onclick="location.href='#Parameterparameters';">parameters</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">intValue</a></li>
+               <li>
+			   <a href="#Parameterexception" data-toggle="collapse" onclick="location.href='#Parameterexception';">exception</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	[Log]
+	public MyInt (int intValue)
+	{
+		if (value == 0)
+			throw new NotSupportedException ();
+		value = intValue;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void OnExceptionConstructor (object instance, MethodBase constructor, object[] parameters, int intValue, Exception exception)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual (".ctor", constructor.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (0, intValue);
+		Assert.AreEqual ("NotSupportedException", exception.GetType ().Name);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	try {
+		new MyInt (0);
+		Assert.Fail ("Must raise an exception");
+	}
+	catch (NotSupportedException) {
+	}
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="OnFinallyConstructorInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#OnFinallyConstructorColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">OnFinallyConstructor</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the constructor is executed if an exception is raised or not</p>
+				
+							
+							
+			  </a>
+			  <div id="OnFinallyConstructorColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterconstructor" data-toggle="collapse" onclick="location.href='#Parameterconstructor';">constructor</a></li>
+               <li>
+			   <a href="#Parameterparameters" data-toggle="collapse" onclick="location.href='#Parameterparameters';">parameters</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">intValue</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	[Log]
+	public MyInt (int intValue)
+	{
+		value = intValue;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void OnFinallyConstructor (object instance, MethodBase constructor, object[] parameters, int intValue)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual (".ctor", constructor.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual (24, intValue);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var myInt = new MyInt (24);
+	myInt.DivideBy (12);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="BeforeCallConstructorInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#BeforeCallConstructorColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">BeforeCallConstructor</h4>
+				<p class="list-group-item-text">This interceptor is executed before calling the constructor</p>
+				
+							
+							
+			  </a>
+			  <div id="BeforeCallConstructorColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerFormat</a></li>
+               <li>
+			   <a href="#Parametercaller" data-toggle="collapse" onclick="location.href='#Parametercaller';">caller</a></li>
+               <li>
+			   <a href="#ParametercolumnNumber" data-toggle="collapse" onclick="location.href='#ParametercolumnNumber';">columnNumber</a></li>
+               <li>
+			   <a href="#ParameterlineNumber" data-toggle="collapse" onclick="location.href='#ParameterlineNumber';">lineNumber</a></li>
+               <li>
+			   <a href="#ParameterfileName" data-toggle="collapse" onclick="location.href='#ParameterfileName';">fileName</a></li>
+               <li>
+			   <a href="#ParameterfilePath" data-toggle="collapse" onclick="location.href='#ParameterfilePath';">filePath</a></li>
+               <li>
+			   <a href="#ParametercallerParameters" data-toggle="collapse" onclick="location.href='#ParametercallerParameters';">callerParameters</a></li>
+               <li>
+			   <a href="#ParametercalledParameters" data-toggle="collapse" onclick="location.href='#ParametercalledParameters';">calledParameters</a></li>
+               <li>
+			   <a href="#Parametercalledparametername" data-toggle="collapse" onclick="location.href='#Parametercalledparametername';">calledValue</a></li>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerMethod</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	[Log]
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeCallConstructor (string callerFormat, MyIntUser caller, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, object[] calledParameters, int calledValue, MethodBase callerMethod)
+	{
+		Called = true;
+		Assert.NotNull (caller);
+		Assert.AreEqual (13, columnNumber);
+		Assert.AreEqual (31, lineNumber);
+		Assert.AreEqual ("Part8Sample1BeforeInstructionCallMethodPossibilityTest.cs", fileName);
+		Assert.AreEqual (fileName, Path.GetFileName (filePath));
+		Assert.AreEqual (3, callerParameters.Length);
+		Assert.AreEqual (1, calledParameters.Length);
+		Assert.AreEqual ("Compute", callerMethod.Name);
+		Assert.AreEqual ("Result : {0}", callerFormat);
+		Assert.AreEqual (12, calledValue);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var user = new MyIntUser ();
+	Assert.AreEqual ("Result : 2", user.Compute (12, 6, "Result : {0}"));
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="AfterCallConstructorInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#AfterCallConstructorColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">AfterCallConstructor</h4>
+				<p class="list-group-item-text">This interceptor is executed after calling the constructor</p>
+				
+							
+							
+			  </a>
+			  <div id="AfterCallConstructorColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerFormat</a></li>
+               <li>
+			   <a href="#Parametercaller" data-toggle="collapse" onclick="location.href='#Parametercaller';">caller</a></li>
+               <li>
+			   <a href="#ParametercolumnNumber" data-toggle="collapse" onclick="location.href='#ParametercolumnNumber';">columnNumber</a></li>
+               <li>
+			   <a href="#ParameterlineNumber" data-toggle="collapse" onclick="location.href='#ParameterlineNumber';">lineNumber</a></li>
+               <li>
+			   <a href="#ParameterfileName" data-toggle="collapse" onclick="location.href='#ParameterfileName';">fileName</a></li>
+               <li>
+			   <a href="#ParameterfilePath" data-toggle="collapse" onclick="location.href='#ParameterfilePath';">filePath</a></li>
+               <li>
+			   <a href="#ParametercallerParameters" data-toggle="collapse" onclick="location.href='#ParametercallerParameters';">callerParameters</a></li>
+               <li>
+			   <a href="#ParametercalledParameters" data-toggle="collapse" onclick="location.href='#ParametercalledParameters';">calledParameters</a></li>
+               <li>
+			   <a href="#Parametercalledparametername" data-toggle="collapse" onclick="location.href='#Parametercalledparametername';">calledValue</a></li>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerMethod</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	[Log]
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterCallConstructor (string callerFormat, MyIntUser caller, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, object[] calledParameters, int calledValue, MethodBase callerMethod)
+	{
+		Called = true;
+		Assert.NotNull (caller);
+		Assert.AreEqual (13, columnNumber);
+		Assert.AreEqual (31, lineNumber);
+		Assert.AreEqual ("Part8Sample2AfterInstructionCallMethodPossibilityTest.cs", fileName);
+		Assert.AreEqual (fileName, Path.GetFileName (filePath));
+		Assert.AreEqual (3, callerParameters.Length);
+		Assert.AreEqual (1, calledParameters.Length);
+		Assert.AreEqual ("Compute", callerMethod.Name);
+		Assert.AreEqual ("Result : {0}", callerFormat);
+		Assert.AreEqual (12, calledValue);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var user = new MyIntUser ();
+	Assert.AreEqual ("Result : 2", user.Compute (12, 6, "Result : {0}"));
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+			<br/>
+				<h2 class="list-group-item-heading">For an aspect put on a property</h2>
+				
+
+
+				<div id="BeforePropertyGetMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#BeforePropertyGetMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">BeforePropertyGetMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed before the code of the property is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="BeforePropertyGetMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterproperty" data-toggle="collapse" onclick="location.href='#Parameterproperty';">property</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforePropertyGetMethod (object instance, PropertyInfo property)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (24, myInt.Value);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="AfterPropertyGetMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#AfterPropertyGetMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">AfterPropertyGetMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the property is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="AfterPropertyGetMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterproperty" data-toggle="collapse" onclick="location.href='#Parameterproperty';">property</a></li>
+               <li>
+			   <a href="#Parameterresult" data-toggle="collapse" onclick="location.href='#Parameterresult';">result</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterPropertyGetMethod (object instance, PropertyInfo property, int result)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (24, result);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (24, myInt.Value);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="OnExceptionPropertyGetMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#OnExceptionPropertyGetMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">OnExceptionPropertyGetMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed when an exception is raised by the property</p>
+				
+							
+							
+			  </a>
+			  <div id="OnExceptionPropertyGetMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterproperty" data-toggle="collapse" onclick="location.href='#Parameterproperty';">property</a></li>
+               <li>
+			   <a href="#Parameterexception" data-toggle="collapse" onclick="location.href='#Parameterexception';">exception</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		get {
+			if (value == 0)
+				throw new NotSupportedException ("Must not be 0");
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void OnExceptionPropertyGetMethod (object instance, PropertyInfo property, Exception exception)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual ("NotSupportedException", exception.GetType ().Name);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	try {
+		var myInt = new MyInt (0);
+		int val = myInt.Value;
+		Assert.Fail ("Must raise an exception");
+	}
+	catch (NotSupportedException) {
+	}
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="OnFinallyPropertyGetMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#OnFinallyPropertyGetMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">OnFinallyPropertyGetMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the property is executed if an exception is raised or not</p>
+				
+							
+							
+			  </a>
+			  <div id="OnFinallyPropertyGetMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterproperty" data-toggle="collapse" onclick="location.href='#Parameterproperty';">property</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void OnFinallyPropertyGetMethod (object instance, PropertyInfo property)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var myInt = new MyInt (24);
+	int val = myInt.Value;
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="BeforePropertySetMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#BeforePropertySetMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">BeforePropertySetMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed before the code of the property is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="BeforePropertySetMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterproperty" data-toggle="collapse" onclick="location.href='#Parameterproperty';">property</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">value</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		set {
+			this.value = value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforePropertySetMethod (object instance, PropertyInfo property, int value)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (32, value);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var myInt = new MyInt (24);
+	myInt.Value = 32;
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="AfterPropertySetMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#AfterPropertySetMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">AfterPropertySetMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the property is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="AfterPropertySetMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterproperty" data-toggle="collapse" onclick="location.href='#Parameterproperty';">property</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">value</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		set {
+			this.value = value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterPropertySetMethod (object instance, PropertyInfo property, int value)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (32, value);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var myInt = new MyInt (24);
+	myInt.Value = 32;
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="OnExceptionPropertySetMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#OnExceptionPropertySetMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">OnExceptionPropertySetMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed when an exception is raised by the property</p>
+				
+							
+							
+			  </a>
+			  <div id="OnExceptionPropertySetMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterproperty" data-toggle="collapse" onclick="location.href='#Parameterproperty';">property</a></li>
+               <li>
+			   <a href="#Parameterexception" data-toggle="collapse" onclick="location.href='#Parameterexception';">exception</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		set {
+			if (value == 0)
+				throw new NotSupportedException ("Must not be 0");
+			this.value = value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void OnExceptionPropertySetMethod (object instance, PropertyInfo property, Exception exception)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual ("NotSupportedException", exception.GetType ().Name);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	try {
+		var myInt = new MyInt (0);
+		myInt.Value = 0;
+		Assert.Fail ("Must raise an exception");
+	}
+	catch (NotSupportedException) {
+	}
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="OnFinallyPropertySetMethodInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#OnFinallyPropertySetMethodColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">OnFinallyPropertySetMethod</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the property is executed if an exception is raised or not</p>
+				
+							
+							
+			  </a>
+			  <div id="OnFinallyPropertySetMethodColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterproperty" data-toggle="collapse" onclick="location.href='#Parameterproperty';">property</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">value</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		set {
+			this.value = value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void OnFinallyPropertySetMethod (object instance, PropertyInfo property, int value)
+	{
+		Called = true;
+		Assert.AreEqual (typeof(MyInt), instance.GetType ());
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (12, value);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var myInt = new MyInt (24);
+	myInt.Value = 12;
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="BeforeGetPropertyInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#BeforeGetPropertyColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">BeforeGetProperty</h4>
+				<p class="list-group-item-text">This interceptor is executed before the code of the property is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="BeforeGetPropertyColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerv</a></li>
+               <li>
+			   <a href="#Parametercaller" data-toggle="collapse" onclick="location.href='#Parametercaller';">caller</a></li>
+               <li>
+			   <a href="#Parametercalled" data-toggle="collapse" onclick="location.href='#Parametercalled';">called</a></li>
+               <li>
+			   <a href="#ParametercolumnNumber" data-toggle="collapse" onclick="location.href='#ParametercolumnNumber';">columnNumber</a></li>
+               <li>
+			   <a href="#ParameterlineNumber" data-toggle="collapse" onclick="location.href='#ParameterlineNumber';">lineNumber</a></li>
+               <li>
+			   <a href="#ParameterfileName" data-toggle="collapse" onclick="location.href='#ParameterfileName';">fileName</a></li>
+               <li>
+			   <a href="#ParameterfilePath" data-toggle="collapse" onclick="location.href='#ParameterfilePath';">filePath</a></li>
+               <li>
+			   <a href="#ParametercallerParameters" data-toggle="collapse" onclick="location.href='#ParametercallerParameters';">callerParameters</a></li>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerMethod</a></li>
+               <li>
+			   <a href="#Parameterproperty" data-toggle="collapse" onclick="location.href='#Parameterproperty';">property</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	public MyInt (int value)
+	{
+		Value = value;
+	}
+
+	[Log]
+	private int Value {
+		get;
+		set;
+	}
+
+	public int DivideBy (int v)
+	{
+		return Value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeGetProperty (int callerv, MyInt caller, MyInt called, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, PropertyInfo property)
+	{
+		Called = true;
+		Assert.AreEqual (caller, called);
+		Assert.NotNull (caller);
+		Assert.AreEqual (13, columnNumber);
+		Assert.AreEqual (39, lineNumber);
+		Assert.AreEqual ("Part7Sample1BeforeInstructionGetPropertyPossibilityTest.cs", fileName);
+		Assert.AreEqual (fileName, Path.GetFileName (filePath));
+		Assert.AreEqual (1, callerParameters.Length);
+		Assert.AreEqual ("DivideBy", callerMethod.Name);
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (6, callerv);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var classToWeave_L = new MyInt (12);
+	classToWeave_L.DivideBy (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="AfterGetPropertyInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#AfterGetPropertyColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">AfterGetProperty</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the property is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="AfterGetPropertyColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerv</a></li>
+               <li>
+			   <a href="#Parametercaller" data-toggle="collapse" onclick="location.href='#Parametercaller';">caller</a></li>
+               <li>
+			   <a href="#Parametercalled" data-toggle="collapse" onclick="location.href='#Parametercalled';">called</a></li>
+               <li>
+			   <a href="#ParametercolumnNumber" data-toggle="collapse" onclick="location.href='#ParametercolumnNumber';">columnNumber</a></li>
+               <li>
+			   <a href="#ParameterlineNumber" data-toggle="collapse" onclick="location.href='#ParameterlineNumber';">lineNumber</a></li>
+               <li>
+			   <a href="#ParameterfileName" data-toggle="collapse" onclick="location.href='#ParameterfileName';">fileName</a></li>
+               <li>
+			   <a href="#ParameterfilePath" data-toggle="collapse" onclick="location.href='#ParameterfilePath';">filePath</a></li>
+               <li>
+			   <a href="#ParametercallerParameters" data-toggle="collapse" onclick="location.href='#ParametercallerParameters';">callerParameters</a></li>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerMethod</a></li>
+               <li>
+			   <a href="#Parameterproperty" data-toggle="collapse" onclick="location.href='#Parameterproperty';">property</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	public MyInt (int value)
+	{
+		Value = value;
+	}
+
+	[Log]
+	private int Value {
+		get;
+		set;
+	}
+
+	public int DivideBy (int v)
+	{
+		return Value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterGetProperty (int callerv, MyInt caller, MyInt called, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, PropertyInfo property)
+	{
+		Called = true;
+		Assert.AreEqual (caller, called);
+		Assert.NotNull (caller);
+		Assert.AreEqual (13, columnNumber);
+		Assert.AreEqual (39, lineNumber);
+		Assert.AreEqual ("Part7Sample2AfterInstructionGetPropertyPossibilityTest.cs", fileName);
+		Assert.AreEqual (fileName, Path.GetFileName (filePath));
+		Assert.AreEqual (1, callerParameters.Length);
+		Assert.AreEqual ("DivideBy", callerMethod.Name);
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (6, callerv);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var classToWeave_L = new MyInt (12);
+	classToWeave_L.DivideBy (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="BeforeUpdatePropertyInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#BeforeUpdatePropertyColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">BeforeUpdateProperty</h4>
+				<p class="list-group-item-text">This interceptor is executed before the code of the property is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="BeforeUpdatePropertyColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerIntValue</a></li>
+               <li>
+			   <a href="#Parametercaller" data-toggle="collapse" onclick="location.href='#Parametercaller';">caller</a></li>
+               <li>
+			   <a href="#Parametercalled" data-toggle="collapse" onclick="location.href='#Parametercalled';">called</a></li>
+               <li>
+			   <a href="#ParametercolumnNumber" data-toggle="collapse" onclick="location.href='#ParametercolumnNumber';">columnNumber</a></li>
+               <li>
+			   <a href="#ParameterlineNumber" data-toggle="collapse" onclick="location.href='#ParameterlineNumber';">lineNumber</a></li>
+               <li>
+			   <a href="#ParameterfileName" data-toggle="collapse" onclick="location.href='#ParameterfileName';">fileName</a></li>
+               <li>
+			   <a href="#ParameterfilePath" data-toggle="collapse" onclick="location.href='#ParameterfilePath';">filePath</a></li>
+               <li>
+			   <a href="#ParametercallerParameters" data-toggle="collapse" onclick="location.href='#ParametercallerParameters';">callerParameters</a></li>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerMethod</a></li>
+               <li>
+			   <a href="#Parameterproperty" data-toggle="collapse" onclick="location.href='#Parameterproperty';">property</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	[Log]
+	private int Value {
+		get;
+		set;
+	}
+
+	public void UpdateValue (int intValue)
+	{
+		Value = intValue;
+	}
+
+	public int DivideBy (int v)
+	{
+		return Value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeUpdateProperty (int callerIntValue, MyInt caller, MyInt called, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, PropertyInfo property)
+	{
+		Called = true;
+		Assert.AreEqual (caller, called);
+		Assert.NotNull (caller);
+		Assert.AreEqual (13, columnNumber);
+		Assert.AreEqual (34, lineNumber);
+		Assert.AreEqual ("Part7Sample3BeforeInstructionSetPropertyPossibilityTest.cs", fileName);
+		Assert.AreEqual (fileName, Path.GetFileName (filePath));
+		Assert.AreEqual (1, callerParameters.Length);
+		Assert.AreEqual ("UpdateValue", callerMethod.Name);
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (6, callerIntValue);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var classToWeave_L = new MyInt ();
+	classToWeave_L.UpdateValue (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="AfterUpdatePropertyInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#AfterUpdatePropertyColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">AfterUpdateProperty</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the property is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="AfterUpdatePropertyColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerIntValue</a></li>
+               <li>
+			   <a href="#Parametercaller" data-toggle="collapse" onclick="location.href='#Parametercaller';">caller</a></li>
+               <li>
+			   <a href="#Parametercalled" data-toggle="collapse" onclick="location.href='#Parametercalled';">called</a></li>
+               <li>
+			   <a href="#ParametercolumnNumber" data-toggle="collapse" onclick="location.href='#ParametercolumnNumber';">columnNumber</a></li>
+               <li>
+			   <a href="#ParameterlineNumber" data-toggle="collapse" onclick="location.href='#ParameterlineNumber';">lineNumber</a></li>
+               <li>
+			   <a href="#ParameterfileName" data-toggle="collapse" onclick="location.href='#ParameterfileName';">fileName</a></li>
+               <li>
+			   <a href="#ParameterfilePath" data-toggle="collapse" onclick="location.href='#ParameterfilePath';">filePath</a></li>
+               <li>
+			   <a href="#ParametercallerParameters" data-toggle="collapse" onclick="location.href='#ParametercallerParameters';">callerParameters</a></li>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerMethod</a></li>
+               <li>
+			   <a href="#Parameterproperty" data-toggle="collapse" onclick="location.href='#Parameterproperty';">property</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	[Log]
+	private int Value {
+		get;
+		set;
+	}
+
+	public void UpdateValue (int intValue)
+	{
+		Value = intValue;
+	}
+
+	public int DivideBy (int v)
+	{
+		return Value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterUpdateProperty (int callerIntValue, MyInt caller, MyInt called, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, PropertyInfo property)
+	{
+		Called = true;
+		Assert.AreEqual (caller, called);
+		Assert.NotNull (caller);
+		Assert.AreEqual (13, columnNumber);
+		Assert.AreEqual (34, lineNumber);
+		Assert.AreEqual ("Part7Sample4AfterInstructionSetPropertyPossibilityTest.cs", fileName);
+		Assert.AreEqual (fileName, Path.GetFileName (filePath));
+		Assert.AreEqual (1, callerParameters.Length);
+		Assert.AreEqual ("UpdateValue", callerMethod.Name);
+		Assert.AreEqual ("Value", property.Name);
+		Assert.AreEqual (6, callerIntValue);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var classToWeave_L = new MyInt ();
+	classToWeave_L.UpdateValue (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+			<br/>
+				<h2 class="list-group-item-heading">For an aspect put on a field</h2>
+				
+
+
+				<div id="BeforeGetFieldInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#BeforeGetFieldColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">BeforeGetField</h4>
+				<p class="list-group-item-text">This interceptor is executed before the code of the field is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="BeforeGetFieldColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerv</a></li>
+               <li>
+			   <a href="#Parametercaller" data-toggle="collapse" onclick="location.href='#Parametercaller';">caller</a></li>
+               <li>
+			   <a href="#Parametercalled" data-toggle="collapse" onclick="location.href='#Parametercalled';">called</a></li>
+               <li>
+			   <a href="#ParametercolumnNumber" data-toggle="collapse" onclick="location.href='#ParametercolumnNumber';">columnNumber</a></li>
+               <li>
+			   <a href="#ParameterlineNumber" data-toggle="collapse" onclick="location.href='#ParameterlineNumber';">lineNumber</a></li>
+               <li>
+			   <a href="#ParameterfileName" data-toggle="collapse" onclick="location.href='#ParameterfileName';">fileName</a></li>
+               <li>
+			   <a href="#ParameterfilePath" data-toggle="collapse" onclick="location.href='#ParameterfilePath';">filePath</a></li>
+               <li>
+			   <a href="#ParametercallerParameters" data-toggle="collapse" onclick="location.href='#ParametercallerParameters';">callerParameters</a></li>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerMethod</a></li>
+               <li>
+			   <a href="#Parameterfield" data-toggle="collapse" onclick="location.href='#Parameterfield';">field</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	[Log]
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeGetField (int callerv, MyInt caller, MyInt called, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, FieldInfo field)
+	{
+		Called = true;
+		Assert.AreEqual (caller, called);
+		Assert.NotNull (caller);
+		Assert.AreEqual (13, columnNumber);
+		Assert.AreEqual (38, lineNumber);
+		Assert.AreEqual ("Part5Sample1BeforeInstructionGetFieldPossibilityTest.cs", fileName);
+		Assert.AreEqual (fileName, Path.GetFileName (filePath));
+		Assert.AreEqual (1, callerParameters.Length);
+		Assert.AreEqual ("DivideBy", callerMethod.Name);
+		Assert.AreEqual ("value", field.Name);
+		Assert.AreEqual (6, callerv);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var classToWeave_L = new MyInt (12);
+	classToWeave_L.DivideBy (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="AfterGetFieldInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#AfterGetFieldColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">AfterGetField</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the field is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="AfterGetFieldColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerv</a></li>
+               <li>
+			   <a href="#Parametercaller" data-toggle="collapse" onclick="location.href='#Parametercaller';">caller</a></li>
+               <li>
+			   <a href="#Parametercalled" data-toggle="collapse" onclick="location.href='#Parametercalled';">called</a></li>
+               <li>
+			   <a href="#ParametercolumnNumber" data-toggle="collapse" onclick="location.href='#ParametercolumnNumber';">columnNumber</a></li>
+               <li>
+			   <a href="#ParameterlineNumber" data-toggle="collapse" onclick="location.href='#ParameterlineNumber';">lineNumber</a></li>
+               <li>
+			   <a href="#ParameterfileName" data-toggle="collapse" onclick="location.href='#ParameterfileName';">fileName</a></li>
+               <li>
+			   <a href="#ParameterfilePath" data-toggle="collapse" onclick="location.href='#ParameterfilePath';">filePath</a></li>
+               <li>
+			   <a href="#ParametercallerParameters" data-toggle="collapse" onclick="location.href='#ParametercallerParameters';">callerParameters</a></li>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerMethod</a></li>
+               <li>
+			   <a href="#Parameterfield" data-toggle="collapse" onclick="location.href='#Parameterfield';">field</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	[Log]
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterGetField (int callerv, MyInt caller, MyInt called, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, FieldInfo field)
+	{
+		Called = true;
+		Assert.AreEqual (caller, called);
+		Assert.NotNull (caller);
+		Assert.AreEqual (13, columnNumber);
+		Assert.AreEqual (38, lineNumber);
+		Assert.AreEqual ("Part5Sample2AfterInstructionGetFieldPossibilityTest.cs", fileName);
+		Assert.AreEqual (fileName, Path.GetFileName (filePath));
+		Assert.AreEqual (1, callerParameters.Length);
+		Assert.AreEqual ("DivideBy", callerMethod.Name);
+		Assert.AreEqual ("value", field.Name);
+		Assert.AreEqual (6, callerv);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var classToWeave_L = new MyInt (12);
+	classToWeave_L.DivideBy (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="BeforeUpdateFieldInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#BeforeUpdateFieldColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">BeforeUpdateField</h4>
+				<p class="list-group-item-text">This interceptor is executed before the code of the field is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="BeforeUpdateFieldColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerIntValue</a></li>
+               <li>
+			   <a href="#Parametercaller" data-toggle="collapse" onclick="location.href='#Parametercaller';">caller</a></li>
+               <li>
+			   <a href="#Parametercalled" data-toggle="collapse" onclick="location.href='#Parametercalled';">called</a></li>
+               <li>
+			   <a href="#ParametercolumnNumber" data-toggle="collapse" onclick="location.href='#ParametercolumnNumber';">columnNumber</a></li>
+               <li>
+			   <a href="#ParameterlineNumber" data-toggle="collapse" onclick="location.href='#ParameterlineNumber';">lineNumber</a></li>
+               <li>
+			   <a href="#ParameterfileName" data-toggle="collapse" onclick="location.href='#ParameterfileName';">fileName</a></li>
+               <li>
+			   <a href="#ParameterfilePath" data-toggle="collapse" onclick="location.href='#ParameterfilePath';">filePath</a></li>
+               <li>
+			   <a href="#ParametercallerParameters" data-toggle="collapse" onclick="location.href='#ParametercallerParameters';">callerParameters</a></li>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerMethod</a></li>
+               <li>
+			   <a href="#Parameterfield" data-toggle="collapse" onclick="location.href='#Parameterfield';">field</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	[Log]
+	private int value;
+
+	public void UpdateValue (int intValue)
+	{
+		value = intValue;
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeUpdateField (int callerIntValue, MyInt caller, MyInt called, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, FieldInfo field)
+	{
+		Called = true;
+		Assert.AreEqual (caller, called);
+		Assert.NotNull (caller);
+		Assert.AreEqual (13, columnNumber);
+		Assert.AreEqual (33, lineNumber);
+		Assert.AreEqual ("Part5Sample3BeforeInstructionSetFieldPossibilityTest.cs", fileName);
+		Assert.AreEqual (fileName, Path.GetFileName (filePath));
+		Assert.AreEqual (1, callerParameters.Length);
+		Assert.AreEqual ("UpdateValue", callerMethod.Name);
+		Assert.AreEqual ("value", field.Name);
+		Assert.AreEqual (6, callerIntValue);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var classToWeave_L = new MyInt ();
+	classToWeave_L.UpdateValue (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="AfterUpdateFieldInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#AfterUpdateFieldColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">AfterUpdateField</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the field is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="AfterUpdateFieldColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerIntValue</a></li>
+               <li>
+			   <a href="#Parametercaller" data-toggle="collapse" onclick="location.href='#Parametercaller';">caller</a></li>
+               <li>
+			   <a href="#Parametercalled" data-toggle="collapse" onclick="location.href='#Parametercalled';">called</a></li>
+               <li>
+			   <a href="#ParametercolumnNumber" data-toggle="collapse" onclick="location.href='#ParametercolumnNumber';">columnNumber</a></li>
+               <li>
+			   <a href="#ParameterlineNumber" data-toggle="collapse" onclick="location.href='#ParameterlineNumber';">lineNumber</a></li>
+               <li>
+			   <a href="#ParameterfileName" data-toggle="collapse" onclick="location.href='#ParameterfileName';">fileName</a></li>
+               <li>
+			   <a href="#ParameterfilePath" data-toggle="collapse" onclick="location.href='#ParameterfilePath';">filePath</a></li>
+               <li>
+			   <a href="#ParametercallerParameters" data-toggle="collapse" onclick="location.href='#ParametercallerParameters';">callerParameters</a></li>
+               <li>
+			   <a href="#Parametercallerparametername" data-toggle="collapse" onclick="location.href='#Parametercallerparametername';">callerMethod</a></li>
+               <li>
+			   <a href="#Parameterfield" data-toggle="collapse" onclick="location.href='#Parameterfield';">field</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	[Log]
+	private int value;
+
+	public void UpdateValue (int intValue)
+	{
+		value = intValue;
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterUpdateField (int callerIntValue, MyInt caller, MyInt called, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, FieldInfo field)
+	{
+		Called = true;
+		Assert.AreEqual (caller, called);
+		Assert.NotNull (caller);
+		Assert.AreEqual (13, columnNumber);
+		Assert.AreEqual (33, lineNumber);
+		Assert.AreEqual ("Part5Sample4AfterInstructionSetFieldPossibilityTest.cs", fileName);
+		Assert.AreEqual (fileName, Path.GetFileName (filePath));
+		Assert.AreEqual (1, callerParameters.Length);
+		Assert.AreEqual ("UpdateValue", callerMethod.Name);
+		Assert.AreEqual ("value", field.Name);
+		Assert.AreEqual (6, callerIntValue);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var classToWeave_L = new MyInt ();
+	classToWeave_L.UpdateValue (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+			<br/>
+				<h2 class="list-group-item-heading">For an aspect put on a parameter</h2>
+				
+
+
+				<div id="BeforeMethodForParameterInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#BeforeMethodForParameterColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">BeforeMethodForParameter</h4>
+				<p class="list-group-item-text">This interceptor is executed before the code of the method is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="BeforeMethodForParameterColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#ParameterparameterValue" data-toggle="collapse" onclick="location.href='#ParameterparameterValue';">parameterValue</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">parameterName</a></li>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">v</a></li>
+               <li>
+			   <a href="#Parameterparameters" data-toggle="collapse" onclick="location.href='#Parameterparameters';">parameters</a></li>
+               <li>
+			   <a href="#Parameterparameter" data-toggle="collapse" onclick="location.href='#Parameterparameter';">parameter</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy ([Log] int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeMethodForParameter (int parameterValue, string parameterName, MyInt instance, int v, object[] parameters, ParameterInfo parameter)
+	{
+		Called = true;
+		Assert.NotNull (instance);
+		Assert.AreEqual ("v", parameter.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual ("v", parameterName);
+		Assert.AreEqual (6, parameterValue);
+		Assert.AreEqual (6, v);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var classToWeave_L = new MyInt (12);
+	classToWeave_L.DivideBy (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="AfterMethodForParameterInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#AfterMethodForParameterColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">AfterMethodForParameter</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the method is executed</p>
+				
+							
+							
+			  </a>
+			  <div id="AfterMethodForParameterColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#ParameterparameterValue" data-toggle="collapse" onclick="location.href='#ParameterparameterValue';">parameterValue</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">parameterName</a></li>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">v</a></li>
+               <li>
+			   <a href="#Parameterparameters" data-toggle="collapse" onclick="location.href='#Parameterparameters';">parameters</a></li>
+               <li>
+			   <a href="#Parameterparameter" data-toggle="collapse" onclick="location.href='#Parameterparameter';">parameter</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy ([Log] int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterMethodForParameter (int parameterValue, string parameterName, MyInt instance, int v, object[] parameters, ParameterInfo parameter)
+	{
+		Called = true;
+		Assert.NotNull (instance);
+		Assert.AreEqual ("v", parameter.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual ("v", parameterName);
+		Assert.AreEqual (6, parameterValue);
+		Assert.AreEqual (6, v);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var classToWeave_L = new MyInt (12);
+	classToWeave_L.DivideBy (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="OnExceptionMethodForParameterInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#OnExceptionMethodForParameterColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">OnExceptionMethodForParameter</h4>
+				<p class="list-group-item-text">This interceptor is executed when an exception is raised by the method</p>
+				
+							
+							
+			  </a>
+			  <div id="OnExceptionMethodForParameterColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#ParameterparameterValue" data-toggle="collapse" onclick="location.href='#ParameterparameterValue';">parameterValue</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">parameterName</a></li>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">v</a></li>
+               <li>
+			   <a href="#Parameterparameters" data-toggle="collapse" onclick="location.href='#Parameterparameters';">parameters</a></li>
+               <li>
+			   <a href="#Parameterparameter" data-toggle="collapse" onclick="location.href='#Parameterparameter';">parameter</a></li>
+               <li>
+			   <a href="#Parameterexception" data-toggle="collapse" onclick="location.href='#Parameterexception';">exception</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy ([Log] int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void OnExceptionMethodForParameter (int parameterValue, string parameterName, MyInt instance, int v, object[] parameters, ParameterInfo parameter, Exception exception)
+	{
+		Called = true;
+		Assert.NotNull (instance);
+		Assert.AreEqual ("v", parameter.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual ("v", parameterName);
+		Assert.AreEqual (0, parameterValue);
+		Assert.AreEqual ("DivideByZeroException", exception.GetType ().Name);
+		Assert.AreEqual (0, v);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	try {
+		var classToWeave_L = new MyInt (12);
+		classToWeave_L.DivideBy (0);
+		Assert.Fail ("Must Fail");
+	}
+	catch (Exception) {
+		Assert.True (LogAttribute.Called);
+	}
+}
+</pre>
+								</div>
+			</div>
+
+					
+
+
+				<div id="OnFinallyMethodForParameterInterceptorCollapsible" >
+			
+			
+			<div class="list-group">
+			  <a data-toggle="collapse" href="#OnFinallyMethodForParameterColl" class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading ">OnFinallyMethodForParameter</h4>
+				<p class="list-group-item-text">This interceptor is executed after the code of the method is executed if an exception is raised or not</p>
+				
+							
+							
+			  </a>
+			  <div id="OnFinallyMethodForParameterColl" class="panel-collapse collapse">
+								<div class="panel-body">
+								<p>The following parameters are available for this interceptor :</p>
+			<ul>
+               <li>
+			   <a href="#ParameterparameterValue" data-toggle="collapse" onclick="location.href='#ParameterparameterValue';">parameterValue</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">parameterName</a></li>
+               <li>
+			   <a href="#Parameterinstance" data-toggle="collapse" onclick="location.href='#Parameterinstance';">instance</a></li>
+               <li>
+			   <a href="#Parameterparametername" data-toggle="collapse" onclick="location.href='#Parameterparametername';">v</a></li>
+               <li>
+			   <a href="#Parameterparameters" data-toggle="collapse" onclick="location.href='#Parameterparameters';">parameters</a></li>
+               <li>
+			   <a href="#Parameterparameter" data-toggle="collapse" onclick="location.href='#Parameterparameter';">parameter</a></li>
+            </ul>
+								<p>Here is a sample on how to use :</p>
+									<pre class="prettyprint">
+// Our business class
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy ([Log] int v)
+	{
+		return value / v;
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+public class LogAttribute : Attribute
+{
+	public static bool Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void OnFinallyMethodForParameter (int parameterValue, string parameterName, MyInt instance, int v, object[] parameters, ParameterInfo parameter)
+	{
+		Called = true;
+		Assert.NotNull (instance);
+		Assert.AreEqual ("v", parameter.Name);
+		Assert.AreEqual (1, parameters.Length);
+		Assert.AreEqual ("v", parameterName);
+		Assert.AreEqual (6, parameterValue);
+		Assert.AreEqual (6, v);
+	}
+}
+
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+{
+	var classToWeave_L = new MyInt (12);
+	classToWeave_L.DivideBy (6);
+	Assert.True (LogAttribute.Called);
+}
+</pre>
+								</div>
+			</div>
+
+					
+			<br/>
+        
+					</div>
+
+
+				</div>
+			</div>;
+	
+
+
+		<div class="bs-docs-section">
+		 
+            <div class="page-header">
+               <h1 id="parameters">Available parameters</h1>
+            </div>
+			
+
+
+
+
+<div class="list-group">
+
+  <a href="#Parametercalledparametername" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">called + parameter name</h4>
+    <p class="list-group-item-text">this parameter is used to have the value of a parameter passed to a call to a weaved method</p>
+  </a>
+  <div id="Parametercalledparametername" name="Parametercalledparametername" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdcalledparameternameP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be declared with the same type as the type of the parameter in the weaved method</h4>
+	  </a>
+	  
+			  <div id="parameterIdcalledparameternameP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class MyAspectAttribute : Attribute
+{
+	public static int Value;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeCallMethod (int calledParam1)
+	{
+		Value = calledParam1;
+	}
+}
+
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+{
+	Assert.AreEqual (0, MyAspectAttribute.Value);
+	var classToWeave_L = new ClassToWeave ();
+	classToWeave_L.Weaved ();
+	Assert.AreEqual (12, MyAspectAttribute.Value);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#ParametercalledParameters" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">calledParameters</h4>
+    <p class="list-group-item-text">this parameter is used to have the instance of the parameters passed to a call to a weaved method</p>
+  </a>
+  <div id="ParametercalledParameters" name="ParametercalledParameters" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdcalledParametersP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be declared with the System.Object[] type</h4>
+	  </a>
+	  
+			  <div id="parameterIdcalledParametersP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class MyAspectAttribute : Attribute
+{
+	public static object[] CalledParameters;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeCallMethod (object[] calledParameters)
+	{
+		CalledParameters = calledParameters;
+	}
+}
+
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+{
+	Assert.IsNull (MyAspectAttribute.CalledParameters);
+	var classToWeave_L = new ClassToWeave ();
+	classToWeave_L.Weaved ();
+	Assert.AreEqual (new object[] {
+		1,
+		2
+	}, MyAspectAttribute.CalledParameters);
+}
+</pre>
+
+								</div>
+								</div>
+	<a href="#parameterIdcalledParametersP2" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be declared with the System.Object[] type</h4>
+	  </a>
+	  
+			  <div id="parameterIdcalledParametersP2" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class MyAspectAttribute : Attribute
+{
+	public static object[] CalledParameters;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeCallMethod (object[] calledParameters)
+	{
+		CalledParameters = calledParameters;
+	}
+}
+
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+{
+	Assert.IsNull (MyAspectAttribute.CalledParameters);
+	var classToWeave_L = new ClassToWeave ();
+	classToWeave_L.Weaved ();
+	Assert.AreEqual (new object[] {
+		1,
+		2
+	}, MyAspectAttribute.CalledParameters);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#Parametercalled" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">called</h4>
+    <p class="list-group-item-text">this parameter is used to have the instance of the object which is used to call the weaved member</p>
+  </a>
+  <div id="Parametercalled" name="Parametercalled" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdcalledP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It can be declared with the System.Object type</h4>
+	  </a>
+	  
+			  <div id="parameterIdcalledP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class MyAspectAttribute : Attribute
+{
+	public static object Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeCallMethod (object called)
+	{
+		Called = called;
+	}
+}
+
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+{
+	Assert.IsNull (MyAspectAttribute.Called);
+	var classToWeave_L = new ClassToWeave ();
+	classToWeave_L.Weaved ();
+	Assert.AreEqual (classToWeave_L, MyAspectAttribute.Called);
+}
+</pre>
+
+								</div>
+								</div>
+	<a href="#parameterIdcalledP2" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It can be declared with the real type</h4>
+	  </a>
+	  
+			  <div id="parameterIdcalledP2" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class MyAspectAttribute : Attribute
+{
+	public static ClassToWeave Called;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeCallMethod (ClassToWeave called)
+	{
+		Called = called;
+	}
+}
+
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+{
+	Assert.IsNull (MyAspectAttribute.Called);
+	var classToWeave_L = new ClassToWeave ();
+	classToWeave_L.Weaved ();
+	Assert.AreEqual (classToWeave_L, MyAspectAttribute.Called);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#Parametercaller" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">caller</h4>
+    <p class="list-group-item-text">this parameter is used to have the instance of the object that call the weaved member</p>
+  </a>
+  <div id="Parametercaller" name="Parametercaller" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdcallerP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It can be declared with the System.Object type</h4>
+	  </a>
+	  
+			  <div id="parameterIdcallerP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class MyAspectAttribute : Attribute
+{
+	public static object Caller;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeCallMethod (object caller)
+	{
+		Caller = caller;
+	}
+}
+
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+{
+	Assert.IsNull (MyAspectAttribute.Caller);
+	var classToWeave_L = new ClassToWeave ();
+	classToWeave_L.Weaved ();
+	Assert.AreEqual (classToWeave_L, MyAspectAttribute.Caller);
+}
+</pre>
+
+								</div>
+								</div>
+	<a href="#parameterIdcallerP2" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It can be declared with the real type</h4>
+	  </a>
+	  
+			  <div id="parameterIdcallerP2" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class MyAspectAttribute : Attribute
+{
+	public static ClassToWeave Caller;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeCallMethod (ClassToWeave caller)
+	{
+		Caller = caller;
+	}
+}
+
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+{
+	Assert.IsNull (MyAspectAttribute.Caller);
+	var classToWeave_L = new ClassToWeave ();
+	classToWeave_L.Weaved ();
+	Assert.AreEqual (classToWeave_L, MyAspectAttribute.Caller);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#ParametercolumnNumber" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">columnNumber</h4>
+    <p class="list-group-item-text">this parameter is used to get the column of the first instruction in the weaved method or the column of the weaved instruction</p>
+  </a>
+  <div id="ParametercolumnNumber" name="ParametercolumnNumber" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdcolumnNumberP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be declared with the System.Int32 type</h4>
+	  </a>
+	  
+			  <div id="parameterIdcolumnNumberP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static int ColumnNumber;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeCallMethod (int columnNumber)
+	{
+		ColumnNumber = columnNumber;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	Computer.Divide (6, 3);
+	Assert.AreEqual (13, LogAttribute.ColumnNumber);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#Parameterconstructor" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">constructor</h4>
+    <p class="list-group-item-text">this parameter is used to get some information about the weaved constructor</p>
+  </a>
+  <div id="Parameterconstructor" name="Parameterconstructor" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdconstructorP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be of System.Reflection.MethodBase type</h4>
+	  </a>
+	  
+			  <div id="parameterIdconstructorP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static MethodBase Constructor;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeConstructor (MethodBase constructor)
+	{
+		Constructor = constructor;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	[Log]
+	public MyInt (int intValue)
+	{
+		value = intValue;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (".ctor", LogAttribute.Constructor.Name);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#Parameterexception" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">exception</h4>
+    <p class="list-group-item-text">this parameter is used to get the exception thrown in the weaved method</p>
+  </a>
+  <div id="Parameterexception" name="Parameterexception" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdexceptionP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be of System.Exception type</h4>
+	  </a>
+	  
+			  <div id="parameterIdexceptionP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static Exception Exception;
+
+	public bool NetAspectAttribute = true;
+
+	public void OnExceptionMethod (Exception exception)
+	{
+		Exception = exception;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	try {
+		var myInt = new MyInt (24);
+		myInt.DivideBy (0);
+		Assert.Fail ("Must raise an exception");
+	}
+	catch (DivideByZeroException) {
+	}
+	Assert.AreEqual ("DivideByZeroException", LogAttribute.Exception.GetType ().Name);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#Parameterfield" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">field</h4>
+    <p class="list-group-item-text">this parameter is used to get information of the accessed field</p>
+  </a>
+  <div id="Parameterfield" name="Parameterfield" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdfieldP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be of System.Reflection.FieldInfo type</h4>
+	  </a>
+	  
+			  <div id="parameterIdfieldP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static FieldInfo Field;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeGetField (FieldInfo field)
+	{
+		Field = field;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	[Log]
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	var classToWeave_L = new MyInt (12);
+	classToWeave_L.DivideBy (6);
+	Assert.AreEqual ("value", LogAttribute.Field.Name);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#ParameterfileName" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">fileName</h4>
+    <p class="list-group-item-text">this parameter is used to get the file name of the weaved method or the file name of the weaved instruction</p>
+  </a>
+  <div id="ParameterfileName" name="ParameterfileName" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdfileNameP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be declared with the System.String type</h4>
+	  </a>
+	  
+			  <div id="parameterIdfileNameP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static string FileName;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeCallMethod (string fileName)
+	{
+		FileName = fileName;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	Computer.Divide (6, 3);
+	Assert.AreEqual ("FileNameParameterWithRealTypeTest.cs", LogAttribute.FileName);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#ParameterfilePath" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">filePath</h4>
+    <p class="list-group-item-text">this parameter is used to get the file path of the weaved method or the file path of the weaved instruction</p>
+  </a>
+  <div id="ParameterfilePath" name="ParameterfilePath" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdfilePathP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be declared with the System.String type</h4>
+	  </a>
+	  
+			  <div id="parameterIdfilePathP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static string FilePath;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeCallMethod (string filePath)
+	{
+		FilePath = filePath;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	Computer.Divide (6, 3);
+	Assert.True (LogAttribute.FilePath.EndsWith (@"FilePath\FilePathParameterWithRealTypeTest.cs"));
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#Parameterinstance" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">instance</h4>
+    <p class="list-group-item-text">this parameter is used to have the <b>this</b> of the weaved member</p>
+  </a>
+  <div id="Parameterinstance" name="Parameterinstance" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdinstanceP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It can be declared as object</h4>
+	  </a>
+	  
+			  <div id="parameterIdinstanceP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static object Instance;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeMethod (object instance)
+	{
+		Instance = instance;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+	Assert.AreSame (myInt, LogAttribute.Instance);
+}
+</pre>
+
+								</div>
+								</div>
+	<a href="#parameterIdinstanceP2" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It can be declared with the real type</h4>
+	  </a>
+	  
+			  <div id="parameterIdinstanceP2" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static MyInt Instance;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeMethod (MyInt instance)
+	{
+		Instance = instance;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+	Assert.AreSame (myInt, LogAttribute.Instance);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#ParameterlineNumber" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">lineNumber</h4>
+    <p class="list-group-item-text">this parameter is used to get the line of the first instruction in the weaved method or the line of the weaved instruction</p>
+  </a>
+  <div id="ParameterlineNumber" name="ParameterlineNumber" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdlineNumberP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be declared with the System.Int32 type</h4>
+	  </a>
+	  
+			  <div id="parameterIdlineNumberP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static int LineNumber;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeCallMethod (int lineNumber)
+	{
+		LineNumber = lineNumber;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	Computer.Divide (6, 3);
+	Assert.AreEqual (50, LogAttribute.LineNumber);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#Parametermethod" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">method</h4>
+    <p class="list-group-item-text">this parameter is used to get some information about the weaved method</p>
+  </a>
+  <div id="Parametermethod" name="Parametermethod" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdmethodP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be of System.Reflection.MethodBase type</h4>
+	  </a>
+	  
+			  <div id="parameterIdmethodP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static MethodBase MethodInfo;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeMethod (MethodBase method)
+	{
+		MethodInfo = method;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+	Assert.AreEqual (myInt.GetType ().GetMethod ("DivideBy"), LogAttribute.MethodInfo);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#ParameternewFieldValue" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">newFieldValue</h4>
+    <p class="list-group-item-text">this parameter is used to get the value that will be assigned to the weaved field</p>
+  </a>
+  <div id="ParameternewFieldValue" name="ParameternewFieldValue" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdnewFieldValueP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be declared with the same type as the field type</h4>
+	  </a>
+	  
+			  <div id="parameterIdnewFieldValueP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class MyAspectAttribute : Attribute
+{
+	public static string Value;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeUpdateField (string newFieldValue)
+	{
+		Value = newFieldValue;
+	}
+}
+
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+{
+	var classToWeave_L = new ClassToWeave ();
+	classToWeave_L.Weaved ();
+	Assert.AreEqual ("Hello", MyAspectAttribute.Value);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#Parameterparametername" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">parameter name</h4>
+    <p class="list-group-item-text">this parameter is used to get the value of the parameter with the same name of the weaved method</p>
+  </a>
+  <div id="Parameterparametername" name="Parameterparametername" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdparameternameP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be declared with the same type as the type of the parameter in the weaved method</h4>
+	  </a>
+	  
+			  <div id="parameterIdparameternameP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static int V;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeMethod (int v)
+	{
+		V = v;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+	Assert.AreEqual (12, LogAttribute.V);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#Parameterparameter" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">parameter</h4>
+    <p class="list-group-item-text">this parameter is used to have the information of the weaved parameter</p>
+  </a>
+  <div id="Parameterparameter" name="Parameterparameter" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdparameterP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be of System.Reflection.ParameterInfo type</h4>
+	  </a>
+	  
+			  <div id="parameterIdparameterP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class MyAspectAttribute : Attribute
+{
+	public static ParameterInfo Parameter;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterConstructorForParameter (ParameterInfo parameter)
+	{
+		Parameter = parameter;
+	}
+}
+
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+{
+	Assert.IsNull (MyAspectAttribute.Parameter);
+	var classToWeave_L = new ClassToWeave (0, "value");
+	Assert.AreEqual ("p", MyAspectAttribute.Parameter.Name);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#Parameterparameters" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">parameters</h4>
+    <p class="list-group-item-text">this parameter is used to get the values of the parameters of the weaved method</p>
+  </a>
+  <div id="Parameterparameters" name="Parameterparameters" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdparametersP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be declared with the System.Object[] type</h4>
+	  </a>
+	  
+			  <div id="parameterIdparametersP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static object[] Parameters;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforeMethod (object[] parameters)
+	{
+		Parameters = parameters;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+	Assert.AreSame (1, LogAttribute.Parameters.Length);
+	Assert.AreSame (12, LogAttribute.Parameters [0]);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#ParameterparameterValue" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">parameterValue</h4>
+    <p class="list-group-item-text">this parameter is used to have the value of the weaved parameter</p>
+  </a>
+  <div id="ParameterparameterValue" name="ParameterparameterValue" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdparameterValueP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It can be declared as object</h4>
+	  </a>
+	  
+			  <div id="parameterIdparameterValueP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class MyAspectAttribute : Attribute
+{
+	public static object ParameterValue;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterConstructorForParameter (object parameterValue)
+	{
+		ParameterValue = parameterValue;
+	}
+}
+
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+{
+	Assert.IsNull (MyAspectAttribute.ParameterValue);
+	var classToWeave_L = new ClassToWeave ("value");
+	Assert.AreEqual ("OtherValue", MyAspectAttribute.ParameterValue);
+}
+</pre>
+
+								</div>
+								</div>
+	<a href="#parameterIdparameterValueP2" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It can be declared with the same type as the parameter type</h4>
+	  </a>
+	  
+			  <div id="parameterIdparameterValueP2" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class MyAspectAttribute : Attribute
+{
+	public static string ParameterValue;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterConstructorForParameter (string parameterValue)
+	{
+		ParameterValue = parameterValue;
+	}
+}
+
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+{
+	Assert.IsNull (MyAspectAttribute.ParameterValue);
+	var classToWeave_L = new ClassToWeave ("value");
+	Assert.AreEqual ("OtherValue", MyAspectAttribute.ParameterValue);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#Parameterproperty" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">property</h4>
+    <p class="list-group-item-text">this parameter is used to get some information about the weaved property</p>
+  </a>
+  <div id="Parameterproperty" name="Parameterproperty" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdpropertyP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be of System.Reflection.PropertyInfo type</h4>
+	  </a>
+	  
+			  <div id="parameterIdpropertyP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static PropertyInfo Property;
+
+	public bool NetAspectAttribute = true;
+
+	public void BeforePropertyGetMethod (PropertyInfo property)
+	{
+		Property = property;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	[Log]
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (24, myInt.Value);
+	Assert.AreEqual ("Value", LogAttribute.Property.Name);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#ParameterpropertyValue" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">propertyValue</h4>
+    <p class="list-group-item-text">this parameter is used to have the new value that will be assigned to the weaved property</p>
+  </a>
+  <div id="ParameterpropertyValue" name="ParameterpropertyValue" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdpropertyValueP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be declared with the same type as the property</h4>
+	  </a>
+	  
+			  <div id="parameterIdpropertyValueP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class MyAspectAttribute : Attribute
+{
+	public static int I;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterPropertySetMethod (int propertyValue)
+	{
+		I = propertyValue;
+	}
+}
+
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+{
+	Assert.AreEqual (0, MyAspectAttribute.I);
+	var classToWeave_L = new ClassToWeave ();
+	classToWeave_L.Weaved = 12;
+	Assert.AreEqual (12, MyAspectAttribute.I);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+  <a href="#Parameterresult" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">result</h4>
+    <p class="list-group-item-text">this parameter is used to get the return value of the weaved method</p>
+  </a>
+  <div id="Parameterresult" name="Parameterresult" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+	<a href="#parameterIdresultP1" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">It must be decalred with the same type as the return type of the weaved method</h4>
+	  </a>
+	  
+			  <div id="parameterIdresultP1" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+public class LogAttribute : Attribute
+{
+	public static int Result;
+
+	public bool NetAspectAttribute = true;
+
+	public void AfterMethod (int result)
+	{
+		Result = result;
+	}
+}
+
+
+// The class to weave
+public class MyInt
+{
+	private readonly int value;
+
+	public MyInt (int value)
+	{
+		this.value = value;
+	}
+
+	public int Value {
+		get {
+			return value;
+		}
+	}
+
+	[Log]
+	public int DivideBy (int v)
+	{
+		return value / v;
+	}
+}
+
+
+// This code will work
+{
+	var myInt = new MyInt (24);
+	Assert.AreEqual (2, myInt.DivideBy (12));
+	Assert.AreEqual (2, LogAttribute.Result);
+}
+</pre>
+
+								</div>
+								</div>
+</div>
+								</div>
+								</div>
+</div>
+;
+
+		</div>
+	</div>
+</div>
+
+
+            
+
+    <!-- Bootstrap core JavaScript
+         ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+      <script src="bootstrap-3.2.0/dist/js/bootstrap.min.js"></script>
+      <script src="google-code-prettify/run_prettify.js"></script>
+   </body>
+</html>

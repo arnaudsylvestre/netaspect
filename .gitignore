@@ -110,5 +110,4 @@ CodeCoverage
 coverage.xml
 dump.txt
 dump.res
-web/Tests/
 src/NugetItems/*.nupkg
