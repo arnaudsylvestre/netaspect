@@ -50,12 +50,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\GettingStarted\GettingStartedPage1Visitor.cs" />
+    <Compile Include="Core\GettingStarted\GettingStartedPage2Visitor.cs" />
     <Compile Include="Core\GettingStarted\GettingStartedReader.cs" />
     <Compile Include="Core\WebsiteGenerator.cs" />
     <Compile Include="DocBuilder.cs" />
+    <Compile Include="DocumentationFromTest.cs" />
+    <Compile Include="DocumentationFromTestExtractor.cs" />
+    <Compile Include="FindInvocationsVisitor.cs" />
+    <Compile Include="Helpers\InterceptorDocumentation.cs" />
     <Compile Include="Helpers\NVelocityHelper.cs" />
+    <Compile Include="InterceptorDescription.cs" />
+    <Compile Include="InterceptorDocumentationVisitor.cs" />
     <Compile Include="Model\DocumentationConfiguration.cs" />
+    <Compile Include="Model\Event.cs" />
+    <Compile Include="Model\GettingStartedPageModel.cs" />
+    <Compile Include="Model\InterceptorConfiguration.cs" />
+    <Compile Include="Model\InterceptorKind.cs" />
+    <Compile Include="Model\InterceptorKindConfiguration.cs" />
+    <Compile Include="Model\InterceptorModel.cs" />
+    <Compile Include="Model\InterceptorModelHelper.cs" />
+    <Compile Include="Model\Kind.cs" />
+    <Compile Include="Model\Page.cs" />
+    <Compile Include="Model\ParameterConfiguration.cs" />
+    <Compile Include="Model\ParameterModel.cs" />
+    <Compile Include="Model\Section.cs" />
+    <Compile Include="Model\SubParagraphModel.cs" />
+    <Compile Include="Model\TemplateHelper.cs" />
+    <Compile Include="Model\WeavingModelDoc.cs" />
     <Compile Include="Model\WebSite.cs" />
+    <Compile Include="Model\WebsiteFactory.cs" />
+    <Compile Include="Parameter.cs" />
+    <Compile Include="ParameterDescription.cs" />
+    <Compile Include="Possibility.cs" />
+    <Compile Include="PossibilityDescription.cs" />
+    <Compile Include="PossibilityEvent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Content.Designer.cs">
@@ -73,8 +102,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Templates.resx</DependentUpon>
     </Compile>
+    <Compile Include="TestDescription.cs" />
     <Content Include="Resources\Basics.txt" />
-    <Compile Include="SampleExtractor.cs" />
+    <Compile Include="Sample.cs" />
     <Content Include="Resources\DocumentationPage.xml">
       <SubType>Designer</SubType>
     </Content>

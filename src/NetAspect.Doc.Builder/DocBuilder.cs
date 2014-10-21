@@ -9,38 +9,7 @@ using NVelocity.App;
 
 namespace NetAspect.Doc.Builder
 {
-   public class PossibilityDescription
-   {
-      public string Kind { get; set; }
-      public string Description { get; set; }
-      public List<PossibilityEvent> Events { get; set; }
-
-      public string Title { get; set; }
-
-      public string Member { get; set; }
-      public string Group { get; set; }
-   }
-
-   public class TestDescription
-   {
-      public TestDescription()
-      {
-         AspectParameters = new List<string>();
-      }
-
-      public string CallCode { get; set; }
-      public string AspectCode { get; set; }
-      public string ClassToWeaveCode { get; set; }
-      public string Possibility { get; set; }
-      public string Called { get; set; }
-      public string Description { get; set; }
-      public string MethodName { get; set; }
-      public List<string> AspectParameters { get; set; }
-      public string Kind { get; set; }
-      public string Member { get; set; }
-   }
-
-   public class DocBuilder
+    public class DocBuilder
    {
       private readonly Documentation documentation = new Documentation();
 
@@ -120,49 +89,5 @@ namespace NetAspect.Doc.Builder
 
          public List<Possibility> Possibilities { get; set; }
       }
-   }
-
-   public class Possibility
-   {
-      public Possibility()
-      {
-         Events = new List<PossibilityEvent>();
-         AvailableParameters = new List<Parameter>();
-      }
-
-      public string Kind { get; set; }
-      public string Description { get; set; }
-      public List<PossibilityEvent> Events { get; set; }
-      public List<Parameter> AvailableParameters { get; set; }
-
-      public string Title { get; set; }
-
-      public string Member { get; set; }
-
-      public string Group { get; set; }
-   }
-
-   public class PossibilityEvent
-   {
-      public PossibilityEvent()
-      {
-         Parameters = new List<Parameter>();
-      }
-
-      public string Kind { get; set; }
-      public string Description { get; set; }
-      public string MethodName { get; set; }
-      public string Called { get; set; }
-
-      public List<Parameter> Parameters { get; set; }
-
-      public Sample Sample { get; set; }
-   }
-
-   public class Parameter
-   {
-      public string Name { get; set; }
-      public string Description { get; set; }
-      public string Kind { get; set; }
    }
 }

@@ -32,47 +32,4 @@ namespace NetAspect.Doc.Builder.Core.GettingStarted
          }
       }
    }
-
-   internal class GettingStartedPage1Visitor : DepthFirstAstVisitor
-   {
-      private readonly GettingStartedPageModel _page;
-
-      public GettingStartedPage1Visitor(GettingStartedPageModel page)
-      {
-         _page = page;
-      }
-
-      public override void VisitTypeDeclaration(TypeDeclaration typeDeclaration)
-      {
-         if (typeDeclaration.Name == "Computer")
-            _page.CodeWithoutAspect = typeDeclaration.ToString();
-         base.VisitTypeDeclaration(typeDeclaration);
-      }
-   }
-
-   internal class GettingStartedPage2Visitor : DepthFirstAstVisitor
-   {
-      private readonly GettingStartedPageModel _page;
-
-      public GettingStartedPage2Visitor(GettingStartedPageModel page)
-      {
-         _page = page;
-      }
-
-      public override void VisitTypeDeclaration(TypeDeclaration typeDeclaration)
-      {
-         if (typeDeclaration.Name == "LogAttribute")
-            _page.AspectCode = typeDeclaration.ToString();
-         if (typeDeclaration.Name == "Computer")
-            _page.CodeWithAspect = typeDeclaration.ToString();
-         base.VisitTypeDeclaration(typeDeclaration);
-      }
-
-
-      public override void VisitLambdaExpression(LambdaExpression lambdaExpression)
-      {
-         _page.TestWithAspect = lambdaExpression.Body.ToString();
-         base.VisitLambdaExpression(lambdaExpression);
-      }
-   }
 }

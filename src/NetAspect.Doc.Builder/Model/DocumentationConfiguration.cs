@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NetAspect.Doc.Builder.Model
 {
@@ -89,102 +88,8 @@ namespace NetAspect.Doc.Builder.Model
     [InterceptorDescription("OnExceptionMethodForParameter", "when an exception occured in the constructor")]
     [InterceptorDescription("OnFinallyMethodForParameter", "after the constructor is executed when an exception occured or not")]*/
 
-   public class InterceptorModel
-   {
-      public InterceptorModel()
-      {
-         Parameters = new List<Parameter>();
-      }
-
-      public string Name { get; set; }
-
-      public List<Parameter> Parameters { get; set; }
-
-      public Event Event
-      {
-         get { return InterceptorModelHelper.ExtractEvent(Name); }
-      }
-
-      public Kind Kind
-      {
-         get { return InterceptorModelHelper.ExtractKind(Name); }
-      }
-
-      public class Parameter
-      {
-         public string Name { get; set; }
-         public string Description { get; set; }
-      }
-   }
-
-   public enum Event
-   {
-      Before,
-      After,
-      OnException,
-      OnFinally,
-   }
-
-   public enum Kind
-   {
-      Method,
-      Call,
-      Parameter,
-   }
-
-   public static class InterceptorModelHelper
-   {
-      public static Event ExtractEvent(string interceptorName)
-      {
-         if (interceptorName.Contains("Before"))
-            return Event.Before;
-         if (interceptorName.Contains("After"))
-            return Event.After;
-         if (interceptorName.Contains("Exception"))
-            return Event.OnException;
-         if (interceptorName.Contains("Finally"))
-            return Event.OnFinally;
-         throw new NotSupportedException(interceptorName);
-      }
-
-      public static Kind ExtractKind(string interceptorName)
-      {
-         if (interceptorName.Contains("Call"))
-            return Kind.Call;
-         if (interceptorName.Contains("Parameter"))
-            return Kind.Parameter;
-         return Kind.Method;
-      }
-   }
-
-   public class DocumentationConfiguration
+    public class DocumentationConfiguration
    {
       public List<InterceptorKind> InterceptorKinds { get; set; }
-   }
-
-   public class InterceptorKindConfiguration
-   {
-      public List<ParameterConfiguration> Parameters { get; set; }
-      public List<InterceptorConfiguration> Interceptors { get; set; }
-
-      public string Title { get; set; }
-   }
-
-   public class InterceptorKind
-   {
-      public string Name { get; set; }
-      public List<InterceptorKindConfiguration> Configurations { get; set; }
-   }
-
-   public class InterceptorConfiguration
-   {
-      public string MethodName { get; set; }
-      public string When { get; set; }
-   }
-
-   public class ParameterConfiguration
-   {
-      public string Name { get; set; }
-      public string Description { get; set; }
    }
 }

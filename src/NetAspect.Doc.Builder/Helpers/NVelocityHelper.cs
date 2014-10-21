@@ -1,46 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using Commons.Collections;
-using NetAspect.Doc.Builder.Model;
 using NVelocity;
 using NVelocity.App;
 
 namespace NetAspect.Doc.Builder.Helpers
 {
-   public class InterceptorDocumentation
-   {
-      public InterceptorDocumentation()
-      {
-         Parameters = new List<string>();
-      }
-
-      public string Name { get; set; }
-
-      public string Kind
-      {
-         get { return InterceptorModelHelper.ExtractKind(Name).ToString(); }
-      }
-
-      public string Event
-      {
-         get { return InterceptorModelHelper.ExtractEvent(Name).ToString(); }
-      }
-
-      public List<string> Parameters { get; set; }
-      public string Member { get; set; }
-
-      public string CallCode { get; set; }
-
-      public string AspectCode { get; set; }
-
-      public string ClassToWeaveCode { get; set; }
-
-      public string When { get; set; }
-   }
-
-
-   public class NVelocityHelper
+    public class NVelocityHelper
    {
       public static string GenerateContent(string template, string key, object value)
       {
