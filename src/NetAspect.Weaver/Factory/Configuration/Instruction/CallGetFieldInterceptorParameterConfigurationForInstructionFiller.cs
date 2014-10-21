@@ -19,7 +19,6 @@ namespace NetAspect.Weaver.Factory.Configuration.Instruction
             .AddFileName(parametersIlGenerator_P)
             .AddCaller(parametersIlGenerator_P)
             .AddCallerParameters(parametersIlGenerator_P)
-            .AddCallerParameterNames(parametersIlGenerator_P)
             .AddCallerMethod(parametersIlGenerator_P);
       }
 

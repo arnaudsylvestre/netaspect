@@ -94,8 +94,12 @@ namespace NetAspect.Core
             Instruction callBaseConstructorInstructions = method.Body.Instructions.GetCallBaseConstructorInstructions();
             if (callBaseConstructorInstructions != null)
             {
-               allInstructions.AddRange(method.Body.Instructions.ExtractBeforeCallBaseConstructorInstructions());
-               allInstructions.Add(callBaseConstructorInstructions);
+                allInstructions.AddRange(method.Body.Instructions.ExtractBeforeCallBaseConstructorInstructions());
+                allInstructions.Add(callBaseConstructorInstructions);
+            }
+            else
+            {
+                allInstructions.AddRange(method.Body.Instructions);
             }
          }
       }

@@ -1,5 +1,9 @@
-﻿namespace NetAspect.Sample.Dep
+﻿using System;
+using System.Collections.Generic;
+
+namespace NetAspect.Sample.Dep
 {
+
    public class DepClassWhichCallField
    {
       public string CallField(string fieldValue)

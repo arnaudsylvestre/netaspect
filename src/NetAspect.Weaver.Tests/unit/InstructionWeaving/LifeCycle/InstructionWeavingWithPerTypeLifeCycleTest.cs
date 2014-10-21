@@ -12,18 +12,18 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.LifeCycle
       {
          return () =>
          {
-            MyAspect.aspects = new List<MyAspect>();
+            //MyAspectAttribute.aspects = new List<MyAspectAttribute>();
             var called = new ClassCalled();
             var classToWeave_L = new ClassToWeave(called);
             classToWeave_L.Weaved();
-            MyAspect aspect1 = MyAspect.aspects.First();
+            MyAspectAttribute aspect1 = MyAspectAttribute.aspects.First();
             Assert.AreEqual(1, aspect1.i);
             classToWeave_L.Weaved();
             Assert.AreEqual(2, aspect1.i);
-            Assert.AreEqual(1, MyAspect.aspects.Count);
+            Assert.AreEqual(1, MyAspectAttribute.aspects.Count);
             var classToWeave2_L = new ClassToWeave(called);
             classToWeave2_L.Weaved();
-            Assert.AreEqual(1, MyAspect.aspects.Count);
+            Assert.AreEqual(1, MyAspectAttribute.aspects.Count);
             Assert.AreEqual(3, aspect1.i);
          };
       }
@@ -48,15 +48,15 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.LifeCycle
          }
       }
 
-      public class MyAspect : Attribute
+      public class MyAspectAttribute : Attribute
       {
-         public static List<MyAspect> aspects = new List<MyAspect>();
+         public static List<MyAspectAttribute> aspects = new List<MyAspectAttribute>();
 
          public static string LifeCycle = "PerType";
          public bool NetAspectAttribute = true;
          public int i = 0;
 
-         public MyAspect()
+         public MyAspectAttribute()
          {
             aspects.Add(this);
          }

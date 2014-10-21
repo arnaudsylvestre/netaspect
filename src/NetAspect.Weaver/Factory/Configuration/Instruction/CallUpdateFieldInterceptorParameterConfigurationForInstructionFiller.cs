@@ -12,8 +12,7 @@ namespace NetAspect.Weaver.Factory.Configuration.Instruction
        public void FillCommon(InstructionWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> parametersIlGenerator_P)
       {
          weavingInfo_P.AddCalled(parametersIlGenerator_P, weavingInfo_P.GetOperandAsField())
-            .AddCalledFieldInfo(parametersIlGenerator_P)
-            .AddCallerParameterNames(parametersIlGenerator_P);
+            .AddCalledFieldInfo(parametersIlGenerator_P);
 
          weavingInfo_P.AddColumnNumber(parametersIlGenerator_P)
             .AddLineNumber(parametersIlGenerator_P)
