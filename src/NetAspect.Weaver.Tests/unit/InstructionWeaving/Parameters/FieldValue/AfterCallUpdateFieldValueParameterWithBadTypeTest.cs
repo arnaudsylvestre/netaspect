@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "the fieldValue parameter in the method AfterUpdateField of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.String",
+                           "the newFieldValue parameter in the method AfterUpdateField of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.String",
                            typeof (MyAspect).FullName,
                            typeof (ClassToWeave).FullName)
                   });
@@ -41,9 +41,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
          public static string Value;
          public bool NetAspectAttribute = true;
 
-         public void AfterUpdateField(int fieldValue)
+         public void AfterUpdateField(int newFieldValue)
          {
-             Value = fieldValue.ToString();
+             Value = newFieldValue.ToString();
          }
       }
    }

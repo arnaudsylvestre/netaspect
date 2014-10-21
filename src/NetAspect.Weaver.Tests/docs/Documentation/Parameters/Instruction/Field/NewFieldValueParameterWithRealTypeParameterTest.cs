@@ -1,16 +1,21 @@
 using System;
 using NUnit.Framework;
+using NetAspect.Weaver.Tests.unit;
 
-namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
+namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.Instruction.Field
 {
-   public class AfterCallUpdateFieldValueParameterWithRealTypeTest :
-      NetAspectTest<AfterCallUpdateFieldValueParameterWithRealTypeTest.ClassToWeave>
+   public class NewFieldValueParameterWithRealTypeParameterTest :
+      NetAspectTest<NewFieldValueParameterWithRealTypeParameterTest.ClassToWeave>
    {
+       public NewFieldValueParameterWithRealTypeParameterTest()
+           : base("It must be declared with the same type as the field type", "GetFieldInstructionWeavingBefore", "InstructionFieldWeaving")
+      {
+      }
+
       protected override Action CreateEnsure()
       {
          return () =>
          {
-            Assert.AreEqual(null, MyAspect.Value);
             var classToWeave_L = new ClassToWeave();
             classToWeave_L.field = "Hello";
             classToWeave_L.Weaved();
@@ -34,7 +39,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
          public static string Value;
          public bool NetAspectAttribute = true;
 
-         public void AfterUpdateField(string newFieldValue)
+         public void BeforeUpdateField(string newFieldValue)
          {
              Value = newFieldValue;
          }

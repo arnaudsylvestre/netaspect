@@ -21,9 +21,22 @@ namespace NetAspect.Doc.Builder.Model
             parameterDescriptions.Add(parameterName, description);
         }
 
+        public string GetRealParameterName(string parameterName)
+        {
+            if (parameterDescriptions.ContainsKey(parameterName))
+                return parameterName;
+            if (parameterName.StartsWith("caller"))
+                return "caller + parameter name";
+            if (parameterName.StartsWith("called"))
+                return "called + parameter name";
+            return "parameter name";
+        }
+
         public string GetParameterDescription(string parameterName)
         {
-            return parameterDescriptions[parameterName];
+
+
+            return parameterDescriptions[GetRealParameterName(parameterName)];
         }
     }
 }

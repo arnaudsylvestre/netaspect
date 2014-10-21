@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.docs
          return () =>
          {
             Computer.Divide(6, 3);
-            Assert.AreEqual(45, LogAttribute.LineNumber);
+            Assert.AreEqual(50, LogAttribute.LineNumber);
          };
       }
 

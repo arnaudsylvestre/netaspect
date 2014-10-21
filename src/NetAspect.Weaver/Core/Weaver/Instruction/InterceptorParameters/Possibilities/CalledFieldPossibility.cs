@@ -23,7 +23,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
         {
             FieldDefinition field = weavingInfo_P.GetOperandAsField();
             TypeReference parameter = field.FieldType;
-            interceptorParameterPossibilitiesP.AddPossibleParameter("fieldvalue")
+            interceptorParameterPossibilitiesP.AddPossibleParameter("newfieldvalue")
                                               .WhichCanNotBeReferenced()
                                               .WhichMustBeOfTypeOf(parameter)
                                               .AndInjectTheFieldValue(field);

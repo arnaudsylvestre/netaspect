@@ -17,7 +17,6 @@ namespace NetAspect.Doc.Builder.Core.Readers.Documentation
                 var test = CsTestFileReader.Read(file_L);
 
                 ParameterModel model = doc.FirstOrDefault(p => p.Name == test.Parameters[0]);
-                // TODO : Voir pourquoi il peut ne pas avoir de paramètres
                 if (model == null)
                 {
                     model = new ParameterModel

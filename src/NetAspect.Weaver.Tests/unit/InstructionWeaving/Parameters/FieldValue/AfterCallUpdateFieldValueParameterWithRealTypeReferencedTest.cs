@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "impossible to ref/out the parameter 'fieldValue' in the method AfterUpdateField of the type '{0}'",
+                           "impossible to ref/out the parameter 'newFieldValue' in the method AfterUpdateField of the type '{0}'",
                            typeof (MyAspect).FullName)
                   });
       }
@@ -39,10 +39,10 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
          public static string Value;
          public bool NetAspectAttribute = true;
 
-         public void AfterUpdateField(ref string fieldValue)
+         public void AfterUpdateField(ref string newFieldValue)
          {
-             Value = fieldValue;
-             fieldValue = "New Hello";
+             Value = newFieldValue;
+             newFieldValue = "New Hello";
          }
       }
    }

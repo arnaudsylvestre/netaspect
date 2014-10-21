@@ -2,7 +2,17 @@
 $section.SetParameterDescription('instance', 'this parameter is used to have the <b>this</b> of the weaved member')
 $section.SetParameterDescription('method', 'this parameter is used to get some information about the weaved method')
 $section.SetParameterDescription('lineNumber', 'this parameter is used to get the line of the first instruction in the weaved method or the line of the weaved instruction')
-$section.SetParameterDescription('columnNumber', 'this parameter is used to get the column of the first instruction in the weaved method or the line of the weaved instruction')
+$section.SetParameterDescription('columnNumber', 'this parameter is used to get the column of the first instruction in the weaved method or the column of the weaved instruction')
+$section.SetParameterDescription('fileName', 'this parameter is used to get the file name of the weaved method or the file name of the weaved instruction')
+$section.SetParameterDescription('filePath', 'this parameter is used to get the file path of the weaved method or the file path of the weaved instruction')
+$section.SetParameterDescription('parameters', 'this parameter is used to get the values of the parameters of the weaved method')
+$section.SetParameterDescription('parameter name', 'this parameter is used to get the value of the parameter with the same name of the weaved method')
+$section.SetParameterDescription('constructor', 'this parameter is used to get some information about the weaved constructor')
+$section.SetParameterDescription('property', 'this parameter is used to get some information about the weaved property')
+$section.SetParameterDescription('exception', 'this parameter is used to get the exception thrown in the weaved method')
+$section.SetParameterDescription('result', 'this parameter is used to get the return value of the weaved method')
+$section.SetParameterDescription('field', 'this parameter is used to get information of the accessed field')
+$section.SetParameterDescription('newFieldValue', 'this parameter is used to get the value that will be assigned to the weaved field')
 
 		<div class="bs-docs-section">
 		 
@@ -18,7 +28,7 @@ $section.SetParameterDescription('columnNumber', 'this parameter is used to get 
 
 #foreach ($parameter in $section.Parameters)
   <a href="#parameterId$velocityCount" data-toggle="collapse"  class="list-group-item list-group-item-info">
-    <h4 class="list-group-item-heading">$parameter.Name</h4>
+    <h4 class="list-group-item-heading">$section.GetRealParameterName($parameter.Name)</h4>
     <p class="list-group-item-text">$section.GetParameterDescription($parameter.Name)</p>
   </a>
   <div id="parameterId$velocityCount" class="panel-collapse collapse">

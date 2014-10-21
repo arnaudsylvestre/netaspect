@@ -2,12 +2,12 @@ using System;
 using NUnit.Framework;
 using NetAspect.Weaver.Tests.unit;
 
-namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.ColumnNumber
+namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.Pdb.FileName
 {
-   public class ColumnNumberParameterWithRealTypeTest : NetAspectTest<ColumnNumberParameterWithRealTypeTest.MyInt>
+   public class FileNameParameterWithRealTypeTest : NetAspectTest<FileNameParameterWithRealTypeTest.MyInt>
    {
-       public ColumnNumberParameterWithRealTypeTest()
-           : base("It must be declared with the System.Int32 type", "MethodWeavingBefore", "MethodWeaving")
+       public FileNameParameterWithRealTypeTest()
+           : base("It must be declared with the System.String type", "MethodWeavingBefore", "MethodWeaving")
        {
            
        }
@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.ColumnNumber
          return () =>
          {
             Computer.Divide(6, 3);
-            Assert.AreEqual(45, LogAttribute.ColumnNumber);
+            Assert.AreEqual("FileNameParameterWithRealTypeTest.cs", LogAttribute.FileName);
          };
       }
 
@@ -53,12 +53,12 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.ColumnNumber
 
       public class LogAttribute : Attribute
       {
-         public static int ColumnNumber;
+         public static string FileName;
          public bool NetAspectAttribute = true;
 
-         public void BeforeCallMethod(int columnNumber)
+         public void BeforeCallMethod(string fileName)
          {
-            ColumnNumber = columnNumber;
+             FileName = fileName;
          }
       }
    }
