@@ -9,7 +9,7 @@ namespace NetAspect.Weaver.Tasks
    public class NetAspectWeaverTask : Task
    {
       [Required]
-      public string ConfigFile { get; set; }
+       public string AssemblyPath { get; set; }
 
       public override bool Execute()
       {
@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tasks
 
          try
          {
-            string directoryPath = Path.GetDirectoryName(ConfigFile);
+             string directoryPath = Path.GetDirectoryName(AssemblyPath);
             string[] weavedFiles;
             AppDomain domain = AppDomain.CreateDomain(
                "SheepAspect Weaving",
@@ -38,9 +38,9 @@ namespace NetAspect.Weaver.Tasks
                      runnerType.FullName) as
                      AppDomainIsolatedDiscoveryRunner;
 
-               if (!runner.Process(ConfigFile, Log, out weavedFiles))
+               if (!runner.Process(AssemblyPath, Log, out weavedFiles))
                {
-                  string targetFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(ConfigFile);
+                   string targetFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(AssemblyPath);
                   if (File.Exists(targetFileName))
                      File.Delete(targetFileName);
                   return false;
@@ -50,8 +50,8 @@ namespace NetAspect.Weaver.Tasks
             {
                AppDomain.Unload(domain);
             }
-            string tempFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(ConfigFile);
-            File.Copy(tempFileName, ConfigFile, true);
+            string tempFileName = AppDomainIsolatedDiscoveryRunner.TargetFileName(AssemblyPath);
+            File.Copy(tempFileName, AssemblyPath, true);
             File.Delete(tempFileName);
          }
          catch (Exception e)
@@ -61,7 +61,7 @@ namespace NetAspect.Weaver.Tasks
          }
 
          stopwatch.Stop();
-         Log.LogMessage("[SheepAspect-Compiler] Compiled {0} in {1:n} ms", ConfigFile, stopwatch.ElapsedMilliseconds);
+         Log.LogMessage("[SheepAspect-Compiler] Compiled {0} in {1:n} ms", AssemblyPath, stopwatch.ElapsedMilliseconds);
          return true;
       }
    }

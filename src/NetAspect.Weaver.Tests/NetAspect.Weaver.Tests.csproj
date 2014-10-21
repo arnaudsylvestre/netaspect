@@ -450,11 +450,11 @@
     <Compile Include="unit\Selectors\OtherAssemblies\CallUpdateFieldWeavingInAnotherAssemblyTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FluentAspect.Sample.Dep\NetAspect.Sample.Dep.csproj">
+    <ProjectReference Include="..\NetAspect.Sample.Dep\NetAspect.Sample.Dep.csproj">
       <Project>{584095D8-E7A6-42EF-B3C1-6A34F15B4B40}</Project>
       <Name>NetAspect.Sample.Dep</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FluentAspect.Weaver\NetAspect.Weaver.csproj">
+    <ProjectReference Include="..\NetAspect.Weaver\NetAspect.Weaver.csproj">
       <Project>{28912034-8A56-4B8E-BAA1-02C50149CA68}</Project>
       <Name>NetAspect.Weaver</Name>
     </ProjectReference>

@@ -48,12 +48,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FluentAspect.Weaver.Tests\NetAspect.Weaver.Tests.csproj">
-      <Project>{2158446B-9E58-4E9D-BDC4-27A5A90365D1}</Project>
-      <Name>NetAspect.Weaver.Tests</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

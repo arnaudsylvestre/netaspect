@@ -1,6 +1,0 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
- <UsingTask TaskName="FluentAspectWeaverTask" AssemblyFile=".\FluentAspect.Weaver.Tasks.dll" />
-  <Target Name="AfterBuild">
-    <FluentAspectWeaverTask ConfigFile="$(MSBuildProjectDirectory)\$(OutputPath)\$(AssemblyName).$(OutputType)" />
-  </Target>
-</Project>

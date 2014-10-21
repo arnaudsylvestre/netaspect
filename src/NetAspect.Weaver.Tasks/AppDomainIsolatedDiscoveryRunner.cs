@@ -8,13 +8,13 @@ namespace NetAspect.Weaver.Tasks
 {
    public class AppDomainIsolatedDiscoveryRunner : MarshalByRefObject
    {
-      public bool Process(string configFile, TaskLoggingHelper logger, out string[] weavedFiles)
+      public bool Process(string assemblyPath, TaskLoggingHelper logger, out string[] weavedFiles)
       {
          weavedFiles = null;
          try
          {
             WeaverEngine weaverEngine_L = WeaverFactory.Create();
-            ErrorReport handler = weaverEngine_L.Weave(configFile, TargetFileName);
+            ErrorReport handler = weaverEngine_L.Weave(assemblyPath, TargetFileName);
 
             foreach (string warning_L in handler.Warnings)
             {
