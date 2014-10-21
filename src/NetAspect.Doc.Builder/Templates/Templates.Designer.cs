@@ -61,6 +61,32 @@ namespace NetAspect.Doc.Builder.Templates {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 
+        ///		&lt;div class=&quot;bs-docs-section&quot;&gt;
+        ///		 
+        ///            &lt;div class=&quot;page-header&quot;&gt;
+        ///               &lt;h1 id=&quot;parameters&quot;&gt;Available parameters&lt;/h1&gt;
+        ///            &lt;/div&gt;
+        ///			
+        ///
+        ///
+        ///
+        ///
+        ///&lt;div class=&quot;list-group&quot;&gt;
+        ///
+        ///#foreach ($parameter in $page.Parameters)
+        ///  &lt;a href=&quot;#parameterId$velocityCount&quot; data-toggle=&quot;collapse&quot;  class=&quot;list-group-item list-group-item-info&quot;&gt;
+        ///    &lt;h4 class=&quot;list-group-item-heading&quot;&gt;$parameter.Name&lt;/h4&gt;
+        ///    &lt;p class=&quot;list-group-item-text&quot;&gt;$page.GetParameterDescription($parameter.Name)&lt;/p&gt;
+        ///  &lt;/a&gt;        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AvailableParametersSection {
+            get {
+                return ResourceManager.GetString("AvailableParametersSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to $documentation.Header
         ///
         ///&lt;div class=&quot;container bs-docs-container&quot;&gt;
@@ -93,12 +119,17 @@ namespace NetAspect.Doc.Builder.Templates {
         ///		&lt;div class=&quot;col-md-12&quot; role=&quot;main&quot;&gt;
         ///
         ///		
-        ///	&lt;div class=&quot;bs-docs-section&quot;&gt;
-        ///		 
-        ///            &lt;div class=&quot;page-header&quot;&gt;
-        ///               &lt;h1 id=&quot;kinds&quot;&gt;Put aspects&lt;/h1&gt;
-        ///            &lt;/div&gt;
-        ///       [rest of string was truncated]&quot;;.
+        ///	$page.GeneratePutAttributesSection();
+        ///	$page.GeneratePutInterceptorsSection();
+        ///	$page.GenerateAvailableParametersSection();
+        ///
+        ///
+        ///
+        ///			
+        ///
+        ///			
+        ///		
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DocumentationPage {
             get {
@@ -155,6 +186,23 @@ namespace NetAspect.Doc.Builder.Templates {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;div class=&quot;bs-docs-section&quot;&gt;
+        ///				&lt;div class=&quot;page-header&quot;&gt;
+        ///					&lt;h1 id=&quot;dropdowns&quot;&gt;Interceptors&lt;/h1&gt;
+        ///				&lt;/div&gt;
+        ///				&lt;p&gt;An interceptor is a &lt;b&gt;method&lt;/b&gt; declared in the &lt;b&gt;aspect&lt;/b&gt; and which will be called at certain moment after the weaving.&lt;br/&gt;Some &lt;b&gt;parameters&lt;/b&gt; can be added to the interceptor to get more information&lt;/p&gt;
+        ///				&lt;p&gt;The following interceptors are available :&lt;/p&gt;
+        ///#foreach ($member in $section.Members)
+        ///				&lt;h2 class=&quot;list-group-item-heading&quot;&gt;For an aspect put on a $member&lt;/h2&gt;
+        ///		 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string InterceptorsSection {
+            get {
+                return ResourceManager.GetString("InterceptorsSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 
         ///  &lt;div class=&quot;container bs-docs-container&quot;&gt;
         ///	
@@ -198,6 +246,25 @@ namespace NetAspect.Doc.Builder.Templates {
         internal static string PageContainer {
             get {
                 return ResourceManager.GetString("PageContainer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #set( $H = &apos;#&apos; )
+        ///
+        ///            &lt;div class=&quot;page-header&quot;&gt;
+        ///               &lt;h1 id=&quot;kinds&quot;&gt;Put aspects&lt;/h1&gt;
+        ///            &lt;/div&gt;
+        ///            &lt;p&gt;In NetAspect, aspects can be put on fields/properties/methods/constructors. There is 2 ways to put an aspect on a member :&lt;/p&gt;
+        ///
+        ///			&lt;div class=&quot;list-group&quot;&gt;
+        ///  &lt;a href=&quot;#AttributesSample&quot; data-toggle=&quot;collapse&quot;  class=&quot;list-group-item list-group-item-info&quot;&gt;
+        ///    &lt;h4 class=&quot;list-group-item-heading&quot;&gt;By attributes&lt;/h4&gt;
+        ///    &lt;p class=&quot;list-group-item-text&quot;&gt;Just consider  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PutAttributesSection {
+            get {
+                return ResourceManager.GetString("PutAttributesSection", resourceCulture);
             }
         }
     }

@@ -1,0 +1,54 @@
+﻿#set( $H = '#' )
+$section.SetParameterDescription('instance', 'this parameter is used to have the <b>this</b> of the weaved member')
+$section.SetParameterDescription('method', 'this parameter is used to get some information about the weaved method')
+
+		<div class="bs-docs-section">
+		 
+            <div class="page-header">
+               <h1 id="parameters">Available parameters</h1>
+            </div>
+			
+
+
+
+
+<div class="list-group">
+
+#foreach ($parameter in $section.Parameters)
+  <a href="#parameterId$velocityCount" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">$parameter.Name</h4>
+    <p class="list-group-item-text">$section.GetParameterDescription($parameter.Name)</p>
+  </a>
+  <div id="parameterId$velocityCount" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+#set ($counter = $velocityCount)
+
+#foreach ($sample in $parameter.Samples)
+	<a href="#parameterId${counter}P$velocityCount" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">${sample.Description}</h4>
+	  </a>
+	  
+			  <div id="parameterId${counter}P$velocityCount" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+$sample.AspectCode
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+$sample.CallCode
+</pre>
+
+								</div>
+								</div>
+#end
+</div>
+								</div>
+								</div>
+#end
+</div>

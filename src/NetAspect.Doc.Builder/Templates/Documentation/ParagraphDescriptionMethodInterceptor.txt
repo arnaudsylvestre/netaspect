@@ -1,8 +1,0 @@
-﻿            <p>The method interceptors will modify the code of the method to add behavior. It is possible to add behaviors :</p>
-            <ul>
-               <li><b>Before</b> the method is executed</li>
-               <li><b>After</b> the method is executed when no exception is raised</li>
-               <li><b>When exception occurs</b> in the method</li>
-               <li><b>On finally</b> : at the end of the method when an exception is raised or not</li>
-            </ul>
-            <p>For each of these behaviors, we can get some information about the weaved method by adding some parameters to the aspect method.</p>

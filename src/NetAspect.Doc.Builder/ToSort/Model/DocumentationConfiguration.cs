@@ -88,8 +88,4 @@ namespace NetAspect.Doc.Builder.Model
     [InterceptorDescription("OnExceptionMethodForParameter", "when an exception occured in the constructor")]
     [InterceptorDescription("OnFinallyMethodForParameter", "after the constructor is executed when an exception occured or not")]*/
 
-    public class DocumentationConfiguration
-   {
-      public List<InterceptorKind> InterceptorKinds { get; set; }
-   }
 }

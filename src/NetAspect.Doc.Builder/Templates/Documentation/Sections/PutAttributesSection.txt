@@ -1,0 +1,44 @@
+﻿#set( $H = '#' )
+
+            <div class="page-header">
+               <h1 id="kinds">Put aspects</h1>
+            </div>
+            <p>In NetAspect, aspects can be put on fields/properties/methods/constructors. There is 2 ways to put an aspect on a member :</p>
+
+			<div class="list-group">
+  <a href="#AttributesSample" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">By attributes</h4>
+    <p class="list-group-item-text">Just consider the aspect as an attribute and put the attribute on the member.</p>
+  </a>
+  <div id="AttributesSample" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+$section.WeaveWithAttributeSampleAspect
+
+// The class to weave
+$section.WeaveWithAttributeSampleClassToWeave
+</pre>
+								</div>
+								</div>
+    <a href="#SelectSample" data-toggle="collapse" class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">By selecting the member</h4>
+    <p class="list-group-item-text">If you can't add an attribute to your member to weave, you can just declare a <b>select</b> method in your aspect.</p>
+  </a>
+    <div id="SelectSample" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+$section.WeaveWithSelectSampleAspect
+
+// The class to weave
+$section.WeaveWithSelectSampleClassToWeave
+</pre>
+								</div>
+								</div>
+</div>
+
+			
+         </div
+
+
