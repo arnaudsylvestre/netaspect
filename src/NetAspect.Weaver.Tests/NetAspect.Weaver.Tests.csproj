@@ -72,14 +72,14 @@
   <ItemGroup>
     <Compile Include="docs\Documentation\Interceptors\InstructionWeaving\Constructors\Part8Sample1BeforeInstructionCallMethodPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\InstructionWeaving\Constructors\Part8Sample2AfterInstructionCallMethodPossibilityTest.cs" />
-    <Compile Include="docs\Documentation\Parameters\MethodParameterWithRealTypeTest.cs" />
-    <Compile Include="docs\Documentation\Parameters\InstanceParameterWithObjectTypeParameterTest.cs" />
-    <Compile Include="docs\Documentation\Parameters\InstanceParameterWithRealTypeParameterTest.cs" />
+    <Compile Include="docs\Documentation\Parameters\Method\MethodParameterWithRealTypeTest.cs" />
+    <Compile Include="docs\Documentation\Parameters\Instance\InstanceParameterWithObjectTypeParameterTest.cs" />
+    <Compile Include="docs\Documentation\Parameters\Instance\InstanceParameterWithRealTypeParameterTest.cs" />
     <Compile Include="docs\Documentation\Weaving\WeaveWithSelectSampleTest.cs" />
     <Compile Include="docs\Documentation\Weaving\WeaveWithAttributeSampleTest.cs" />
     <Compile Include="docs\GettingStarted\GettingStartedPart1Test.cs" />
     <Compile Include="docs\GettingStarted\GettingStartedPart2Test.cs" />
-    <Compile Include="docs\InstructionWeavingForDocTest.cs" />
+    <Compile Include="docs\Documentation\Parameters\LineNumber\LineNumberParameterWithRealTypeTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\InstructionWeaving\Properties\Part7Sample3BeforeInstructionSetPropertyPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\InstructionWeaving\Properties\Part7Sample4AfterInstructionSetPropertyPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\InstructionWeaving\Properties\Part7Sample2AfterInstructionGetPropertyPossibilityTest.cs" />
@@ -101,10 +101,8 @@
     <Compile Include="docs\Documentation\Interceptors\MethodWeaving\Method\Part1Sample4OnFinallyMethodPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\MethodWeaving\Method\Part1Sample3OnExceptionMethodPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\MethodWeaving\Method\Part1Sample1BeforeMethodPossibilityTest.cs" />
-    <Compile Include="docs\EventAttribute.cs" />
     <Compile Include="docs\InterceptorDescriptionAttribute.cs" />
     <Compile Include="docs\Documentation\Interceptors\MethodWeaving\Method\Part1Sample2AfterMethodPossibilityTest.cs" />
-    <Compile Include="docs\Documentation\DocConfiguration.cs" />
     <Compile Include="docs\Documentation\Interceptors\MethodWeaving\PropertySet\Part4Sample1BeforePropertySetPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\MethodWeaving\PropertySet\Part4Sample2AfterPropertySetPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\MethodWeaving\PropertySet\Part4Sample3OnExceptionPropertySetPossibilityTest.cs" />
@@ -113,7 +111,6 @@
     <Compile Include="docs\Documentation\Interceptors\ParameterWeaving\Part8Sample3OnExceptionParameterPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\ParameterWeaving\Part8Sample2AfterParameterPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\ParameterWeaving\Part8Sample1BeforeParameterPossibilityTest.cs" />
-    <Compile Include="docs\ParameterDescriptionAttribute.cs" />
     <Compile Include="docs\PossibilityDocumentationAttribute.cs" />
     <Compile Include="docs\MethodWeavingForDocWithStartDivisionAndParametersTest.cs" />
     <Compile Include="docs\MethodWeavingForDocTest.cs" />

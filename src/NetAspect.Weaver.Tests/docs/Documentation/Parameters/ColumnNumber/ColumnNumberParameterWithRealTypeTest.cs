@@ -2,17 +2,22 @@ using System;
 using NUnit.Framework;
 using NetAspect.Weaver.Tests.unit;
 
-namespace NetAspect.Weaver.Tests.docs
+namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.ColumnNumber
 {
-   public class InstructionWeavingForDocTest :
-      NetAspectTest<InstructionWeavingForDocTest.MyInt>
+   public class ColumnNumberParameterWithRealTypeTest : NetAspectTest<ColumnNumberParameterWithRealTypeTest.MyInt>
    {
+       public ColumnNumberParameterWithRealTypeTest()
+           : base("It must be declared with the System.Int32 type", "MethodWeavingBefore", "MethodWeaving")
+       {
+           
+       }
+
       protected override Action CreateEnsure()
       {
          return () =>
          {
             Computer.Divide(6, 3);
-            Assert.AreEqual(45, LogAttribute.LineNumber);
+            Assert.AreEqual(45, LogAttribute.ColumnNumber);
          };
       }
 
@@ -48,12 +53,12 @@ namespace NetAspect.Weaver.Tests.docs
 
       public class LogAttribute : Attribute
       {
-         public static int LineNumber;
+         public static int ColumnNumber;
          public bool NetAspectAttribute = true;
 
-         public void BeforeCallMethod(int lineNumber)
+         public void BeforeCallMethod(int columnNumber)
          {
-            LineNumber = lineNumber;
+            ColumnNumber = columnNumber;
          }
       }
    }
