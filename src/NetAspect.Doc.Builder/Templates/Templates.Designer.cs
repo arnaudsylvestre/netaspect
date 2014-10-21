@@ -84,21 +84,21 @@ namespace NetAspect.Doc.Builder.Templates {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;div class=&quot;container bs-docs-container&quot;&gt;
+        ///   Looks up a localized string similar to #set( $H = &apos;#&apos; )
+        ///$page.SetParameterDescription(&apos;instance&apos;, &apos;this parameter is used to have the &lt;b&gt;this&lt;/b&gt; of the weaved member&apos;)
+        ///$page.SetParameterDescription(&apos;method&apos;, &apos;this parameter is used to get some information about the weaved method&apos;)
+        ///
+        ///&lt;div class=&quot;container bs-docs-container&quot;&gt;
         ///      &lt;div class=&quot;row&quot;&gt;
-        ///      &lt;div class=&quot;col-md-12&quot; role=&quot;main&quot;&gt;
+        ///		&lt;div class=&quot;col-md-12&quot; role=&quot;main&quot;&gt;
         ///
-        ///#foreach ($section in $page.Sections)
-        ///         &lt;div class=&quot;bs-docs-section&quot;&gt;
+        ///		
+        ///	&lt;div class=&quot;bs-docs-section&quot;&gt;
+        ///		 
         ///            &lt;div class=&quot;page-header&quot;&gt;
-        ///               &lt;h1 id=&quot;dropdowns&quot;&gt;$section.Name&lt;/h1&gt;
+        ///               &lt;h1 id=&quot;kinds&quot;&gt;Put aspects&lt;/h1&gt;
         ///            &lt;/div&gt;
-        ///			&lt;p&gt;$section.Description&lt;/p&gt;
-        ///#foreach ($paragraph in $section.Paragraphs)
-        ///			&lt;h2 id=&quot;dropdowns&quot;&gt;$paragraph.Title&lt;/h2&gt;
-        ///$paragraph.Description
-        ///
-        ///&lt;input type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-toggle=&quot; [rest of string was truncated]&quot;;.
+        ///       [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DocumentationPage {
             get {
@@ -192,12 +192,12 @@ namespace NetAspect.Doc.Builder.Templates {
         ///      &lt;meta name=&quot;author&quot; content=&quot;&quot;&gt;
         ///      &lt;link rel=&quot;shortcut icon&quot; href=&quot;../../docs-assets/ico/favicon.png&quot;&gt;
         ///      &lt;title&gt;NetAspect&lt;/title&gt;
-        ///      &lt;link href=&quot;bootstrap-3.0.2/dist/css/bootstrap.css&quot; rel=&quot;stylesheet&quot;&gt;
+        ///      &lt;link href=&quot;bootstrap-3.2.0/dist/css/bootstrap.css&quot; rel=&quot;stylesheet&quot;&gt;
         ///      &lt;link href=&quot;jumbotron.cs [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Page {
+        internal static string PageContainer {
             get {
-                return ResourceManager.GetString("Page", resourceCulture);
+                return ResourceManager.GetString("PageContainer", resourceCulture);
             }
         }
     }

@@ -14,7 +14,7 @@ namespace NetAspect.Doc.Builder.Core
             File.WriteAllText(
                filePath,
                NVelocityHelper.GenerateContent(
-                  Templates.Templates.Page,
+                  Templates.Templates.PageContainer,
                   new NVelocityHelper.NVelocityEntry
                   {
                      Key = "page",
