@@ -23,6 +23,7 @@
       TooManySelectorsWithSameName,
       SelectorMustHaveParameters,
        ImpossibleToHavePerInstanceLifeCycleInStaticMethod,
-       AttributeTypeNotAllowed
+       AttributeTypeNotAllowed,
+       AspectWithSelectorMustHaveDefaultConstructor
    }
 }

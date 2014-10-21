@@ -17,15 +17,6 @@ namespace NetAspect.Weaver.Core.Weaver.Parameters.InterceptorParameters
             return weavingInfo_P;
         }
 
-        public static ParameterWeavingInfo AddParameterName(this ParameterWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilitiesP)
-        {
-            interceptorParameterPossibilitiesP.AddPossibleParameter("parametername")
-                                              .WhichCanNotBeReferenced()
-                                              .WhichMustBeOfType<VariablesForMethod, string>()
-                                              .AndInjectTheValue(weavingInfo_P.Parameter.Name);
-            return weavingInfo_P;
-        }
-
         public static ParameterWeavingInfo AddParameterInfo(this ParameterWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilitiesP)
         {
             interceptorParameterPossibilitiesP.AddPossibleParameter("parameter")

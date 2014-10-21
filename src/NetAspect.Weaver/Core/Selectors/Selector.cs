@@ -20,6 +20,14 @@ namespace NetAspect.Weaver.Core.Selectors
 
       public string SelectorName { get; private set; }
 
+       public bool Exists
+       {
+           get
+           {
+               return _aspect.GetMethod(SelectorName) != null;
+           }
+       }
+
       public void Check(ErrorHandler errorHandler)
       {
          MethodInfo method = _aspect.GetMethod(SelectorName);

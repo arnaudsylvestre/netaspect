@@ -143,6 +143,7 @@
     <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInConstructorTest.cs" />
     <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInMethodTest.cs" />
     <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInParameterTest.cs" />
+    <Compile Include="unit\Aspects\Parameters\Selectors\AspectParameterInMethodTest.cs" />
     <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithBooleanTypeTest.cs" />
     <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithByteTypeTest.cs" />
     <Compile Include="unit\Aspects\Parameters\Types\AspectParameterInParameterWithCharTypeTest.cs" />
@@ -446,10 +447,6 @@
     <Compile Include="unit\MethodWeaving\Properties\Getter\Return\CheckWeaveWithReturnVoidTest.cs" />
     <Compile Include="unit\NetAspectTest.cs" />
     <Compile Include="unit\Selectors\Members\WeaveParameterWithSelectorTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Parameters\ParameterName\AfterConstructorParameterNameWithBadTypeTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Parameters\ParameterName\AfterConstructorParameterNameWithObjectTypeTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Parameters\ParameterName\AfterConstructorParameterNameWithRealTypeReferencedTest.cs" />
-    <Compile Include="unit\ParameterWeaving\Parameters\ParameterName\AfterConstructorParameterNameWithRealTypeTest.cs" />
     <Compile Include="unit\ParameterWeaving\Parameters\ParameterValue\AfterConstructorParameterValueWithBadTypeTest.cs" />
     <Compile Include="unit\ParameterWeaving\Parameters\ParameterValue\AfterConstructorParameterValueWithObjectTypeTest.cs" />
     <Compile Include="unit\ParameterWeaving\Parameters\ParameterValue\AfterConstructorParameterValueWithRealTypeReferencedTest.cs" />

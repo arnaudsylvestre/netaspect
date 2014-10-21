@@ -21,12 +21,27 @@ namespace NetAspect.Weaver.Core.Weaver.Session.AspectCheckers
          EnsureSelector(aspect.PropertySelector, errorHandler, aspect);
          EnsureSelector(aspect.ParameterSelector, errorHandler, aspect);
          EnsureAttributeConstructorTypeIsAllowed(aspect, InstructionsExtensions.adders.Keys.ToList(), errorHandler);
+          EnsureAspectWithSelectorHasDefaultConstructor(aspect, errorHandler);
       }
+
+        private void EnsureAspectWithSelectorHasDefaultConstructor(NetAspectDefinition aspect, ErrorHandler errorHandler)
+        {
+            ConstructorInfo constructor = aspect.Type.GetConstructor(new Type[0]);
+            if (constructor != null)
+                return;
+            if (aspect.ConstructorSelector.Exists ||
+                aspect.FieldSelector.Exists ||
+                aspect.MethodSelector.Exists ||
+                aspect.ParameterSelector.Exists ||
+                aspect.PropertySelector.Exists)
+            {
+                errorHandler.OnError(ErrorCode.AspectWithSelectorMustHaveDefaultConstructor, FileLocation.None, aspect.Type.FullName);
+            }
+        }
 
         private void EnsureAttributeConstructorTypeIsAllowed(NetAspectDefinition aspect, List<Type> allowedTypes, ErrorHandler errorHandler)
         {
-            ConstructorInfo[] constructors = aspect.Type.GetConstructors(ObjectExtensions.BINDING_FLAGS);
-            foreach (var constructor in constructors)
+            foreach (var constructor in aspect.Type.GetConstructors(ObjectExtensions.BINDING_FLAGS))
             {
                 ParameterInfo[] parameterInfos = constructor.GetParameters();
                 foreach (var parameterInfo in parameterInfos)

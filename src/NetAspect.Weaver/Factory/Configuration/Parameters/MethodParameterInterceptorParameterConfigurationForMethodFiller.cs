@@ -14,7 +14,6 @@ namespace NetAspect.Weaver.Factory.Configuration.Parameters
        public void FillCommon(ParameterWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilitiesP)
       {
          weavingInfo_P.AddParameterValue(interceptorParameterPossibilitiesP)
-            .AddParameterName(interceptorParameterPossibilitiesP)
             .AddParameterInfo(interceptorParameterPossibilitiesP)
             .AddConstructor(interceptorParameterPossibilitiesP)
             .AddParameters(interceptorParameterPossibilitiesP)
