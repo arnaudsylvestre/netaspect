@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -17,7 +18,7 @@ namespace NetAspect.Weaver.Tasks
 
          try
          {
-             string directoryPath = Path.GetDirectoryName(AssemblyPath);
+             string directoryPath = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath);
              AppDomain domain = AppDomain.CreateDomain(
                "NetAspect Weaving",
                null,
@@ -31,9 +32,11 @@ namespace NetAspect.Weaver.Tasks
             {
                Type runnerType = typeof (AppDomainIsolatedDiscoveryRunner);
 
-               var runner =
+               string assemblyName = new Uri(runnerType.Assembly.CodeBase).LocalPath;
+               Log.LogMessage(assemblyName);
+                var runner =
                   domain.CreateInstanceFromAndUnwrap(
-                     new Uri(runnerType.Assembly.CodeBase).LocalPath,
+                     assemblyName,
                      runnerType.FullName) as
                      AppDomainIsolatedDiscoveryRunner;
 

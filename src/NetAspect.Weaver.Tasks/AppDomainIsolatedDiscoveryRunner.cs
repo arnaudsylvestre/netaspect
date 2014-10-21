@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Microsoft.Build.Utilities;
 using NetAspect.Weaver.Core.Model.Errors;
 using NetAspect.Weaver.Core.Weaver;
@@ -30,7 +31,8 @@ namespace NetAspect.Weaver.Tasks
          }
          catch (Exception e)
          {
-            logger.LogError(e.Message);
+             logger.LogError(e.Message);
+             logger.LogError(e.StackTrace);
             return false;
          }
       }
