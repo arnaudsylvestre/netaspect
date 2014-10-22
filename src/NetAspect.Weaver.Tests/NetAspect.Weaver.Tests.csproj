@@ -139,6 +139,12 @@
     <Compile Include="docs\MethodWeavingForDocWithStartDivisionTest.cs" />
     <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
+    <Compile Include="unit\Samples\Methods\LogSampleTest.cs" />
+    <Compile Include="unit\Samples\Parameters\Integers\LowerThanSampleTest.cs" />
+    <Compile Include="unit\Samples\Parameters\Integers\GreaterThanOrEqualToSampleTest.cs" />
+    <Compile Include="unit\Samples\Parameters\Integers\GreaterThanSampleTest.cs" />
+    <Compile Include="unit\Samples\Parameters\String\NotNullOrEmptySampleTest.cs" />
+    <Compile Include="unit\Samples\Parameters\String\NotNullSampleTest.cs" />
     <Compile Include="unit\Aspects\Definition\ImpossibleToHaveDifferentInterceptorsTest.cs" />
     <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInGetFieldTest.cs" />
     <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInConstructorTest.cs" />

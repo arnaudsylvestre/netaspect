@@ -108,7 +108,7 @@ namespace NetAspect.Weaver.Core.Weaver.Session.AspectCheckers
             var propertyInfos = aspect.GetType().GetProperties().Where(p => p.PropertyType == typeof (Interceptor));
             foreach (var propertyInfo in propertyInfos)
             {
-                if (propertyInfo.GetValue(aspect, new object[0]) != null)
+                if (((Interceptor)propertyInfo.GetValue(aspect, new object[0])).Method != null)
                     interceptors.Add(propertyInfo.Name);
             }
             var firstOrDefault = interceptors.FirstOrDefault();
