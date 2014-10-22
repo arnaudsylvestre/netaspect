@@ -39,8 +39,8 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.Method.CurrentIns
          {
             var myInt = new MyInt(24);
             Assert.AreEqual(2, myInt.DivideBy(12));
-            Assert.AreSame(1, LogAttribute.Parameters.Length);
-            Assert.AreSame(12, LogAttribute.Parameters[0]);
+            Assert.AreEqual(1, LogAttribute.Parameters.Length);
+            Assert.AreEqual(12, LogAttribute.Parameters[0]);
          };
       }
 

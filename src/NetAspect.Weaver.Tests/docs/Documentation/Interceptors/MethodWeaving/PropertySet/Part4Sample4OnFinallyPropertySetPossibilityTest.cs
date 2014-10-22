@@ -49,12 +49,12 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.P
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void OnFinallyPropertySetMethod(object instance, PropertyInfo property, int value)
+         public void OnFinallyPropertySetMethod(object instance, PropertyInfo property, int propertyValue)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());
             Assert.AreEqual("Value", property.Name);
-            Assert.AreEqual(12, value);
+            Assert.AreEqual(12, propertyValue);
          }
       }
    }

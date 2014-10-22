@@ -54,7 +54,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void BeforeCallConstructor(string callerFormat,
+         public void BeforeCallConstructor(
             MyIntUser caller,
             int columnNumber,
             int lineNumber,
@@ -74,7 +74,6 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
             Assert.AreEqual(3, callerParameters.Length);
             Assert.AreEqual(1, calledParameters.Length);
             Assert.AreEqual("Compute", callerMethod.Name);
-            Assert.AreEqual("Result : {0}", callerFormat);
             Assert.AreEqual(12, calledValue);
          }
       }

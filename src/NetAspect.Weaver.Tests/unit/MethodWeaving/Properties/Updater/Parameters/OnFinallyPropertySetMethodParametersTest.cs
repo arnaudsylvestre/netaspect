@@ -48,12 +48,12 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void OnFinallyPropertySetMethod(object instance, PropertyInfo property, int value, string fileName, string filePath, int lineNumber, int columnNumber)
+         public void OnFinallyPropertySetMethod(object instance, PropertyInfo property, int propertyValue, string fileName, string filePath, int lineNumber, int columnNumber)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());
             Assert.AreEqual("Value", property.Name);
-            Assert.AreEqual(12, value);
+            Assert.AreEqual(12, propertyValue);
          }
       }
    }

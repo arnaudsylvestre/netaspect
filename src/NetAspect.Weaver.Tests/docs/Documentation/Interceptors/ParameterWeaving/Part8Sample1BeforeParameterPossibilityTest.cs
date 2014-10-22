@@ -44,7 +44,6 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.ParameterWeavin
          public bool NetAspectAttribute = true;
 
          public void BeforeMethodForParameter(int parameterValue,
-            string parameterName,
             MyInt instance,
             int v,
             object[] parameters,
@@ -54,7 +53,6 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.ParameterWeavin
             Assert.NotNull(instance);
             Assert.AreEqual("v", parameter.Name);
             Assert.AreEqual(1, parameters.Length);
-            Assert.AreEqual("v", parameterName);
             Assert.AreEqual(6, parameterValue);
             Assert.AreEqual(6, v);
          }

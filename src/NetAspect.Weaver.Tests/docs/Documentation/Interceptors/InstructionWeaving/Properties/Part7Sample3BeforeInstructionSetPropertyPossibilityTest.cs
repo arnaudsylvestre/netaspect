@@ -45,7 +45,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void BeforeUpdateProperty(int callerIntValue,
+         public void BeforeUpdateProperty(
             MyInt caller,
             MyInt called,
             int columnNumber,
@@ -66,7 +66,6 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             Assert.AreEqual(1, callerParameters.Length);
             Assert.AreEqual("UpdateValue", callerMethod.Name);
             Assert.AreEqual("Value", property.Name);
-            Assert.AreEqual(6, callerIntValue);
          }
       }
    }

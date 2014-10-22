@@ -16,7 +16,7 @@ namespace NetAspect.Weaver.Tests.unit.Aspects.Definition
               new ErrorReport.Error
               {
                   Level = ErrorLevel.Error,
-                  Message = string.Format("The interceptor BeforeMethod and the interceptor BeforeUpdateField can not be in the same aspect ({0})", typeof(MyAspect))
+                  Message = string.Format("The interceptor AfterMethod and the interceptor AfterConstructor can not be in the same aspect ({0})", typeof(MyAspect))
               });
        }
 

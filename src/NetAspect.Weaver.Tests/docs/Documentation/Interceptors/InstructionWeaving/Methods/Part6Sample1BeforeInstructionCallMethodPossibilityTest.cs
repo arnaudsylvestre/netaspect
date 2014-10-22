@@ -55,7 +55,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void BeforeCallMethod(string callerFormat,
+         public void BeforeCallMethod(
             MyIntUser caller,
             MyInt called,
             int columnNumber,
@@ -77,7 +77,6 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             Assert.AreEqual(3, callerParameters.Length);
             Assert.AreEqual(1, calledParameters.Length);
             Assert.AreEqual("Compute", callerMethod.Name);
-            Assert.AreEqual("Result : {0}", callerFormat);
             Assert.AreEqual(6, calledV);
          }
       }
