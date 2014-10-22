@@ -51,6 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\NetAspect.Weaver\Core\Weaver\Session\AspectCheckers\Kinds\Event.cs">
+      <Link>Core\Helpers\Event.cs</Link>
+    </Compile>
+    <Compile Include="..\NetAspect.Weaver\Core\Weaver\Session\AspectCheckers\Kinds\InterceptorModelHelper.cs">
+      <Link>Core\Helpers\InterceptorModelHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\NetAspect.Weaver\Core\Weaver\Session\AspectCheckers\Kinds\Kind.cs">
+      <Link>Core\Helpers\Kind.cs</Link>
+    </Compile>
     <Compile Include="Core\Readers\Core\CsTestFileReader.cs" />
     <Compile Include="Core\Readers\CsFileReader.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\AvailableParameters\DocumentationAvailableParametersSectionReader.cs" />
@@ -79,10 +88,7 @@
     <Compile Include="Helpers\ConfigureNVelocity.cs" />
     <Compile Include="Core\Readers\Core\CsTestFileVisitor.cs" />
     <Compile Include="ToSort\Model\DocumentationConfiguration.cs" />
-    <Compile Include="Core\Helpers\Event.cs" />
     <Compile Include="Core\Readers\GettingStarted\GettingStartedPageModel.cs" />
-    <Compile Include="Core\Helpers\InterceptorModelHelper.cs" />
-    <Compile Include="Core\Helpers\Kind.cs" />
     <Compile Include="Core\Page.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\AvailableParameters\ParameterModel.cs" />
     <Compile Include="Core\WebSite.cs" />

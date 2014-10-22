@@ -35,6 +35,7 @@ namespace NetAspect.Weaver.Factory
                   {ErrorCode.ImpossibleToHavePerInstanceLifeCycleInStaticMethod, new ErrorInfo("Impossible to use the aspect {0} in the method {1} of type {2} because this method is static and the aspect is declared as PerInstance")},
                   {ErrorCode.AttributeTypeNotAllowed, new ErrorInfo("The parameter '{0}' in a constructor of the aspect {1} can not be declared with the type {2}. Only the following types are allowed : {3}")},
                   {ErrorCode.AspectWithSelectorMustHaveDefaultConstructor, new ErrorInfo("The aspect '{0}' must have a constructor with no parameters because he got selectors")},
+                  {ErrorCode.AllInterceptorsMustHaveTheSameScope, new ErrorInfo("The interceptor {0} and the interceptor {1} can not be in the same aspect ({2})")},
                };
         }
     }

@@ -24,6 +24,7 @@
       SelectorMustHaveParameters,
        ImpossibleToHavePerInstanceLifeCycleInStaticMethod,
        AttributeTypeNotAllowed,
-       AspectWithSelectorMustHaveDefaultConstructor
+       AspectWithSelectorMustHaveDefaultConstructor,
+       AllInterceptorsMustHaveTheSameScope
    }
 }

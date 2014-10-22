@@ -17,13 +17,13 @@ namespace NetAspect.Weaver.Factory
         public static IMethodAspectInstanceDetector BuildMethodDetector()
         {
             return new MethodAspectInstanceDetector<MethodDefinition>(
-               aspect => aspect.After,
+               aspect => aspect.AfterMethod,
                new IlInjectorsFactoryForMethod(new MethodInterceptorParameterConfigurationForMethodFiller(), new NoWeavingPreconditionInjector()),
-               aspect => aspect.Before,
+               aspect => aspect.BeforeMethod,
                MethodCompliance.IsMethod,
                m => m,
-               aspect => aspect.OnException,
-               aspect => aspect.OnFinally,
+               aspect => aspect.OnExceptionMethod,
+               aspect => aspect.OnFinallyMethod,
                aspect => aspect.MethodSelector
                );
         }

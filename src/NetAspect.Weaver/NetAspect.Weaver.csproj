@@ -80,6 +80,9 @@
     <Compile Include="Core\Model\Aspect\LifeCycle.cs" />
     <Compile Include="Core\Helpers\LifeCycleHelper.cs" />
     <Compile Include="Core\Weaver\Engine\IL\VariablesFactory.cs" />
+    <Compile Include="Core\Weaver\Session\AspectCheckers\Kinds\Event.cs" />
+    <Compile Include="Core\Weaver\Session\AspectCheckers\Kinds\InterceptorModelHelper.cs" />
+    <Compile Include="Core\Weaver\Session\AspectCheckers\Kinds\Kind.cs" />
     <Compile Include="Core\Weaver\ToSort\Data\Variables\ExistingVariable.cs" />
     <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\MemberKindCheckers.cs" />
     <Compile Include="Core\Weaver\Engine\InterceptorParameters\Checkers\ParameterKindCheckers.cs" />

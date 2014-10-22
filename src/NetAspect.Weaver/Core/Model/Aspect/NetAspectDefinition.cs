@@ -30,22 +30,22 @@ namespace NetAspect.Weaver.Core.Model.Aspect
          get { return _attribute; }
       }
 
-      public Interceptor Before
+      public Interceptor BeforeMethod
       {
          get { return new Interceptor(_attribute.GetMethod("BeforeMethod")); }
       }
 
-      public Interceptor After
+      public Interceptor AfterMethod
       {
          get { return new Interceptor(_attribute.GetMethod("AfterMethod")); }
       }
 
-      public Interceptor OnException
+      public Interceptor OnExceptionMethod
       {
          get { return new Interceptor(_attribute.GetMethod("OnExceptionMethod")); }
       }
 
-      public Interceptor OnFinally
+      public Interceptor OnFinallyMethod
       {
          get { return new Interceptor(_attribute.GetMethod("OnFinallyMethod")); }
       }
