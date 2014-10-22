@@ -31,9 +31,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Value
          public static int I;
          public bool NetAspectAttribute = true;
 
-         public void AfterPropertySetMethod(int value)
+         public void AfterPropertySetMethod(int propertyValue)
          {
-            I = value;
+             I = propertyValue;
          }
       }
    }

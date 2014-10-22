@@ -32,9 +32,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Value
          public static int I;
          public bool NetAspectAttribute = true;
 
-         public void AfterPropertySetMethod(ref byte value)
+         public void AfterPropertySetMethod(ref byte propertyValue)
          {
-            I = value;
+             I = propertyValue;
          }
       }
    }
