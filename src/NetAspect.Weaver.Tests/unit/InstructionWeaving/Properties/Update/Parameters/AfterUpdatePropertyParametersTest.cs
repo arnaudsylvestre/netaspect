@@ -44,7 +44,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Param
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void AfterUpdateProperty(int callerIntValue,
+         public void AfterUpdateProperty(
             MyInt caller,
             MyInt called,
             int columnNumber,
@@ -65,7 +65,6 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Update.Param
             Assert.AreEqual(1, callerParameters.Length);
             Assert.AreEqual("UpdateValue", callerMethod.Name);
             Assert.AreEqual("Value", property.Name);
-            Assert.AreEqual(6, callerIntValue);
          }
       }
    }

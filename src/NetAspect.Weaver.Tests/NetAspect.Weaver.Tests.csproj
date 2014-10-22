@@ -215,14 +215,6 @@
     <Compile Include="unit\InstructionWeaving\Parameters\CallerMethod\AfterCallMethodCallerMethodParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\CallerMethod\AfterCallMethodCallerMethodParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\CallerMethod\BeforeCallMethodCallerMethodParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Parameters\CallerParameterName\AfterCallMethodCallerParameterNameParameterWithBadTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Parameters\CallerParameterName\AfterCallMethodCallerParameterNameParameterWithObjectTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Parameters\CallerParameterName\AfterCallMethodCallerParameterNameParameterWithRealTypeOutTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Parameters\CallerParameterName\AfterCallMethodCallerParameterNameParameterWithRealTypeReferencedTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Parameters\CallerParameterName\AfterCallMethodCallerParameterNameParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Parameters\CallerParameterName\AfterCallMethodCallerParameterNameReferencedParameterWithRealTypeReferencedTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Parameters\CallerParameterName\AfterCallMethodCallerParameterNameReferencedParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Parameters\CallerParameterName\BeforeCallMethodCallerParameterNameParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\CallerParameters\AfterCallMethodCallerParametersParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\CallerParameters\AfterCallMethodCallerParametersParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\CallerParameters\AfterCallMethodCallerParametersParameterWithRealTypeTest.cs" />

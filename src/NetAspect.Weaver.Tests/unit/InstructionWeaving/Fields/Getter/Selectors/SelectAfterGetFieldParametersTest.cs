@@ -48,7 +48,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Selectors
               return field.Name == "value";
           }
 
-         public void AfterGetField(int callerv,
+         public void AfterGetField(
             MyInt caller,
             MyInt called,
             int columnNumber,
@@ -69,7 +69,6 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Selectors
             Assert.AreEqual(1, callerParameters.Length);
             Assert.AreEqual("DivideBy", callerMethod.Name);
             Assert.AreEqual("value", field.Name);
-            Assert.AreEqual(6, callerv);
          }
       }
    }

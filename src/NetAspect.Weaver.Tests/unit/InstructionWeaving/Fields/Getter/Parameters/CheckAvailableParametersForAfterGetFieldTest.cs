@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameter
               new ErrorReport.Error
               {
                   Level = ErrorLevel.Error,
-                  Message = string.Format("The parameter 'unknown' is unknown. Expected one of : called, field, columnnumber, linenumber, filepath, filename, caller, callerparameters, callerv, callermethod, result")
+                  Message = string.Format("The parameter 'unknown' is unknown. Expected one of : called, field, columnnumber, linenumber, filepath, filename, caller, callerparameters, callermethod, result")
               });
        }
 

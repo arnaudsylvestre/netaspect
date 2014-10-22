@@ -44,7 +44,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Param
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void AfterGetProperty(int callerv,
+         public void AfterGetProperty(
             MyInt caller,
             MyInt called,
             int columnNumber,
@@ -65,7 +65,6 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Param
             Assert.AreEqual(1, callerParameters.Length);
             Assert.AreEqual("DivideBy", callerMethod.Name);
             Assert.AreEqual("Value", property.Name);
-            Assert.AreEqual(6, callerv);
          }
       }
    }
