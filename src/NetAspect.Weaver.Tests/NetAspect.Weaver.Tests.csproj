@@ -433,7 +433,6 @@
     <Compile Include="unit\MethodWeaving\Parameters\PropertyValue\AfterPropertyValueParameterWithRealTypeTest.cs" />
     <Compile Include="unit\Selectors\Members\WeavePublicPropertyTest.cs" />
     <Compile Include="unit\MultiWeaving\AspectDefinedOnDeclaringTypeTest.cs" />
-    <Compile Include="unit\MultiWeaving\CheckCallWeavingAndMethodWeavingOnsameMethodTest.cs" />
     <Compile Include="unit\MultiWeaving\CheckCallFrom2DifferentInterceptors.cs" />
     <Compile Include="unit\Atttributes\Statics\WeaveStaticMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\LifeCycle\MethodWeavingWithNoLifeCycleTest.cs" />

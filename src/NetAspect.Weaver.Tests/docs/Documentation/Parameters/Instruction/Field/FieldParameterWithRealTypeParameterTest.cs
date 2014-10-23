@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameters
 {
    public class FieldParameterWithRealTypeParameterTest :
-      NetAspectTest<BeforeGetFieldParametersTest.MyInt>
+      NetAspectTest<FieldParameterWithRealTypeParameterTest.MyInt>
    {
       public FieldParameterWithRealTypeParameterTest()
            : base("It must be of System.Reflection.FieldInfo type", "GetFieldInstructionWeavingBefore", "InstructionFieldWeaving")
