@@ -1,17 +1,18 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 
 namespace NetAspect.Weaver.Core.Model.Aspect
 {
-   public class Interceptor
+   public class Interceptors
    {
-      private readonly MethodInfo _methodInfo;
+       private readonly List<MethodInfo> _methodInfo;
 
-      public Interceptor(MethodInfo methodInfo_P)
+       public Interceptors(List<MethodInfo> methodInfo_P)
       {
          _methodInfo = methodInfo_P;
       }
 
-      public MethodInfo Method
+      public IEnumerable<MethodInfo> Methods
       {
          get { return _methodInfo; }
       }

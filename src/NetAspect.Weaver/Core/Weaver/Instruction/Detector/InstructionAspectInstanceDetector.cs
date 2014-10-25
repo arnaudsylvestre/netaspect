@@ -16,9 +16,9 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.Detector
          NetAspectDefinition aspect,
          MethodDefinition method);
 
-      private readonly Func<NetAspectDefinition, Interceptor> afterInterceptorProvider;
+      private readonly Func<NetAspectDefinition, Interceptors> afterInterceptorProvider;
       private readonly IlInjectorsFactoryForInstruction _ilInjectorsFactoryForInstruction;
-       private readonly Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider;
+       private readonly Func<NetAspectDefinition, Interceptors> beforeInterceptorProvider;
       private readonly IsInstructionCompliant isInstructionCompliant;
       private readonly Func<Mono.Cecil.Cil.Instruction, TMember> memberProvider;
       private readonly SelectorProvider<TMember> selectorProvider;
@@ -27,8 +27,8 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.Detector
          SelectorProvider<TMember> selectorProvider,
          IlInjectorsFactoryForInstruction _ilInjectorsFactoryForInstruction,
          Func<Mono.Cecil.Cil.Instruction, TMember> memberProvider,
-         Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider,
-         Func<NetAspectDefinition, Interceptor> afterInterceptorProvider)
+         Func<NetAspectDefinition, Interceptors> beforeInterceptorProvider,
+         Func<NetAspectDefinition, Interceptors> afterInterceptorProvider)
       {
          this.isInstructionCompliant = isInstructionCompliant;
          this.selectorProvider = selectorProvider;
@@ -63,8 +63,8 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.Detector
                {
                    Instance = customAttribute,
                    Aspect = aspect,
-                   Before = _ilInjectorsFactoryForInstruction.CreateForBefore(method, beforeInterceptorProvider(aspect).Method, instruction),
-                   After = _ilInjectorsFactoryForInstruction.CreateForAfter(method, afterInterceptorProvider(aspect).Method, instruction)
+                   Before = _ilInjectorsFactoryForInstruction.CreateForBefore(method, beforeInterceptorProvider(aspect), instruction),
+                   After = _ilInjectorsFactoryForInstruction.CreateForAfter(method, afterInterceptorProvider(aspect), instruction)
                };
        }
    }

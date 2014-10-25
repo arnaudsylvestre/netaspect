@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
+using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Weaver.Engine.InterceptorParameters;
 using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model;
@@ -19,14 +22,14 @@ namespace NetAspect.Weaver.Core.Weaver.Parameters.Detector
          this.weavingPreconditionInjector = weavingPreconditionInjector;
       }
 
-      public IIlInjector<VariablesForMethod> Create(MethodDefinition method, MethodInfo interceptorMethod, Action<ParameterWeavingInfo, InterceptorParameterPossibilities<VariablesForMethod>> fillSpecific, ParameterDefinition parameter)
+      public IIlInjector<VariablesForMethod> Create(MethodDefinition method, Interceptors interceptorMethod, Action<ParameterWeavingInfo, InterceptorParameterPossibilities<VariablesForMethod>> fillSpecific, ParameterDefinition parameter)
       {
-         if (interceptorMethod == null)
+         if (!interceptorMethod.Methods.Any())
              return new NoIIlInjector<VariablesForMethod>();
 
          var weavingInfo_P = new ParameterWeavingInfo
          {
-            Interceptor = interceptorMethod,
+            Interceptor = interceptorMethod.Methods,
             Method = method,
             Parameter = parameter,
          };
@@ -34,27 +37,27 @@ namespace NetAspect.Weaver.Core.Weaver.Parameters.Detector
          _filler.FillCommon(weavingInfo_P, interceptorParameterConfigurations);
          fillSpecific(weavingInfo_P, interceptorParameterConfigurations);
 
-         return new Injector<VariablesForMethod>(method, interceptorMethod, interceptorParameterConfigurations, weavingPreconditionInjector);
+         return new Injector<VariablesForMethod>(method, weavingInfo_P.Interceptor, interceptorParameterConfigurations, weavingPreconditionInjector);
       }
 
-      public IIlInjector<VariablesForMethod> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, ParameterDefinition parameter)
+      public IIlInjector<VariablesForMethod> CreateForBefore(MethodDefinition method, Interceptors interceptorMethod, ParameterDefinition parameter)
       {
          return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => {}, parameter);
       }
 
-      public IIlInjector<VariablesForMethod> CreateForOnFinally(MethodDefinition method, MethodInfo interceptorMethod, ParameterDefinition parameter)
+      public IIlInjector<VariablesForMethod> CreateForOnFinally(MethodDefinition method, Interceptors interceptorMethod, ParameterDefinition parameter)
       {
           return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => { }, parameter);
       }
 
-      public IIlInjector<VariablesForMethod> CreateForAfter(MethodDefinition method, MethodInfo interceptorMethod, ParameterDefinition parameter)
+      public IIlInjector<VariablesForMethod> CreateForAfter(MethodDefinition method, Interceptors interceptorMethod, ParameterDefinition parameter)
       {
           return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => { }, parameter);
       }
 
-      public IIlInjector<VariablesForMethod> CreateForExceptions(MethodDefinition method, MethodInfo interceptorMethod, ParameterDefinition parameter)
+      public IIlInjector<VariablesForMethod> CreateForExceptions(MethodDefinition method, Interceptors interceptorMethod, ParameterDefinition parameter)
       {
-         return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => _filler.FillOnExceptionSpecific(info, interceptorParameterConfigurations), parameter);
+          return Create(method, interceptorMethod, (info, interceptorParameterConfigurations) => _filler.FillOnExceptionSpecific(info, interceptorParameterConfigurations), parameter);
       }
    }
 }

@@ -13,28 +13,46 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.ILInjector
 {
     public class Injector<T> : IIlInjector<T> where T : VariablesForMethod
     {
-      private readonly MethodDefinition _method;
-      private readonly MethodInfo interceptorMethod;
+        private readonly MethodDefinition _method;
+        private readonly IEnumerable<MethodInfo> interceptorMethods;
+        private MethodInfo interceptorMethod;
       private readonly InterceptorParameterPossibilities<T> _interceptorParameterPossibilities;
       private readonly IWevingPreconditionInjector<T> weavingPreconditionInjector;
 
 
-      public Injector(MethodDefinition method_P, MethodInfo interceptorMethod_P, InterceptorParameterPossibilities<T> interceptorParameterPossibilitiesP, IWevingPreconditionInjector<T> weavingPreconditionInjector)
+      public Injector(MethodDefinition method_P, IEnumerable<MethodInfo> interceptorMethod_P, InterceptorParameterPossibilities<T> interceptorParameterPossibilitiesP, IWevingPreconditionInjector<T> weavingPreconditionInjector)
       {
          _method = method_P;
-         interceptorMethod = interceptorMethod_P;
+         interceptorMethods = interceptorMethod_P;
          _interceptorParameterPossibilities = interceptorParameterPossibilitiesP;
          this.weavingPreconditionInjector = weavingPreconditionInjector;
       }
 
-      public void Check(ErrorHandler errorHandler, T availableInformations, Variable aspectInstance)
+      public void Check(ErrorHandler errorHandlers, T availableInformations, Variable aspectInstance)
       {
-          if (interceptorMethod.ReturnType != typeof (void))
-              errorHandler.OnError(ErrorCode.InterceptorMustBeVoid, FileLocation.None, interceptorMethod.Name,
-                                   interceptorMethod.DeclaringType.FullName);
-          _interceptorParameterPossibilities.Check(interceptorMethod.GetParameters(), errorHandler);
-          aspectInstance.Check(errorHandler);
+          foreach (var interceptorMethod in interceptorMethods)
+          {
+              var interceptorHandler = new ErrorHandler();
+              Check(aspectInstance, interceptorMethod, interceptorHandler);
+              if (!interceptorHandler.Errors.Any())
+              {
+                  this.interceptorMethod = interceptorMethod;
+                  return;
+                  
+              }
+          }
+
+          Check(aspectInstance, interceptorMethods.First(), errorHandlers);
       }
+
+        private void Check(Variable aspectInstance, MethodInfo interceptorMethod, ErrorHandler interceptorHandler)
+        {
+            if (interceptorMethod.ReturnType != typeof (void))
+                interceptorHandler.OnError(ErrorCode.InterceptorMustBeVoid, FileLocation.None, interceptorMethod.Name,
+                                           interceptorMethod.DeclaringType.FullName);
+            _interceptorParameterPossibilities.Check(interceptorMethod.GetParameters(), interceptorHandler);
+            aspectInstance.Check(interceptorHandler);
+        }
 
         public void Inject(List<Mono.Cecil.Cil.Instruction> instructions, T availableInformations, Variable aspectInstance)
         {

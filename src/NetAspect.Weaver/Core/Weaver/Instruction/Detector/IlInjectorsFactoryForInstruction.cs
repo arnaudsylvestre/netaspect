@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
+using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Weaver.Engine.InterceptorParameters;
 using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model;
@@ -20,38 +23,38 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.Detector
          this.weavingPreconditionInjector = weavingPreconditionInjector;
       }
 
-      public IIlInjector<VariablesForInstruction> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod, Mono.Cecil.Cil.Instruction instruction)
+      public IIlInjector<VariablesForInstruction> CreateForBefore(MethodDefinition method, Interceptors interceptors, Mono.Cecil.Cil.Instruction instruction)
       {
-          return Create(method, interceptorMethod, instruction, NoSpecific);
+          return Create(method, interceptors, instruction, NoSpecific);
       }
 
        private IIlInjector<VariablesForInstruction> Create(MethodDefinition method,
-         MethodInfo interceptorMethod,
+         Interceptors interceptors,
          Mono.Cecil.Cil.Instruction instruction,
          Action<IInterceptorParameterConfigurationForInstructionFiller, InstructionWeavingInfo, InterceptorParameterPossibilities<VariablesForInstruction>> specificFiller)
       {
-         if (interceptorMethod == null)
+          if (!interceptors.Methods.Any())
             return new NoIIlInjector<VariablesForInstruction>();
 
          var info = new InstructionWeavingInfo
          {
             Instruction = instruction,
-            Interceptor = interceptorMethod,
+            Interceptor = new List<MethodInfo>(interceptors.Methods),
             Method = method,
          };
          var parametersIlGenerator = new InterceptorParameterPossibilities<VariablesForInstruction>();
          _interceptorParameterConfigurationForInstructionFiller.FillCommon(info, parametersIlGenerator);
          specificFiller(_interceptorParameterConfigurationForInstructionFiller, info, parametersIlGenerator);
 
-         return new Injector<VariablesForInstruction>(method, interceptorMethod, parametersIlGenerator, weavingPreconditionInjector);
+         return new Injector<VariablesForInstruction>(method, info.Interceptor, parametersIlGenerator, weavingPreconditionInjector);
       }
 
 
       public IIlInjector<VariablesForInstruction> CreateForAfter(MethodDefinition method,
-         MethodInfo interceptorMethod,
+         Interceptors interceptors,
          Mono.Cecil.Cil.Instruction instruction)
       {
-         return Create(method, interceptorMethod, instruction, (factory, interceptorInfo, generator) => factory.FillAfterSpecific(interceptorInfo, generator));
+         return Create(method, interceptors, instruction, (factory, interceptorInfo, generator) => factory.FillAfterSpecific(interceptorInfo, generator));
       }
    }
 }

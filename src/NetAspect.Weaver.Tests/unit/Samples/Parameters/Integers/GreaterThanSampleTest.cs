@@ -19,8 +19,8 @@ namespace NetAspect.Weaver.Tests.unit.Samples.Parameters.Integers
             }
             catch (Exception e)
             {
-            } 
-             try
+            }
+            try
             {
                 classToWeave_L.Check(9);
                 Assert.Fail("Must fail");
@@ -28,16 +28,29 @@ namespace NetAspect.Weaver.Tests.unit.Samples.Parameters.Integers
             catch (Exception e)
             {
             }
+            try
+            {
+                classToWeave_L.CheckLong(9);
+                Assert.Fail("Must fail");
+            }
+            catch (Exception e)
+            {
+            }
              classToWeave_L.Check(11);
+             classToWeave_L.CheckLong(11);
          };
       }
 
       public class ClassToWeave
       {
           public void Check([GreaterThan(10)] int param)
-         {
-             
-         }
+          {
+
+          }
+          public void CheckLong([GreaterThan(10)] long param)
+          {
+
+          }
       }
 
       public class GreaterThanAttribute : Attribute
@@ -51,10 +64,16 @@ namespace NetAspect.Weaver.Tests.unit.Samples.Parameters.Integers
           }
 
           public void BeforeMethodForParameter(ParameterInfo parameter, int parameterValue)
-         {
-            if (parameterValue <= _value)
-                throw new Exception(string.Format("{0} must be greater than {1}", parameter.Name, _value));
-         }
+          {
+              if (parameterValue <= _value)
+                  throw new Exception(string.Format("{0} must be greater than {1}", parameter.Name, _value));
+          }
+
+          public void BeforeMethodForParameter(ParameterInfo parameter, long parameterValue)
+          {
+              if (parameterValue <= _value)
+                  throw new Exception(string.Format("{0} must be greater than {1}", parameter.Name, _value));
+          }
       }
    }
 }

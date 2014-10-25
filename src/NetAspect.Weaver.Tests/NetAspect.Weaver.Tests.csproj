@@ -145,7 +145,6 @@
     <Compile Include="unit\Samples\Parameters\Integers\GreaterThanSampleTest.cs" />
     <Compile Include="unit\Samples\Parameters\String\NotNullOrEmptySampleTest.cs" />
     <Compile Include="unit\Samples\Parameters\String\NotNullSampleTest.cs" />
-    <Compile Include="unit\Aspects\Definition\ImpossibleToHaveDifferentInterceptorsTest.cs" />
     <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInGetFieldTest.cs" />
     <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInConstructorTest.cs" />
     <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInMethodTest.cs" />
@@ -494,7 +493,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="unit\Aspects\Definition\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

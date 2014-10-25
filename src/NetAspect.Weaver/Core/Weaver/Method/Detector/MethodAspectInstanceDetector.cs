@@ -15,26 +15,26 @@ namespace NetAspect.Weaver.Core.Weaver.Method.Detector
    {
        public delegate bool IsMethodCompliant(NetAspectDefinition aspect, MethodDefinition method);
 
-      private readonly Func<NetAspectDefinition, Interceptor> afterInterceptorProvider;
+      private readonly Func<NetAspectDefinition, Interceptors> afterInterceptorProvider;
 
       private readonly IlInjectorsFactoryForMethod _ilInjectorsFactoryForMethod;
 
 
-      private readonly Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider;
+      private readonly Func<NetAspectDefinition, Interceptors> beforeInterceptorProvider;
       private readonly IsMethodCompliant isMethodCompliant;
       private readonly Func<MethodDefinition, TMember> memberProvider;
 
-      private readonly Func<NetAspectDefinition, Interceptor> onExceptionInterceptorProvider;
-      private readonly Func<NetAspectDefinition, Interceptor> onFinallyInterceptorProvider;
+      private readonly Func<NetAspectDefinition, Interceptors> onExceptionInterceptorProvider;
+      private readonly Func<NetAspectDefinition, Interceptors> onFinallyInterceptorProvider;
       private readonly SelectorProvider<TMember> selectorProvider;
 
-      public MethodAspectInstanceDetector(Func<NetAspectDefinition, Interceptor> afterInterceptorProvider,
+      public MethodAspectInstanceDetector(Func<NetAspectDefinition, Interceptors> afterInterceptorProvider,
          IlInjectorsFactoryForMethod _ilInjectorsFactoryForMethod,
-         Func<NetAspectDefinition, Interceptor> beforeInterceptorProvider,
+         Func<NetAspectDefinition, Interceptors> beforeInterceptorProvider,
          IsMethodCompliant isMethodCompliant,
          Func<MethodDefinition, TMember> memberProvider,
-         Func<NetAspectDefinition, Interceptor> onExceptionInterceptorProvider,
-         Func<NetAspectDefinition, Interceptor> onFinallyInterceptorProvider,
+         Func<NetAspectDefinition, Interceptors> onExceptionInterceptorProvider,
+         Func<NetAspectDefinition, Interceptors> onFinallyInterceptorProvider,
          SelectorProvider<TMember> selectorProvider)
       {
          this.afterInterceptorProvider = afterInterceptorProvider;
@@ -71,10 +71,10 @@ namespace NetAspect.Weaver.Core.Weaver.Method.Detector
                {
                    Instance = customAttribute,
                    Aspect = aspect,
-                   Befores = new List<IIlInjector<VariablesForMethod>> {_ilInjectorsFactoryForMethod.CreateForBefore(method, beforeInterceptorProvider(aspect).Method)},
-                   Afters = new List<IIlInjector<VariablesForMethod>> {_ilInjectorsFactoryForMethod.CreateForAfter(method, afterInterceptorProvider(aspect).Method)}, 
-                   OnExceptions = new List<IIlInjector<VariablesForMethod>> {_ilInjectorsFactoryForMethod.CreateForExceptions(method, onExceptionInterceptorProvider(aspect).Method)},
-                   OnFinallys = new List<IIlInjector<VariablesForMethod>> {_ilInjectorsFactoryForMethod.CreateForOnFinally(method, onFinallyInterceptorProvider(aspect).Method)}
+                   Befores = new List<IIlInjector<VariablesForMethod>> {_ilInjectorsFactoryForMethod.CreateForBefore(method, beforeInterceptorProvider(aspect))},
+                   Afters = new List<IIlInjector<VariablesForMethod>> {_ilInjectorsFactoryForMethod.CreateForAfter(method, afterInterceptorProvider(aspect))}, 
+                   OnExceptions = new List<IIlInjector<VariablesForMethod>> {_ilInjectorsFactoryForMethod.CreateForExceptions(method, onExceptionInterceptorProvider(aspect))},
+                   OnFinallys = new List<IIlInjector<VariablesForMethod>> {_ilInjectorsFactoryForMethod.CreateForOnFinally(method, onFinallyInterceptorProvider(aspect))}
                };
        }
    }

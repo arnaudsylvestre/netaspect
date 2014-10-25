@@ -6,7 +6,6 @@ using Mono.Cecil;
 using Mono.Collections.Generic;
 using NetAspect.Weaver.Core.Helpers;
 using NetAspect.Weaver.Core.Selectors;
-using NetAspect.Weaver.Helpers;
 using NetAspect.Weaver.Helpers.NetFramework;
 
 namespace NetAspect.Weaver.Core.Model.Aspect
@@ -30,105 +29,105 @@ namespace NetAspect.Weaver.Core.Model.Aspect
          get { return _attribute; }
       }
 
-      public Interceptor BeforeMethod
+      public Interceptors BeforeMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("BeforeMethod")); }
+         get { return GetInterceptors("BeforeMethod"); }
       }
 
-      public Interceptor AfterMethod
+      public Interceptors AfterMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("AfterMethod")); }
+         get { return GetInterceptors("AfterMethod"); }
       }
 
-      public Interceptor OnExceptionMethod
+      public Interceptors OnExceptionMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("OnExceptionMethod")); }
+         get { return GetInterceptors("OnExceptionMethod"); }
       }
 
-      public Interceptor OnFinallyMethod
+      public Interceptors OnFinallyMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("OnFinallyMethod")); }
+         get { return GetInterceptors("OnFinallyMethod"); }
       }
 
-      public Interceptor BeforeUpdateField
+      public Interceptors BeforeUpdateField
       {
-         get { return new Interceptor(_attribute.GetMethod("BeforeUpdateField")); }
+         get { return GetInterceptors("BeforeUpdateField"); }
       }
 
-      public Interceptor AfterUpdateField
+      public Interceptors AfterUpdateField
       {
-         get { return new Interceptor(_attribute.GetMethod("AfterUpdateField")); }
+         get { return GetInterceptors("AfterUpdateField"); }
       }
 
-      public Interceptor BeforeGetField
+      public Interceptors BeforeGetField
       {
-         get { return new Interceptor(_attribute.GetMethod("BeforeGetField")); }
+         get { return GetInterceptors("BeforeGetField"); }
       }
 
-      public Interceptor AfterGetField
+      public Interceptors AfterGetField
       {
-         get { return new Interceptor(_attribute.GetMethod("AfterGetField")); }
+         get { return GetInterceptors("AfterGetField"); }
       }
 
 
-      public Interceptor AfterGetProperty
+      public Interceptors AfterGetProperty
       {
-         get { return new Interceptor(_attribute.GetMethod("AfterGetProperty")); }
+         get { return GetInterceptors("AfterGetProperty"); }
       }
 
-      public Interceptor BeforeGetProperty
+      public Interceptors BeforeGetProperty
       {
-         get { return new Interceptor(_attribute.GetMethod("BeforeGetProperty")); }
+         get { return GetInterceptors("BeforeGetProperty"); }
       }
 
-      public Interceptor AfterSetProperty
+      public Interceptors AfterSetProperty
       {
-         get { return new Interceptor(_attribute.GetMethod("AfterUpdateProperty")); }
+         get { return GetInterceptors("AfterUpdateProperty"); }
       }
 
-      public Interceptor BeforeSetProperty
+      public Interceptors BeforeSetProperty
       {
-         get { return new Interceptor(_attribute.GetMethod("BeforeUpdateProperty")); }
+         get { return GetInterceptors("BeforeUpdateProperty"); }
       }
 
-      public Interceptor BeforeCallMethod
+      public Interceptors BeforeCallMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("BeforeCallMethod")); }
+         get { return GetInterceptors("BeforeCallMethod"); }
       }
 
-      public Interceptor AfterCallMethod
+      public Interceptors AfterCallMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("AfterCallMethod")); }
+         get { return GetInterceptors("AfterCallMethod"); }
       }
 
-      public Interceptor BeforeCallConstructor
+      public Interceptors BeforeCallConstructor
       {
-         get { return new Interceptor(_attribute.GetMethod("BeforeCallConstructor")); }
+         get { return GetInterceptors("BeforeCallConstructor"); }
       }
 
-      public Interceptor AfterCallConstructor
+      public Interceptors AfterCallConstructor
       {
-         get { return new Interceptor(_attribute.GetMethod("AfterCallConstructor")); }
+         get { return GetInterceptors("AfterCallConstructor"); }
       }
 
-      public Interceptor BeforeConstructor
+      public Interceptors BeforeConstructor
       {
-         get { return new Interceptor(_attribute.GetMethod("BeforeConstructor")); }
+         get { return GetInterceptors("BeforeConstructor"); }
       }
 
-      public Interceptor AfterConstructor
+      public Interceptors AfterConstructor
       {
-         get { return new Interceptor(_attribute.GetMethod("AfterConstructor")); }
+         get { return GetInterceptors("AfterConstructor"); }
       }
 
-      public Interceptor OnFinallyConstructor
+      public Interceptors OnFinallyConstructor
       {
-         get { return new Interceptor(_attribute.GetMethod("OnFinallyConstructor")); }
+         get { return GetInterceptors("OnFinallyConstructor"); }
       }
 
-      public Interceptor OnExceptionConstructor
+      public Interceptors OnExceptionConstructor
       {
-         get { return new Interceptor(_attribute.GetMethod("OnExceptionConstructor")); }
+         get { return GetInterceptors("OnExceptionConstructor"); }
       }
 
       public Selector<FieldDefinition> FieldSelector
@@ -171,44 +170,44 @@ namespace NetAspect.Weaver.Core.Model.Aspect
          }
       }
 
-      public Interceptor BeforePropertyGetMethod
+      public Interceptors BeforePropertyGetMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("BeforePropertyGetMethod")); }
+         get { return GetInterceptors("BeforePropertyGetMethod"); }
       }
 
-      public Interceptor AfterPropertyGetMethod
+      public Interceptors AfterPropertyGetMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("AfterPropertyGetMethod")); }
+         get { return GetInterceptors("AfterPropertyGetMethod"); }
       }
 
-      public Interceptor OnExceptionPropertyGetMethod
+      public Interceptors OnExceptionPropertyGetMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("OnExceptionPropertyGetMethod")); }
+         get { return GetInterceptors("OnExceptionPropertyGetMethod"); }
       }
 
-      public Interceptor OnFinallyPropertyGetMethod
+      public Interceptors OnFinallyPropertyGetMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("OnFinallyPropertyGetMethod")); }
+         get { return GetInterceptors("OnFinallyPropertyGetMethod"); }
       }
 
-      public Interceptor BeforePropertySetMethod
+      public Interceptors BeforePropertySetMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("BeforePropertySetMethod")); }
+         get { return GetInterceptors("BeforePropertySetMethod"); }
       }
 
-      public Interceptor AfterPropertySetMethod
+      public Interceptors AfterPropertySetMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("AfterPropertySetMethod")); }
+         get { return GetInterceptors("AfterPropertySetMethod"); }
       }
 
-      public Interceptor OnExceptionPropertySetMethod
+      public Interceptors OnExceptionPropertySetMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("OnExceptionPropertySetMethod")); }
+         get { return GetInterceptors("OnExceptionPropertySetMethod"); }
       }
 
-      public Interceptor OnFinallyPropertySetMethod
+      public Interceptors OnFinallyPropertySetMethod
       {
-         get { return new Interceptor(_attribute.GetMethod("OnFinallyPropertySetMethod")); }
+         get { return GetInterceptors("OnFinallyPropertySetMethod"); }
       }
 
       public LifeCycle LifeCycle
@@ -216,44 +215,49 @@ namespace NetAspect.Weaver.Core.Model.Aspect
          get { return LifeCycleHelper.Convert(_attribute.GetValueForField("LifeCycle", () => "Transient")); }
       }
 
-      public Interceptor AfterMethodForParameter
+      public Interceptors AfterMethodForParameter
       {
-         get { return new Interceptor(_attribute.GetMethod("AfterMethodForParameter")); }
+         get { return GetInterceptors("AfterMethodForParameter"); }
       }
 
-      public Interceptor BeforeMethodForParameter
+      public Interceptors BeforeMethodForParameter
       {
-         get { return new Interceptor(_attribute.GetMethod("BeforeMethodForParameter")); }
+          get { return GetInterceptors("BeforeMethodForParameter"); }
       }
 
-      public Interceptor OnExceptionMethodForParameter
+       private Interceptors GetInterceptors(string interceptorName)
+       {
+           return new Interceptors(_attribute.GetMethods().Where(m => m.Name == interceptorName).ToList());
+       }
+
+       public Interceptors OnExceptionMethodForParameter
       {
-         get { return new Interceptor(_attribute.GetMethod("OnExceptionMethodForParameter")); }
+         get { return GetInterceptors("OnExceptionMethodForParameter"); }
       }
 
-      public Interceptor OnFinallyMethodForParameter
+       public Interceptors OnFinallyMethodForParameter
       {
-         get { return new Interceptor(_attribute.GetMethod("OnFinallyMethodForParameter")); }
+         get { return GetInterceptors("OnFinallyMethodForParameter"); }
       }
 
-      public Interceptor AfterConstructorForParameter
+      public Interceptors AfterConstructorForParameter
       {
-         get { return new Interceptor(_attribute.GetMethod("AfterConstructorForParameter")); }
+         get { return GetInterceptors("AfterConstructorForParameter"); }
       }
 
-      public Interceptor BeforeConstructorForParameter
+      public Interceptors BeforeConstructorForParameter
       {
-         get { return new Interceptor(_attribute.GetMethod("BeforeConstructorForParameter")); }
+          get { return GetInterceptors("BeforeConstructorForParameter"); }
       }
 
-      public Interceptor OnExceptionConstructorForParameter
+      public Interceptors OnExceptionConstructorForParameter
       {
-         get { return new Interceptor(_attribute.GetMethod("OnExceptionConstructorForParameter")); }
+         get { return GetInterceptors("OnExceptionConstructorForParameter"); }
       }
 
-      public Interceptor OnFinallyConstructorForParameter
+      public Interceptors OnFinallyConstructorForParameter
       {
-         get { return new Interceptor(_attribute.GetMethod("OnFinallyConstructorForParameter")); }
+         get { return GetInterceptors("OnFinallyConstructorForParameter"); }
       }
 
       private PropertyInfo GetProperty(PropertyDefinition arg)

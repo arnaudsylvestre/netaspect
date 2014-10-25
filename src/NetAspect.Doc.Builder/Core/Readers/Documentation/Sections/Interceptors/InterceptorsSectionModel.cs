@@ -7,12 +7,30 @@ namespace NetAspect.Doc.Builder.Model
     public class InterceptorsSectionModel
     {
         private readonly List<CsTestFile> testFiles;
-        private Dictionary<string, string> parameterDescriptions;
+        private readonly Dictionary<string, string> parameterDescriptions;
+        private readonly AvailableParametersSectionModel availableParametersSectionModel;
 
-        public InterceptorsSectionModel(List<CsTestFile> testFiles, Dictionary<string, string> parameterDescriptions)
+        public InterceptorsSectionModel(List<CsTestFile> testFiles, Dictionary<string, string> parameterDescriptions, AvailableParametersSectionModel availableParametersSectionModel)
         {
             this.testFiles = testFiles;
             this.parameterDescriptions = parameterDescriptions;
+            this.availableParametersSectionModel = availableParametersSectionModel;
+        }
+
+
+        public List<ParameterModel> GetParameters(CsTestFile testFile)
+        { return availableParametersSectionModel.Parameters.Where(p => testFile.Parameters.Contains(p.Name)).ToList(); }
+
+
+        public string GetRealParameterName(string parameterName)
+        {
+            return parameterDescriptions.GetRealParameterName(parameterName);
+        }
+
+
+        public string GetParameterDescription(string parameterName)
+        {
+            return parameterDescriptions.GetDescription(parameterName);
         }
 
 

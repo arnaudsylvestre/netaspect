@@ -52,12 +52,46 @@
 			  <div id="${interceptor.Name}Coll" class="panel-collapse collapse">
 								<div class="panel-body">
 								<p>The following parameters are available for this interceptor :</p>
-			<ul>
-#foreach ($parameter in $interceptor.Parameters)
-               <li>
-			   <a href="#Parameter$section.GetParameterId($parameter)" data-toggle="collapse" onclick="location.href='#Parameter$section.GetParameterId($parameter)';">$parameter</a></li>
+<div class="list-group">
+
+#foreach ($parameter in $section.GetParameters($interceptor))
+  <a href="#Parameter$section.GetParameterId($parameter.Name)${interceptor.Name}" data-toggle="collapse"  class="list-group-item ">
+    <h4 class="list-group-item-heading">$section.GetRealParameterName($parameter.Name)</h4>
+    <p class="list-group-item-text">$section.GetParameterDescription($parameter.Name)</p>
+  </a>
+  <div id="Parameter$section.GetParameterId($parameter.Name)${interceptor.Name}" name="Parameter$section.GetParameterId($parameter.Name)" class="panel-collapse collapse">
+								<div class="panel-body">
+
+								<div class="list-group">
+
+
+#foreach ($sample in $parameter.Samples)
+	<a href="#parameterId$section.GetParameterId($parameter.Name)P$velocityCount" data-toggle="collapse"  class="list-group-item">
+		<h4 class="list-group-item-heading">${sample.Description}</h4>
+	  </a>
+	  
+			  <div id="parameterId$section.GetParameterId($parameter.Name)P$velocityCount" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+$sample.AspectCode
+
+// The class to weave
+$sample.ClassToWeaveCode
+
+// This code will work
+$sample.CallCode
+</pre>
+
+								</div>
+								</div>
 #end
-            </ul>
+</div>
+								</div>
+								</div>
+#end
+</div>
+
 								<p>Here is a sample on how to use :</p>
 									<pre class="prettyprint">
 // Our business class

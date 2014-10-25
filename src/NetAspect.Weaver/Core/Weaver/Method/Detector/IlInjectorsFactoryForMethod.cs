@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
+using NetAspect.Weaver.Core.Model.Aspect;
 using NetAspect.Weaver.Core.Weaver.Engine.InterceptorParameters;
 using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model;
@@ -20,41 +23,41 @@ namespace NetAspect.Weaver.Core.Weaver.Method.Detector
          this.weavingPreconditionInjector = weavingPreconditionInjector;
       }
        
-      public IIlInjector<VariablesForMethod> CreateForBefore(MethodDefinition method, MethodInfo interceptorMethod)
+      public IIlInjector<VariablesForMethod> CreateForBefore(MethodDefinition method, Interceptors interceptorMethod)
       {
           return Create(method, interceptorMethod, NoSpecific);
       }
 
-      public IIlInjector<VariablesForMethod> CreateForOnFinally(MethodDefinition method, MethodInfo interceptorMethod)
+      public IIlInjector<VariablesForMethod> CreateForOnFinally(MethodDefinition method, Interceptors interceptorMethod)
       {
           return Create(method, interceptorMethod, NoSpecific);
       }
 
-       public IIlInjector<VariablesForMethod> CreateForAfter(MethodDefinition method, MethodInfo interceptorMethod)
+      public IIlInjector<VariablesForMethod> CreateForAfter(MethodDefinition method, Interceptors interceptorMethod)
       {
          return Create(method, interceptorMethod, builder.FillAfterSpecific);
       }
 
-      public IIlInjector<VariablesForMethod> CreateForExceptions(MethodDefinition method, MethodInfo interceptorMethod)
+      public IIlInjector<VariablesForMethod> CreateForExceptions(MethodDefinition method, Interceptors interceptorMethod)
       {
          return Create(method, interceptorMethod, builder.FillOnExceptionSpecific);
       }
 
-      private IIlInjector<VariablesForMethod> Create(MethodDefinition method, MethodInfo interceptorMethod, Action<CommonWeavingInfo, InterceptorParameterPossibilities<VariablesForMethod>> fillSpecific)
+      private IIlInjector<VariablesForMethod> Create(MethodDefinition method, Interceptors interceptorMethod, Action<CommonWeavingInfo, InterceptorParameterPossibilities<VariablesForMethod>> fillSpecific)
       {
-          if (interceptorMethod == null)
+          if (!interceptorMethod.Methods.Any())
               return new NoIIlInjector<VariablesForMethod>();
 
           var weavingInfo_P = new CommonWeavingInfo
           {
-              Interceptor = interceptorMethod,
+              Interceptor = new List<MethodInfo>(interceptorMethod.Methods),
               Method = method,
           };
           var interceptorParameterConfigurations = new InterceptorParameterPossibilities<VariablesForMethod>();
           builder.FillCommon(weavingInfo_P, interceptorParameterConfigurations);
           fillSpecific(weavingInfo_P, interceptorParameterConfigurations);
 
-          return new Injector<VariablesForMethod>(method, interceptorMethod, interceptorParameterConfigurations, weavingPreconditionInjector);
+          return new Injector<VariablesForMethod>(method, weavingInfo_P.Interceptor, interceptorParameterConfigurations, weavingPreconditionInjector);
       }
    }
 }
