@@ -5,9 +5,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NetAspect</id>
-    <version>0.2</version>
+    <version>0.4</version>
     <authors>Arnaud SYLVESTRE</authors>
-    <owners>Arnaud SYLVESTREk</owners>
+    <owners>Arnaud SYLVESTRE</owners>
     <language>en-US</language>
     <!--<licenseUrl>https://github.com/arnaudsylvestre/netaspect/license</licenseUrl>-->
     <projectUrl>https://github.com/arnaudsylvestre/netaspect</projectUrl>

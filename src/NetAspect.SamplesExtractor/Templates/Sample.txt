@@ -1,0 +1,8 @@
+﻿#set ( $d = "$")
+using System;
+using System.Reflection;
+
+namespace ${d}rootNamespace${d}.Aspects
+{
+	$sample.Code
+}
