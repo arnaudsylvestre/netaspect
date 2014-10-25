@@ -14,8 +14,8 @@ namespace NetAspect.Doc.Builder.Tests
       public void CheckWebsiteGeneration()
       {
          //string baseDirectory = @"D:\Sources\3rdParty\fluentaspect-git\fluentaspect\";
-         string baseDirectory = @"D:\Developpement\fluentaspect\";
-         string tests = baseDirectory + @"web\Tests";
+         string baseDirectory = @"D:\Developpement\netaspect\";
+         string tests = baseDirectory + @"..\netaspect-site";
          if (!Directory.Exists(tests))
             Directory.CreateDirectory(tests);
          
