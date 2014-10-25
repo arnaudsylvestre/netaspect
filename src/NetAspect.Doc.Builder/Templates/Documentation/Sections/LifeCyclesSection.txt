@@ -1,0 +1,69 @@
+﻿<div class="page-header">
+               <h1 id="kinds">Life cycles</h1>
+            </div>
+            <p>An aspect is a class and that's why it is instantiated. There is 3 kinds of aspect life cycles</p>
+
+
+			<div class="list-group">
+  <a href="#TransientSample" data-toggle="collapse"  class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">Transient</h4>
+    <p class="list-group-item-text">The aspect is instantiated each time you entered in the weaved member.</p>
+  </a>
+  <div id="TransientSample" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+$section.TransientSampleAspect
+
+// The class to weave
+$section.TransientSampleClassToWeave
+
+// This code is working
+$section.TransientSampleTest
+</pre>
+								</div>
+								</div>
+    <a href="#PerInstanceSample" data-toggle="collapse" class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">Per instance</h4>
+    <p class="list-group-item-text">The aspect is instantiated one time by instance</p>
+  </a>
+    <div id="PerInstanceSample" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+$section.PerInstanceSampleAspect
+
+// The class to weave
+$section.PerInstanceSampleClassToWeave
+
+// This code is working
+$section.PerInstanceSampleTest
+</pre>
+								</div>
+								</div>
+			<a href="#PerTypeSample" data-toggle="collapse" class="list-group-item list-group-item-info">
+    <h4 class="list-group-item-heading">Per type</h4>
+    <p class="list-group-item-text">The aspect is instantiated only one time in a static way</p>
+  </a>
+    <div id="PerTypeSample" class="panel-collapse collapse">
+								<div class="panel-body">
+								<pre class="prettyprint">
+// The aspect
+$section.PerTypeSampleAspect
+
+// The class to weave
+$section.PerTypeSampleClassToWeave
+
+// This code is working
+$section.PerTypeSampleTest
+</pre>
+								</div>
+								</div>
+</div>
+
+			
+         </div
+
+
+			
+         </div

@@ -61,55 +61,6 @@ namespace NetAspect.Doc.Builder.Templates {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 
-        ///		&lt;div class=&quot;bs-docs-section&quot;&gt;
-        ///		 
-        ///            &lt;div class=&quot;page-header&quot;&gt;
-        ///               &lt;h1 id=&quot;parameters&quot;&gt;Available parameters&lt;/h1&gt;
-        ///            &lt;/div&gt;
-        ///			
-        ///
-        ///
-        ///
-        ///
-        ///&lt;div class=&quot;list-group&quot;&gt;
-        ///
-        ///#foreach ($parameter in $page.Parameters)
-        ///  &lt;a href=&quot;#parameterId$velocityCount&quot; data-toggle=&quot;collapse&quot;  class=&quot;list-group-item list-group-item-info&quot;&gt;
-        ///    &lt;h4 class=&quot;list-group-item-heading&quot;&gt;$parameter.Name&lt;/h4&gt;
-        ///    &lt;p class=&quot;list-group-item-text&quot;&gt;$page.GetParameterDescription($parameter.Name)&lt;/p&gt;
-        ///  &lt;/a&gt;        /// [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string AvailableParametersSection {
-            get {
-                return ResourceManager.GetString("AvailableParametersSection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to $documentation.Header
-        ///
-        ///&lt;div class=&quot;container bs-docs-container&quot;&gt;
-        ///      &lt;div class=&quot;row&quot;&gt;
-        ///      &lt;div class=&quot;col-md-12&quot; role=&quot;main&quot;&gt;
-        ///
-        ///$documentation.Basics
-        ///
-        ///         &lt;div class=&quot;bs-docs-section&quot;&gt;
-        ///            &lt;div class=&quot;page-header&quot;&gt;
-        ///               &lt;h1 id=&quot;dropdowns&quot;&gt;Interceptors&lt;/h1&gt;
-        ///            &lt;/div&gt;
-        ///			&lt;p&gt;In NetAspect, an interceptor is a method which will be called on &lt;/p&gt;
-        ///			&lt;h2 id=&quot;dropdowns&quot;&gt;For method weaving&lt;/h2&gt;
-        ///            &lt;p&gt;The &quot;method weaving&quot; will modify the code of the method to [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string Documentation {
-            get {
-                return ResourceManager.GetString("Documentation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to #set( $H = &apos;#&apos; )
         ///$page.SetParameterDescription(&apos;instance&apos;, &apos;this parameter is used to have the &lt;b&gt;this&lt;/b&gt; of the weaved member&apos;)
         ///$page.SetParameterDescription(&apos;method&apos;, &apos;this parameter is used to get some information about the weaved method&apos;)
@@ -118,18 +69,18 @@ namespace NetAspect.Doc.Builder.Templates {
         ///      &lt;div class=&quot;row&quot;&gt;
         ///		&lt;div class=&quot;col-md-12&quot; role=&quot;main&quot;&gt;
         ///
-        ///		
         ///	$page.GeneratePutAttributesSection();
-        ///	$page.GeneratePutInterceptorsSection();
-        ///	$page.GenerateAvailableParametersSection();
+        ///	$page.GenerateInterceptorsSection();
+        ///	$page.GenerateLifeCyclesSection();
         ///
         ///
+        ///	
         ///
-        ///			
         ///
-        ///			
-        ///		
-        /// [rest of string was truncated]&quot;;.
+        ///		&lt;/div&gt;
+        ///	&lt;/div&gt;
+        ///&lt;/div&gt;
+        ///.
         /// </summary>
         internal static string DocumentationPage {
             get {
@@ -177,7 +128,7 @@ namespace NetAspect.Doc.Builder.Templates {
         ///      &lt;div class=&quot;row&quot;&gt;
         ///        &lt;div class=&quot;col-md-4&quot;&gt;
         ///          &lt;h2&gt;Simple configuration&lt;/h2&gt;
-        ///          &lt;p&gt;NetAspect try to be the most user friend [rest of string was truncated]&quot;;.
+        ///          &lt;p&gt;NetAspect try to be the mos [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string HomePage {
             get {
@@ -186,19 +137,39 @@ namespace NetAspect.Doc.Builder.Templates {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;div class=&quot;bs-docs-section&quot;&gt;
+        ///   Looks up a localized string similar to #set( $H = &apos;#&apos; )
+        ///
+        ///&lt;div class=&quot;bs-docs-section&quot;&gt;
         ///				&lt;div class=&quot;page-header&quot;&gt;
         ///					&lt;h1 id=&quot;dropdowns&quot;&gt;Interceptors&lt;/h1&gt;
         ///				&lt;/div&gt;
         ///				&lt;p&gt;An interceptor is a &lt;b&gt;method&lt;/b&gt; declared in the &lt;b&gt;aspect&lt;/b&gt; and which will be called at certain moment after the weaving.&lt;br/&gt;Some &lt;b&gt;parameters&lt;/b&gt; can be added to the interceptor to get more information&lt;/p&gt;
         ///				&lt;p&gt;The following interceptors are available :&lt;/p&gt;
         ///#foreach ($member in $section.Members)
-        ///				&lt;h2 class=&quot;list-group-item-heading&quot;&gt;For an aspect put on a $member&lt;/h2&gt;
-        ///		 [rest of string was truncated]&quot;;.
+        ///				&lt;h2 class=&quot;list-group-item-heading&quot;&gt;For an aspect put o [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string InterceptorsSection {
             get {
                 return ResourceManager.GetString("InterceptorsSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;div class=&quot;page-header&quot;&gt;
+        ///               &lt;h1 id=&quot;kinds&quot;&gt;Life cycles&lt;/h1&gt;
+        ///            &lt;/div&gt;
+        ///            &lt;p&gt;An aspect is a class and that&apos;s why it is instantiated. There is 3 kinds of aspect life cycles&lt;/p&gt;
+        ///
+        ///
+        ///			&lt;div class=&quot;list-group&quot;&gt;
+        ///  &lt;a href=&quot;#TransientSample&quot; data-toggle=&quot;collapse&quot;  class=&quot;list-group-item list-group-item-info&quot;&gt;
+        ///    &lt;h4 class=&quot;list-group-item-heading&quot;&gt;Transient&lt;/h4&gt;
+        ///    &lt;p class=&quot;list-group-item-text&quot;&gt;The aspect is instantiated each time you entered in the weaved member.&lt;/p&gt;
+        ///  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string LifeCyclesSection {
+            get {
+                return ResourceManager.GetString("LifeCyclesSection", resourceCulture);
             }
         }
         

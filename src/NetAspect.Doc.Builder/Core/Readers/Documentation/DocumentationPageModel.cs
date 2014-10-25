@@ -6,7 +6,7 @@ namespace NetAspect.Doc.Builder.Model
     {
         public PutAspectsSectionModel PutAspects { get; set; }
         public InterceptorsSectionModel Interceptors { get; set; }
-        public AvailableParametersSectionModel AvailableParameters { get; set; }
+        public LifeCyclesSectionModel LifeCycles { get; set; }
 
         public string GeneratePutAttributesSection()
         {
@@ -18,10 +18,10 @@ namespace NetAspect.Doc.Builder.Model
             return ConfigureNVelocity.With("section", Interceptors)
                                      .AndGenerateInto(Templates.Templates.InterceptorsSection);
         }
-        public string GenerateAvailableParametersSection()
+        public string GenerateLifeCyclesSection()
         {
-            return ConfigureNVelocity.With("section", AvailableParameters)
-                                     .AndGenerateInto(Templates.Templates.AvailableParametersSection);
+            return ConfigureNVelocity.With("section", LifeCycles)
+                                     .AndGenerateInto(Templates.Templates.LifeCyclesSection);
         }
     }
 }

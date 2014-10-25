@@ -18,8 +18,8 @@ namespace NetAspect.Doc.Builder.Core.Readers.Documentation
                                                                                                 @"Documentation\Interceptors"), parameterDescriptions, availableParametersSectionModel),
                     PutAspects =
                         DocumentationPutAspectsSectionReader.ExtractPutAspects(Path.Combine(baseFolder, @"Documentation\Weaving")),
-                    AvailableParameters =
-                        availableParametersSectionModel,
+                    LifeCycles =
+                        DocumentationLifeCyclesSectionReader.ExtractLifeCycles(Path.Combine(baseFolder, @"Documentation\LifeCycles")),
                 };
         }
     }

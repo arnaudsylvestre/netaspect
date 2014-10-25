@@ -72,6 +72,9 @@
   <ItemGroup>
     <Compile Include="docs\Documentation\Interceptors\InstructionWeaving\Constructors\Part8Sample1BeforeInstructionCallMethodPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\InstructionWeaving\Constructors\Part8Sample2AfterInstructionCallMethodPossibilityTest.cs" />
+    <Compile Include="docs\Documentation\LifeCycles\PerTypeLifeCycleSampleTest.cs" />
+    <Compile Include="docs\Documentation\LifeCycles\PerInstanceLifeCycleSampleTest.cs" />
+    <Compile Include="docs\Documentation\LifeCycles\TransientLifeCycleSampleTest.cs" />
     <Compile Include="docs\Documentation\Parameters\Instruction\Called\CalledParameterNameParameterWithRealTypeParameterTest.cs" />
     <Compile Include="docs\Documentation\Parameters\Instruction\Called\CalledParametersParameterWithRealTypeParameterTest.cs" />
     <Compile Include="docs\Documentation\Parameters\Instruction\Called\CalledParameterWithRealTypeParameterTest.cs" />

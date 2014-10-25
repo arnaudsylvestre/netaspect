@@ -66,10 +66,12 @@
     <Compile Include="Core\Readers\Documentation\Sections\AvailableParameters\AvailableParametersSectionModel.cs" />
     <Compile Include="Core\Readers\Documentation\DocumentationReader.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\Interceptors\InterceptorsSectionModel.cs" />
+    <Compile Include="Core\Readers\Documentation\Sections\PutAspects\DocumentationPutAspectsSectionReader.cs" />
+    <Compile Include="Core\Readers\Documentation\Sections\LifeCycles\PutAspectsSectionModel.cs" />
     <Compile Include="Helpers\DirectoryExtensions.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\Interceptors\DocumentationPutAspectsSectionReader.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\PutAspects\PutAspectsSectionModel.cs" />
-    <Compile Include="Core\Readers\Documentation\Sections\PutAspects\DocumentationPutAspectsSectionReader.cs" />
+    <Compile Include="Core\Readers\Documentation\Sections\LifeCycles\DocumentationLifeCyclesSectionReader.cs" />
     <Compile Include="Factory\DocumentationPageFactory.cs" />
     <Compile Include="Templates\Templates.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -87,7 +89,6 @@
     <Compile Include="Core\Readers\Core\CsTestFile.cs" />
     <Compile Include="Helpers\ConfigureNVelocity.cs" />
     <Compile Include="Core\Readers\Core\CsTestFileVisitor.cs" />
-    <Compile Include="ToSort\Model\DocumentationConfiguration.cs" />
     <Compile Include="Core\Readers\GettingStarted\GettingStartedPageModel.cs" />
     <Compile Include="Core\Page.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\AvailableParameters\ParameterModel.cs" />
@@ -95,7 +96,7 @@
     <Compile Include="Factory\WebsiteFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="Templates\Documentation\Sections\AvailableParametersSection.txt" />
+    <Content Include="Templates\Documentation\Sections\LifeCyclesSection.txt" />
     <Content Include="Templates\Documentation\Sections\InterceptorsSection.txt" />
     <Content Include="Templates\Documentation\Sections\PutAttributesSection.txt" />
     <Content Include="Templates\NetAspect\NetAspectPage.txt" />
@@ -109,7 +110,6 @@
     <Content Include="Templates\GettingStarted\GettingStartedPage.txt" />
     <Content Include="Templates\Home\HomePage.txt" />
     <Content Include="Templates\Documentation\DocumentationPage.txt" />
-    <Content Include="Templates\Documentation.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Templates\Templates.resx">
@@ -117,9 +117,7 @@
       <LastGenOutput>Templates.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Readers\Documentation\Sections\LifeCycles\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,6 +8,11 @@ $page.SetParameterDescription('method', 'this parameter is used to get some info
 
 	$page.GeneratePutAttributesSection();
 	$page.GenerateInterceptorsSection();
+	$page.GenerateLifeCyclesSection();
+
+
+	
+
 
 		</div>
 	</div>
