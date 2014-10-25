@@ -11,10 +11,10 @@ before_install:
  - sudo installer -pkg "MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg" -target /
 
  
-#install:
-#  - sudo apt-get install mono-devel mono-gmcs nunit-console
+install:
+  - sudo apt-get install mono-devel mono-gmcs nunit-console
  
 script:
   - xbuild ./src/xbuild.xml
  # - .ci/nunit.sh Tests/bin/Debug/Tests.dll
- # - nunit-console ./src/FluentAspect.Weaver.Tests/bin/Debug/NetAspect.Weaver.Tests.dll -exclude Integration,NotWorkingOnMono
+  - nunit-console ./src/FluentAspect.Weaver.Tests/bin/Debug/NetAspect.Weaver.Tests.dll -exclude Integration,NotWorkingOnMono
