@@ -16,7 +16,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Properties.Updater.Parameter
               new ErrorReport.Error
               {
                   Level = ErrorLevel.Error,
-                  Message = string.Format("The parameter 'unknown' is unknown. Expected one of : instance, property, propertyvalue, linenumber, columnnumber, filename, filepath")
+                  Message = string.Format("The parameter 'unknown' in the interceptor BeforePropertySetMethod of the aspect {0} is unknown. Expected one of : instance, property, propertyvalue, linenumber, columnnumber, filename, filepath", typeof(LogAttribute).FullName)
               });
        }
 

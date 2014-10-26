@@ -12,7 +12,7 @@ namespace NetAspect.Weaver.Tests.unit.Interceptors.Errors
             new ErrorReport.Error
             {
                Level = ErrorLevel.Error,
-               Message = string.Format("The parameter 'unknown' is unknown. Expected one of : instance, method, parameters, i, linenumber, columnnumber, filename, filepath, result")
+               Message = string.Format("The parameter 'unknown' in the interceptor AfterMethod of the aspect {0} is unknown. Expected one of : instance, method, parameters, i, linenumber, columnnumber, filename, filepath, result", typeof(MyAspect).FullName)
             });
       }
 

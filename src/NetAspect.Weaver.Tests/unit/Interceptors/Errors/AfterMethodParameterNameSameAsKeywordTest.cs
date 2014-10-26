@@ -15,7 +15,7 @@ namespace NetAspect.Weaver.Tests.unit.Interceptors.Errors
                new ErrorReport.Error
                {
                   Level = ErrorLevel.Error,
-                  Message = string.Format("The parameter instance is already declared")
+                  Message = string.Format("The parameter instance in the interceptor AfterMethod of the aspect {0} is already declared", typeof(MyAspect).FullName)
                });
             errorHandler.Add(
                new ErrorReport.Error

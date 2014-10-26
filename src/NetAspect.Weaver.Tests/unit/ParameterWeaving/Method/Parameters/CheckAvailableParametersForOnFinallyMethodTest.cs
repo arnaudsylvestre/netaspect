@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.ParameterWeaving.Method.Parameters
               new ErrorReport.Error
               {
                   Level = ErrorLevel.Error,
-                  Message = string.Format("The parameter 'unknown' is unknown. Expected one of : parametervalue, parameter, constructor, parameters, v, instance")
+                  Message = string.Format("The parameter 'unknown' in the interceptor OnFinallyMethodForParameter of the aspect {0} is unknown. Expected one of : parametervalue, parameter, constructor, parameters, v, instance", typeof(LogAttribute).FullName)
               });
        }
 
