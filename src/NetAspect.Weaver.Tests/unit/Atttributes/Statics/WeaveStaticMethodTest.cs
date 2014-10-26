@@ -13,11 +13,14 @@ namespace NetAspect.Weaver.Tests.unit.Atttributes.Statics
             Assert.IsNull(MyAspect.Constructor);
             new ClassToWeave();
             Assert.AreEqual(".cctor", MyAspect.Constructor.Name);
+            Assert.AreEqual(2, ClassToWeave.i);
          };
       }
 
       public class ClassToWeave
       {
+          public static int i = 2;
+
           [MyAspect]
           static ClassToWeave()
           {

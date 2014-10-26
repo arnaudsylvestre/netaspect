@@ -97,10 +97,6 @@ namespace NetAspect.Core
                 allInstructions.AddRange(method.Body.Instructions.ExtractBeforeCallBaseConstructorInstructions());
                 allInstructions.Add(callBaseConstructorInstructions);
             }
-            else
-            {
-                allInstructions.AddRange(method.Body.Instructions);
-            }
          }
       }
 

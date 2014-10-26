@@ -24,7 +24,7 @@ namespace NetAspect.Core.Helpers
 
       public static List<Instruction> ExtractRealInstructions(this MethodDefinition method)
       {
-         if (!method.IsConstructor)
+         if (!method.IsConstructor || method.IsStatic)
             return new List<Instruction>(method.Body.Instructions);
          var allInstructions = new List<Instruction>();
          bool callBaseContructorFound = false;
