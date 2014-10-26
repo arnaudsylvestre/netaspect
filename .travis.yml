@@ -7,8 +7,8 @@ env:
   - MONO_VERSION="3.8.0"
  
 before_install:
- - sudo mozroots --import --sync
  - sudo apt-get install mono-devel mono-gmcs nunit-console
+ - mozroots --import --sync
  
 script:
   - xbuild ./src/xbuild.xml
