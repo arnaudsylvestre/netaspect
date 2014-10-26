@@ -119,16 +119,16 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="DocumentationPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>documentation\documentationpage.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>Documentation\DocumentationPage.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="GettingStartedPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>gettingstarted\gettingstartedpage.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>GettingStarted\GettingStartedPage.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="HomePage" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>home\homepage.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>Home\HomePage.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="InterceptorsSection" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>documentation\sections\interceptorssection.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>Socumentation\Sections\InterceptorsSection.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="LifeCyclesSection" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>documentation\sections\lifecyclessection.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>

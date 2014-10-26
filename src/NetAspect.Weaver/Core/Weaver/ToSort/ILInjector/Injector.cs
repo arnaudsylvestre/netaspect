@@ -50,7 +50,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.ILInjector
             if (interceptorMethod.ReturnType != typeof (void))
                 interceptorHandler.OnError(ErrorCode.InterceptorMustBeVoid, FileLocation.None, interceptorMethod.Name,
                                            interceptorMethod.DeclaringType.FullName);
-            _interceptorParameterPossibilities.Check(interceptorMethod.GetParameters(), interceptorHandler);
+            _interceptorParameterPossibilities.Check(interceptorMethod.GetParameters(), interceptorHandler, interceptorMethod);
             aspectInstance.Check(interceptorHandler);
         }
 
