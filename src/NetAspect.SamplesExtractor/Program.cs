@@ -29,7 +29,7 @@ namespace NetAspect.SamplesExtractor
 
             foreach (var sample in samples)
             {
-                var sampleCs = ConfigureNVelocity.With("sample", sample).AndGenerateInto(new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(Program), "Templates.sample.txt"), Encoding.UTF8).ReadToEnd());
+                var sampleCs = ConfigureNVelocity.With("sample", sample).AndGenerateInto(new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(Program), "Templates.Sample.txt"), Encoding.UTF8).ReadToEnd());
                 File.WriteAllText(Path.Combine(destinationFolder, sample.Name + ".cs.pp"), sampleCs);
             }
         }
