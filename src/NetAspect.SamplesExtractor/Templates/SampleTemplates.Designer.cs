@@ -61,9 +61,11 @@ namespace NetAspect.SamplesExtractor.Templates {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to using System;
+        ///   Looks up a localized string similar to #set ( $d = &quot;$&quot;)
+        ///using System;
+        ///using System.Reflection;
         ///
-        ///namespace $rootNamespace$.Aspects
+        ///namespace ${d}rootNamespace${d}.Aspects
         ///{
         ///	$sample.Code
         ///}.
