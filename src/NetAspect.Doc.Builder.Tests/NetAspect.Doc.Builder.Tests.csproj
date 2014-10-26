@@ -57,7 +57,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Sample1.txt">
+    <Content Include="Resources\sample1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -65,6 +65,7 @@
     <EmbeddedResource Include="Resources\Samples.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Samples.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
