@@ -12,5 +12,4 @@ before_install:
  
 script:
   - xbuild ./src/xbuild.xml
- # - .ci/nunit.sh Tests/bin/Debug/Tests.dll
-  - nunit-console ./src/NetAspect.Weaver.Tests/bin/Debug/NetAspect.Weaver.Tests.dll
+#  - nunit-console ./src/NetAspect.Weaver.Tests/bin/Debug/NetAspect.Weaver.Tests.dll
