@@ -230,6 +230,11 @@
     <Compile Include="unit\InstructionWeaving\Parameters\ColumnNumber\AfterCallMethodColumnNumberParameterWithRealTypeReferencedTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\ColumnNumber\AfterCallMethodColumnNumberParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\ColumnNumber\BeforeCallMethodColumnNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Parameters\Constructor\AfterCallGetFieldFieldInOtherTypeParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Parameters\Constructor\AfterCallGetFieldFieldParameterWithBadTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Parameters\Constructor\AfterCallGetFieldFieldParameterWithRealTypeReferencedTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Parameters\Constructor\AfterCallGetFieldFieldParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Parameters\Constructor\BeforeCallGetFieldFieldParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\FieldValue\BeforeCallUpdateFieldValueParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\Field\BeforeCallGetFieldFieldParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\FileName\BeforeCallMethodFileNameParameterWithRealTypeTest.cs" />

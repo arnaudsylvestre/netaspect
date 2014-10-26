@@ -1,3 +1,4 @@
+using System.Reflection;
 using NetAspect.Weaver.Core.Weaver.Engine.InterceptorParameters;
 using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
 using NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Engine;
@@ -13,6 +14,14 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
             interceptorParameterPossibilitiesP.AddPossibleParameter("result")
                                               .WhereParameterTypeIsSameAsMethodResultAndNotReferenced(weavingInfo_P)
                                               .AndInjectTheVariable(variables => variables.ResultForInstruction.Definition);
+            return weavingInfo_P;
+        }
+        public static InstructionWeavingInfo AddCalledConstructorInfo(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
+        {
+            interceptorParameterPossibilitiesP.AddPossibleParameter("constructor")
+                                              .WhichCanNotBeReferenced()
+                                              .WhichMustBeOfType<VariablesForInstruction, MethodBase>()
+                                              .AndInjectTheCalledConstructorInfo(weavingInfo_P);
             return weavingInfo_P;
         }
     }

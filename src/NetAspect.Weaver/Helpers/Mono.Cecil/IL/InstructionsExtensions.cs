@@ -25,22 +25,58 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
                  module.Import(typeof(Type).GetMethod("GetTypeFromHandle", new Type[] { typeof(RuntimeTypeHandle) }))));
        }
 
-      public static void AppendCallToGetField(this List<Instruction> instructions,
-         string fieldName,
-         ModuleDefinition module)
-      {
-         instructions.Add(Instruction.Create(OpCodes.Ldstr, fieldName));
-         instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 60));
-         instructions.Add(
-            Instruction.Create(
-               OpCodes.Callvirt,
-               module.Import(
-                  typeof (Type).GetMethod(
-                     "GetField",
-                     new[] {typeof (string), typeof (BindingFlags)}))));
-      }
+       public static void AppendCallToGetField(this List<Instruction> instructions,
+          string fieldName,
+          ModuleDefinition module)
+       {
+           instructions.Add(Instruction.Create(OpCodes.Ldstr, fieldName));
+           instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 60));
+           instructions.Add(
+              Instruction.Create(
+                 OpCodes.Callvirt,
+                 module.Import(
+                    typeof(Type).GetMethod(
+                       "GetField",
+                       new[] { typeof(string), typeof(BindingFlags) }))));
+       }
 
-      public static void AppendCallToGetMethod(this List<Instruction> instructions,
+       public static void AppendCallToGetConstructor(this List<Instruction> instructions,
+          MethodReference methodReference,
+          ModuleDefinition module, Action<VariableDefinition> addVariable)
+       {
+           instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 60));
+           instructions.Add(Instruction.Create(OpCodes.Ldnull));
+           addVariable(CreateTypesFromParameters(instructions, methodReference));
+           instructions.Add(Instruction.Create(OpCodes.Ldnull));
+           instructions.Add(
+              Instruction.Create(
+                 OpCodes.Callvirt,
+                 module.Import(
+                    typeof(Type).GetMethod(
+                       "GetConstructor",
+                       new[] { typeof(BindingFlags), typeof(Binder), typeof(Type[]), typeof(ParameterModifier) }))));
+       }
+
+       private static VariableDefinition CreateTypesFromParameters(List<Instruction> instructions, MethodReference methodReference)
+       {
+           var tabVariable = new VariableDefinition(methodReference.Module.Import(typeof(Type[])));
+           instructions.Add(Instruction.Create(OpCodes.Ldc_I4, methodReference.Parameters.Count));
+           instructions.Add(Instruction.Create(OpCodes.Newarr, methodReference.Module.Import(typeof(Type))));
+           instructions.Add(Instruction.Create(OpCodes.Stloc, tabVariable));
+           instructions.Add(Instruction.Create(OpCodes.Ldloc, tabVariable));
+           int i = 0;
+           foreach (var parameter in methodReference.Parameters)
+           {
+               instructions.Add(Instruction.Create(OpCodes.Ldc_I4, i));
+               AppendCallToTypeOf(instructions, methodReference.Module, parameter.ParameterType);
+               instructions.Add(Instruction.Create(OpCodes.Stelem_Ref));
+
+           }
+           instructions.Add(Instruction.Create(OpCodes.Ldloc, tabVariable));
+           return tabVariable;
+       }
+
+       public static void AppendCallToGetMethod(this List<Instruction> instructions,
          string methodName,
          ModuleDefinition module)
       {

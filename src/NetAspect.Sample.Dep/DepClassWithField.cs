@@ -3,25 +3,27 @@ using System.Reflection;
 
 namespace NetAspect.Sample.Dep
 {
-    public class TotoAttribute : Attribute
-    {
-        public const uint T = 125;
-
-        public TotoAttribute(uint t)
-        {
-            
-        }
-    }
 
    public class DepClassWithField
    {
       public string Field;
-       [TotoAttribute(TotoAttribute.T)]
+
+       public DepClassWithField()
+       {
+           
+       }
+
+       public DepClassWithField(int toto)
+       {
+           
+       }
+
       public void Test()
       {
-         ParameterInfo toto = MethodBase.GetCurrentMethod().GetParameters()[3];
-          var toto2 = typeof (DepClassWithProperty);
-          new TotoAttribute((uint)0xfffffffe);
+          GetType().GetConstructor(BindingFlags.Public, null, new Type[]
+              {
+                  typeof (int)
+              }, null);
 
       }
    }

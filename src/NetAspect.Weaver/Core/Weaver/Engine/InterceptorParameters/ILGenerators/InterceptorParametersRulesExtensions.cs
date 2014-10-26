@@ -168,21 +168,40 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Engine
 
       public static InterceptorParameterPossibility<VariablesForInstruction> AndInjectTheCalledFieldInfo(this InterceptorParameterPossibility<VariablesForInstruction> possibility, InstructionWeavingInfo weavingInfo_P)
       {
-         possibility.Generators.Add(
-            (parameter, instructions, info) =>
-            {
-               FieldDefinition fieldReference = weavingInfo_P.GetOperandAsField();
-               ModuleDefinition module = weavingInfo_P.Method.Module;
-                var definition = info.Called.Definition;
-                if (definition != null)
-                    instructions.AppendCallToTargetGetType(module, definition);
-                else
-                {
-                    instructions.AppendCallToTypeOf(module, fieldReference.DeclaringType);
-                }
-               instructions.AppendCallToGetField(fieldReference.Name, module);
-            });
-         return possibility;
+          possibility.Generators.Add(
+             (parameter, instructions, info) =>
+             {
+                 FieldDefinition fieldReference = weavingInfo_P.GetOperandAsField();
+                 ModuleDefinition module = weavingInfo_P.Method.Module;
+                 var definition = info.Called.Definition;
+                 if (definition != null)
+                     instructions.AppendCallToTargetGetType(module, definition);
+                 else
+                 {
+                     instructions.AppendCallToTypeOf(module, fieldReference.DeclaringType);
+                 }
+                 instructions.AppendCallToGetField(fieldReference.Name, module);
+             });
+          return possibility;
+      }
+
+      public static InterceptorParameterPossibility<VariablesForInstruction> AndInjectTheCalledConstructorInfo(this InterceptorParameterPossibility<VariablesForInstruction> possibility, InstructionWeavingInfo weavingInfo_P)
+      {
+          possibility.Generators.Add(
+             (parameter, instructions, info) =>
+             {
+                 var methodReference = weavingInfo_P.GetOperandAsMethod();
+                 ModuleDefinition module = weavingInfo_P.Method.Module;
+                 var definition = info.Called.Definition;
+                 if (definition != null)
+                     instructions.AppendCallToTargetGetType(module, definition);
+                 else
+                 {
+                     instructions.AppendCallToTypeOf(module, methodReference.DeclaringType);
+                 }
+                 instructions.AppendCallToGetConstructor(methodReference, module, info.AddLocalVariable);
+             });
+          return possibility;
       }
 
       public static void AndInjectTheCalledParameter(this InterceptorParameterPossibility<VariablesForInstruction> possibility,
