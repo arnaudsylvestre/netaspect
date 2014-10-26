@@ -131,15 +131,15 @@
     <value>Socumentation\Sections\InterceptorsSection.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="LifeCyclesSection" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>documentation\sections\lifecyclessection.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>Documentation\Sections\LifeCyclesSection.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="NetAspectPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>netaspect\netaspectpage.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>Netaspect\NetAspectPage.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PageContainer" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>pagecontainer.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>PageContainer.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PutAttributesSection" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>documentation\sections\putattributessection.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>Documentation\Sections\PutAttributesSection.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>
