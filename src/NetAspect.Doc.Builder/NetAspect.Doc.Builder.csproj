@@ -91,26 +91,21 @@
     <Compile Include="Factory\WebsiteFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="Templates\documentation\sections\lifecyclessection.txt" />
-    <Content Include="Templates\documentation\sections\interceptorssection.txt" />
-    <Content Include="Templates\documentation\sections\putattributessection.txt" />
-    <Content Include="Templates\netaspect\netaspectpage.txt" />
-    <Content Include="Templates\pagecontainer.txt" />
+    <Compile Include="Templates\Templates.cs" />
+    <EmbeddedResource Include="Templates\Documentation\Sections\LifeCyclesSection.txt" />
+    <EmbeddedResource Include="Templates\Documentation\Sections\InterceptorsSection.txt" />
+    <EmbeddedResource Include="Templates\Documentation\Sections\PutAttributesSection.txt" />
+    <EmbeddedResource Include="Templates\NetAspect\NetAspectPage.txt" />
+    <EmbeddedResource Include="Templates\PageContainer.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Templates\gettingstarted\gettingstartedpage.txt" />
-    <Content Include="Templates\home\homepage.txt" />
-    <Content Include="Templates\documentation\documentationpage.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Templates\Templates.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\GettingStarted\GettingStartedPage.txt" />
+    <EmbeddedResource Include="Templates\Home\HomePage.txt" />
+    <EmbeddedResource Include="Templates\Documentation\DocumentationPage.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
