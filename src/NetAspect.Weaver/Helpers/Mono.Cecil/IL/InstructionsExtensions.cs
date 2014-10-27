@@ -59,6 +59,28 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
                        new[] { typeof(BindingFlags), typeof(Binder), typeof(Type[]), typeof(ParameterModifier[]) }))));
        }
 
+       public static void AppendCallToGetMethod(this List<Instruction> instructions,
+          MethodReference methodReference,
+          ModuleDefinition module, Action<VariableDefinition> addVariable)
+       {
+           var typesFromParameters_L = CreateTypesFromParameters(instructions, methodReference);
+           instructions.Add(Instruction.Create(OpCodes.Ldstr, methodReference.Name));
+           instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 60));
+           instructions.Add(Instruction.Create(OpCodes.Ldnull));
+           addVariable(typesFromParameters_L);
+           instructions.Add(Instruction.Create(OpCodes.Ldloc, typesFromParameters_L));
+           instructions.Add(Instruction.Create(OpCodes.Ldnull));
+           instructions.Add(
+               Instruction.Create(
+                   OpCodes.Callvirt,
+                   module.Import(
+                       typeof(Type).GetMethod(
+                           "GetMethod",
+                           new[] { typeof(string), typeof(BindingFlags), typeof(Binder), typeof(Type[]), typeof(ParameterModifier[]) }))));
+       }
+
+
+
        private static VariableDefinition CreateTypesFromParameters(List<Instruction> instructions, MethodReference methodReference)
        {
            var tabVariable = new VariableDefinition(methodReference.Module.Import(typeof(Type[])));

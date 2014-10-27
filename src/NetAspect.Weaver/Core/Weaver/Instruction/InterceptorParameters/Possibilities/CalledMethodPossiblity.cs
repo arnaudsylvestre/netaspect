@@ -24,5 +24,13 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
                                               .AndInjectTheVariable(variables => variables.CalledConstructor.Definition);
             return weavingInfo_P;
         }
+        public static InstructionWeavingInfo AddCalledMethod(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
+        {
+            interceptorParameterPossibilitiesP.AddPossibleParameter("method")
+                                              .WhichCanNotBeReferenced()
+                                              .WhichMustBeOfType<VariablesForInstruction, MethodBase>()
+                                              .AndInjectTheVariable(variables => variables.CalledMethod.Definition);
+            return weavingInfo_P;
+        }
     }
 }

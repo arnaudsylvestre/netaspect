@@ -106,6 +106,7 @@
     <Compile Include="Core\Model\Weaving\AspectInstanceForMethod.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
     <Compile Include="Core\Helpers\NetAspectDefinitionExtensions.cs" />
+    <Compile Include="Core\Weaver\ToSort\Data\Variables\Instructions\VariableCalledMethod.cs" />
     <Compile Include="Core\Weaver\ToSort\Data\Variables\Instructions\VariableCalledConstructor.cs" />
     <Compile Include="Core\Weaver\ToSort\ILInjector\NoIIlInjector.cs" />
     <Compile Include="Core\Model\Weaving\WeavingSession.cs" />

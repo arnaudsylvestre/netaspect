@@ -14,6 +14,7 @@ namespace NetAspect.Weaver.Factory.Configuration.Instruction
          weavingInfo_P.AddCalled(parametersIlGenerator_P, weavingInfo_P.GetOperandAsMethod());
          weavingInfo_P.AddCalledParameters(parametersIlGenerator_P);
          weavingInfo_P.AddCalledParameterNames(parametersIlGenerator_P);
+         weavingInfo_P.AddCalledMethod(parametersIlGenerator_P);
 
          weavingInfo_P.AddCaller(parametersIlGenerator_P);
          weavingInfo_P.AddCallerParameters(parametersIlGenerator_P);

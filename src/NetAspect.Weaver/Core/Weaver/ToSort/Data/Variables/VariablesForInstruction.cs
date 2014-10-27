@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables
    public class VariablesForInstruction : VariablesForMethod
    {
 
-       public VariablesForInstruction(Mono.Cecil.Cil.Instruction instruction, Variable callerMethod, Variable callerProperty, Variable parameters, Variable exception, MultipleVariable calledParameters, Variable called, Variable fieldValue, Variable result, Variable resultForInstruction, Variable calledParametersObjects, List<VariableDefinition> variables, Variable calledConstructor)
+       public VariablesForInstruction(Mono.Cecil.Cil.Instruction instruction, Variable callerMethod, Variable callerProperty, Variable parameters, Variable exception, MultipleVariable calledParameters, Variable called, Variable fieldValue, Variable result, Variable resultForInstruction, Variable calledParametersObjects, List<VariableDefinition> variables, Variable calledConstructor, Variable calledMethod)
            : base(callerMethod, callerProperty, parameters, exception, result, variables)
        {
            Instruction = instruction;
@@ -16,6 +16,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables
            ResultForInstruction = resultForInstruction;
            CalledParametersObjects = calledParametersObjects;
           CalledConstructor = calledConstructor;
+           CalledMethod = calledMethod;
        }
 
        public Mono.Cecil.Cil.Instruction Instruction { get; private set; }
@@ -26,6 +27,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables
        public Variable ResultForInstruction { get; set; }
 
        public Variable CalledParametersObjects { get; set; }
-      public Variable CalledConstructor { get; set; }
+       public Variable CalledConstructor { get; set; }
+       public Variable CalledMethod { get; set; }
    }
 }
