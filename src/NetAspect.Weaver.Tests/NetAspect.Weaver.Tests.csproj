@@ -245,7 +245,7 @@
     <Compile Include="unit\InstructionWeaving\Parameters\FileName\BeforeCallMethodFileNameParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\FilePath\BeforeCallMethodFilePathParameterWithRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\LineNumber\BeforeCallMethodLineNumberParameterWithRealTypeTest.cs" />
-    <Compile Include="unit\InstructionWeaving\Parameters\Method\Copy of BeforeCallMethodMethodParameterWithRealTypeTest.cs" />
+    <Compile Include="unit\InstructionWeaving\Parameters\Method\BeforeCallMethodMethodParameterWithOverloadingRealTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\PropertyValue\AfterCallUpdatePropertyValueParameterWithBadTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\PropertyValue\AfterCallUpdatePropertyValueParameterWithObjectTypeTest.cs" />
     <Compile Include="unit\InstructionWeaving\Parameters\PropertyValue\AfterCallUpdatePropertyValueParameterWithRealTypeReferencedTest.cs" />
