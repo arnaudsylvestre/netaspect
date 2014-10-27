@@ -7,13 +7,14 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables
    {
        private List<VariableDefinition> variablesToAdd; 
 
-       public VariablesForMethod(Variable callerMethod, Variable callerProperty, Variable parameters, Variable exception, Variable result)
+       public VariablesForMethod(Variable callerMethod, Variable callerProperty, Variable parameters, Variable exception, Variable result, List<VariableDefinition> variablesToAdd)
        {
            CallerMethod = callerMethod;
            CallerProperty = callerProperty;
            Parameters = parameters;
            Exception = exception;
            Result = result;
+           this.variablesToAdd = variablesToAdd;
        }
 
        public Variable Parameters { get; private set; }

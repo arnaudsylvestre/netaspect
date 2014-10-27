@@ -19,7 +19,8 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
                 new Variable(instructionsToInsert, new VariableCurrentProperty(), method, null, variables),
                 new Variable(instructionsToInsert, new VariableParameters(), method, null, variables),
                 new Variable(instructionsToInsert, new VariableException(), method, null, variables),
-                new Variable(instructionsToInsert, new ExistingVariable(result), method, null, variables));
+                new Variable(instructionsToInsert, new ExistingVariable(result), method, null, variables),
+                variables);
         }
 
         public static VariablesForInstruction CreateVariablesForInstruction(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables, Mono.Cecil.Cil.Instruction instruction, VariableDefinition result, WeavingMethodSession model)
@@ -36,7 +37,8 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
                 new Variable(instructionsToInsert, new VariableFieldValue(), method, instruction, variables),
                 variablesForMethod.Result,
                 new Variable(instructionsToInsert, new VariableResultForInstruction(), method, instruction, variables),
-                new Variable(instructionsToInsert, new VariableCalledParametersObject(() => calledParameters.Definitions), method, instruction, variables));
+                new Variable(instructionsToInsert, new VariableCalledParametersObject(() => calledParameters.Definitions), method, instruction, variables),
+                variables);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
                  module.Import(
                     typeof(Type).GetMethod(
                        "GetConstructor",
-                       new[] { typeof(BindingFlags), typeof(Binder), typeof(Type[]), typeof(ParameterModifier) }))));
+                       new[] { typeof(BindingFlags), typeof(Binder), typeof(Type[]), typeof(ParameterModifier[]) }))));
        }
 
        private static VariableDefinition CreateTypesFromParameters(List<Instruction> instructions, MethodReference methodReference)
