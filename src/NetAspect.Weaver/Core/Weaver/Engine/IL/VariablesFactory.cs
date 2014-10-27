@@ -27,18 +27,20 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
         {
             VariablesForMethod variablesForMethod = VariablesFactory.CreateVariablesForMethod(instructionsToInsert, method, variables, result);
             var calledParameters = new MultipleVariable(instructionsToInsert, new VariablesCalledParameters(), method, instruction, variables);
-            return new VariablesForInstruction(instruction,
+           var called_L = new Variable(instructionsToInsert, new VariableCalled(() => calledParameters.Definitions), method, instruction, variables);
+           return new VariablesForInstruction(instruction,
                 variablesForMethod.CallerMethod,
                 variablesForMethod.CallerProperty,
                 variablesForMethod.Parameters,
                 variablesForMethod.Exception,
                 calledParameters,
-                new Variable(instructionsToInsert, new VariableCalled(() => calledParameters.Definitions), method, instruction, variables),
+                called_L,
                 new Variable(instructionsToInsert, new VariableFieldValue(), method, instruction, variables),
                 variablesForMethod.Result,
                 new Variable(instructionsToInsert, new VariableResultForInstruction(), method, instruction, variables),
                 new Variable(instructionsToInsert, new VariableCalledParametersObject(() => calledParameters.Definitions), method, instruction, variables),
-                variables);
+                variables,
+                new Variable(instructionsToInsert, new VariableCalledConstructor(variables), method, instruction, variables));
         }
     }
 }

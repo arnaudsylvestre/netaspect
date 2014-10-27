@@ -44,10 +44,12 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
           MethodReference methodReference,
           ModuleDefinition module, Action<VariableDefinition> addVariable)
        {
+          var typesFromParameters_L = CreateTypesFromParameters(instructions, methodReference);
            instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 60));
            instructions.Add(Instruction.Create(OpCodes.Ldnull));
-           addVariable(CreateTypesFromParameters(instructions, methodReference));
-           instructions.Add(Instruction.Create(OpCodes.Ldnull));
+          addVariable(typesFromParameters_L);
+          instructions.Add(Instruction.Create(OpCodes.Ldloc, typesFromParameters_L));
+          instructions.Add(Instruction.Create(OpCodes.Ldnull));
            instructions.Add(
               Instruction.Create(
                  OpCodes.Callvirt,
@@ -63,7 +65,8 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
            instructions.Add(Instruction.Create(OpCodes.Ldc_I4, methodReference.Parameters.Count));
            instructions.Add(Instruction.Create(OpCodes.Newarr, methodReference.Module.Import(typeof(Type))));
            instructions.Add(Instruction.Create(OpCodes.Stloc, tabVariable));
-           instructions.Add(Instruction.Create(OpCodes.Ldloc, tabVariable));
+           if (methodReference.Parameters.Count > 0)
+            instructions.Add(Instruction.Create(OpCodes.Ldloc, tabVariable));
            int i = 0;
            foreach (var parameter in methodReference.Parameters)
            {
@@ -72,7 +75,6 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
                instructions.Add(Instruction.Create(OpCodes.Stelem_Ref));
 
            }
-           instructions.Add(Instruction.Create(OpCodes.Ldloc, tabVariable));
            return tabVariable;
        }
 

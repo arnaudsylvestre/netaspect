@@ -4,8 +4,8 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Constructor
 {
-   public class AfterCallGetFieldFieldInOtherTypeParameterWithRealTypeTest :
-      NetAspectTest<AfterCallGetFieldFieldInOtherTypeParameterWithRealTypeTest.ClassToWeave>
+   public class AfterCallConstructorFieldInOtherTypeParameterWithRealTypeTest :
+      NetAspectTest<AfterCallConstructorFieldInOtherTypeParameterWithRealTypeTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
       {
@@ -31,11 +31,12 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Constructor
 
       public class ClassToWeave
       {
-         private readonly ClassCalled called = new ClassCalled();
+         private readonly ClassCalled called;
 
          public ClassCalled Weaved()
          {
-            return new ClassCalled();
+            var classCalled_L = new ClassCalled();
+            return classCalled_L;
          }
       }
 

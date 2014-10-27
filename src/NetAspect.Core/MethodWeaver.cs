@@ -67,7 +67,6 @@ namespace NetAspect.Core
 
          if (weavingModel.OnFinallyInstructions.Any())
          {
-            //if (end.Count > 0)
             weavingModel.OnFinallyInstructions.Add(Instruction.Create(OpCodes.Endfinally));
             allInstructions.AddRange(weavingModel.OnFinallyInstructions);
             method.AddTryFinally(
