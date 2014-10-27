@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Constructor
 {
    public class AfterCallConstructorConstructorParameterWithBadTypeTest :
-      NetAspectTest<AfterCallConstructorConstructorParameterWithRealTypeTest.ClassToWeave>
+      NetAspectTest<AfterCallConstructorConstructorParameterWithBadTypeTest.ClassToWeave>
    {
       protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
       {
@@ -20,7 +20,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Constructor
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "the constructor parameter in the method AfterCallConstructor of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Refection.MethodBase",
+                           "the constructor parameter in the method AfterCallConstructor of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Reflection.MethodBase",
                            typeof(MyAspect).FullName)
                   });
       }
@@ -45,7 +45,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Constructor
       {
          public bool NetAspectAttribute = true;
 
-         public void AfterCallConstructor(int constructor)
+         public void AfterCallConstructor(string constructor)
          {
          }
       }
