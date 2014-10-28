@@ -25,6 +25,7 @@
        ImpossibleToHavePerInstanceLifeCycleInStaticMethod,
        AttributeTypeNotAllowed,
        AspectWithSelectorMustHaveDefaultConstructor,
-       AllInterceptorsMustHaveTheSameScope
+       AllInterceptorsMustHaveTheSameScope,
+       ParameterWithBadTypeBecauseReturnField
    }
 }

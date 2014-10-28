@@ -24,7 +24,7 @@ namespace NetAspect.Weaver.Factory.Configuration.Instruction
 
        public void FillAfterSpecific(InstructionWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> generator_P)
       {
-         weavingInfo_P.AddResult(generator_P);
+         weavingInfo_P.AddCallFieldValue(generator_P);
       }
    }
 }

@@ -20,6 +20,11 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Engine
             possibility.Checkers.Add((parameter, errorListener) => EnsureResult.OfTypeNotReferenced(parameter, errorListener, info.GetOperandAsMethod()));
             return possibility;
         }
+        public static InterceptorParameterPossibility<T> WhereParameterTypeIsSameAsFieldTypeAndNotReferenced<T>(this InterceptorParameterPossibility<T> possibility, InstructionWeavingInfo info) where T : VariablesForMethod
+        {
+            possibility.Checkers.Add((parameter, errorListener) => EnsureResult.OfTypeNotReferenced(parameter, errorListener, info.GetOperandAsField()));
+            return possibility;
+        }
 
         public static InterceptorParameterPossibility<T> WhichMustBeOfType<T, T1>(this InterceptorParameterPossibility<T> possibility) where T : VariablesForMethod
         {

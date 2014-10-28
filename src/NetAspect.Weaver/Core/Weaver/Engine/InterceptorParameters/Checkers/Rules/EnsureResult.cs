@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using Mono.Cecil;
 using NetAspect.Weaver.Core.Errors;
@@ -36,6 +37,12 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Checkers
         }
 
 
+        public static void OfTypeNotReferenced(ParameterInfo info, ErrorHandler handler, FieldDefinition field)
+        {
+            EnsureField.OfType(info, handler, field);
+            EnsureParameter.IsNotReferenced(info, handler);
+        }
+
 
         private static bool MethodMustNotBeVoid(ParameterInfo info, ErrorHandler handler, MethodDefinition method)
         {
@@ -52,5 +59,27 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Checkers
             return true;
         }
 
+    }
+
+    public class EnsureField
+    {
+        public static void OfType(ParameterInfo info, ErrorHandler handler, FieldDefinition field)
+        {
+            if (info.ParameterType == typeof(object))
+                return;
+            if (info.ParameterType.FullName.Replace("&", "") != field.FieldType.FullName.Replace("/", "+"))
+            {
+                handler.OnError(
+                    ErrorCode.ParameterWithBadTypeBecauseReturnField,
+                    FileLocation.None,
+                    info.Name,
+                    info.Member.Name,
+                    info.Member.DeclaringType.FullName.Replace("/", "+"),
+                    info.ParameterType.FullName,
+                    field.FieldType.FullName,
+                    field.Name,
+                    field.DeclaringType.FullName.Replace("/", "+"));
+            }
+        }
     }
 }

@@ -18,6 +18,10 @@ namespace NetAspect.Weaver.Factory
                      ErrorCode.ParameterWithBadTypeBecauseReturnMethod,
                      new ErrorInfo("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because the return type of the method {5} in the type {6}")
                   },
+                  {
+                     ErrorCode.ParameterWithBadTypeBecauseReturnField,
+                     new ErrorInfo("the {0} parameter in the method {1} of the type '{2}' is declared with the type '{3}' but it is expected to be {4} because the return type of the field {5} in the type {6}")
+                  },
                   {ErrorCode.MustNotBeVoid, new ErrorInfo("Impossible to use the {0} parameter in the method {1} of the type '{2}' because the return type of the method {3} in the type {4} is void")},
                   {ErrorCode.ImpossibleToRefGenericParameter, new ErrorInfo("Impossible to ref/out the parameter '{0}' in the method {1} of the type '{2}' because the parameter type in the method {3} of the type {4} is a generic type")},
                   {ErrorCode.ParameterCanNotBeUsedInStaticMethod, new ErrorInfo("the {0} parameter in the method {1} of the type '{2}' can not be used because the member {3} of the type {4} is static")},
