@@ -4,10 +4,10 @@
     <title>NetAspect</title>
     <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
 </description>
-    <link>http://arnaudsylvestre.github.io/fluentaspect.com/</link>
-    <atom:link href="http://arnaudsylvestre.github.io/fluentaspect.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 25 Oct 2014 21:33:25 +0200</pubDate>
-    <lastBuildDate>Sat, 25 Oct 2014 21:33:25 +0200</lastBuildDate>
+    <link>http://arnaudsylvestre.github.io/fluentaspect/</link>
+    <atom:link href="http://arnaudsylvestre.github.io/fluentaspect/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Tue, 28 Oct 2014 06:25:56 +0100</pubDate>
+    <lastBuildDate>Tue, 28 Oct 2014 06:25:56 +0100</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -28,8 +28,8 @@
 
 </description>
         <pubDate>Sat, 25 Oct 2014 00:56:51 +0200</pubDate>
-        <link>http://arnaudsylvestre.github.io/fluentaspect.com/jekyll/update/2014/10/25/welcome-to-jekyll.html</link>
-        <guid isPermaLink="true">http://arnaudsylvestre.github.io/fluentaspect.com/jekyll/update/2014/10/25/welcome-to-jekyll.html</guid>
+        <link>http://arnaudsylvestre.github.io/fluentaspect/jekyll/update/2014/10/25/welcome-to-jekyll.html</link>
+        <guid isPermaLink="true">http://arnaudsylvestre.github.io/fluentaspect/jekyll/update/2014/10/25/welcome-to-jekyll.html</guid>
         
         
         <category>jekyll</category>

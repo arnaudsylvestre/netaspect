@@ -111,3 +111,4 @@ coverage.xml
 dump.txt
 dump.res
 src/NugetItems/*.nupkg
+.sass-cache/
