@@ -49,13 +49,17 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.C
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void OnFinallyConstructor(object instance, MethodBase constructor, object[] parameters, int intValue)
+         public void OnFinallyConstructor(object instance, MethodBase constructor, object[] parameters, int intValue, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());
             Assert.AreEqual(".ctor", constructor.Name);
             Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual(24, intValue);
+            Assert.AreEqual(19, lineNumber);
+            Assert.AreEqual(10, columnNumber);
+            Assert.AreEqual("Part2Sample4OnFinallyConstructorPossibilityTest.cs", fileName);
+            Assert.True(filePath.EndsWith(@"Constructor\Part2Sample4OnFinallyConstructorPossibilityTest.cs"));
          }
       }
    }

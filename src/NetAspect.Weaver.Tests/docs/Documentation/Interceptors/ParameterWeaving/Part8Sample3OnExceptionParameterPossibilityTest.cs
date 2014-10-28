@@ -52,10 +52,9 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.ParameterWeavin
 
          public void OnExceptionMethodForParameter(int parameterValue,
             MyInt instance,
-            int v,
             object[] parameters,
             ParameterInfo parameter,
-            Exception exception)
+            Exception exception, MethodBase method, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.NotNull(instance);
@@ -63,7 +62,11 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.ParameterWeavin
             Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual(0, parameterValue);
             Assert.AreEqual("DivideByZeroException", exception.GetType().Name);
-            Assert.AreEqual(0, v);
+            Assert.AreEqual("DivideBy", method.Name);
+            Assert.AreEqual(36, lineNumber);
+            Assert.AreEqual(10, columnNumber);
+            Assert.AreEqual("Part8Sample3OnExceptionParameterPossibilityTest.cs", fileName);
+            Assert.True(filePath.EndsWith(@"ParameterWeaving\Part8Sample3OnExceptionParameterPossibilityTest.cs"));
          }
       }
    }

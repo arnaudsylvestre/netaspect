@@ -35,7 +35,6 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
                 variablesForMethod.Exception,
                 calledParameters,
                 called_L,
-                new Variable(instructionsToInsert, new VariableFieldValue(), method, instruction, variables),
                 variablesForMethod.Result,
                 new Variable(instructionsToInsert, new VariableResultForInstruction(), method, instruction, variables),
                 new Variable(instructionsToInsert, new VariableCalledParametersObject(() => calledParameters.Definitions), method, instruction, variables),

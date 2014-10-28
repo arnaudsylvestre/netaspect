@@ -45,16 +45,20 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.ParameterWeavin
 
          public void BeforeMethodForParameter(int parameterValue,
             MyInt instance,
-            int v,
             object[] parameters,
-            ParameterInfo parameter)
+            ParameterInfo parameter,
+             MethodBase method, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.NotNull(instance);
             Assert.AreEqual("v", parameter.Name);
             Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual(6, parameterValue);
-            Assert.AreEqual(6, v);
+            Assert.AreEqual("DivideBy", method.Name);
+            Assert.AreEqual(36, lineNumber);
+            Assert.AreEqual(10, columnNumber);
+            Assert.AreEqual("Part8Sample1BeforeParameterPossibilityTest.cs", fileName);
+            Assert.True(filePath.EndsWith(@"ParameterWeaving\Part8Sample1BeforeParameterPossibilityTest.cs"));
          }
       }
    }

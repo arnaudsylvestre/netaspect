@@ -154,6 +154,7 @@
     <Compile Include="Core\Weaver\Parameters\InterceptorParameters\ParameterWeavingInfo.cs" />
     <Compile Include="Core\Weaver\Parameters\Detector\IlInjectorsFactoryForParameter.cs" />
     <Compile Include="Core\Weaver\Parameters\Detector\IInterceptorParameterConfigurationForParameterFiller.cs" />
+    <Compile Include="Factory\Configuration\Parameters\MethodParameterInterceptorParameterConfigurationForConstructorFiller.cs" />
     <Compile Include="Factory\Configuration\Parameters\MethodParameterInterceptorParameterConfigurationForMethodFiller.cs" />
     <Compile Include="Core\Weaver\Parameters\Detector\ParameterAspectInstanceDetector.cs" />
     <Compile Include="Core\Weaver\Engine\IL\AspectInstanceForMethodExtensions.cs" />

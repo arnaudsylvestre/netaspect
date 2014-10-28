@@ -6,7 +6,7 @@ namespace NetAspect.Weaver.Core.Weaver.Parameters.Detector
 {
    public interface IInterceptorParameterConfigurationForParameterFiller
    {
-       void FillCommon(ParameterWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilitiesP);
+       void FillCommon(ParameterWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilities);
        void FillOnExceptionSpecific(ParameterWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilitiesP);
    }
 }

@@ -49,7 +49,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.M
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void AfterMethod(object instance, MethodBase method, object[] parameters, int v, int result)
+         public void AfterMethod(object instance, MethodBase method, object[] parameters, int v, int result, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());
@@ -57,6 +57,10 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.M
             Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual(12, v);
             Assert.AreEqual(2, result);
+            Assert.AreEqual(31, lineNumber);
+            Assert.AreEqual(10, columnNumber);
+            Assert.AreEqual("Part1Sample2AfterMethodPossibilityTest.cs", fileName);
+            Assert.True(filePath.EndsWith(@"Method\Part1Sample2AfterMethodPossibilityTest.cs"));
          }
       }
    }

@@ -61,12 +61,16 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.P
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void OnExceptionPropertySetMethod(object instance, PropertyInfo property, Exception exception)
+         public void OnExceptionPropertySetMethod(object instance, PropertyInfo property, Exception exception, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());
             Assert.AreEqual("Value", property.Name);
             Assert.AreEqual("NotSupportedException", exception.GetType().Name);
+            Assert.AreEqual(28, lineNumber);
+            Assert.AreEqual(13, columnNumber);
+            Assert.AreEqual("Part4Sample3OnExceptionPropertySetPossibilityTest.cs", fileName);
+            Assert.True(filePath.EndsWith(@"PropertySet\Part4Sample3OnExceptionPropertySetPossibilityTest.cs"));
          }
       }
    }

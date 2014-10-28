@@ -57,7 +57,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.C
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void OnExceptionConstructor(object instance, MethodBase constructor, object[] parameters, int intValue, Exception exception)
+         public void OnExceptionConstructor(object instance, MethodBase constructor, object[] parameters, int intValue, Exception exception, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());
@@ -65,6 +65,10 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.C
             Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual(0, intValue);
             Assert.AreEqual("NotSupportedException", exception.GetType().Name);
+            Assert.AreEqual(19, lineNumber);
+            Assert.AreEqual(10, columnNumber);
+            Assert.AreEqual("Part2Sample3OnExceptionConstructorPossibilityTest.cs", fileName);
+            Assert.True(filePath.EndsWith(@"Constructor\Part2Sample3OnExceptionConstructorPossibilityTest.cs"));
          }
       }
    }

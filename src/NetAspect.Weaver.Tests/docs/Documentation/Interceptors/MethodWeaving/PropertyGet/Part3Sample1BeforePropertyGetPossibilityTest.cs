@@ -50,11 +50,15 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.P
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void BeforePropertyGetMethod(object instance, PropertyInfo property)
+         public void BeforePropertyGetMethod(object instance, PropertyInfo property, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());
             Assert.AreEqual("Value", property.Name);
+            Assert.AreEqual(28, lineNumber);
+            Assert.AreEqual(17, columnNumber);
+            Assert.AreEqual("Part3Sample1BeforePropertyGetPossibilityTest.cs", fileName);
+            Assert.True(filePath.EndsWith(@"PropertyGet\Part3Sample1BeforePropertyGetPossibilityTest.cs"));
          }
       }
    }

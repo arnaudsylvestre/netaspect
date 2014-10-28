@@ -50,13 +50,17 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.M
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void BeforeMethod(object instance, MethodBase method, object[] parameters, int v)
+         public void BeforeMethod(object instance, MethodBase method, object[] parameters, int v, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());
             Assert.AreEqual("DivideBy", method.Name);
             Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual(12, v);
+            Assert.AreEqual(32, lineNumber);
+            Assert.AreEqual(10, columnNumber);
+            Assert.AreEqual("Part1Sample1BeforeMethodPossibilityTest.cs", fileName);
+            Assert.True(filePath.EndsWith(@"Method\Part1Sample1BeforeMethodPossibilityTest.cs"));
          }
       }
    }

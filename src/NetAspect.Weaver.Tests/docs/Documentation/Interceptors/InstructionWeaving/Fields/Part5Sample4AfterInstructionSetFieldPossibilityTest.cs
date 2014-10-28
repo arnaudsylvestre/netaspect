@@ -53,7 +53,8 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             string filePath,
             object[] callerParameters,
             MethodBase callerMethod,
-            FieldInfo field)
+            FieldInfo field,
+             int newFieldValue)
          {
             Called = true;
             Assert.AreEqual(caller, instance);
@@ -65,6 +66,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             Assert.AreEqual(1, callerParameters.Length);
             Assert.AreEqual("UpdateValue", callerMethod.Name);
             Assert.AreEqual("value", field.Name);
+            Assert.AreEqual(6, newFieldValue);
          }
       }
    }

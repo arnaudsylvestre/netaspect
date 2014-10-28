@@ -9,20 +9,16 @@ using NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model;
 
 namespace NetAspect.Weaver.Factory.Configuration.Parameters
 {
-   public class MethodParameterInterceptorParameterConfigurationForMethodFiller : IInterceptorParameterConfigurationForParameterFiller
+   public class MethodParameterInterceptorParameterConfigurationForConstructorFiller : IInterceptorParameterConfigurationForParameterFiller
    {
        public void FillCommon(ParameterWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForMethod> interceptorParameterPossibilities)
       {
          weavingInfo_P.AddParameterValue(interceptorParameterPossibilities)
             .AddParameterInfo(interceptorParameterPossibilities)
-            .AddMethod(interceptorParameterPossibilities)
+            .AddConstructor(interceptorParameterPossibilities)
             .AddParameters(interceptorParameterPossibilities)
+            .AddParameterNames(interceptorParameterPossibilities)
             .AddInstance(interceptorParameterPossibilities)
-
-            .AddLineNumberForMethod(interceptorParameterPossibilities)
-            .AddColumnNumberForMethod(interceptorParameterPossibilities)
-            .AddFileNameForMethod(interceptorParameterPossibilities)
-            .AddFilePathForMethod(interceptorParameterPossibilities)
             ;
       }
 

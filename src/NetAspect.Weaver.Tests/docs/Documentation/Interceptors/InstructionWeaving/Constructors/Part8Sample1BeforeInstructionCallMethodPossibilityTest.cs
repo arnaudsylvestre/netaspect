@@ -64,10 +64,12 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             object[] callerParameters,
             object[] parameters,
             int value,
-            MethodBase callerMethod)
+            MethodBase callerMethod,
+             MethodBase constructor)
          {
-            Called = true;
-            Assert.NotNull(caller);
+             Called = true;
+             Assert.NotNull(caller);
+             Assert.AreEqual(".ctor", constructor.Name);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(31, lineNumber);
             Assert.AreEqual("Part8Sample1BeforeInstructionCallMethodPossibilityTest.cs", fileName);

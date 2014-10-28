@@ -54,7 +54,8 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             string filePath,
             object[] callerParameters,
             MethodBase callerMethod,
-            PropertyInfo property)
+            PropertyInfo property,
+             int result)
          {
             Called = true;
             Assert.AreEqual(caller, instance);
@@ -66,6 +67,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             Assert.AreEqual(1, callerParameters.Length);
             Assert.AreEqual("DivideBy", callerMethod.Name);
             Assert.AreEqual("Value", property.Name);
+            Assert.AreEqual(12, result);
          }
       }
    }

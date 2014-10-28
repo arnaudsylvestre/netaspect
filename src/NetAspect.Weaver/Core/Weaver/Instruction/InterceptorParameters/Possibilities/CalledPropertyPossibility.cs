@@ -23,7 +23,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
                                                                        InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
         {
             ParameterDefinition parameter = weavingInfo_P.GetOperandAsMethod().Parameters.Last();
-            interceptorParameterPossibilitiesP.AddPossibleParameter("propertyvalue")
+            interceptorParameterPossibilitiesP.AddPossibleParameter("newpropertyvalue")
                                               .WhichCanNotBeReferenced()
                                               .WhichMustBeOfTypeOfParameter(parameter)
                                               .AndInjectTheCalledValue(parameter);

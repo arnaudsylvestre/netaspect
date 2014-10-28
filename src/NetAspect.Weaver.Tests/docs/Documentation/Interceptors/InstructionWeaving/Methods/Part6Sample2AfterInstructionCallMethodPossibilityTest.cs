@@ -65,7 +65,9 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             object[] callerParameters,
             object[] parameters,
             int v,
-            MethodBase callerMethod)
+            MethodBase callerMethod,
+            MethodBase method,
+             int result)
          {
             Called = true;
             Assert.NotNull(caller);
@@ -77,7 +79,9 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             Assert.AreEqual(3, callerParameters.Length);
             Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual("Compute", callerMethod.Name);
+            Assert.AreEqual("DivideBy", method.Name);
             Assert.AreEqual(6, v);
+            Assert.AreEqual(2, result);
          }
       }
    }

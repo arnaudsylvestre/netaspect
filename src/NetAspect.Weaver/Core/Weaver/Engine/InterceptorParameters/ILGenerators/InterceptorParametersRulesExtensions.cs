@@ -100,19 +100,19 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Engine
 
       public static InterceptorParameterPossibility<VariablesForInstruction> AndInjectTheCalledPropertyInfo(this InterceptorParameterPossibility<VariablesForInstruction> possibility, InstructionWeavingInfo weavingInfo)
       {
-         possibility.Generators.Add(
-            (parameter, instructions, info) =>
-            {
-               InstructionWeavingInfo interceptor = weavingInfo;
-               var propertyDefinition = interceptor.GetOperandAsMethod().GetProperty();
-                var definition = info.Called.Definition;
-                if (definition != null)
-                    instructions.AppendCallToTargetGetType(interceptor.Method.Module, definition);
-                else
-                    instructions.AppendCallToTypeOf(interceptor.Method.Module, propertyDefinition.DeclaringType);
-                instructions.AppendCallToGetProperty(propertyDefinition.Name, interceptor.Method.Module);
-            });
-         return possibility;
+          possibility.Generators.Add(
+             (parameter, instructions, info) =>
+             {
+                 InstructionWeavingInfo interceptor = weavingInfo;
+                 var propertyDefinition = interceptor.GetOperandAsMethod().GetProperty();
+                 var definition = info.Called.Definition;
+                 if (definition != null)
+                     instructions.AppendCallToTargetGetType(interceptor.Method.Module, definition);
+                 else
+                     instructions.AppendCallToTypeOf(interceptor.Method.Module, propertyDefinition.DeclaringType);
+                 instructions.AppendCallToGetProperty(propertyDefinition.Name, interceptor.Method.Module);
+             });
+          return possibility;
       }
 
       public static InterceptorParameterPossibility<VariablesForInstruction> AndInjectTheCalledInstance(this InterceptorParameterPossibility<VariablesForInstruction> possibility) 
@@ -228,7 +228,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Engine
                   instructions.Add(
                      Mono.Cecil.Cil.Instruction.Create(
                         OpCodes.Ldloc,
-                        info.FieldValue.Definition));
+                        info.CalledParameters.GetDefinition("value")));
                   instructions.Add(
                      Mono.Cecil.Cil.Instruction.Create(
                         OpCodes.Ldobj,
@@ -239,12 +239,12 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Engine
                   instructions.Add(
                      Mono.Cecil.Cil.Instruction.Create(
                         OpCodes.Ldloc,
-                        info.FieldValue.Definition));
+                        info.CalledParameters.GetDefinition("value")));
                }
                if (field.FieldType != moduleDefinition.TypeSystem.Object &&
                    parameterInfo.ParameterType == typeof (Object))
                {
-                  TypeReference reference = info.FieldValue.Definition.VariableType;
+                  TypeReference reference = info.CalledParameters.GetDefinition("value").VariableType;
 
                   instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Box, reference));
                }

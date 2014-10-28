@@ -56,7 +56,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.M
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void OnExceptionMethod(object instance, MethodBase method, object[] parameters, int v, Exception exception)
+         public void OnExceptionMethod(object instance, MethodBase method, object[] parameters, int v, Exception exception, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());
@@ -64,6 +64,10 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.M
             Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual(0, v);
             Assert.AreEqual("DivideByZeroException", exception.GetType().Name);
+            Assert.AreEqual(31, lineNumber);
+            Assert.AreEqual(10, columnNumber);
+            Assert.AreEqual("Part1Sample3OnExceptionMethodPossibilityTest.cs", fileName);
+            Assert.True(filePath.EndsWith(@"Method\Part1Sample3OnExceptionMethodPossibilityTest.cs"));
          }
       }
    }

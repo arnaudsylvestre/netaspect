@@ -45,7 +45,7 @@ namespace NetAspect.Weaver.Factory
         {
             return new ParameterAspectInstanceDetector(
                aspect => aspect.AfterConstructorForParameter,
-               new IlInjectorsFactoryForParameter(new MethodParameterInterceptorParameterConfigurationForMethodFiller(), new NoWeavingPreconditionInjector()),
+               new IlInjectorsFactoryForParameter(new MethodParameterInterceptorParameterConfigurationForConstructorFiller(), new NoWeavingPreconditionInjector()),
                aspect => aspect.BeforeConstructorForParameter,
                MethodCompliance.IsConstructorForParameter,
                aspect => aspect.OnExceptionConstructorForParameter,

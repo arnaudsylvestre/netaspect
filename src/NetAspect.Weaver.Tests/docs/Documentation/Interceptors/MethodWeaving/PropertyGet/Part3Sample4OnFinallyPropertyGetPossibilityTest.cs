@@ -49,11 +49,15 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.P
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void OnFinallyPropertyGetMethod(object instance, PropertyInfo property)
+         public void OnFinallyPropertyGetMethod(object instance, PropertyInfo property, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());
             Assert.AreEqual("Value", property.Name);
+            Assert.AreEqual(27, lineNumber);
+            Assert.AreEqual(17, columnNumber);
+            Assert.AreEqual("Part3Sample4OnFinallyPropertyGetPossibilityTest.cs", fileName);
+            Assert.True(filePath.EndsWith(@"PropertyGet\Part3Sample4OnFinallyPropertyGetPossibilityTest.cs"));
          }
       }
    }
