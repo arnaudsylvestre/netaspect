@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.CalledParame
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "impossible to ref/out the parameter 'calledParam1' in the method AfterCallMethod of the type '{0}'",
+                           "impossible to ref/out the parameter 'param1' in the method AfterCallMethod of the type '{0}'",
                            typeof (MyAspect).FullName)
                   });
       }
@@ -42,9 +42,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.CalledParame
          public static int ParameterName;
          public bool NetAspectAttribute = true;
 
-         public void AfterCallMethod(ref int calledParam1)
+         public void AfterCallMethod(ref int param1)
          {
-            ParameterName = calledParam1;
+            ParameterName = param1;
          }
       }
    }

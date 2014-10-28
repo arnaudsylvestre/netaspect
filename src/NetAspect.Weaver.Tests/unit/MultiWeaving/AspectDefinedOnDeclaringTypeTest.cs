@@ -10,11 +10,11 @@ namespace NetAspect.Weaver.Tests.unit.MultiWeaving
       {
          return () =>
          {
-            Assert.IsNull(MyAspect.Called);
-            var called = new ClassCalled();
-            var classToWeave_L = new ClassToWeave(called);
+            Assert.IsNull(MyAspect.Instance);
+            var instance = new ClassCalled();
+            var classToWeave_L = new ClassToWeave(instance);
             classToWeave_L.Weaved();
-            Assert.AreEqual(called, MyAspect.Called);
+            Assert.AreEqual(instance, MyAspect.Instance);
          };
       }
 
@@ -26,27 +26,27 @@ namespace NetAspect.Weaver.Tests.unit.MultiWeaving
 
       public class ClassToWeave
       {
-         private readonly ClassCalled called;
+         private readonly ClassCalled _instance;
 
-         public ClassToWeave(ClassCalled called)
+         public ClassToWeave(ClassCalled instance)
          {
-            this.called = called;
+            this._instance = instance;
          }
 
          public string Weaved()
          {
-            return called.Field;
+            return _instance.Field;
          }
       }
 
       public class MyAspect : Attribute
       {
-         public static ClassCalled Called;
+         public static ClassCalled Instance;
          public bool NetAspectAttribute = true;
 
-         public void AfterGetField(ClassCalled called)
+         public void AfterGetField(ClassCalled instance)
          {
-            Called = called;
+            Instance = instance;
          }
       }
    }

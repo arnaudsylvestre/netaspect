@@ -10,13 +10,13 @@ namespace NetAspect.Weaver.Tests.unit.MultiWeaving
       {
          return () =>
          {
-            Assert.IsNull(MyAspect2.BeforeGetFieldCalled);
-            Assert.IsNull(MyAspect.BeforeGetFieldCalled);
+            Assert.IsNull(MyAspect2.BeforeGetFieldInstance);
+            Assert.IsNull(MyAspect.BeforeGetFieldInstance);
             var called = new ClassCalled();
             var classToWeave_L = new ClassToWeave(called);
             classToWeave_L.Weaved();
-            Assert.AreEqual(called, MyAspect.BeforeGetFieldCalled);
-            Assert.AreEqual(called, MyAspect2.BeforeGetFieldCalled);
+            Assert.AreEqual(called, MyAspect.BeforeGetFieldInstance);
+            Assert.AreEqual(called, MyAspect2.BeforeGetFieldInstance);
          };
       }
 
@@ -43,23 +43,23 @@ namespace NetAspect.Weaver.Tests.unit.MultiWeaving
 
       public class MyAspect : Attribute
       {
-         public static ClassCalled BeforeGetFieldCalled;
+         public static ClassCalled BeforeGetFieldInstance;
          public bool NetAspectAttribute = true;
 
-         public void BeforeGetField(ClassCalled called)
+         public void BeforeGetField(ClassCalled instance)
          {
-            BeforeGetFieldCalled = called;
+            BeforeGetFieldInstance = instance;
          }
       }
 
       public class MyAspect2 : Attribute
       {
-         public static ClassCalled BeforeGetFieldCalled;
+         public static ClassCalled BeforeGetFieldInstance;
          public bool NetAspectAttribute = true;
 
-         public void BeforeGetField(ClassCalled called)
+         public void BeforeGetField(ClassCalled instance)
          {
-            BeforeGetFieldCalled = called;
+            BeforeGetFieldInstance = instance;
          }
       }
    }
