@@ -10,7 +10,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Checkers
       public static void IsNotStatic(ParameterInfo parameter, ErrorHandler handler, MethodDefinition definition)
       {
          if (definition.IsStatic)
-            handler.OnError(ErrorCode.ParameterCanNotBeUsedInStaticMethod, FileLocation.None, parameter.Name);
+             handler.OnError(ErrorCode.ParameterCanNotBeUsedInStaticMethod, FileLocation.None, parameter.Name, parameter.Member.Name, parameter.Member.DeclaringType.FullName, definition.Name, definition.DeclaringType.FullName.Replace('/', '+'));
       }
 
        public static void IsNotStaticButDefaultValue(ParameterInfo parameter, ErrorHandler handler, IMemberDefinition member)

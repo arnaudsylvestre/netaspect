@@ -34,7 +34,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Checkers
         {
             if (parameter.ParameterType.IsGenericParameter && info.ParameterType.IsByRef)
             {
-                handler.OnError(ErrorCode.ImpossibleToRefGenericParameter, FileLocation.None);
+                handler.OnError(ErrorCode.ImpossibleToRefGenericParameter, FileLocation.None, info.Name, info.Member.Name, info.Member.DeclaringType.FullName, ((MethodReference)parameter.Method).Name, ((MethodReference)parameter.Method).DeclaringType.FullName.Replace('/', '+'));
                 return;
             }
 

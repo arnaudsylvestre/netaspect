@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Result
                         Level = ErrorLevel.Error,
                         Message =
                            string.Format(
-                              "The parameter 'result' in the interceptor BeforeCallMethod of the aspect {0} is unknown. Expected one of : called, calledparameters, caller, callerparameters, callermethod, columnnumber, linenumber, filepath, filename", typeof(MyAspect).FullName)
+                              "The parameter 'result' in the interceptor BeforeCallMethod of the aspect {0} is unknown. Expected one of : called, calledparameters, method, caller, callerparameters, callermethod, columnnumber, linenumber, filepath, filename", typeof(MyAspect).FullName)
                     });
        }
       public class ClassToWeave

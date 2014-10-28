@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Instance
                   {
                      Level = ErrorLevel.Error,
                      Message =
-                        string.Format("the instance parameter can not be used for static method interceptors")
+                        string.Format("the instance parameter in the method AfterMethod of the type '{0}' can not be used because the member Weaved of the type {1} is static", typeof(MyAspect), typeof(ClassToWeave))
                   });
       }
 

@@ -14,7 +14,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.ParameterName
             new ErrorReport.Error
             {
                Level = ErrorLevel.Error,
-               Message = string.Format("Impossible to ref a generic parameter")
+               Message = string.Format("Impossible to ref/out the parameter 'i' in the method AfterMethod of the type '{0}' because the parameter type in the method Weaved of the type {1} is a generic type", typeof(MyAspect), typeof(ClassToWeave))
             });
       }
 

@@ -55,7 +55,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Checkers.Ensures
             return;
          if (parameterDefinition.ParameterType.IsGenericParameter && info.ParameterType.IsByRef)
          {
-            errorHandler.OnError(ErrorCode.ImpossibleToRefGenericParameter, FileLocation.None);
+             errorHandler.OnError(ErrorCode.ImpossibleToRefGenericParameter, FileLocation.None, info.Name, info.Member.Name, info.Member.DeclaringType.FullName, info.Member.DeclaringType.FullName, ((MethodReference)parameterDefinition.Method).Name, ((MethodReference)parameterDefinition.Method).DeclaringType.FullName.Replace('/', '+'));
          }
       }
    }
