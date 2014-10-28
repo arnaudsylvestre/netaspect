@@ -10,7 +10,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
    {
        public static InstructionWeavingInfo AddCalled(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP, IMemberDefinition member)
       {
-         interceptorParameterPossibilitiesP.AddPossibleParameter("called")
+         interceptorParameterPossibilitiesP.AddPossibleParameter("instance")
             .WhichCanNotBeReferenced()
             .WhereFieldCanNotBeStatic(member)
             .WhichMustBeOfTypeOf(member.DeclaringType)
@@ -20,7 +20,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
 
        public static InstructionWeavingInfo AddCalledParameters(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
        {
-           interceptorParameterPossibilitiesP.AddPossibleParameter("calledparameters")
+           interceptorParameterPossibilitiesP.AddPossibleParameter("parameters")
               .WhichCanNotBeReferenced()
               .WhichMustBeOfType<VariablesForInstruction, object[]>()
               .AndInjectTheVariable(variables => variables.CalledParametersObjects.Definition);
@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
        {
            foreach (ParameterDefinition parameterDefinition in weavingInfo_P.GetOperandAsMethod().Parameters)
            {
-               interceptorParameterPossibilitiesP.AddPossibleParameter("called" + parameterDefinition.Name.ToLower())
+               interceptorParameterPossibilitiesP.AddPossibleParameter(parameterDefinition.Name.ToLower())
                   .WhichCanNotBeReferenced()
                   .WhichMustBeOfTypeOfParameter(parameterDefinition)
                   .AndInjectTheCalledParameter(parameterDefinition);

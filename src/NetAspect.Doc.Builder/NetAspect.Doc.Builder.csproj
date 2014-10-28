@@ -68,6 +68,7 @@
     <Compile Include="Core\Readers\Documentation\Sections\Interceptors\InterceptorsSectionModel.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\PutAspects\DocumentationPutAspectsSectionReader.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\LifeCycles\PutAspectsSectionModel.cs" />
+    <Compile Include="Core\Readers\Helpers\CodeFormatterHelper.cs" />
     <Compile Include="Helpers\DirectoryExtensions.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\Interceptors\DocumentationPutAspectsSectionReader.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\PutAspects\PutAspectsSectionModel.cs" />

@@ -1,19 +1,20 @@
-﻿#set( $H = '#' )
-$page.SetParameterDescription('instance', 'this parameter is used to have the <b>this</b> of the weaved member')
-$page.SetParameterDescription('method', 'this parameter is used to get some information about the weaved method')
+﻿<header class="page-header">
+    <div class="container">
+        <h1>Documentation</h1>
+        <p>What can I do with NetAspect ?</p>
+    </div>
+</header>
 
 <div class="container bs-docs-container">
-      <div class="row">
-		<div class="col-md-12" role="main">
+        <div class="bs-docs-section">
 
-	$page.GeneratePutAttributesSection();
-	$page.GenerateInterceptorsSection();
-	$page.GenerateLifeCyclesSection();
+	$page.GeneratePutAttributesSection()
+	$page.GenerateInterceptorsSection()
+	$page.GenerateLifeCyclesSection()
 
 
 	
 
 
-		</div>
 	</div>
 </div>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace NetAspect.Doc.Builder.Model
 {
@@ -10,5 +11,6 @@ namespace NetAspect.Doc.Builder.Model
       }
 
       public List<Page> Pages { get; set; }
+      public IEnumerable<Page> LinkPages { get { return Pages.Skip(1); }}
    }
 }

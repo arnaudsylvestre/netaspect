@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.CalledParame
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "the calledParameters parameter in the method AfterCallMethod of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object[]",
+                           "the parameters parameter in the method AfterCallMethod of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Object[]",
                            typeof (MyAspect).FullName,
                            typeof (ClassToWeave).FullName)
                   });
@@ -42,7 +42,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.CalledParame
       {
          public bool NetAspectAttribute = true;
 
-         public void AfterCallMethod(int calledParameters)
+         public void AfterCallMethod(int parameters)
          {
          }
       }

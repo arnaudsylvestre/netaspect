@@ -6,15 +6,6 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.CalledParame
    public class AfterCallMethodCalledParameterNameParameterWithObjectTypeTest :
       NetAspectTest<AfterCallMethodCalledParameterNameParameterWithObjectTypeTest.ClassToWeave>
    {
-      //protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
-      //{
-      //    return
-      //        errorHandler =>
-      //        errorHandler.Errors.Add(
-      //            string.Format(
-      //                "the calledParam1 parameter in the method AfterCallMethod of the type '{0}' is declared with the type 'System.Object' but it is expected to be System.Int32",
-      //                typeof(MyAspect).FullName));
-      //}
 
       protected override Action CreateEnsure()
       {
@@ -47,9 +38,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.CalledParame
          public static object ParameterName;
          public bool NetAspectAttribute = true;
 
-         public void AfterCallMethod(object calledParam1)
+         public void AfterCallMethod(object param1)
          {
-            ParameterName = calledParam1;
+            ParameterName = param1;
          }
       }
    }

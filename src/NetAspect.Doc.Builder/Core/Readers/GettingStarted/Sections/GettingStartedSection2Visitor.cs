@@ -1,5 +1,8 @@
-﻿using ICSharpCode.NRefactory.CSharp;
+﻿using System;
+using System.Linq;
+using ICSharpCode.NRefactory.CSharp;
 using NetAspect.Doc.Builder.Core.Readers;
+using NetAspect.Doc.Builder.Core.Readers.Helpers;
 using NetAspect.Doc.Builder.Model;
 
 namespace NetAspect.Doc.Builder.Core.GettingStarted
@@ -16,16 +19,16 @@ namespace NetAspect.Doc.Builder.Core.GettingStarted
         public override void VisitTypeDeclaration(TypeDeclaration typeDeclaration)
         {
             if (typeDeclaration.Name == "LogAttribute")
-                _page.AspectCode = typeDeclaration.ToString();
+                _page.AspectCode = typeDeclaration.ToNetAspectString();
             if (typeDeclaration.Name == "Computer")
-                _page.CodeWithAspect = typeDeclaration.ToString();
+                _page.CodeWithAspect = typeDeclaration.ToNetAspectString();
             base.VisitTypeDeclaration(typeDeclaration);
         }
 
 
         public override void VisitLambdaExpression(LambdaExpression lambdaExpression)
         {
-            _page.TestWithAspect = lambdaExpression.Body.ToString();
+            _page.TestWithAspect = lambdaExpression.Body.ToNetAspectString().Indent();
             base.VisitLambdaExpression(lambdaExpression);
         }
     }

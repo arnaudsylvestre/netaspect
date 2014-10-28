@@ -1,9 +1,6 @@
 ﻿#set( $H = '#' )
 
-<div class="bs-docs-section">
-				<div class="page-header">
 					<h1 id="dropdowns">Interceptors</h1>
-				</div>
 				<p>An interceptor is a <b>method</b> declared in the <b>aspect</b> and which will be called at certain moment after the weaving.<br/>Some <b>parameters</b> can be added to the interceptor to get more information</p>
 				<p>The following interceptors are available :</p>
 #foreach ($member in $section.Members)
@@ -117,4 +114,3 @@ $interceptor.CallCode
 
 
 				</div>
-			</div>

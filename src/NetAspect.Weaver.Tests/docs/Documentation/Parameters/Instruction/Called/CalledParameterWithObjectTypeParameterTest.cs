@@ -17,10 +17,10 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.Instruction.Calle
       {
          return () =>
          {
-            Assert.IsNull(MyAspectAttribute.Called);
+            Assert.IsNull(MyAspectAttribute.Instance);
             var classToWeave_L = new ClassToWeave();
             classToWeave_L.Weaved();
-            Assert.AreEqual(classToWeave_L, MyAspectAttribute.Called);
+            Assert.AreEqual(classToWeave_L, MyAspectAttribute.Instance);
          };
       }
 
@@ -40,12 +40,12 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.Instruction.Calle
 
       public class MyAspectAttribute : Attribute
       {
-          public static object Called;
+          public static object Instance;
          public bool NetAspectAttribute = true;
 
-         public void BeforeCallMethod(object called)
+         public void BeforeCallMethod(object instance)
          {
-            Called = called;
+            Instance = instance;
          }
       }
    }

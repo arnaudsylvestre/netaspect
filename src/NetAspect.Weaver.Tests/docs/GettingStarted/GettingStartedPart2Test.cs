@@ -20,23 +20,28 @@ namespace NetAspect.Weaver.Tests.docs.GettingStarted
       {
          return () =>
          {
-            LogAttribute.writer = new StringWriter();
             var computer = new Computer();
-            Assert.AreEqual(2, computer.Divide(12, 6));
-            Assert.AreEqual("Before calling method", LogAttribute.writer.ToString());
+             try
+             {
+                 computer.Divide(12, 0);
+             }
+             catch (Exception)
+             {
+                 Assert.AreEqual("An exception !", LogAttribute.writer.ToString());
+             }
          };
       }
 
 
       public class LogAttribute : Attribute
       {
-         public static StringWriter writer;
-
          public bool NetAspectAttribute = true;
+         public static StringWriter writer = new StringWriter();
 
-         public void BeforeMethod()
+
+         public void OnExceptionMethod()
          {
-            writer.Write("Before calling method");
+            writer.Write("An exception !");
          }
       }
    }

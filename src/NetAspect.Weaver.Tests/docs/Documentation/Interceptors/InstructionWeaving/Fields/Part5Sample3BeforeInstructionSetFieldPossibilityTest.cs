@@ -46,7 +46,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
 
          public void BeforeUpdateField(
             MyInt caller,
-            MyInt called,
+            MyInt instance,
             int columnNumber,
             int lineNumber,
             string fileName,
@@ -56,7 +56,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             FieldInfo field)
          {
             Called = true;
-            Assert.AreEqual(caller, called);
+            Assert.AreEqual(caller, instance);
             Assert.NotNull(caller);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(33, lineNumber);

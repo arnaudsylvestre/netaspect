@@ -19,6 +19,7 @@ namespace NetAspect.Doc.Builder.Core.Readers
         {
             using (var stream = File.OpenRead(csFilePath))
             {
+                
                 var syntaxTree = parser.Parse(stream);
                 var visitor = new TVisitor();
                 visitor.SetModel(model);

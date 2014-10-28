@@ -61,8 +61,8 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
             string fileName,
             string filePath,
             object[] callerParameters,
-            object[] calledParameters,
-            int calledValue,
+            object[] parameters,
+            int value,
             MethodBase callerMethod)
          {
             Called = true;
@@ -72,9 +72,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
             Assert.AreEqual("AfterCallConstructorParametersTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(3, callerParameters.Length);
-            Assert.AreEqual(1, calledParameters.Length);
+            Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual("Compute", callerMethod.Name);
-            Assert.AreEqual(12, calledValue);
+            Assert.AreEqual(12, value);
          }
       }
    }

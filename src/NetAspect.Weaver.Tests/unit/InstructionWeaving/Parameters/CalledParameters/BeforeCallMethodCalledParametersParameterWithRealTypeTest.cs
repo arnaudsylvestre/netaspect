@@ -10,7 +10,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.CalledParame
       {
          return () =>
          {
-            Assert.IsNull(MyAspect.CalledParameters);
+            Assert.IsNull(MyAspect.Parameters);
             var classToWeave_L = new ClassToWeave();
             classToWeave_L.Weaved();
             Assert.AreEqual(
@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.CalledParame
                {
                   1, 2
                },
-               MyAspect.CalledParameters);
+               MyAspect.Parameters);
          };
       }
 
@@ -38,12 +38,12 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.CalledParame
 
       public class MyAspect : Attribute
       {
-         public static object[] CalledParameters;
+         public static object[] Parameters;
          public bool NetAspectAttribute = true;
 
-         public void BeforeCallMethod(object[] calledParameters)
+         public void BeforeCallMethod(object[] parameters)
          {
-            CalledParameters = calledParameters;
+            Parameters = parameters;
          }
       }
    }

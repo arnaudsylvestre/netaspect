@@ -62,8 +62,8 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             string fileName,
             string filePath,
             object[] callerParameters,
-            object[] calledParameters,
-            int calledValue,
+            object[] parameters,
+            int value,
             MethodBase callerMethod)
          {
             Called = true;
@@ -73,9 +73,9 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             Assert.AreEqual("Part8Sample1BeforeInstructionCallMethodPossibilityTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(3, callerParameters.Length);
-            Assert.AreEqual(1, calledParameters.Length);
+            Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual("Compute", callerMethod.Name);
-            Assert.AreEqual(12, calledValue);
+            Assert.AreEqual(12, value);
          }
       }
    }

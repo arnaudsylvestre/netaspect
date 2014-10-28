@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters
               new ErrorReport.Error
               {
                   Level = ErrorLevel.Error,
-                  Message = string.Format("The parameter 'unknown' in the interceptor BeforeCallMethod of the aspect {0} is unknown. Expected one of : called, calledparameters, calledv, method, caller, callerparameters, callermethod, columnnumber, linenumber, filepath, filename", typeof(LogAttribute).FullName)
+                  Message = string.Format("The parameter 'unknown' in the interceptor BeforeCallMethod of the aspect {0} is unknown. Expected one of : instance, parameters, v, method, caller, callerparameters, callermethod, columnnumber, linenumber, filepath, filename", typeof(LogAttribute).FullName)
               });
        }
 

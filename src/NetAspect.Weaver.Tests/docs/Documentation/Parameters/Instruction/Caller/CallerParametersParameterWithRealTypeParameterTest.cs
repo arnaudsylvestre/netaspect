@@ -46,9 +46,9 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.Instruction.Calle
          public static object[] CalledParameters;
          public bool NetAspectAttribute = true;
 
-         public void BeforeCallMethod(object[] calledParameters)
+         public void BeforeCallMethod(object[] parameters)
          {
-            CalledParameters = calledParameters;
+            CalledParameters = parameters;
          }
       }
    }

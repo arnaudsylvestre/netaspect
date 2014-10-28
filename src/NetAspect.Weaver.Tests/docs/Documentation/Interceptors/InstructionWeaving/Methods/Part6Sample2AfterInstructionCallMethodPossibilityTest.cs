@@ -57,14 +57,14 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
 
          public void AfterCallMethod(
             MyIntUser caller,
-            MyInt called,
+            MyInt instance,
             int columnNumber,
             int lineNumber,
             string fileName,
             string filePath,
             object[] callerParameters,
-            object[] calledParameters,
-            int calledV,
+            object[] parameters,
+            int v,
             MethodBase callerMethod)
          {
             Called = true;
@@ -75,9 +75,9 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             Assert.AreEqual("Part6Sample2AfterInstructionCallMethodPossibilityTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(3, callerParameters.Length);
-            Assert.AreEqual(1, calledParameters.Length);
+            Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual("Compute", callerMethod.Name);
-            Assert.AreEqual(6, calledV);
+            Assert.AreEqual(6, v);
          }
       }
    }

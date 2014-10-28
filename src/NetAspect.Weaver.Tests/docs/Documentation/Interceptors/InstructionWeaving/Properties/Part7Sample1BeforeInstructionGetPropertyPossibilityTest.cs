@@ -47,7 +47,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
 
          public void BeforeGetProperty(
             MyInt caller,
-            MyInt called,
+            MyInt instance,
             int columnNumber,
             int lineNumber,
             string fileName,
@@ -57,7 +57,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             PropertyInfo property)
          {
             Called = true;
-            Assert.AreEqual(caller, called);
+            Assert.AreEqual(caller, instance);
             Assert.NotNull(caller);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(39, lineNumber);

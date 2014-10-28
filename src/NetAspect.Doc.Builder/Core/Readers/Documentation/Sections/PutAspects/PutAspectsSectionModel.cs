@@ -15,7 +15,7 @@ namespace NetAspect.Doc.Builder.Model
 
         public string WeaveWithAttributeSampleAspect { get { return aspectByAttribute.AspectCode; } }
         public string WeaveWithAttributeSampleClassToWeave { get { return aspectByAttribute.ClassToWeaveCode; } }
-        public string WeaveWithSelectSampleAspect { get { return aspectBySelect.ClassToWeaveCode; } }
+        public string WeaveWithSelectSampleAspect { get { return aspectBySelect.AspectCode; } }
         public string WeaveWithSelectSampleClassToWeave { get { return aspectBySelect.ClassToWeaveCode; } }
     }
 }

@@ -56,14 +56,14 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters
 
          public void BeforeCallMethod(
             MyIntUser caller,
-            MyInt called,
+            MyInt instance,
             int columnNumber,
             int lineNumber,
             string fileName,
             string filePath,
             object[] callerParameters,
-            object[] calledParameters,
-            int calledV,
+            object[] parameters,
+            int v,
             MethodBase callerMethod)
          {
             Called = true;
@@ -74,9 +74,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters
             Assert.AreEqual("BeforeCallMethodParametersTest.cs", fileName);
             Assert.AreEqual(fileName, Path.GetFileName(filePath));
             Assert.AreEqual(3, callerParameters.Length);
-            Assert.AreEqual(1, calledParameters.Length);
+            Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual("Compute", callerMethod.Name);
-            Assert.AreEqual(6, calledV);
+            Assert.AreEqual(6, v);
          }
       }
    }

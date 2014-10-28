@@ -2,6 +2,7 @@
 using System.Linq;
 using ICSharpCode.NRefactory.CSharp;
 using NetAspect.Doc.Builder.Core.Readers;
+using NetAspect.Doc.Builder.Core.Readers.Helpers;
 using NetAspect.Doc.Builder.Helpers;
 
 namespace NetAspect.Doc.Builder
@@ -57,7 +58,7 @@ namespace NetAspect.Doc.Builder
 
         public override void VisitLambdaExpression(LambdaExpression lambdaExpression)
         {
-            model.CallCode = lambdaExpression.Body.ToString();
+            model.CallCode = lambdaExpression.Body.ToNetAspectString();
             base.VisitLambdaExpression(lambdaExpression);
         }
 
@@ -65,11 +66,11 @@ namespace NetAspect.Doc.Builder
         {
             if (typeDeclaration.Name.EndsWith("Attribute"))
             {
-                model.AspectCode = typeDeclaration.ToString();
+                model.AspectCode = typeDeclaration.ToNetAspectString();
             }
             if (typeDeclaration.Name == "MyInt" || typeDeclaration.Name == "ClassToWeave")
             {
-                model.ClassToWeaveCode = typeDeclaration.ToString();
+                model.ClassToWeaveCode = typeDeclaration.ToNetAspectString();
             }
             base.VisitTypeDeclaration(typeDeclaration);
         }
