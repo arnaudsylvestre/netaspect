@@ -335,6 +335,8 @@
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\CheckAvailableParametersForBeforePropertySetMethodTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\OnExceptionPropertySetMethodParametersTest.cs" />
     <Compile Include="unit\MethodWeaving\Properties\Updater\Parameters\OnFinallyPropertySetMethodParametersTest.cs" />
+    <Compile Include="unit\MultiWeaving\CheckWithIfCallTest.cs" />
+    <Compile Include="unit\MultiWeaving\CheckWithIfMethodTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\Parameters\BeforeMethodForParameterParametersTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\Parameters\AfterMethodForParameterParametersTest.cs" />
     <Compile Include="unit\ParameterWeaving\Method\Parameters\CheckAvailableParametersForAfterMethodForParameterTest.cs" />
