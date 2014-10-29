@@ -37,7 +37,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Constructor
          public static MethodBase Method;
          public bool NetAspectAttribute = true;
 
-         public void AfterConstructor(ref MethodBase constructor)
+         public void AfterConstructor(ref ConstructorInfo constructor)
          {
             Method = constructor;
          }

@@ -39,7 +39,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Flow
          public static MethodBase Method;
          public bool NetAspectAttribute = true;
 
-         public void AfterMethod(MethodBase method)
+         public void AfterMethod(MethodInfo method)
          {
             Method = method;
          }

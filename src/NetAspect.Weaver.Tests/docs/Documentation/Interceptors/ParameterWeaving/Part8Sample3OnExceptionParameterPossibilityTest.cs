@@ -54,7 +54,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.ParameterWeavin
             MyInt instance,
             object[] parameters,
             ParameterInfo parameter,
-            Exception exception, MethodBase method, int lineNumber, int columnNumber, string fileName, string filePath)
+            Exception exception, MethodInfo method, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.NotNull(instance);

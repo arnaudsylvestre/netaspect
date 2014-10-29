@@ -56,7 +56,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.M
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void OnExceptionMethod(object instance, MethodBase method, object[] parameters, int v, Exception exception, int lineNumber, int columnNumber, string fileName, string filePath)
+         public void OnExceptionMethod(object instance, MethodInfo method, object[] parameters, int v, Exception exception, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());

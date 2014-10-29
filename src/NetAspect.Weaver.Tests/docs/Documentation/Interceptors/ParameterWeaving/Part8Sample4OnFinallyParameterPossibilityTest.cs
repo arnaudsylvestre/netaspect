@@ -46,7 +46,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.ParameterWeavin
          public void OnFinallyMethodForParameter(int parameterValue,
             MyInt instance,
             object[] parameters,
-            ParameterInfo parameter, MethodBase method, int lineNumber, int columnNumber, string fileName, string filePath)
+            ParameterInfo parameter, MethodInfo method, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.NotNull(instance);

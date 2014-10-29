@@ -49,7 +49,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.MethodWeaving.C
          public static bool Called;
          public bool NetAspectAttribute = true;
 
-         public void OnFinallyConstructor(object instance, MethodBase constructor, object[] parameters, int intValue, int lineNumber, int columnNumber, string fileName, string filePath)
+         public void OnFinallyConstructor(object instance, ConstructorInfo constructor, object[] parameters, int intValue, int lineNumber, int columnNumber, string fileName, string filePath)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());

@@ -20,7 +20,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
 
         public static CommonWeavingInfo AddCallerMethod(this CommonWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
         {
-            return weavingInfo_P.AddMethod(interceptorParameterPossibilitiesP, "callermethod");
+            return weavingInfo_P.AddMethodBase(interceptorParameterPossibilitiesP, "callermethod");
         }
     }
 }

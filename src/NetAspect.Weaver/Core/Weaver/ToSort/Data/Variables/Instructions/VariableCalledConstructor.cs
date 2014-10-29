@@ -26,9 +26,12 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Instructions
         {
            var methodReference = instruction.GetCalledMethod();
            ModuleDefinition module = method.Module;
+           VariableDefinition type = new VariableDefinition(module.Import(typeof(Type)));
+            allVariables.Add(type);
            VariableDefinition constructorVariable = new VariableDefinition(module.Import(typeof (ConstructorInfo)));
            instructionsToInsert.calledConstructorInstructions.AppendCallToTypeOf(module, methodReference.DeclaringType);
-           instructionsToInsert.calledConstructorInstructions.AppendCallToGetConstructor(methodReference, module, var => allVariables.Add(var));
+           instructionsToInsert.calledConstructorInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, type));
+           instructionsToInsert.calledConstructorInstructions.AppendCallToGetConstructor(methodReference, module, var => allVariables.Add(var), type);
            instructionsToInsert.calledConstructorInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, constructorVariable));
            return constructorVariable;
         }

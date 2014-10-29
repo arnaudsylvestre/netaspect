@@ -27,7 +27,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
         {
             interceptorParameterPossibilitiesP.AddPossibleParameter("constructor")
                                               .WhichCanNotBeReferenced()
-                                              .WhichMustBeOfType<VariablesForInstruction, MethodBase>()
+                                              .WhichMustBeOfType<VariablesForInstruction, ConstructorInfo>()
                                               .AndInjectTheVariable(variables => variables.CalledConstructor.Definition);
             return weavingInfo_P;
         }
@@ -35,7 +35,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
         {
             interceptorParameterPossibilitiesP.AddPossibleParameter("method")
                                               .WhichCanNotBeReferenced()
-                                              .WhichMustBeOfType<VariablesForInstruction, MethodBase>()
+                                              .WhichMustBeOfType<VariablesForInstruction, MethodInfo>()
                                               .AndInjectTheVariable(variables => variables.CalledMethod.Definition);
             return weavingInfo_P;
         }

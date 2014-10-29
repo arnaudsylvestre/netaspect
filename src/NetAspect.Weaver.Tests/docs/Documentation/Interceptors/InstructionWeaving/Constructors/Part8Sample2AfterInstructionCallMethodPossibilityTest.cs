@@ -65,7 +65,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             object[] parameters,
             int value,
             MethodBase callerMethod,
-             MethodBase constructor)
+             ConstructorInfo constructor)
          {
              Called = true;
              Assert.NotNull(caller);

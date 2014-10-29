@@ -15,7 +15,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
         public static VariablesForMethod CreateVariablesForMethod(InstructionsToInsert instructionsToInsert, MethodDefinition method, List<VariableDefinition> variables, VariableDefinition result)
         {
             return new VariablesForMethod(
-                new Variable(instructionsToInsert, new VariableCurrentMethodBuilder(), method, null, variables),
+                new Variable(instructionsToInsert, new VariableCurrentMethodBuilder(variables), method, null, variables),
                 new Variable(instructionsToInsert, new VariableCurrentProperty(), method, null, variables),
                 new Variable(instructionsToInsert, new VariableParameters(), method, null, variables),
                 new Variable(instructionsToInsert, new VariableException(), method, null, variables),

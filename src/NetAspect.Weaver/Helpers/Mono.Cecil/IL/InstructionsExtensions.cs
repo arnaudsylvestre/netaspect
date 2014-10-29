@@ -42,14 +42,15 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
 
        public static void AppendCallToGetConstructor(this List<Instruction> instructions,
           MethodReference methodReference,
-          ModuleDefinition module, Action<VariableDefinition> addVariable)
+          ModuleDefinition module, Action<VariableDefinition> addVariable, VariableDefinition typeInstance)
        {
-          var typesFromParameters_L = CreateTypesFromParameters(instructions, methodReference);
+           var typesFromParameters_L = CreateTypesFromParameters(instructions, methodReference);
+           instructions.Add(Instruction.Create(OpCodes.Ldloc, typeInstance));
            instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 60));
            instructions.Add(Instruction.Create(OpCodes.Ldnull));
-          addVariable(typesFromParameters_L);
-          instructions.Add(Instruction.Create(OpCodes.Ldloc, typesFromParameters_L));
-          instructions.Add(Instruction.Create(OpCodes.Ldnull));
+           addVariable(typesFromParameters_L);
+           instructions.Add(Instruction.Create(OpCodes.Ldloc, typesFromParameters_L));
+           instructions.Add(Instruction.Create(OpCodes.Ldnull));
            instructions.Add(
               Instruction.Create(
                  OpCodes.Callvirt,
@@ -61,9 +62,10 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
 
        public static void AppendCallToGetMethod(this List<Instruction> instructions,
           MethodReference methodReference,
-          ModuleDefinition module, Action<VariableDefinition> addVariable)
+          ModuleDefinition module, Action<VariableDefinition> addVariable, VariableDefinition typeInstance)
        {
            var typesFromParameters_L = CreateTypesFromParameters(instructions, methodReference);
+           instructions.Add(Instruction.Create(OpCodes.Ldloc, typeInstance));
            instructions.Add(Instruction.Create(OpCodes.Ldstr, methodReference.Name));
            instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 60));
            instructions.Add(Instruction.Create(OpCodes.Ldnull));
@@ -80,40 +82,25 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
        }
 
 
-
        private static VariableDefinition CreateTypesFromParameters(List<Instruction> instructions, MethodReference methodReference)
        {
            var tabVariable = new VariableDefinition(methodReference.Module.Import(typeof(Type[])));
            instructions.Add(Instruction.Create(OpCodes.Ldc_I4, methodReference.Parameters.Count));
            instructions.Add(Instruction.Create(OpCodes.Newarr, methodReference.Module.Import(typeof(Type))));
-           instructions.Add(Instruction.Create(OpCodes.Stloc, tabVariable));
-           if (methodReference.Parameters.Count > 0)
-            instructions.Add(Instruction.Create(OpCodes.Ldloc, tabVariable));
+           instructions.Add(Instruction.Create(OpCodes.Stloc_S, tabVariable));
            int i = 0;
            foreach (var parameter in methodReference.Parameters)
            {
+               instructions.Add(Instruction.Create(OpCodes.Ldloc_S, tabVariable));
                instructions.Add(Instruction.Create(OpCodes.Ldc_I4, i));
                AppendCallToTypeOf(instructions, methodReference.Module, parameter.ParameterType);
                instructions.Add(Instruction.Create(OpCodes.Stelem_Ref));
+               i++;
 
            }
            return tabVariable;
        }
 
-       public static void AppendCallToGetMethod(this List<Instruction> instructions,
-         string methodName,
-         ModuleDefinition module)
-      {
-         instructions.Add(Instruction.Create(OpCodes.Ldstr, methodName));
-         instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 60));
-         instructions.Add(
-            Instruction.Create(
-               OpCodes.Callvirt,
-               module.Import(
-                  typeof (Type).GetMethod(
-                     "GetMethod",
-                     new[] {typeof (string), typeof (BindingFlags)}))));
-      }
 
       public static void AppendCallToGetProperty(this List<Instruction> instructions,
          string propertyName,

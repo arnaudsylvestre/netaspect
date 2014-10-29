@@ -147,13 +147,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Engine
          return possibility;
       }
 
-      public static InterceptorParameterPossibility<T> AndInjectTheValue<T>(this InterceptorParameterPossibility<T> possibility, string value) where T : VariablesForMethod
-      {
-         possibility.Generators.Add((parameter, instructions, info) => instructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldstr, value)));
-         return possibility;
-      }
-
-      public static InterceptorParameterPossibility<T> AndInjectTheParameterInfo<T>(this InterceptorParameterPossibility<T> possibility, ParameterDefinition parameterDefinition, MethodDefinition method) where T : VariablesForMethod
+        public static InterceptorParameterPossibility<T> AndInjectTheParameterInfo<T>(this InterceptorParameterPossibility<T> possibility, ParameterDefinition parameterDefinition, MethodDefinition method) where T : VariablesForMethod
       {
          possibility.Generators.Add(
             (parameter, instructions, info) =>
@@ -185,26 +179,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Engine
           return possibility;
       }
 
-      public static InterceptorParameterPossibility<VariablesForInstruction> AndInjectTheCalledConstructorInfo(this InterceptorParameterPossibility<VariablesForInstruction> possibility, InstructionWeavingInfo weavingInfo_P)
-      {
-          possibility.Generators.Add(
-             (parameter, instructions, info) =>
-             {
-                 var methodReference = weavingInfo_P.GetOperandAsMethod();
-                 ModuleDefinition module = weavingInfo_P.Method.Module;
-                 var definition = info.Called.Definition;
-                 if (definition != null)
-                     instructions.AppendCallToTargetGetType(module, definition);
-                 else
-                 {
-                     instructions.AppendCallToTypeOf(module, methodReference.DeclaringType);
-                 }
-                 instructions.AppendCallToGetConstructor(methodReference, module, info.AddLocalVariable);
-             });
-          return possibility;
-      }
-
-      public static void AndInjectTheCalledParameter(this InterceptorParameterPossibility<VariablesForInstruction> possibility,
+        public static void AndInjectTheCalledParameter(this InterceptorParameterPossibility<VariablesForInstruction> possibility,
          ParameterDefinition parameter)
       {
          AndInjectTheCalledParameter(possibility, parameter, p => "called" + p.Name);

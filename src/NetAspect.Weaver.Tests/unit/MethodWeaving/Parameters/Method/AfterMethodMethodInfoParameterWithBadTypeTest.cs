@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Method
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "the method parameter in the method AfterMethod of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.MethodBase",
+                           "the method parameter in the method AfterMethod of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.MethodInfo",
                            typeof (MyAspect).FullName)
                   });
       }

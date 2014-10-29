@@ -49,7 +49,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.Method.CurrentMem
           public static MethodBase Constructor;
          public bool NetAspectAttribute = true;
 
-         public void BeforeConstructor(MethodBase constructor)
+         public void BeforeConstructor(ConstructorInfo constructor)
          {
              Constructor = constructor;
             

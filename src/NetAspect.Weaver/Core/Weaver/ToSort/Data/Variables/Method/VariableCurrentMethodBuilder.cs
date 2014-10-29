@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -7,19 +8,33 @@ using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Method
 {
-   public class VariableCurrentMethodBuilder : Variable.IVariableBuilder
-   {
-       public void Check(MethodDefinition method, ErrorHandler errorHandler)
-       {
-           
-       }
+    public class VariableCurrentMethodBuilder : Variable.IVariableBuilder
+    {
+        private List<VariableDefinition> methodVariables;
 
-       public VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Mono.Cecil.Cil.Instruction instruction)
-      {
-         var variable = new VariableDefinition(method.Module.Import(typeof(MethodBase)));
-         var methodInfo_L = typeof(MethodBase).GetMethod("GetCurrentMethod",new Type[] { });
-         instructionsToInsert_P.BeforeInstructions.AppendCallStaticMethodAnsSaveResultInto(methodInfo_L, variable, method.Module);
-         return variable;
-      }
-   }
+        public VariableCurrentMethodBuilder(List<VariableDefinition> methodVariables)
+        {
+            this.methodVariables = methodVariables;
+        }
+
+        public void Check(MethodDefinition method, ErrorHandler errorHandler)
+        {
+
+        }
+
+        public VariableDefinition Build(InstructionsToInsert instructionsToInsert_P, MethodDefinition method, Mono.Cecil.Cil.Instruction instruction)
+        {
+            var variable = new VariableDefinition(method.Module.Import(method.IsConstructor ? typeof(ConstructorInfo) : typeof(MethodInfo)));
+            var type = new VariableDefinition(method.Module.Import(typeof(Type)));
+            methodVariables.Add(type);
+            instructionsToInsert_P.BeforeInstructions.AppendCallToTypeOf(method.Module, method.DeclaringType);
+            instructionsToInsert_P.BeforeInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, type));
+            if (!method.IsConstructor)
+                instructionsToInsert_P.BeforeInstructions.AppendCallToGetMethod(method, method.Module, methodVariables.Add, type);
+            else
+                instructionsToInsert_P.BeforeInstructions.AppendCallToGetConstructor(method, method.Module, methodVariables.Add, type);
+            instructionsToInsert_P.BeforeInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, variable));
+            return variable;
+        }
+    }
 }

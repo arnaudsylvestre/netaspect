@@ -51,7 +51,7 @@ namespace NetAspect.Weaver.Tests.unit.Aspects.Parameters.Members
               this.max = max;
           }
 
-          public void AfterConstructor(object instance, MethodBase constructor, object[] parameters, int intValue, string fileName, string filePath, int lineNumber, int columnNumber)
+          public void AfterConstructor(object instance, ConstructorInfo constructor, object[] parameters, int intValue, string fileName, string filePath, int lineNumber, int columnNumber)
          {
             Called = true;
             Assert.AreEqual(typeof (MyInt), instance.GetType());

@@ -68,22 +68,22 @@ namespace NetAspect.Weaver.Tests.unit.Samples.Methods
 
          public bool NetAspectAttribute = true;
 
-          private static string ComputeLog(string eventName, MethodBase method)
+         private static string ComputeLog(string eventName, MethodInfo method)
           {
               return string.Format("{0} {1} ", eventName, method.Name);
           }
 
-          public void BeforeMethod(MethodBase method)
+         public void BeforeMethod(MethodInfo method)
           {
               Logger.Info(ComputeLog("On enter :", method));
           }
 
-          public void AfterMethod(MethodBase method)
+         public void AfterMethod(MethodInfo method)
           {
               Logger.Info(ComputeLog("On exit :", method));
           }
 
-          public void OnExceptionMethod(MethodBase method, Exception exception)
+         public void OnExceptionMethod(MethodInfo method, Exception exception)
           {
               Logger.Error(ComputeLog(exception.Message, method));
           }

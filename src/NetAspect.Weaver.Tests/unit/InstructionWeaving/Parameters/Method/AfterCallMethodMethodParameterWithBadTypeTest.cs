@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Method
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "the method parameter in the method AfterCallMethod of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Reflection.MethodBase",
+                           "the method parameter in the method AfterCallMethod of the type '{0}' is declared with the type 'System.String' but it is expected to be System.Reflection.MethodInfo",
                            typeof(MyAspect).FullName)
                   });
       }

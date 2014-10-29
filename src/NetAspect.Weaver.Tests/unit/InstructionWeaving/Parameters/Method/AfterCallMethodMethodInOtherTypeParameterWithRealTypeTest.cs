@@ -46,7 +46,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Method
           public static MethodBase Method;
          public bool NetAspectAttribute = true;
 
-         public void AfterCallMethod(MethodBase method)
+         public void AfterCallMethod(MethodInfo method)
          {
              Method = method;
          }

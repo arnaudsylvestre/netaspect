@@ -66,7 +66,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             object[] parameters,
             int v,
             MethodBase callerMethod,
-            MethodBase method,
+            MethodInfo method,
              int result)
          {
             Called = true;

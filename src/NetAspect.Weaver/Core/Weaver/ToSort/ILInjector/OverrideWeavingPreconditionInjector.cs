@@ -21,7 +21,10 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.ILInjector
             {
                 precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldstr, calledMethod.DeclaringType.FullName.Replace('/', '+')));
                 precondition.AppendCallToTargetGetType(method_P.Module, availableInformations.Called.Definition);
-                precondition.AppendCallToGetMethod(calledMethod.Name, method_P.Module);
+                VariableDefinition type = new VariableDefinition(method_P.Module.Import(typeof(Type)));
+                availableInformations.AddLocalVariable(type);
+                precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, type));
+                precondition.AppendCallToGetMethod(calledMethod, method_P.Module, availableInformations.AddLocalVariable, type);
                 precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Callvirt, method_P.Module.Import(typeof (MemberInfo).GetMethod("get_DeclaringType"))));
                 precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Callvirt, method_P.Module.Import(typeof (Type).GetMethod("get_FullName"))));
                 precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Call, method_P.Module.Import(typeof (string).GetMethod("op_Equality"))));

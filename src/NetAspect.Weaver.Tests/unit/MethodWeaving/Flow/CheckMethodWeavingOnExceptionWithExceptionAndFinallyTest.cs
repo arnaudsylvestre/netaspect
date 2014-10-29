@@ -43,12 +43,12 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Flow
          public static MethodBase FinallyMethod;
          public bool NetAspectAttribute = true;
 
-         public void OnExceptionMethod(MethodBase method)
+         public void OnExceptionMethod(MethodInfo method)
          {
             Method = method;
          }
 
-         public void OnFinallyMethod(MethodBase method)
+         public void OnFinallyMethod(MethodInfo method)
          {
             FinallyMethod = method;
          }

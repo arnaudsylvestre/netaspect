@@ -63,7 +63,8 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
             object[] callerParameters,
             object[] parameters,
             int value,
-            MethodBase callerMethod)
+            MethodBase callerMethod,
+             ConstructorInfo constructor)
          {
             Called = true;
             Assert.NotNull(caller);
@@ -74,6 +75,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
             Assert.AreEqual(3, callerParameters.Length);
             Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual("Compute", callerMethod.Name);
+            Assert.AreEqual("MyInt", constructor.DeclaringType.Name);
             Assert.AreEqual(12, value);
          }
       }

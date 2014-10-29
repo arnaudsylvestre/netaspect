@@ -33,7 +33,7 @@ namespace NetAspect.Weaver.Tests.unit.Atttributes.Statics
          public static MethodBase Constructor;
          public bool NetAspectAttribute = true;
 
-         public void BeforeConstructor(MethodBase constructor)
+         public void BeforeConstructor(ConstructorInfo constructor)
          {
             Constructor = constructor;
          }

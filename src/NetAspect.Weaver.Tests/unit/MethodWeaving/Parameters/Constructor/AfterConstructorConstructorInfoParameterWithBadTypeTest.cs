@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Parameters.Constructor
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "the constructor parameter in the method AfterConstructor of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.MethodBase",
+                           "the constructor parameter in the method AfterConstructor of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.Reflection.ConstructorInfo",
                            typeof (MyAspect).FullName)
                   });
       }
