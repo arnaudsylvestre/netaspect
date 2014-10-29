@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Result
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "the result parameter in the method AfterCallMethod of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.String because the return type of the method Weaved in the type {1}",
+                           "the result parameter in the method AfterCallMethod of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.String because the return type of the method Method in the type {1}",
                            typeof (MyAspect).FullName,
                            typeof (ClassToWeave).FullName)
                   });

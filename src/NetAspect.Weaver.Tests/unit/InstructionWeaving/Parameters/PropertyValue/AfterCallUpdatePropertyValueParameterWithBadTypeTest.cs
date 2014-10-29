@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.PropertyValu
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "the propertyValue parameter in the method AfterUpdateProperty of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.String",
+                           "the newPropertyValue parameter in the method AfterUpdateProperty of the type '{0}' is declared with the type 'System.Int32' but it is expected to be System.String",
                            typeof (MyAspect).FullName,
                            typeof (ClassToWeave).FullName)
                   });
@@ -40,9 +40,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.PropertyValu
          public static string Value;
          public bool NetAspectAttribute = true;
 
-         public void AfterUpdateProperty(int propertyValue)
+         public void AfterUpdateProperty(int newPropertyValue)
          {
-             Value = propertyValue.ToString();
+             Value = newPropertyValue.ToString();
          }
       }
    }

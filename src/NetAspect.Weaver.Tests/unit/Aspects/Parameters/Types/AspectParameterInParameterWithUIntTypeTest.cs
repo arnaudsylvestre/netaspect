@@ -38,9 +38,9 @@ namespace NetAspect.Weaver.Tests.unit.Aspects.Parameters.Types
               _value = value;
           }
 
-          public void AfterMethodForParameter(int i)
+          public void AfterMethodForParameter(int parameterValue)
          {
-            I = i;
+            I = parameterValue;
             Max = _value;
          }
       }

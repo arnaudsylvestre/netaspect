@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
         }
         public static InstructionWeavingInfo AddCallFieldValue(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
         {
-            interceptorParameterPossibilitiesP.AddPossibleParameter("fieldValue")
+            interceptorParameterPossibilitiesP.AddPossibleParameter("fieldvalue")
                                               .WhereParameterTypeIsSameAsFieldTypeAndNotReferenced(weavingInfo_P)
                                               .AndInjectTheVariable(variables => variables.ResultForInstruction.Definition);
             return weavingInfo_P;

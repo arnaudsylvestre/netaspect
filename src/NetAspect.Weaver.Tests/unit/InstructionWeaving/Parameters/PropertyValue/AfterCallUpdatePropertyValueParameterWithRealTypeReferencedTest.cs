@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.PropertyValu
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "impossible to ref/out the parameter 'propertyValue' in the method AfterUpdateProperty of the type '{0}'",
+                           "impossible to ref/out the parameter 'newPropertyValue' in the method AfterUpdateProperty of the type '{0}'",
                            typeof (MyAspect).FullName)
                   });
       }
@@ -39,10 +39,10 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.PropertyValu
          public static string Value;
          public bool NetAspectAttribute = true;
 
-         public void AfterUpdateProperty(ref string propertyValue)
+         public void AfterUpdateProperty(ref string newPropertyValue)
          {
-             Value = propertyValue;
-             propertyValue = "New Hello";
+             Value = newPropertyValue;
+             newPropertyValue = "New Hello";
          }
       }
    }

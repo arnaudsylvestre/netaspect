@@ -3,8 +3,8 @@ using NUnit.Framework;
 
 namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
 {
-   public class AfterCallUpdateFieldValueParameterWithRealTypeTest :
-      NetAspectTest<AfterCallUpdateFieldValueParameterWithRealTypeTest.ClassToWeave>
+   public class AfterCallUpdateNewFieldValueParameterWithRealTypeTest :
+      NetAspectTest<AfterCallUpdateNewFieldValueParameterWithRealTypeTest.ClassToWeave>
    {
       protected override Action CreateEnsure()
       {

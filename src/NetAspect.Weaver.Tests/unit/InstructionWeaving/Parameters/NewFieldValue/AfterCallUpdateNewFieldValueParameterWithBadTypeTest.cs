@@ -5,8 +5,8 @@ using NetAspect.Weaver.Core.Model.Errors;
 
 namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Value
 {
-   public class AfterCallUpdateFieldValueParameterWithBadTypeTest :
-      NetAspectTest<AfterCallUpdateFieldValueParameterWithBadTypeTest.ClassToWeave>
+   public class AfterCallUpdateNewFieldValueParameterWithBadTypeTest :
+      NetAspectTest<AfterCallUpdateNewFieldValueParameterWithBadTypeTest.ClassToWeave>
    {
       protected override Action<List<ErrorReport.Error>> CreateErrorHandlerProvider()
       {

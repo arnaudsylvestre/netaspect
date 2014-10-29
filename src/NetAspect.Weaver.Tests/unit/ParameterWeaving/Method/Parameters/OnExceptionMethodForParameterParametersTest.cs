@@ -51,7 +51,6 @@ namespace NetAspect.Weaver.Tests.unit.ParameterWeaving.Method.Parameters
 
          public void OnExceptionMethodForParameter(int parameterValue,
             MyInt instance,
-            int v,
             object[] parameters,
             ParameterInfo parameter,
             Exception exception)
@@ -62,7 +61,6 @@ namespace NetAspect.Weaver.Tests.unit.ParameterWeaving.Method.Parameters
             Assert.AreEqual(1, parameters.Length);
             Assert.AreEqual(0, parameterValue);
             Assert.AreEqual("DivideByZeroException", exception.GetType().Name);
-            Assert.AreEqual(0, v);
          }
       }
    }

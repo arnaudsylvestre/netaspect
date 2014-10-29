@@ -35,9 +35,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.PropertyValu
          public static string Value;
          public bool NetAspectAttribute = true;
 
-         public void BeforeUpdateProperty(string propertyValue)
+         public void BeforeUpdateProperty(string newPropertyValue)
          {
-             Value = propertyValue;
+             Value = newPropertyValue;
          }
       }
    }

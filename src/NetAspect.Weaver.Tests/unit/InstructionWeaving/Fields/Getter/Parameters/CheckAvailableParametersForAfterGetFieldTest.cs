@@ -17,7 +17,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Fields.Getter.Parameter
               new ErrorReport.Error
               {
                   Level = ErrorLevel.Error,
-                  Message = string.Format("The parameter 'unknown' in the interceptor AfterGetField of the aspect {0} is unknown. Expected one of : instance, field, columnnumber, linenumber, filepath, filename, caller, callerparameters, callermethod, result", typeof(LogAttribute).FullName)
+                  Message = string.Format("The parameter 'unknown' in the interceptor AfterGetField of the aspect {0} is unknown. Expected one of : instance, field, columnnumber, linenumber, filepath, filename, caller, callerparameters, callermethod, fieldvalue", typeof(LogAttribute).FullName)
               });
        }
 

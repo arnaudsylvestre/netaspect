@@ -54,7 +54,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             object[] callerParameters,
             MethodBase callerMethod,
             FieldInfo field,
-             int result)
+             int fieldValue)
          {
             Called = true;
             Assert.AreEqual(caller, instance);
@@ -66,7 +66,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             Assert.AreEqual(1, callerParameters.Length);
             Assert.AreEqual("DivideBy", callerMethod.Name);
             Assert.AreEqual("value", field.Name);
-            Assert.AreEqual(12, result);
+            Assert.AreEqual(12, fieldValue);
          }
       }
    }
