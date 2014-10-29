@@ -9,7 +9,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
     {
         public static CommonWeavingInfo AddCallerParameters(this CommonWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
         {
-            return CurrentInstancePossibility.AddCurrentParameters(weavingInfo_P, interceptorParameterPossibilitiesP, "callerparameters");
+            return weavingInfo_P.AddCurrentParameters(interceptorParameterPossibilitiesP, "callerparameters");
         }
 
 
