@@ -45,7 +45,9 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="mscorlib" />
+    <Reference Include="mscorlib">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunitlite, Version=0.8.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\nunitlite.dll</HintPath>
@@ -60,13 +62,72 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Tests\*.cs">
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tests\" />
+    <Compile Include="Tests\CalledParameterNameParameterWithRealTypeParameterTest.cs" />
+    <Compile Include="Tests\CalledParametersParameterWithRealTypeParameterTest.cs" />
+    <Compile Include="Tests\CalledParameterWithObjectTypeParameterTest.cs" />
+    <Compile Include="Tests\CalledParameterWithRealTypeParameterTest.cs" />
+    <Compile Include="Tests\CallerParametersParameterWithRealTypeParameterTest.cs" />
+    <Compile Include="Tests\CallerParameterWithObjectTypeParameterTest.cs" />
+    <Compile Include="Tests\CallerParameterWithRealTypeParameterTest.cs" />
+    <Compile Include="Tests\ColumnNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="Tests\ConstructorParameterWithRealTypeTest.cs" />
+    <Compile Include="Tests\ExceptionParameterWithRealTypeTest.cs" />
+    <Compile Include="Tests\FieldParameterWithRealTypeParameterTest.cs" />
+    <Compile Include="Tests\FileNameParameterWithRealTypeTest.cs" />
+    <Compile Include="Tests\FilePathParameterWithRealTypeTest.cs" />
+    <Compile Include="Tests\GettingStartedPart2Test.cs" />
+    <Compile Include="Tests\InstanceParameterWithObjectTypeParameterTest.cs" />
+    <Compile Include="Tests\InstanceParameterWithRealTypeParameterTest.cs" />
+    <Compile Include="Tests\LineNumberParameterWithRealTypeTest.cs" />
+    <Compile Include="Tests\MethodParameterWithRealTypeTest.cs" />
+    <Compile Include="Tests\MethodWeavingForDocWithStartDivisionAndParametersTest.cs" />
+    <Compile Include="Tests\MethodWeavingForDocWithStartDivisionTest.cs" />
+    <Compile Include="Tests\NewFieldValueParameterWithRealTypeParameterTest.cs" />
+    <Compile Include="Tests\ParameterNameParameterWithRealTypeParameterTest.cs" />
+    <Compile Include="Tests\ParameterParameterWithRealTypeTest.cs" />
+    <Compile Include="Tests\ParametersParameterWithRealTypeParameterTest.cs" />
+    <Compile Include="Tests\ParameterValueParameterWithObjectTypeTest.cs" />
+    <Compile Include="Tests\ParameterValueParameterWithRealTypeTest.cs" />
+    <Compile Include="Tests\Part1Sample1BeforeMethodPossibilityTest.cs" />
+    <Compile Include="Tests\Part1Sample2AfterMethodPossibilityTest.cs" />
+    <Compile Include="Tests\Part1Sample3OnExceptionMethodPossibilityTest.cs" />
+    <Compile Include="Tests\Part1Sample4OnFinallyMethodPossibilityTest.cs" />
+    <Compile Include="Tests\Part2Sample1BeforeConstructorPossibilityTest.cs" />
+    <Compile Include="Tests\Part2Sample2AfterConstructorPossibilityTest.cs" />
+    <Compile Include="Tests\Part2Sample3OnExceptionConstructorPossibilityTest.cs" />
+    <Compile Include="Tests\Part2Sample4OnFinallyConstructorPossibilityTest.cs" />
+    <Compile Include="Tests\Part3Sample1BeforePropertyGetPossibilityTest.cs" />
+    <Compile Include="Tests\Part3Sample2AfterProeprtyGetPossibilityTest.cs" />
+    <Compile Include="Tests\Part3Sample3OnExceptionPropertyGetPossibilityTest.cs" />
+    <Compile Include="Tests\Part3Sample4OnFinallyPropertyGetPossibilityTest.cs" />
+    <Compile Include="Tests\Part4Sample1BeforePropertySetPossibilityTest.cs" />
+    <Compile Include="Tests\Part4Sample2AfterPropertySetPossibilityTest.cs" />
+    <Compile Include="Tests\Part4Sample3OnExceptionPropertySetPossibilityTest.cs" />
+    <Compile Include="Tests\Part4Sample4OnFinallyPropertySetPossibilityTest.cs" />
+    <Compile Include="Tests\Part5Sample1BeforeInstructionGetFieldPossibilityTest.cs" />
+    <Compile Include="Tests\Part5Sample2AfterInstructionGetFieldPossibilityTest.cs" />
+    <Compile Include="Tests\Part5Sample3BeforeInstructionSetFieldPossibilityTest.cs" />
+    <Compile Include="Tests\Part5Sample4AfterInstructionSetFieldPossibilityTest.cs" />
+    <Compile Include="Tests\Part6Sample1BeforeInstructionCallMethodPossibilityTest.cs" />
+    <Compile Include="Tests\Part6Sample2AfterInstructionCallMethodPossibilityTest.cs" />
+    <Compile Include="Tests\Part7Sample1BeforeInstructionGetPropertyPossibilityTest.cs" />
+    <Compile Include="Tests\Part7Sample2AfterInstructionGetPropertyPossibilityTest.cs" />
+    <Compile Include="Tests\Part7Sample3BeforeInstructionSetPropertyPossibilityTest.cs" />
+    <Compile Include="Tests\Part7Sample4AfterInstructionSetPropertyPossibilityTest.cs" />
+    <Compile Include="Tests\Part8Sample1BeforeInstructionCallMethodPossibilityTest.cs" />
+    <Compile Include="Tests\Part8Sample1BeforeParameterPossibilityTest.cs" />
+    <Compile Include="Tests\Part8Sample2AfterInstructionCallMethodPossibilityTest.cs" />
+    <Compile Include="Tests\Part8Sample2AfterParameterPossibilityTest.cs" />
+    <Compile Include="Tests\Part8Sample3OnExceptionParameterPossibilityTest.cs" />
+    <Compile Include="Tests\Part8Sample4OnFinallyParameterPossibilityTest.cs" />
+    <Compile Include="Tests\PerInstanceLifeCycleSampleTest.cs" />
+    <Compile Include="Tests\PerTypeLifeCycleSampleTest.cs" />
+    <Compile Include="Tests\PropertyParameterWithRealTypeTest.cs" />
+    <Compile Include="Tests\PropertyValueParameterWithRealTypeTest.cs" />
+    <Compile Include="Tests\ResultParameterWithRealTypeTest.cs" />
+    <Compile Include="Tests\TransientLifeCycleSampleTest.cs" />
+    <Compile Include="Tests\WeaveWithAttributeSampleTest.cs" />
+    <Compile Include="Tests\WeaveWithSelectSampleTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
   <Import Project="NetAspect.targets" Condition="Exists('NetAspect.targets')" />

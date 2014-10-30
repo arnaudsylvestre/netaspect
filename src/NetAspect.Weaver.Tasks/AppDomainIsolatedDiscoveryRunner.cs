@@ -14,7 +14,7 @@ namespace NetAspect.Weaver.Tasks
          weavedFiles = null;
          try
          {
-            WeaverEngine weaverEngine_L = WeaverFactory.Create();
+             WeaverEngine weaverEngine_L = WeaverFactory.Create(assemblyPath);
             ErrorReport handler = weaverEngine_L.Weave(assemblyPath, TargetFileName);
 
             foreach (string warning_L in handler.Warnings)

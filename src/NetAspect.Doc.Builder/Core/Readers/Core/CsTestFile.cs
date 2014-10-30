@@ -8,6 +8,8 @@ namespace NetAspect.Doc.Builder.Helpers
         public CsTestFile()
         {
             Parameters = new List<string>();
+            UserCode = "";
+            ClassToWeaveCode = "";
         }
 
         public string Name { get; set; }
@@ -32,5 +34,11 @@ namespace NetAspect.Doc.Builder.Helpers
         public string ClassToWeaveCode { get; set; }
 
         public string When { get; set; }
+
+        public bool CanBeRun { get; set; }
+
+        public string TestName { get; set; }
+
+        public string UserCode { get; set; }
     }
 }

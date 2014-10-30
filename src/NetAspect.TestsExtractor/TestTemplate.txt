@@ -1,0 +1,30 @@
+﻿
+using System;
+using System.Reflection;
+using NUnit.Framework;
+using System.IO;
+using System.Text;
+
+namespace ${namespace}.ns$test.TestName
+{
+
+	[TestFixture]
+	public class Test$test.TestName
+	{
+		public void Check()
+		$test.CallCode		
+
+
+		
+				
+
+	}
+
+	
+		$test.UserCode
+
+		$test.AspectCode
+
+		$test.ClassToWeaveCode
+
+}

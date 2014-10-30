@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
@@ -15,24 +16,30 @@ namespace NetAspect.Weaver.Core.Assemblies
       private readonly Dictionary<Assembly, AssemblyDefinition> asms = new Dictionary<Assembly, AssemblyDefinition>();
       private readonly IAssemblyChecker assemblyChecker;
       private readonly Func<TypeDefinition, bool> typesToSave;
+       private string assemblyPath;
 
-      public AssemblyPool(IAssemblyChecker assemblyChecker, Func<TypeDefinition, bool> typesToSave_P)
+      public AssemblyPool(IAssemblyChecker assemblyChecker, Func<TypeDefinition, bool> typesToSave_P, string assemblyPath)
       {
          this.assemblyChecker = assemblyChecker;
          typesToSave = typesToSave_P;
+          this.assemblyPath = assemblyPath;
       }
 
       public void Add(IEnumerable<Assembly> assemblies)
       {
          foreach (Assembly assembly_L in assemblies)
          {
-            asms.Add(
+             var defaultAssemblyResolver = new DefaultAssemblyResolver();
+             if (assemblyPath != null)
+                defaultAssemblyResolver.AddSearchDirectory(Path.GetDirectoryName(assemblyPath));
+             asms.Add(
                assembly_L,
                AssemblyDefinition.ReadAssembly(
                   assembly_L.GetAssemblyPath(),
                   new ReaderParameters(ReadingMode.Immediate)
                   {
-                     ReadSymbols = true
+                     ReadSymbols = true,
+                     AssemblyResolver = defaultAssemblyResolver
                   }));
          }
       }

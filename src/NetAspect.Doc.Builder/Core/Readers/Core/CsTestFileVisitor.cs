@@ -64,19 +64,31 @@ namespace NetAspect.Doc.Builder
 
         public override void VisitTypeDeclaration(TypeDeclaration typeDeclaration)
         {
-            if (typeDeclaration.Name.EndsWith("Attribute"))
+            if (string.IsNullOrEmpty(model.TestName))
+            {
+                model.TestName = typeDeclaration.Name;
+                
+            }
+            else if (typeDeclaration.Name.EndsWith("Attribute"))
             {
                 model.AspectCode = typeDeclaration.ToNetAspectString();
             }
-            if (typeDeclaration.Name == "MyInt" || typeDeclaration.Name == "ClassToWeave")
+            else if (typeDeclaration.Name == "MyInt" || typeDeclaration.Name == "ClassToWeave")
             {
                 model.ClassToWeaveCode = typeDeclaration.ToNetAspectString();
+            }
+            else
+            {
+                model.UserCode = typeDeclaration.ToNetAspectString();
             }
             base.VisitTypeDeclaration(typeDeclaration);
         }
 
         public override void VisitMethodDeclaration(MethodDeclaration methodDeclaration)
         {
+            if (methodDeclaration.Name == "CreateEnsure")
+                model.CanBeRun = true;
+
             if (((TypeDeclaration) methodDeclaration.Parent).Name.EndsWith("Attribute"))
             {
                 model.Name = methodDeclaration.Name;

@@ -25,7 +25,7 @@ namespace NetAspect.Weaver.Tests.Helpers
          Assembly otherAssembly = Assembly.LoadFrom(otherDll);
          Type type = assembly.GetTypes().First(t => t.FullName == typeName);
          Type otherType = otherAssembly.GetTypes().First(t => t.FullName == otherTypeName);
-         WeaverEngine weaver = WeaverFactory.Create(t => TypeMustBeSaved(t, typeName, otherTypeName));
+         WeaverEngine weaver = WeaverFactory.Create(null, t => TypeMustBeSaved(t, typeName, otherTypeName));
          ErrorReport errorHandler = weaver.Weave(ComputeTypes(type, otherType), a => ChangeName(dll_L, a, tempDirectory), ComputeTypes(type, otherType));
          var builder = new StringBuilder();
          errorHandler.Dump(builder);

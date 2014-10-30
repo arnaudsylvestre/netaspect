@@ -9,16 +9,18 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine.AssemblyPoolFactories
    {
       private readonly IAssemblyChecker assemblyChecker;
       private readonly Func<TypeDefinition, bool> typesToSave;
+       private string assemblyPath;
 
-      public DefaultAssemblyPoolFactory(IAssemblyChecker assemblyChecker_P, Func<TypeDefinition, bool> typesToSave_P)
+       public DefaultAssemblyPoolFactory(IAssemblyChecker assemblyChecker_P, Func<TypeDefinition, bool> typesToSave_P, string assemblyPath)
       {
          assemblyChecker = assemblyChecker_P;
          typesToSave = typesToSave_P;
+           this.assemblyPath = assemblyPath;
       }
 
       public AssemblyPool Create()
       {
-         return new AssemblyPool(assemblyChecker, typesToSave);
+         return new AssemblyPool(assemblyChecker, typesToSave, assemblyPath);
       }
    }
 }

@@ -15,7 +15,7 @@ namespace NetAspect.Weaver.Factory
 {
    public static class WeaverFactory
    {
-       public static WeaverEngine Create(Func<TypeDefinition, bool> typesToSave = null)
+       public static WeaverEngine Create(string assemblyPath, Func<TypeDefinition, bool> typesToSave = null)
       {
            return new WeaverEngine(
             new WeavingSessionComputer(
@@ -40,7 +40,7 @@ namespace NetAspect.Weaver.Factory
                   MethodWeavingDetectorFactory.BuildMethodParameterDetector(),
                   MethodWeavingDetectorFactory.BuildConstructorParameterDetector(),
                }),
-            new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker(), typesToSave),
+            new DefaultAssemblyPoolFactory(new PeVerifyAssemblyChecker(), typesToSave, assemblyPath),
             new ErrorInfoComputer(ErrorsFactory.CreateAvailableErrors()
                ),
                new MethodWeaver(new AspectInstanceBuilder(LifeCyclesFactory.CreateLifeCycles())));

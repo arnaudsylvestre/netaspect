@@ -18,6 +18,7 @@ namespace NetAspect.Weaver.Tasks
 
          try
          {
+             Log.LogMessage(AssemblyPath);
              string directoryPath = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath);
              AppDomain domain = AppDomain.CreateDomain(
                "NetAspect Weaving",
