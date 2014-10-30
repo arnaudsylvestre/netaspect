@@ -56,7 +56,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
          public bool NetAspectAttribute = true;
 
          public void BeforeCallConstructor(
-            MyIntUser caller,
+            MyIntUser callerInstance,
             int columnNumber,
             int lineNumber,
             string fileName,

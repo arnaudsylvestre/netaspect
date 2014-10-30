@@ -44,7 +44,7 @@ namespace NetAspect.Weaver.Tests.unit.Atttributes.Statics
          public bool NetAspectAttribute = true;
 
          public void AfterGetField(
-            MyInt caller,
+            MyInt callerInstance,
             int columnNumber,
             int lineNumber,
             string fileName,
@@ -54,7 +54,7 @@ namespace NetAspect.Weaver.Tests.unit.Atttributes.Statics
             FieldInfo field)
          {
             Called = true;
-            Assert.NotNull(caller);
+            Assert.NotNull(callerInstance);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(37, lineNumber);
             Assert.AreEqual("WeaveStaticFieldTest.cs", fileName);

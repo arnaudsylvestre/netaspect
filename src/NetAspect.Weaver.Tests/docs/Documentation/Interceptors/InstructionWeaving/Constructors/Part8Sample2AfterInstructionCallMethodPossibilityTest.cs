@@ -56,7 +56,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
          public bool NetAspectAttribute = true;
 
          public void AfterCallConstructor(
-            MyIntUser caller,
+            MyIntUser callerInstance,
             int columnNumber,
             int lineNumber,
             string fileName,
@@ -68,7 +68,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
              ConstructorInfo constructor)
          {
              Called = true;
-             Assert.NotNull(caller);
+             Assert.NotNull(callerInstance);
              Assert.NotNull(constructor);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(31, lineNumber);

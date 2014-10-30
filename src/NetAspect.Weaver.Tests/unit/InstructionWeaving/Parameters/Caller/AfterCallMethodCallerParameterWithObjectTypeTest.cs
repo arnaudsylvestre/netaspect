@@ -36,9 +36,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Caller
          public static object Caller;
          public bool NetAspectAttribute = true;
 
-         public void AfterCallMethod(object caller)
+         public void AfterCallMethod(object callerInstance)
          {
-            Caller = caller;
+            Caller = callerInstance;
          }
       }
    }

@@ -45,7 +45,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Param
          public bool NetAspectAttribute = true;
 
          public void BeforeGetProperty(
-            MyInt caller,
+            MyInt callerInstance,
             MyInt instance,
             int columnNumber,
             int lineNumber,
@@ -56,8 +56,8 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Properties.Getter.Param
             PropertyInfo property)
          {
             Called = true;
-            Assert.AreEqual(caller, instance);
-            Assert.NotNull(caller);
+            Assert.AreEqual(callerInstance, instance);
+            Assert.NotNull(callerInstance);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(38, lineNumber);
             Assert.AreEqual("BeforeCallGetPropertyParametersTest.cs", fileName);

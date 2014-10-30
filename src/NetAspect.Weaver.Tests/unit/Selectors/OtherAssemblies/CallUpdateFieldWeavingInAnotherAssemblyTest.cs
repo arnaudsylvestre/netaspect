@@ -28,9 +28,9 @@ namespace NetAspect.Weaver.Tests.unit.Selectors.OtherAssemblies
          public static IEnumerable<Assembly> AssembliesToWeave = new List<Assembly> {typeof (DepClassWhichCallField).Assembly};
          public bool NetAspectAttribute = true;
 
-         public void BeforeUpdateField(DepClassWhichCallField caller)
+         public void BeforeUpdateField(DepClassWhichCallField callerInstance)
          {
-            Caller = caller;
+            Caller = callerInstance;
          }
 
          public static bool SelectField(FieldInfo field)

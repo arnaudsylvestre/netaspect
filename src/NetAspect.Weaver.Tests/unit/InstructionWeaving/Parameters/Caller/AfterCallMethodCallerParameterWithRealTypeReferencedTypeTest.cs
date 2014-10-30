@@ -18,7 +18,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Caller
                      Level = ErrorLevel.Error,
                      Message =
                         string.Format(
-                           "impossible to ref/out the parameter 'caller' in the method AfterCallMethod of the type '{0}'",
+                           "impossible to ref/out the parameter 'callerInstance' in the method AfterCallMethod of the type '{0}'",
                            typeof (MyAspect).FullName,
                            typeof (ClassToWeave).FullName)
                   });
@@ -42,7 +42,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Parameters.Caller
       {
          public bool NetAspectAttribute = true;
 
-         public void AfterCallMethod(ref ClassToWeave caller)
+         public void AfterCallMethod(ref ClassToWeave callerInstance)
          {
          }
       }

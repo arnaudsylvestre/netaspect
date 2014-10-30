@@ -41,9 +41,9 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Parameters.Instruction.Calle
          public static ClassToWeave Caller;
          public bool NetAspectAttribute = true;
 
-         public void BeforeCallMethod(ClassToWeave caller)
+         public void BeforeCallMethod(ClassToWeave callerInstance)
          {
-            Caller = caller;
+            Caller = callerInstance;
          }
       }
    }

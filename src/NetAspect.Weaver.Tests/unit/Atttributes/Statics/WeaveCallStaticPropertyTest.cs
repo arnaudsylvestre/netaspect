@@ -46,7 +46,7 @@ namespace NetAspect.Weaver.Tests.unit.Atttributes.Statics
          public bool NetAspectAttribute = true;
 
          public void AfterGetProperty(
-            MyInt caller,
+            MyInt callerInstance,
             int columnNumber,
             int lineNumber,
             string fileName,
@@ -56,7 +56,7 @@ namespace NetAspect.Weaver.Tests.unit.Atttributes.Statics
             PropertyInfo property)
          {
             Called = true;
-            Assert.NotNull(caller);
+            Assert.NotNull(callerInstance);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(39, lineNumber);
             Assert.AreEqual("WeaveCallStaticPropertyTest.cs", fileName);

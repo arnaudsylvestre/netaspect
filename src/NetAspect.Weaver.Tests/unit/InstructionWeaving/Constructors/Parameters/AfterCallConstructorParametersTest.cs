@@ -55,7 +55,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
          public bool NetAspectAttribute = true;
 
          public void AfterCallConstructor(
-            MyIntUser caller,
+            MyIntUser callerInstance,
             int columnNumber,
             int lineNumber,
             string fileName,
@@ -67,7 +67,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Parameters
              ConstructorInfo constructor)
          {
             Called = true;
-            Assert.NotNull(caller);
+            Assert.NotNull(callerInstance);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(30, lineNumber);
             Assert.AreEqual("AfterCallConstructorParametersTest.cs", fileName);

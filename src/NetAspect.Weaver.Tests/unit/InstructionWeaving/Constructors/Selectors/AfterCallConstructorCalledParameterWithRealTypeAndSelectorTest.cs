@@ -31,9 +31,9 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Constructors.Selectors
          public static ClassToWeave Caller;
          public bool NetAspectAttribute = true;
 
-         public void AfterCallConstructor(ClassToWeave caller)
+         public void AfterCallConstructor(ClassToWeave callerInstance)
          {
-            Caller = caller;
+            Caller = callerInstance;
          }
 
          public static bool SelectConstructor(ConstructorInfo constructor)

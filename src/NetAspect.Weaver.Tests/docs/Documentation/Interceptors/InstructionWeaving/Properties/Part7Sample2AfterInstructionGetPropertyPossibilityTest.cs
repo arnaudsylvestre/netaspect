@@ -46,7 +46,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
          public bool NetAspectAttribute = true;
 
          public void AfterGetProperty(
-            MyInt caller,
+            MyInt callerInstance,
             MyInt instance,
             int columnNumber,
             int lineNumber,
@@ -58,8 +58,8 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
              int result)
          {
             Called = true;
-            Assert.AreEqual(caller, instance);
-            Assert.NotNull(caller);
+            Assert.AreEqual(callerInstance, instance);
+            Assert.NotNull(callerInstance);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(39, lineNumber);
             Assert.AreEqual("Part7Sample2AfterInstructionGetPropertyPossibilityTest.cs", fileName);

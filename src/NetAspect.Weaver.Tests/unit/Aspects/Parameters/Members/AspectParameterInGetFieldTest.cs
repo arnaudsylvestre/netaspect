@@ -50,7 +50,7 @@ namespace NetAspect.Weaver.Tests.unit.Aspects.Parameters.Members
           }
 
           public void AfterGetField(
-            MyInt caller,
+            MyInt callerInstance,
             MyInt instance,
             int columnNumber,
             int lineNumber,
@@ -61,8 +61,8 @@ namespace NetAspect.Weaver.Tests.unit.Aspects.Parameters.Members
             FieldInfo field)
          {
             Called = true;
-            Assert.AreEqual(caller, instance);
-            Assert.NotNull(caller);
+            Assert.AreEqual(callerInstance, instance);
+            Assert.NotNull(callerInstance);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(37, lineNumber);
             Assert.AreEqual("AspectParameterInGetFieldTest.cs", fileName);

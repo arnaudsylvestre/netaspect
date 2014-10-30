@@ -55,7 +55,7 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters
          public bool NetAspectAttribute = true;
 
          public void BeforeCallMethod(
-            MyIntUser caller,
+            MyIntUser callerInstance,
             MyInt instance,
             int columnNumber,
             int lineNumber,
@@ -67,8 +67,8 @@ namespace NetAspect.Weaver.Tests.unit.InstructionWeaving.Methods.Parameters
             MethodBase callerMethod)
          {
             Called = true;
-            Assert.NotNull(caller);
-            Assert.NotNull(caller);
+            Assert.NotNull(callerInstance);
+            Assert.NotNull(callerInstance);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(31, lineNumber);
             Assert.AreEqual("BeforeCallMethodParametersTest.cs", fileName);

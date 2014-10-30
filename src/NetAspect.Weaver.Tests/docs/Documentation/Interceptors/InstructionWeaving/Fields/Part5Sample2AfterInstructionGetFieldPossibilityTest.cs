@@ -45,7 +45,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
          public bool NetAspectAttribute = true;
 
          public void AfterGetField(
-            MyInt caller,
+            MyInt callerInstance,
             MyInt instance,
             int columnNumber,
             int lineNumber,
@@ -57,8 +57,8 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
              int fieldValue)
          {
             Called = true;
-            Assert.AreEqual(caller, instance);
-            Assert.NotNull(caller);
+            Assert.AreEqual(callerInstance, instance);
+            Assert.NotNull(callerInstance);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(38, lineNumber);
             Assert.AreEqual("Part5Sample2AfterInstructionGetFieldPossibilityTest.cs", fileName);

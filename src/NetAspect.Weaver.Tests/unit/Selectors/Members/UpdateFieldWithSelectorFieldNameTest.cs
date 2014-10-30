@@ -33,9 +33,9 @@ namespace NetAspect.Weaver.Tests.unit.Selectors.Members
          public static ClassToWeave Caller;
          public bool NetAspectAttribute = true;
 
-         public void BeforeUpdateField(ClassToWeave caller)
+         public void BeforeUpdateField(ClassToWeave callerInstance)
          {
-            Caller = caller;
+            Caller = callerInstance;
          }
 
          public static bool SelectField(FieldInfo field)

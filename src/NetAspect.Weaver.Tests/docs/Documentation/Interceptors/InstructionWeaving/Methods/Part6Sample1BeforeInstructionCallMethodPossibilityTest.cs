@@ -56,7 +56,7 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
          public bool NetAspectAttribute = true;
 
          public void BeforeCallMethod(
-            MyIntUser caller,
+            MyIntUser callerInstance,
             MyInt instance,
             int columnNumber,
             int lineNumber,
@@ -69,8 +69,8 @@ namespace NetAspect.Weaver.Tests.docs.Documentation.Interceptors.InstructionWeav
             MethodInfo method)
          {
             Called = true;
-            Assert.NotNull(caller);
-            Assert.NotNull(caller);
+            Assert.NotNull(callerInstance);
+            Assert.NotNull(callerInstance);
             Assert.AreEqual(13, columnNumber);
             Assert.AreEqual(32, lineNumber);
             Assert.AreEqual("Part6Sample1BeforeInstructionCallMethodPossibilityTest.cs", fileName);

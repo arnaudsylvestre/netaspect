@@ -15,7 +15,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
 
         public static CommonWeavingInfo AddCaller(this CommonWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
         {
-            return weavingInfo_P.AddCurrentInstance(interceptorParameterPossibilitiesP, "caller");
+            return weavingInfo_P.AddCurrentInstance(interceptorParameterPossibilitiesP, "callerinstance");
         }
 
         public static CommonWeavingInfo AddCallerMethod(this CommonWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)

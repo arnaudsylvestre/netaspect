@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 
@@ -20,9 +21,13 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Return
 
       public class ClassToWeave
       {
-         [MyAspect]
+         //[MyAspect]
          public T Weaved<T>(T toWeave)
          {
+             var method = GetType().GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+                            .Where(s => s.Name == "Weaved" && s.GetParameters()[0].ParameterType == typeof(T));
+
+             Assert.NotNull(method, "Elle est nulle !!!");
             return toWeave;
          }
       }
