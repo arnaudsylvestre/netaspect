@@ -49,5 +49,15 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
             return instruction.SequencePoint;
          return instruction.Previous.GetLastSequencePoint();
       }
+
+
+      public static MethodDefinition GetOperandAsMethod(this Instruction instruction)
+      {
+          return (instruction.Operand as MethodReference).Resolve();
+      }
+      public static FieldDefinition GetOperandAsField(this Instruction instruction)
+      {
+          return (instruction.Operand as FieldReference).Resolve();
+      }
    }
 }

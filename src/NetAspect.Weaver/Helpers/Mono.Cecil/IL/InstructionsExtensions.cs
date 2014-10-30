@@ -46,7 +46,7 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
        {
            var typesFromParameters_L = CreateTypesFromParameters(instructions, methodReference);
            instructions.Add(Instruction.Create(OpCodes.Ldloc, typeInstance));
-           instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 60));
+           instructions.Add(Instruction.Create(OpCodes.Ldc_I4, ComputeBindingFlags(methodReference)));
            instructions.Add(Instruction.Create(OpCodes.Ldnull));
            addVariable(typesFromParameters_L);
            instructions.Add(Instruction.Create(OpCodes.Ldloc, typesFromParameters_L));
@@ -60,6 +60,13 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
                        new[] { typeof(BindingFlags), typeof(Binder), typeof(Type[]), typeof(ParameterModifier[]) }))));
        }
 
+       private static int ComputeBindingFlags(MethodReference methodReference)
+       {
+           BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic;
+           flags |= methodReference.Resolve().IsStatic ? BindingFlags.Static : BindingFlags.Instance;
+           return (int) flags;
+       }
+
        public static void AppendCallToGetMethod(this List<Instruction> instructions,
           MethodReference methodReference,
           ModuleDefinition module, Action<VariableDefinition> addVariable, VariableDefinition typeInstance)
@@ -67,7 +74,7 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
            var typesFromParameters_L = CreateTypesFromParameters(instructions, methodReference);
            instructions.Add(Instruction.Create(OpCodes.Ldloc, typeInstance));
            instructions.Add(Instruction.Create(OpCodes.Ldstr, methodReference.Name));
-           instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 60));
+           instructions.Add(Instruction.Create(OpCodes.Ldc_I4, ComputeBindingFlags(methodReference)));
            instructions.Add(Instruction.Create(OpCodes.Ldnull));
            addVariable(typesFromParameters_L);
            instructions.Add(Instruction.Create(OpCodes.Ldloc, typesFromParameters_L));
@@ -136,16 +143,7 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
 
        private static Func<object, Instruction> Get(CustomAttribute attribute, int i)
        {
-           try
-           {
-               return adders[attribute.ConstructorArguments[i].Value.GetType()];
-
-           }
-           catch (Exception)
-           {
-
-               throw;
-           }
+           return adders[attribute.ConstructorArguments[i].Value.GetType()];
        }
 
        public static Dictionary<Type, Func<object, Instruction>> adders = new Dictionary<Type, Func<object, Instruction>>
@@ -164,12 +162,5 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
                    {typeof (ushort), o => Instruction.Create(OpCodes.Ldc_I4, (short)(ushort)o)},
                    {typeof (ulong), o => Instruction.Create(OpCodes.Ldc_I8, (long)(ulong)o)},
                };
-
-       public static void AppendCallStaticMethodAnsSaveResultInto(this List<Instruction> instructions, MethodInfo method, VariableDefinition variable, ModuleDefinition module)
-      {
-         var methodToCall = module.Import(method);
-         instructions.Add(Instruction.Create(OpCodes.Call, methodToCall));
-         instructions.Add(Instruction.Create(OpCodes.Stloc, variable));
-      }
    }
 }

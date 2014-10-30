@@ -23,7 +23,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
            interceptorParameterPossibilitiesP.AddPossibleParameter("parameters")
               .WhichCanNotBeReferenced()
               .WhichMustBeOfType<VariablesForInstruction, object[]>()
-              .AndInjectTheVariable(variables => variables.CalledParametersObjects.Definition);
+              .AndInjectTheVariable(variables => variables.CalledParametersObjects);
            return weavingInfo_P;
        }
 

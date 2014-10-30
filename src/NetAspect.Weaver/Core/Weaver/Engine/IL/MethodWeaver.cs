@@ -143,6 +143,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
                instructionIl.Before.AddRange(instructions.calledInstructions);
                instructionIl.Before.AddRange(instructions.calledParametersObjectInstructions);
                instructionIl.Before.AddRange(instructions.calledConstructorInstructions);
+               instructionIl.Before.AddRange(instructions.calledPropertyInstructions);
                instructionIl.After.AddRange(instructions.resultInstructions);
                instructionsToInsert.BeforeInstructions.AddRange(instructions.BeforeInstructions);
                foreach (var aroundInstructionIl in ils)

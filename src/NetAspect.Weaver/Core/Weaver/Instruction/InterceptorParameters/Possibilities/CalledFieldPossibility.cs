@@ -14,7 +14,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
             interceptorParameterPossibilitiesP.AddPossibleParameter("field")
                                               .WhichCanNotBeReferenced()
                                               .WhichMustBeOfType<VariablesForInstruction, FieldInfo>()
-                                              .AndInjectTheCalledFieldInfo(weavingInfo_P);
+                                              .AndInjectTheVariable(info => info.CalledField);
             return weavingInfo_P;
         }
 

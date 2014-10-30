@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetAspect.CF.Tests", "NetAspect.CF.Tests\NetAspect.CF.Tests.csproj", "{EA4C7BF4-7407-42D6-8C5C-553C964F0981}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA4C7BF4-7407-42D6-8C5C-553C964F0981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA4C7BF4-7407-42D6-8C5C-553C964F0981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA4C7BF4-7407-42D6-8C5C-553C964F0981}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{EA4C7BF4-7407-42D6-8C5C-553C964F0981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA4C7BF4-7407-42D6-8C5C-553C964F0981}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA4C7BF4-7407-42D6-8C5C-553C964F0981}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

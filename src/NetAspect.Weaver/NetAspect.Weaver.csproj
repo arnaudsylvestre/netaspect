@@ -106,8 +106,10 @@
     <Compile Include="Core\Model\Weaving\AspectInstanceForMethod.cs" />
     <Compile Include="Core\Model\Aspect\NetAspectDefinition.cs" />
     <Compile Include="Core\Helpers\NetAspectDefinitionExtensions.cs" />
+    <Compile Include="Core\Weaver\ToSort\Data\Variables\Instructions\VariableCalledField.cs" />
     <Compile Include="Core\Weaver\ToSort\Data\Variables\Instructions\VariableCalledMethod.cs" />
     <Compile Include="Core\Weaver\ToSort\Data\Variables\Instructions\VariableCalledConstructor.cs" />
+    <Compile Include="Core\Weaver\ToSort\Data\Variables\Instructions\VariableCalledProperty.cs" />
     <Compile Include="Core\Weaver\ToSort\ILInjector\NoIIlInjector.cs" />
     <Compile Include="Core\Model\Weaving\WeavingSession.cs" />
     <Compile Include="Core\Model\Weaving\AspectInstanceForInstruction.cs" />
@@ -181,7 +183,7 @@
     <Compile Include="Core\Weaver\ToSort\ILInjector\IIlInjectorsExtensions.cs" />
     <Compile Include="Core\Weaver\ToSort\Engine\LifeCycle\AspectInstanceBuilder.cs" />
     <Compile Include="Core\Weaver\ToSort\Engine\LifeCycle\ILifeCycleHandler.cs" />
-    <Compile Include="Core\Weaver\ToSort\Data\IlInjectorAvailableVariables.cs" />
+    <Compile Include="Core\Weaver\ToSort\Data\ParameterDefinitionHelper.cs" />
     <Compile Include="Core\Weaver\ToSort\Engine\LifeCycle\TransientLifeCycleHandler.cs" />
     <Compile Include="Core\Weaver\Session\WeavingSessionComputer.cs" />
     <Compile Include="Factory\ErrorsFactory.cs" />

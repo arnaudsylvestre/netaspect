@@ -13,7 +13,7 @@ namespace NetAspect.Weaver.Core.Weaver.Method.InterceptorParameters
             interceptorParameterPossibilitiesP.AddPossibleParameter("exception")
                .WhichCanNotBeReferenced()
                .WhichMustBeOfType<VariablesForMethod, Exception>()
-               .AndInjectTheVariable(variables => variables.Exception.Definition);
+               .AndInjectTheVariable(variables => variables.Exception);
             return weavingInfo_P;
         }
 
@@ -21,7 +21,7 @@ namespace NetAspect.Weaver.Core.Weaver.Method.InterceptorParameters
         {
             interceptorParameterPossibilitiesP.AddPossibleParameter("result")
                .WhereParameterTypeIsSameAsMethodResult(weavingInfo_P)
-               .AndInjectTheVariable(variables => variables.Result.Definition);
+               .AndInjectTheVariable(variables => variables.Result);
             return weavingInfo_P;
         }
     }

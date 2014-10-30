@@ -12,10 +12,9 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
     {
         public static InstructionWeavingInfo AddCalledPropertyInfo(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
         {
-            interceptorParameterPossibilitiesP.AddPossibleParameter("property")
-                                              .WhichCanNotBeReferenced()
-                                              .WhichMustBeOfType<VariablesForInstruction, PropertyInfo>()
-                                              .AndInjectTheCalledPropertyInfo(weavingInfo_P);
+            InterceptorParametersRulesExtensions.AndInjectTheVariable(interceptorParameterPossibilitiesP.AddPossibleParameter("property")
+                                                                   .WhichCanNotBeReferenced()
+                                                                   .WhichMustBeOfType<VariablesForInstruction, PropertyInfo>(), instruction => instruction.CalledProperty);
             return weavingInfo_P;
         }
 

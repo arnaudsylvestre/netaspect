@@ -112,3 +112,11 @@ dump.txt
 dump.res
 src/NugetItems/*.nupkg
 src/NugetItems/Content/Aspects/
+test/NetAspect.CF.Tests/NetAspect.CF.Tests/Mono.Cecil.dll
+test/NetAspect.CF.Tests/NetAspect.CF.Tests/Mono.Cecil.Mdb.dll
+test/NetAspect.CF.Tests/NetAspect.CF.Tests/Mono.Cecil.Pdb.dll
+test/NetAspect.CF.Tests/NetAspect.CF.Tests/Mono.Cecil.Rocks.dll
+test/NetAspect.CF.Tests/NetAspect.CF.Tests/NetAspect.Core.dll
+test/NetAspect.CF.Tests/NetAspect.CF.Tests/NetAspect.Targets
+test/NetAspect.CF.Tests/NetAspect.CF.Tests/NetAspect.Weaver.dll
+test/NetAspect.CF.Tests/NetAspect.CF.Tests/NetAspect.Weaver.Tasks.dll

@@ -1,4 +1,5 @@
 using Mono.Cecil;
+using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model
 {
@@ -11,7 +12,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Detectors.Model
 
       public static MethodDefinition GetOperandAsMethod(this InstructionWeavingInfo instructionWeaving_P)
       {
-         return (instructionWeaving_P.Instruction.Operand as MethodReference).Resolve();
+         return instructionWeaving_P.Instruction.GetOperandAsMethod();
       }
    }
 }

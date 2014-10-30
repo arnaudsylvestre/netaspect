@@ -28,7 +28,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Instructions
                 MethodDefinition calledMethod = Instruction.GetCalledMethod();
                 foreach (ParameterDefinition parameter in calledMethod.Parameters.Reverse())
                 {
-                    var variableDefinition = new VariableDefinition(IlInjectorAvailableVariables.ComputeVariableType(parameter, Instruction));
+                    var variableDefinition = new VariableDefinition(ParameterDefinitionHelper.ComputeVariableType(parameter, Instruction));
                     _calledParameters.Add("called" + parameter.Name, variableDefinition);
                     instructionsToInsert.calledParametersInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, variableDefinition));
                 }

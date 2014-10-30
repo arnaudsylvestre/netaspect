@@ -40,7 +40,9 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Engine
                 new Variable(instructionsToInsert, new VariableCalledParametersObject(() => calledParameters.Definitions), method, instruction, variables),
                 variables,
                 new Variable(instructionsToInsert, new VariableCalledConstructor(variables), method, instruction, variables),
-                new Variable(instructionsToInsert, new VariableCalledMethod(variables), method, instruction, variables));
+                new Variable(instructionsToInsert, new VariableCalledMethod(variables), method, instruction, variables),
+                new Variable(instructionsToInsert, new VariableCalledProperty(), method, instruction, variables),
+                new Variable(instructionsToInsert, new VariableCalledField(), method, instruction, variables));
         }
     }
 }

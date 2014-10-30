@@ -13,14 +13,14 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
         {
             interceptorParameterPossibilitiesP.AddPossibleParameter("result")
                                               .WhereParameterTypeIsSameAsMethodResultAndNotReferenced(weavingInfo_P)
-                                              .AndInjectTheVariable(variables => variables.ResultForInstruction.Definition);
+                                              .AndInjectTheVariable(variables => variables.ResultForInstruction);
             return weavingInfo_P;
         }
         public static InstructionWeavingInfo AddCallFieldValue(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
         {
             interceptorParameterPossibilitiesP.AddPossibleParameter("fieldvalue")
                                               .WhereParameterTypeIsSameAsFieldTypeAndNotReferenced(weavingInfo_P)
-                                              .AndInjectTheVariable(variables => variables.ResultForInstruction.Definition);
+                                              .AndInjectTheVariable(variables => variables.ResultForInstruction);
             return weavingInfo_P;
         }
         public static InstructionWeavingInfo AddCalledConstructorInfo(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
@@ -28,7 +28,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
             interceptorParameterPossibilitiesP.AddPossibleParameter("constructor")
                                               .WhichCanNotBeReferenced()
                                               .WhichMustBeOfType<VariablesForInstruction, ConstructorInfo>()
-                                              .AndInjectTheVariable(variables => variables.CalledConstructor.Definition);
+                                              .AndInjectTheVariable(variables => variables.CalledConstructor);
             return weavingInfo_P;
         }
         public static InstructionWeavingInfo AddCalledMethod(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
@@ -36,7 +36,7 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
             interceptorParameterPossibilitiesP.AddPossibleParameter("method")
                                               .WhichCanNotBeReferenced()
                                               .WhichMustBeOfType<VariablesForInstruction, MethodInfo>()
-                                              .AndInjectTheVariable(variables => variables.CalledMethod.Definition);
+                                              .AndInjectTheVariable(variables => variables.CalledMethod);
             return weavingInfo_P;
         }
     }
