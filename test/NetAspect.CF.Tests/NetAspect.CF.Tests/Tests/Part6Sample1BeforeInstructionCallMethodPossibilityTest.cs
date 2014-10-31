@@ -39,11 +39,11 @@ namespace NetAspect.nsPart6Sample1BeforeInstructionCallMethodPossibilityTest
 {
     public static bool Called;
     public bool NetAspectAttribute = true;
-    public void BeforeCallMethod(MyIntUser caller, MyInt instance, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, object[] parameters, int v, MethodBase callerMethod, MethodInfo method)
+    public void BeforeCallMethod(MyIntUser callerInstance, MyInt instance, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, object[] parameters, int v, MethodBase callerMethod, MethodInfo method)
     {
         Called = true;
-        Assert.NotNull(caller);
-        Assert.NotNull(caller);
+        Assert.NotNull(callerInstance);
+        Assert.NotNull(callerInstance);
         Assert.AreEqual(13, columnNumber);
         Assert.AreEqual(32, lineNumber);
         Assert.AreEqual("Part6Sample1BeforeInstructionCallMethodPossibilityTest.cs", fileName);

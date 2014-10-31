@@ -16,6 +16,14 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.InterceptorParameters
                                               .AndInjectTheVariable(variables => variables.ResultForInstruction);
             return weavingInfo_P;
         }
+
+        public static InstructionWeavingInfo AddPropertyValue(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
+        {
+            interceptorParameterPossibilitiesP.AddPossibleParameter("propertyvalue")
+                                              .WhereParameterTypeIsSameAsMethodResultAndNotReferenced(weavingInfo_P)
+                                              .AndInjectTheVariable(variables => variables.ResultForInstruction);
+            return weavingInfo_P;
+        }
         public static InstructionWeavingInfo AddCallFieldValue(this InstructionWeavingInfo weavingInfo_P, InterceptorParameterPossibilities<VariablesForInstruction> interceptorParameterPossibilitiesP)
         {
             interceptorParameterPossibilitiesP.AddPossibleParameter("fieldvalue")

@@ -69,15 +69,17 @@ namespace NetAspect.Weaver.Core.Weaver.Session
         {
             foreach (var aspect in aspects)
             {
-                methodWeavingDetector.ForEach(model => session.Add(method, model.GetAspectInstances(method, aspect)));
-                foreach (var instruction in method.Body.Instructions)
-                {
-                    instructionWeavingDetector.ForEach(
-                        model => session.Add(
-                            method,
-                            instruction,
-                            model.GetAspectInstances(method, instruction, aspect)));
-                }
+                if (aspect.IsMethodWeavingAspect())
+                    methodWeavingDetector.ForEach(model => session.Add(method, model.GetAspectInstances(method, aspect)));
+                if (aspect.IsInstructionWeavingattribute())
+                    foreach (var instruction in method.Body.Instructions)
+                    {
+                        instructionWeavingDetector.ForEach(
+                            model => session.Add(
+                                method,
+                                instruction,
+                                model.GetAspectInstances(method, instruction, aspect)));
+                    }
             }
         }
 

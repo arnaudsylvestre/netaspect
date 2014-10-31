@@ -39,7 +39,7 @@ namespace NetAspect.nsPart8Sample1BeforeInstructionCallMethodPossibilityTest
 {
     public static bool Called;
     public bool NetAspectAttribute = true;
-    public void BeforeCallConstructor(MyIntUser caller, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, object[] parameters, int value, MethodBase callerMethod, ConstructorInfo constructor)
+    public void BeforeCallConstructor(MyIntUser callerInstance, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, object[] parameters, int value, MethodBase callerMethod, ConstructorInfo constructor)
     {
         Called = true;
         /*Assert.NotNull(caller);

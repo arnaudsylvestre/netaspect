@@ -32,9 +32,9 @@ namespace NetAspect.nsCallerParameterWithObjectTypeParameterTest
 {
     public static object Caller;
     public bool NetAspectAttribute = true;
-    public void BeforeCallMethod(object caller)
+    public void BeforeCallMethod(object callerInstance)
     {
-        Caller = caller;
+        Caller = callerInstance;
     }
 }
 

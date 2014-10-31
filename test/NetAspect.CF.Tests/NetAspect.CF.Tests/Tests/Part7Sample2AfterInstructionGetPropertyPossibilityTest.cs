@@ -31,11 +31,11 @@ namespace NetAspect.nsPart7Sample2AfterInstructionGetPropertyPossibilityTest
 {
     public static bool Called;
     public bool NetAspectAttribute = true;
-    public void AfterGetProperty(MyInt caller, MyInt instance, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, PropertyInfo property, int result)
+    public void AfterGetProperty(MyInt callerInstance, MyInt instance, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, PropertyInfo property, int result)
     {
         Called = true;
-        Assert.AreEqual(caller, instance);
-        Assert.NotNull(caller);
+        Assert.AreEqual(callerInstance, instance);
+        Assert.NotNull(callerInstance);
         Assert.AreEqual(13, columnNumber);
         Assert.AreEqual(39, lineNumber);
         Assert.AreEqual("Part7Sample2AfterInstructionGetPropertyPossibilityTest.cs", fileName);

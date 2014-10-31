@@ -39,10 +39,10 @@ namespace NetAspect.nsPart8Sample2AfterInstructionCallMethodPossibilityTest
 {
     public static bool Called;
     public bool NetAspectAttribute = true;
-    public void AfterCallConstructor(MyIntUser caller, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, object[] parameters, int value, MethodBase callerMethod, ConstructorInfo constructor)
+    public void AfterCallConstructor(MyIntUser callerInstance, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, object[] parameters, int value, MethodBase callerMethod, ConstructorInfo constructor)
     {
         Called = true;
-        Assert.NotNull(caller);
+        Assert.NotNull(callerInstance);
         Assert.NotNull(constructor);
         Assert.AreEqual(13, columnNumber);
         Assert.AreEqual(31, lineNumber);

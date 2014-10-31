@@ -31,11 +31,11 @@ namespace NetAspect.nsPart5Sample1BeforeInstructionGetFieldPossibilityTest
 {
     public static bool Called;
     public bool NetAspectAttribute = true;
-    public void BeforeGetField(MyInt caller, MyInt instance, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, FieldInfo field)
+    public void BeforeGetField(MyInt callerInstance, MyInt instance, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, FieldInfo field)
     {
         Called = true;
-        Assert.AreEqual(caller, instance);
-        Assert.NotNull(caller);
+        Assert.AreEqual(callerInstance, instance);
+        Assert.NotNull(callerInstance);
         Assert.AreEqual(13, columnNumber);
         Assert.AreEqual(38, lineNumber);
         Assert.AreEqual("Part5Sample1BeforeInstructionGetFieldPossibilityTest.cs", fileName);

@@ -31,11 +31,11 @@ namespace NetAspect.nsPart5Sample4AfterInstructionSetFieldPossibilityTest
 {
     public static bool Called;
     public bool NetAspectAttribute = true;
-    public void AfterUpdateField(MyInt caller, MyInt instance, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, FieldInfo field, int newFieldValue)
+    public void AfterUpdateField(MyInt callerInstance, MyInt instance, int columnNumber, int lineNumber, string fileName, string filePath, object[] callerParameters, MethodBase callerMethod, FieldInfo field, int newFieldValue)
     {
         Called = true;
-        Assert.AreEqual(caller, instance);
-        Assert.NotNull(caller);
+        Assert.AreEqual(callerInstance, instance);
+        Assert.NotNull(callerInstance);
         Assert.AreEqual(13, columnNumber);
         Assert.AreEqual(33, lineNumber);
         Assert.AreEqual("Part5Sample4AfterInstructionSetFieldPossibilityTest.cs", fileName);
