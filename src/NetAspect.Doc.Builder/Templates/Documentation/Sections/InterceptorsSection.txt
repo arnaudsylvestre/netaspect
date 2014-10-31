@@ -48,7 +48,20 @@
 			  </a>
 			  <div id="${interceptor.Name}Coll" class="panel-collapse collapse">
 								<div class="panel-body">
-								<p>The following parameters are available for this interceptor :</p>
+								<p><b>The sample :</b></p>
+									<pre class="prettyprint">
+// Our business class
+$interceptor.ClassToWeaveCode
+</pre>
+									<pre class="prettyprint">
+// Our aspect
+$interceptor.AspectCode
+</pre>
+									<pre class="prettyprint">
+// The following code is working
+$interceptor.CallCode
+</pre>
+								<p><b>The following parameters are available for this interceptor :</b></p>
 <div class="list-group">
 
 #foreach ($parameter in $section.GetParameters($interceptor))
@@ -63,25 +76,9 @@
 
 
 #foreach ($sample in $parameter.Samples)
-	<a href="#parameterId$section.GetParameterId($parameter.Name)P$velocityCount" data-toggle="collapse"  class="list-group-item">
+	<a class="list-group-item">
 		<h4 class="list-group-item-heading">${sample.Description}</h4>
 	  </a>
-	  
-			  <div id="parameterId$section.GetParameterId($parameter.Name)P$velocityCount" class="panel-collapse collapse">
-								<div class="panel-body">
-								<pre class="prettyprint">
-// The aspect
-$sample.AspectCode
-
-// The class to weave
-$sample.ClassToWeaveCode
-
-// This code will work
-$sample.CallCode
-</pre>
-
-								</div>
-								</div>
 #end
 </div>
 								</div>
@@ -89,19 +86,7 @@ $sample.CallCode
 #end
 </div>
 
-								<p>Here is a sample on how to use :</p>
-									<pre class="prettyprint">
-// Our business class
-$interceptor.ClassToWeaveCode
-</pre>
-									<pre class="prettyprint">
-// Our aspect
-$interceptor.AspectCode
-</pre>
-									<pre class="prettyprint">
-// The following code is working
-$interceptor.CallCode
-</pre>
+								
 								</div>
 			</div>
 
