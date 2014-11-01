@@ -1,0 +1,6 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+ <UsingTask TaskName="NetAspectWeaverTask" AssemblyFile="NetAspect.Weaver.Tasks.dll" />
+  <Target Name="AfterBuild">
+    <NetAspectWeaverTask AssemblyPath="$(TargetPath)" />
+  </Target>
+</Project>

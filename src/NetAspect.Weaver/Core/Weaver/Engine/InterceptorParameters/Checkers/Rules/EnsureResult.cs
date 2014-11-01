@@ -10,7 +10,8 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Checkers
     {
         public static void OfType(ParameterInfo info, ErrorHandler handler, MethodDefinition method)
         {
-            if (MethodMustNotBeVoid(info, handler, method)) return;
+            if (MethodMustNotBeVoid(info, handler, method))
+                return;
             EnsureParameter.IsNotOut(info, handler);
             if (info.ParameterType == typeof(object))
                 return;
