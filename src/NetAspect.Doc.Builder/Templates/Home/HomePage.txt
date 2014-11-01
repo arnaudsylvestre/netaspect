@@ -21,7 +21,7 @@
           <p><a class="btn btn-default" href="Documentation.html" role="button">View Documentation &raquo;</a></p>
        </div>
         <div class="col-md-4">
-          <h2>Ope</h2>
+          <h2>Open source</h2>
           <p>NetAspect supports the compact framework</p>
 		  <p>So, you can weave your software for smart device too !</p>
           <p><a class="btn btn-default" href="http://www.apache.org/licenses/LICENSE-2.0.html" role="button">View licence &raquo;</a></p>

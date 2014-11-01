@@ -62,7 +62,6 @@
     </Compile>
     <Compile Include="Core\Readers\Core\CsTestFileReader.cs" />
     <Compile Include="Core\Readers\CsFileReader.cs" />
-    <Compile Include="Core\Readers\Documentation\Sections\AvailableParameters\DocumentationAvailableParametersSectionReader.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\AvailableParameters\AvailableParametersSectionModel.cs" />
     <Compile Include="Core\Readers\Documentation\DocumentationReader.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\Interceptors\InterceptorsSectionModel.cs" />

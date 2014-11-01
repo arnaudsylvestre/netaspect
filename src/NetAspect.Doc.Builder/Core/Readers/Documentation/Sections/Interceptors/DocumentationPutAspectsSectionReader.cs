@@ -8,13 +8,13 @@ namespace NetAspect.Doc.Builder.Core.Readers.Documentation.Sections.PutAspects
 {
     public static class DocumentationInterceptorsSectionReader
     {
-        public static InterceptorsSectionModel ExtractInterceptors(string directoryPath, Dictionary<string, string> parameterDescriptions, AvailableParametersSectionModel availableParametersSectionModel)
+        public static InterceptorsSectionModel ExtractInterceptors(string directoryPath, List<ParameterDescriptionFactory.ParameterDescription> parameterDescriptions, AvailableParametersSectionModel availableParametersSectionModel)
         {
             return new InterceptorsSectionModel(directoryPath.GetAllCsFiles().
                                                               Select(file_L => CsTestFileReader.Read(file_L)).
                                                               // TODO : Voir si on peut supprimer le test.Name != null
                                                               Where(test => test.Name != null)
-                                                              .ToList(), parameterDescriptions, availableParametersSectionModel);
+                                                              .ToList(), parameterDescriptions);
         } 
     }
 }

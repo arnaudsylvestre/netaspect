@@ -9,8 +9,9 @@ namespace NetAspect.Doc.Builder.Core.Readers.Documentation
     {
         public static DocumentationPageModel Read(string baseFolder)
         {
-            Dictionary<string, string> parameterDescriptions = ParameterDescriptionFactory.Create();
-            var availableParametersSectionModel = DocumentationAvailableParametersSectionReader.ExtractAvailableParameters(Path.Combine(baseFolder, @"Documentation\Parameters"), parameterDescriptions);
+            var parameterDescriptions = ParameterDescriptionFactory.Create();
+            //var availableParametersSectionModel = DocumentationAvailableParametersSectionReader.ExtractAvailableParameters(Path.Combine(baseFolder, @"Documentation\Parameters"), parameterDescriptions);
+            AvailableParametersSectionModel availableParametersSectionModel = null;
             return new DocumentationPageModel
                 {
                     Interceptors =

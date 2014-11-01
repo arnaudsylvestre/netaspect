@@ -1,26 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace NetAspect.Doc.Builder.Model
 {
     public static class ParameterDescriptionsExtensions
     {
-        public static string GetRealParameterName(this Dictionary<string, string> parameterDescriptions, string parameterName)
+        public static string GetRealParameterName(this List<ParameterDescriptionFactory.ParameterDescription> parameterDescriptions, string parameterName)
         {
-            if (parameterDescriptions.ContainsKey(parameterName))
+            if (parameterDescriptions.Any(p => p.Name == parameterName))
                 return parameterName;
-            if (parameterName.StartsWith("caller"))
-                return "caller + parameter name";
-            if (parameterName.StartsWith("called"))
-                return "called + parameter name";
-            return "parameter name";
+            return "The parameter name of the weaved method";
         }
-        public static string GetParameterId(this Dictionary<string, string> parameterDescriptions, string parameterName)
+        public static string GetParameterId(this List<ParameterDescriptionFactory.ParameterDescription> parameterDescriptions, string parameterName)
         {
             return GetRealParameterName(parameterDescriptions, parameterName).Replace(" ", "").Replace("+", "");
         }
-        public static string GetDescription(this Dictionary<string, string> parameterDescriptions, string parameterName)
+        public static string GetDescription(this List<ParameterDescriptionFactory.ParameterDescription> parameterDescriptions, string parameterName, bool isInstruction)
         {
-            return parameterDescriptions[parameterDescriptions.GetRealParameterName(parameterName)];
+            return parameterDescriptions.First(p => p.Name == parameterName && p.InInstruction == isInstruction).Description;
         }
     }
 
@@ -37,12 +34,12 @@ namespace NetAspect.Doc.Builder.Model
 
             public string Description { get; set; }
             public string Name { get; set; }
+            public bool InInstruction { get; set; }
         }
 
-        public static Dictionary<string, List<ParameterDescription>> Create()
+        public static List<ParameterDescription> Create()
         {
-            var parameterDescriptions = new Dictionary<string, List<ParameterDescription>>();
-            parameterDescriptions.Add("BeforeMethod", new List<ParameterDescription>()
+            var parameterDescriptions = new List<ParameterDescription>()
                 {
                     BuildInstanceParameterDescription(),
                     BuildMethodParameterDescription(),
@@ -51,32 +48,164 @@ namespace NetAspect.Doc.Builder.Model
                     BuildLineNumberParameterInMethodDescription(),
                     BuildFileNameParameterInMethodDescription(),
                     BuildFilePathParameterInMethodDescription(),
-
-                });
-            //parameterDescriptions.Add("instance", "this parameter is used to have the <b>this</b> of the weaved member");
-            //parameterDescriptions.Add("method", "this parameter is used to get some information about the weaved method");
-            //parameterDescriptions.Add("lineNumber", "this parameter is used to get the line of the first instruction in the weaved method or the line of the weaved instruction");
-            //parameterDescriptions.Add("columnNumber", "this parameter is used to get the column of the first instruction in the weaved method or the column of the weaved instruction");
-            //parameterDescriptions.Add("fileName", "this parameter is used to get the file name of the weaved method or the file name of the weaved instruction");
-            //parameterDescriptions.Add("filePath", "this parameter is used to get the file path of the weaved method or the file path of the weaved instruction");
-            //parameterDescriptions.Add("parameters", "this parameter is used to get the values of the parameters of the weaved method");
-            //parameterDescriptions.Add("parameter name", "this parameter is used to get the value of the parameter with the same name of the weaved method");
-            //parameterDescriptions.Add("constructor", "this parameter is used to get some information about the weaved constructor");
-            //parameterDescriptions.Add("property", "this parameter is used to get some information about the weaved property");
-            //parameterDescriptions.Add("exception", "this parameter is used to get the exception thrown in the weaved method");
-            //parameterDescriptions.Add("result", "this parameter is used to get the return value of the weaved method");
-            //parameterDescriptions.Add("field", "this parameter is used to get information of the accessed field");
-            //parameterDescriptions.Add("newFieldValue", "this parameter is used to get the value that will be assigned to the weaved field");
-            //parameterDescriptions.Add("called", "this parameter is used to have the instance of the object which is used to call the weaved member");
-            //parameterDescriptions.Add("calledParameters", "this parameter is used to have the instance of the parameters passed to a call to a weaved method");
-            //parameterDescriptions.Add("called + parameter name", "this parameter is used to have the value of a parameter passed to a call to a weaved method");
-            //parameterDescriptions.Add("propertyValue", "this parameter is used to have the new value that will be assigned to the weaved property");
-            //parameterDescriptions.Add("callerInstance", "this parameter is used to have the instance of the object that call the weaved member");
-            //parameterDescriptions.Add("callerParameters", "this parameter is used to have the parameters of the method that will call the weaved member");
-            //parameterDescriptions.Add("parameterValue", "this parameter is used to have the value of the weaved parameter");
-            //parameterDescriptions.Add("parameter", "this parameter is used to have the information of the weaved parameter");
-            //parameterDescriptions.Add("fieldValue", "this parameter is used to have the information of the weaved parameter");
+                    BuildParameterNameParameterDescription(),
+                    BuildNewPropertyValueParameterDescription(),
+                    BuildCallerInstanceParameterDescription(),
+                    BuildNewFieldValueParameterDescription(),
+                    BuildrParameterDescription(),
+                    BuildrParameterValueDescription(),
+                    BuildCallerParametersParameterDescription(),
+                    BuildExceptionParameterDescription(),
+                    BuildResultParameterDescription(),
+                    BuildFieldParameterDescription(),
+                    BuildPropertyValueParameterDescription(),
+                    BuildFieldValueParameterDescription(),
+                    BuildColumnNumberParameterInInstructionDescription(),
+                    BuildLineNumberParameterInInstructionDescription(),
+                    BuildFilePathParameterInInstructionDescription(),
+                    BuildFileNameParameterInInstructionDescription(),
+                };
             return parameterDescriptions;
+        }
+        private static ParameterDescription BuildParameterNameParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to get the value of the parameter with the same name of the weaved method",
+                Name = "The parameter name of the weaved method",
+                WhatCanBe = new List<string>()
+                        {
+                            "It must be declared with the same type as the type of the parameter in the weaved method",
+                        }
+            };
+        }
+        private static ParameterDescription BuildNewPropertyValueParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to get the value of the value that will be affected to the property",
+                Name = "newPropertyValue",
+                WhatCanBe = new List<string>()
+                        {
+                            "It must be declared with the same type as the property",
+                        },
+                InInstruction = true,
+                        
+            };
+        }
+        private static ParameterDescription BuildNewFieldValueParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to get the value of the value that will be affected to the field",
+                Name = "newFieldValue",
+                WhatCanBe = new List<string>()
+                        {
+                            "It must be declared with the same type as the field",
+                        },
+                InInstruction = true,
+            };
+        }
+        private static ParameterDescription BuildPropertyValueParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to get the value of the property",
+                Name = "propertyValue",
+                WhatCanBe = new List<string>()
+                        {
+                            "It must be declared with the same type as the property",
+                        },
+                InInstruction = true,
+            };
+        }
+        private static ParameterDescription BuildFieldValueParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to get the value of the field",
+                Name = "fieldValue",
+                WhatCanBe = new List<string>()
+                        {
+                            "It must be declared with the same type as the field",
+                        },
+                InInstruction = true,
+            };
+        }
+        private static ParameterDescription BuildFieldParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to get some information about the field",
+                Name = "field",
+                WhatCanBe = new List<string>()
+                        {
+                            "It must be of System.Reflection.FieldInfo type",
+                        },
+                InInstruction = true,
+            };
+        }
+        private static ParameterDescription BuildResultParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to get the return value of the weaved method",
+                Name = "result",
+                WhatCanBe = new List<string>()
+                        {
+                            "It must be declared with the same type as the return type of the weaved method",
+                        }
+            };
+        }
+        private static ParameterDescription BuildExceptionParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to get the exception thrown in the weaved method",
+                Name = "exception",
+                WhatCanBe = new List<string>()
+                        {
+                            "It must be declared with the System.Exception type",
+                        }
+            };
+        }
+        private static ParameterDescription BuildCallerParametersParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to have the parameters of the method that will call the weaved member",
+                Name = "callerParameters",
+                WhatCanBe = new List<string>()
+                        {
+                            "It must be declared with the System.Object[] type",
+                        },
+                InInstruction = true,
+            };
+        }
+        private static ParameterDescription BuildrParameterValueDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to have the value of the weaved parameter",
+                Name = "parameterValue",
+                WhatCanBe = new List<string>()
+                        {
+                            "It can be declared as object",
+                            "It can be declared with the same type as the parameter type",
+                        }
+            };
+        }
+        private static ParameterDescription BuildrParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to get information about the parameter",
+                Name = "parameter",
+                WhatCanBe = new List<string>()
+                        {
+                            "It must be of System.Reflection.ParameterInfo type",
+                        }
+            };
         }
 
         private static ParameterDescription BuildColumnNumberParameterInMethodDescription()
@@ -120,7 +249,7 @@ namespace NetAspect.Doc.Builder.Model
             return new ParameterDescription()
             {
                 Description = "this parameter is used to get the file path of the weaved method",
-                Name = "fileName",
+                Name = "filePath",
                 WhatCanBe = new List<string>()
                         {
                             "It must be declared with the System.String type",
@@ -136,7 +265,8 @@ namespace NetAspect.Doc.Builder.Model
                 WhatCanBe = new List<string>()
                         {
                             "It must be declared with the System.Int32 type",
-                        }
+                        },
+                InInstruction = true,
             };
         }
 
@@ -149,7 +279,8 @@ namespace NetAspect.Doc.Builder.Model
                 WhatCanBe = new List<string>()
                         {
                             "It must be declared with the System.Int32 type",
-                        }
+                        },
+                InInstruction = true,
             };
         }
         private static ParameterDescription BuildFileNameParameterInInstructionDescription()
@@ -161,7 +292,8 @@ namespace NetAspect.Doc.Builder.Model
                 WhatCanBe = new List<string>()
                         {
                             "It must be declared with the System.String type",
-                        }
+                        },
+                InInstruction = true,
             };
         }
         private static ParameterDescription BuildFilePathParameterInInstructionDescription()
@@ -169,11 +301,12 @@ namespace NetAspect.Doc.Builder.Model
             return new ParameterDescription()
             {
                 Description = "this parameter is used to get the file path of the instruction that call our membe",
-                Name = "fileName",
+                Name = "filePath",
                 WhatCanBe = new List<string>()
                         {
                             "It must be declared with the System.String type",
-                        }
+                        },
+                InInstruction = true,
             };
         }
         private static ParameterDescription BuildParametersParameterDescription()
@@ -192,28 +325,80 @@ namespace NetAspect.Doc.Builder.Model
         private static ParameterDescription BuildMethodParameterDescription()
         {
             return new ParameterDescription()
-                {
-                    Description = "this parameter is used to get some information about the weaved method",
-                    Name = "method",
-                    WhatCanBe = new List<string>()
+            {
+                Description = "this parameter is used to get some information about the weaved method",
+                Name = "method",
+                WhatCanBe = new List<string>()
                         {
                             "It must be of System.Reflection.MethodInfo type",
                         }
-                };
+            };
+        }
+        private static ParameterDescription BuildPropertyInMethodParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to get some information about the current property",
+                Name = "property",
+                WhatCanBe = new List<string>()
+                        {
+                            "It must be of System.Reflection.PropertyInfo type",
+                        }
+            };
+        }
+        private static ParameterDescription BuildPropertyInInstructionParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to get some information about the property",
+                Name = "property",
+                WhatCanBe = new List<string>()
+                        {
+                            "It must be of System.Reflection.PropertyInfo type",
+                        },
+                InInstruction = true,
+            };
+        }
+        private static ParameterDescription BuildConstructorParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to get some information about the weaved constructor",
+                Name = "constructor",
+                WhatCanBe = new List<string>()
+                        {
+                            "It must be of System.Reflection.ConstructorInfo type",
+                        }
+            };
         }
 
         private static ParameterDescription BuildInstanceParameterDescription()
         {
             return new ParameterDescription()
-                {
-                    Description = "this parameter is used to have the <b>this</b> of the weaved member",
-                    Name = "instance",
-                    WhatCanBe = new List<string>()
+            {
+                Description = "this parameter is used to have the <b>this</b> of the weaved member",
+                Name = "instance",
+                WhatCanBe = new List<string>()
                         {
                             "It can be declared as object",
                             "It can be declared with the real type object",
                         }
-                };
+            };
+        }
+
+        private static ParameterDescription BuildCallerInstanceParameterDescription()
+        {
+            return new ParameterDescription()
+            {
+                Description = "this parameter is used to have the instance of the object that call the weaved member",
+                Name = "callerInstance",
+                WhatCanBe = new List<string>()
+                        {
+                            "It can be declared as object",
+                            "It can be declared with the real type object",
+                        },
+                InInstruction = true,
+            };
         }
     }
 
@@ -232,20 +417,6 @@ namespace NetAspect.Doc.Builder.Model
 
 
 
-        public string GetRealParameterName(string parameterName)
-        {
-            return parameterDescriptions.GetRealParameterName(parameterName);
-        }
-
-        public string GetParameterId(string parameterName)
-        {
-            return parameterDescriptions.GetParameterId(parameterName);
-        }
         
-
-        public string GetParameterDescription(string parameterName)
-        {
-            return parameterDescriptions.GetDescription(parameterName);
-        }
     }
 }

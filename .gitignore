@@ -120,3 +120,4 @@ test/NetAspect.CF.Tests/NetAspect.CF.Tests/NetAspect.Core.dll
 test/NetAspect.CF.Tests/NetAspect.CF.Tests/NetAspect.Targets
 test/NetAspect.CF.Tests/NetAspect.CF.Tests/NetAspect.Weaver.dll
 test/NetAspect.CF.Tests/NetAspect.CF.Tests/NetAspect.Weaver.Tasks.dll
+.sonar

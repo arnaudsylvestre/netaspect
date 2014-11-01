@@ -7,19 +7,27 @@ namespace NetAspect.Doc.Builder.Model
     public class InterceptorsSectionModel
     {
         private readonly List<CsTestFile> testFiles;
-        private readonly Dictionary<string, string> parameterDescriptions;
-        private readonly AvailableParametersSectionModel availableParametersSectionModel;
+        private readonly List<ParameterDescriptionFactory.ParameterDescription> parameterDescriptions;
 
-        public InterceptorsSectionModel(List<CsTestFile> testFiles, Dictionary<string, string> parameterDescriptions, AvailableParametersSectionModel availableParametersSectionModel)
+        public InterceptorsSectionModel(List<CsTestFile> testFiles, List<ParameterDescriptionFactory.ParameterDescription> parameterDescriptions)
         {
             this.testFiles = testFiles;
             this.parameterDescriptions = parameterDescriptions;
-            this.availableParametersSectionModel = availableParametersSectionModel;
         }
 
 
-        public List<ParameterModel> GetParameters(CsTestFile testFile)
-        { return availableParametersSectionModel.Parameters.Where(p => testFile.Parameters.Contains(p.Name)).ToList(); }
+        public List<ParameterDescriptionFactory.ParameterDescription> GetParameters(CsTestFile testFile)
+        {
+            var compliant = new List<ParameterDescriptionFactory.ParameterDescription>();
+            foreach (var parameter in testFile.Parameters)
+            {
+                var parameterDescription = parameterDescriptions.FirstOrDefault(p => p.Name == GetRealParameterName(parameter) && p.InInstruction == (InterceptorModelHelper.ExtractKind(testFile.Name) == Kind.Call));
+                if (parameterDescription == null)
+                    parameterDescription = parameterDescriptions.FirstOrDefault(p => p.Name == GetRealParameterName(parameter) && p.InInstruction == (InterceptorModelHelper.ExtractKind(testFile.Name) == Kind.Method || InterceptorModelHelper.ExtractKind(testFile.Name) == Kind.Parameter));
+                compliant.Add(parameterDescription);
+            }
+            return compliant;
+        }
 
 
         public string GetRealParameterName(string parameterName)
@@ -27,11 +35,6 @@ namespace NetAspect.Doc.Builder.Model
             return parameterDescriptions.GetRealParameterName(parameterName);
         }
 
-
-        public string GetParameterDescription(string parameterName)
-        {
-            return parameterDescriptions.GetDescription(parameterName);
-        }
 
 
         public IEnumerable<string> Members

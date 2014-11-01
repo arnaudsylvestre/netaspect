@@ -33,7 +33,6 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Flow
          {
             if (toWeave != null)
                throw new Exception();
-            //return toWeave;
          }
       }
 
