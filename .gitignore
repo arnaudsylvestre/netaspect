@@ -123,3 +123,4 @@ test/NetAspect.CF.Tests/NetAspect.CF.Tests/NetAspect.Weaver.Tasks.dll
 .sonar
 deploy/Samples/
 deploy/Temp
+deploy/Output/
