@@ -65,12 +65,17 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Method
 	IL_0000: nop
 	IL_0001: ldnull
 	IL_0002: stloc.0
+     * 
+     * 
+     * Call Gettype et GetMethods()
 	IL_0003: ldarg.0
 	IL_0004: call instance class [mscorlib]System.Type [mscorlib]System.Object::GetType()
 	IL_0009: ldc.i4.s 60
 	IL_000b: callvirt instance class [mscorlib]System.Reflection.MethodInfo[] [mscorlib]System.Type::GetMethods(valuetype [mscorlib]System.Reflection.BindingFlags)
 	IL_0010: stloc.1
 	IL_0011: nop
+     * 
+     * Copie temporaire dans une variable (à supprimer)
 	IL_0012: ldloc.1
 	IL_0013: stloc.s CS$6$0001
 	IL_0015: ldc.i4.0
