@@ -9,11 +9,12 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Return
    {
       protected override Action CreateEnsure()
       {
+          //HERE
          return () =>
          {
             Assert.IsNull(MyAspect.Method);
             var classToWeave_L = new ClassToWeave();
-            ClassToWeave res = classToWeave_L.Weaved(classToWeave_L);
+            ClassToWeave res = classToWeave_L.Weaved(classToWeave_L, "param1");
             Assert.AreEqual("Weaved", MyAspect.Method.Name);
             Assert.AreEqual(classToWeave_L, res);
          };
@@ -21,14 +22,41 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Return
 
       public class ClassToWeave
       {
-         //[MyAspect]
-         public T Weaved<T>(T toWeave)
-         {
-             var method = GetType().GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
-                            .Where(s => s.Name == "Weaved" && s.GetParameters()[0].ParameterType == typeof(T));
+          //[MyAspect]
+          public T Weaved<T>(T toWeave, string param1)
+          {
+              MethodInfo myMethod = null;
+             var methods = GetType().GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+             foreach (var methodInfo in methods)
+             {
+                 if (methodInfo.Name != "Weaved")
+                     continue;
+                 if (methodInfo.GetGenericArguments().Count() != 1)
+                     continue;
+                 var parameters = methodInfo.GetParameters();
+                 if (parameters.Length != 2)
+                     continue;
+                 var parameterType = parameters[0].ParameterType;   
+                 if (parameterType != typeof(T))
+                     continue;
+                 if (parameters[1].ParameterType != typeof(string))
+                     continue;
+                 myMethod = methodInfo;
+                 break;
+             }
 
-             Assert.NotNull(method, "Elle est nulle !!!");
+             Assert.NotNull(myMethod, "Elle est nulle !!!");
             return toWeave;
+         }
+
+         public T Weaved<T, T1>(T toWeave)
+         {
+             return toWeave;
+         }
+
+         public T Weaved<T>(T toWeave, int param)
+         {
+             return toWeave;
          }
       }
 

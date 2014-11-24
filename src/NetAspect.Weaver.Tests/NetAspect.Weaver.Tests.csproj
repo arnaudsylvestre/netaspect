@@ -120,7 +120,6 @@
     <Compile Include="docs\Documentation\Interceptors\MethodWeaving\Method\Part1Sample4OnFinallyMethodPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\MethodWeaving\Method\Part1Sample3OnExceptionMethodPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\MethodWeaving\Method\Part1Sample1BeforeMethodPossibilityTest.cs" />
-    <Compile Include="docs\InterceptorDescriptionAttribute.cs" />
     <Compile Include="docs\Documentation\Interceptors\MethodWeaving\Method\Part1Sample2AfterMethodPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\MethodWeaving\PropertySet\Part4Sample1BeforePropertySetPossibilityTest.cs" />
     <Compile Include="docs\Documentation\Interceptors\MethodWeaving\PropertySet\Part4Sample2AfterPropertySetPossibilityTest.cs" />

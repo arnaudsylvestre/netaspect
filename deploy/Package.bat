@@ -9,7 +9,7 @@ mkdir Temp\Nuget\Tools
 mkdir Temp\Nuget\Content\Aspects
 call ..\src\NetAspect.SamplesExtractor\bin\Debug\NetAspect.SamplesExtractor.exe ..\src\NetAspect.Weaver.Tests\Samples Temp\Nuget\Content\Aspects
 call xcopy %~dp0Nuget\* Temp\Nuget\Tools /D /E /C /R /H /I /K /Y
-call Nuget\Nuget.exe pack Nuget\NetAspect.nuspec -OutputDirectory Output -Version %1
+call Nuget\Nuget.exe pack Nuget\NetAspect.nuspec -OutputDirectory Output
 
 REM Without Nuget
 mkdir Temp\WithoutNuget
