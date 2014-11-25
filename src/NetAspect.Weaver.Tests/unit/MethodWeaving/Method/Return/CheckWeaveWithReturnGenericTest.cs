@@ -9,7 +9,6 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Return
    {
       protected override Action CreateEnsure()
       {
-          //HERE
          return () =>
          {
             Assert.IsNull(MyAspect.Method);
@@ -22,30 +21,9 @@ namespace NetAspect.Weaver.Tests.unit.MethodWeaving.Method.Return
 
       public class ClassToWeave
       {
-          //[MyAspect]
+          [MyAspect]
           public T Weaved<T>(T toWeave, string param1)
           {
-              MethodInfo myMethod = null;
-             var methods = GetType().GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-             foreach (var methodInfo in methods)
-             {
-                 if (methodInfo.Name != "Weaved")
-                     continue;
-                 if (methodInfo.GetGenericArguments().Count() != 1)
-                     continue;
-                 var parameters = methodInfo.GetParameters();
-                 if (parameters.Length != 2)
-                     continue;
-                 var parameterType = parameters[0].ParameterType;   
-                 if (parameterType != typeof(T))
-                     continue;
-                 if (parameters[1].ParameterType != typeof(string))
-                     continue;
-                 myMethod = methodInfo;
-                 break;
-             }
-
-             Assert.NotNull(myMethod, "Elle est nulle !!!");
             return toWeave;
          }
 

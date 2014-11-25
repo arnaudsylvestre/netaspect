@@ -71,23 +71,357 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
           MethodReference methodReference,
           ModuleDefinition module, Action<VariableDefinition> addVariable, VariableDefinition typeInstance)
        {
-           var typesFromParameters_L = CreateTypesFromParameters(instructions, methodReference);
+           Func<VariableDefinition, VariableDefinition> add = definition =>
+               {
+                   addVariable(definition);
+                   return definition;
+               };
+           var methods = add(new VariableDefinition(module.Import(typeof(MethodInfo[]))));
+           var method = add(new VariableDefinition(module.Import(typeof(MethodInfo))));
+           var finalMethod = add(new VariableDefinition(module.Import(typeof(MethodInfo))));
+           var i = add(new VariableDefinition(module.Import(typeof(int))));
+           var condition = add(new VariableDefinition(module.Import(typeof(bool))));
+           var parameters = add(new VariableDefinition(module.Import(typeof(ParameterInfo[]))));
            instructions.Add(Instruction.Create(OpCodes.Ldloc, typeInstance));
-           instructions.Add(Instruction.Create(OpCodes.Ldstr, methodReference.Name));
            instructions.Add(Instruction.Create(OpCodes.Ldc_I4, ComputeBindingFlags(methodReference)));
-           instructions.Add(Instruction.Create(OpCodes.Ldnull));
-           addVariable(typesFromParameters_L);
-           instructions.Add(Instruction.Create(OpCodes.Ldloc, typesFromParameters_L));
-           instructions.Add(Instruction.Create(OpCodes.Ldnull));
            instructions.Add(
                Instruction.Create(
                    OpCodes.Callvirt,
                    module.Import(
                        typeof(Type).GetMethod(
-                           "GetMethod",
-                           new[] { typeof(string), typeof(BindingFlags), typeof(Binder), typeof(Type[]), typeof(ParameterModifier[]) }))));
+                           "GetMethods",
+                           new[] { typeof(BindingFlags) }))));
+           instructions.Add(Instruction.Create(OpCodes.Stloc, typeInstance));
+
+           var startCondition = Instruction.Create(OpCodes.Nop);;
+           var startLoop = Instruction.Create(OpCodes.Nop);
+           var startIncrementation = Instruction.Create(OpCodes.Nop);
+           var endLoop = Instruction.Create(OpCodes.Nop);
+           
+           instructions.Add(Instruction.Create(OpCodes.Ldc_I4_0));
+           instructions.Add(Instruction.Create(OpCodes.Stloc_S, i));
+           instructions.Add(Instruction.Create(OpCodes.Br, startCondition));
+           instructions.Add(startLoop);
+
+           
+           instructions.AddRange(GetMethodAtIndex(methods, i, method));
+
+
+           instructions.AddRange(CheckGenericArguments(module, method, condition, startIncrementation));
+           instructions.AddRange(CheckMethodName(module, method, methodReference, condition, startIncrementation));
+           instructions.AddRange(CheckParametersLength(module, method, methodReference, condition, startIncrementation, parameters));
+           for (int j = 0; j < methodReference.Parameters.Count; j++)
+           {
+               instructions.AddRange(CheckParameterType(module, methodReference, condition, startIncrementation, parameters, j));
+           }
+
+           instructions.AddRange(SaveMethod(finalMethod, method, endLoop));
+
+           instructions.Add(startIncrementation);
+           instructions.AddRange(CreateLoopIncrementation(i));
+           instructions.Add(startCondition);
+           instructions.AddRange(CreateLoopCondition(i, methods, startLoop, condition));
+           instructions.Add(endLoop);
+           instructions.Add(Instruction.Create(OpCodes.Ldloc, finalMethod));
        }
 
+       private static IEnumerable<Instruction> SaveMethod(VariableDefinition finalMethod, VariableDefinition method, Instruction endLoop)
+       {
+           var instructions = new List<Instruction>
+                {
+                    Instruction.Create(OpCodes.Ldloc, method),
+                    Instruction.Create(OpCodes.Ldloc, finalMethod),
+                    Instruction.Create(OpCodes.Br, endLoop),
+                };
+           /*	IL_00ab: ldloc.2
+		IL_00ac: stloc.0
+		IL_00ad: br.s IL_00c6*/
+           return instructions;
+       }
+
+       private static IEnumerable<Instruction> CheckParameterType(ModuleDefinition module, MethodReference methodReference, VariableDefinition condition, Instruction startIncrementation, VariableDefinition parameters, int parameterIndex)
+       {
+           var parameterDefinition = methodReference.Parameters[parameterIndex];
+           var getParameterType = module.Import(typeof(ParameterInfo).GetMethod("get_ParameterType", new Type[] { }));
+           var getName = module.Import(typeof(MemberInfo).GetMethod("get_Name", new Type[] { }));
+           var getFullName = module.Import(typeof(Type).GetMethod("get_FullName", new Type[] { }));
+           var stringInequalityMethod = module.Import(typeof(string).GetMethod("op_Inequality", new[] { typeof(string), typeof(string) }));
+           var instructions = new List<Instruction>
+                {
+                    Instruction.Create(OpCodes.Ldloc, parameters),
+                    Instruction.Create(OpCodes.Ldc_I4, parameterIndex),
+                    Instruction.Create(OpCodes.Ldelem_Ref),
+                    Instruction.Create(OpCodes.Callvirt, getParameterType),
+                    Instruction.Create(OpCodes.Callvirt, parameterDefinition.ParameterType.IsGenericParameter ? getName : getFullName),
+                    Instruction.Create(OpCodes.Ldstr, parameterDefinition.ParameterType.IsGenericParameter ? parameterDefinition.ParameterType.Name : parameterDefinition.ParameterType.FullName.Replace("/", "+")),
+                    Instruction.Create(OpCodes.Call, stringInequalityMethod),
+                    Instruction.Create(OpCodes.Ldc_I4_0),
+                    Instruction.Create(OpCodes.Ceq),
+                    Instruction.Create(OpCodes.Stloc_S, condition),
+                    Instruction.Create(OpCodes.Ldloc_S, condition),
+                    Instruction.Create(OpCodes.Brfalse_S, startIncrementation)
+
+                };
+           return instructions;
+       }
+
+       private static IEnumerable<Instruction> CheckParametersLength(ModuleDefinition module, VariableDefinition method, MethodReference methodReference, VariableDefinition condition, Instruction startIncrementation, VariableDefinition parameters)
+       {
+           var getGenericArguments = module.Import(typeof(MethodBase).GetMethod("GetParameters", new Type[] { }));
+           var instructions = new List<Instruction>
+                {
+                    Instruction.Create(OpCodes.Ldloc, method),
+                    Instruction.Create(OpCodes.Callvirt, getGenericArguments),
+                    Instruction.Create(OpCodes.Stloc, parameters),
+                    Instruction.Create(OpCodes.Ldloc, parameters),
+                    Instruction.Create(OpCodes.Ldlen),
+                    Instruction.Create(OpCodes.Conv_I4),
+                    Instruction.Create(OpCodes.Ldc_I4, methodReference.Parameters.Count),
+                    Instruction.Create(OpCodes.Ceq),
+                    Instruction.Create(OpCodes.Stloc_S, condition),
+                    Instruction.Create(OpCodes.Ldloc_S, condition),
+                    Instruction.Create(OpCodes.Brfalse_S, startIncrementation)
+
+                };
+
+          /* IL_0052: ldloc.2
+		IL_0053: callvirt instance class [mscorlib]System.Reflection.ParameterInfo[] [mscorlib]System.Reflection.MethodBase::GetParameters()
+		IL_0058: stloc.3
+		IL_0059: ldloc.3
+		IL_005a: ldlen
+		IL_005b: conv.i4
+		IL_005c: ldc.i4.2
+		IL_005d: ceq
+		IL_005f: stloc.s CS$4$0003
+		IL_0061: ldloc.s CS$4$0003
+		IL_0063: brtrue.s IL_0067*/
+           return instructions;
+       }
+
+       private static IEnumerable<Instruction> CheckGenericArguments(ModuleDefinition module, VariableDefinition method, VariableDefinition condition, Instruction startIncrementation)
+       {
+           var getGenericArguments = module.Import(typeof(MethodBase).GetMethod("GetGenericArguments", new Type[] { }));
+           var instructions = new List<Instruction>
+                {
+                    Instruction.Create(OpCodes.Ldloc, method),
+                    Instruction.Create(OpCodes.Callvirt, getGenericArguments),
+                    Instruction.Create(OpCodes.Ldlen),
+                    Instruction.Create(OpCodes.Conv_I4),
+                    Instruction.Create(OpCodes.Ceq),
+                    Instruction.Create(OpCodes.Stloc_S, condition),
+                    Instruction.Create(OpCodes.Ldloc_S, condition),
+                    Instruction.Create(OpCodes.Brfalse_S, startIncrementation)
+
+                };
+           /*
+                    IL_003f: ldloc.2
+		IL_0040: callvirt instance class [mscorlib]System.Type[] [mscorlib]System.Reflection.MethodBase::GetGenericArguments()
+		IL_0045: ldlen
+		IL_0046: conv.i4
+		IL_0047: ldc.i4.1
+		IL_0048: ceq
+		IL_004a: stloc.s CS$4$0003
+		IL_004c: ldloc.s CS$4$0003
+		IL_004e: brtrue.s IL_0052
+            */
+           return instructions;
+       }
+
+       private static List<Instruction> CheckMethodName(ModuleDefinition module, VariableDefinition method, MethodReference methodReference, VariableDefinition condition, Instruction startIncrementation)
+       {
+           var getNameMethod = module.Import(typeof(MemberInfo).GetMethod("get_Name", new Type[] { }));
+           var stringInequalityMethod = module.Import(typeof(string).GetMethod("op_Inequality", new[] { typeof(string), typeof(string) }));
+           var instructions = new List<Instruction>
+                {
+                    Instruction.Create(OpCodes.Ldloc, method),
+                    Instruction.Create(OpCodes.Callvirt, getNameMethod),
+                    Instruction.Create(OpCodes.Ldstr, methodReference.Name),
+                    Instruction.Create(OpCodes.Call, stringInequalityMethod),
+                    Instruction.Create(OpCodes.Ldc_I4_0),
+                    Instruction.Create(OpCodes.Ceq),
+                    Instruction.Create(OpCodes.Stloc_S, condition),
+                    Instruction.Create(OpCodes.Ldloc_S, condition),
+                    Instruction.Create(OpCodes.Brfalse_S, startIncrementation)
+                };
+           return instructions;
+           /*IL_0024: ldloc.2
+		IL_0025: callvirt instance string [mscorlib]System.Reflection.MemberInfo::get_Name()
+		IL_002a: ldstr "Weaved"
+		IL_002f: call bool [mscorlib]System.String::op_Inequality(string, string)
+		IL_0034: ldc.i4.0
+		IL_0035: ceq
+		IL_0037: stloc.s CS$4$0003
+		IL_0039: ldloc.s CS$4$0003
+		IL_003b: brtrue.s IL_003f*/
+       }
+
+       private static List<Instruction> CreateLoopIncrementation(VariableDefinition i)
+       {
+           var instructions = new List<Instruction>
+                {
+                    Instruction.Create(OpCodes.Ldloc_S, i),
+                    Instruction.Create(OpCodes.Ldc_I4_1),
+                    Instruction.Create(OpCodes.Add),
+                    Instruction.Create(OpCodes.Stloc_S, i),
+                };
+           return instructions;
+       }
+
+       private static List<Instruction> GetMethodAtIndex(VariableDefinition methods, VariableDefinition i, VariableDefinition method)
+       {
+
+           var instructions = new List<Instruction>
+                    {
+                        Instruction.Create(OpCodes.Stloc_S, methods),
+                        Instruction.Create(OpCodes.Stloc_S, i),
+                        Instruction.Create(OpCodes.Ldelem_Ref),
+                        Instruction.Create(OpCodes.Stloc, method)
+                    };
+           return instructions;
+           //   IL_001d: ldloc.s CS$6$0001
+           //IL_001f: ldloc.s CS$7$0002
+           //IL_0021: ldelem.ref
+           //IL_0022: stloc.2
+       }
+
+       private static List<Instruction> CreateLoopCondition(VariableDefinition i, VariableDefinition methods, Instruction startLoop, VariableDefinition condition)
+       {
+           var instructions = new List<Instruction>
+                {
+                    Instruction.Create(OpCodes.Ldloc_S, i),
+                    Instruction.Create(OpCodes.Ldloc_S, methods),
+                    Instruction.Create(OpCodes.Ldlen),
+                    Instruction.Create(OpCodes.Conv_I4),
+                    Instruction.Create(OpCodes.Clt),
+                    Instruction.Create(OpCodes.Stloc_S, condition),
+                    Instruction.Create(OpCodes.Ldloc_S, condition),
+                    Instruction.Create(OpCodes.Brtrue, startLoop)
+                };
+           return instructions;
+           //    IL_00c3: ldloc.s CS$7$0002
+           //IL_00c5: ldloc.s CS$6$0001
+           //IL_00c7: ldlen
+           //IL_00c8: conv.i4
+           //IL_00c9: clt
+           //IL_00cb: stloc.s CS$4$0003
+           //IL_00cd: ldloc.s CS$4$0003
+           //IL_00cf: brtrue IL_001d
+       }
+
+       /**
+   
+   // loop start (head: IL_00c3)
+       IL_001d: ldloc.s CS$6$0001
+       IL_001f: ldloc.s CS$7$0002
+       IL_0021: ldelem.ref
+       IL_0022: stloc.2
+       IL_0023: nop
+       IL_0024: ldloc.2
+       IL_0025: callvirt instance string [mscorlib]System.Reflection.MemberInfo::get_Name()
+       IL_002a: ldstr "Weaved"
+       IL_002f: call bool [mscorlib]System.String::op_Inequality(string, string)
+       IL_0034: ldc.i4.0
+       IL_0035: ceq
+       IL_0037: stloc.s CS$4$0003
+       IL_0039: ldloc.s CS$4$0003
+       IL_003b: brtrue.s IL_003f
+
+       IL_003d: br.s IL_00bd
+
+       IL_003f: ldloc.2
+       IL_0040: callvirt instance class [mscorlib]System.Type[] [mscorlib]System.Reflection.MethodBase::GetGenericArguments()
+       IL_0045: ldlen
+       IL_0046: conv.i4
+       IL_0047: ldc.i4.1
+       IL_0048: ceq
+       IL_004a: stloc.s CS$4$0003
+       IL_004c: ldloc.s CS$4$0003
+       IL_004e: brtrue.s IL_0052
+
+       IL_0050: br.s IL_00bd
+
+       IL_0052: ldloc.2
+       IL_0053: callvirt instance class [mscorlib]System.Reflection.ParameterInfo[] [mscorlib]System.Reflection.MethodBase::GetParameters()
+       IL_0058: stloc.3
+       IL_0059: ldloc.3
+       IL_005a: ldlen
+       IL_005b: conv.i4
+       IL_005c: ldc.i4.2
+       IL_005d: ceq
+       IL_005f: stloc.s CS$4$0003
+       IL_0061: ldloc.s CS$4$0003
+       IL_0063: brtrue.s IL_0067
+
+       IL_0065: br.s IL_00bd
+
+       IL_0067: ldloc.3
+       IL_0068: ldc.i4.0
+       IL_0069: ldelem.ref
+       IL_006a: callvirt instance class [mscorlib]System.Type [mscorlib]System.Reflection.ParameterInfo::get_ParameterType()
+       IL_006f: stloc.s parameterType
+       IL_0071: ldloc.s parameterType
+       IL_0073: callvirt instance string [mscorlib]System.Reflection.MemberInfo::get_Name()
+       IL_0078: ldstr "T"
+       IL_007d: call bool [mscorlib]System.String::op_Inequality(string, string)
+       IL_0082: ldc.i4.0
+       IL_0083: ceq
+       IL_0085: stloc.s CS$4$0003
+       IL_0087: ldloc.s CS$4$0003
+       IL_0089: brtrue.s IL_008d
+
+       IL_008b: br.s IL_00bd
+
+       IL_008d: ldloc.3
+       IL_008e: ldc.i4.1
+       IL_008f: ldelem.ref
+       IL_0090: callvirt instance class [mscorlib]System.Type [mscorlib]System.Reflection.ParameterInfo::get_ParameterType()
+       IL_0095: callvirt instance string [mscorlib]System.Type::get_FullName()
+       IL_009a: ldtoken [mscorlib]System.String
+       IL_009f: call class [mscorlib]System.Type [mscorlib]System.Type::GetTypeFromHandle(valuetype [mscorlib]System.RuntimeTypeHandle)
+       IL_00a4: callvirt instance string [mscorlib]System.Type::get_FullName()
+       IL_00a9: call bool [mscorlib]System.String::op_Inequality(string, string)
+       IL_00ae: ldc.i4.0
+       IL_00af: ceq
+       IL_00b1: stloc.s CS$4$0003
+       IL_00b3: ldloc.s CS$4$0003
+       IL_00b5: brtrue.s IL_00b9
+
+       IL_00b7: br.s IL_00bd
+
+       IL_00b9: ldloc.2
+       IL_00ba: stloc.0
+       IL_00bb: br.s IL_00d4
+
+       IL_00bd: ldloc.s CS$7$0002
+       IL_00bf: ldc.i4.1
+       IL_00c0: add
+       IL_00c1: stloc.s CS$7$0002
+
+       IL_00c3: ldloc.s CS$7$0002
+       IL_00c5: ldloc.s CS$6$0001
+       IL_00c7: ldlen
+       IL_00c8: conv.i4
+       IL_00c9: clt
+       IL_00cb: stloc.s CS$4$0003
+       IL_00cd: ldloc.s CS$4$0003
+       IL_00cf: brtrue IL_001d
+   // end loop
+
+   IL_00d4: ldloc.0
+   IL_00d5: ldstr "Elle est nulle !!!"
+   IL_00da: call void [nunit.framework]NUnit.Framework.Assert::NotNull(object, string)
+   IL_00df: nop
+   IL_00e0: ldarg.1
+   IL_00e1: stloc.s CS$1$0000
+   IL_00e3: br.s IL_00e5
+
+   IL_00e5: ldloc.s CS$1$0000
+   IL_00e7: ret
+} // end of method ClassToWeaveCheckMethod::Weaved
+
+    * 
+    * 
+    */
 
        private static VariableDefinition CreateTypesFromParameters(List<Instruction> instructions, MethodReference methodReference)
        {

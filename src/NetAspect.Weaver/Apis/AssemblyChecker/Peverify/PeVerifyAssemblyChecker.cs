@@ -16,8 +16,8 @@ namespace NetAspect.Weaver.Apis.AssemblyChecker.Peverify
          catch (Exception e)
          {
              var runningOnMono = Type.GetType ("Mono.Runtime") != null;
-             //if (!runningOnMono)
-             //   errorHandler.OnError(ErrorCode.AssemblyGeneratedIsNotCompliant, FileLocation.None, e.Message);
+             if (!runningOnMono)
+                errorHandler.OnError(ErrorCode.AssemblyGeneratedIsNotCompliant, FileLocation.None, e.Message);
          }
       }
    }
