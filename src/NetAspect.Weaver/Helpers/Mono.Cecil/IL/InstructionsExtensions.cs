@@ -91,7 +91,7 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
                        typeof(Type).GetMethod(
                            "GetMethods",
                            new[] { typeof(BindingFlags) }))));
-           instructions.Add(Instruction.Create(OpCodes.Stloc, typeInstance));
+           instructions.Add(Instruction.Create(OpCodes.Stloc, methods));
 
            var startCondition = Instruction.Create(OpCodes.Nop);;
            var startLoop = Instruction.Create(OpCodes.Nop);
@@ -107,8 +107,8 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
            instructions.AddRange(GetMethodAtIndex(methods, i, method));
 
 
-           instructions.AddRange(CheckGenericArguments(module, method, condition, startIncrementation));
            instructions.AddRange(CheckMethodName(module, method, methodReference, condition, startIncrementation));
+           instructions.AddRange(CheckGenericArguments(module, method, condition, startIncrementation, methodReference));
            instructions.AddRange(CheckParametersLength(module, method, methodReference, condition, startIncrementation, parameters));
            for (int j = 0; j < methodReference.Parameters.Count; j++)
            {
@@ -130,7 +130,7 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
            var instructions = new List<Instruction>
                 {
                     Instruction.Create(OpCodes.Ldloc, method),
-                    Instruction.Create(OpCodes.Ldloc, finalMethod),
+                    Instruction.Create(OpCodes.Stloc, finalMethod),
                     Instruction.Create(OpCodes.Br, endLoop),
                 };
            /*	IL_00ab: ldloc.2
@@ -159,7 +159,7 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
                     Instruction.Create(OpCodes.Ceq),
                     Instruction.Create(OpCodes.Stloc_S, condition),
                     Instruction.Create(OpCodes.Ldloc_S, condition),
-                    Instruction.Create(OpCodes.Brfalse_S, startIncrementation)
+                    Instruction.Create(OpCodes.Brfalse, startIncrementation)
 
                 };
            return instructions;
@@ -167,11 +167,11 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
 
        private static IEnumerable<Instruction> CheckParametersLength(ModuleDefinition module, VariableDefinition method, MethodReference methodReference, VariableDefinition condition, Instruction startIncrementation, VariableDefinition parameters)
        {
-           var getGenericArguments = module.Import(typeof(MethodBase).GetMethod("GetParameters", new Type[] { }));
+           var getParametersMethod = module.Import(typeof(MethodBase).GetMethod("GetParameters", new Type[] { }));
            var instructions = new List<Instruction>
                 {
                     Instruction.Create(OpCodes.Ldloc, method),
-                    Instruction.Create(OpCodes.Callvirt, getGenericArguments),
+                    Instruction.Create(OpCodes.Callvirt, getParametersMethod),
                     Instruction.Create(OpCodes.Stloc, parameters),
                     Instruction.Create(OpCodes.Ldloc, parameters),
                     Instruction.Create(OpCodes.Ldlen),
@@ -180,7 +180,7 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
                     Instruction.Create(OpCodes.Ceq),
                     Instruction.Create(OpCodes.Stloc_S, condition),
                     Instruction.Create(OpCodes.Ldloc_S, condition),
-                    Instruction.Create(OpCodes.Brfalse_S, startIncrementation)
+                    Instruction.Create(OpCodes.Brfalse, startIncrementation)
 
                 };
 
@@ -198,20 +198,20 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
            return instructions;
        }
 
-       private static IEnumerable<Instruction> CheckGenericArguments(ModuleDefinition module, VariableDefinition method, VariableDefinition condition, Instruction startIncrementation)
+       private static IEnumerable<Instruction> CheckGenericArguments(ModuleDefinition module, VariableDefinition method, VariableDefinition condition, Instruction startIncrementation, MethodReference methodReference)
        {
            var getGenericArguments = module.Import(typeof(MethodBase).GetMethod("GetGenericArguments", new Type[] { }));
-           var instructions = new List<Instruction>
+          var instructions = new List<Instruction>
                 {
                     Instruction.Create(OpCodes.Ldloc, method),
                     Instruction.Create(OpCodes.Callvirt, getGenericArguments),
                     Instruction.Create(OpCodes.Ldlen),
                     Instruction.Create(OpCodes.Conv_I4),
+                    Instruction.Create(OpCodes.Ldc_I4, methodReference.GenericParameters.Count),
                     Instruction.Create(OpCodes.Ceq),
                     Instruction.Create(OpCodes.Stloc_S, condition),
                     Instruction.Create(OpCodes.Ldloc_S, condition),
-                    Instruction.Create(OpCodes.Brfalse_S, startIncrementation)
-
+                    Instruction.Create(OpCodes.Brfalse, startIncrementation),
                 };
            /*
                     IL_003f: ldloc.2
@@ -241,7 +241,7 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
                     Instruction.Create(OpCodes.Ceq),
                     Instruction.Create(OpCodes.Stloc_S, condition),
                     Instruction.Create(OpCodes.Ldloc_S, condition),
-                    Instruction.Create(OpCodes.Brfalse_S, startIncrementation)
+                    Instruction.Create(OpCodes.Brfalse, startIncrementation)
                 };
            return instructions;
            /*IL_0024: ldloc.2
@@ -272,8 +272,8 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
 
            var instructions = new List<Instruction>
                     {
-                        Instruction.Create(OpCodes.Stloc_S, methods),
-                        Instruction.Create(OpCodes.Stloc_S, i),
+                        Instruction.Create(OpCodes.Ldloc_S, methods),
+                        Instruction.Create(OpCodes.Ldloc_S, i),
                         Instruction.Create(OpCodes.Ldelem_Ref),
                         Instruction.Create(OpCodes.Stloc, method)
                     };
