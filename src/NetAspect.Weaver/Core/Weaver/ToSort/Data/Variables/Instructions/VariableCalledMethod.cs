@@ -28,11 +28,15 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Instructions
            ModuleDefinition module = method.Module;
             VariableDefinition type = new VariableDefinition(module.Import(typeof(Type)));
             allVariables.Add(type);
-           VariableDefinition methodVariable = new VariableDefinition(module.Import(typeof(MethodInfo)));
+            VariableDefinition methodVariable = new VariableDefinition(module.Import(typeof(MethodInfo)));
+            VariableDefinition called = new VariableDefinition(methodReference.DeclaringType);
+            allVariables.Add(called);
+            instructionsToInsert.calledConstructorInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, called));
            instructionsToInsert.calledConstructorInstructions.AppendCallToTypeOf(module, methodReference.DeclaringType);
            instructionsToInsert.calledConstructorInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, type));
            instructionsToInsert.calledConstructorInstructions.AppendCallToGetMethod(methodReference, module, var => allVariables.Add(var), type);
            instructionsToInsert.calledConstructorInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, methodVariable));
+           instructionsToInsert.calledConstructorInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldloc, called));
            return methodVariable;
         }
    }
