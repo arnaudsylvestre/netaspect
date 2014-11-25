@@ -29,10 +29,9 @@ namespace NetAspect.Weaver.Tests.unit
                 var parameters = methodInfo.GetParameters();
                 if (parameters.Length != 2)
                     continue;
-                var parameterType = parameters[0].ParameterType;
-                if (parameterType.Name != "T")
+                if (parameters[0].ParameterType.Name != "T")
                     continue;
-                if (parameters[1].ParameterType.FullName != typeof(string).FullName)
+                if (parameters[1].ParameterType.FullName != "System.String")
                     continue;
                 myMethod = methodInfo;
                 break;
