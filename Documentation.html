@@ -7333,6 +7333,46 @@ public class ClassToWeave
 
 			
          </div
+	<div class="page-header">
+               <h1 id="otherAssemblies">Assemblies to weave</h1>
+            </div>
+            <p>By default, in NetAspect, only the assembly in which NetAspect is installed is weaved.</p><p>But you can tell to NetAspect to weave other assemblies thanks to the field <b>AssembliesToWeave</b></p>
+
+
+								<pre class="prettyprint">
+// The aspect
+public class MyAspectAttribute : Attribute
+{
+    public static DepClassWhichCallField Caller;
+    public static IEnumerable<Assembly> AssembliesToWeave = new List<Assembly> {
+        typeof(DepClassWhichCallField).Assembly
+    };
+    public bool NetAspectAttribute = true;
+    public void BeforeUpdateField(DepClassWhichCallField callerInstance)
+    {
+        Caller = callerInstance;
+    }
+    public static bool SelectField(FieldInfo field)
+    {
+        return field.Name == "Field";
+    }
+}
+
+// The class to weave
+public class ClassToWeave
+{
+// Defined in another assembly
+}
+
+// This code is working
+{
+    Assert.IsNull(MyAspectAttribute.Caller);
+    var classToWeave_L = new DepClassWhichCallField();
+    classToWeave_L.CallField("value");
+    Assert.AreEqual(classToWeave_L, MyAspectAttribute.Caller);
+}
+</pre>
+								
 
 
 	
