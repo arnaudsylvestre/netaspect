@@ -72,6 +72,7 @@
     <Compile Include="docs\Documentation\LifeCycles\PerTypeLifeCycleSampleTest.cs" />
     <Compile Include="docs\Documentation\LifeCycles\PerInstanceLifeCycleSampleTest.cs" />
     <Compile Include="docs\Documentation\LifeCycles\TransientLifeCycleSampleTest.cs" />
+    <Compile Include="docs\Documentation\OtherAssemblies\SampleAnotherAssemblyTest.cs" />
     <Compile Include="docs\Documentation\Parameters\Instruction\Called\CalledParameterNameParameterWithRealTypeParameterTest.cs" />
     <Compile Include="docs\Documentation\Parameters\Instruction\Caller\CallerParametersParameterWithRealTypeParameterTest.cs" />
     <Compile Include="docs\Documentation\Parameters\Instruction\Caller\CallerParameterWithRealTypeParameterTest.cs" />

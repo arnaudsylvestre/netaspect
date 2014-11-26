@@ -11,6 +11,7 @@
 	$page.GeneratePutAttributesSection()
 	$page.GenerateInterceptorsSection()
 	$page.GenerateLifeCyclesSection()
+	$page.GenerateOtherAssembliesSection()
 
 
 	

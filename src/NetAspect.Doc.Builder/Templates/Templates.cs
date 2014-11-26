@@ -31,6 +31,11 @@ namespace NetAspect.Doc.Builder.Templates
             get { return Read("Documentation.Sections.LifeCyclesSection.txt"); }
         }
 
+        public static string OtherAssembliesSection
+        {
+            get { return Read("Documentation.Sections.OtherAssembliesSection.txt"); }
+        }
+
         public static string PageContainer
         {
             get { return Read("PageContainer.txt"); }

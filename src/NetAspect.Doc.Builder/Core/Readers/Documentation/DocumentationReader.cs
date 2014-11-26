@@ -21,6 +21,7 @@ namespace NetAspect.Doc.Builder.Core.Readers.Documentation
                         DocumentationPutAspectsSectionReader.ExtractPutAspects(Path.Combine(baseFolder, @"Documentation\Weaving")),
                     LifeCycles =
                         DocumentationLifeCyclesSectionReader.ExtractLifeCycles(Path.Combine(baseFolder, @"Documentation\LifeCycles")),
+                    OtherAssemblies = DocumentationOtherAssembliesSectionReader.ExtractOtherAssemblies(Path.Combine(baseFolder, @"Documentation\OtherAssemblies")),
                 };
         }
     }

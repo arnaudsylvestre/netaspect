@@ -65,6 +65,8 @@
     <Compile Include="Core\Readers\Documentation\Sections\AvailableParameters\AvailableParametersSectionModel.cs" />
     <Compile Include="Core\Readers\Documentation\DocumentationReader.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\Interceptors\InterceptorsSectionModel.cs" />
+    <Compile Include="Core\Readers\Documentation\Sections\OtherAssemblies\DocumentationLifeCyclesSectionReader.cs" />
+    <Compile Include="Core\Readers\Documentation\Sections\OtherAssemblies\OtherAssembliesSectionModel.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\PutAspects\DocumentationPutAspectsSectionReader.cs" />
     <Compile Include="Core\Readers\Documentation\Sections\LifeCycles\PutAspectsSectionModel.cs" />
     <Compile Include="Core\Readers\Helpers\CodeFormatterHelper.cs" />
@@ -107,7 +109,9 @@
     <EmbeddedResource Include="Templates\Home\HomePage.txt" />
     <EmbeddedResource Include="Templates\Documentation\DocumentationPage.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\Documentation\Sections\OtherAssembliesSection.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

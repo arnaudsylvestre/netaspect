@@ -1,0 +1,17 @@
+﻿<div class="page-header">
+               <h1 id="otherAssemblies">Assemblies to weave</h1>
+            </div>
+            <p>By default, in NetAspect, only the assembly in which NetAspect is installed is weaved.</p><p>But you can tell to NetAspect to weave other assemblies thanks to the field <b>AssembliesToWeave</b></p>
+
+
+								<pre class="prettyprint">
+// The aspect
+$section.SampleAspect
+
+// The class to weave
+$section.SampleClassToWeave
+
+// This code is working
+$section.SampleTest
+</pre>
+								
