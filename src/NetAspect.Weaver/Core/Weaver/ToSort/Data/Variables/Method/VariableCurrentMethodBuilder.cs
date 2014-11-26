@@ -31,7 +31,7 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables.Method
             instructionsToInsert_P.BeforeInstructions.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, type));
             if (!method.IsConstructor)
             {
-                instructionsToInsert_P.BeforeInstructions.AppendCallToGetMethod(method, method.Module, methodVariables.Add, type);
+                instructionsToInsert_P.BeforeInstructions.AppendCallToGetMethod(method, method.Module, type, method);
 
             }
             else

@@ -131,7 +131,7 @@
     <Compile Include="Core\Weaver\ToSort\Data\Variables\Method\VariableParameters.cs" />
     <Compile Include="Core\Weaver\ToSort\Data\Variables\Instructions\VariablesCalledParameters.cs" />
     <Compile Include="Core\Weaver\Engine\InterceptorParameters\ILGenerators\InterceptorParametersRulesExtensions.cs" />
-    <Compile Include="Core\Weaver\ToSort\ILInjector\IWevingPreconditionInjector.cs" />
+    <Compile Include="Core\Weaver\ToSort\ILInjector\IWeavingPreconditionInjector.cs" />
     <Compile Include="Core\Weaver\ToSort\ILInjector\NoWeavingPreconditionInjector.cs" />
     <Compile Include="Core\Weaver\ToSort\ILInjector\OverrideWeavingPreconditionInjector.cs" />
     <Compile Include="Factory\Configuration\Instruction\CallUpdateFieldInterceptorParameterConfigurationForInstructionFiller.cs" />

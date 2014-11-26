@@ -14,10 +14,10 @@ namespace NetAspect.Weaver.Core.Weaver.Method.Detector
    public class IlInjectorsFactoryForMethod
    {
       private readonly IInterceptorParameterConfigurationForMethodFiller builder;
-      private readonly IWevingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector;
+      private readonly IWeavingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector;
        private readonly Action<CommonWeavingInfo, InterceptorParameterPossibilities<VariablesForMethod>> NoSpecific = (info, interceptorParameterConfigurations) => { };
 
-      public IlInjectorsFactoryForMethod(IInterceptorParameterConfigurationForMethodFiller builder, IWevingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector)
+      public IlInjectorsFactoryForMethod(IInterceptorParameterConfigurationForMethodFiller builder, IWeavingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector)
       {
          this.builder = builder;
          this.weavingPreconditionInjector = weavingPreconditionInjector;

@@ -14,9 +14,9 @@ namespace NetAspect.Weaver.Core.Weaver.Parameters.Detector
    public class IlInjectorsFactoryForParameter
    {
        private readonly IInterceptorParameterConfigurationForParameterFiller _filler;
-      private readonly IWevingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector;
+      private readonly IWeavingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector;
 
-      public IlInjectorsFactoryForParameter(IInterceptorParameterConfigurationForParameterFiller _filler, IWevingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector)
+      public IlInjectorsFactoryForParameter(IInterceptorParameterConfigurationForParameterFiller _filler, IWeavingPreconditionInjector<VariablesForMethod> weavingPreconditionInjector)
       {
          this._filler = _filler;
          this.weavingPreconditionInjector = weavingPreconditionInjector;

@@ -14,10 +14,10 @@ namespace NetAspect.Weaver.Core.Weaver.Instruction.Detector
    public class IlInjectorsFactoryForInstruction
    {
       private readonly IInterceptorParameterConfigurationForInstructionFiller _interceptorParameterConfigurationForInstructionFiller;
-      private readonly IWevingPreconditionInjector<VariablesForInstruction> weavingPreconditionInjector;
+      private readonly IWeavingPreconditionInjector<VariablesForInstruction> weavingPreconditionInjector;
       private static readonly Action<IInterceptorParameterConfigurationForInstructionFiller, InstructionWeavingInfo, InterceptorParameterPossibilities<VariablesForInstruction>> NoSpecific = (factory, interceptorInfo, generator) => { };
 
-       public IlInjectorsFactoryForInstruction(IInterceptorParameterConfigurationForInstructionFiller interceptorParameterConfigurationForInstructionFiller, IWevingPreconditionInjector<VariablesForInstruction> weavingPreconditionInjector)
+       public IlInjectorsFactoryForInstruction(IInterceptorParameterConfigurationForInstructionFiller interceptorParameterConfigurationForInstructionFiller, IWeavingPreconditionInjector<VariablesForInstruction> weavingPreconditionInjector)
       {
          _interceptorParameterConfigurationForInstructionFiller = interceptorParameterConfigurationForInstructionFiller;
          this.weavingPreconditionInjector = weavingPreconditionInjector;

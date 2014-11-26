@@ -4,9 +4,9 @@ using NetAspect.Weaver.Core.Weaver.ToSort.Data.Variables;
 
 namespace NetAspect.Weaver.Core.Weaver.ToSort.ILInjector
 {
-    public class NoWeavingPreconditionInjector : IWevingPreconditionInjector<VariablesForMethod>
+    public class NoWeavingPreconditionInjector : IWeavingPreconditionInjector<VariablesForMethod>
     {
-        public void Inject(List<Mono.Cecil.Cil.Instruction> precondition, VariablesForMethod availableInformations, MethodDefinition method_P)
+        public void Inject(List<Mono.Cecil.Cil.Instruction> precondition, VariablesForMethod availableInformations, MethodDefinition method)
         {
         }
     }

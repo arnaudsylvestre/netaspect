@@ -6,7 +6,10 @@ using Mono.Cecil.Cil;
 
 namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
 {
-   public static class InstructionsExtensions
+    using MethodAttributes = global::Mono.Cecil.MethodAttributes;
+    using ParameterAttributes = global::Mono.Cecil.ParameterAttributes;
+
+    public static class InstructionsExtensions
    {
        public static void AppendCallToTargetGetType(this List<Instruction> instructions, ModuleDefinition module, VariableDefinition target)
        {
@@ -69,63 +72,74 @@ namespace NetAspect.Weaver.Helpers.Mono.Cecil.IL
 
        public static void AppendCallToGetMethod(this List<Instruction> instructions,
           MethodReference methodReference,
-          ModuleDefinition module, Action<VariableDefinition> addVariable, VariableDefinition typeInstance)
+          ModuleDefinition module, VariableDefinition typeInstance, MethodDefinition methodDefinition)
        {
-           Func<VariableDefinition, VariableDefinition> add = definition =>
-               {
-                   addVariable(definition);
-                   return definition;
-               };
-           var methods = add(new VariableDefinition(module.Import(typeof(MethodInfo[]))));
-           var method = add(new VariableDefinition(module.Import(typeof(MethodInfo))));
-           var finalMethod = add(new VariableDefinition(module.Import(typeof(MethodInfo))));
-           var i = add(new VariableDefinition(module.Import(typeof(int))));
-           var condition = add(new VariableDefinition(module.Import(typeof(bool))));
-           var parameters = add(new VariableDefinition(module.Import(typeof(ParameterInfo[]))));
+           var methodGetMethod = new MethodDefinition(Guid.NewGuid().ToString(), MethodAttributes.Private | MethodAttributes.Static, module.Import(typeof(MethodInfo)));
+           methodGetMethod.Parameters.Add(new ParameterDefinition("type", ParameterAttributes.None, module.Import(typeof(Type))));
+           methodDefinition.DeclaringType.Methods.Add(methodGetMethod);
+           CreateMethodToGetMethodInfo(methodGetMethod, methodReference, module);
            instructions.Add(Instruction.Create(OpCodes.Ldloc, typeInstance));
-           instructions.Add(Instruction.Create(OpCodes.Ldc_I4, ComputeBindingFlags(methodReference)));
-           instructions.Add(
-               Instruction.Create(
-                   OpCodes.Callvirt,
-                   module.Import(
-                       typeof(Type).GetMethod(
-                           "GetMethods",
-                           new[] { typeof(BindingFlags) }))));
-           instructions.Add(Instruction.Create(OpCodes.Stloc, methods));
-
-           var startCondition = Instruction.Create(OpCodes.Nop);;
-           var startLoop = Instruction.Create(OpCodes.Nop);
-           var startIncrementation = Instruction.Create(OpCodes.Nop);
-           var endLoop = Instruction.Create(OpCodes.Nop);
-           
-           instructions.Add(Instruction.Create(OpCodes.Ldc_I4_0));
-           instructions.Add(Instruction.Create(OpCodes.Stloc_S, i));
-           instructions.Add(Instruction.Create(OpCodes.Br, startCondition));
-           instructions.Add(startLoop);
-
-           
-           instructions.AddRange(GetMethodAtIndex(methods, i, method));
-
-
-           instructions.AddRange(CheckMethodName(module, method, methodReference, condition, startIncrementation));
-           instructions.AddRange(CheckGenericArguments(module, method, condition, startIncrementation, methodReference));
-           instructions.AddRange(CheckParametersLength(module, method, methodReference, condition, startIncrementation, parameters));
-           for (int j = 0; j < methodReference.Parameters.Count; j++)
-           {
-               instructions.AddRange(CheckParameterType(module, methodReference, condition, startIncrementation, parameters, j));
-           }
-
-           instructions.AddRange(SaveMethod(finalMethod, method, endLoop));
-
-           instructions.Add(startIncrementation);
-           instructions.AddRange(CreateLoopIncrementation(i));
-           instructions.Add(startCondition);
-           instructions.AddRange(CreateLoopCondition(i, methods, startLoop, condition));
-           instructions.Add(endLoop);
-           instructions.Add(Instruction.Create(OpCodes.Ldloc, finalMethod));
+           instructions.Add(Instruction.Create(OpCodes.Call, methodGetMethod));
        }
 
-       private static IEnumerable<Instruction> SaveMethod(VariableDefinition finalMethod, VariableDefinition method, Instruction endLoop)
+        private static void CreateMethodToGetMethodInfo(
+            MethodDefinition methodDefinition, MethodReference methodReference, ModuleDefinition module)
+        {
+            var methods = (new VariableDefinition(module.Import(typeof(MethodInfo[]))));
+            var method = (new VariableDefinition(module.Import(typeof(MethodInfo))));
+            var finalMethod = (new VariableDefinition(module.Import(typeof(MethodInfo))));
+            var i = (new VariableDefinition(module.Import(typeof(int))));
+            var condition = (new VariableDefinition(module.Import(typeof(bool))));
+            var parameters = (new VariableDefinition(module.Import(typeof(ParameterInfo[]))));
+            methodDefinition.Body.Variables.Add(methods);
+            methodDefinition.Body.Variables.Add(method);
+            methodDefinition.Body.Variables.Add(finalMethod);
+            methodDefinition.Body.Variables.Add(i);
+            methodDefinition.Body.Variables.Add(condition);
+            methodDefinition.Body.Variables.Add(parameters);
+            methodDefinition.Body.InitLocals = true;
+
+            methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
+            methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, ComputeBindingFlags(methodReference)));
+            methodDefinition.Body.Instructions.Add(
+                Instruction.Create(
+                    OpCodes.Callvirt, module.Import(typeof(Type).GetMethod("GetMethods", new[] { typeof(BindingFlags) }))));
+            methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Stloc, methods));
+
+            var startCondition = Instruction.Create(OpCodes.Nop);
+            var startLoop = Instruction.Create(OpCodes.Nop);
+            var startIncrementation = Instruction.Create(OpCodes.Nop);
+            var endLoop = Instruction.Create(OpCodes.Nop);
+
+            methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4_0));
+            methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Stloc_S, i));
+            methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Br, startCondition));
+            methodDefinition.Body.Instructions.Add(startLoop);
+
+            methodDefinition.Body.Instructions.AddRange(GetMethodAtIndex(methods, i, method));
+
+            methodDefinition.Body.Instructions.AddRange(CheckMethodName(module, method, methodReference, condition, startIncrementation));
+            methodDefinition.Body.Instructions.AddRange(CheckGenericArguments(module, method, condition, startIncrementation, methodReference));
+            methodDefinition.Body.Instructions.AddRange(
+                CheckParametersLength(module, method, methodReference, condition, startIncrementation, parameters));
+            for (int j = 0; j < methodReference.Parameters.Count; j++)
+            {
+                methodDefinition.Body.Instructions.AddRange(
+                    CheckParameterType(module, methodReference, condition, startIncrementation, parameters, j));
+            }
+
+            methodDefinition.Body.Instructions.AddRange(SaveMethod(finalMethod, method, endLoop));
+
+            methodDefinition.Body.Instructions.Add(startIncrementation);
+            methodDefinition.Body.Instructions.AddRange(CreateLoopIncrementation(i));
+            methodDefinition.Body.Instructions.Add(startCondition);
+            methodDefinition.Body.Instructions.AddRange(CreateLoopCondition(i, methods, startLoop, condition));
+            methodDefinition.Body.Instructions.Add(endLoop);
+            methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ldloc, finalMethod));
+            methodDefinition.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+        }
+
+        private static IEnumerable<Instruction> SaveMethod(VariableDefinition finalMethod, VariableDefinition method, Instruction endLoop)
        {
            var instructions = new List<Instruction>
                 {

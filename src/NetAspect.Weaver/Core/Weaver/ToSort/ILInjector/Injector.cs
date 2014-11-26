@@ -17,10 +17,10 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.ILInjector
         private readonly IEnumerable<MethodInfo> interceptorMethods;
         private MethodInfo interceptorMethod;
       private readonly InterceptorParameterPossibilities<T> _interceptorParameterPossibilities;
-      private readonly IWevingPreconditionInjector<T> weavingPreconditionInjector;
+      private readonly IWeavingPreconditionInjector<T> weavingPreconditionInjector;
 
 
-      public Injector(MethodDefinition method_P, IEnumerable<MethodInfo> interceptorMethod_P, InterceptorParameterPossibilities<T> interceptorParameterPossibilitiesP, IWevingPreconditionInjector<T> weavingPreconditionInjector)
+      public Injector(MethodDefinition method_P, IEnumerable<MethodInfo> interceptorMethod_P, InterceptorParameterPossibilities<T> interceptorParameterPossibilitiesP, IWeavingPreconditionInjector<T> weavingPreconditionInjector)
       {
          _method = method_P;
          interceptorMethods = interceptorMethod_P;

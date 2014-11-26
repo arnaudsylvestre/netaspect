@@ -9,9 +9,9 @@ using NetAspect.Weaver.Helpers.Mono.Cecil.IL;
 
 namespace NetAspect.Weaver.Core.Weaver.ToSort.ILInjector
 {
-    public class OverrideWeavingPreconditionInjector : IWevingPreconditionInjector<VariablesForInstruction>
+    public class OverrideWeavingPreconditionInjector : IWeavingPreconditionInjector<VariablesForInstruction>
     {
-        public void Inject(List<Mono.Cecil.Cil.Instruction> precondition, VariablesForInstruction availableInformations, MethodDefinition method_P)
+        public void Inject(List<Mono.Cecil.Cil.Instruction> precondition, VariablesForInstruction availableInformations, MethodDefinition method)
         {
             Mono.Cecil.Cil.Instruction instruction_L = availableInformations.Instruction;
             if (!instruction_L.IsACallInstruction())
@@ -19,15 +19,15 @@ namespace NetAspect.Weaver.Core.Weaver.ToSort.ILInjector
             MethodDefinition calledMethod = instruction_L.GetCalledMethod();
             if (calledMethod.IsVirtual)
             {
-                precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldstr, calledMethod.DeclaringType.FullName.Replace('/', '+')));
-                precondition.AppendCallToTargetGetType(method_P.Module, availableInformations.Called.Definition);
-                VariableDefinition type = new VariableDefinition(method_P.Module.Import(typeof(Type)));
+                precondition.AppendCallToTargetGetType(method.Module, availableInformations.Called.Definition);
+                VariableDefinition type = new VariableDefinition(method.Module.Import(typeof(Type)));
                 availableInformations.AddLocalVariable(type);
                 precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Stloc, type));
-                precondition.AppendCallToGetMethod(calledMethod, method_P.Module, availableInformations.AddLocalVariable, type);
-                precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Callvirt, method_P.Module.Import(typeof (MemberInfo).GetMethod("get_DeclaringType"))));
-                precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Callvirt, method_P.Module.Import(typeof (Type).GetMethod("get_FullName"))));
-                precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Call, method_P.Module.Import(typeof (string).GetMethod("op_Equality"))));
+                precondition.AppendCallToGetMethod(calledMethod, method.Module, type, method);
+                precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Callvirt, method.Module.Import(typeof (MemberInfo).GetMethod("get_DeclaringType"))));
+                precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Callvirt, method.Module.Import(typeof(Type).GetMethod("get_FullName"))));
+                precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Ldstr, calledMethod.DeclaringType.FullName.Replace('/', '+')));
+                precondition.Add(Mono.Cecil.Cil.Instruction.Create(OpCodes.Call, method.Module.Import(typeof (string).GetMethod("op_Equality"))));
             }
         }
     }
