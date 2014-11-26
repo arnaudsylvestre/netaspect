@@ -8,54 +8,109 @@
   <div class="container">
         <div class="bs-docs-section">
           
-          <h1>The sample</h1>
-		  <p>Here is a sample class to divide two numbers. We want to log when there is an exception. This class is in a C# project named <b>Math.csproj</b></p>
-		  <pre class="prettyprint">
+
+		  <a href="#GettingStartedSample" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">The sample</h4>
+			<p class="list-group-item-text">Show the sample class to divide two numbers</p>
+		  </a>
+		  <div id="GettingStartedSample" class="panel-collapse collapse">
+			<div class="panel-body">
+			  <p>This class is in a C# project named <b>Math.csproj</b></p>
+				  <pre class="prettyprint">
 $page.CodeWithoutAspect</pre>
-          
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  <h1>Prepare your project</h1>
-          
-		  <h3>For Visual Studio 2008</h3>
-          <p>Download the latest version of NetAspect <a href="./javascript.html#dropdowns">Here</a> and unzip it in the directory you want. For example : <b>C:\NetAspect</b>.<br/>
-		  Now edit the <b>Math.csproj</b> project with an XML Editor and put the following line :</p>
-		  <pre class="prettyprint">&lt;Import Project="C:\NetAspect\NetAspect.targets" Condition="Exists('C:\NetAspect\NetAspect.targets')" /&gt;</pre>
-		  <p>This line must be after the following line :</p>
-		  <pre class="prettyprint">&lt;Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" /&gt;</pre>
-
-          <h3>For Visual Studio 2010/2012/2013</h3>
-          <p>Just add the NetAspect Nuget package to the <b>Math.csproj</b> project</p>
+			</div>
+		  </div>
+		</a>
 
 
 
 
+		
+		  <a href="#GettingStartedPrepareProject" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">Set up your project</h4>
+			<p class="list-group-item-text">To use NetAspect in your .Net projects</p>
+		  </a>
+		  <div id="GettingStartedPrepareProject" class="panel-collapse collapse">
+			<div class="panel-body">
+			  
+
+			  <a href="#GettingStartedPrepareProjectVS2010" data-toggle="collapse"  class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading">Visual Studio 2010/2012/2013</h4>
+			  </a>
+			  <div id="GettingStartedPrepareProjectVS2010" class="panel-collapse collapse">
+				<div class="panel-body">
+					<p>Just add the <a href="https://www.nuget.org/packages/NetAspect/" >NetAspect Nuget package</a> to the <b>Math.csproj</b></p>
+				</div>
+			  </div>
+			</a>
+
+			 <a href="#GettingStartedPrepareProjectVS2008" data-toggle="collapse"  class="list-group-item list-group-item-info">
+				<h4 class="list-group-item-heading">Visual Studio 2005/2008</h4>
+			  </a>
+			  <div id="GettingStartedPrepareProjectVS2008" class="panel-collapse collapse">
+				<div class="panel-body">
+					<p>Download the latest version of NetAspect <a href="NetAspect.zip">Here</a> and unzip it in the directory you want. For example : <b>C:\NetAspect</b>.<br/>
+					  Now edit the <b>Math.csproj</b> project with an XML Editor and put the following line :</p>
+					  <pre class="prettyprint">&lt;Import Project="C:\NetAspect\NetAspect.targets" Condition="Exists('C:\NetAspect\NetAspect.targets')" /&gt;</pre>
+					  <p>This line must be after the following line :</p>
+					  <pre class="prettyprint">&lt;Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" /&gt;</pre>
+				</div>
+			  </div>
+			</a>
 
 
 
-          <h1>The aspect</h1>
-          <p>To handle the exception, we must create an aspect :</p>
+			</div>
+		  </div>
+		</a>
+
+
+
+
+		<a href="#GettingStartedAspect" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">Define the aspect</h4>
+			<p class="list-group-item-text">Imagine we want to log when an exception occured in our Divide method</p>
+		  </a>
+		  <div id="GettingStartedAspect" class="panel-collapse collapse">
+			<div class="panel-body">
+			  <p>To handle the exception, we must create an aspect :</p>
           
 		  <pre class="prettyprint">$page.AspectCode</pre>
-            <h1>Weaving</h1>
-          <p>Now we must <b>weave</b> our <i>Divide</i> method to the aspect. That's why, we add the aspect attribute to the method :</p>
+            
+			</div>
+		  </div>
+		</a>
+
+
+
+
+
+		
+
+		<a href="#GettingStartedWeavingt" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">Define the weaving</h4>
+			<p class="list-group-item-text">To indicate to the weaver that our Divide Method must handle our aspect</p>
+		  </a>
+		  <div id="GettingStartedWeavingt" class="panel-collapse collapse">
+			<div class="panel-body">
+			  <p>Now we must <b>weave</b> our <i>Divide</i> method to the aspect. That's why, we add the aspect attribute to the method :</p>
 		  <pre class="prettyprint">$page.CodeWithAspect</pre>
+            
+			</div>
+		  </div>
+		</a>
+		  
+		  
+		  
+		  
 
-
-
-
-
-
-
-          <h1>Build and test</h1>
-		  <p>Now you can write and run the following test :</p>
+		<a href="#GettingStartedBuildAndTest" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">Build ant test</h4>
+			<p class="list-group-item-text">Just see the results !</p>
+		  </a>
+		  <div id="GettingStartedBuildAndTest" class="panel-collapse collapse">
+			<div class="panel-body">
+			  <p>Now you can write and run the following test :</p>
 		  <pre class="prettyprint">
 [TestFixture]
 public class MathAspectTest
@@ -64,6 +119,16 @@ public class MathAspectTest
    public void CheckDivideByZero()
 $page.TestWithAspect
 }</pre>
+            
+			</div>
+		  </div>
+		</a>
+		  
+
+
+
+
+
         </div>
 	  
 	  

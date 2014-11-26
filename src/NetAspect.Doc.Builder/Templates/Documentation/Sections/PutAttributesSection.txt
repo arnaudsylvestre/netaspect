@@ -16,7 +16,7 @@ $section.WeaveWithAttributeSampleAspect</pre>
 
       <p>Our <b>business class</b> :</p>
       <pre class="prettyprint">
-$section.WeaveWithAttributeSampleClassToWeave
+$section.WeaveWithAttributeSampleClassToWeave</pre>
     </div>
   </div>
   <a href="#SelectSample" data-toggle="collapse" class="list-group-item list-group-item-info">
