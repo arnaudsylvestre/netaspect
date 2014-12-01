@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+      <title>NetAspect</title>
+      <link href="bootstrap-3.2.0/dist/css/bootstrap.css" rel="stylesheet">
+      <link href="jumbotron.css" rel="stylesheet">
+   </head>
+   <body>
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+         <div class="container">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="index.html">Home</a>
+            </div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li ><a href="NetAspect.html">NetAspect</a></li>
+					<li ><a href="GettingStarted.html">Getting Started</a></li>
+					<li ><a href="Documentation.html">Documentation</a></li>
+					<li  class="active" ><a href="Samples.html">Samples</a></li>
+				</ul>
+      
+			</div>
+         </div>
+      </div>
+
+
+			
+<header class="page-header">
+    <div class="container">
+        <h1>Samples</h1>
+        <p>Some few aspects that you can use with NetAspect</p>
+    </div>
+</header>
+  
+  <div class="container">
+        <div class="bs-docs-section">
+          
+		  <a href="#SampleLog" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">Log</h4>
+		  </a>
+		  <div id="SampleLog" class="panel-collapse collapse">
+			<div class="panel-body">
+			  <p>The aspect code</p>
+				  <pre class="prettyprint">
+public class LogAttribute : Attribute
+{
+    public interface ILogger
+    {
+        void Info(string text);
+        void Error(string text);
+    }
+    public static ILogger Logger;
+    public bool NetAspectAttribute = true;
+    private static string ComputeLog(string eventName, MethodInfo method)
+    {
+        return string.Format("{0} {1} ", eventName, method.Name);
+    }
+    public void BeforeMethod(MethodInfo method)
+    {
+        Logger.Info(ComputeLog("On enter :", method));
+    }
+    public void AfterMethod(MethodInfo method)
+    {
+        Logger.Info(ComputeLog("On exit :", method));
+    }
+    public void OnExceptionMethod(MethodInfo method, Exception exception)
+    {
+        Logger.Error(ComputeLog(exception.Message, method));
+    }
+}</pre>
+			  <p>A sample class</p>
+				  <pre class="prettyprint">
+public class ClassToWeave
+{
+    [Log]
+    public int Divide(int value, int divideBy)
+    {
+        return value / divideBy;
+    }
+}</pre>
+			  <p>The following code is working</p>
+				  <pre class="prettyprint">
+{
+    var defaultLogger = new DefaultLogger();
+    LogAttribute.Logger = defaultLogger;
+    var classToWeave = new ClassToWeave();
+    classToWeave.Divide(12, 3);
+    Assert.AreEqual(2, defaultLogger.infos.Count);
+    Assert.AreEqual(0, defaultLogger.errors.Count);
+    try
+    {
+        classToWeave.Divide(12, 0);
+    }
+    catch (Exception)
+    {
+    }
+    Assert.AreEqual(3, defaultLogger.infos.Count);
+    Assert.AreEqual(1, defaultLogger.errors.Count);
+}</pre>
+			</div>
+		  </div>
+		
+
+
+		  <a href="#SampleTransactional" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">Transactional</h4>
+		  </a>
+		  <div id="SampleTransactional" class="panel-collapse collapse">
+			<div class="panel-body">
+			  <p>The aspect code</p>
+				  <pre class="prettyprint">
+public class TransactionalAttribute : Attribute
+{
+    private static NHibernate.ISession session;
+    public bool NetAspectAttribute = true;
+    private NHibernate.ITransaction transaction;
+    public static void SetSession(NHibernate.ISession newSession)
+    {
+        session = newSession;
+    }
+    public void AfterMethod()
+    {
+        transaction.Commit();
+    }
+    public void BeforeMethod()
+    {
+        transaction = session.BeginTransaction();
+    }
+    public void OnExceptionMethod()
+    {
+        transaction.Rollback();
+    }
+}</pre>
+			  <p>A sample class</p>
+				  <pre class="prettyprint">
+public class ClassToWeave
+{
+    [Transactional]
+    public int Divide(int value, int divideBy)
+    {
+        return value / divideBy;
+    }
+}</pre>
+			  <p>The following code is working</p>
+				  <pre class="prettyprint">
+{
+    TransactionalAttribute.SetSession(new FakeSession());
+    var classToWeave = new ClassToWeave();
+    classToWeave.Divide(12, 3);
+    Assert.True(FakeTransation.IsCommited);
+    Assert.False(FakeTransation.IsRollback);
+}</pre>
+			</div>
+		  </div>
+		
+
+
+		  <a href="#SampleGreaterThanOrEqualTo" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">GreaterThanOrEqualTo</h4>
+		  </a>
+		  <div id="SampleGreaterThanOrEqualTo" class="panel-collapse collapse">
+			<div class="panel-body">
+			  <p>The aspect code</p>
+				  <pre class="prettyprint">
+public class GreaterThanOrEqualToAttribute : Attribute
+{
+    private readonly int _value;
+    public bool NetAspectAttribute = true;
+    public GreaterThanOrEqualToAttribute(int value)
+    {
+        _value = value;
+    }
+    public void BeforeMethodForParameter(ParameterInfo parameter, int parameterValue)
+    {
+        BeforeMethodForParameter(parameter, (long)parameterValue);
+    }
+    public void BeforeMethodForParameter(ParameterInfo parameter, long parameterValue)
+    {
+        if (parameterValue < _value)
+            throw new Exception(string.Format("{0} must be greater than or equal to {1}", parameter.Name, _value));
+    }
+}</pre>
+			  <p>A sample class</p>
+				  <pre class="prettyprint">
+public class ClassToWeave
+{
+    public void Check([GreaterThanOrEqualTo(10)] int param)
+    {
+    }
+}</pre>
+			  <p>The following code is working</p>
+				  <pre class="prettyprint">
+{
+    var classToWeave_L = new ClassToWeave();
+    classToWeave_L.Check(10);
+    try
+    {
+        classToWeave_L.Check(9);
+        Assert.Fail("Must fail");
+    }
+    catch (Exception e)
+    {
+    }
+    classToWeave_L.Check(11);
+}</pre>
+			</div>
+		  </div>
+		
+
+
+		  <a href="#SampleGreaterThan" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">GreaterThan</h4>
+		  </a>
+		  <div id="SampleGreaterThan" class="panel-collapse collapse">
+			<div class="panel-body">
+			  <p>The aspect code</p>
+				  <pre class="prettyprint">
+public class GreaterThanAttribute : Attribute
+{
+    private readonly int _value;
+    public bool NetAspectAttribute = true;
+    public GreaterThanAttribute(int value)
+    {
+        _value = value;
+    }
+    public void BeforeMethodForParameter(ParameterInfo parameter, int parameterValue)
+    {
+        BeforeMethodForParameter(parameter, (long)parameterValue);
+    }
+    public void BeforeMethodForParameter(ParameterInfo parameter, long parameterValue)
+    {
+        if (parameterValue <= _value)
+            throw new Exception(string.Format("{0} must be greater than {1}", parameter.Name, _value));
+    }
+}</pre>
+			  <p>A sample class</p>
+				  <pre class="prettyprint">
+public class ClassToWeave
+{
+    public void Check([GreaterThan(10)] int param)
+    {
+    }
+    public void CheckLong([GreaterThan(10)] long param)
+    {
+    }
+}</pre>
+			  <p>The following code is working</p>
+				  <pre class="prettyprint">
+{
+    var classToWeave_L = new ClassToWeave();
+    try
+    {
+        classToWeave_L.Check(10);
+        Assert.Fail("Must fail");
+    }
+    catch (Exception e)
+    {
+    }
+    try
+    {
+        classToWeave_L.Check(9);
+        Assert.Fail("Must fail");
+    }
+    catch (Exception e)
+    {
+    }
+    try
+    {
+        classToWeave_L.CheckLong(9);
+        Assert.Fail("Must fail");
+    }
+    catch (Exception e)
+    {
+    }
+    classToWeave_L.Check(11);
+    classToWeave_L.CheckLong(11);
+}</pre>
+			</div>
+		  </div>
+		
+
+
+		  <a href="#SampleLowerThan" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">LowerThan</h4>
+		  </a>
+		  <div id="SampleLowerThan" class="panel-collapse collapse">
+			<div class="panel-body">
+			  <p>The aspect code</p>
+				  <pre class="prettyprint">
+public class LowerThanAttribute : Attribute
+{
+    private readonly int _value;
+    public bool NetAspectAttribute = true;
+    public LowerThanAttribute(int value)
+    {
+        _value = value;
+    }
+    public void BeforeMethodForParameter(ParameterInfo parameter, int parameterValue)
+    {
+        BeforeMethodForParameter(parameter, (long)parameterValue);
+    }
+    public void BeforeMethodForParameter(ParameterInfo parameter, long parameterValue)
+    {
+        if (parameterValue >= _value)
+            throw new Exception(string.Format("{0} must be lower than {1}", parameter.Name, _value));
+    }
+}</pre>
+			  <p>A sample class</p>
+				  <pre class="prettyprint">
+public class ClassToWeave
+{
+    public void Check([LowerThan(10)] int param)
+    {
+    }
+}</pre>
+			  <p>The following code is working</p>
+				  <pre class="prettyprint">
+{
+    var classToWeave_L = new ClassToWeave();
+    try
+    {
+        classToWeave_L.Check(10);
+        Assert.Fail("Must fail");
+    }
+    catch (Exception e)
+    {
+    }
+    try
+    {
+        classToWeave_L.Check(11);
+        Assert.Fail("Must fail");
+    }
+    catch (Exception e)
+    {
+    }
+    classToWeave_L.Check(9);
+}</pre>
+			</div>
+		  </div>
+		
+
+
+		  <a href="#SampleNotNullOrEmpty" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">NotNullOrEmpty</h4>
+		  </a>
+		  <div id="SampleNotNullOrEmpty" class="panel-collapse collapse">
+			<div class="panel-body">
+			  <p>The aspect code</p>
+				  <pre class="prettyprint">
+public class NotNullOrEmptyAttribute : Attribute
+{
+    public bool NetAspectAttribute = true;
+    public void BeforeMethodForParameter(ParameterInfo parameter, string parameterValue)
+    {
+        if (string.IsNullOrEmpty(parameterValue))
+            throw new ArgumentNullException(parameter.Name);
+    }
+}</pre>
+			  <p>A sample class</p>
+				  <pre class="prettyprint">
+public class ClassToWeave
+{
+    public void Check([NotNullOrEmpty] string param)
+    {
+    }
+}</pre>
+			  <p>The following code is working</p>
+				  <pre class="prettyprint">
+{
+    var classToWeave_L = new ClassToWeave();
+    try
+    {
+        classToWeave_L.Check(null);
+        Assert.Fail("Must fail");
+    }
+    catch (ArgumentNullException e)
+    {
+        Assert.AreEqual("param", e.ParamName);
+    }
+    try
+    {
+        classToWeave_L.Check("");
+        Assert.Fail("Must fail");
+    }
+    catch (ArgumentNullException e)
+    {
+        Assert.AreEqual("param", e.ParamName);
+    }
+    classToWeave_L.Check("not empty");
+}</pre>
+			</div>
+		  </div>
+		
+
+
+		  <a href="#SampleNotNull" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">NotNull</h4>
+		  </a>
+		  <div id="SampleNotNull" class="panel-collapse collapse">
+			<div class="panel-body">
+			  <p>The aspect code</p>
+				  <pre class="prettyprint">
+public class NotNullAttribute : Attribute
+{
+    public bool NetAspectAttribute = true;
+    public void BeforeMethodForParameter(ParameterInfo parameter, object parameterValue)
+    {
+        if (parameterValue == null)
+            throw new ArgumentNullException(parameter.Name);
+    }
+}</pre>
+			  <p>A sample class</p>
+				  <pre class="prettyprint">
+public class ClassToWeave
+{
+    public void Check([NotNull] string param)
+    {
+    }
+}</pre>
+			  <p>The following code is working</p>
+				  <pre class="prettyprint">
+{
+    var classToWeave_L = new ClassToWeave();
+    try
+    {
+        classToWeave_L.Check(null);
+        Assert.Fail("Must fail");
+    }
+    catch (ArgumentNullException e)
+    {
+        Assert.AreEqual("param", e.ParamName);
+    }
+    classToWeave_L.Check("");
+}</pre>
+			</div>
+		  </div>
+		
+
+
+		  <a href="#SampleTrim" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">Trim</h4>
+		  </a>
+		  <div id="SampleTrim" class="panel-collapse collapse">
+			<div class="panel-body">
+			  <p>The aspect code</p>
+				  <pre class="prettyprint">
+public class TrimAttribute : Attribute
+{
+    public bool NetAspectAttribute = true;
+    public void BeforeMethodForParameter(ref string parameterValue)
+    {
+        if (string.IsNullOrEmpty(parameterValue))
+            return;
+        parameterValue = parameterValue.Trim();
+    }
+}</pre>
+			  <p>A sample class</p>
+				  <pre class="prettyprint">
+public class ClassToWeave
+{
+    public string TrimWithNetAspect([Trim] string param)
+    {
+        return param;
+    }
+}</pre>
+			  <p>The following code is working</p>
+				  <pre class="prettyprint">
+{
+    var classToWeave_L = new ClassToWeave();
+    Assert.AreEqual("ToTrim", classToWeave_L.TrimWithNetAspect("ToTrim    "));
+}</pre>
+			</div>
+		  </div>
+		
+
+
+
+
+
+        </div>
+	  
+	  
+    </div>
+
+            
+
+    <!-- Bootstrap core JavaScript
+         ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+      <script src="bootstrap-3.2.0/dist/js/bootstrap.min.js"></script>
+      <script src="google-code-prettify/run_prettify.js"></script>
+   </body>
+</html>
