@@ -136,10 +136,12 @@
     <Compile Include="docs\MethodWeavingForDocWithStartDivisionTest.cs" />
     <Compile Include="Helpers\AppDomainIsolatedTestRunner.cs" />
     <Compile Include="Helpers\ErrorHandlerExtensions.cs" />
+    <Compile Include="Samples\Methods\TransactionalSampleTest.cs" />
     <Compile Include="Samples\Methods\LogSampleTest.cs" />
     <Compile Include="Samples\Parameters\Integers\LowerThanSampleTest.cs" />
     <Compile Include="Samples\Parameters\Integers\GreaterThanOrEqualToSampleTest.cs" />
     <Compile Include="Samples\Parameters\Integers\GreaterThanSampleTest.cs" />
+    <Compile Include="Samples\Parameters\String\TrimSampleTest.cs" />
     <Compile Include="Samples\Parameters\String\NotNullOrEmptySampleTest.cs" />
     <Compile Include="Samples\Parameters\String\NotNullSampleTest.cs" />
     <Compile Include="unit\Aspects\Parameters\Members\AspectParameterInGetFieldTest.cs" />

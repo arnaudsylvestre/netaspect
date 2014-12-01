@@ -72,6 +72,7 @@ namespace NetAspect.Doc.Builder
             else if (typeDeclaration.Name.EndsWith("Attribute"))
             {
                 model.AspectCode = typeDeclaration.ToNetAspectString();
+                model.AspectName = typeDeclaration.Name.Replace("Attribute", "");
             }
             else if (typeDeclaration.Name == "MyInt" || typeDeclaration.Name == "ClassToWeave")
             {

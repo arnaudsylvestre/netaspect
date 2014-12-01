@@ -1,4 +1,6 @@
-﻿namespace NetAspect.Doc.Builder.Model
+﻿using System.IO;
+
+namespace NetAspect.Doc.Builder.Model
 {
     public static class WebsiteFactory
     {
@@ -9,6 +11,7 @@
             webSite.Pages.Add(NetAspectPageFactory.CreateNetAspectPage());
             webSite.Pages.Add(GettingStartedPageFactory.CreateGettingStartedPage(baseFolder));
             webSite.Pages.Add(DocumentationPageFactory.CreateDocumentationPage(baseFolder));
+            webSite.Pages.Add(SamplesPageFactory.CreateSamplesPage(Path.Combine(baseFolder, "..")));
             return webSite;
         }
     }

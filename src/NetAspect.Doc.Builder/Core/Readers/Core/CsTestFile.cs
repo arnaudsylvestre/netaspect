@@ -40,5 +40,7 @@ namespace NetAspect.Doc.Builder.Helpers
         public string TestName { get; set; }
 
         public string UserCode { get; set; }
+
+        public string AspectName { get; set; }
     }
 }

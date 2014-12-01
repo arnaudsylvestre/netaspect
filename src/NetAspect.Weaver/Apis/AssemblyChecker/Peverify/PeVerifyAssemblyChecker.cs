@@ -1,7 +1,10 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using NetAspect.Core.Helpers;
 using NetAspect.Weaver.Core.Errors;
 using NetAspect.Weaver.Core.Model.Errors;
+using NetAspect.Weaver.Helpers.NetFramework;
 
 namespace NetAspect.Weaver.Apis.AssemblyChecker.Peverify
 {
@@ -11,7 +14,9 @@ namespace NetAspect.Weaver.Apis.AssemblyChecker.Peverify
       {
          try
          {
-            ProcessHelper.Launch("peverify.exe", "\"" + assemblyFile + "\"");
+             var assemblyPath = Assembly.GetExecutingAssembly().GetAssemblyPath();
+             var peverifyPath = Path.Combine(Path.GetDirectoryName(assemblyPath), "peverify.exe");
+             ProcessHelper.Launch(peverifyPath, "\"" + assemblyFile + "\"");
          }
          catch (Exception e)
          {

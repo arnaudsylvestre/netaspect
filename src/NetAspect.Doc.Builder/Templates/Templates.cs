@@ -60,5 +60,10 @@ namespace NetAspect.Doc.Builder.Templates
         {
             get { return Read("NetAspect.NetAspectPage.txt"); }
         }
+
+        public static string SamplesPage
+        {
+            get { return Read("Samples.SamplesPage.txt"); }
+        }
     }
 }

@@ -1,0 +1,38 @@
+﻿<header class="page-header">
+    <div class="container">
+        <h1>Samples</h1>
+        <p>Some few aspects that you can use with NetAspect</p>
+    </div>
+</header>
+  
+  <div class="container">
+        <div class="bs-docs-section">
+          
+#foreach ($sample in $page.Samples) 
+		  <a href="#Sample$sample.AspectName" data-toggle="collapse"  class="list-group-item list-group-item-info">
+			<h4 class="list-group-item-heading">$sample.AspectName</h4>
+		  </a>
+		  <div id="Sample$sample.AspectName" class="panel-collapse collapse">
+			<div class="panel-body">
+			  <p>The aspect code</p>
+				  <pre class="prettyprint">
+$sample.AspectCode</pre>
+			  <p>A sample class</p>
+				  <pre class="prettyprint">
+$sample.ClassToWeaveCode</pre>
+			  <p>The following code is working</p>
+				  <pre class="prettyprint">
+$sample.CallCode</pre>
+			</div>
+		  </div>
+		
+
+
+#end
+
+
+
+        </div>
+	  
+	  
+    </div>

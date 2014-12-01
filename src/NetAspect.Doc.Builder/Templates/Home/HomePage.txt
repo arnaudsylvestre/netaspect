@@ -21,9 +21,9 @@
           <p><a class="btn btn-default" href="Documentation.html" role="button">View Documentation &raquo;</a></p>
        </div>
         <div class="col-md-4">
-          <h2>Open source</h2>
-          <p>NetAspect can be used freely</p>
-          <p><a class="btn btn-default" href="http://www.apache.org/licenses/LICENSE-2.0.html" role="button">View licence &raquo;</a></p>
+          <h2>Samples</h2>
+          <p>Some default samples are provided to show you the features available in NetAspect</p>
+          <p><a class="btn btn-default" href="Samples.html" role="button">View samples &raquo;</a></p>
        </div>
       </div>
 
