@@ -20,7 +20,7 @@ namespace NetAspect.Weaver.Tests.unit.Samples.Parameters.Integers
                 classToWeave_L.Check(9);
                 Assert.Fail("Must fail");
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
              classToWeave_L.Check(11);

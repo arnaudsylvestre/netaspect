@@ -59,7 +59,7 @@ namespace NetAspect.Weaver.Core.Weaver.Session.AspectCheckers
          {
             fieldSelector.Check(errorHandler);
          }
-         catch (AmbiguousMatchException e)
+         catch (AmbiguousMatchException)
          {
             errorHandler.OnError(ErrorCode.TooManySelectorsWithSameName, FileLocation.None, fieldSelector.SelectorName, aspectP.Type.FullName);
          }
